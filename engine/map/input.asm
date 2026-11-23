@@ -40,7 +40,7 @@
         rts
         
         _APressed
-        jsr rsUnknown88B028
+        jsr rsMapPressA
         rts
         
         _SelectPressed
@@ -50,24 +50,24 @@
           rts
 
         +
-        jsr rsUnknown88B10B
+        jsr rsOpenMainMapMenu
         rts
         
         _BPressed
         lda wUnknown000770,b
         beq +
 
-          jsr rsUnknown88B133
+          jsr rsMapPressBWithUnitSelected
 
         +
         rts
         
         _XPressed
-        jsr rsUnknown88B1C2
+        jsr rsMapPressX
         rts
         
         _StartPressed
-        jsr rsUnknown88B20C
+        jsr rsMapPressStart
         rts
         
         _RPressed
@@ -86,7 +86,7 @@
 
         lda #0
         sta wUnknown000790,b
-        jsr rsUnknown88B51A
+        jsr rsCursorToNextReadyUnit
         rts
         
         _LPressed
@@ -111,12 +111,14 @@
       .al
       .xl
 
-      rsUnknown88B028 ; 88/B028
+      rsMapPressA ; 88/B028
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A on the map. With no unit selected: picks up the unit at the cursor; with none there, enters the home castle if the cursor is on it, else opens the map menu. With a unit selected: in warp mode acts at the cursor (rsMapConfirmWarpAtCursor); for a unit of the active army sets its destination (sound $0A, or $22 if it cannot go there); for any other unit puts it down.
 
         lda wUnknown000770,b
         bne _B03F
@@ -155,14 +157,14 @@
 
 
         _B06F
-        jsl rlUnknown88B249
+        jsl rlEnterHomeCastleAtCursor
         bcc _B080
-        jsr rsUnknown88B10B
+        jsr rsOpenMainMapMenu
         rts
 
 
         _B079
-        jsr rsUnknown88B096
+        jsr rsMapConfirmWarpAtCursor
         rts
 
         .byte $20, $33, $B1
@@ -185,12 +187,14 @@
 
         ; 88/B096
 
-      rsUnknown88B096 ; 88/B096
+      rsMapConfirmWarpAtCursor ; 88/B096
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; With bit 11 of wUnknown000D79 set and a unit selected: hides the range, puts the cursor back on the active unit and acts (rlUnknown84DC1C) with the cursor's tile in wR2/wR3.
 
         lda #$0000
         sta wUnknown0007D8,b
@@ -251,12 +255,14 @@
 
         ; 88/B10B
 
-      rsUnknown88B10B ; 88/B10B
+      rsOpenMainMapMenu ; 88/B10B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Saves the camera and opens the map menu (procMainMapMenu).
 
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
@@ -277,12 +283,14 @@
 
         ; 88/B133
 
-      rsUnknown88B133 ; 88/B133
+      rsMapPressBWithUnitSelected ; 88/B133
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; B with a unit selected: puts it down and sends the cursor back to it (by wMapActionMode, with canto the cursor goes to it in state 7); in warp mode goes back to the unit menu.
 
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable,x
@@ -350,12 +358,14 @@
 
         ; 88/B1C2
 
-      rsUnknown88B1C2 ; 88/B1C2
+      rsMapPressX ; 88/B1C2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X: on a unit, opens its status screen; elsewhere enters the home castle if the cursor is on it.
 
         lda wUnknown000770,b
         bne _B1D0
@@ -363,7 +373,7 @@
         beq _B1D1
 
         _B1CC
-        jsl rlUnknown88B249
+        jsl rlEnterHomeCastleAtCursor
 
         _B1D0
         rts
@@ -395,12 +405,14 @@
 
         ; 88/B20C
 
-      rsUnknown88B20C ; 88/B20C
+      rsMapPressStart ; 88/B20C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Start alone, with no unit selected: opens the minimap, or closes it.
 
         lda wJoy1Input
         cmp #$1000
@@ -437,12 +449,14 @@
 
         ; 88/B249
 
-      rlUnknown88B249 ; 88/B249
+      rlEnterHomeCastleAtCursor ; 88/B249
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear and the castle screen opens if the cursor is on the home castle of the player army; carry set otherwise.
 
         lda wCursorXOffset,b
         clc
@@ -479,7 +493,7 @@
         sta wCastleSavedUnitRAMPointer,b
         lda #$0009
         jsl rlPlaySoundEffect
-        jml rlUnknown88B316
+        jml rlOpenCastleCourtyardFromMap
 
         clc
         rtl
@@ -493,12 +507,14 @@
 
         ; 88/B2A5
 
-      rlUnknown88B2A5 ; 88/B2A5
+      rlEnterLocationOfUnit ; 88/B2A5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = deployment: puts the cursor on the unit and opens the castle courtyard if it stands on the home castle, or the town screen at another location.
 
         lda aDeploymentTable._XTilePosition,x
         asl a
@@ -543,14 +559,14 @@
         jsl rlGetFactionSlotLocationID
         cmp wEnteredCastleLocationID,b
         bne _B305
-        jml rlUnknown88B316
+        jml rlOpenCastleCourtyardFromMap
 
         clc
         rtl
 
 
         _B305
-        jml rlUnknown88B339
+        jml rlOpenCastleTownFromMap
 
         clc
         rtl
@@ -562,20 +578,22 @@
 
         .databank 0
 
-      rlUnknown88B30D ; 88/B30D
+      rlEnterCastleAtLocation ; 88/B30D
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = location: opens the castle courtyard for it.
+
         jsl rlGetLocationEventDataEntry
-        jml rlUnknown88B316
+        jml rlOpenCastleCourtyardFromMap
         rtl
 
         .databank 0
 
-      rlUnknown88B316 ; 88/B316
+      rlOpenCastleCourtyardFromMap ; 88/B316
 
         .al
         .xl
@@ -599,7 +617,7 @@
 
         ; 88/B339
 
-      rlUnknown88B339 ; 88/B339
+      rlOpenCastleTownFromMap ; 88/B339
 
         .al
         .xl
@@ -634,12 +652,14 @@
       .al
       .xl
 
-      rsUnknown88B51A ; 88/B51A
+      rsCursorToNextReadyUnit ; 88/B51A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; R: sends the cursor to the next unit of the active army that can still act (alive, not grayed or asleep), going through the deployment table up or down (wUnknown000790); the home castle counts as a stop while units inside it can act.
 
         lda wCursorXOffset,b
         clc
@@ -658,7 +678,7 @@
         lsr a
         sta wTempVariable2,b
         ldy #$0090
-        jsr rsUnknown88B5CA
+        jsr rsCheckCycleStartsAtCastle
         bcs _B561
         lda wUnknown000790,b
         bne _B54F
@@ -679,7 +699,7 @@
         ldx #$0000
 
         _B55C
-        jsr rsUnknown88B5DD
+        jsr rsCheckCycleStopsAtCastle
         bcs _B5C9
 
         _B561
@@ -741,7 +761,7 @@
 
         ; 88/B5CA
 
-      rsUnknown88B5CA ; 88/B5CA
+      rsCheckCycleStartsAtCastle ; 88/B5CA
 
         .al
         .xl
@@ -766,7 +786,7 @@
 
         ; 88/B5DD
 
-      rsUnknown88B5DD ; 88/B5DD
+      rsCheckCycleStopsAtCastle ; 88/B5DD
 
         .al
         .xl
@@ -788,7 +808,7 @@
         jsl rlGetFactionSlotLocationID
         jsl rlGetLocationEventDataEntry
         jsl rlBuildCastleUnitList
-        jsr rsUnknown88B627
+        jsr rsCheckCastleUnitsCanAct
         bcc _B625
         jsl rlGetEventLocationEntryEffectiveXCoordinate
         sec
@@ -814,12 +834,14 @@
 
         ; 88/B627
 
-      rsUnknown88B627 ; 88/B627
+      rsCheckCastleUnitsCanAct ; 88/B627
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if a unit in aCastleUnitDeploymentOffsets is neither grayed nor asleep.
 
         phx
         ldx #$002E

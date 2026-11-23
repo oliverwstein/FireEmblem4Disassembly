@@ -1270,7 +1270,7 @@
           stz wGameStateRoutine1,b
 
           lda #0
-          jsl rlUnknown88B30D
+          jsl rlEnterCastleAtLocation
           bra _End
         
         +
@@ -1593,7 +1593,7 @@
         phx
         stz wGameStateRoutine1,b
         lda #$0000
-        jsl rlUnknown88B30D
+        jsl rlEnterCastleAtLocation
         plx
         bra _B086
 

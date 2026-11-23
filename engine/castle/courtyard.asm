@@ -99,7 +99,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$EE52
+        ldy #<>aMapCursorSprite
         lda wCastleGridCursorXPixel,b
         sec
         sbc #$0008
@@ -128,7 +128,7 @@
         lda wVBlankEnabledFramecount
         and #$0018
         beq _82C3
-        ldy #$EE3C
+        ldy #<>aMapCursorSpriteWide
 
         _82C3
         jsl rlPushToOAMBuffer
@@ -180,7 +180,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$EE52
+        ldy #<>aMapCursorSprite
         lda wCastleGridCursorXPixel,b
         sec
         sbc #$0008
@@ -193,7 +193,7 @@
         sta wR5
         lda #$0004
         sta wR4
-        ldy #$EE68
+        ldy #<>aMapCursorSpriteWideTwoPalettes
         jsl rlPushToOAMBuffer
         rtl
 

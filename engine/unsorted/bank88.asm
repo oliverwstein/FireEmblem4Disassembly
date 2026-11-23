@@ -3438,7 +3438,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$EE94
+        ldy #<>aMinimapViewBoxSprite
         lda wMapScrollXPixels,b
         lsr a
         lsr a
@@ -3460,7 +3460,7 @@
         lda wVBlankEnabledFramecount
         and #$0018
         beq _9838
-        ldy #$EE7E
+        ldy #<>aMinimapViewBoxSpriteWide
 
         _9838
         jsl rlPushToOAMBuffer
@@ -4748,7 +4748,7 @@
         plb
         rep #$20
 
-        ldy #$EE52
+        ldy #<>aMapCursorSprite
         lda wCursorXOffset,b
         sta $00
         lda wCursorYOffset,b
@@ -4769,7 +4769,7 @@
         and #$0018
         beq +
 
-          ldy #$EE3C
+          ldy #<>aMapCursorSpriteWide
 
         +
         jsl rlPushToOAMBuffer
@@ -5003,7 +5003,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$EE52
+        ldy #<>aMapCursorSprite
         lda wCursorXOffset,b
         sta wR0
         lda wCursorYOffset,b
@@ -5063,29 +5063,29 @@
         lsr a
         lsr a
         tax
-        lda aUnknown88A4BC,x
+        lda aRangeOverlayPulseColors,x
         clc
         adc #$2E29
         sta $0112,b
-        lda aUnknown88A4BC,x
+        lda aRangeOverlayPulseColors,x
         clc
         adc #$00C1
         sta $0114,b
-        lda aUnknown88A4DC,x
+        lda aRangeOverlayPulseColors2,x
         clc
         adc #$1E18
         sta $011A,b
-        lda aUnknown88A4DC,x
+        lda aRangeOverlayPulseColors2,x
         clc
         adc #$0018
         sta $011C,b
         lda aAIAction.wMapPointer
         bne _A4A3
-        lda aUnknown88A4DC,x
+        lda aRangeOverlayPulseColors2,x
         clc
         adc #$1318
         sta $010A,b
-        lda aUnknown88A4DC,x
+        lda aRangeOverlayPulseColors2,x
         clc
         adc #$0210
         sta $010C,b
@@ -5093,11 +5093,11 @@
 
 
         _A4A3
-        lda aUnknown88A4DC,x
+        lda aRangeOverlayPulseColors2,x
         clc
         adc #$1940
         sta $010A,b
-        lda aUnknown88A4DC,x
+        lda aRangeOverlayPulseColors2,x
         clc
         adc #$1020
         sta $010C,b
@@ -5119,7 +5119,7 @@
       .al
       .xl
 
-      aUnknown88A4BC ; 88/A4BC
+      aRangeOverlayPulseColors ; 88/A4BC
 
         ; Read by rlAnimateRangeOverlayPalette.
 
@@ -5128,7 +5128,7 @@
 
         ; 88/A4DC
 
-      aUnknown88A4DC ; 88/A4DC
+      aRangeOverlayPulseColors2 ; 88/A4DC
 
         ; Read by rlAnimateRangeOverlayPalette.
 
@@ -5372,13 +5372,15 @@
       .al
       .xl
 
-      rsUnknown88A698 ; 88/A698
+      rsSetCursorScrollSpeedUnused ; 88/A698
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. Sets wMapScrollSpeed to 8 with Y held, 4 while a direction is held after the first step, else 1.
 
         lda wJoy1Input
         bit #$4000
@@ -5457,7 +5459,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$A74D
+        ldy #<>aHandCursorSprite
         lda #$0000
         sta wR4
         lda #$2000
@@ -5485,8 +5487,13 @@
 
         ; Read by rlDrawHandCursor.
 
-        .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
-        .byte $01, $00, $00, $C2, $00, $02, $30
+        .word $0000, $0000, $0001, $0001, $0000, $0000, $FFFF, $FFFF
+
+      aHandCursorSprite ; 88/A74D
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $002, 3, 0, false, false]]
+
+        .structSpriteArray aHandCursorSprite._Sprites
 
         ; 88/A754
 
@@ -5767,7 +5774,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$EE52
+        ldy #<>aMapCursorSprite
         lda #$0006
         sta wR4
         lda #$2000
@@ -6089,13 +6096,15 @@
       .al
       .xl
 
-      rsUnknown88AB2C ; 88/AB2C
+      rsGetCursorTileUnused ; 88/AB2C
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. wR10/wR11 = the cursor's map tile.
 
         lda wCursorXOffset,b
         clc
@@ -6317,13 +6326,15 @@
       .al
       .xl
 
-      rsUnknown88AC5B ; 88/AC5B
+      rsSelectNextTargetInOrderUnused ; 88/AC5B
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. Steps wMapTargetSearchIndex left or right through aTargetDistanceMap to the next target.
 
         lda wJoy1New
         bit #$0200
@@ -6342,7 +6353,7 @@
         sta wTempVariable2,b
 
         _AC76
-        jsr rsUnknown88ACA6
+        jsr rsGetTargetAtSearchIndexUnused
         bne _ACA2
         lda wMapTargetSearchIndex,b
         clc
@@ -6384,12 +6395,14 @@
       .al
       .xl
 
-      rsUnknown88ACA6 ; 88/ACA6
+      rsGetTargetAtSearchIndexUnused ; 88/ACA6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The deployment offset in aTargetDistanceMap at wMapTargetSearchIndex, or 0 for none.
 
         lda wMapTargetSearchIndex,b
         tax
@@ -9635,7 +9648,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$EE52
+        ldy #<>aMapCursorSprite
         lda wCursorXOffset,b
         sta wR0
         lda wCursorYOffset,b
@@ -10144,7 +10157,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$CC5F
+        ldy #<>aMovingUnitSprite24x24
         jml _C97E
 
 
@@ -10181,7 +10194,7 @@
         clc
         adc wR1
         sta wR1
-        ldy #$CC49
+        ldy #<>aMovingUnitSprite32x32
         plx
 
         _C97E
@@ -11951,7 +11964,7 @@
         stz wR1
         lda @l aMovingMapSpriteTileOffsets,x
         sta wR4
-        ldy #$CC5F
+        ldy #<>aMovingUnitSprite24x24
         rts
 
         .databank 0
@@ -12140,7 +12153,7 @@
         sta wR1
         lda @l aMovingMapSpriteTileOffsets,x
         sta wR4
-        ldy #$CC49
+        ldy #<>aMovingUnitSprite32x32
         rts
 
         .databank 0
@@ -13037,9 +13050,9 @@
       .al
       .xl
 
-      procUnknown88E02B ; 88/E02B
+      procFirstGenerationEnding ; 88/E02B
 
-        .structProcInfo "MS", rlUnknown88E033, rlUnknown88E0DF, aProcUnknown88E02BCode
+        .structProcInfo "MS", rlProcFirstGenerationEndingInit, rlProcFirstGenerationEndingUpload1, aProcFirstGenerationEndingCode
 
     .endsection Unsorted88E02BSection
 
@@ -13049,12 +13062,14 @@
       .al
       .xl
 
-      rlUnknown88E033 ; 88/E033
+      rlProcFirstGenerationEndingInit ; 88/E033
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets up the text screen over the map, pauses the map animations, sets wGameStateRoutine1 to 0 (so world map portraits use rlLoadFirstGenerationEndingPortrait) and starts the HDMA.
 
         ldx #$01DE
 
@@ -13130,9 +13145,9 @@
         jsl rlPauseMapSpriteAnimation
         jsl rlPauseMapTileAnimation
         stz $0AD3,b
-        lda #(`aUnknown88E2DE)<<8
+        lda #(`aFirstGenerationEndingHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown88E2DE
+        lda #<>aFirstGenerationEndingHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rtl
@@ -13141,7 +13156,7 @@
 
         ; 88/E0DF
 
-      rlUnknown88E0DF ; 88/E0DF
+      rlProcFirstGenerationEndingUpload1 ; 88/E0DF
 
         .al
         .xl
@@ -13154,7 +13169,7 @@
           .structDMAToVRAM $7E7B88, $0500, $80, $A800
 
         plx
-        lda #<>rlUnknown88E0F5
+        lda #<>rlProcFirstGenerationEndingUpload2
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -13162,7 +13177,7 @@
 
         ; 88/E0F5
 
-      rlUnknown88E0F5 ; 88/E0F5
+      rlProcFirstGenerationEndingUpload2 ; 88/E0F5
 
         .al
         .xl
@@ -13175,7 +13190,7 @@
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
 
         plx
-        lda #<>rlUnknown88E10B
+        lda #<>rlProcFirstGenerationEndingFadeIn
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -13191,13 +13206,15 @@
       .al
       .xl
 
-      rlUnknown88E10B ; 88/E10B
+      rlProcFirstGenerationEndingFadeIn ; 88/E10B
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fades the palette in, then starts the text dialogueEpilogueMemorial88E9E5.
 
         lda $0AD3,b
         cmp #$0040
@@ -13222,7 +13239,7 @@
 
 
         _E131
-        lda #<>rlUnknown88E154
+        lda #<>rlProcFirstGenerationEndingText
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlResetDialogueEngine
         lda #(`dialogueEpilogueMemorial88E9E5)<<8
@@ -13232,19 +13249,21 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsl rlUnknown88E38A
+        jsl rlSetFirstGenerationEndingTextPosition
         rtl
 
         .databank 0
 
         ; 88/E154
 
-      rlUnknown88E154 ; 88/E154
+      rlProcFirstGenerationEndingText ; 88/E154
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs the text until it ends.
 
         lda aDialogue.wStatus,b
         beq _E172
@@ -13262,7 +13281,7 @@
 
 
         _E172
-        lda #<>rlUnknown88E179
+        lda #<>rlProcFirstGenerationEndingFinish
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -13278,13 +13297,15 @@
       .al
       .xl
 
-      rlUnknown88E179 ; 88/E179
+      rlProcFirstGenerationEndingFinish ; 88/E179
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fades out, ends the proc, restores the map palettes and tilemaps and goes back to the map step.
 
         sep #$20
         lda bBufferINIDISP
@@ -13366,7 +13387,7 @@
       .al
       .xl
 
-      aProcUnknown88E02BCode ; 88/E1FE
+      aProcFirstGenerationEndingCode ; 88/E1FE
 
         PROC_HALT
 
@@ -13380,7 +13401,7 @@
       .al
       .xl
 
-      aUnknown88E2DE .dstruct structHDMADirectEntryInfo, rlUnknown88E2E9, rlUnknown88E2E9, $E33B, $0008BC, PPU_REG_BASE + $2C, $00 ; 88/E2DE
+      aFirstGenerationEndingHDMAInfo .dstruct structHDMADirectEntryInfo, rlFirstGenerationEndingHDMA, rlFirstGenerationEndingHDMA, $E33B, $0008BC, PPU_REG_BASE + $2C, $00 ; 88/E2DE
 
     .endsection Table88E2DESection
 
@@ -13390,7 +13411,7 @@
       .al
       .xl
 
-      rlUnknown88E2E9 ; 88/E2E9
+      rlFirstGenerationEndingHDMA ; 88/E2E9
 
         .al
         .xl
@@ -13439,7 +13460,7 @@
       .al
       .xl
 
-      rlUnknown88E38A ; 88/E38A
+      rlSetFirstGenerationEndingTextPosition ; 88/E38A
 
         .al
         .xl
@@ -13507,13 +13528,15 @@
       .al
       .xl
 
-      rsUnknown88E401 ; 88/E401
+      rsFirstGenerationEndingFindCharacter ; 88/E401
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = character: wSelectedUnitDataRAMPointer (also in A) = the player army's unit for it, or 0.
 
         sta wRoutineVariable1,b
         stz wR10
@@ -13526,13 +13549,15 @@
 
         ; 88/E411
 
-      rlUnknown88E411 ; 88/E411
+      rlASMCFirstGenerationEndingMissingHeader ; 88/E411
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Shows dialogueEpilogueMemorial88EBFD ("those who were with Sigurd to the end ... fate unknown") if any of characters 2-24 is in the player army and not dead.
 
         lda #$0002
 
@@ -13564,7 +13589,7 @@
 
         ; 88/E440
 
-      rlUnknown88E440 ; 88/E440
+      rlASMCFirstGenerationEndingMissingNaoise ; 88/E440
 
         ; Found by tools/sweep.py.
         .al
@@ -13572,8 +13597,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Naoise's line in the "fate unknown" list if Naoise is in the player army and chapter 5 event flag $14 is set.
+
         lda #$0002
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E465
         lda #$0014
         sta wEventEngineParameter1,b
@@ -13593,7 +13620,7 @@
 
         ; 88/E466
 
-      rlUnknown88E466 ; 88/E466
+      rlASMCFirstGenerationEndingMissingAlec ; 88/E466
 
         ; Found by tools/sweep.py.
         .al
@@ -13601,8 +13628,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Alec's line in the "fate unknown" list if Alec is in the player army and chapter 5 event flag $15 is set.
+
         lda #$0003
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E48B
         lda #$0015
         sta wEventEngineParameter1,b
@@ -13622,7 +13651,7 @@
 
         ; 88/E48C
 
-      rlUnknown88E48C ; 88/E48C
+      rlASMCFirstGenerationEndingMissingArden ; 88/E48C
 
         ; Found by tools/sweep.py.
         .al
@@ -13630,8 +13659,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Arden's line in the "fate unknown" list if Arden is in the player army and chapter 5 event flag $16 is set.
+
         lda #$0004
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E4B1
         lda #$0016
         sta wEventEngineParameter1,b
@@ -13651,7 +13682,7 @@
 
         ; 88/E4B2
 
-      rlUnknown88E4B2 ; 88/E4B2
+      rlASMCFirstGenerationEndingMissingLex ; 88/E4B2
 
         ; Found by tools/sweep.py.
         .al
@@ -13659,8 +13690,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Lex's line in the "fate unknown" list if Lex is in the player army and chapter 5 event flag $1E is set.
+
         lda #$000E
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E4D7
         lda #$001E
         sta wEventEngineParameter1,b
@@ -13680,7 +13713,7 @@
 
         ; 88/E4D8
 
-      rlUnknown88E4D8 ; 88/E4D8
+      rlASMCFirstGenerationEndingMissingAzelle ; 88/E4D8
 
         ; Found by tools/sweep.py.
         .al
@@ -13688,8 +13721,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Azelle's line in the "fate unknown" list if Azelle is in the player army and chapter 5 event flag $1A is set.
+
         lda #$000A
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E4FD
         lda #$001A
         sta wEventEngineParameter1,b
@@ -13709,7 +13744,7 @@
 
         ; 88/E4FE
 
-      rlUnknown88E4FE ; 88/E4FE
+      rlASMCFirstGenerationEndingMissingAyra ; 88/E4FE
 
         ; Found by tools/sweep.py.
         .al
@@ -13717,8 +13752,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Ayra's line in the "fate unknown" list if Ayra is in the player army and chapter 5 event flag $21 is set.
+
         lda #$0013
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E523
         lda #$0021
         sta wEventEngineParameter1,b
@@ -13738,7 +13775,7 @@
 
         ; 88/E524
 
-      rlUnknown88E524 ; 88/E524
+      rlASMCFirstGenerationEndingMissingEdain ; 88/E524
 
         ; Found by tools/sweep.py.
         .al
@@ -13746,8 +13783,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Edain's line in the "fate unknown" list if Edain is in the player army and chapter 5 event flag $2A is set.
+
         lda #$0017
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E549
         lda #$002A
         sta wEventEngineParameter1,b
@@ -13767,7 +13806,7 @@
 
         ; 88/E54A
 
-      rlUnknown88E54A ; 88/E54A
+      rlASMCFirstGenerationEndingMissingMidir ; 88/E54A
 
         ; Found by tools/sweep.py.
         .al
@@ -13775,8 +13814,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Midir's line in the "fate unknown" list if Midir is in the player army and chapter 5 event flag $17 is set.
+
         lda #$0007
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E56F
         lda #$0017
         sta wEventEngineParameter1,b
@@ -13796,7 +13837,7 @@
 
         ; 88/E570
 
-      rlUnknown88E570 ; 88/E570
+      rlASMCFirstGenerationEndingMissingJamke ; 88/E570
 
         ; Found by tools/sweep.py.
         .al
@@ -13804,8 +13845,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Jamke's line in the "fate unknown" list if Jamke is in the player army and chapter 5 event flag $1B is set.
+
         lda #$000B
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E595
         lda #$001B
         sta wEventEngineParameter1,b
@@ -13825,7 +13868,7 @@
 
         ; 88/E596
 
-      rlUnknown88E596 ; 88/E596
+      rlASMCFirstGenerationEndingMissingLachesis ; 88/E596
 
         ; Found by tools/sweep.py.
         .al
@@ -13833,8 +13876,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Lachesis's line in the "fate unknown" list if Lachesis is in the player army and chapter 5 event flag $20 is set.
+
         lda #$0012
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E5BB
         lda #$0020
         sta wEventEngineParameter1,b
@@ -13854,7 +13899,7 @@
 
         ; 88/E5BC
 
-      rlUnknown88E5BC ; 88/E5BC
+      rlASMCFirstGenerationEndingMissingBeowulf ; 88/E5BC
 
         ; Found by tools/sweep.py.
         .al
@@ -13862,8 +13907,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Beowulf's line in the "fate unknown" list if Beowulf is in the player army and chapter 5 event flag $1D is set.
+
         lda #$000D
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E5E1
         lda #$001D
         sta wEventEngineParameter1,b
@@ -13883,7 +13930,7 @@
 
         ; 88/E5E2
 
-      rlUnknown88E5E2 ; 88/E5E2
+      rlASMCFirstGenerationEndingMissingChulainn ; 88/E5E2
 
         ; Found by tools/sweep.py.
         .al
@@ -13891,8 +13938,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Chulainn's line in the "fate unknown" list if Chulainn is in the player army and chapter 5 event flag $19 is set.
+
         lda #$0009
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E607
         lda #$0019
         sta wEventEngineParameter1,b
@@ -13912,7 +13961,7 @@
 
         ; 88/E608
 
-      rlUnknown88E608 ; 88/E608
+      rlASMCFirstGenerationEndingMissingDew ; 88/E608
 
         ; Found by tools/sweep.py.
         .al
@@ -13920,8 +13969,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Dew's line in the "fate unknown" list if Dew is in the player army and chapter 5 event flag $1F is set.
+
         lda #$000F
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E62D
         lda #$001F
         sta wEventEngineParameter1,b
@@ -13941,7 +13992,7 @@
 
         ; 88/E62E
 
-      rlUnknown88E62E ; 88/E62E
+      rlASMCFirstGenerationEndingMissingLewyn ; 88/E62E
 
         ; Found by tools/sweep.py.
         .al
@@ -13949,8 +14000,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Lewyn's line in the "fate unknown" list if Lewyn is in the player army and chapter 5 event flag $18 is set.
+
         lda #$0008
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E653
         lda #$0018
         sta wEventEngineParameter1,b
@@ -13970,7 +14023,7 @@
 
         ; 88/E654
 
-      rlUnknown88E654 ; 88/E654
+      rlASMCFirstGenerationEndingMissingErinys ; 88/E654
 
         ; Found by tools/sweep.py.
         .al
@@ -13978,8 +14031,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Erinys's line in the "fate unknown" list if Erinys is in the player army and chapter 5 event flag $25 is set.
+
         lda #$0014
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E679
         lda #$0025
         sta wEventEngineParameter1,b
@@ -13999,7 +14054,7 @@
 
         ; 88/E67A
 
-      rlUnknown88E67A ; 88/E67A
+      rlASMCFirstGenerationEndingMissingSilvia ; 88/E67A
 
         ; Found by tools/sweep.py.
         .al
@@ -14007,8 +14062,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Silvia's line in the "fate unknown" list if Silvia is in the player army and chapter 5 event flag $29 is set.
+
         lda #$0016
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E69F
         lda #$0029
         sta wEventEngineParameter1,b
@@ -14028,7 +14085,7 @@
 
         ; 88/E6A0
 
-      rlUnknown88E6A0 ; 88/E6A0
+      rlASMCFirstGenerationEndingMissingClaud ; 88/E6A0
 
         ; Found by tools/sweep.py.
         .al
@@ -14036,8 +14093,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Claud's line in the "fate unknown" list if Claud is in the player army and chapter 5 event flag $1C is set.
+
         lda #$000C
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E6C5
         lda #$001C
         sta wEventEngineParameter1,b
@@ -14057,7 +14116,7 @@
 
         ; 88/E6C6
 
-      rlUnknown88E6C6 ; 88/E6C6
+      rlASMCFirstGenerationEndingMissingTailtiu ; 88/E6C6
 
         ; Found by tools/sweep.py.
         .al
@@ -14065,8 +14124,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Tailtiu's line in the "fate unknown" list if Tailtiu is in the player army and chapter 5 event flag $2C is set.
+
         lda #$0015
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E6EB
         lda #$002C
         sta wEventEngineParameter1,b
@@ -14086,7 +14147,7 @@
 
         ; 88/E6EC
 
-      rlUnknown88E6EC ; 88/E6EC
+      rlASMCFirstGenerationEndingMissingBrigid ; 88/E6EC
 
         ; Found by tools/sweep.py.
         .al
@@ -14094,8 +14155,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Brigid's line in the "fate unknown" list if Brigid is in the player army and chapter 5 event flag $2B is set.
+
         lda #$0018
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E711
         lda #$002B
         sta wEventEngineParameter1,b
@@ -14115,7 +14178,7 @@
 
         ; 88/E712
 
-      rlUnknown88E712 ; 88/E712
+      rlASMCFirstGenerationEndingFallenNaoise ; 88/E712
 
         ; Found by tools/sweep.py.
         .al
@@ -14123,8 +14186,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Naoise's line in the "fell in battle" list if Naoise is in the player army and chapter 5 event flag $14 is clear.
+
         lda #$0002
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E737
         lda #$0014
         sta wEventEngineParameter1,b
@@ -14144,7 +14209,7 @@
 
         ; 88/E738
 
-      rlUnknown88E738 ; 88/E738
+      rlASMCFirstGenerationEndingFallenAlec ; 88/E738
 
         ; Found by tools/sweep.py.
         .al
@@ -14152,8 +14217,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Alec's line in the "fell in battle" list if Alec is in the player army and chapter 5 event flag $15 is clear.
+
         lda #$0003
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E75D
         lda #$0015
         sta wEventEngineParameter1,b
@@ -14173,7 +14240,7 @@
 
         ; 88/E75E
 
-      rlUnknown88E75E ; 88/E75E
+      rlASMCFirstGenerationEndingFallenArden ; 88/E75E
 
         ; Found by tools/sweep.py.
         .al
@@ -14181,8 +14248,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Arden's line in the "fell in battle" list if Arden is in the player army and chapter 5 event flag $16 is clear.
+
         lda #$0004
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E783
         lda #$0016
         sta wEventEngineParameter1,b
@@ -14202,7 +14271,7 @@
 
         ; 88/E784
 
-      rlUnknown88E784 ; 88/E784
+      rlASMCFirstGenerationEndingFallenLex ; 88/E784
 
         ; Found by tools/sweep.py.
         .al
@@ -14210,8 +14279,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Lex's line in the "fell in battle" list if Lex is in the player army and chapter 5 event flag $1E is clear.
+
         lda #$000E
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E7A9
         lda #$001E
         sta wEventEngineParameter1,b
@@ -14231,7 +14302,7 @@
 
         ; 88/E7AA
 
-      rlUnknown88E7AA ; 88/E7AA
+      rlASMCFirstGenerationEndingFallenAzelle ; 88/E7AA
 
         ; Found by tools/sweep.py.
         .al
@@ -14239,8 +14310,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Azelle's line in the "fell in battle" list if Azelle is in the player army and chapter 5 event flag $1A is clear.
+
         lda #$000A
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E7CF
         lda #$001A
         sta wEventEngineParameter1,b
@@ -14260,7 +14333,7 @@
 
         ; 88/E7D0
 
-      rlUnknown88E7D0 ; 88/E7D0
+      rlASMCFirstGenerationEndingFallenAyra ; 88/E7D0
 
         ; Found by tools/sweep.py.
         .al
@@ -14268,8 +14341,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Ayra's line in the "fell in battle" list if Ayra is in the player army and chapter 5 event flag $21 is clear.
+
         lda #$0013
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E7F5
         lda #$0021
         sta wEventEngineParameter1,b
@@ -14289,7 +14364,7 @@
 
         ; 88/E7F6
 
-      rlUnknown88E7F6 ; 88/E7F6
+      rlASMCFirstGenerationEndingFallenEdain ; 88/E7F6
 
         ; Found by tools/sweep.py.
         .al
@@ -14297,8 +14372,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Edain's line in the "fell in battle" list if Edain is in the player army and chapter 5 event flag $2A is clear.
+
         lda #$0017
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E81B
         lda #$002A
         sta wEventEngineParameter1,b
@@ -14318,7 +14395,7 @@
 
         ; 88/E81C
 
-      rlUnknown88E81C ; 88/E81C
+      rlASMCFirstGenerationEndingFallenMidir ; 88/E81C
 
         ; Found by tools/sweep.py.
         .al
@@ -14326,8 +14403,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Midir's line in the "fell in battle" list if Midir is in the player army and chapter 5 event flag $17 is clear.
+
         lda #$0007
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E841
         lda #$0017
         sta wEventEngineParameter1,b
@@ -14347,7 +14426,7 @@
 
         ; 88/E842
 
-      rlUnknown88E842 ; 88/E842
+      rlASMCFirstGenerationEndingFallenJamke ; 88/E842
 
         ; Found by tools/sweep.py.
         .al
@@ -14355,8 +14434,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Jamke's line in the "fell in battle" list if Jamke is in the player army and chapter 5 event flag $1B is clear.
+
         lda #$000B
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E867
         lda #$001B
         sta wEventEngineParameter1,b
@@ -14376,7 +14457,7 @@
 
         ; 88/E868
 
-      rlUnknown88E868 ; 88/E868
+      rlASMCFirstGenerationEndingFallenLachesis ; 88/E868
 
         ; Found by tools/sweep.py.
         .al
@@ -14384,8 +14465,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Lachesis's line in the "fell in battle" list if Lachesis is in the player army and chapter 5 event flag $20 is clear.
+
         lda #$0012
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E88D
         lda #$0020
         sta wEventEngineParameter1,b
@@ -14405,7 +14488,7 @@
 
         ; 88/E88E
 
-      rlUnknown88E88E ; 88/E88E
+      rlASMCFirstGenerationEndingFallenBeowulf ; 88/E88E
 
         ; Found by tools/sweep.py.
         .al
@@ -14413,8 +14496,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Beowulf's line in the "fell in battle" list if Beowulf is in the player army and chapter 5 event flag $1D is clear.
+
         lda #$000D
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E8B3
         lda #$001D
         sta wEventEngineParameter1,b
@@ -14434,7 +14519,7 @@
 
         ; 88/E8B4
 
-      rlUnknown88E8B4 ; 88/E8B4
+      rlASMCFirstGenerationEndingFallenChulainn ; 88/E8B4
 
         ; Found by tools/sweep.py.
         .al
@@ -14442,8 +14527,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Chulainn's line in the "fell in battle" list if Chulainn is in the player army and chapter 5 event flag $19 is clear.
+
         lda #$0009
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E8D9
         lda #$0019
         sta wEventEngineParameter1,b
@@ -14463,7 +14550,7 @@
 
         ; 88/E8DA
 
-      rlUnknown88E8DA ; 88/E8DA
+      rlASMCFirstGenerationEndingFallenDew ; 88/E8DA
 
         ; Found by tools/sweep.py.
         .al
@@ -14471,8 +14558,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Dew's line in the "fell in battle" list if Dew is in the player army and chapter 5 event flag $1F is clear.
+
         lda #$000F
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E8FF
         lda #$001F
         sta wEventEngineParameter1,b
@@ -14492,7 +14581,7 @@
 
         ; 88/E900
 
-      rlUnknown88E900 ; 88/E900
+      rlASMCFirstGenerationEndingFallenLewyn ; 88/E900
 
         ; Found by tools/sweep.py.
         .al
@@ -14500,8 +14589,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Lewyn's line in the "fell in battle" list if Lewyn is in the player army and chapter 5 event flag $18 is clear.
+
         lda #$0008
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E925
         lda #$0018
         sta wEventEngineParameter1,b
@@ -14521,7 +14612,7 @@
 
         ; 88/E926
 
-      rlUnknown88E926 ; 88/E926
+      rlASMCFirstGenerationEndingFallenErinys ; 88/E926
 
         ; Found by tools/sweep.py.
         .al
@@ -14529,8 +14620,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Erinys's line in the "fell in battle" list if Erinys is in the player army and chapter 5 event flag $25 is clear.
+
         lda #$0014
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E94B
         lda #$0025
         sta wEventEngineParameter1,b
@@ -14550,7 +14643,7 @@
 
         ; 88/E94C
 
-      rlUnknown88E94C ; 88/E94C
+      rlASMCFirstGenerationEndingFallenSilvia ; 88/E94C
 
         ; Found by tools/sweep.py.
         .al
@@ -14558,8 +14651,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Silvia's line in the "fell in battle" list if Silvia is in the player army and chapter 5 event flag $29 is clear.
+
         lda #$0016
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E971
         lda #$0029
         sta wEventEngineParameter1,b
@@ -14579,7 +14674,7 @@
 
         ; 88/E972
 
-      rlUnknown88E972 ; 88/E972
+      rlASMCFirstGenerationEndingFallenClaud ; 88/E972
 
         ; Found by tools/sweep.py.
         .al
@@ -14587,8 +14682,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Claud's line in the "fell in battle" list if Claud is in the player army and chapter 5 event flag $1C is clear.
+
         lda #$000C
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E997
         lda #$001C
         sta wEventEngineParameter1,b
@@ -14608,7 +14705,7 @@
 
         ; 88/E998
 
-      rlUnknown88E998 ; 88/E998
+      rlASMCFirstGenerationEndingFallenTailtiu ; 88/E998
 
         ; Found by tools/sweep.py.
         .al
@@ -14616,8 +14713,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Tailtiu's line in the "fell in battle" list if Tailtiu is in the player army and chapter 5 event flag $2C is clear.
+
         lda #$0015
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E9BD
         lda #$002C
         sta wEventEngineParameter1,b
@@ -14637,7 +14736,7 @@
 
         ; 88/E9BE
 
-      rlUnknown88E9BE ; 88/E9BE
+      rlASMCFirstGenerationEndingFallenBrigid ; 88/E9BE
 
         ; Found by tools/sweep.py.
         .al
@@ -14645,8 +14744,10 @@
         .autsiz
         .databank ?
 
+        ; Shows Brigid's line in the "fell in battle" list if Brigid is in the player army and chapter 5 event flag $2B is clear.
+
         lda #$0018
-        jsr rsUnknown88E401
+        jsr rsFirstGenerationEndingFindCharacter
         beq _E9E3
         lda #$002B
         sta wEventEngineParameter1,b
@@ -14698,35 +14799,35 @@
       dialogueEpilogueMemorial88EE03 .include "../../text/dialogue/Epilogue/Memorial88EE03.dialogue.txt" ; 88/EE03
       dialogueEpilogueMemorial88EE1F .include "../../text/dialogue/Epilogue/Memorial88EE1F.dialogue.txt" ; 88/EE1F
 
-      aUnknown88EE3C ; 88/EE3C
+      aMapCursorSpriteWide ; 88/EE3C
         .word 4 ; sprite count
         .structSpriteEntry (  -3,   -3), $00, SpriteSmall, $000, 3, 0, false, false
         .structSpriteEntry (  11,   -3), $00, SpriteSmall, $001, 3, 0, false, false
         .structSpriteEntry (  -3,   11), $00, SpriteSmall, $010, 3, 0, false, false
         .structSpriteEntry (  11,   11), $00, SpriteSmall, $011, 3, 0, false, false
 
-      aUnknown88EE52 ; 88/EE52
+      aMapCursorSprite ; 88/EE52
         .word 4 ; sprite count
         .structSpriteEntry (  -2,   -2), $00, SpriteSmall, $000, 3, 0, false, false
         .structSpriteEntry (  10,   -2), $00, SpriteSmall, $001, 3, 0, false, false
         .structSpriteEntry (  -2,   10), $00, SpriteSmall, $010, 3, 0, false, false
         .structSpriteEntry (  10,   10), $00, SpriteSmall, $011, 3, 0, false, false
 
-      aUnknown88EE68 ; 88/EE68
+      aMapCursorSpriteWideTwoPalettes ; 88/EE68
         .word 4 ; sprite count
         .structSpriteEntry (  -3,   -3), $00, SpriteSmall, $000, 3, 0, false, false
         .structSpriteEntry (  11,   -3), $00, SpriteSmall, $001, 3, 0, false, false
         .structSpriteEntry (  -3,   11), $00, SpriteSmall, $010, 2, 0, false, false
         .structSpriteEntry (  11,   11), $00, SpriteSmall, $011, 2, 0, false, false
 
-      aUnknown88EE7E ; 88/EE7E
+      aMinimapViewBoxSpriteWide ; 88/EE7E
         .word 4 ; sprite count
         .structSpriteEntry (  -3,   -3), $00, SpriteSmall, $000, 3, 0, false, false
         .structSpriteEntry (  27,   -3), $00, SpriteSmall, $001, 3, 0, false, false
         .structSpriteEntry (  -3,   23), $00, SpriteSmall, $010, 3, 0, false, false
         .structSpriteEntry (  27,   23), $00, SpriteSmall, $011, 3, 0, false, false
 
-      aUnknown88EE94 ; 88/EE94
+      aMinimapViewBoxSprite ; 88/EE94
         .word 4 ; sprite count
         .structSpriteEntry (  -2,   -2), $00, SpriteSmall, $000, 3, 0, false, false
         .structSpriteEntry (  26,   -2), $00, SpriteSmall, $001, 3, 0, false, false
@@ -14746,12 +14847,14 @@
       .al
       .xl
 
-      rlUnknown88EEB1 ; 88/EEB1
+      rlSetDemoIndexFromRanking ; 88/EEB1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets the attract demo index ($1B49, and $1B4B where it restarts) from the kept ranking: 2 x (7 - ranking) - 1, with ranking 6 when none is kept.
 
         phx
         jsl rlGetKeptRanking
@@ -14779,12 +14882,14 @@
 
         .databank 0
 
-      rlUnknown88EED9 ; 88/EED9
+      rlRunDemoBattleSetup ; 88/EED9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 0 of the demo index and runs its entry of aDemoBattleSetups, then steps the index down (back to $1B4B below 0). Only odd entries are reached from here.
 
         lda $1B49,b
         ora #$0001
@@ -14795,9 +14900,9 @@
         clc
         adc $1B49,b
         tax
-        lda @l aUnknown88EF0D,x
+        lda @l aDemoBattleSetups,x
         sta lR18
-        lda @l aUnknown88EF0D+1,x
+        lda @l aDemoBattleSetups+1,x
         sta lR18+1
         phk
         pea #<>(+)-1
@@ -14822,21 +14927,23 @@
       .al
       .xl
 
-      aUnknown88EF0D ; 88/EF0D
+      aDemoBattleSetups ; 88/EF0D
 
         ; 12 long pointers to routines.
 
-        .long rlUnknown9EEED3, rlUnknown9EEDB5, rlUnknown88F47C
-        .long rlUnknown88EF31, rlUnknown88F5B3, rlUnknown88F01D
-        .long rlUnknown88F6D1, rlUnknown88F13B, rlUnknown88F7EF
-        .long rlUnknown88F259, rlUnknown88F8F4, rlUnknown88F35E
+        .long rlUnknown9EEED3, rlUnknown9EEDB5, rlSetupDemoBattle02
+        .long rlSetupDemoBattle03, rlSetupDemoBattle04, rlSetupDemoBattle05
+        .long rlSetupDemoBattle06, rlSetupDemoBattle07, rlSetupDemoBattle08
+        .long rlSetupDemoBattle09, rlSetupDemoBattle10, rlSetupDemoBattle11
 
-      rlUnknown88EF31 ; 88/EF31
+      rlSetupDemoBattle03 ; 88/EF31
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 3 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -14919,13 +15026,15 @@
 
         .databank 0
 
-      rlUnknown88F01D ; 88/F01D
+      rlSetupDemoBattle05 ; 88/F01D
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 5 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -15024,13 +15133,15 @@
 
         ; 88/F13B
 
-      rlUnknown88F13B ; 88/F13B
+      rlSetupDemoBattle07 ; 88/F13B
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 7 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -15129,13 +15240,15 @@
 
         ; 88/F259
 
-      rlUnknown88F259 ; 88/F259
+      rlSetupDemoBattle09 ; 88/F259
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 9 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -15227,13 +15340,15 @@
 
         ; 88/F35E
 
-      rlUnknown88F35E ; 88/F35E
+      rlSetupDemoBattle11 ; 88/F35E
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 11 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -15332,13 +15447,15 @@
 
         ; 88/F47C
 
-      rlUnknown88F47C ; 88/F47C
+      rlSetupDemoBattle02 ; 88/F47C
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 2 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -15444,13 +15561,15 @@
 
         ; 88/F5B3
 
-      rlUnknown88F5B3 ; 88/F5B3
+      rlSetupDemoBattle04 ; 88/F5B3
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 4 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -15549,13 +15668,15 @@
 
         ; 88/F6D1
 
-      rlUnknown88F6D1 ; 88/F6D1
+      rlSetupDemoBattle06 ; 88/F6D1
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 6 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -15654,13 +15775,15 @@
 
         ; 88/F7EF
 
-      rlUnknown88F7EF ; 88/F7EF
+      rlSetupDemoBattle08 ; 88/F7EF
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 8 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb
@@ -15752,13 +15875,15 @@
 
         ; 88/F8F4
 
-      rlUnknown88F8F4 ; 88/F8F4
+      rlSetupDemoBattle10 ; 88/F8F4
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 10 of aDemoBattleSetups: fills the action structs and battle rounds for a scripted attract demo battle.
 
         phx
         phb

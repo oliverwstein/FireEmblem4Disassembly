@@ -1310,7 +1310,7 @@
 
         _CC85
         phx
-        jsl rlUnknown88B2A5
+        jsl rlEnterLocationOfUnit
         plx
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b

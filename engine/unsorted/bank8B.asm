@@ -107,7 +107,7 @@
         plb
         .databank $88
         rep #$20
-        ldy #$EE52
+        ldy #<>aMapCursorSprite
         lda wCastleCursorX,b
         sta wR0
         lda wCastleCursorY,b

@@ -109,7 +109,7 @@
         lda wGameStateRoutine1,b
         bne +
 
-          jml rlUnknown88E377
+          jml rlFadeOutFirstGenerationEndingPortrait
 
         +
         txa
@@ -263,7 +263,7 @@
         cpy #0
         bne +
 
-          jml rlUnknown88E33D
+          jml rlLoadFirstGenerationEndingPortrait
 
         +
         phx
@@ -806,9 +806,9 @@
       .al
       .xl
 
-      procUnknown88E200 ; 88/E200
+      procFirstGenerationEndingPortraitFadeIn ; 88/E200
 
-        .structProcInfo "MN", rlProcUnknown88E200Init, rlProcUnknown88E200Cycle, aProcUnknown88E200Code
+        .structProcInfo "MN", rlProcFirstGenerationEndingPortraitFadeInInit, rlProcFirstGenerationEndingPortraitFadeInCycle, aProcFirstGenerationEndingPortraitFadeInCode
 
     .endsection ProcScript88E200Section
 
@@ -818,7 +818,7 @@
       .al
       .xl
 
-      rlProcUnknown88E200Init ; 88/E208
+      rlProcFirstGenerationEndingPortraitFadeInInit ; 88/E208
 
         .al
         .xl
@@ -855,7 +855,7 @@
 
         ; 88/E23B
 
-      rlProcUnknown88E200Cycle ; 88/E23B
+      rlProcFirstGenerationEndingPortraitFadeInCycle ; 88/E23B
 
         .al
         .xl
@@ -900,16 +900,16 @@
       .al
       .xl
 
-      aProcUnknown88E200Code ; 88/E268
+      aProcFirstGenerationEndingPortraitFadeInCode ; 88/E268
 
         PROC_HALT
 
 
         ; 88/E26A
 
-      procUnknown88E26A ; 88/E26A
+      procFirstGenerationEndingPortraitFadeOut ; 88/E26A
 
-        .structProcInfo "FF", rlProcUnknown88E26AInit, rlProcUnknown88E26ACycle, aProcUnknown88E26ACode
+        .structProcInfo "FF", rlProcFirstGenerationEndingPortraitFadeOutInit, rlProcFirstGenerationEndingPortraitFadeOutCycle, aProcFirstGenerationEndingPortraitFadeOutCode
 
     .endsection ProcScript88E268Section
 
@@ -919,7 +919,7 @@
       .al
       .xl
 
-      rlProcUnknown88E26AInit ; 88/E272
+      rlProcFirstGenerationEndingPortraitFadeOutInit ; 88/E272
 
         .al
         .xl
@@ -944,7 +944,7 @@
 
         ; 88/E28D
 
-      rlProcUnknown88E26ACycle ; 88/E28D
+      rlProcFirstGenerationEndingPortraitFadeOutCycle ; 88/E28D
 
         .al
         .xl
@@ -1002,7 +1002,7 @@
       .al
       .xl
 
-      aProcUnknown88E26ACode ; 88/E2DC
+      aProcFirstGenerationEndingPortraitFadeOutCode ; 88/E2DC
 
         PROC_HALT
 
@@ -1017,12 +1017,14 @@
       .al
       .xl
 
-      rlUnknown88E33D ; 88/E33D
+      rlLoadFirstGenerationEndingPortrait ; 88/E33D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; rlLoadWorldMapPortraitIntoSlot while wGameStateRoutine1 is 0: decompresses the portrait, copies its palette and graphics and fades it in.
 
         php
         phx
@@ -1044,9 +1046,9 @@
         lda #$0800
         sta wR0
         jsl rlDMAByPointer
-        lda #(`procUnknown88E200)<<8
+        lda #(`procFirstGenerationEndingPortraitFadeIn)<<8
         sta lR44+1
-        lda #<>procUnknown88E200
+        lda #<>procFirstGenerationEndingPortraitFadeIn
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -1057,18 +1059,20 @@
 
         ; 88/E377
 
-      rlUnknown88E377 ; 88/E377
+      rlFadeOutFirstGenerationEndingPortrait ; 88/E377
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; rlFadeOutWorldMapPortraitSlot while wGameStateRoutine1 is 0.
+
         php
         phx
-        lda #(`procUnknown88E26A)<<8
+        lda #(`procFirstGenerationEndingPortraitFadeOut)<<8
         sta lR44+1
-        lda #<>procUnknown88E26A
+        lda #<>procFirstGenerationEndingPortraitFadeOut
         sta lR44
         jsl rlProcEngineCreateProc
         plx

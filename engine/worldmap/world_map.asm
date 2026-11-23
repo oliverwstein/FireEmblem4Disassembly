@@ -317,7 +317,7 @@
         sta wBufferBG2VOFS
         stz wCastleSubMenuStep,b
         stz wMapScrollDirectionIdentifier,b
-        jsl rlUnknown8883C8
+        jsl rlDrawVisibleMapToVRAM
         lda #(`aUnknown8B911F)<<8
         sta lR44+1
         lda #<>aUnknown8B911F

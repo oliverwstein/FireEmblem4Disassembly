@@ -4949,7 +4949,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown888082
+        jsl rlSetUpChapterMapDisplay
         rts
 
         .databank 0
@@ -4960,7 +4960,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88821A
+        jsl rlSetUpChapterMapDisplayAllFrames
         rts
 
         .databank 0
@@ -4974,7 +4974,7 @@
         jsl rlLoadChapterMapLayout
         jsl rlUpdateAllLocationEvents
         jsl rlUnknown86C629
-        jsl rlUnknown888082
+        jsl rlSetUpChapterMapDisplay
         rts
 
         .databank 0
@@ -5769,7 +5769,7 @@
 
           _8CF3
           phx
-          jsl rlUnknown888082
+          jsl rlSetUpChapterMapDisplay
           plx
           lda #2
           sta aProcSystem.aBody0,b,x
@@ -6216,7 +6216,7 @@
 
           _8F11
           phx
-          jsl rlUnknown8883C7
+          jsl rlMapEmptyRoutine
           plx
           lda #2
           sta aProcSystem.aBody0,b,x
@@ -7285,12 +7285,14 @@
       .al
       .xl
 
-      rlUnknown888082 ; 88/8082
+      rlSetUpChapterMapDisplay ; 88/8082
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = wUnknown00075A and wMapTileIDMask. Loads the map's graphics, palettes and window settings, restores the camera (rlRestoreMapCamera), clears the cursor and moving unit state, draws the visible map, uploads the standing map sprites, handles the return flags and restarts the animations.
 
         lda #$0001
         sta wUnknown00075A,b
@@ -7393,9 +7395,9 @@
         stz wMapActionActiveFlag,b
         stz wMapScrollSpeed,b
         stz wMapScrollDirectionIdentifier,b
-        jsl rlUnknown8883C8
+        jsl rlDrawVisibleMapToVRAM
         jsl rlUploadAllStandingMapSprites
-        jsr rsUnknown8881B8
+        jsr rsHandleMapReturnFlags
         jsl rlResumeMapSpriteAnimation
         jsl rlResumeMapTileAnimation
         jsl rlUploadMapTileAnimations
@@ -7413,12 +7415,14 @@
       .al
       .xl
 
-      rsUnknown8881B8 ; 88/81B8
+      rsHandleMapReturnFlags ; 88/81B8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; With MAP_RETURN_CENTER_ON_UNIT set, sends the cursor to the active unit and clears the flag.
 
         lda wMapOverlayFlags,b
         bit #$0001
@@ -7453,12 +7457,14 @@
       .al
       .xl
 
-      rlUnknown88821A ; 88/821A
+      rlSetUpChapterMapDisplayAllFrames ; 88/821A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Like rlSetUpChapterMapDisplay (with wUnknown00075A = 1 and the mask $03FF), but queues and uploads all 16 standing map sprite steps at once.
 
         lda #$0001
         sta wUnknown00075A,b
@@ -7556,7 +7562,7 @@
         stz wMapActionActiveFlag,b
         stz wMapScrollSpeed,b
         stz wMapScrollDirectionIdentifier,b
-        jsl rlUnknown8883C8
+        jsl rlDrawVisibleMapToVRAM
         lda #$0000
         jsl rlQueueStandingMapSpriteFrames
         jsl rlUploadMapAnimations
@@ -7605,7 +7611,7 @@
         lda #$000F
         jsl rlQueueStandingMapSpriteFrames
         jsl rlUploadMapAnimations
-        jsr rsUnknown8881B8
+        jsr rsHandleMapReturnFlags
         jsl rlResumeMapSpriteAnimation
         jsl rlResumeMapTileAnimation
         jsl rlUploadMapTileAnimations
@@ -7627,12 +7633,14 @@
       .al
       .xl
 
-      rlUnknown8883C7 ; 88/83C7
+      rlMapEmptyRoutine ; 88/83C7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Only returns.
 
         rtl
 
@@ -7640,12 +7648,14 @@
 
         ; 88/83C8
 
-      rlUnknown8883C8 ; 88/83C8
+      rlDrawVisibleMapToVRAM ; 88/83C8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws every visible map row straight to VRAM, bottom to top, uploading each as it goes.
 
         lda #$0001
         sta wMapEnableXScrollFlag,b

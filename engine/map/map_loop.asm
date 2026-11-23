@@ -120,7 +120,7 @@
         _AF4C
         jsl rlUploadAllStandingMapSprites
         jsl rlUpdateAllLocationEvents
-        jsl rlUnknown888082
+        jsl rlSetUpChapterMapDisplay
         jsl rlLoadWindowGraphics
         jsr rsUnknown80B065
         jsr rsUnknown80B105
@@ -134,7 +134,7 @@
         beq _AF89
         stz wGameStateRoutine1,b
         lda #$0000
-        jsl rlUnknown88B30D
+        jsl rlEnterCastleAtLocation
         lda #$0004
         tsb wMapSystemFlags,b
 

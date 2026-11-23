@@ -40,7 +40,7 @@
 
       aPortraitAndMapUIOAMPalettes ; 8C/951E
 
-        ; Read by rlUnknown888082, rlUnknown88821A, rlUnknown9EF76F, rsUnitWindowCopyGraphics, rsReviveScreenLoadGraphics.
+        ; Read by rlSetUpChapterMapDisplay, rlSetUpChapterMapDisplayAllFrames, rlUnknown9EF76F, rsUnitWindowCopyGraphics, rsReviveScreenLoadGraphics.
 
         .word $0000, $3800, $7FFF, $0000, $0000, $4EB5, $2129, $7F56
         .word $7D28, $2862, $19DA, $0CCF, $1484, $4AFB, $2590, $1041
@@ -123,7 +123,7 @@
 
       aMapAndCastleSpriteOAMPalettes ; 8C/9D00
 
-        ; Read by rlSetupCastleCourtyardDisplay, rlSetupCastleTownDisplay, rlUnknown888082, rlLoadMapSpriteOAMPalettes, rlUnknown88821A, rsCastleLoadCourtyardScreen.
+        ; Read by rlSetupCastleCourtyardDisplay, rlSetupCastleTownDisplay, rlSetUpChapterMapDisplay, rlLoadMapSpriteOAMPalettes, rlSetUpChapterMapDisplayAllFrames, rsCastleLoadCourtyardScreen.
 
         .word $0842, $1463, $239D, $22BC, $0931, $7FFF, $634D, $0599
         .word $3546, $4A2C, $6312, $7398, $7C1F, $53BE, $023F, $7F7F

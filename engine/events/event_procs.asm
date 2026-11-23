@@ -836,11 +836,11 @@
         .autsiz
         .databank ?
 
-        ; Poll rlProcEngineFindProc for procUnknown88E02B and free event proc when gone
+        ; Poll rlProcEngineFindProc for procFirstGenerationEnding and free event proc when gone
 
-        lda #(`procUnknown88E02B)<<8
+        lda #(`procFirstGenerationEnding)<<8
         sta lR44+1
-        lda #<>procUnknown88E02B
+        lda #<>procFirstGenerationEnding
         sta lR44
         jsl rlProcEngineFindProc
         bcs _8BE7
@@ -976,11 +976,11 @@
         .autsiz
         .databank ?
 
-        ; Creates procUnknown88E02B and an event proc that waits until it ends. Only the chapter 5 ending event runs it, right after rlASMCArvisAttacksSigurd.
+        ; Creates procFirstGenerationEnding and an event proc that waits until it ends. Only the chapter 5 ending event runs it, right after rlASMCArvisAttacksSigurd.
 
-        lda #(`procUnknown88E02B)<<8
+        lda #(`procFirstGenerationEnding)<<8
         sta lR44+1
-        lda #<>procUnknown88E02B
+        lda #<>procFirstGenerationEnding
         sta lR44
         jsl rlProcEngineCreateProc
         lda #(`procEventWaitProcUnknown88E02B)<<8

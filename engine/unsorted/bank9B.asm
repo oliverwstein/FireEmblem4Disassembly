@@ -4534,7 +4534,7 @@
         lda #$10
         sta bBufferBG1SC
         rep #$20
-        jsl rlUnknown88EEB1
+        jsl rlSetDemoIndexFromRanking
         jsl rlGetHighestCompletionCount
         cmp #$0010
         bcc _FBE7
