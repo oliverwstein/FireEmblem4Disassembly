@@ -481,14 +481,14 @@
       .al
       .xl
 
-      rlProcEvent5DFadeOutInit ; 82/886F
+      rlProcDemoSkipFadeOutInit ; 82/886F
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Mark procEvent5DFadeOut non-blocking ($0200) in wEventProcBanks
+        ; Mark procDemoSkipFadeOut non-blocking ($0200) in wEventProcBanks
 
         lda #$0200
         sta wEventProcBanks,b,x
@@ -498,7 +498,7 @@
 
         ; 82/8876
 
-      rlProcEvent5DFadeOutCycle1 ; 82/8876
+      rlProcDemoSkipFadeOutCycle1 ; 82/8876
 
         .al
         .xl
@@ -517,7 +517,7 @@
 
         _8888
         stz wGameStateRoutine1,b
-        lda #<>rlProcEvent5DFadeOutCycle2
+        lda #<>rlProcDemoSkipFadeOutCycle2
         sta aProcSystem.aHeaderOnCycle,b,x
         lda bSoundFlags,b
         pha
@@ -546,7 +546,7 @@
       .al
       .xl
 
-      rlProcEvent5DFadeOutCycle2 ; 82/88B2
+      rlProcDemoSkipFadeOutCycle2 ; 82/88B2
 
         ; Found by tools/sweep.py.
         .al
@@ -554,7 +554,7 @@
         .autsiz
         .databank ?
 
-        ; Fade bBufferINIDISP down to 0, clear event proc/flags, set main loop $C0BC, disable IRQ
+        ; Fade bBufferINIDISP down to 0, clear event proc/flags, set main loop rsOpenMapBattleForDemo, disable IRQ
 
         lda bBufferINIDISP
         bit #$000F
@@ -571,7 +571,7 @@
         lda bSoundFlags,b
         and #$FFFA
         sta bSoundFlags,b
-        lda #$C0BC
+        lda #<>rsOpenMapBattleForDemo
         jsl rlSetMainLoopPointer
         sei
         sep #$20
@@ -596,7 +596,7 @@
       .al
       .xl
 
-      aProcEvent5DFadeOutCode ; 82/88E7
+      aProcDemoSkipFadeOutCode ; 82/88E7
 
         PROC_HALT
 
@@ -906,7 +906,7 @@
 
       rlFreeMapBattleProcAndClearSprites ; 82/9496
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -942,7 +942,7 @@
 
       rlCreateProcEventWaitBattleSceneEnd ; 82/94C0
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

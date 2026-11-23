@@ -190,12 +190,21 @@
 
         php
         lda #$0000
-        bra _C0C0
+        bra +
 
-        .byte $08, $A9, $01, $00
+      rsOpenMapBattleForDemo ; 80/C0BC
 
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
-        _C0C0
+        ; The same with $7FD8B9 = 1, which bank $9B tests to skip parts of the setup. Entered from procDemoSkipFadeOut at the end of the attract mode's opening.
+
+        php
+        lda #$0001
+
+        +
         sep #$20
         sta $7FD8B9
         rep #$20
@@ -295,7 +304,7 @@
 
       aBattleTransitionHDMAInfo ; 87/C38C
 
-        ; Created by rlStartGameOverEvent. Writes WH0 indirectly from the buffer at
+        ; Created by rlStartBattleScene. Writes WH0 indirectly from the buffer at
         ; $7E8B92, which rsBuildBattleTransitionWindow fills from aBattleTransitionShape.
         .structHDMAIndirectEntryInfo rlBattleTransitionHDMAInit, rlBattleTransitionHDMACycle, aBattleTransitionHDMACode, aBattleTransitionHDMATableEven, WH0, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode0), $7E
 

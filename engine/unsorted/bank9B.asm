@@ -1305,7 +1305,7 @@
         lda $7FD8B5
         and #$00FF
         beq _DD99
-        jsl rlUnknown9BDFAA
+        jsl rlStartOpeningEvent
 
         _DD99
         rtl
@@ -1342,7 +1342,7 @@
         lda $7FD8B5
         and #$00FF
         beq _DDE2
-        jsl rlUnknown9BDFAA
+        jsl rlStartOpeningEvent
         bra _DDE2
 
 
@@ -1599,12 +1599,14 @@
       .al
       .xl
 
-      rlUnknown9BDFAA ; 9B/DFAA
+      rlStartOpeningEvent ; 9B/DFAA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Called from the map battle screen's loop when $7FD8B5 is set: blanks the screen, resets the battle screen's state and HDMA, and starts the attract mode's opening (aOpeningEvent).
 
         sei
         jsl rlDisableVBlank
@@ -1626,9 +1628,9 @@
         sta $7FD004
         lda #$EC63
         sta $7FD003
-        lda #(`aUnknown90E8CE)<<8
+        lda #(`aOpeningEvent)<<8
         sta lR18+1
-        lda #<>aUnknown90E8CE
+        lda #<>aOpeningEvent
         sta lR18
         jsl rlStartEventScript
         rtl

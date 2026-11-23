@@ -209,21 +209,11 @@
         .byte $09, $C5, $01
 
       aUnknown8D9EC8 ; 8D/9EC8
-        .byte $0B, $33, $57, $09, $28, $0D, $CE, $0B, $22, $09, $18, $C5, $01, $06, $00, $3D
-        .byte $00, $3F, $81, $02, $07, $00, $3D, $00, $3F, $13, $00, $06, $00, $12, $02, $00
-        .byte $1D, $0F, $09, $60, $61, $86, $BB, $51, $17, $29, $0A, $24, $0D, $64, $0B, $EC
-        .byte $09, $48, $BB, $48, $15, $36, $02, $19, $3D, $24, $0A, $AB, $0D, $4C, $09, $28
-        .byte $11, $11, $24, $37, $25, $24, $5C, $20, $5D, $48, $31, $48, $BD, $07, $00, $1D
-        .byte $10, $6B, $AD, $74, $8C, $BF, $BF, $BF, $02, $00, $1D, $32, $01, $06, $00, $3D
-        .byte $00, $3F, $5A, $00, $07, $00, $3D, $00, $3F, $12, $00, $06, $00, $12, $02, $00
-        .byte $1D, $0F, $09, $86, $68, $6B, $6C, $BB, $0A, $AA, $09, $29, $60, $8F, $6C, $72
-        .byte $A8, $2C, $30, $15, $12, $02, $14, $3A, $15, $24, $0D, $44, $0A, $4A, $09, $24
-        .byte $4C, $33, $31, $38, $35, $12, $02, $0C, $45, $0A, $AF, $09, $25, $14, $27, $3E
-        .byte $11, $1C, $38, $00, $1D, $10, $07, $14, $2E, $20, $17, $48, $1A, $11, $BB, $0B
-        .byte $66, $0A, $D8, $09, $BD, $02, $00, $1D, $32, $01, $07, $00, $3D, $00, $3F, $04
-        .byte $01, $00, $12, $02, $09, $19, $39, $3E, $0A, $B5, $BC, $09, $48, $BD, $02, $00
-        .byte $1D, $08, $0B, $12, $0A, $51, $09, $BB, $0D, $45, $0A, $35, $36, $09, $3C, $15
-        .byte $18, $35, $BD, $BD, $02, $00, $1D, $80, $01
+        .byte $0B, $33, $57, $09, $28, $0D, $CE, $0B, $22, $09, $18, $C5, $01
+
+      dialogueOpeningShannanAyra .include "../../text/dialogue/Opening/ShannanAyra.dialogue.txt" ; 8D/9ED5
+      dialogueOpeningEldiganLachesis .include "../../text/dialogue/Opening/EldiganLachesis.dialogue.txt" ; 8D/9F25
+      dialogueOpeningArvisFinalAttack .include "../../text/dialogue/Opening/ArvisFinalAttack.dialogue.txt" ; 8D/9F82
 
         ; 8D/9FB1
 
@@ -1115,13 +1105,15 @@
       .al
       .xl
 
-      rlUnknown91B131 ; 91/B131
+      rlASMCCloseDialogue ; 91/B131
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Frees the dialogue proc and steps the dialogue until it has closed, running this command again (wActiveEventOffset back 4) while it has not.
 
         lda #(`procDialogue)<<8
         sta lR44+1

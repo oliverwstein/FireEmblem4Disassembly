@@ -475,68 +475,68 @@ Nothing in the source names it (found between other streams).
 
 ![gcUnknownD4486F](catalog/gcUnknownD4486F.png)
 
-### gcUnknownD4499C
+### gcOpeningCreditsFont
 
 6316 bytes compressed, 12288 decompressed.
-Nothing in the source names it (found between other streams).
+The font of the opening's staff credits (2bpp, BG3): entry `aOpeningCreditsFont`, $3000 bytes to VRAM $4000, used by `rsSetUpOpeningCreditsScreen` (engine/demo/opening_credits.asm).
 
-![gcUnknownD4499C](catalog/gcUnknownD4499C.png)
+![gcOpeningCreditsFont](catalog/gcOpeningCreditsFont.png)
 
-### gcUnknownD46248
+### gcOpeningCreditsPage1
 
 58 bytes compressed, 1792 decompressed.
-Nothing in the source names it (found between other streams).
+Page 1 of the opening's staff credits, a BG3 tilemap: entry `aOpeningCreditsPage1Tilemap`, $0700 bytes to VRAM $5800, used by `rlShowOpeningCreditsPage1` (engine/demo/opening_credits.asm).
 
-![gcUnknownD46248](catalog/gcUnknownD46248.png)
+![gcOpeningCreditsPage1](catalog/gcOpeningCreditsPage1.png)
 
-### gcUnknownD46282
+### gcOpeningCreditsPage2
 
 132 bytes compressed, 1792 decompressed.
-Nothing in the source names it (found between other streams).
+Page 2 of the opening's staff credits, a BG3 tilemap: entry `aOpeningCreditsPage2Tilemap`, $0700 bytes to VRAM $5800, used by `rlShowOpeningCreditsPage2` (engine/demo/opening_credits.asm).
 
-![gcUnknownD46282](catalog/gcUnknownD46282.png)
+![gcOpeningCreditsPage2](catalog/gcOpeningCreditsPage2.png)
 
-### gcUnknownD46306
+### gcOpeningCreditsPage3
 
 131 bytes compressed, 1792 decompressed.
-Nothing in the source names it (found between other streams).
+Page 3 of the opening's staff credits, a BG3 tilemap: entry `aOpeningCreditsPage3Tilemap`, $0700 bytes to VRAM $5800, used by `rlShowOpeningCreditsPage3` (engine/demo/opening_credits.asm).
 
-![gcUnknownD46306](catalog/gcUnknownD46306.png)
+![gcOpeningCreditsPage3](catalog/gcOpeningCreditsPage3.png)
 
-### gcUnknownD46389
+### gcOpeningCreditsPage4
 
 134 bytes compressed, 1792 decompressed.
-Nothing in the source names it (found between other streams).
+Page 4 of the opening's staff credits, a BG3 tilemap: entry `aOpeningCreditsPage4Tilemap`, $0700 bytes to VRAM $5800, used by `rlShowOpeningCreditsPage4` (engine/demo/opening_credits.asm).
 
-![gcUnknownD46389](catalog/gcUnknownD46389.png)
+![gcOpeningCreditsPage4](catalog/gcOpeningCreditsPage4.png)
 
-### gcUnknownD4640F
+### gcOpeningCreditsPage5
 
 198 bytes compressed, 1792 decompressed.
-Nothing in the source names it (found between other streams).
+Page 5 of the opening's staff credits, a BG3 tilemap: entry `aOpeningCreditsPage5Tilemap`, $0700 bytes to VRAM $5800, used by `rlShowOpeningCreditsPage5` (engine/demo/opening_credits.asm).
 
-![gcUnknownD4640F](catalog/gcUnknownD4640F.png)
+![gcOpeningCreditsPage5](catalog/gcOpeningCreditsPage5.png)
 
-### gcUnknownD464D5
+### gcOpeningCreditsPage6
 
 147 bytes compressed, 1792 decompressed.
-Nothing in the source names it (found between other streams).
+Page 6 of the opening's staff credits, a BG3 tilemap: entry `aOpeningCreditsPage6Tilemap`, $0700 bytes to VRAM $5800, used by `rlShowOpeningCreditsPage6` (engine/demo/opening_credits.asm).
 
-![gcUnknownD464D5](catalog/gcUnknownD464D5.png)
+![gcOpeningCreditsPage6](catalog/gcOpeningCreditsPage6.png)
 
-### gcUnknownD46568
+### gcOpeningCreditsPage7
 
 264 bytes compressed, 1792 decompressed.
-Nothing in the source names it (found between other streams).
+Page 7 of the opening's staff credits, a BG3 tilemap: entry `aOpeningCreditsPage7Tilemap`, $0700 bytes to VRAM $5800, used by `rlShowOpeningCreditsPage7` (engine/demo/opening_credits.asm).
 
-![gcUnknownD46568](catalog/gcUnknownD46568.png)
+![gcOpeningCreditsPage7](catalog/gcOpeningCreditsPage7.png)
 
-### gcUnknownD46670
+### gcOpeningCreditsPage8
 
 33 bytes compressed, 1792 decompressed.
-Nothing in the source names it (found between other streams).
+Page 8 of the opening's staff credits, a BG3 tilemap: entry `aOpeningCreditsPage8Tilemap`, $0700 bytes to VRAM $5800, used by `rlShowOpeningCreditsPage8` (engine/demo/opening_credits.asm).
 
-![gcUnknownD46670](catalog/gcUnknownD46670.png)
+![gcOpeningCreditsPage8](catalog/gcOpeningCreditsPage8.png)
 
 ### gcUnknownD46691
 

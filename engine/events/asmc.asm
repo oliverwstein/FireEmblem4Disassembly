@@ -250,3 +250,32 @@
     .endsection Unsorted85BC0FSection
 
 
+    .section ASMCDialogueSection
+
+      .al
+      .xl
+
+      rlASMCContinueDuringDialogue ; 91/B11C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; If a dialogue is running, marks its proc as one the event does not wait for (rlUnknown91A4AC), so the script goes on while the text shows.
+
+        lda #(`procDialogue)<<8
+        sta lR44+1
+        lda #<>procDialogue
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _End
+
+          jsl rlUnknown91A4AC
+
+        _End
+        rtl
+
+        .databank 0
+
+    .endsection ASMCDialogueSection

@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-102,568 bytes in 233 runs: 56 runs of padding (42,139 bytes) and 177 pieces (60,429 bytes).
+101,873 bytes in 230 runs: 56 runs of padding (42,139 bytes) and 174 pieces (59,734 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 177 | 60,429 | 0 |
+| `none` | 174 | 59,734 | 0 |
 
 ## `code` (0)
 
@@ -37,7 +37,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (177)
+## `none` (174)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -57,7 +57,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $81/90CC-$81/9165 | 154 | 0 | `rsFillMovingMapSpriteDataPathScriptPointer` / `rlUnknown819166` |  |
 | $81/EBBC-$81/FFFF | 5,188 | 0 | `aUNITGroupDataChapterFinalUnused` / `` | 92% $00/$FF |
 | $82/83B5-$82/83E2 | 46 | 0 | `aProcMainLoopChangeFadeByTimerCode` / `procFadeOutAndChangeSong` |  |
-| $82/8816-$82/8864 | 79 | 0 | `aProcCastleNamePopUpCode` / `procEvent5DFadeOut` |  |
+| $82/8816-$82/8864 | 79 | 0 | `aProcCastleNamePopUpCode` / `procDemoSkipFadeOut` |  |
 | $82/8D21-$82/8D51 | 49 | 0 | `aProcUnknown828CA3Code` / `procUnknown828D52` |  |
 | $82/90B0-$82/921D | 366 | 0 | `aProcEventFadeOutByTimerCode` / `procEventPause` |  |
 | $82/9285-$82/92A8 | 36 | 0 | `aProcUnknown82925ECode` / `procUnknown8292A9` |  |
@@ -73,21 +73,21 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $82/F4F9-$82/F516 | 30 | 0 | `rlGetUNITGroupPointer` / `rlCopyOffsetTableEntry` |  |
 | $82/F54F-$82/F566 | 24 | 0 | `rlCopyOffsetTableEntry` / `rlAddOffsetTableEntry` |  |
 | $82/F7A2-$82/F865 | 196 | 0 | `rlUpdateOffsetTable` / `rlSetParentsPermanentFlags` |  |
-| $88/857E-$88/85D2 | 85 | 0 | `rlUnknown888560` / `rlUnknown8885D3` |  |
-| $88/9AC4-$88/9AE1 | 30 | 0 | `rlUnknown889A85` / `aUnknown889AE2` |  |
-| $88/9C38-$88/9C51 | 26 | 0 | `rlUnknown889BF7` / `procUnknown889C52` |  |
-| $88/9E6E-$88/9FC2 | 341 | 0 | `aProcUnknown889C52Code` / `aChapterMapPointers` |  |
-| $88/A383-$88/A38B | 9 | 0 | `rsUnknown88A32D` / `rlUnknown88A38C` |  |
-| $88/A505-$88/A550 | 76 | 0 | `rlUnknown88A4FC` / `rsUnknown88A551` |  |
-| $88/A6CA-$88/A703 | 58 | 0 | `rsUnknown88A698` / `rlUnknown88A704` |  |
-| $88/A816-$88/A81C | 7 | 0 | `rsUnknown88A7F5` / `rlUnknown88A81D` |  |
-| $88/ACBB-$88/ACF0 | 54 | 0 | `rsUnknown88ACA6` / `aUnknown88ACF1` | 64% $00/$FF |
-| $88/AD09-$88/AD45 | 61 | 0 | `aUnknown88ACF1` / `rlUnknown88AD46` |  |
-| $88/B3C2-$88/B3DE | 29 | 0 | `rlUnknown88B3AF` / `rlUnknown88B3DF` |  |
-| $88/BEFF-$88/BF36 | 56 | 0 | `rsUnknown88BEEF` / `rlUnknown88BF37` |  |
-| $88/E00E-$88/E02A | 29 | 0 | `rsUnknown88DFDA` / `procUnknown88E02B` |  |
-| $88/E2D6-$88/E2DB | 6 | 0 | `rlProcUnknown88E26ACycle` / `aProcUnknown88E26ACode` | 66% $00/$FF |
-| $88/E33B-$88/E33C | 2 | 0 | `rlUnknown88E2E9` / `rlUnknown88E33D` |  |
+| $88/857E-$88/85D2 | 85 | 0 | `rlContinueMapScroll` / `rlStartMapScrollUp` |  |
+| $88/9AC4-$88/9AE1 | 30 | 0 | `rlMinimapAnimateViewColors` / `aMinimapViewColorCycle` |  |
+| $88/9C38-$88/9C51 | 26 | 0 | `rlDrawMinimapUnits` / `procMinimapClose` |  |
+| $88/9E6E-$88/9FC2 | 341 | 0 | `aProcMinimapCloseCode` / `aChapterMapPointers` |  |
+| $88/A383-$88/A38B | 9 | 0 | `rsUpdateMapSystemFlags` / `rlCheckMapCursorResting` |  |
+| $88/A505-$88/A550 | 76 | 0 | `rlLoadMapWindowPalettes` / `rsGetMapCursorMove` |  |
+| $88/A6CA-$88/A703 | 58 | 0 | `rsSetCursorScrollSpeedUnused` / `rlDrawHandCursor` |  |
+| $88/A816-$88/A81C | 7 | 0 | `rsSetUnitWalkSpeed` / `rlMapChooseTargetStep` |  |
+| $88/ACBB-$88/ACF0 | 54 | 0 | `rsGetTargetAtSearchIndexUnused` / `aNearTargetOffsets` | 64% $00/$FF |
+| $88/AD09-$88/AD45 | 61 | 0 | `aNearTargetOffsets` / `rlStartChoosingTarget` |  |
+| $88/B3C2-$88/B3DE | 29 | 0 | `rlSaveMapCameraAndLockCursor` / `rlGetTileEntriesAtCursor` |  |
+| $88/BEFF-$88/BF36 | 56 | 0 | `rsPlayMapCursorMoveSound` / `rlGetMapDataIndex` |  |
+| $88/E00E-$88/E02A | 29 | 0 | `rsAnimateUnitWindowTallSprite` / `procFirstGenerationEnding` |  |
+| $88/E2D6-$88/E2DB | 6 | 0 | `rlProcFirstGenerationEndingPortraitFadeOutCycle` / `aProcFirstGenerationEndingPortraitFadeOutCode` | 66% $00/$FF |
+| $88/E33B-$88/E33C | 2 | 0 | `rlFirstGenerationEndingHDMA` / `rlLoadFirstGenerationEndingPortrait` |  |
 | $8A/8682-$8A/8699 | 24 | 0 | `rsCastleGridMoveToTarget` / `rsCastleGridFindPreviousTarget` | 54% $00/$FF |
 | $8A/B10A-$8A/B110 | 7 | 0 | `rlPushStockListScrollArrows` / `rlDrawCastleNumber` |  |
 | $8A/BAC9-$8A/BACE | 6 | 0 | `PortraitPaletteGhostDeirdrePortraitPalettePointersEntry` / `aDialogueBackgroundPointers` |  |
@@ -102,19 +102,16 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8B/8BA5-$8B/8BB4 | 16 | 0 | `aProcWorldMapMarkerShadowFadeInCode` / `rlUnknown8B8BB5` |  |
 | $8B/8BF2-$8B/8BF3 | 2 | 0 | `rlUnknown8B8BB5` / `procWorldMapMarkerShadowFadeOut` |  |
 | $8B/8C7B-$8B/8C80 | 6 | 0 | `rlUnknown8B8C4A` / `aProcUnknown8B8C3ACode` | 66% $00/$FF |
-| $8B/A088-$8B/A0B3 | 44 | 0 | `ClassPortraitDarkPrinceClassPortraitDataIDsEntry` / `rlUnknown8BA0B4` |  |
 | $8B/A7CE-$8B/A7F1 | 36 | 0 | `rlUnusedGameState15` / `rlUnitWindowShow` |  |
 | $8B/B882-$8B/B8B5 | 52 | 0 | `rsUnitWindowRenderWeaponRankIcons` / `rsUnitWindowCopyLineHighlightColors` |  |
 | $8C/F09B-$8C/FFFF | 3,941 | 0 | `rlUnknown8CF07F` / `` |  |
 | $8D/A612-$8D/A623 | 18 | 0 | `rlUnknown8DA50F` / `rsUnknown8DA624` |  |
-| $8D/AAFD-$8D/AD72 | 630 | 0 | `aProcUnknown8DAA96Code` / `rlUnknown8DAD73` |  |
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlUnknown8DAE85` / `rlUnknown8DAEC2` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlUnknown8DB52C` / `rsUnknown8DB53A` |  |
 | $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardGreatBallistaPointer` / `gcUnknownD05673` |  |
 | $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlUnknown91A80D` |  |
 | $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlUnknown91A928` |  |
 | $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsUnknown91AA15` |  |
-| $91/B11C-$91/B130 | 21 | 0 | `dialogueChapterFinalEddaSeizedClaudsChildrenAloneStart` / `rlUnknown91B131` |  |
 | $91/B1FB-$91/B1FB | 1 | 0 | `aUnknown91B1E3` / `rsUnknown91B1FC` |  |
 | $91/BD42-$91/BD93 | 82 | 0 | `aEpilogueLoverPartners` / `rlASMCStatUpDisplay` |  |
 | $91/DF08-$91/DF31 | 42 | 0 | `rsUnknown91DEA1` / `rlUnknown91DF32` |  |

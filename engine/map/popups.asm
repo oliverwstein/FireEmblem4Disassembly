@@ -266,9 +266,9 @@
       .al
       .xl
 
-      procEvent5DFadeOut ; 82/8865
+      procDemoSkipFadeOut ; 82/8865
 
-        .structProcInfo "TT", rlProcEvent5DFadeOutInit, rlProcEvent5DFadeOutCycle1, aProcEvent5DFadeOutCode
+        .structProcInfo "TT", rlProcDemoSkipFadeOutInit, rlProcDemoSkipFadeOutCycle1, aProcDemoSkipFadeOutCode
 
     .endsection ProcScript828865Section
 

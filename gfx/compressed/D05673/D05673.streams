@@ -63,15 +63,16 @@ gcUnknownD43402 gcUnknownD43402 ; 4096 bytes decompressed
 gcUnknownD44143 gcUnknownD44143 ; 2048 bytes decompressed
 gcUnknownD4429B gcUnknownD4429B ; 2048 bytes decompressed
 gcUnknownD4486F gcUnknownD4486F ; 2048 bytes decompressed
-gcUnknownD4499C gcUnknownD4499C ; 12288 bytes decompressed
-gcUnknownD46248 gcUnknownD46248 ; 1792 bytes decompressed
-gcUnknownD46282 gcUnknownD46282 ; 1792 bytes decompressed
-gcUnknownD46306 gcUnknownD46306 ; 1792 bytes decompressed
-gcUnknownD46389 gcUnknownD46389 ; 1792 bytes decompressed
-gcUnknownD4640F gcUnknownD4640F ; 1792 bytes decompressed
-gcUnknownD464D5 gcUnknownD464D5 ; 1792 bytes decompressed
-gcUnknownD46568 gcUnknownD46568 ; 1792 bytes decompressed
-gcUnknownD46670 gcUnknownD46670 ; 1792 bytes decompressed
+# The opening's staff credits: BG3 tilemaps (aOpeningCreditsPage1Tilemap...).
+gcOpeningCreditsFont gcOpeningCreditsFont ; 12288 bytes decompressed
+gcOpeningCreditsPage1 gcOpeningCreditsPage1 ; 1792 bytes decompressed
+gcOpeningCreditsPage2 gcOpeningCreditsPage2 ; 1792 bytes decompressed
+gcOpeningCreditsPage3 gcOpeningCreditsPage3 ; 1792 bytes decompressed
+gcOpeningCreditsPage4 gcOpeningCreditsPage4 ; 1792 bytes decompressed
+gcOpeningCreditsPage5 gcOpeningCreditsPage5 ; 1792 bytes decompressed
+gcOpeningCreditsPage6 gcOpeningCreditsPage6 ; 1792 bytes decompressed
+gcOpeningCreditsPage7 gcOpeningCreditsPage7 ; 1792 bytes decompressed
+gcOpeningCreditsPage8 gcOpeningCreditsPage8 ; 1792 bytes decompressed
 gcUnknownD46691 gcUnknownD46691 ; 2048 bytes decompressed
 gcUnknownD467EF gcUnknownD467EF ; 2048 bytes decompressed
 aUnitedGrannvaleMapHighlightTilemap aUnitedGrannvaleMapHighlightTilemap ; 2048 bytes decompressed

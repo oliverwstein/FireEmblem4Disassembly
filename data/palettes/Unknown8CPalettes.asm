@@ -461,6 +461,10 @@
         .word $2908, $24E7, $20C6, $18A5, $1484, $0C42, $0821, $0800
         .word $4001, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
         .word $7FFF, $3632, $29CF, $218D, $194B, $10C6, $0C85, $0C42
+
+      aOpeningCreditsPalette ; 8C/EC00
+
+        ; The opening credits' BG palettes (rsSetUpOpeningCreditsScreen copies 16 colours).
         .word $0000, $77BD, $4631, $18C6, $0000, $5AD6, $35AD, $18C6
         .word $0000, $0000, $0000, $0000, $0000, $2506, $B5AB, $4A51
         .word $0240, $0421, $294A, $77FF, $2DAF, $1841, $4A0D, $77FF

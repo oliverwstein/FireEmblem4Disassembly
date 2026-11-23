@@ -293,8 +293,8 @@
       .byte \SpriteColor
     .endsegment
 
-    MOVE_TEMPORARY_TO_COORDS_CLASS .segment CharacterID, StartCoordinates, DestinationCoordinates, MovementSpeed, SpriteColor, FactionSlot, MapSprite=0
-      ; Unused.
+    MOVE_TEMPORARY_TO_COORDS_CLASS .segment CharacterID, StartCoordinates, DestinationCoordinates, MovementSpeed, SpriteColor, FactionSlot, MapSprite=0, DisappearOffscreenFlag=false
+      ; Used only by the attract mode's opening (engine/demo/opening.asm).
       ; If a map sprite is specified, use that instead of the characters regualar sprite
       .byte $26
       .word \CharacterID
@@ -302,7 +302,7 @@
       .byte \StartCoordinates[1]
       .byte \DestinationCoordinates[0]
       .byte \DestinationCoordinates[1]
-      .byte (\MovementSpeed $0F | int(\DisappearOffscreenFlag) << 4)
+      .byte (\MovementSpeed & $0F | int(\DisappearOffscreenFlag) << 4)
       .byte \SpriteColor
       .byte \FactionSlot
       .word \MapSprite
@@ -648,4 +648,16 @@
 
     WM_CLEAR_HIGHLIGHT .segment
       .byte $5C
+    .endsegment
+
+    DEMO_ALLOW_SKIP .segment
+      ; The attract mode's opening: when the event ends or Start is pressed,
+      ; fade out and go to the map battle screen (procDemoSkipFadeOut,
+      ; rsOpenMapBattleForDemo). Also sets $1832 (see the command routine).
+      .byte $5D
+    .endsegment
+
+    OPEN_MAP_BATTLE .segment
+      ; Fades to the map battle screen (rsOpenMapBattle).
+      .byte $5E
     .endsegment

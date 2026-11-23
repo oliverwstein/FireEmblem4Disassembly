@@ -4493,7 +4493,7 @@
 
       rsOpenChapterSaveTransition ; 80/F27C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

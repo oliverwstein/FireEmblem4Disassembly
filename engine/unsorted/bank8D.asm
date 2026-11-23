@@ -1744,7 +1744,7 @@
 
       rlUnknown8DA810 ; 8D/A810
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1813,7 +1813,7 @@
 
       rlUnknown8DA864 ; 8D/A864
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1836,7 +1836,7 @@
 
       rlUnknown8DA880 ; 8D/A880
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3976,12 +3976,16 @@
         .byte $08, $00, $FF, $FF, $FA, $CD, $08, $00, $CE, $CD, $0A, $00, $E4, $CD, $0E, $00
         .byte $B8, $CD, $08, $00, $FF, $FF, $9D, $CE, $05, $00, $3F, $CE, $07, $00, $6E, $CE
         .byte $0B, $00, $10, $CE, $05, $00, $FF, $FF, $59, $CF, $05, $00, $FB, $CE, $07, $00
-        .byte $2A, $CF, $0B, $00, $CC, $CE, $05, $00, $FF, $FF, $41, $D0, $41, $D0, $42, $D0
-        .byte $44, $D0, $8D, $12, $02, $41, $D0, $41, $D0, $42, $D0, $09, $D2, $8D, $12, $02
-        .byte $41, $D0, $41, $D0, $42, $D0, $CE, $D3, $8D, $12, $02, $41, $D0, $41, $D0, $42
-        .byte $D0, $93, $D5, $8D, $12, $02, $41, $D0, $41, $D0, $42, $D0, $58, $D7, $8D, $12
-        .byte $02, $41, $D0, $41, $D0, $42, $D0, $1D, $D9, $8D, $12, $02, $41, $D0, $41, $D0
-        .byte $42, $D0, $E2, $DA, $8D, $12, $02
+        .byte $2A, $CF, $0B, $00, $CC, $CE, $05, $00, $FF, $FF
+
+      aOpeningCreditsVScrollHDMAInfo1 .dstruct structHDMADirectEntryInfo, rlUnknown8DD041, rlUnknown8DD041, aUnknown8DD042, aUnknown8DD044, PPU_REG_BASE + $12, $02 ; 8D/CFF4
+      aOpeningCreditsVScrollHDMAInfo2 .dstruct structHDMADirectEntryInfo, rlUnknown8DD041, rlUnknown8DD041, aUnknown8DD042, aUnknown8DD209, PPU_REG_BASE + $12, $02 ; 8D/CFFF
+      aOpeningCreditsVScrollHDMAInfo3 .dstruct structHDMADirectEntryInfo, rlUnknown8DD041, rlUnknown8DD041, aUnknown8DD042, aUnknown8DD3CE, PPU_REG_BASE + $12, $02 ; 8D/D00A
+      aOpeningCreditsVScrollHDMAInfo4 .dstruct structHDMADirectEntryInfo, rlUnknown8DD041, rlUnknown8DD041, aUnknown8DD042, aUnknown8DD593, PPU_REG_BASE + $12, $02 ; 8D/D015
+      aOpeningCreditsVScrollHDMAInfo5 .dstruct structHDMADirectEntryInfo, rlUnknown8DD041, rlUnknown8DD041, aUnknown8DD042, aUnknown8DD758, PPU_REG_BASE + $12, $02 ; 8D/D020
+      aOpeningCreditsVScrollHDMAInfo6 .dstruct structHDMADirectEntryInfo, rlUnknown8DD041, rlUnknown8DD041, aUnknown8DD042, aUnknown8DD91D, PPU_REG_BASE + $12, $02 ; 8D/D02B
+      aOpeningCreditsVScrollHDMAInfo7 .dstruct structHDMADirectEntryInfo, rlUnknown8DD041, rlUnknown8DD041, aUnknown8DD042, aUnknown8DDAE2, PPU_REG_BASE + $12, $02 ; 8D/D036
+        ; Nothing uses the seventh.
 
         ; 8D/D041
 
@@ -3995,7 +3999,7 @@
 
       rlUnknown8DD041 ; 8D/D041
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

@@ -162,6 +162,8 @@
   .include "engine/events/event_movement.asm"
   .include "engine/events/talk_events.asm"
   .include "engine/demo/demo_battles.asm"
+  .include "engine/demo/opening.asm"
+  .include "engine/demo/opening_credits.asm"
   .include "engine/map/chapter_maps.asm"
   .include "engine/map/input.asm"
   .include "engine/map/map_cursor.asm"
@@ -193,7 +195,6 @@
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
   .include "engine/unsorted/bank8D.asm"
-  .include "engine/unsorted/bank90.asm"
   .include "engine/unsorted/bank91.asm"
   .include "engine/unsorted/bank95.asm"
   .include "engine/unsorted/bank96.asm"
@@ -4436,12 +4437,13 @@
 
       aPortraitDataIDs .include "data/character/PortraitDataIDs.csv.asm" ; 8B/9A88
       aClassPortraitDataIDs .include "data/class/ClassPortraitDataIDs.csv.asm" ; 8B/9FF8
-      ; 4 different HDMA structs
 
     .here
 
-    * = $0BA0B4
-    .logical $8BA0B4
+    * = $0BA088
+    .logical $8BA088
+
+      .dsection OpeningCreditsHScrollHDMASection
 
       .dsection Unsorted8BA0B4Section
 
@@ -5175,10 +5177,7 @@
 
       .dsection Unsorted8DAAFBSection
 
-    .here
-
-    * = $0DAD73
-    .logical $8DAD73
+      .dsection OpeningCreditsSection
 
       .dsection Unsorted8DAD73Section
 
@@ -6180,12 +6179,7 @@
 
       .dsection DeathQuoteSection
 
-      ; 91b11c
-
-    .here
-
-    * = $11B131
-    .logical $91B131
+      .dsection ASMCDialogueSection
 
       .dsection Unsorted91B131Section
 

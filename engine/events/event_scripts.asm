@@ -367,8 +367,8 @@
         .word <>rsEventCommandWMClearDialogue
         .word <>rsEventCommandWMHighlight
         .word <>rsEventCommandWMClearHighlight
-        .word <>rsEventCommand5D
-        .word <>rsEventCommand5E
+        .word <>rsEventCommandDemoAllowSkip
+        .word <>rsEventCommandOpenMapBattle
         .word $0000               ; $5F
 
       rlRunEventCommand ; 91/A5CA
@@ -4360,11 +4360,13 @@
 
         .databank 0
 
-      rsEventCommand5D ; 91/CDB7
+      rsEventCommandDemoAllowSkip ; 91/CDB7
 
         .al
         .autsiz
         .databank ?
+
+        ; Event command $5D (DEMO_ALLOW_SKIP): sets $1832 (to 0 when $0CC2 is 0 and wDemoIndex is 0 or 1, with sound command $D0) and starts procDemoSkipFadeOut, which ends the opening when the event ends or Start is pressed.
 
         php
         phb
@@ -4386,9 +4388,9 @@
             jsl rlSendSoundCommand
 
         +
-        lda #(`procEvent5DFadeOut)<<8
+        lda #(`procDemoSkipFadeOut)<<8
         sta lR44+1
-        lda #<>procEvent5DFadeOut
+        lda #<>procDemoSkipFadeOut
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -4411,11 +4413,13 @@
 
         .databank 0
 
-      rsEventCommand5E ; 91/CE02
+      rsEventCommandOpenMapBattle ; 91/CE02
 
         .al
         .autsiz
         .databank ?
+
+        ; Event command $5E (OPEN_MAP_BATTLE): fades to the map battle screen (rsOpenMapBattle).
 
         php
         phb

@@ -51,11 +51,21 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 0 of the demo index and runs its entry of aDemoBattleSetups, then steps the index down (back to $1B4B below 0). Only odd entries are reached from here.
+        ; Sets bit 0 of the demo index and runs its entry of aDemoBattleSetups, then steps the index down (back to wDemoRestartIndex below 0). The opening (engine/demo/opening.asm) runs this for the odd scene of a pair and rlRunDemoBattleSetupAtIndex for the even one.
 
         lda wDemoIndex,b
         ora #$0001
         sta wDemoIndex,b
+
+      rlRunDemoBattleSetupAtIndex ; 88/EEE2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The same without setting bit 0: the attract mode's opening runs it for the even scene of each pair.
+
         phx
         lda wDemoIndex,b
         asl a
