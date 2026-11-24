@@ -108,6 +108,20 @@ A unit's army is recorded in three places: the `FactionSlot` byte of its persona
 
 When a script unloads an army (`rlUnloadFactionSlot`), its units are deleted, except `Dynamic` units, the second-generation children, who are set to `Factionless` so they survive to join later. Unloading slot 0 starts the game over sequence.
 
+> **Sidebar: the dead on the status screen**
+>
+> On a unit's status screen, L and R step through the player's other units. Holding Select while pressing them also shows the dead.
+>
+> A player unit that dies is not deleted. `rlActionStructHandleUnitDeath` marks its deployment entry defeated and sets `UnitStateDead`, but the unit keeps its header, its parts, and its place in slot 0's list. The status screen's cycling (`rsStatusScreenNextUnit` and `rsStatusScreenPreviousUnit`) walks generation IDs 1 to 24 and looks each one up in slot 0 with `rlFindGenerationIDInFactionSlotData`, so it finds dead units like any other. It then skips any unit that is dead or captive, unless Select is held:
+>
+> ```rust
+> if !joypad.held(JOY_Select) {
+>     if unit.states().has(Dead) || unit.status() == Captive { continue; }
+> }
+> ```
+>
+> With the check skipped, every unit still in the player's army comes up, including units captured through the PoW skill.
+
 ## Castles
 
 Each location records the faction slot that owns it (`rlSetLocationFactionSlotOwner`), and an army's home is the castle in its header's `location_id`, where `rlSetUnitResidingInCastle` keeps units that haven't been sent out. Seizing a castle changes its owner slot ([Chapter 5](OUTLINE.md)).
