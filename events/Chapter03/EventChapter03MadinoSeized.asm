@@ -57,7 +57,7 @@
     PAUSE 20
     YIELD
 
-    RUN_ASM rlShowQueuedSeizePopUpUnused
+    RUN_ASM rlASMCShowQueuedSeizePopUp
     YIELD
 
     PAUSE 30

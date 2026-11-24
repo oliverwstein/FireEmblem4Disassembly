@@ -1,5 +1,16 @@
 
+    ; Script commands for the event script engine (rlRunEventCommand, aEventCommandPointers).
+    ; Each command is an opcode byte and its parameters. A handler returns carry clear to
+    ; go on to the next command in the same frame, or carry set to stop for this frame.
+    ; A command that starts an event proc doesn't stop the script: the commands after it
+    ; run until the next YIELD, and at the start of each later frame the script waits
+    ; until every event proc it started has ended. Wait commands that poll (the map
+    ; sprite ones) step back to their own opcode and stop, so they run again next frame.
+    ; Most procs read their parameters from the script themselves, in their init routine,
+    ; at wActiveEventOffset. Guide: docs/guide/12-screenplays.md.
+
     YIELD .segment
+      ; Ends the script's work for this frame.
       .byte $FD
     .endsegment
 
@@ -7,7 +18,12 @@
       .word $FFFF
     .endsegment
 
-    EVENT_DUMMY .segment
+    SKIP_POINT .segment
+      ; Marks where Start would skip the script to: rsGetEventLength records the offset
+      ; after it in wActiveEventLength when the script begins, and the interpreter steps
+      ; over it. The routine that would skip there (rsCheckSkipActiveEventUnused) has no
+      ; caller, so scripts can't be skipped. Every use is in a chapter opening, just
+      ; before the setup at its end (fade out, deploy, RELOAD_MAP_SCREEN).
       .word $FEFE
     .endsegment
 
@@ -25,6 +41,7 @@
     .endsegment
 
     JUMP .segment Address
+      ; Address is a 16-bit address in the script's own bank.
       .byte $02
       .addr \Address
     .endsegment
@@ -42,6 +59,8 @@
     .endsegment
 
     JUMP_RELATIVE_TRUE .segment Address
+      ; Unused. The relative jumps work in a script copied to RAM, where JUMP's
+      ; address (an offset in the script's ROM bank) would be wrong.
       ; Modifies the distance if wEventEngineTruthFlag is set.
       ; The distance is measured from the beginning of the command.
       .byte $05
@@ -49,6 +68,7 @@
     .endsegment
 
     JUMP_RELATIVE_FALSE .segment Address
+      ; Used once, by the song-and-dialogue template copied to RAM (death_quotes.asm).
       ; Modifies the distance if wEventEngineTruthFlag is unset.
       ; The distance is measured from the beginning of the command.
       .byte $06
@@ -56,13 +76,15 @@
     .endsegment
 
     TEST_PERMANENT_FLAG_SET .segment EventFlag
+      ; Sets wEventEngineTruthFlag to 1 if the permanent flag is set, 0 if not.
       .byte $07
       .byte \EventFlag
     .endsegment
 
     TEST_FLAG_IN_CHAPTER_SET .segment ChapterID, EventFlag
       ; Sets wEventEngineTruthFlag if flag is set in chapter.
-      ; Only works if specified chapter is the current one.
+      ; Only works if specified chapter is the current one; for any other chapter
+      ; the truth flag keeps whatever the last test left in it.
       .byte $08
       .byte \ChapterID
       .byte \EventFlag
@@ -110,6 +132,8 @@
     .endsegment
 
     PLAY_SONG .segment SongID
+      ; Sets wMusicID and stops for this frame; the script then waits while a map
+      ; battle (procMapBattle) is running.
       .byte $0E
       .byte \SongID
     .endsegment
@@ -143,6 +167,7 @@
     .endsegment
 
     RESTORE_PHASE_MUSIC .segment
+      ; Resumes the phase music; the script then waits while a map battle is running.
       .byte $13
     .endsegment
 
@@ -255,7 +280,10 @@
     .endsegment
 
     LOAD_UNIT_BY_GROUP .segment UnitGroupID, IDInGroup, StartCoordinates, MovementSpeed, SpriteColor
-      ; Loads a unit specified in UNITGroupData.
+      ; Loads a unit specified in UNITGroupData, hidden, and walks it from StartCoordinates
+      ; to its own tile in the group (a route planned by the map main loop); it is shown
+      ; when it arrives. SpriteColor is read and then replaced by the color of the unit's
+      ; allegiance (aEventUnitAllegianceValues), so it has no effect.
       .byte $23
       .byte \UnitGroupID
       .word \IDInGroup
@@ -327,7 +355,9 @@
     .endsegment
 
     WAIT_UNIT_SPRITE_DECOMPRESSED .segment
-      ; Also waits until aMovingMapSprites.wState is free
+      ; Waits (re-running each frame) until no decompression is queued and
+      ; aMovingMapSprites.wState is 0, which means the map main loop has planned the
+      ; last queued unit's route (rlPlanQueuedMapSpriteMovement).
       .byte $29
     .endsegment
 
@@ -445,9 +475,15 @@
       .byte \Coordinates[1]
     .endsegment
 
-    EVENT_3B .segment Unknown
+    RELOAD_MAP_SCREEN .segment Mode
+      ; Fades out over (Mode & $3F) frames and rebuilds the map screen through
+      ; rsReturnToMapMainLoop, with wMainGameMode 3 if bit 7 is set, 2 if bit 6 is set,
+      ; and 0 otherwise. With bit 7 the script goes on once the map is rebuilt and the
+      ; screen is still dark, for a FADE_IN_BY_TIMER; otherwise it waits for the fade-in
+      ; to full brightness (procEventWaitFadeToMap). Chapter openings use $80 to show
+      ; the map after the opening list has set it up, and 1 after deploying the army.
       .byte $3B
-      .byte \Unknown
+      .byte \Mode
     .endsegment
 
     EVENT_3C .segment
@@ -489,6 +525,9 @@
     .endsegment
 
     FILL_EVENT_UNIT_SLOT .segment CharacterID, Slot
+      ; Stores the unit's RAM pointer and tile in wEventUnitSlot1Pointer/2Pointer and the
+      ; slot's coordinates. If the unit isn't found, the coordinates become $FFFF and
+      ; the commands that read the slot do nothing.
       .byte $42
       .word \CharacterID
       .byte \Slot >> 1
@@ -511,6 +550,8 @@
     .endsegment
 
     RUN_ASM .segment Address
+      ; Calls the routine (an ASMC) at once. It can block the script by creating an
+      ; event proc (rlEventEngineCreateProc), as rlASMCStatUpDisplay does.
       .byte $45
       .long \Address
     .endsegment
@@ -541,6 +582,8 @@
     .endsegment
 
     RUN_EVENT_CONDITION .segment
+      ; Followed by one condition-list command (include/events/Conditions.h), which
+      ; rlTryRunEventConditionCommand runs in run mode; the script goes on after it.
       .byte $4A
     .endsegment
 
@@ -560,9 +603,11 @@
       .byte \EventFlag
     .endsegment
 
-    RUN_EVENT_CONDITION_UNSKIPPABLE .segment
-      ; This calls RUN_EVENT_CONDITION, but also sets up a proc
-      ; that waits until the $0001 flag in bUnknown000E7B is cleared.
+    RUN_EVENT_CONDITION_AND_WAIT .segment
+      ; Runs one condition-list command like RUN_EVENT_CONDITION, then waits until bit 0
+      ; of bUnknown000E7B is clear, and 4 frames more (procEventWaitFlag0E7B). The prologue
+      ; uses it for SET_SCRIPTED_ACTION, which sets that bit; the battle scene clears it
+      ; when the scripted action's fight ends.
       .byte $4D
     .endsegment
 

@@ -5,7 +5,7 @@
       REGISTER_UNITGROUP_MAP_SPRITES UNITGroupChapter05Start
 
     SET_CAMERA_POSITION [47, 0]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     PAUSE 2
     YIELD
 
@@ -193,7 +193,7 @@
 
       ; 9D/C08C
 
-      EVENT_DUMMY
+      SKIP_POINT
       FADE_OUT_BY_TIMER 1
       YIELD
 
@@ -201,7 +201,7 @@
         DEPLOY_UNIT_GROUP UNITGroupChapter05Start
 
       SET_CAMERA_POSITION [16, 4]
-      EVENT_3B $01
+      RELOAD_MAP_SCREEN $01
       YIELD
 
       JUMP _C0A0

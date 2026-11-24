@@ -205,9 +205,9 @@
     .autsiz
     .databank ?
 
-    lda wEventUnitSlot1ID,b
+    lda wEventUnitSlot1Pointer,b
     sta wR0
-    lda wEventUnitSlot2ID,b
+    lda wEventUnitSlot2Pointer,b
     sta wR1
     jsl rlStartScriptedMapBattleAnimation
     jsl rlCreateProcHaltEvent
@@ -235,7 +235,7 @@
     bcs _False
 
       lda wSelectedUnitDataRAMPointer
-      sta wEventUnitSlot1ID
+      sta wEventUnitSlot1Pointer
       jsl rlGetSelectedUnitLevel
       cmp #11
       bge _False
@@ -249,7 +249,7 @@
           bcs _False
 
             lda wSelectedUnitDataRAMPointer
-            sta wEventUnitSlot2ID
+            sta wEventUnitSlot2Pointer
             jsl rlGetSelectedUnitLevel
             cmp #11
             bge _False

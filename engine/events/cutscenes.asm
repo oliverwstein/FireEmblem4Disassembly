@@ -835,7 +835,7 @@
 
         ; The event unit in slot 1 warps away (warp-away ASMCs of chapters 3 and 7-10).
 
-        lda wEventUnitSlot1ID,b
+        lda wEventUnitSlot1Pointer,b
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta $7E4EA9

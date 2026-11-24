@@ -1917,7 +1917,7 @@
         .databank ?
 
         phx
-        lda wEventUnitSlot1ID,b
+        lda wEventUnitSlot1Pointer,b
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta aActionStructUnit1.DeploymentNumber

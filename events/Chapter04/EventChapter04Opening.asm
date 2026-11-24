@@ -2,7 +2,7 @@
   aEventChapter04Opening ; 8E/9020
 
     SET_CAMERA_POSITION [19, 50]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     FADE_IN_BY_TIMER 3
     CASTLE_NAME dialogueCastleNameSilesse, CASLTE_NAME_YELLOW, 120
     YIELD
@@ -335,7 +335,7 @@
 
       ; 8E/92DC
 
-      EVENT_DUMMY
+      SKIP_POINT
       FADE_OUT_BY_TIMER 1
       YIELD
 
@@ -343,7 +343,7 @@
         DEPLOY_UNIT_GROUP UNITGroupChapter04Start
 
       SET_CAMERA_POSITION [0, 33]
-      EVENT_3B $01
+      RELOAD_MAP_SCREEN $01
       YIELD
       JUMP _92F0
 

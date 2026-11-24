@@ -5,7 +5,7 @@
       REGISTER_UNITGROUP_MAP_SPRITES UNITGroupChapter09Opening
 
     SET_CAMERA_POSITION [48, 0]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     PAUSE 2
     YIELD
 
@@ -219,14 +219,14 @@
       JUMP +
 
     _SkipLeifFinnTalk
-    EVENT_3B 1
+    RELOAD_MAP_SCREEN 1
     YIELD
 
     +
     JUMP _End
 
       ; B1/D59A
-      EVENT_DUMMY
+      SKIP_POINT
       FADE_OUT_BY_TIMER 1
       YIELD
 
@@ -234,7 +234,7 @@
         DEPLOY_UNIT_GROUP UNITGroupChapter09Opening
 
       SET_CAMERA_POSITION [44, 0]
-      EVENT_3B 1
+      RELOAD_MAP_SCREEN 1
       YIELD
 
       JUMP +

@@ -62,7 +62,7 @@
     PAUSE 10
     YIELD
 
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     PAUSE 5
     YIELD
 

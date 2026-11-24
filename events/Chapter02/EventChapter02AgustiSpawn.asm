@@ -48,7 +48,7 @@
     DIALOGUE_WITH_BG dialogueChapter02AgustiSpawn1, DIALOGUE_BG_HALLWAY, 5, 2
     YIELD
 
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     PAUSE 2
     YIELD
 

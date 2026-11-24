@@ -6,7 +6,7 @@
 
     SET_CAMERA_POSITION [18, 44]
 
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
 
     FADE_IN_BY_TIMER 4
 
@@ -36,7 +36,7 @@
     YIELD
 
     SET_CAMERA_POSITION [45, 1]
-    EVENT_3B $01
+    RELOAD_MAP_SCREEN $01
     YIELD
 
     MOVE_TEMPORARY_BY_SCRIPT EldiganCh01, [48, 15], 4, MAP_SPRITE_GREEN, _ScriptedMovementEldigan2
@@ -136,7 +136,7 @@
 
     ; 8E/8119
 
-      EVENT_DUMMY
+      SKIP_POINT
 
       FADE_OUT_BY_TIMER 1
       YIELD
@@ -145,7 +145,7 @@
         DEPLOY_UNIT_GROUP UNITGroupChapter02Start
 
       SET_CAMERA_POSITION [48, 50]
-      EVENT_3B 1
+      RELOAD_MAP_SCREEN 1
       YIELD
       JUMP _812D
 

@@ -1486,8 +1486,10 @@
   .virtual $00171A
 
     wEventEngineFlags .word ? ; $00171A
-      ; Nonzero while an event script runs (rlStartEventScript sets 9). $0002 the
-      ; event waits for its procs, $0004 the event has procs (rlEventEngineCreateProc),
+      ; Nonzero while an event script runs (rlStartEventScript sets 9). Bit 0 the
+      ; engine runs the script (rsRunEventEngineState). $0002 set by the proc poll
+      ; when none of the event's blocking procs is still alive (rsEventEnginePollBlockingProcs),
+      ; $0004 the event has started procs (rlEventEngineCreateProc),
       ; $0008 a script was started and hasn't begun running (rlEventEngineBeginScript
       ; clears it; rlGetAndRunChapterMapEventConditions and rlBeginChapterEvents return
       ; carry set while it is set), $8000 the event is fading out. The map step and many
@@ -1496,14 +1498,18 @@
       ; 0 begin the script, 1 run its commands, 2 end it (aEventEngineStateRoutines).
     wUnknown00171E .word ? ; $00171E
     wMapCurrentlyScrollingFlag .word ? ; $001720
-    wEventUnitSlot1ID .word ? ; $001722
-    wEventUnitSlot2ID .word ? ; $001724
+    wEventUnitSlot1Pointer .word ? ; $001722
+      ; The unit in the script's slot 1 (FILL_EVENT_UNIT_SLOT): its RAM pointer, or 0.
+    wEventUnitSlot2Pointer .word ? ; $001724
     wEventUnitSlot1XCoordinate .word ? ; $001726
     wEventUnitSlot1YCoordinate .word ? ; $001728
     wEventUnitSlot2XCoordinate .word ? ; $00172A
     wEventUnitSlot2YCoordinate .word ? ; $00172C
     wEventEngineTruthFlag      .word ? ; $00172E
-    wUnknown001730 .word ? ; $001730
+      ; The script's condition: set by the TEST_ commands and some ASMCs, read by
+      ; JUMP_TRUE, JUMP_FALSE and the relative jumps.
+    wEventSavedGameStateRoutine1 .word ? ; $001730
+      ; wGameStateRoutine1 when the script began (rlEventEngineBeginScript); nothing reads it.
     wUnknown001732 .word ? ; $001732
 
   .endvirtual
@@ -1514,6 +1520,7 @@
     wActiveEventOffset  .word ?       ; $001736
     lActiveEventPointer .long ?       ; $001738
     wActiveEventLength  .word ?       ; $00173B
+      ; Offset just after the script's SKIP_POINT, or 0 (rsGetEventLength).
     .byte ?                           ; $00173D
     wEventMapScrollScript .long ?     ; $00173E
     wEventMapScrollSpeed .word ?      ; $001741

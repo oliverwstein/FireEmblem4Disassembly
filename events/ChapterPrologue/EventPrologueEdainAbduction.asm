@@ -14,7 +14,7 @@
     YIELD
 
     ; This sets a scripted siege attack(?)
-    RUN_EVENT_CONDITION_UNSKIPPABLE
+    RUN_EVENT_CONDITION_AND_WAIT
       SET_SCRIPTED_ACTION Munnir, [33, 25], $0B, Midir
       .word <>_ScriptedBattle
     YIELD
@@ -106,7 +106,7 @@
     RUN_EVENT_CONDITION
       SET_LOCATION_TAKEOVER FS_PrologueEvans, ChP_Yngvi
 
-    RUN_EVENT_CONDITION_UNSKIPPABLE
+    RUN_EVENT_CONDITION_AND_WAIT
       SET_SCRIPTED_ACTION DiMaggio, [33, 25], $06, $FFFF
     YIELD
 

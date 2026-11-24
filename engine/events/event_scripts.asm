@@ -31,6 +31,11 @@
         .autsiz
         .databank ?
 
+        ; Event engine state 0, the frame after rlStartEventScript: moves to state 1,
+        ; clears the event's menu windows, records the skip point (rsGetEventLength),
+        ; frees the event procs, the moving map sprites and every active sprite, and runs
+        ; the script's first commands at once.
+
         php
         rep #$30
         inc wEventEngineState,b
@@ -41,7 +46,7 @@
         jsl rlActiveSpriteEngineClearAllSprites
 
         lda wGameStateRoutine1,b
-        sta wUnknown001730,b
+        sta wEventSavedGameStateRoutine1,b
 
         stz wR26
 
@@ -203,7 +208,10 @@
         .autsiz
         .databank ?
 
-        ; Polls blocking event procs in wEventProcBanks and clears finished slots
+        ; Polls blocking event procs in wEventProcBanks and clears finished slots: a slot
+        ; whose proc slot no longer holds the same proc definition has ended. Sets $0002
+        ; of wEventEngineFlags if no blocking proc is still alive. The table is indexed
+        ; like the proc engine's 16 slots.
 
         lda #$0002
         tsb wEventEngineFlags,b
@@ -343,7 +351,7 @@
         .word <>rsEventCommandWMHighlight
         .word <>rsEventCommandWMClearHighlight
         .word <>rsEventCommandDemoAllowSkip
-        .word <>rsEventCommandOpenMapBattle
+        .word <>rsEventCommandOpenTitleScreen
         .word $0000               ; $5F
 
       rlRunEventCommand ; 91/A5CA
@@ -351,6 +359,11 @@
         .al
         .autsiz
         .databank `aEventCommandPointers
+
+        ; Event engine state 1, every frame: returns at once while an event proc the script
+        ; is waiting for is alive. Otherwise runs commands from wActiveEventOffset until one
+        ; returns carry set or a YIELD ($FD), stepping over SKIP_POINT ($FEFE); END_EVENT
+        ; ($FFFF) sets state 2.
 
         phb
         php
@@ -3255,7 +3268,7 @@
         bcs +
 
           lda wSelectedUnitDataRAMPointer,b
-          sta wEventUnitSlot1ID,b
+          sta wEventUnitSlot1Pointer,b
           jsl rlGetSelectedUnitDeploymentOffset
 
           tax
@@ -3269,7 +3282,7 @@
         lda #$FFFF
         sta wEventUnitSlot1XCoordinate
         sta wEventUnitSlot1YCoordinate
-        stz wEventUnitSlot1ID,b
+        stz wEventUnitSlot1Pointer,b
 
         +
         rtl
@@ -3286,7 +3299,7 @@
         bcs +
 
           lda wSelectedUnitDataRAMPointer,b
-          sta wEventUnitSlot2ID,b
+          sta wEventUnitSlot2Pointer,b
           jsl rlGetSelectedUnitDeploymentOffset
 
           tax
@@ -3300,7 +3313,7 @@
         lda #$FFFF
         sta wEventUnitSlot2XCoordinate
         sta wEventUnitSlot2YCoordinate
-        stz wEventUnitSlot2ID,b
+        stz wEventUnitSlot2Pointer,b
         
         +
         rtl
@@ -3313,7 +3326,7 @@
         .autsiz
         .databank ?
 
-        ; 3rd value => 0 = wEventUnitSlot1ID, 1 = wEventUnitSlot2ID
+        ; 3rd value => 0 = wEventUnitSlot1Pointer, 1 = wEventUnitSlot2Pointer
 
         php
         lda [lR22],y
@@ -3332,11 +3345,11 @@
 
         bne +
 
-        stz wEventUnitSlot1ID,b
+        stz wEventUnitSlot1Pointer,b
         bra ++
 
         +
-        stz wEventUnitSlot2ID,b
+        stz wEventUnitSlot2Pointer,b
 
         +
         inc y
@@ -3351,11 +3364,11 @@
         cpx #0
         bne +
 
-        sta wEventUnitSlot1ID,b
+        sta wEventUnitSlot1Pointer,b
         bra _End
 
         +
-        sta wEventUnitSlot2ID,b
+        sta wEventUnitSlot2Pointer,b
 
         _End
         ply 
@@ -3812,7 +3825,7 @@
         .autsiz
         .databank ?
 
-        ; RUN_EVENT_CONDITION_UNSKIPPABLE
+        ; RUN_EVENT_CONDITION_AND_WAIT
 
         php
         phb
@@ -4420,7 +4433,7 @@
 
         .databank 0
 
-      rsEventCommandOpenMapBattle ; 91/CE02
+      rsEventCommandOpenTitleScreen ; 91/CE02
 
         .al
         .autsiz
@@ -5262,6 +5275,8 @@
         .autsiz
         .databank ?
 
+        ; Unreferenced, with rlProcEventWaitMusicEndCycle and its code: no proc
+        ; definition points here (procEventWaitMapBattleEnd uses the map battle routines).
         ; Empty rtl init
 
         rtl
@@ -5290,7 +5305,7 @@
 
         PROC_HALT
 
-      procEventWaitMapBattleEndAlt ; 82/8AD9
+      procEventWaitMapBattleEndAlt ; 82/8B09
 
         .structProcInfo "ME", rlProcEventWaitMapBattleEndInit, rlProcEventWaitMapBattleEndCycle, aProcEventWaitMapBattleEndCode
 

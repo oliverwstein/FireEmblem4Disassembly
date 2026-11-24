@@ -5,7 +5,7 @@
       REGISTER_UNITGROUP_MAP_SPRITES UNITGroupChapter08Opening
 
     SET_CAMERA_POSITION [41, 2]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
 
     _UnitList1 := [aUNITGroupDataChapter08Opening.ID_02]
     _UnitList1..= [aUNITGroupDataChapter08Opening.ID_03]
@@ -195,7 +195,7 @@
 
       ; 8F/B990
 
-      EVENT_DUMMY
+      SKIP_POINT
 
       FADE_OUT_BY_TIMER 1
       YIELD
@@ -230,7 +230,7 @@
 
       ; 8F/B9EC
       SET_CAMERA_POSITION [0, 29]
-      EVENT_3B $01
+      RELOAD_MAP_SCREEN $01
       YIELD
 
       JUMP +

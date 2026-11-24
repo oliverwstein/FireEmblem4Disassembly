@@ -19,7 +19,7 @@
 
       SET_CAMERA_POSITION [48, 4]
 
-      EVENT_3B $80
+      RELOAD_MAP_SCREEN $80
 
       PAUSE 3
       YIELD

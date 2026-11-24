@@ -61,7 +61,7 @@
       UPDATE_LOCATION_AND_MAP_CHANGE_EVENTS
 
     SET_CAMERA_POSITION [1, 47]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     PLAY_SONG $76
     YIELD
 
@@ -322,9 +322,9 @@
       sta lStructPointer2,b
       jsl rlAppendNewStructEntry
 
-      lda wEventUnitSlot1ID,b
+      lda wEventUnitSlot1Pointer,b
       sta wR0
-      lda wEventUnitSlot2ID,b
+      lda wEventUnitSlot2Pointer,b
       sta wR1
       jsl rlStartScriptedMapBattleAnimation
       jsl rlCreateProcHaltEvent

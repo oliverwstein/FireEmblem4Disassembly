@@ -2,7 +2,7 @@
   aEventChapter03Opening ; 9D/8703
 
     SET_CAMERA_POSITION [33, 24]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     FADE_IN_BY_TIMER 3
     CASTLE_NAME dialogueCastleNameMadino, CASLTE_NAME_RED, 150
     YIELD
@@ -68,12 +68,12 @@
 
       ; 9D/8782
 
-      EVENT_DUMMY
+      SKIP_POINT
       FADE_OUT_BY_TIMER 1
       YIELD
 
       SET_CAMERA_POSITION [28, 50]
-      EVENT_3B 1
+      RELOAD_MAP_SCREEN 1
       YIELD
       JUMP _8790
 

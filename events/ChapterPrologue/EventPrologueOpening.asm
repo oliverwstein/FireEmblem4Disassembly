@@ -13,7 +13,7 @@
 
     SET_CAMERA_POSITION [26, 17]
 
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
 
     PAUSE 2
     YIELD
@@ -114,7 +114,7 @@
 
     ; B1/8131
 
-      EVENT_DUMMY
+      SKIP_POINT
 
       FADE_OUT_BY_TIMER 1
       YIELD
@@ -130,7 +130,7 @@
         DEPLOY_UNIT_GROUP UNITGroupPrologueStart
 
       SET_CAMERA_POSITION [48, 5]
-      EVENT_3B 1
+      RELOAD_MAP_SCREEN 1
       YIELD
 
       JUMP _815A

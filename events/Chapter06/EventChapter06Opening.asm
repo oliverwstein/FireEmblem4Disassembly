@@ -30,7 +30,7 @@
     .endfor
 
     SET_CAMERA_POSITION [48, 8]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     PAUSE 2
     YIELD
 
@@ -200,7 +200,7 @@
 
     JUMP _D0BA
 
-      EVENT_DUMMY
+      SKIP_POINT
       FADE_OUT_BY_TIMER 1
       YIELD
 
@@ -230,7 +230,7 @@
         DEPLOY_UNIT_GROUP UNITGroupChapter06Ganeishire
 
       SET_CAMERA_POSITION [0, 0]
-      EVENT_3B $01
+      RELOAD_MAP_SCREEN $01
       YIELD
 
       JUMP _D0BD

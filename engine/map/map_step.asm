@@ -1757,13 +1757,15 @@
 
         .databank 0
 
-      rlShowQueuedSeizePopUpUnused ; 81/B1ED
+      rlASMCShowQueuedSeizePopUp ; 81/B1ED
 
         .al
         .autsiz
         .databank ?
 
-        ; Nothing reaches this. A variant of rsRelocateShowSeizePopUp that creates the seize popup as an event proc.
+        ; An ASMC: the seize scripts of Chapters 3 (Madino) and 5 (Phinora) run it. A variant
+        ; of rsRelocateShowSeizePopUp that creates the queued seize popup as an event proc,
+        ; so the script waits for it.
 
         lda wUnitRelocationDeploymentOffset,b
         bmi _End

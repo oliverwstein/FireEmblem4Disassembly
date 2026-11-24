@@ -78,7 +78,7 @@
       GIVE_UNIT_PID_FORCED AdultFinn, PI_IronLance4
 
     SET_CAMERA_POSITION [48, 21]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
     PAUSE 2
     YIELD
 

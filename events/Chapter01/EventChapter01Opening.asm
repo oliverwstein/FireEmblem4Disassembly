@@ -6,7 +6,7 @@
 
       SET_CAMERA_POSITION [7, 0]
 
-      EVENT_3B $80
+      RELOAD_MAP_SCREEN $80
 
       FADE_IN_BY_TIMER 3
 

@@ -471,7 +471,8 @@
         .autsiz
         .databank ?
 
-        ; Clear fades, main-loop fade proc, unit/terrain/map windows, and dialogue HDMA
+        ; Clear fades, main-loop fade proc, unit/terrain/map windows, and dialogue HDMA.
+        ; Only rsCheckSkipActiveEventUnused calls it.
 
         php
         jsl rlClearAllFadeProcs
@@ -496,13 +497,15 @@
 
         .databank 0
 
-      rsCheckSkipActiveEvent ; 91/A69D
+      rsCheckSkipActiveEventUnused ; 91/A69D
 
         .al
         .autsiz
         .databank ?
 
-        ; Skip active event on Start press: clear UI/event procs, reset state, return sec
+        ; Unreferenced (nothing calls it, and the CDL never ran it). On a Start press,
+        ; before the script's SKIP_POINT, clears the fades, windows and event procs and
+        ; moves the script to the offset after the skip point; returns carry set.
 
         lda wJoy1New
         bit #JOY_Start

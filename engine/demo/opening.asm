@@ -44,7 +44,7 @@
         RUN_ASM rlASMCClearDemoDeployments
         RUN_ASM rlASMCSetOpeningMapChapter9
         SET_CAMERA_POSITION [0, 7]
-        EVENT_3B $80
+        RELOAD_MAP_SCREEN $80
         PAUSE $0005
         YIELD
         RUN_ASM rlASMCSetUpOpeningSkyScene
@@ -98,7 +98,7 @@
         YIELD
         RUN_ASM rlASMCSetDemoIndexOdd
         RUN_ASM rlASMCLoadDemoMapScene
-        EVENT_3B $80
+        RELOAD_MAP_SCREEN $80
         RUN_ASM rlASMCClearDemoDeployments
         RUN_ASM rlASMCPlaceDemoSceneSprites
         PAUSE $0014
@@ -166,7 +166,7 @@
         FADE_OUT_BY_TIMER $04
         YIELD
         RUN_ASM rlASMCLoadDemoMapScene
-        EVENT_3B $80
+        RELOAD_MAP_SCREEN $80
         RUN_ASM rlASMCClearDemoDeployments
         RUN_ASM rlASMCPlaceDemoSceneSprites
         PAUSE $0014
@@ -191,7 +191,7 @@
         YIELD
         RUN_ASM rlASMCSetOpeningMapChapter11
         SET_CAMERA_POSITION [35, 17]
-        EVENT_3B $80
+        RELOAD_MAP_SCREEN $80
         RUN_ASM rlASMCClearDemoDeployments
         RUN_ASM rlASMCPlaceOpeningFinalSceneSprites
         PAUSE $0014

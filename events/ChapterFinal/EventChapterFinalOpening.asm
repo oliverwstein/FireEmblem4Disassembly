@@ -5,7 +5,7 @@
       REGISTER_UNITGROUP_MAP_SPRITES UNITGroupChapterFinalOpening
 
     SET_CAMERA_POSITION [48, 0]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
 
     PAUSE 2
     YIELD
@@ -83,7 +83,7 @@
     DIALOGUE_WITH_BG dialogueChapterFinalOpening2, DIALOGUE_BG_HALLWAY, 5, 2
     YIELD
 
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
 
     PAUSE 2
     YIELD
@@ -145,7 +145,7 @@
 
     JUMP _DF00
 
-      EVENT_DUMMY
+      SKIP_POINT
       FADE_OUT_BY_TIMER 1
       YIELD
 
@@ -153,7 +153,7 @@
         DEPLOY_UNIT_GROUP UNITGroupChapterFinalOpening
 
       SET_CAMERA_POSITION [26, 50]
-      EVENT_3B $01
+      RELOAD_MAP_SCREEN $01
       YIELD
 
       JUMP +

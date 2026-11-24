@@ -8,7 +8,7 @@
       REGISTER_UNITGROUP_MAP_SPRITES UNITGroupChapter10Opening2
 
     SET_CAMERA_POSITION [28, 42]
-    EVENT_3B $80
+    RELOAD_MAP_SCREEN $80
 
     _UnitList1 := [aUNITGroupDataChapter10Opening1.ID_22]
     _UnitList1..= [aUNITGroupDataChapter10Opening1.ID_23]
