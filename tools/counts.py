@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Print the project's progress numbers. Every doc quotes these, and only these.
 
-usage: tools/counts.py [--fast]
+usage: tools/counts.py [--fast] [--breakdown]
 
 Prints:
   - coverage: ROM bytes built from source (the two-fill test of ./build.sh
@@ -16,8 +16,10 @@ Prints:
     that end in a question mark.
 
 --fast skips the coverage builds.
+--breakdown prints per-folder and per-file Unknown counts under engine/.
 """
 import argparse
+import collections
 import glob
 import os
 import re
@@ -105,9 +107,32 @@ def notes():
     print(f'  comments ending in "?": {questions}')
 
 
+def breakdown():
+    by_dir = collections.defaultdict(lambda: [0, 0])
+    by_file = collections.defaultdict(lambda: [0, 0])
+    for f in sorted(glob.glob('engine/**/*.asm', recursive=True)):
+        d = f.split('/')[1]
+        for l in open(f, encoding='utf-8'):
+            m = TOP.match(l)
+            if m:
+                is_u = 'Unknown' in m.group(1)
+                by_dir[d][0] += 1
+                by_dir[d][1] += is_u
+                by_file[f][0] += 1
+                by_file[f][1] += is_u
+    print('\nUnknowns by folder:')
+    for d, (t, u) in sorted(by_dir.items(), key=lambda kv: (-kv[1][1], kv[0])):
+        print(f'  {d:16s} {u:4d} Unknown / {t:4d} total ({t - u:4d} named)')
+        files = [(f, ft, fu) for f, (ft, fu) in by_file.items()
+                 if f.startswith(f'engine/{d}/') and fu]
+        for f, ft, fu in sorted(files, key=lambda item: (-item[2], item[0])):
+            print(f'    {os.path.basename(f):32s} {fu:4d} / {ft:4d}')
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--fast', action='store_true', help='skip the coverage builds')
+    ap.add_argument('--breakdown', action='store_true', help='print per-folder and per-file Unknown counts')
     args = ap.parse_args()
     os.chdir(ROOT)
     if not args.fast:
@@ -116,6 +141,8 @@ def main():
     routines()
     pinned()
     notes()
+    if args.breakdown:
+        breakdown()
 
 
 if __name__ == '__main__':
