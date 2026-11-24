@@ -10048,6 +10048,7 @@
 
         ; 9E/CE9E
 
+      aProcMapBattleHalt ; 9E/CE9E
 
         PROC_HALT
 

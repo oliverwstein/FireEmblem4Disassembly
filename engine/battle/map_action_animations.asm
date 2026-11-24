@@ -38,7 +38,7 @@
 
       procVillageRaid ; 9E/9A43
 
-        .structProcInfo "ON", rlProcVillageRaidInit, rlProcUnknown9E9A43Cycle1, aProcVillageRaidCode
+        .structProcInfo "ON", rlProcVillageRaidInit, rlProcVillageRaidQueueGraphics, aProcVillageRaidCode
 
     .endsection ProcScript9E9A43Section
 
@@ -85,7 +85,7 @@
         lda wDeathQuotePointer+1
         jsl rlGetItemDataROMPointer
         jsl rlGetItemWeaponType
-        sta $454A,b
+        sta <>aMapAction.wAttackerWeaponType,b
         lda #$0000
         sta <>aMapAction.wDefenderSpriteRow,b
         sta <>aMapAction.wDefenderXTile,b
@@ -106,11 +106,11 @@
         .databank ?
         lda aMapAction.wAttackerYTile
         clc
-        adc aUnknown9E9B50+2,x
+        adc aVillageRaidFireTileOffsets+2,x
         tay
         lda aMapAction.wAttackerXTile
         clc
-        adc aUnknown9E9B50,x
+        adc aVillageRaidFireTileOffsets,x
         tax
         lda aActionStructUnit1.UnitRAMPointer
         jsl rlGetMapBattleUnitScreenPosition
@@ -136,9 +136,9 @@
         sta aActionStructUnit1.ClassID
         lda wDeathQuotePointer+1
         sta aActionStructUnit1.WeaponID
-        lda #$8100
+        lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta @l $0015E5
-        lda #$841B
+        lda #<>rlPushToOAMBufferDualTileBase
         sta @l $0015E4
         plx
         lda @l $000302
@@ -161,7 +161,7 @@
       .al
       .xl
 
-      aUnknown9E9B50 ; 9E/9B50
+      aVillageRaidFireTileOffsets ; 9E/9B50
 
         ; Read by rlProcVillageRaidInit.
 
@@ -178,7 +178,7 @@
       .al
       .xl
 
-      rlProcUnknown9E9A43Cycle4 ; 9E/9B68
+      rlProcVillageRaidWaitRoundStart ; 9E/9B68
 
         .al
         .xl
@@ -187,7 +187,7 @@
 
         lda aMapAction.wMapBattleRoundRunning
         beq _9B74
-        lda #<>rlUnknown9E9B82
+        lda #<>rlProcVillageRaidRunRound
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9B74
@@ -211,7 +211,7 @@
       .al
       .xl
 
-      rlUnknown9E9B82 ; 9E/9B82
+      rlProcVillageRaidRunRound ; 9E/9B82
 
         .al
         .xl
@@ -220,7 +220,7 @@
 
         lda aMapAction.wMapBattleRoundRunning
         bne _9B97
-        lda #<>rlUnknown9E9BAD
+        lda #<>rlProcVillageRaidFinishRound
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -231,8 +231,8 @@
         beq _9BAC
         lda #$0000
         sta aMapAction.wMapBattleStrikeSignal
-        jsl rlUnknown9E9E61
-        jsl rlUnknown9E9C70
+        jsl rlVillageRaidCreateFireSprite
+        jsl rlVillageRaidStartFireEffect
 
         _9BAC
         rtl
@@ -241,7 +241,7 @@
 
         ; 9E/9BAD
 
-      rlUnknown9E9BAD ; 9E/9BAD
+      rlProcVillageRaidFinishRound ; 9E/9BAD
 
         .al
         .xl
@@ -255,14 +255,14 @@
         beq _9BC8
         lda #$0000
         sta aMapAction.wMapBattleRoundRunning
-        lda #<>rlUnknown9E9BE0
+        lda #<>rlProcVillageRaidIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _9BDE
 
 
         _9BC8
         jsl rlMapBattleEndRoundScripts
-        lda #<>rlUnknown9E9BE0
+        lda #<>rlProcVillageRaidIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -277,7 +277,7 @@
 
         ; 9E/9BE0
 
-      rlUnknown9E9BE0 ; 9E/9BE0
+      rlProcVillageRaidIdle ; 9E/9BE0
 
         .al
         .xl
@@ -304,13 +304,13 @@
         PROC_CALL rlCheckMapMagicDecompressionDone
         PROC_JUMP_IF_BITS_UNSET aProcVillageRaidCode, $0001
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown9E9A43Cycle2
+        PROC_SET_ONCYCLE rlProcVillageRaidQueueSpriteData
         PROC_YIELD 16
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
-        PROC_CALL rlUnknown9E9D3B
+        PROC_CALL rlMapActionQueueWeaponIconGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown9E9D76
+        PROC_CALL rlMapActionUploadWeaponIconGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_YIELD 2
@@ -325,9 +325,9 @@
         PROC_YIELD 2
         _9C2F
         PROC_YIELD 8
-        PROC_CALL rlUnknown9E9E10
+        PROC_CALL rlVillageRaidStartRound
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown9E9A43Cycle4
+        PROC_SET_ONCYCLE rlProcVillageRaidWaitRoundStart
         _9C3C
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _9C3C, $0002
@@ -356,7 +356,7 @@
       .al
       .xl
 
-      rlUnknown9E9C70 ; 9E/9C70
+      rlVillageRaidStartFireEffect ; 9E/9C70
 
         .al
         .xl
@@ -369,7 +369,7 @@
         lda wBattleSong
         cmp #$0006
         bcs _9C93
-        jsl rlUnknown9F9217
+        jsl rlStartMapMagicVillageFire
         sta $7F57EE
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -390,7 +390,7 @@
       .al
       .xl
 
-      rlUnknown9E9C94 ; 9E/9C94
+      rlVillageRaidWaitFireEffect ; 9E/9C94
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -408,7 +408,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$9BE0
+        lda #<>rlProcVillageRaidIdle
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9CB7
@@ -425,7 +425,7 @@
       .al
       .xl
 
-      rlProcUnknown9E9A43Cycle1 ; 9E/9CB9
+      rlProcVillageRaidQueueGraphics ; 9E/9CB9
 
         .al
         .xl
@@ -496,7 +496,7 @@
         jsl rlAppendDecompList
         ply
         plx
-        lda #<>rlUnknown9E9BE0
+        lda #<>rlProcVillageRaidIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -512,11 +512,13 @@
       .al
       .xl
 
-      rlUnknown9E9D3B ; 9E/9D3B
+      rlMapActionQueueWeaponIconGraphics ; 9E/9D3B
 
         .al
         .autsiz
         .databank ?
+
+        ; Decompresses map action effect OAM graphics to aDecompressionBuffer+$2000/$3000.
 
         phx
         lda #(`gcUnknownD676F6)<<8
@@ -557,12 +559,14 @@
       .al
       .xl
 
-      rlUnknown9E9D76 ; 9E/9D76
+      rlMapActionUploadWeaponIconGraphics ; 9E/9D76
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Uploads the decompressed effect OAM tiles and aMapActionEffectOAMPalette.
 
         phy
         phx
@@ -590,7 +594,7 @@
         ldy #$01C0
 
         _9DA6
-        lda aUnknown9E9DB9,x
+        lda aMapActionEffectOAMPalette,x
         sta aBGPaletteBuffer,b,y
         inc y
         inc y
@@ -614,9 +618,9 @@
       .al
       .xl
 
-      aUnknown9E9DB9 ; 9E/9DB9
+      aMapActionEffectOAMPalette ; 9E/9DB9
 
-        ; Read by rlUnknown9E9D76.
+        ; Read by rlMapActionUploadWeaponIconGraphics.
 
         .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
         .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
@@ -631,7 +635,7 @@
       .al
       .xl
 
-      rlProcUnknown9E9A43Cycle2 ; 9E/9DD9
+      rlProcVillageRaidQueueSpriteData ; 9E/9DD9
 
         .al
         .xl
@@ -654,7 +658,7 @@
         jsl rlMapBattleQueueSpriteData
         plx
         ply
-        lda #<>rlUnknown9E9BE0
+        lda #<>rlProcVillageRaidIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -662,7 +666,7 @@
 
         ; 9E/9E10
 
-      rlUnknown9E9E10 ; 9E/9E10
+      rlVillageRaidStartRound ; 9E/9E10
 
         .al
         .xl
@@ -718,7 +722,7 @@
       .al
       .xl
 
-      rlUnknown9E9E61 ; 9E/9E61
+      rlVillageRaidCreateFireSprite ; 9E/9E61
 
         .al
         .xl
@@ -781,7 +785,7 @@
       .al
       .xl
 
-      rlUnknown9E9ECF ; 9E/9ECF
+      rlVillageRaidSetupGoldPopup ; 9E/9ECF
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -826,7 +830,7 @@
 
         ; 9E/9F13
 
-      rlUnknown9E9F13 ; 9E/9F13
+      rlVillageRaidCheckPopupDone ; 9E/9F13
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -1018,7 +1022,7 @@
         _AD6E
         PROC_CALL rlMapBattleRestoreMusic
         PROC_YIELD 16
-        PROC_SET_ONCYCLE rlUnknown9EAD7B
+        PROC_SET_ONCYCLE rlProcMapActionRewardsRestoreGraphics
         PROC_HALT
 
         ; AD7B
@@ -1031,7 +1035,7 @@
       .al
       .xl
 
-      rlUnknown9EAD7B ; 9E/AD7B
+      rlProcMapActionRewardsRestoreGraphics ; 9E/AD7B
 
         .al
         .xl
@@ -1039,7 +1043,7 @@
         .databank ?
 
         phx
-        lda #$CE9E
+        lda #<>aProcMapBattleHalt
         sta aProcSystem.aHeaderCodeOffset,b,x
         lda #$0001
         sta aProcSystem.aHeaderSleepTimer,b,x
@@ -1062,7 +1066,7 @@
         plb
         .databank ?
         plx
-        lda #<>rlUnknown9EADB4
+        lda #<>rlProcMapActionRewardsEnd
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -1078,7 +1082,7 @@
       .al
       .xl
 
-      rlUnknown9EADB4 ; 9E/ADB4
+      rlProcMapActionRewardsEnd ; 9E/ADB4
 
         ; Found by tools/sweep.py.
         .al
@@ -1138,7 +1142,7 @@
 
       procReturnHome ; 9E/D089
 
-        .structProcInfo "ON", rlProcReturnHomeInit, rlUnknown9ED2B5, aProcReturnHomeCode
+        .structProcInfo "ON", rlProcReturnHomeInit, rlProcReturnHomeQueueGraphics, aProcReturnHomeCode
 
       rlProcReturnHomeInit ; 9E/D091
 
@@ -1184,7 +1188,7 @@
         sta <>aMapAction.wAttackerYTile,b
         lda #$FFFF
         jsl rlGetClassMapBattleWeaponType
-        sta $454A,b
+        sta <>aMapAction.wAttackerWeaponType,b
         lda #$FFFF
         sta aActionStructUnit1.WeaponID
         lda #$0000
@@ -1217,9 +1221,9 @@
         ora wR0
         sta wMapMagicCasterPixel
         sta wMapMagicTargetPixel
-        lda #$8100
+        lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta @l $0015E5
-        lda #$841B
+        lda #<>rlPushToOAMBufferDualTileBase
         sta @l $0015E4
         lda @l aActiveSpriteSystem
         sta wMapBattleSavedSpriteEngineFlag
@@ -1256,11 +1260,11 @@
         .autsiz
         .databank ?
 
-        ; On-cycle: once wMapMagicStart is set, moves on to rlUnknown9ED1BB; clears the active sprite sync flag.
+        ; On-cycle: once wMapMagicStart is set, moves on to rlProcWaitMapMagicDoneCycle; clears the active sprite sync flag.
 
         lda wMapMagicStart
         beq _D1AD
-        lda #<>rlUnknown9ED1BB
+        lda #<>rlProcWaitMapMagicDoneCycle
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _D1AD
@@ -1276,7 +1280,7 @@
 
         ; 9E/D1BB
 
-      rlUnknown9ED1BB ; 9E/D1BB
+      rlProcWaitMapMagicDoneCycle ; 9E/D1BB
 
         .al
         .xl
@@ -1285,7 +1289,7 @@
 
         lda wMapMagicDone
         beq _D1D0
-        lda #<>rlUnknown9ED1DE
+        lda #<>rlProcReturnHomeFinishMagic
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -1304,7 +1308,7 @@
 
         ; 9E/D1DE
 
-      rlUnknown9ED1DE ; 9E/D1DE
+      rlProcReturnHomeFinishMagic ; 9E/D1DE
 
         .al
         .xl
@@ -1312,7 +1316,7 @@
         .databank ?
 
         phx
-        lda #<>rlUnknown9ED1F3
+        lda #<>rlProcReturnHomeIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -1325,7 +1329,7 @@
 
         ; 9E/D1F3
 
-      rlUnknown9ED1F3 ; 9E/D1F3
+      rlProcReturnHomeIdle ; 9E/D1F3
 
         .al
         .xl
@@ -1351,16 +1355,16 @@
         PROC_YIELD 1
         PROC_CALL rlCheckMapMagicDecompressionDone
         PROC_JUMP_IF_BITS_UNSET aProcReturnHomeCode, $0001
-        PROC_SET_ONCYCLE rlUnknown9ED337
+        PROC_SET_ONCYCLE rlProcReturnHomeQueueSpriteData
         PROC_YIELD 56
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
-        PROC_CALL rlUnknown9E9D3B
+        PROC_CALL rlMapActionQueueWeaponIconGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown9E9D76
+        PROC_CALL rlMapActionUploadWeaponIconGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
-        PROC_CALL rlUnknown9ED401
+        PROC_CALL rlReturnHomeCopySpriteSlotsToDefender
         PROC_YIELD 2
         PROC_SET_ONCYCLE rlQueueMapMagicBackgroundAll
         PROC_YIELD 16
@@ -1385,7 +1389,7 @@
         PROC_YIELD 16
         _D270
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ED372
+        PROC_CALL rlReturnHomeStartMagicRound
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlProcWaitMapMagicStartCycle
         _D27D
@@ -1397,12 +1401,12 @@
         PROC_CALL rlEndMapMagicEffect
         PROC_CALL rlRestoreMapMagicScreenRegisters
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ED3C1
+        PROC_CALL rlEndReturnHomeSprites
         PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 4
         PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ED71E
+        PROC_CALL rlSignalMapAnimationDone
         PROC_END
 
 
@@ -1416,7 +1420,7 @@
       .al
       .xl
 
-      rlUnknown9ED2B5 ; 9E/D2B5
+      rlProcReturnHomeQueueGraphics ; 9E/D2B5
 
         .al
         .xl
@@ -1487,7 +1491,7 @@
         jsl rlAppendDecompList
         ply
         plx
-        lda #<>rlUnknown9ED1F3
+        lda #<>rlProcReturnHomeIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -1503,7 +1507,7 @@
       .al
       .xl
 
-      rlUnknown9ED337 ; 9E/D337
+      rlProcReturnHomeQueueSpriteData ; 9E/D337
 
         .al
         .autsiz
@@ -1526,7 +1530,7 @@
         lda #0
         jsl rlMapBattleQueueSpriteData
         plx
-        lda #<>rlUnknown9ED1F3
+        lda #<>rlProcReturnHomeIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         ply
         rtl
@@ -1543,7 +1547,7 @@
       .al
       .xl
 
-      rlUnknown9ED372 ; 9E/D372
+      rlReturnHomeStartMagicRound ; 9E/D372
 
         .al
         .xl
@@ -1599,13 +1603,15 @@
       .al
       .xl
 
-      rlUnknown9ED3C1 ; 9E/D3C1
+      rlEndReturnHomeSprites ; 9E/D3C1
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Frees the unit's sprites, resumes map animations, and restores the OAM/sprite engine state.
 
         phx
         lda aMapAction.wMapBattleAttackerSpriteSlot
@@ -1645,7 +1651,7 @@
       .al
       .xl
 
-      rlUnknown9ED401 ; 9E/D401
+      rlReturnHomeCopySpriteSlotsToDefender ; 9E/D401
 
         .al
         .xl
@@ -1670,7 +1676,7 @@
       .al
       .xl
 
-      rlUnknown9ED412 ; 9E/D412
+      rlReturnHomeFreeAttackerSprites ; 9E/D412
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -1720,7 +1726,7 @@
 
         .databank 0
 
-      procHolyWeaponShine .structProcInfo "ON", rlProcHolyWeaponShineInit, rlProcUnknown9ED441Cycle1, aProcHolyWeaponShineCode ; 9E/D441
+      procHolyWeaponShine .structProcInfo "ON", rlProcHolyWeaponShineInit, rlProcHolyWeaponShineQueueGraphics, aProcHolyWeaponShineCode ; 9E/D441
 
     .endsection Unsorted9ED42ASection
 
@@ -1752,8 +1758,8 @@
         sta wMapBattleMode
         sta wMapBattleStrikeDrains
         sta wMapAnimationSignals
-        sta $4C11,b
-        sta $4C13,b
+        sta <>wMapBattleAttackerBallista,b
+        sta <>wMapBattleDefenderBallista,b
 
         lda #$FFFF
         sta aMapAction.wMapBattleAttackerSpriteSlot
@@ -1768,39 +1774,39 @@
         lda aActionStructUnit1.CharacterID
         sta @l wR2
         jsl rlGetMapBattleClassSprite
-        sta $454E,b
+        sta <>aMapAction.wAttackerSpriteRow,b
         lda aActionStructUnit1.XPosition
-        sta $4552,b
+        sta <>aMapAction.wAttackerXTile,b
         lda aActionStructUnit1.YPosition
-        sta $4554,b
+        sta <>aMapAction.wAttackerYTile,b
 
         lda #$FFFF
         jsl rlGetClassMapBattleWeaponType
-        sta $454A,b
+        sta <>aMapAction.wAttackerWeaponType,b
 
         lda #$FFFF
         sta aActionStructUnit1.WeaponID
 
         lda #0
-        sta $4550,b
-        sta $4556,b
-        sta $4558,b
-        sta $454C,b
+        sta <>aMapAction.wDefenderSpriteRow,b
+        sta <>aMapAction.wDefenderXTile,b
+        sta <>aMapAction.wDefenderYTile,b
+        sta <>aMapAction.wDefenderWeaponType,b
 
         lda #$FFFF
         sta aActionStructUnit2.DeploymentNumber
 
         lda #6
-        sta $455E,b
-        sta $4560,b
+        sta <>aMapAction.wAttackerFacing,b
+        sta <>aMapAction.wDefenderFacing,b
 
         lda #0
-        sta $508F,b
-        sta $459E,b
+        sta <>wMapMagicFlags,b
+        sta <>aMapAction.wMapBattleRoundIndex,b
         sta $7E4F85
 
         lda #5
-        sta $4BF3,b
+        sta <>wMapBattleSkillEffect,b
 
         plb
         lda #(`rlPushToOAMBufferDualTileBase)<<8
@@ -1832,7 +1838,7 @@
       .al
       .xl
 
-      rlUnknown9ED528 ; 9E/D528
+      rlProcHolyWeaponShineFreeSprites ; 9E/D528
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -1841,8 +1847,8 @@
         .databank ?
 
         phx
-        jsl rlUnknown9ED72A
-        lda #$D535
+        jsl rlHolyWeaponShineFreeAttackerSprites
+        lda #<>rlProcHolyWeaponShineIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         plx
         rtl
@@ -1857,7 +1863,7 @@
       .al
       .xl
 
-      rlProcUnknown9ED441Cycle2 ; 9E/D535
+      rlProcHolyWeaponShineIdle ; 9E/D535
 
         .al
         .autsiz
@@ -1874,17 +1880,17 @@
         PROC_CALL rlCheckMapMagicDecompressionDone
         PROC_JUMP_IF_BITS_UNSET -, $0001
 
-        PROC_SET_ONCYCLE rlProcUnknown9ED441Cycle3
+        PROC_SET_ONCYCLE rlProcHolyWeaponShineQueueSpriteData
         PROC_YIELD 40
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
-        PROC_CALL rlUnknown9E9D3B
+        PROC_CALL rlMapActionQueueWeaponIconGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown9E9D76
+        PROC_CALL rlMapActionUploadWeaponIconGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_YIELD 2
-        PROC_CALL rlUnknown9ED6BA
+        PROC_CALL rlHolyWeaponShineClearRoundState
         PROC_YIELD 1
         PROC_CALL rlMapBattleStartSkillEffect
         PROC_SET_UNK_TIMER 96
@@ -1896,12 +1902,12 @@
 
         PROC_CALL rlMapBattleEndSkillEffect
         PROC_YIELD 16
-        PROC_CALL rlUnknown9ED6D6
+        PROC_CALL rlEndHolyWeaponShineSprites
         PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 4
         PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ED71E
+        PROC_CALL rlSignalMapAnimationDone
         PROC_END
 
       rlSetHolyWeaponShineUnit ; 9E/D5A1
@@ -1959,7 +1965,7 @@
       .al
       .xl
 
-      rlProcUnknown9ED441Cycle1 ; 9E/D609
+      rlProcHolyWeaponShineQueueGraphics ; 9E/D609
 
         .al
         .autsiz
@@ -2031,7 +2037,7 @@
         jsl rlAppendDecompList
         ply
         plx
-        lda #<>rlProcUnknown9ED441Cycle2
+        lda #<>rlProcHolyWeaponShineIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2045,7 +2051,7 @@
       .al
       .xl
 
-      rlProcUnknown9ED441Cycle3 ; 9E/D68B
+      rlProcHolyWeaponShineQueueSpriteData ; 9E/D68B
 
         .al
         .autsiz
@@ -2064,7 +2070,7 @@
         lda #0
         jsl rlMapBattleQueueSpriteData
         plx
-        lda #<>rlProcUnknown9ED441Cycle2
+        lda #<>rlProcHolyWeaponShineIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         ply
         rtl
@@ -2081,7 +2087,7 @@
       .al
       .xl
 
-      rlUnknown9ED6BA ; 9E/D6BA
+      rlHolyWeaponShineClearRoundState ; 9E/D6BA
 
         .al
         .xl
@@ -2112,7 +2118,7 @@
 
         ; 9E/D6D6
 
-      rlUnknown9ED6D6 ; 9E/D6D6
+      rlEndHolyWeaponShineSprites ; 9E/D6D6
 
         .al
         .xl
@@ -2152,12 +2158,14 @@
 
         ; 9E/D71E
 
-      rlUnknown9ED71E ; 9E/D71E
+      rlSignalMapAnimationDone ; 9E/D71E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets wMapAnimationSignals bit 1 to signal the calling event/state that the animation finished.
 
         lda wMapAnimationSignals
         ora #$0002
@@ -2176,7 +2184,7 @@
       .al
       .xl
 
-      rlUnknown9ED72A ; 9E/D72A
+      rlHolyWeaponShineFreeAttackerSprites ; 9E/D72A
 
         ; Found by tools/sweep.py.
         .al
@@ -2236,7 +2244,7 @@
 
       procGiveGold ; 9E/DAF6
 
-        .structProcInfo "ON", rlProcGiveGoldInit, rlProcUnknown9EDAF6Cycle1, aProcGiveGoldCode
+        .structProcInfo "ON", rlProcGiveGoldInit, rlProcGiveGoldQueueGraphics, aProcGiveGoldCode
 
     .endsection ProcScript9EDAF6Section
 
@@ -2289,7 +2297,7 @@
         sta <>aMapAction.wAttackerYTile,b
         lda #$FFFF
         jsl rlGetClassMapBattleWeaponType
-        sta $454A,b
+        sta <>aMapAction.wAttackerWeaponType,b
         lda #$FFFF
         sta aActionStructUnit1.WeaponID
         lda aActionStructUnit2.ClassID
@@ -2330,9 +2338,9 @@
         sta $7E4F85
         plb
         .databank ?
-        lda #$8100
+        lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta @l $0015E5
-        lda #$841B
+        lda #<>rlPushToOAMBufferDualTileBase
         sta @l $0015E4
         plx
         lda @l $000302
@@ -2347,7 +2355,7 @@
 
         ; 9E/DC09
 
-      rlProcUnknown9EDAF6Cycle1 ; 9E/DC09
+      rlProcGiveGoldQueueGraphics ; 9E/DC09
 
         .al
         .xl
@@ -2363,7 +2371,7 @@
 
         ; 9E/DC14
 
-      rlUnknown9EDC14 ; 9E/DC14
+      rlProcGiveGoldIdle ; 9E/DC14
 
         .al
         .xl
@@ -2389,7 +2397,7 @@
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET aProcGiveGoldCode, $0001
         PROC_YIELD 4
-        PROC_SET_ONCYCLE rlProcUnknown9EDAF6Cycle2
+        PROC_SET_ONCYCLE rlProcGiveGoldQueueSpriteData
         PROC_YIELD 32
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 2
@@ -2397,14 +2405,14 @@
         PROC_YIELD 2
         PROC_CALL rlCreateMapBattleDefenderSprites
         PROC_YIELD 2
-        PROC_CALL rlUnknown9EDD14
+        PROC_CALL rlGiveGoldClearRoundState
         PROC_YIELD 32
-        PROC_CALL rlUnknown9EDD97
+        PROC_CALL rlGiveGoldUploadCoinGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown9EDDE8
+        PROC_CALL rlGiveGoldCreateCoinSprite
         _DC4D
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EDE60
+        PROC_CALL rlGiveGoldWaitCoinSprite
         PROC_JUMP_IF_BITS_UNSET _DC4D, $0004
         PROC_YIELD 4
         PROC_SET_ONCYCLE rlMapBattleLoadHUD
@@ -2439,8 +2447,8 @@
         _DCC0
         PROC_CALL rlMapBattleRestoreMusic
         PROC_YIELD 16
-        PROC_CALL rlUnknown9EDD20
-        PROC_SET_ONCYCLE rlUnknown9EAD7B
+        PROC_CALL rlEndGiveGoldSprites
+        PROC_SET_ONCYCLE rlProcMapActionRewardsRestoreGraphics
         PROC_HALT
 
 
@@ -2454,7 +2462,7 @@
       .al
       .xl
 
-      rlProcUnknown9EDAF6Cycle2 ; 9E/DCD2
+      rlProcGiveGoldQueueSpriteData ; 9E/DCD2
 
         .al
         .xl
@@ -2479,7 +2487,7 @@
         lda #$0001
         jsl rlMapBattleQueueSpriteData
         plx
-        lda #<>rlUnknown9EDC14
+        lda #<>rlProcGiveGoldIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         ply
         rtl
@@ -2488,7 +2496,7 @@
 
         ; 9E/DD14
 
-      rlUnknown9EDD14 ; 9E/DD14
+      rlGiveGoldClearRoundState ; 9E/DD14
 
         .al
         .xl
@@ -2504,7 +2512,7 @@
 
         ; 9E/DD20
 
-      rlUnknown9EDD20 ; 9E/DD20
+      rlEndGiveGoldSprites ; 9E/DD20
 
         .al
         .xl
@@ -2566,12 +2574,14 @@
 
         ; 9E/DD97
 
-      rlUnknown9EDD97 ; 9E/DD97
+      rlGiveGoldUploadCoinGraphics ; 9E/DD97
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Uploads coin OAM tiles (g4bppUnknownAFC400) and aGiveGoldCoinOAMPalette to OAM palette 6.
 
         phx
         lda #(`g4bppUnknownAFC400)<<8
@@ -2593,7 +2603,7 @@
         ldx #$001E
 
         _DDBB
-        lda aUnknown9EDDC8,x
+        lda aGiveGoldCoinOAMPalette,x
         sta aOAMPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -2613,9 +2623,9 @@
       .al
       .xl
 
-      aUnknown9EDDC8 ; 9E/DDC8
+      aGiveGoldCoinOAMPalette ; 9E/DDC8
 
-        ; Read by rlUnknown9EDD97.
+        ; Read by rlGiveGoldUploadCoinGraphics.
 
         .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
         .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
@@ -2630,7 +2640,9 @@
       .al
       .xl
 
-      rlUnknown9EDDE8 ; 9E/DDE8
+      rlGiveGoldCreateCoinSprite ; 9E/DDE8
+
+        ; Creates the coin active sprite above the recipient unit.
 
         .al
         .xl
@@ -2645,9 +2657,9 @@
         sta $7F57EA
         lda aMapAction.lAttackerSpriteData+1
         sta $7F57EC
-        lda #(`aUnknown9EDE89)<<8
+        lda #(`aGiveGoldCoinSpriteData)<<8
         sta aMapAction.lAttackerSpriteData+1
-        lda #<>aUnknown9EDE89
+        lda #<>aGiveGoldCoinSpriteData
         sta aMapAction.lAttackerSpriteData
         lda aMapAction.wDefenderYTile
         tay
@@ -2655,16 +2667,16 @@
         tax
         lda aActionStructUnit2.UnitRAMPointer
         jsl rlGetMapBattleUnitScreenPosition
-        lda #(`aUnknown9EDF78)<<8
+        lda #(`aGiveGoldCoinSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EDF78
+        lda #<>aGiveGoldCoinSpriteInfo
         sta lR44
         ldx wR0
         lda wR1
         clc
         adc #$0002
         tay
-        lda #$DF78
+        lda #<>aGiveGoldCoinSpriteInfo
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
@@ -2686,7 +2698,7 @@
 
         ; 9E/DE60
 
-      rlUnknown9EDE60 ; 9E/DE60
+      rlGiveGoldWaitCoinSprite ; 9E/DE60
 
         .al
         .xl
@@ -2724,10 +2736,10 @@
       .al
       .xl
 
-      aUnknown9EDE89 ; 9E/DE89
+      aGiveGoldCoinSpriteData ; 9E/DE89
 
-        .word _DE89_Table - aUnknown9EDE89
-        .word _DE89_Script - aUnknown9EDE89
+        .word _DE89_Table - aGiveGoldCoinSpriteData
+        .word _DE89_Script - aGiveGoldCoinSpriteData
 
         _DE89_Frame00
           .word 1 ; sprite count
@@ -2790,17 +2802,17 @@
           .structSpriteEntry ( -13,  -21), $00, SpriteSmall, $006, 2, 0, false, false
 
         _DE89_Table
-          .word _DE89_Frame00 - aUnknown9EDE89
-          .word _DE89_Frame01 - aUnknown9EDE89
-          .word _DE89_Frame02 - aUnknown9EDE89
-          .word _DE89_Frame03 - aUnknown9EDE89
-          .word _DE89_Frame04 - aUnknown9EDE89
-          .word _DE89_Frame05 - aUnknown9EDE89
-          .word _DE89_Frame06 - aUnknown9EDE89
-          .word _DE89_Frame07 - aUnknown9EDE89
-          .word _DE89_Frame08 - aUnknown9EDE89
-          .word _DE89_Frame09 - aUnknown9EDE89
-          .word _DE89_Frame10 - aUnknown9EDE89
+          .word _DE89_Frame00 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame01 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame02 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame03 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame04 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame05 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame06 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame07 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame08 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame09 - aGiveGoldCoinSpriteData
+          .word _DE89_Frame10 - aGiveGoldCoinSpriteData
 
         _DE89_Script
           ACTIVE_SPRITE_TABLE_FRAME 4, 5
@@ -2824,10 +2836,10 @@
           ACTIVE_SPRITE_TABLE_FRAME 3, 10
           ACTIVE_SPRITE_END
 
-      aUnknown9EDF78 ; 9E/DF78
-        .word <>rlUnknown9EDF7E, <>rlUnknown9EDF7E, <>aUnknown9EDE89._DE89_Script
+      aGiveGoldCoinSpriteInfo ; 9E/DF78
+        .word <>rlGiveGoldCoinSpriteIdle, <>rlGiveGoldCoinSpriteIdle, <>aGiveGoldCoinSpriteData._DE89_Script
 
-      rlUnknown9EDF7E ; 9E/DF7E
+      rlGiveGoldCoinSpriteIdle ; 9E/DF7E
         rtl
 
     .endsection Data9EDE89Section

@@ -19,13 +19,15 @@
       .al
       .xl
 
-      rlUnknown9F9217 ; 9F/9217
+      rlStartMapMagicVillageFire ; 9F/9217
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Starts the village raid fire effect (called by rlVillageRaidStartFireEffect). Returns proc slot in A.
 
         phb
         phk

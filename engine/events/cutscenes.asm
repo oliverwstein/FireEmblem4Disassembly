@@ -852,7 +852,7 @@
 
       procWarpAway ; 9E/F24B
 
-        .structProcInfo "ON", rlProcWarpAwayInit, rlUnknown9ED2B5, aProcReturnHomeCode
+        .structProcInfo "ON", rlProcWarpAwayInit, rlProcReturnHomeQueueGraphics, aProcReturnHomeCode
 
       rlProcWarpAwayInit ; 9E/F253
 
@@ -1007,7 +1007,7 @@
 
       procWarpIn ; 9E/F37F
 
-        .structProcInfo "ON", rlProcWarpInInit, rlUnknown9ED2B5, aProcWarpInCode
+        .structProcInfo "ON", rlProcWarpInInit, rlProcReturnHomeQueueGraphics, aProcWarpInCode
 
       rlProcWarpInInit ; 9E/F387
 
@@ -1129,13 +1129,13 @@
         PROC_YIELD 1
         PROC_CALL rlUnknown9EF55B
         PROC_JUMP_IF_BITS_UNSET _F4A0, $0001
-        PROC_SET_ONCYCLE rlUnknown9ED337
+        PROC_SET_ONCYCLE rlProcReturnHomeQueueSpriteData
         PROC_YIELD 56
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
-        PROC_CALL rlUnknown9E9D3B
+        PROC_CALL rlMapActionQueueWeaponIconGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown9E9D76
+        PROC_CALL rlMapActionUploadWeaponIconGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_CALL rlUnknown9EF578
@@ -1153,7 +1153,7 @@
         PROC_YIELD 16
         _F4FA
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ED372
+        PROC_CALL rlReturnHomeStartMagicRound
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlProcWaitMapMagicStartCycle
         _F507
@@ -1175,12 +1175,12 @@
         _F53F
         PROC_YIELD 30
         _F541
-        PROC_CALL rlUnknown9ED3C1
+        PROC_CALL rlEndReturnHomeSprites
         PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 2
         PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ED71E
+        PROC_CALL rlSignalMapAnimationDone
         PROC_END
 
 
@@ -1394,7 +1394,7 @@
       aProcBelhallaAttackingMageCode ; 9E/F9E0
 
         PROC_YIELD 44
-        PROC_SET_ONCYCLE rlUnknown9ED337
+        PROC_SET_ONCYCLE rlProcReturnHomeQueueSpriteData
         PROC_YIELD 32
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 2
