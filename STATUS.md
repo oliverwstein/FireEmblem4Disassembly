@@ -45,7 +45,7 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5e
 
 ## Next session
 
-1. **Engine guide, Part I:** write Chapter 1 (*A unit is made of parts*) from `units.md`, then Chapters 2–5. Open question for the user: the introduction's "The data model: what a unit is" section already covers most of Part I (unit parts, pools, the item table, deployment, factions, limits); either cut it to a short preview or let the chapters go deeper than it.
+1. **Engine guide, Part I:** write Chapter 1 (*A unit is made of parts*) from `units.md`, then Chapters 2–5. The introduction's data-model section is now a short preview (`d829d5c`), so Part I owns that material. Its old list of limits (in `git show 9da974d:docs/guide/00-introduction.md`, "What the structures cost the design") is raw material for each chapter's closing limits.
 2. **Loose ends:**
    - Pad-test banks `$88`, `$9B`, and `$9F` (`./build.sh pad SECTION N`).
    - Fix `tools/songs.py` (stops at stale `aUnknown8A9D79`) before regenerating `audio/SONGS.md`, and investigate why `tools/stream_catalog.py` deleted catalog previews.
