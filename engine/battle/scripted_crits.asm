@@ -144,7 +144,7 @@
 
         ; lover crit?
         +
-        jsr rsUnknown87BC5C
+        jsr rsActionStructCheckForLoverCrit
         lda #2
         bcs _End
 
@@ -164,11 +164,13 @@
 
         .databank 0
 
-      rsUnknown87BC5C ; 87/BC5C
+      rsActionStructCheckForLoverCrit ; 87/BC5C
 
         .al
         .autsiz
         .databank ?
+
+        ; Checks if the unit's lover is adjacent and populates aAIAction targets for a lover crit.
 
         phx
         phy

@@ -3296,13 +3296,15 @@
       .al
       .xl
 
-      rlUnknown9E9320 ; 9E/9320
+      rlMapBattleSelectActiveUnitIfIdle ; 9E/9320
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Selects the active unit at the cursor if idle flags allow.
 
         phx
         lda bUnknown000E7B,b
@@ -10089,14 +10091,16 @@
 
         ; Unreferenced: nothing creates this proc.
 
-        .structProcInfo "ON", rlProcUnknown9ECEB9Init, rlProcUnknown9ECEB9Cycle, aProcUnknown9ECEB9Code
+        .structProcInfo "ON", rlProcCheckMapBattleHPWindowsInit, rlProcCheckMapBattleHPWindowsCycle, aProcUnknown9ECEB9Code
 
-      rlProcUnknown9ECEB9Init ; 9E/CEC1
+      rlProcCheckMapBattleHPWindowsInit ; 9E/CEC1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Empty init for procUnknown9ECEB9.
 
         rtl
 
@@ -10104,12 +10108,14 @@
 
         ; 9E/CEC2
 
-      rlProcUnknown9ECEB9Cycle ; 9E/CEC2
+      rlProcCheckMapBattleHPWindowsCycle ; 9E/CEC2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Stores whether either map battle HP window is busy into $7F45A0.
 
         jsl rlCheckMapBattleHPWindowLeftBusy
         sta aProcSystem.aBody0,b,x
@@ -10674,7 +10680,7 @@
         .autsiz
         .databank ?
 
-        ; Before a scripted critical (rlUnknown84DE36): ends the unit's action and plays the critical's effect (procScriptedCritEffect).
+        ; Before a scripted critical (rlStartCombatAnimation): ends the unit's action and plays the critical's effect (procScriptedCritEffect).
 
         lda #(`procScriptedCritStart)<<8
         sta lR44+1

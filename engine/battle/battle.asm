@@ -1681,7 +1681,7 @@
           bcs _End
 
         _DDF7
-        jsl rlUnknown84DE36
+        jsl rlStartCombatAnimation
         bra _End
 
         _DDFD
@@ -1727,7 +1727,7 @@
 
         .databank 0
 
-      rlUnknown84DE36 ; 84/DE36
+      rlStartCombatAnimation ; 84/DE36
 
         .al
         .autsiz
@@ -2942,14 +2942,14 @@
           jsr rsActionStructRoundTryProcPavise
           bcc +
 
-            jsr rsUnknown84E62C
+            jsr rsActionStructUseWeaponAndSteal
             lda structActionStructEntry.BattleBonusAtkDef,b,x
             sta wRoutineVariable1,b
             jsr rsActionStructRoundTryProcWrath
             jsr rsActionStructRoundTryProcCrit
             jsr rsActionStructRoundGetDamage
             jsr rsActionStructCheckForSolHealing
-            jsr rsUnknown84E6F6
+            jsr rsActionStructInflictDamageAndExp
 
         +
         clc
@@ -3149,11 +3149,13 @@
 
         .databank 0
 
-      rsUnknown84E62C ; 84/E62C
+      rsActionStructUseWeaponAndSteal ; 84/E62C
 
         .al
         .autsiz
         .databank ?
+
+        ; Decrements weapon durability, marks broken flag, and steals gold if unit has Steal.
 
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
@@ -3291,7 +3293,7 @@
 
         .databank 0
 
-      rsUnknown84E6F6 ; 84/E6F6
+      rsActionStructInflictDamageAndExp ; 84/E6F6
 
         .al
         .autsiz
@@ -3328,7 +3330,7 @@
         cmp #StatusCaptive
         bne +
 
-          jsr rsUnknown84EF13
+          jsr rsCaptureDefeatedUnitToCastle
 
         +
         lda @l wBattleType
@@ -3498,14 +3500,14 @@
           jsr rsActionStructRoundTryProcPavise
           bcc +
 
-            jsr rsUnknown84E62C
+            jsr rsActionStructUseWeaponAndSteal
             lda structActionStructEntry.BattleBonusAtkDef,b,x
             sta wRoutineVariable1,b
             jsr rsActionStructRoundTryProcWrath
             jsr rsActionStructRoundTryProcCrit
             jsr rsActionStructRoundGetDamage
             jsr rsActionStructCheckForSolHealing
-            jsr rsUnknown84E6F6
+            jsr rsActionStructInflictDamageAndExp
         
         +
         clc
@@ -3529,14 +3531,14 @@
           jsr rsActionStructRoundTryProcPavise
           bcc _End
           
-            jsr rsUnknown84E62C
+            jsr rsActionStructUseWeaponAndSteal
             lda structActionStructEntry.BattleBonusAtkDef,b,x
             sta wRoutineVariable1,b
             jsr rsActionStructRoundTryProcWrath
             jsr rsActionStructRoundTryProcCrit
             jsr rsActionStructRoundGetDamage
             jsr rsActionStructCheckForSolHealing
-            jsr rsUnknown84E6F6
+            jsr rsActionStructInflictDamageAndExp
 
             lda structActionStructEntry.UnitRAMPointer,b,y
             sta wSelectedUnitDataRAMPointer,b
@@ -3595,7 +3597,7 @@
         jsr rsActionStructRoundCheckIfHit
         bcc +
 
-          jsr rsUnknown84E62C
+          jsr rsActionStructUseWeaponAndSteal
           lda structActionStructEntry.UnitRAMPointer,b,y
           sta wSelectedUnitDataRAMPointer,b
           lda structActionStructEntry.CurrentHP,b,y
@@ -3628,7 +3630,7 @@
         lda #2
         tsb bBattleRoundFlags
         
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
 
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
@@ -3688,7 +3690,7 @@
         and #$00FF
         jsl rlGetItemROMDataByInventorySlot
         jsl rlApplyFortify
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
 
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
@@ -3721,7 +3723,7 @@
         lda #2
         tsb bBattleRoundFlags
         
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
 
         phx
         lda wTargetEventLocationEntry,b

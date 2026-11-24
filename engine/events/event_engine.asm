@@ -5542,7 +5542,7 @@
 
         bcs +
 
-          jsl rlUnknown84DE36
+          jsl rlStartCombatAnimation
 
         +
         rts

@@ -21,7 +21,7 @@
         ldy $CCDA,b
         lda #$0002
         tsb $CCDE,b
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
         phx
         lda $0000,b,y
         tax
@@ -71,7 +71,7 @@
         ldy $CCDA,b
         lda #$0002
         tsb $CCDE,b
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
         phx
         lda $0006,b,y
         sta wSelectedUnitDataRAMPointer,b
@@ -122,7 +122,7 @@
         ldy $CCDA,b
         lda #$0002
         tsb $CCDE,b
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
         lda $0006,b,y
         sta wSelectedUnitDataRAMPointer,b
         lda wTargetEventLocationEntry,b
@@ -216,13 +216,13 @@
         jsr rsActionStructRoundCheckIfHit
         bcc +
 
-          jsr rsUnknown84E62C
+          jsr rsActionStructUseWeaponAndSteal
           lda structActionStructEntry.BattleBonusAtkDef,b,x
           sta wRoutineVariable1,b
           jsr rsActionStructRoundTryProcWrath
           jsr rsActionStructRoundTryProcCrit
           jsr rsActionStructRoundGetDamage
-          jsr rsUnknown84E6F6
+          jsr rsActionStructInflictDamageAndExp
           lda structActionStructEntry.UnitRAMPointer,b,x
           sta wSelectedUnitDataRAMPointer,b
           jsl rlHealSelectedUnitsHP
@@ -245,7 +245,7 @@
         lda #2
         tsb bBattleRoundFlags
         
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
 
         lda wChapterFlags,b
         bit #$0040
@@ -267,7 +267,7 @@
         +
         lda structActionStructEntry.UnitRAMPointer,b,y
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown87AF46
+        jsl rlFindRescueDestinationTile
         bcc +
 
           jml _End
@@ -283,7 +283,7 @@
         tax
         jsl rlQueueRelocateUnitToCoords
         plx
-        jsr rsUnknown84EDAE
+        jsr rsStopGuardingCastleIfGuarding
 
         lda @l aEventMovement.wTargetXCoordinate
         sta @l $7E4F77
@@ -297,7 +297,7 @@
         bra +
 
         _ED3A
-        jsr rsUnknown84EDAE
+        jsr rsStopGuardingCastleIfGuarding
         lda structActionStructEntry.DeploymentNumber,b,x
         sta wUnitRelocationDeploymentOffset,b
         lda #UNIT_RELOCATION_RESCUED
@@ -351,11 +351,13 @@
 
         .databank 0
 
-      rsUnknown84EDAE ; 84/EDAE
+      rsStopGuardingCastleIfGuarding ; 84/EDAE
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears UnitStateGuardingCastle if the selected unit is guarding a castle.
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateGuardingCastle
@@ -414,7 +416,7 @@
 
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
 
         lda structActionStructEntry.UnitRAMPointer,b,y
         sta wSelectedUnitDataRAMPointer,b
@@ -471,7 +473,7 @@
         bra ++
         
         +
-        jsr rsUnknown84E62C
+        jsr rsActionStructUseWeaponAndSteal
         jsr rsActionStructInflictItemStatus
 
         lda structActionStructEntry.UnitRAMPointer,b,x
@@ -589,11 +591,13 @@
 
         .databank 0
 
-      rsUnknown84EF13 ; 84/EF13
+      rsCaptureDefeatedUnitToCastle ; 84/EF13
 
         .al
         .autsiz
         .databank ?
+
+        ; Relocates a defeated captive unit to the last chapter castle.
 
         phx
         jsl rlFindLastChapterCastleLocation
@@ -695,11 +699,13 @@
 
         .databank 0
 
-      rlUnknown84EFA5 ; 84/EFA5
+      rlGetDefeatedUnitCharacterID ; 84/EFA5
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns the defeated combatant's character ID from wBattleStatus, or 0 if neither died.
 
         phb
         php
@@ -746,12 +752,14 @@
       .al
       .xl
 
-      rlUnknown87AF46 ; 87/AF46
+      rlFindRescueDestinationTile ; 87/AF46
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Finds the nearest valid tile around the caster for the Rescue staff.
 
         phb
         php
@@ -783,7 +791,7 @@
         dec x
         dec x
         bpl _AF65
-        jsl rlUnknown87AFB6
+        jsl rlMaskRescueMovementCostMap
         lda aEventMovement.wDestinationXCoordinate
         sta aEventMovement.wStartingXCoordinate
         lda aEventMovement.wDestinationYCoordinate
@@ -814,12 +822,14 @@
 
         ; 87/AFB6
 
-      rlUnknown87AFB6 ; 87/AFB6
+      rlMaskRescueMovementCostMap ; 87/AFB6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Marks area-restricted and impassable tiles as $FF in the Rescue movement cost map.
 
         phb
         php

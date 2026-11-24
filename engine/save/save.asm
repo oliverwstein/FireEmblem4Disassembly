@@ -547,7 +547,7 @@
         adc #$0001
         sta lStructPointer2,b
         jsl rlAppendNewStructEntry
-        jsl rlUnknown84F9EE
+        jsl rlAddItemStatBonusIfRingByItemRAMStructEntry
         plx
         inc x
         inc x

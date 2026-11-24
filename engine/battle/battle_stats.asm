@@ -172,11 +172,13 @@
 
         .databank 0
 
-      rlUnknown84F9EE ; 84/F9EE
+      rlAddItemStatBonusIfRingByItemRAMStructEntry ; 84/F9EE
 
         .al
         .autsiz
         .databank ?
+
+        ; Long wrapper for rsAddItemStatBonusIfRingByItemRAMStructEntry.
 
         jsr rsAddItemStatBonusIfRingByItemRAMStructEntry
         rtl

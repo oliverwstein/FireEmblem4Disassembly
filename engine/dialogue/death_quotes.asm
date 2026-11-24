@@ -129,11 +129,11 @@
         .autsiz
         .databank ?
 
-        ; Runs rlUnknown84EFA5 and rlGetDeathQuote for map battle death quote
+        ; Runs rlGetDefeatedUnitCharacterID and rlGetDeathQuote for map battle death quote
 
         php
         phx
-        jsl rlUnknown84EFA5
+        jsl rlGetDefeatedUnitCharacterID
         jsl rlGetDeathQuote
         plx
         plp

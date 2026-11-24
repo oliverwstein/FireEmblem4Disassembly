@@ -172,7 +172,7 @@
       procUnknown87C70A ; 87/C70A
 
         ; BG2 HDMA ripple visual effect created by rlUnknown9FF947 in map_magic_effects.asm.
-        .structProcInfo "RP", rlUnknown87C712, rlUnknown87C7B4, aProcUnknown87C70ACode
+        .structProcInfo "RP", rlProcMapMagicRippleInit, rlProcMapMagicRippleUploadTiles, aProcUnknown87C70ACode
 
     .endsection Unsorted87C70ASection
 
@@ -182,12 +182,14 @@
       .al
       .xl
 
-      rlUnknown87C712 ; 87/C712
+      rlProcMapMagicRippleInit ; 87/C712
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Initializes BG2 ripple palette, tile decompression, and tilemap upload.
 
         lda aProcSystem.wInput0,b
         sta aProcSystem.aBody0,b,x
@@ -215,12 +217,12 @@
         jsl rlClearTilemapEntryTiles
         lda aProcSystem.aBody0,b,x
         bne _C761
-        jsr rsUnknown87C821
+        jsr rsDrawMapMagicRippleSmallTilemap
         bra _C764
 
 
         _C761
-        jsr rsUnknown87C87A
+        jsr rsDrawMapMagicRippleLargeTilemap
 
         _C764
         jsl rlDMAByStruct
@@ -266,12 +268,14 @@
       .al
       .xl
 
-      rlUnknown87C7B4 ; 87/C7B4
+      rlProcMapMagicRippleUploadTiles ; 87/C7B4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Waits for decompression and DMAs BG2 ripple tiles to VRAM $7000.
 
         lda bDecompressionArrayFlag,b
         bne _C7CE
@@ -281,7 +285,7 @@
           .structDMAToVRAM $7EEB88, $0E00, $80, $7000
 
         plx
-        lda #<>rlUnknown87C7CF
+        lda #<>rlProcMapMagicRippleStartHDMA
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C7CE
@@ -291,12 +295,14 @@
 
         ; 87/C7CF
 
-      rlUnknown87C7CF ; 87/C7CF
+      rlProcMapMagicRippleStartHDMA ; 87/C7CF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Starts the small or large BG2 ripple HDMA entry.
 
         lda #aUnknown87C91D >> 8
         sta lR44+1
@@ -314,7 +320,7 @@
         lda #$0001
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #<>rlUnknown87C7F3
+        lda #<>rlProcMapMagicRippleWaitDone
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -330,13 +336,15 @@
       .al
       .xl
 
-      rlUnknown87C7F3 ; 87/C7F3
+      rlProcMapMagicRippleWaitDone ; 87/C7F3
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Waits for ripple HDMA completion, clears BG2 tilemap, and frees the proc.
 
         lda $1611,b
         bit #$0001
@@ -384,12 +392,14 @@
       .al
       .xl
 
-      rsUnknown87C821 ; 87/C821
+      rsDrawMapMagicRippleSmallTilemap ; 87/C821
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the 4x4 small ripple tilemap.
 
         lda #(`aUnknown87C866)<<8
         sta lR18+1
@@ -449,12 +459,14 @@
       .al
       .xl
 
-      rsUnknown87C87A ; 87/C87A
+      rsDrawMapMagicRippleLargeTilemap ; 87/C87A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the 9x6 large ripple tilemap.
 
         lda #(`aUnknown87C8E1)<<8
         sta lR18+1
@@ -524,14 +536,16 @@
       aUnknown87C913 ; 87/C913
         .byte $64, $65, $66, $67, $68, $69, $6A, $6B, $6C, $00
 
-      aUnknown87C91D .dstruct structHDMAIndirectEntryInfo, rsUnknown87C929, rsUnknown87C989, aUnknown87C9C3, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/C91D
+      aUnknown87C91D .dstruct structHDMAIndirectEntryInfo, rsHDMAMapMagicRippleSmallInit, rsHDMAMapMagicRippleCycle, aUnknown87C9C3, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/C91D
 
-      rsUnknown87C929 ; 87/C929
+      rsHDMAMapMagicRippleSmallInit ; 87/C929
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Initializes small BG2 ripple HDMA state and script.
 
         ldx #$0062
         lda #$008D
@@ -567,12 +581,14 @@
         .byte $00, $0C, $00, $01, $00, $0A, $00, $01, $00, $08, $00, $01, $00, $06, $00, $01
         .byte $00, $04, $00, $01, $00, $02, $00, $01, $00, $01, $00, $20, $FF, $FF
 
-      rsUnknown87C989 ; 87/C989
+      rsHDMAMapMagicRippleCycle ; 87/C989
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Double-buffers and updates the BG2 ripple HDMA table each frame.
 
         lda wVBlankEnabledFramecount
         bit #$0001
@@ -593,14 +609,14 @@
         lda wVBlankEnabledFramecount
         and $7EF034
         bne _C9B7
-        jsr rsUnknown87C9CF
-        jsr rsUnknown87CA4E
+        jsr rsStepMapMagicRippleScript
+        jsr rsStepMapMagicRippleBounds
 
         _C9B7
-        jsr rsUnknown87CA92
+        jsr rsBuildMapMagicRippleHDMA
         lda $7EF02C
         tax
-        jsr rsUnknown87CAF4
+        jsr rsBuildMapMagicRippleBG2VOFS
         rtl
 
         .databank 0
@@ -612,12 +628,14 @@
         HDMA_JUMP_IF_BITS_UNSET aUnknown87C9C3, 1
         HDMA_END
 
-      rsUnknown87C9CF ; 87/C9CF
+      rsStepMapMagicRippleScript ; 87/C9CF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Steps the BG2 ripple HDMA script to expand or contract scanline bounds.
 
         phb
         phy
@@ -690,12 +708,14 @@
 
         ; 87/CA4E
 
-      rsUnknown87CA4E ; 87/CA4E
+      rsStepMapMagicRippleBounds ; 87/CA4E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Interpolates the BG2 ripple scanline height table.
 
         lda $7EF032
         bne _CA73
@@ -745,12 +765,14 @@
 
         ; 87/CA92
 
-      rsUnknown87CA92 ; 87/CA92
+      rsBuildMapMagicRippleHDMA ; 87/CA92
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds the direct HDMA table for the BG2 ripple effect.
 
         lda #$7EEB
         sta lR18+1
@@ -803,12 +825,14 @@
 
         ; 87/CAF4
 
-      rsUnknown87CAF4 ; 87/CAF4
+      rsBuildMapMagicRippleBG2VOFS ; 87/CAF4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Computes per-scanline BG2VOFS offsets for the BG2 ripple effect.
 
         phb
         php
@@ -867,14 +891,16 @@
 
         ; 87/CB47
 
-      aUnknown87CB47 .dstruct structHDMAIndirectEntryInfo, rsUnknown87CB53, rsUnknown87C989, aUnknown87C9C3, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/CB47
+      aUnknown87CB47 .dstruct structHDMAIndirectEntryInfo, rsHDMAMapMagicRippleLargeInit, rsHDMAMapMagicRippleCycle, aUnknown87C9C3, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/CB47
 
-      rsUnknown87CB53 ; 87/CB53
+      rsHDMAMapMagicRippleLargeInit ; 87/CB53
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Initializes large BG2 ripple HDMA state and script.
 
         ldx #$0062
         lda #$0071
