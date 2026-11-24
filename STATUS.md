@@ -2,13 +2,13 @@
 
 Current state and next steps. Read this first, then [PLAN.md](PLAN.md) (roadmap, per-wave checklist, engine guide). Past work and older technical notes are in [HISTORY.md](HISTORY.md); tool usage and 64tass pitfalls are in [tools/README.md](tools/README.md). **Rewrite this file at the end of every session** to keep it short and about the present.
 
-## Current state (2026-11-23, after wave 17: `battle_scene/` at 0 `Unknown`)
+## Current state (2026-11-23, after wave 18: 0 `Unknown` across all 20 folders)
 
 Numbers come from `python3 tools/counts.py --fast --breakdown`; quote nothing else.
 
 - `./build.sh` is byte-identical and checksums verify (`./build.sh mod` builds the identical ROM without `fe4.sfc`; GAPS.md is empty).
-- Routines: 6,505 in `engine/`, 6,045 named, 460 `Unknown` (92.9% named). 172 pinned blocks.
-- **Stage 1 complete; Stage 2 underway:** 19 of 20 folders in `engine/` now have **0 `Unknown`** (`ai/`, `arena/`, `battle_scene/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` — 5,432 routines total).
+- Routines: 6,505 in `engine/`, 6,505 named, 0 `Unknown` (100.0% named). 172 pinned blocks.
+- **Stage 1 and Stage 2 complete:** all 20 folders in `engine/` now have **0 `Unknown`** (`ai/`, `arena/`, `battle/`, `battle_scene/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` — 6,505 routines total).
 - Reference pages: `docs/reference/core.md`, `ai.md`, `arena.md`, `battle_scene.md`, `castle.md`, `demo.md`, `dialogue.md`, `epilogue.md`, `events.md`, `map_battle.md`, `map_menu.md`, `map.md`, `menus.md`, `save.md`, `title.md`, `worldmap.md` (`tools/reference.py` output is gitignored).
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
@@ -18,13 +18,12 @@ From `python3 tools/counts.py --fast --breakdown` (top-level `rl`/`rs` routines 
 
 | System | Unknown | Total | Where | Notes |
 |---|---:|---:|---|---|
-| `battle/` | 460 | 1,073 | `map_magic_effects.asm` 434, `map_battle_magic.asm` 13, `effects.asm` 5, `battle.asm` 3, `map_battle.asm` 3, others 2 | Spell visuals and bank `$87` ripple (`procUnknown87C70A`) intentionally left `Unknown`; mechanics done |
-| `ai/`, `arena/`, `battle_scene/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` | 0 | 5,432 | — | 0 `Unknown` |
-| **Total** | **460** | **6,505** | | **6,045 named (92.9%)** |
+| All 20 folders (`ai/` .. `worldmap/`) | 0 | 6,505 | — | 0 `Unknown` |
+| **Total** | **0** | **6,505** | | **6,505 named (100.0%)** |
 
 ## Who wrote what
 
-Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), Wave 16 (`495d670`..`80c1e1d`), and Wave 17 (`d7054ee`..`4fa5320`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`). Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
+Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), Wave 16 (`495d670`..`80c1e1d`), Wave 17 (`d7054ee`..`4fa5320`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and Wave 18 (`ea75480`..`0e1f146`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`). Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
 
 ## Active decisions
 
@@ -34,11 +33,9 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5e
 
 ## Next session
 
-1. **Stage 2 — Literal 0 `Unknown` (460 visual/effect routines remaining):**
-   - **Wave 18 — Map magic & battle visuals (460 `Unknown`):** `map_magic_effects.asm` (434), `map_battle_magic.asm` (13), `effects.asm` (5), `battle.asm` (3), `map_battle.asm` (3), `battle_stats.asm` (1), `scripted_crits.asm` (1).
-2. **Engine guide outline:**
+1. **Engine guide outline:**
    - Draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide"). Every major gameplay system is documented.
-3. **Loose ends:**
+2. **Loose ends:**
    - Pad-test banks `$88`, `$9B`, and `$9F` (`./build.sh pad SECTION N`).
    - Fix `tools/songs.py` (stops at stale `aUnknown8A9D79`) before regenerating `audio/SONGS.md`, and investigate why `tools/stream_catalog.py` deleted catalog previews.
    - Check whether `tools/dialogue.py` decodes the Jugdral history texts (`engine/save/jugdral_history.asm`).

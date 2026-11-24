@@ -48,13 +48,13 @@ A tome or staff plays an effect over a background of its own. The effect number 
 For each round, the battle's script:
 
 1. `rlSelectMapMagicEffectForRound`: `wMapMagicEffect` = the acting side's number.
-2. `rlQueueMapMagicBackgroundTiles`, `...Tilemap`, `...Palette` (earlier, in `rlUnknown9E...` before the rounds) decompress the background from `aMapBattleMagicBackgrounds`. Meteor and Valflame have a second tilemap for a target on the right of the screen.
+2. `rlQueueMapMagicBackgroundTiles`, `...Tilemap`, `...Palette` (queued before the rounds) decompress the background from `aMapBattleMagicBackgrounds`. Meteor and Valflame have a second tilemap for a target on the right of the screen.
 3. `rlUploadMapMagicBackgroundTiles`, `...TilesRest`, `...Tilemap`, `rlCopyMapMagicBackgroundColors`, then `rlLoadMapMagicSprites` and `rlUploadMapMagicSpriteTiles` (`aMapBattleMagicSprites`).
 4. `rlStartMapMagicEffect` saves the screen registers and creates `procMapMagicEffect`.
 5. The battler's sprite script reaches `ACTIVE_SPRITE_START_MAP_MAGIC` (command `$10`), which sets `wMapMagicStart`. The proc then runs the spell's starter from `aMapMagicEffectStarters` (`rlStartMapMagicFire` ... `rlStartMapMagicBrokenStaff`) and ends. The script waits at `ACTIVE_SPRITE_WAIT_MAP_MAGIC` (command `$11`) until the effect sets `wMapMagicDone`, usually after fading the colours back (`rsFadeBackMapMagicColors`).
 6. `rlEndMapMagicEffect` frees the procs and HDMA entries the effect created (`aMapMagicProcList`, `aMapMagicHDMAList`, filled by `rsCreateMapMagicProc` and `rsCreateMapMagicHDMA`), and `rlRestoreMapMagicScreenRegisters` puts the screen back.
 
-The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) also plays for Naga, Loptous, the broken fire tomes, Charm and Valkyrie; Mend, Recover and Physic use the same proc with their own sound; Elthunder serves Bolting, Wind Elwind, Warp Rescue. The Belhalla mages' meteors use Meteor's (effect 4). Shared bank `$9F` machinery in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm) provides vector/trig math (`rlGetVectorLength`, `rlMultiplyByNegSin`, `rlMultiplyByNegSinMode7`, `aMapMagicSineTable`), palette darkening/tinting/restoring (`rlDarkenBGPaletteRange`, `rlDarkenSNESColor`, `rlDarkenMapMagicColors`, `rlFadeBackMapMagicColors`, `rlSaveMapMagicColors`, `rsTintMapMagicColorsRed`/`Blue`/`Green`, `rsFadeMapMagicPalette14ToWhite`/`Black`), background shake (`rsShakeMapMagicBackground`), and DMA list queueing (`rlQueueMapMagicDMAList`). The steps of each effect are `Unknown` (visual detail) and carry a note naming their effect.
+The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) also plays for Naga, Loptous, the broken fire tomes, Charm and Valkyrie; Mend, Recover and Physic use the same proc with their own sound; Elthunder serves Bolting, Wind Elwind, Warp Rescue. The Belhalla mages' meteors use Meteor's (effect 4). Shared bank `$9F` machinery in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm) provides vector/trig math (`rlGetVectorLength`, `rlMultiplyByNegSin`, `rlMultiplyByNegSinMode7`, `aMapMagicSineTable`), palette darkening/tinting/restoring (`rlDarkenBGPaletteRange`, `rlDarkenSNESColor`, `rlDarkenMapMagicColors`, `rlFadeBackMapMagicColors`, `rlSaveMapMagicColors`, `rsTintMapMagicColorsRed`/`Blue`/`Green`, `rsFadeMapMagicPalette14ToWhite`/`Black`), background shake (`rsShakeMapMagicBackground`), DMA list queueing (`rlQueueMapMagicDMAList`), and the bank `$87` BG2 HDMA ripple effect (`procUnknown87C70A`, `rlProcMapMagicRippleInit`..`rsHDMAMapMagicRippleLargeInit`). All effect steps, shared HDMA/window builders, and cutscene sequence helpers in [map_magic_effects.asm](../../engine/battle/map_magic_effects.asm) are now named and carry a note naming their effect.
 
 **Active sprite scripts.** The effects draw with active sprites, whose scripts are now written with the `ACTIVE_SPRITE_*` macros in `include/ActiveSpriteEngine.h` (`tools/sprite_scripts.py` decodes one from the ROM). Command `$17` calls a routine; many of the routines it calls read a script position after the call and jump there or skip it (they load the word at `Y` into `Y`).
 
@@ -65,7 +65,7 @@ The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) als
 - **Give gold** (`procGiveGold`, from `rlStartGiveGoldAnimation`): shows both units, uploads coin graphics (`rlGiveGoldUploadCoinGraphics`) and plays `aGiveGoldCoinSpriteData` (`rlGiveGoldCreateCoinSprite`), then runs the experience and level-up steps.
 - **Holy weapon shine** (`procHolyWeaponShine`, from `rlStartHolyWeaponShine`): sets up the unit (`rlSetHolyWeaponShineUnit`), plays `rlMapBattleStartSkillEffect`, and signals completion (`rlSignalMapAnimationDone`).
 - **Rewards without a battle** (`procMapActionRewards`, from `rlStartMapActionRewards`): experience, level up, gold, item, using the battle's steps, then restores graphics (`rlProcMapActionRewardsRestoreGraphics`, `rlProcMapActionRewardsEnd`).
-- **Scripted critical** (`procScriptedCritStart`, `procScriptedCritEffect`): before a battle with a scripted critical (`rlUnknown84DE36`), the critical's effect plays on the map (`aMapBattleScriptedCritSprites`).
+- **Scripted critical** (`procScriptedCritStart`, `procScriptedCritEffect`): before a battle with a scripted critical (`rlStartCombatAnimation`), the critical's effect plays on the map (`aMapBattleScriptedCritSprites`).
 - **Warp away / warp in** (`procWarpAway`, `procWarpIn`) and **the Belhalla mages** (`procBelhallaAttackingMage`, `procBelhallaMagesBlast`), from event ASMCs.
 
 ## Sprites
@@ -85,7 +85,6 @@ Other pieces: the weapon icon over each unit (`rlUploadMapBattleWeaponIcon`), th
 
 - `UnitState0400`: a unit with it shares a tile with another (battle.asm moves it a tile for the battle). What puts two units on one tile.
 - `rlMapBattlePlayLordDodgeSound` plays sound `$97` only when a Junior Lord or a Prince is missed. Why those classes.
-- The sprite, palette and animation helpers that are still `Unknown`.
 - What `wMapMagicFlags`' edge bits change: they pick the HDMA line counts in `aMapMagicWindowLines` (`rsSetMapMagicWindowLines`).
 - Who sets the effect number `$27` (Berserk) in `event_scripts.asm` (near `$9E/ECA4`), and for which scene.
 - The round entry `$7F00` makes the battle signal a waiting event and pause (`rlMapBattleSignalEventMarker`); which events use it.

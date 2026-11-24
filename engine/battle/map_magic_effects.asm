@@ -8,10 +8,11 @@
 ; the background that the map battle loaded, then sets wMapMagicDone when it
 ; has finished, usually after rsFadeBackMapMagicColors.
 ;
-; The effects' own steps, sprite scripts and tables are left Unknown: they are
-; visual detail. Each carries a note saying which effect uses it ("Part of the
-; Thoron effect.", "Shared by ..."), worked out from the references between
-; labels starting at the starters.
+; All effect steps, shared HDMA/window builders, and cutscene sequence helpers
+; are named; each still carries a note saying which effect uses it ("Part of
+; the Thoron effect.", "Shared by ..."), worked out from the references
+; between labels starting at the starters. Sprite scripts and data tables
+; retain their `aUnknown...` names.
 
 
     .section Unsorted9F9217Section
