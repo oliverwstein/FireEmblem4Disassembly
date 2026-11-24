@@ -12,7 +12,7 @@ The command menu lists, top to bottom, every command whose check passes:
 |---|---|---|
 | はなす talk | a talk event with a unit in range 1, or between a guarding unit and a unit on its gate | choose a target |
 | たすける help | a civilian or child is adjacent | choose a target; 100 experience and an event |
-| とつげき assault | the unit guards a castle, or stands on the gate of a guarded enemy castle, and has a weapon that reaches the other side at range 2 | item list, then a target |
+| とつげき assault | the unit guards a castle, or stands on the gate of a guarded enemy castle, and has a weapon with a minimum range of 1 (range 1 or 1–2) to strike the enemy two tiles away | item list, then a target |
 | こうげき attack | a weapon with a target in range | item list, then a target |
 | つえ staff | a usable staff with a target, at least one of them a support staff | item list, then a target |
 | おどる dance | the unit has Dance, and an adjacent unit of its army has moved | acts at once |
@@ -156,7 +156,7 @@ The checks and the commands share one target search, `rlFindTargetsInRange`. It 
 
 ### Placement
 
-The menu opens at column 4. If the cursor is on the left side of the screen, it moves to column 19 so it doesn't cover the unit. Between 112 and 144 pixels from the left, the menu stays on the side it last used (bit 2 of `wMapStateFlags`), which keeps it from jumping across the screen when the cursor sits near the middle. The battle forecast's windows switch sides the same way, between columns 2 and 18.
+The menu opens at column 4. If the cursor is on the left side of the screen, it moves to column 19 so it doesn't cover the unit. Between 112 and 144 pixels from the left, the menu stays on the side it last used (bit 2 of `wMapStateFlags`), which keeps it from jumping across the screen when the cursor sits near the middle. The battle forecast's windows switch sides at a single point instead: the target's window goes to column 18 while the cursor is in the left half of the screen (under 128 pixels) and to column 2 otherwise, each proc remembering its own side, and the attacker's window sits 8 tiles to the right of it.
 
 ## Going back
 
@@ -178,7 +178,7 @@ Reopening the command menu runs the whole setup again: new slot lists, 24 checks
 
 Commands with a target (attack, assault, staff, talk, help, give) record their targets in `aTargetDistanceMap`, a 32 × 32 grid of deployment rows centered on the unit (`$FF` for none), and start target selection. Cursor state 3 then takes over the D-pad: the cursor no longer moves freely but jumps from target to target, Right or Down to the next and Left or Up to the previous.
 
-The order depends on the weapon's range. With a maximum range of 2 or less, or no weapon, the cursor steps through 12 fixed grid offsets, every tile within 2 of the unit, in an order that goes round clockwise from the tile two above. With a maximum range of 3 or more (a bow knight's longbow, or a long-range tome), it scans all 1,024 cells in grid order, row by row.
+The order depends on the selected item's range. With a maximum range of 2 or less, or no item, the cursor steps through 12 fixed grid offsets, every tile within 2 of the unit, in an order that goes around clockwise from the tile two above. With a maximum range of 3 or more (a ballista, a long-range tome, or a long-range staff), it scans all 1,024 cells in grid order, row by row.
 
 ```rust
 fn select_next_target(back: bool) {                   // rsSelectNextTarget
