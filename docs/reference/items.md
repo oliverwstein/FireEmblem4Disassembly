@@ -55,7 +55,7 @@ Also in `data/item/`: [ItemIconOffsets.asm](../../data/item/ItemIconOffsets.asm)
 | Map | `aStaffTargetChecks` (`rlCheckStaffHasTargets`) | `aStaffTargetSelectionHandlers` (`rlStartStaffTargetSelection`) |
 | Castle | `aCastleStaffTargetChecks` (`rlCheckStaffHasCastleTargets`) | `aCastleStaffTargetSelectionHandlers` (`rlStartCastleStaffTargetSelection`) |
 
-- **Effects:** `$01`–`$03` Heal/Mend/Recover, `$04` Physic, `$05` Fortify, `$06` Return, `$07` Warp (sets `wChapterFlags` bit `$0800`), `$08` Rescue, `$09` Charm (unused, 0 durability), `$0A` Restore, `$0B` Valkyrie, `$0C` Silence, `$0D`–`$0F` Sleep/Berserk/Thief, `$10` none. `wChapterFlags` bit `$0020` indicates inside a castle.
+- **Effects:** `$01`–`$03` Heal/Mend/Recover, `$04` Physic, `$05` Fortify, `$06` Return, `$07` Warp (sets `wChapterFlags` bit `$0800`), `$08` Rescue, `$09` Charm (0 max durability, so never equippable), `$0A` Restore, `$0B` Valkyrie, `$0C` Silence, `$0D`–`$0F` Sleep/Berserk/Thief (Thief also has 0 max durability), `$10` none. `wChapterFlags` bit `$0020` indicates inside a castle.
 - **Target filters** passed to `rlCheckStaffTargetsInRange` / `rlBuildCastleTargetList`: `$02` same army, `$08` missing HP, `$09` has status, `$0C` magic user with lower resistance, `$0D` enemy with lower resistance.
 - **Healing:** `rlGetStaffHealAmount` returns `Magic + 10` (Heal, Physic, Fortify), `(Magic + 10) * 2` (Mend), or `80` (`$50`, Recover). `rlApplyFortify` heals every unit in `aTargetDistanceMap` on the map (`rsApplyFortifyOnMap`) or every unit in `aCastleUnitDeploymentOffsets` except `aActionStructUnit1` in the castle (`rsApplyFortifyInCastle`).
 - **Valkyrie:** In the castle (`rsCastleStaffValkyrie`), spawns `procMainLoopChangeFade` to `rsReviveScreenOpen`.

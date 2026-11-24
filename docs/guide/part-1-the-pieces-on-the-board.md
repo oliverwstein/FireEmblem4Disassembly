@@ -1,6 +1,6 @@
 # Part I: The Pieces on the Board
 
-Every mutable piece of a *Genealogy of the Holy War* chapter fits into a single 10,155-byte stretch of bank `$7E` in work RAM, from `$7E/2180` to `$7E/492A`, with the sixteen chapter locations (`aChapterLocationRAMData`) sitting nearby at `$7E/4E45` ([include/WRAM.h](../../include/WRAM.h)). Inside that ~10 KB region live the armies, the 72 unit records, their inventories, generation-1 love scores, all 256 individual items in the world, and every unit's position on the map.
+Every mutable piece of a *Genealogy of the Holy War* chapter fits into a single 10,155-byte stretch of bank `$7E` in work RAM, from `$7E/2180` to `$7E/492A`, with the sixteen chapter locations (`aChapterLocationRAMData`) sitting nearby at `$7E/4E45` ([include/WRAM.h](../../include/WRAM.h)). Inside that ~10 KB region live the armies, the 72 unit records, their inventories, love scores, all 256 individual items in the world, and every unit's position on the map.
 
 ```
 Work RAM (bank $7E)                                     Cartridge ROM (4 MB)

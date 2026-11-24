@@ -35,7 +35,7 @@ Unit pools, four-type ROM/RAM dispatch, classes, stats, skills, weapon ranks, Ho
   - `aHolyAndEnemyRAMArea` (`$7E/3131`): 63 slots of `Personal` (15B) only.
   - `aInventoryRAMArea` (`$7E/3664`): 73 (`72 + 1`) inventory blocks.
   - `aLoverRAMArea` (`$7E/3BD7`): 9 × 30-byte `structLoverDataRAM` blocks (15 words each, female player units `GenID 16..24`).
-  - `aUnitWinCounts` (`$7E/3D23`): 24 Gen-1 words + 24 Gen-2 words (`$7E/3D53`). `wTotalLevelUpCount` (`$7E/3D83`), `wTotalAlivePlayerUnitCount` (`$7E/3D85`), `aUnitJoinOrder` (`$7E/531B`, 24 entries).
+  - `aUnitWinCounts` (`$7E/3D23`): 24 Gen-1 words + 24 Gen-2 words (`$7E/3D53`). `wTotalLevelUpCount` (`$7E/3D83`), `wTotalAlivePlayerUnitCount` (`$7E/3D85`), `aUnitJoinOrder` (`$7E/531B`, 24 bytes).
 - **Four `UnitType`s and their pointer layouts (`unit_creation.asm`):**
   - `UnitTypeStatic` (`0`): `Personal` + `Extended` in `aStaticUnitRAMArea`; `ConstantData` → ROM (`$83`, `+CharacterID`); `EnemyROMData = 0`; allocates `Inventory` + `Lover` (if female).
   - `UnitTypeDynamic` (`1`): `Personal` + `Extended` + `ConstantData` in `aDynamicUnitRAMArea`; `EnemyROMData = 0`; allocates `Inventory` + `Lover` (if female).
@@ -95,7 +95,7 @@ Unit pools, four-type ROM/RAM dispatch, classes, stats, skills, weapon ranks, Ho
 - **Inheritance (`inheritance.asm`):** Driven by `rsCreateDynamicUnitRAMData` with Mother in `aUnit1DataBuffer` (`wR1`) and Father in `aUnit2DataBuffer` (`wR0`):
   - **Growths (`rsGetChildGrowthRate`):** Male `Father + floor(Mother / 2)`; Female `Mother + floor(Father / 2)`.
   - **Skills:** `(Mother.Skills | Father.Skills) & aValidInheritableSkills[CharID - Seliph]`.
-  - **Holy Blood (`rsGetChildHolyBlood`):** Minor-influence parent (`MajorInfluence == 0` means Mother is major, nonzero means Father is major) is downgraded (`Major → Minor`, `Minor → Minor`) and summed with the major-influence parent (`Minor + Minor = Major`).
+  - **Holy Blood (`rsGetChildHolyBlood`):** Minor-influence parent (`MajorInfluence == 0` means Mother is major, nonzero means Father is major) is downgraded (`Major → Minor`, `Minor → Minor`) and summed with the major-influence parent (`Minor + Minor = Major`; `Minor + Major` gives the value `3`, which the blood checks read as Major).
   - **Gold & base stats:** Gold = `2000 + floor((Mother.Money + Father.Money) / 10)`. Base stats = `floor((2 * Primary + Secondary) / 10) + floor((Level - 1) * TotalGrowth / 100)` (selected by child gender), adding `+15` to HP and `1..10` random Luck. Auto-promotes via `rlGetPromotedClassIfAvailable` if starting level qualifies.
   - **Inventory (`rlInheritInventoryToChild`):** Inherits from `MajorInfluence` parent's inventory and Supply. `Forseti`, `ValkyrieStaff`, and `Yewfelle` bypass rank/obtainability and the 7-item cap; other holy weapons are reverted; overflow past 7 items goes to child's Supply; the highest-Might weapon is placed in slot 1.
 
@@ -116,7 +116,6 @@ Unit pools, four-type ROM/RAM dispatch, classes, stats, skills, weapon ranks, Ho
   - **Faction bugs (`factions.asm`):** `rsSetFactionSlotsHostilityEnemies` (`:1470`) lacks `bcs _End` after `cmp #7`; `rlUnloadFactionSlot` (`:258`) checks `cmp #$0080` instead of `$FFFF`; `rlLoadFactionGroup` (`:146`) writes 16 bits into `LocationID` before checking `$FFFF`, spilling into `HostileFactions`; `rlRemoveSelectedUnitFromFactionSlot` (`:1120`) decrements `UnitCount` even if the unit is not found; `rlCountFactionFieldedLivingUnits` (`:759`) clobbers `wSelectedUnitDataRAMPointer` and `wRoutineVariable1`.
   - **Weapon rank early exit (`unit_info.asm:262–269`):** A higher-index Minor Holy Blood that upgrades `B → A` returns `CLC` immediately without checking lower-index Major Holy Bloods.
   - **Asymmetric buffer save/load:** `rlSavePersonalCharacterDataToBuffer` omits `LoveDataID`, `rlSaveExtendedCharacterDataToBuffer` omits `LeadershipStars`, and `rlSaveCharacterROMDataToBuffer` omits `GenerationID`, whereas all three `rlLoad*FromBuffer` routines write them back.
-  - **16-bit writes to byte fields/tables:** `aDebugMenuSkillFlags` clear (`skills.asm:295`) writes 1 byte past the 30-byte array; `rlGetPromotedClassIfAvailable` (`classes.asm:52`) writes 16 bits to `$7E/2002`; `rsFillChildExtendedPersonalData` (`inheritance.asm:146`) adds Luck in 16-bit mode; `rlRemoveFromUnitJoinOrder` (`join_order.asm:58`) stores 16 bits into a 1-byte entry (`aUnitJoinOrder` is also declared as `.word` in `WRAM.h:2133` but indexed as 24 bytes in `join_order.asm`).
+  - **16-bit writes to byte fields/tables:** `aDebugMenuSkillFlags` clear (`skills.asm:295`) writes 1 byte past the 30-byte array; `rlGetPromotedClassIfAvailable` (`classes.asm:52`) writes 16 bits to `$7E/2002`; `rlFillChildExtendedPersonalData` (`inheritance.asm:146`) adds Luck in 16-bit mode; `rlRemoveFromUnitJoinOrder` (`join_order.asm:58`) stores 16 bits into a 1-byte entry.
 - **Remaining disassembly notes:**
-  - `aUnitJoinOrder` is declared as `.word` in `WRAM.h:2133` but indexed as 24 bytes in `join_order.asm`.
   - `aDebugMenuSkillFlags` scratch aliasing in `turn_start.asm:380`, hardcoded `$830000`/raw offsets, and unused stubs (`rlDoNothing84B4C3`, `rlStatsUnusedStub1`/`2`, `rlSetSelectedUnitAIUnused`).

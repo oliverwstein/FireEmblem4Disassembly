@@ -193,8 +193,8 @@ CharacterDataRAM (aUnitRAMArea, 72 slots)
   ├── extended   ──▶ ExtendedData      (stats, class, level, gold, EXP)  [playable & gen-2]
   ├── constant   ──▶ ConstantData      (growths, skills, holy blood)     [gen-2 only]
   ├── enemy_rom  ──▶ CharacterROMEntry (stats & growths in ROM)          [enemies & bosses]
-  ├── inventory  ──▶ InventoryData     (7 item slots + equipped flags)
-  └── lover      ──▶ LoverData         (love points with 15 men)         [gen-1 women only]
+  ├── inventory  ──▶ InventoryData     (8 item slots + equipped flags)
+  └── lover      ──▶ LoverData         (love points with 15 men)         [playable women only]
 ```
 
 The parts live in separate pools, each sized for its kind:
@@ -204,8 +204,8 @@ The parts live in separate pools, each sized for its kind:
 | `aStaticUnitRAMArea` | 24 | the playable characters | personal + extended |
 | `aDynamicUnitRAMArea` | 17 | generation-2 children, whose growths and blood are *computed* from their parents | personal + extended + constant |
 | `aHolyAndEnemyRAMArea` | 63 | bosses, holy-blood enemies, and ordinary enemies | personal only; everything else is read from the character's ROM entry |
-| `aInventoryRAMArea` | 73 | anyone with items | 7 slots + equipped flags |
-| `aLoverRAMArea` | 9 | the eligible women of generation 1 | love points with 15 men |
+| `aInventoryRAMArea` | 73 | anyone with items | 8 slots + equipped flags |
+| `aLoverRAMArea` | 9 | the playable women of the current generation | love points with 15 men |
 
 An ordinary enemy soldier costs its header plus a 15-byte personal part: under forty bytes. A playable character adds a 15-byte block of stats, and a generation-2 child adds its computed growths and blood on top of that. Data that can't change, like an enemy's stats, is never copied out of ROM. This is the *Flyweight* idea: share what is common, store only what differs. It explains a lot of the game's code, because almost everything that reads a stat goes through a *getter* (`engine/units/unit_info.asm`, `unit_data.asm`) that knows which part to look in for this kind of unit. The separate pools also mean each kind of unit has a fixed budget, set when the game was built, rather than all kinds competing for one heap.
 
@@ -222,7 +222,7 @@ Fixed pools are cheap and predictable, and every one of them is also a rule the 
 - **Armies arrive and leave in waves.** With only 72 deployment slots total and 63 non-player slots, a chapter that wants a fresh enemy army often has to clear out the old one through events first.
 - **Playable casts and children are hard-capped.** Generation 1's 24-character budget and generation 2's 17 child slots are baked into the RAM pools.
 - **Every weapon in the world shares one 256-slot table.** Player weapons and enemy drops alike come out of the same `aItemRAMData` budget; creating a sword uses up a slot.
-- **A fixed 7-item inventory and a 9 × 15 love grid.** Each generation-1 woman tracks love points against 15 eligible men, and no unit can carry an eighth item.
+- **A fixed 7-item inventory and a 9 × 15 love grid.** Each playable woman tracks love points against 15 eligible men. An inventory has eight slots, but the eighth only holds a new item until the player chooses one to give up.
 - **Stats are bytes; money is a word.** Each stat fits in 0-255, and a unit's gold in 0-65,535, before any cap the rules impose.
 - **Sixteen procs at once.** A scene that wants more simultaneous effects must wait for some to end.
 
