@@ -128,7 +128,7 @@ The per-unit list, `structInventoryDataRAM`, holds the eight indices, a small li
 
 Inheritance ([Chapter 17](OUTLINE.md)) is where the handles pay off most. When a child joins in generation 2, `rlInheritInventoryToChild` moves records from the parent to the child: the owner field changes and the indices move into the child's list. The swords are the same records, with the same kills and the same wear. When a parent is deleted at the generation change, anything left in their hands or storage is reverted to unobtained with full durability (`rlRevertItemAcquirement`), and shop and pawn shop stock go back too.
 
-Tyrfing shows the whole cycle. Sigurd receives the record `PI_Tyrfing` from Byron in Chapter 5. When Sigurd is deleted at the generation change, the record reverts to unobtained. In Chapter 10, an event gives the same record to Seliph: same index, same entry, and, since reverting resets durability but not kills, the same kill count.
+Tyrfing shows the whole cycle. The new-game setup creates the record `PI_Tyrfing` like any other, then sets its durability to 0 (`rlInitiateItemRAMData`), so when Byron hands it to Sigurd in Chapter 5 it arrives broken: the same record, seen through the broken-weapon substitution until it is repaired. When Sigurd is deleted at the generation change, the record reverts to unobtained. In Chapter 10, an event gives the same record to Seliph: same index, same entry, and, since reverting resets durability but not kills, the same kill count.
 
 ## Trade-offs and hard limits
 
