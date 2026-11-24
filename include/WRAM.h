@@ -1991,8 +1991,8 @@
       _UnitRAMPointer .fill (size(word) * 72)     ; $7E46EB
       _FactionSlot .fill (size(word) * 72)        ; $7E477B
       _MapSpriteID .fill (size(word) * 72)        ; $7E480B
-        ; Not per unit: a pool of the distinct map sprites in use ($FFFF free). Units of one
-        ; class share a row. Short sprites take rows 0-47; tall ones ($8000 set) search from row 71 down.
+        ; Not per unit: a pool of the distinct map sprites in use ($FFFF free). Units drawn
+        ; with the same sprite share a row. Short sprites take rows 0-47; tall ones ($8000 set) search from row 71 down.
       _StateBuffer .fill (size(word) * 72)        ; $7E489B
     .bend
 

@@ -1,6 +1,6 @@
 # Part I: The Pieces on the Board
 
-Every mutable piece of a *Genealogy of the Holy War* chapter fits into a single 10,155-byte stretch of bank `$7E` in work RAM, from `$7E/2180` to `$7E/492A`, with the sixteen chapter locations (`aChapterLocationRAMData`) sitting nearby at `$7E/4E45` ([include/WRAM.h](../../include/WRAM.h)). Inside that ~10 KB region live the armies, the 72 unit records, their inventories, love scores, all 256 individual items in the world, and every unit's position on the map.
+The pieces Part I describes live in a single 10,155-byte stretch of bank `$7E` in work RAM, from `$7E/2180` to `$7E/492A`, with the sixteen chapter locations (`aChapterLocationRAMData`) sitting nearby at `$7E/4E45` ([include/WRAM.h](../../include/WRAM.h)). Inside that ~10 KB region live the armies, the 72 unit records, their inventories, love scores, the table of individual items (140 records in 256 slots), and every unit's position on the map.
 
 ```
 Work RAM (bank $7E)                                     Cartridge ROM (4 MB)
@@ -33,6 +33,6 @@ The [introduction](00-introduction.md) sketched the hardware and the main loop. 
 2. **[Classes, stats, skills, and weapon ranks](02-classes-stats-skills-and-weapon-ranks.md)** — How class templates, rings, weapons, and Holy Blood compose behind shared queries, and why the same skill occupies different bit positions across character, class, and item tables.
 3. **[Every sword is an individual](03-every-sword-is-an-individual.md)** — The 256-slot `aItemRAMData` table, how `ItemState` partitions one array into inventories, storage, shops, and the pawn shop, and how broken weapons keep their kill counts intact.
 4. **[Armies and allegiance](04-armies-and-allegiance.md)** — The seven faction slots, pairwise hostility and alliance bitmasks, and how an army can be neutral to the player while fighting another faction.
-5. **Who stands where** — The 72-entry `aDeploymentTable` structure of arrays, the handoff between residing in a castle and standing on the field, and the sixteen chapter locations (castles, villages, and gates).
+5. **[Who stands where](05-who-stands-where.md)** — The 72-entry `aDeploymentTable` structure of arrays, the handoff between residing in a castle and standing on the field, and the sixteen chapter locations (castles and villages).
 
 Each chapter closes with the hard limits its layout imposes—and where in the source those limits are enforced.
