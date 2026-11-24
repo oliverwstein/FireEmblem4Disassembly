@@ -163,7 +163,7 @@
         beq _E5E7
         cmp #$0002
         beq _E5E3
-        jsl rlUnknown84B57A
+        jsl rlHandleArenaExitEvent
         stz $0AD7,b
         sta aDialogue.wNumber1,b
         jsr _E63C
@@ -196,7 +196,7 @@
 
 
         _E5E7
-        jsl rlUnknown84B57A
+        jsl rlHandleArenaExitEvent
         jsl rlGetSelectedUnitCharacterID
         sta aDialogue.wUnit1,b
         lda #(`dialogueShopUnknown8AD553)<<8
@@ -1103,7 +1103,7 @@
         bne _ECDF
         lda $0AD7,b
         beq _ECDF
-        jsl rlUnknown84B57A
+        jsl rlHandleArenaExitEvent
 
         _ECDF
         rts

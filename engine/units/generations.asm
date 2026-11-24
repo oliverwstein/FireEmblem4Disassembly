@@ -274,7 +274,7 @@
         _End
         jsl rlClearChapterLocationRAMData
         jsl rlInitChapterLocations
-        jsl rlUnknown86C548
+        jsl rlClearChapterActiveMapChanges
 
         pla
         sta wR0

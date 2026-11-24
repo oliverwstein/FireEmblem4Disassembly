@@ -7,9 +7,9 @@
       .al
       .xl
 
-      aUnknown81B45B ; 81/B45B
+      aAreaRestrictionSetBitmasks ; 81/B45B
 
-        ; Read by rlUnknown81B43F.
+        ; Read by rlSetAreaRestrictionBit.
 
         .byte $04, $08, $10, $20, $40, $80
 
@@ -23,9 +23,9 @@
       .al
       .xl
 
-      aUnknown81B47D ; 81/B47D
+      aAreaRestrictionClearBitmasks ; 81/B47D
 
-        ; Read by rlUnknown81B461.
+        ; Read by rlClearAreaRestrictionBit.
 
         .byte $FB, $F7, $EF, $DF, $BF, $7F
 
@@ -97,7 +97,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $03, every frame: runs step 0 or 1 from aUnknown86804E (a higher step hangs).
+        ; Game state routine $03, every frame: runs step 0 or 1 from aOpeningLogoSteps (a higher step hangs).
 
         lda wGameStateStep,b
         cmp #2
@@ -109,21 +109,23 @@
         +
         asl a
         tax
-        jsr (aUnknown86804E,x)
+        jsr (aOpeningLogoSteps,x)
         rtl
 
         .databank 0
 
-      aUnknown86804E ; 86/804E
+      aOpeningLogoSteps ; 86/804E
 
-        .addr rsUnknown868052
-        .addr rsUnknown86805D
+        .addr rsOpeningLogoRunFlash
+        .addr rsOpeningLogoFadeToTitle
 
-      rsUnknown868052 ; 86/8052
+      rsOpeningLogoRunFlash ; 86/8052
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs rlFlashToTitleScreen and advances wGameStateStep on carry set
 
         jsl rlFlashToTitleScreen
         bcs +
@@ -136,11 +138,13 @@
 
         .databank 0
 
-      rsUnknown86805D ; 86/805D
+      rsOpeningLogoFadeToTitle ; 86/805D
 
         .al
         .autsiz
         .databank ?
+
+        ; Resets proc engine and fades to rsOpenTitleScreen
 
         jsl rlProcEngineResetProcEngine
         stz wGameStateRoutine1,b
@@ -395,11 +399,13 @@
         .byte $40
         .byte $80
 
-      rlUnknown86816B ; 86/816B
+      rlTryRunEventConditionCommand ; 86/816B
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs one event condition command at Y unless terminated by $FFFF
 
         lda $0000,b,y
         cmp #$FFFF
@@ -534,11 +540,13 @@
 
         .databank 0
 
-      rlUnknown86821E ; 86/821E
+      rlEventEngineUnusedStub ; 86/821E
 
         .al
         .autsiz
         .databank ?
+
+        ; Unreferenced stub (rtl)
 
         rtl
 
@@ -770,11 +778,13 @@
 
         .databank 0
 
-      rlUnknown86832B ; 86/832B
+      rlRemoveCurrentChapterRAMStruct ; 86/832B
 
         .al
         .autsiz
         .databank ?
+
+        ; Removes the current chapter's entry from aChapterEventRAMData
 
         jsl rlGetEventChapterID
         jsl rlRemoveChapterRAMStruct
@@ -936,11 +946,13 @@
 
         .databank 0
 
-      rlUnknown8683C7 ; 86/83C7
+      rlCallChapterEventHeaderRoutine8 ; 86/83C7
 
         .al
         .autsiz
         .databank ?
+
+        ; Unreferenced; calls indirect routine at offset 8 of current chapter event header
 
         phx
         jsl rlGetCurrentEventPointer
@@ -1137,11 +1149,13 @@
 
         .databank 0
 
-      rsUnknown8684ED ; 86/84ED
+      rsEvaluateEventCondition ; 86/84ED
 
         .al
         .autsiz
         .databank ?
+
+        ; Evaluates action ID, event flag, and condition check (lEventPointer), then runs or skips command
 
         bcs _AdjustScriptOffset
 
@@ -1194,7 +1208,7 @@
 
           lda $0000,b,y
           jsr rsRunEventConditionCommand
-          jml rsUnknown868C37
+          jml rsEventFindConditionBreak
 
         _SkipEvent
         jsr _AdjustScriptOffset
@@ -1215,27 +1229,31 @@
         _RunEventCheck
         jmp (lEventPointer)
 
-      rsUnknown86855D ; 86/855D
+      rsEventConditionCheck1Param ; 86/855D
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 1-parameter (3-byte) event condition check
 
         php
         ldx #3
         stx wEventCommandLength,b
-        ldx #<>rsUnknown86856F
+        ldx #<>rsEventConditionTest1Param
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown86856F ; 86/856F
+      rsEventConditionTest1Param ; 86/856F
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 1 parameter word and calls rsEventCheck1Parameter
 
         lda $0001,b,y
         sta wEventEngineParameter1,b
@@ -1244,27 +1262,31 @@
 
         .databank 0
 
-      rsUnknown868579 ; 86/8579
+      rsEventConditionCheck2Params ; 86/8579
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 2-parameter (5-byte) event condition check
 
         php
         ldx #5
         stx wEventCommandLength,b
-        ldx #<>rsUnknown86858B
+        ldx #<>rsEventConditionTest2Params
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown86858B ; 86/858B
+      rsEventConditionTest2Params ; 86/858B
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 2 parameter words and calls rsEventCheck2Parameters
 
         lda $0001,b,y
         sta wEventEngineParameter1,b
@@ -1275,27 +1297,31 @@
 
         .databank 0
 
-      rsUnknown86859B ; 86/859B
+      rsEventConditionCheck3Params ; 86/859B
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 3-parameter (7-byte) event condition check
 
         php
         ldx #7
         stx wEventCommandLength,b
-        ldx #<>rsUnknown8685AD
+        ldx #<>rsEventConditionTest3Params
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown8685AD ; 86/85AD
+      rsEventConditionTest3Params ; 86/85AD
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 3 parameter words and calls rsEventCheck4Parameters
 
         lda $0001,b,y
         sta wEventEngineParameter1,b
@@ -1320,7 +1346,7 @@
         ldx #<>rsEventCheckUnitsFightingCallback
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
@@ -1439,7 +1465,7 @@
         stx lEventPointer,b
         plp
 
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
@@ -1487,7 +1513,7 @@
         ldx #<>rsEventCheckTalkCallback
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
@@ -1526,27 +1552,31 @@
 
         .databank 0
 
-      rsUnknown8686F2 ; 86/86F2
+      rsEventConditionCheck1Gen2Char ; 86/86F2
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 1-Gen2-character-ID (3-byte) event condition check
 
         php
         ldx #3
         stx wEventCommandLength,b
-        ldx #<>rsUnknown868704
+        ldx #<>rsEventConditionTest1Gen2Char
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown868704 ; 86/8704
+      rsEventConditionTest1Gen2Char ; 86/8704
 
         .al
         .autsiz
         .databank ?
+
+        ; Unifies Gen2 character ID and calls rsEventEngineCheckGen2CharacterIDParameter
 
         lda wEventEngineArgument1,b
         jsr rsEventUnifyGen2CharacterIds
@@ -1559,27 +1589,31 @@
 
         .databank 0
 
-      rsUnknown868717 ; 86/8717
+      rsEventConditionCheck2Gen2Chars ; 86/8717
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 2-Gen2-character-ID (5-byte) event condition check
 
         php
         ldx #5
         stx wEventCommandLength,b
-        ldx #<>rsUnknown868729
+        ldx #<>rsEventConditionTest2Gen2Chars
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown868729 ; 86/8729
+      rsEventConditionTest2Gen2Chars ; 86/8729
 
         .al
         .autsiz
         .databank ?
+
+        ; Unifies 2 Gen2 character IDs and calls rsEventEngineCheck2Gen2CharacterIDParameters
 
         lda wEventEngineArgument1,b
         jsr rsEventUnifyGen2CharacterIds
@@ -1598,27 +1632,31 @@
 
         .databank 0
 
-      rsUnknown86874B ; 86/874B
+      rsEventConditionCheck4ParamsGen2 ; 86/874B
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 4-parameter (9-byte) event condition check with Gen2 character ID unification
 
         php
         ldx #9
         stx wEventCommandLength,b
-        ldx #<>rsUnknown86875D
+        ldx #<>rsEventConditionTest4ParamsGen2
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown86875D ; 86/875D
+      rsEventConditionTest4ParamsGen2 ; 86/875D
 
         .al
         .autsiz
         .databank ?
+
+        ; Unifies Arg2/Arg4 Gen2 character IDs, reads 4 params, and calls rsEventConditionMatch4ParamsSymmetric
 
         lda wEventEngineArgument2,b
         jsr rsEventUnifyGen2CharacterIds
@@ -1636,32 +1674,36 @@
         sta wEventEngineParameter3,b
         lda $0007,b,y
         sta wEventEngineParameter4,b
-        jsr rsUnknown86890E
+        jsr rsEventConditionMatch4ParamsSymmetric
         rts
 
         .databank 0
 
-      rsUnknown86878B ; 86/878B
+      rsEventConditionCheck2ParamsGen2SetUnit1 ; 86/878B
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 2-parameter (5-byte) Gen2-unified check that also sets wEventUnit1Pointer
 
         php
         ldx #5
         stx wEventCommandLength,b
-        ldx #<>rsUnknown86879D
+        ldx #<>rsEventConditionTest2ParamsGen2SetUnit1
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown86879D ; 86/879D
+      rsEventConditionTest2ParamsGen2SetUnit1 ; 86/879D
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs rsEventEngineCheckGen2CharacterIDParameterAdditional and sets wEventUnit1Pointer on match
 
         lda wEventEngineArgument1,b
         jsr rsEventUnifyGen2CharacterIds
@@ -1689,27 +1731,31 @@
 
         .databank 0
 
-      rsUnknown8687CC ; 86/87CC
+      rsEventConditionCheck2Gen2CharsSetUnit1 ; 86/87CC
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 2-Gen2-character-ID (5-byte) check that also sets wEventUnit1Pointer
 
         php
         ldx #5
         stx wEventCommandLength,b
-        ldx #<>rsUnknown8687DE
+        ldx #<>rsEventConditionTest2Gen2CharsSetUnit1
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown8687DE ; 86/87DE
+      rsEventConditionTest2Gen2CharsSetUnit1 ; 86/87DE
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs rsEventEngineCheck2Gen2CharacterIDParameters and sets wEventUnit1Pointer on match
 
         lda wEventEngineArgument1,b
         jsr rsEventUnifyGen2CharacterIds
@@ -1741,27 +1787,31 @@
 
         .databank 0
 
-      rsUnknown868816 ; 86/8816
+      rsEventConditionCheck2ParamsGen2SetBothUnits ; 86/8816
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets up 2-parameter (5-byte) Gen2-unified check that sets wEventUnit1Pointer and wEventUnit2Pointer
 
         php
         ldx #5
         stx wEventCommandLength,b
-        ldx #<>rsUnknown868828
+        ldx #<>rsEventConditionTest2ParamsGen2SetBothUnits
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown868828 ; 86/8828
+      rsEventConditionTest2ParamsGen2SetBothUnits ; 86/8828
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs rsEventEngineCheckGen2CharacterIDParameterAdditional and sets both event unit pointers on match
 
         lda wEventEngineArgument1,b
         jsr rsEventUnifyGen2CharacterIds
@@ -1806,7 +1856,7 @@
         ldx #<>rsEventCheckChildTalkCallback
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
@@ -1940,11 +1990,13 @@
 
         .databank 0
 
-      rsUnknown86890E ; 86/890E
+      rsEventConditionMatch4ParamsSymmetric ; 86/890E
 
         .al
         .autsiz
         .databank ?
+
+        ; Checks 4 parameters against Arg1/Gen2Char1/Arg3/Gen2Char2 in either order
 
         lda wEventEngineParameter1,b
         bmi +
@@ -2030,7 +2082,7 @@
         .databank ?
 
         lda #$20
-        jml rsUnknown86855D
+        jml rsEventConditionCheck1Param
 
         .databank 0
 
@@ -2167,19 +2219,21 @@
         php
         lda #8
         sta wEventCommandLength,b
-        lda #<>rsUnknown8689D7
+        lda #<>rsEventConditionTestUnitInArea
         sta lEventPointer,b
         lda #$03
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown8689D7 ; 86/89D7
+      rsEventConditionTestUnitInArea ; 86/89D7
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 4 area/unit parameters, runs rlCheckEventParameters $03, and sets wEventUnit1Pointer
 
         lda $0001,b,y
         sta wEventEngineParameter1,b
@@ -2229,19 +2283,21 @@
         php
         lda #7
         sta wEventCommandLength,b
-        lda #<>rsUnknown868A2F
+        lda #<>rsEventConditionTestUnitsWithinDistance
         sta lEventPointer,b
         lda #$03
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown868A2F ; 86/8A2F
+      rsEventConditionTestUnitsWithinDistance ; 86/8A2F
 
         .al
         .autsiz
         .databank ?
+
+        ; Checks two units' deployment offsets and Manhattan distance for CHECK_UNITS_WITHIN_DISTANCE
 
         ; CHECK_UNITS_WITHIN_DISTANCE
 
@@ -2335,7 +2391,7 @@
         stx lEventPointer,b
         lda #$14
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
@@ -2379,7 +2435,7 @@
         ; wEventEngineArgument2 = FactionSlot
 
         lda #$17
-        jml rsUnknown868579
+        jml rsEventConditionCheck2Params
 
         .databank 0
 
@@ -2392,7 +2448,7 @@
         ; CHECK_UNIT_DIED_TO
 
         lda #$18
-        jml rsUnknown868579
+        jml rsEventConditionCheck2Params
 
         .databank 0
 
@@ -2405,7 +2461,7 @@
         ; CHECK_FELL_IN_LOVE
 
         lda #$11
-        jml rsUnknown868579
+        jml rsEventConditionCheck2Params
 
         .databank 0
 
@@ -2419,18 +2475,20 @@
         php
         ldx #7
         stx wEventCommandLength,b
-        ldx #<>rsUnknown868AFC
+        ldx #<>rsEventConditionCheckGenderSetUnit1
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown868AFC ; 86/8AFC
+      rsEventConditionCheckGenderSetUnit1 ; 86/8AFC
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 3 params and tests unit gender; sets wEventUnit1Pointer on match
 
         lda $0001,b,y
         sta wEventEngineParameter1,b
@@ -2438,7 +2496,7 @@
         sta wEventEngineParameter2,b
         lda $0005,b,y
         sta wEventEngineParameter3,b
-        jsr rsUnknown868B76
+        jsr rsEventConditionTestUnitsAndGender
         bcc +
 
           ldx wSelectedUnitDataRAMPointer,b
@@ -2466,18 +2524,20 @@
         php
         ldx #7
         stx wEventCommandLength,b
-        ldx #<>rsUnknown868B3D
+        ldx #<>rsEventConditionCheckGenderSetBothUnits
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
-      rsUnknown868B3D ; 86/8B3D
+      rsEventConditionCheckGenderSetBothUnits ; 86/8B3D
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 3 params and tests unit gender; sets both event unit pointers on match
 
         lda $0001,b,y
         sta wEventEngineParameter1,b
@@ -2485,7 +2545,7 @@
         sta wEventEngineParameter2,b
         lda $0005,b,y
         sta wEventEngineParameter3,b
-        jsr rsUnknown868B76
+        jsr rsEventConditionTestUnitsAndGender
         bcc +
 
           ldx wSelectedUnitDataRAMPointer,b
@@ -2508,11 +2568,13 @@
 
         .databank 0
 
-      rsUnknown868B76 ; 86/8B76
+      rsEventConditionTestUnitsAndGender ; 86/8B76
 
         .al
         .autsiz
         .databank ?
+
+        ; Checks Arg1/Arg2 against Param1/Param2 and Arg1 unit gender against Param3
 
         lda wEventEngineParameter1,b
         bmi +
@@ -2556,7 +2618,7 @@
         .databank ?
 
         lda #$04
-        jml rsUnknown86878B
+        jml rsEventConditionCheck2ParamsGen2SetUnit1
 
         .databank 0
 
@@ -2567,7 +2629,7 @@
         .databank ?
 
         lda #$06
-        jml rsUnknown86878B
+        jml rsEventConditionCheck2ParamsGen2SetUnit1
 
         .databank 0
 
@@ -2578,7 +2640,7 @@
         .databank ?
 
         lda #$0A
-        jml rsUnknown868816
+        jml rsEventConditionCheck2ParamsGen2SetBothUnits
 
         .databank 0
 
@@ -2602,7 +2664,7 @@
         .databank ?
 
         lda #$17
-        jml rsUnknown8686F2
+        jml rsEventConditionCheck1Gen2Char
 
         .databank 0
 
@@ -2613,7 +2675,7 @@
         .databank ?
 
         lda #$18
-        jml rsUnknown868717
+        jml rsEventConditionCheck2Gen2Chars
 
         .databank 0
 
@@ -2624,7 +2686,7 @@
         .databank ?
 
         lda #$11
-        jml rsUnknown868717
+        jml rsEventConditionCheck2Gen2Chars
 
         .databank 0
 
@@ -2635,7 +2697,7 @@
         .databank ?
 
         lda #$14
-        jml rsUnknown86874B
+        jml rsEventConditionCheck4ParamsGen2
 
         .databank 0
 
@@ -2664,7 +2726,7 @@
         ; CHECK_PLAYER_UNCAPTURED_IF_SEIZING
 
         lda #$1B
-        jml rsUnknown86855D
+        jml rsEventConditionCheck1Param
 
         .databank 0
 
@@ -2681,7 +2743,7 @@
         ldx #<>rsEventCheckWonInArenaCallback
         stx lEventPointer,b
         plp
-        jml rsUnknown8684ED
+        jml rsEvaluateEventCondition
 
         .databank 0
 
@@ -2728,15 +2790,17 @@
         ; CHECK_SPECIAL_CRIT
 
         lda #$1D
-        jml rsUnknown868579
+        jml rsEventConditionCheck2Params
 
         .databank 0
 
-      rsUnknown868C37 ; 86/8C37
+      rsEventFindConditionBreak ; 86/8C37
 
         .al
         .autsiz
         .databank ?
+
+        ; Scans forward in condition script for $20/$6666 break marker
 
         -
         lda $0001,b,y
@@ -2831,7 +2895,7 @@
         .databank ?
 
         lda #$20
-        jml rsUnknown868CBB
+        jml rsSkipUnlessEventAction
 
         .databank 0
 
@@ -2842,7 +2906,7 @@
         .databank ?
 
         lda #$25
-        jml rsUnknown868CBB
+        jml rsSkipUnlessEventAction
 
         .databank 0
 
@@ -2853,15 +2917,17 @@
         .databank ?
 
         lda #$26
-        jml rsUnknown868CBB
+        jml rsSkipUnlessEventAction
 
         .databank 0
 
-      rsUnknown868CBB ; 86/8CBB
+      rsSkipUnlessEventAction ; 86/8CBB
 
         .al
         .autsiz
         .databank ?
+
+        ; Skips to turn-check break ($25/$6666) unless bEventActionIdentifier equals A
 
         bcs +
 
@@ -3316,7 +3382,7 @@
 
         bcs +
 
-          jsl rlUnknown86832B
+          jsl rlRemoveCurrentChapterRAMStruct
 
         +
         rts
@@ -4680,7 +4746,7 @@
           sta lR18
           lda $0000+1,b,y
           sta lR18+1
-          jsl rlUnknown84B613
+          jsl rlSetupScriptedBattleActionStruct
 
         +
         inc y
@@ -5442,7 +5508,7 @@
 
           lda $0000,b,y
           and #$00FF
-          jsl rlUnknown81B43F
+          jsl rlSetAreaRestrictionBit
 
         +
         inc y
@@ -5460,7 +5526,7 @@
 
           lda $0000,b,y
           and #$00FF
-          jsl rlUnknown81B461
+          jsl rlClearAreaRestrictionBit
 
         +
         inc y
@@ -6417,11 +6483,13 @@
       .al
       .xl
 
-      rlUnknown86C4C4 ; 86/C4C4
+      rlStartChapterEvents ; 86/C4C4
 
         .al
         .autsiz
         .databank ?
+
+        ; Loads aChapterEventPointers[A*3], calls rlBeginChapterEvents, and clears $7E52EE
 
         ; Input:
         ; A = current chapter
@@ -6451,11 +6519,13 @@
 
         .databank 0
 
-      rlUnknown86C4EB ; 86/C4EB
+      rlRefreshChapterEventPointers ; 86/C4EB
 
         .al
         .autsiz
         .databank ?
+
+        ; Refreshes EventPointer for every entry in aChapterEventRAMData from aChapterEventPointers
 
         phb
         php
@@ -6537,11 +6607,13 @@
 
         .databank 0
 
-      rlUnknown86C548 ; 86/C548
+      rlClearChapterActiveMapChanges ; 86/C548
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears aChapterActiveMapChanges
 
         phb
         php
@@ -6903,11 +6975,13 @@
       .al
       .xl
 
-      rlUnknown81B43F ; 81/B43F
+      rlSetAreaRestrictionBit ; 81/B43F
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets bit (A-1)+2 in wAreaRestrictionBitfield
 
         phb
         php
@@ -6920,7 +6994,7 @@
           tax
           sep #$20
           lda wAreaRestrictionBitfield,b
-          ora aUnknown81B45B,x
+          ora aAreaRestrictionSetBitmasks,x
           sta wAreaRestrictionBitfield,b
           rep #$20
 
@@ -6941,11 +7015,13 @@
       .al
       .xl
 
-      rlUnknown81B461 ; 81/B461
+      rlClearAreaRestrictionBit ; 81/B461
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears bit (A-1)+2 in wAreaRestrictionBitfield
 
 
         phb
@@ -6959,7 +7035,7 @@
           tax
           sep #$20
           lda wAreaRestrictionBitfield,b
-          and aUnknown81B47D,x
+          and aAreaRestrictionClearBitmasks,x
           sta wAreaRestrictionBitfield,b
           rep #$20
 
@@ -6980,11 +7056,13 @@
       .al
       .xl
 
-      rlUnknown84B57A ; 84/B57A
+      rlHandleArenaExitEvent ; 84/B57A
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears arena RAM/flags, heals survivor and runs event action $1C, or clears defeated state
 
         ; entering castle menu
 
@@ -7070,11 +7148,13 @@
 
         .databank 0
 
-      rlUnknown84B613 ; 84/B613
+      rlSetupScriptedBattleActionStruct ; 84/B613
 
         .al
         .autsiz
         .databank ?
+
+        ; Populates action structs, death quotes, and scripted battle rounds from lR18
 
         phb
         php

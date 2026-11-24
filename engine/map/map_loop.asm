@@ -99,7 +99,7 @@
         bne _AF33
         jsl rlResetUnitsForChapter
         lda wCurrentChapter,b
-        jsl rlUnknown86C4C4
+        jsl rlStartChapterEvents
         stz wCurrentTurn,b
         stz wSavedMapStep,b
         sep #$20
@@ -110,7 +110,7 @@
 
         _AF33
         stz wPhaseSongID,b
-        jsl rlUnknown86C4EB
+        jsl rlRefreshChapterEventPointers
         lda #$0007
         sta wSavedMapStep,b
         jsl rlStartPhaseMusic

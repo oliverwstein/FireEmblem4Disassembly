@@ -975,7 +975,7 @@
         sta lR18+1
         lda lAITemp000E90,b
         sta lR18
-        jsl rlUnknown84B613
+        jsl rlSetupScriptedBattleActionStruct
         rts
 
         .databank 0

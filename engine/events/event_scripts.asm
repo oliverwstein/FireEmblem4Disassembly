@@ -3675,7 +3675,7 @@
         adc lR22
         tay
 
-        jsl rlUnknown86816B
+        jsl rlTryRunEventConditionCommand
 
         tya
         sec

@@ -3506,7 +3506,7 @@
           cmp aSave.wStructIndex,b
           bne -
 
-        jsl rlUnknown86C4EB
+        jsl rlRefreshChapterEventPointers
         rts
 
         .databank 0
