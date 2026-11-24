@@ -29,7 +29,9 @@ fn total_strength() -> u8 {                          // rlGetSelectedUnitTotalSt
 
 Sigurd, a Knight Lord with a personal strength of 4, has a base of 10 + 4 = 14. Magic, skill, speed, defense, and resistance follow the same shape, with two more equipment bonuses: the Safeguard adds 7 to defense and the Barrier Blade 7 to resistance. Each ring sets a bit in the unit's `RingStatBonusBitfield` when it enters the inventory, and the getters test those bits: `$80` Power, `$40` Magic, `$20` Skill, `$10` Speed, `$08` Shield, and `$04` Barrier each add 5, and `$02` Leg adds 3 movement.
 
-Two stats break the pattern. **Max HP** and **luck** have no class term: the class table has no luck column, and its HP column is used only for generic enemies. A player unit's max HP is simply its personal HP, capped at 80. Personal stats have their own caps, enforced when a level-up adds to them (`rlAddSelectedUnitStat`): 80 for HP, 30 for luck, and 15 for the other six.
+Each of the six combat stats has two caps. When a level-up adds to a stat, `rlAddSelectedUnitStat` stops the *personal* value at 15. When the stat is read, class base plus personal stops at 30. A unit's real ceiling is therefore its class base plus 15, never above 30: a Cavalier, with a strength base of 7, tops out at 22 strength, and the same unit as a Paladin (base 9) can reach 24. Promotion raises the ceiling along with the stat.
+
+**Max HP** and **luck** break the pattern. They have no class term: the class table has no luck column, and its HP column is used only for generic enemies. A player unit's max HP is simply its personal HP and its luck its personal luck, so their personal caps, 80 and 30, are their only ones.
 
 `rlGetSelectedUnitStrengthBaseAndBonus` returns the base in the accumulator and passes the bonus back through the scratch variable `wR34`, a second return value in a language without tuples. The split exists for display. The status screen draws the base and then the bonus beside it (`rlDrawStatBonus`), and the level-up screen records the base before and after the gain.
 
@@ -142,7 +144,7 @@ Nothing on the status screen is cached. Every displayed stat, every hit-rate cal
 
 The limits:
 
-- **Bases cap at 30, bonuses don't.** Class plus personal stat stops at 30; holy weapons, rings, and the two special swords add on top. Personal stats cap at 15 (HP 80, luck 30).
+- **A ceiling of class base + 15, at most 30.** Personal stats cap at 15 (HP 80, luck 30) and class plus personal at 30; holy weapons, rings, and the two special swords add on top of both.
 - **Promotion never adds HP.** Max HP has no class term.
 - **13 holy blood lines**, 2 bits each, in two words of constant data. Holy weapon stat boosts are bound to those 13 rows: a new holy weapon with its own boosts needs a new blood or must share one's row.
 - **Two non-holy stat bonuses** (Safeguard and Barrier Blade), each special-cased in code, and **seven rings**, one bit each.
