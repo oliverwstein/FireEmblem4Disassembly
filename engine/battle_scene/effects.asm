@@ -1,6 +1,6 @@
-; The battle scene's visual effects: palette, window, HDMA, BG scroll and
-; mosaic effects started by the script commands and by spells, and the sprites
-; drawn for them. Low-level rendering: most of it stays Unknown.
+; The battle scene's visual effects: palette, spell/polygon/gradient/mosaic
+; window, HDMA, BG scroll/shake/animation, and sprite effects started by the
+; script commands and by spells.
 
 
     .section Unsorted959C64Section

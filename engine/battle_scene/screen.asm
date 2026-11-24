@@ -1,6 +1,6 @@
 ; The battle scene's screen: IRQ splits installed by rsOpenBattleScene, the
-; INIDISP and window HDMA tables (the letterbox, the camera), and VBlank work.
-; Mostly Unknown: low-level rendering.
+; INIDISP, BG2/camera and window HDMA tables, brightness fades, level-up
+; number sprites, OAM buffer management, and VBlank work.
 
 
     .section Unsorted9590F2Section

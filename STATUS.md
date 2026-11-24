@@ -2,13 +2,13 @@
 
 Current state and next steps. Read this first, then [PLAN.md](PLAN.md) (roadmap, per-wave checklist, engine guide). Past work and older technical notes are in [HISTORY.md](HISTORY.md); tool usage and 64tass pitfalls are in [tools/README.md](tools/README.md). **Rewrite this file at the end of every session** to keep it short and about the present.
 
-## Current state (2026-11-23, after wave 16: `title/` at 0 `Unknown`)
+## Current state (2026-11-23, after wave 17: `battle_scene/` at 0 `Unknown`)
 
 Numbers come from `python3 tools/counts.py --fast --breakdown`; quote nothing else.
 
 - `./build.sh` is byte-identical and checksums verify (`./build.sh mod` builds the identical ROM without `fe4.sfc`; GAPS.md is empty).
-- Routines: 6,505 in `engine/`, 5,744 named, 761 `Unknown` (88.3% named). 172 pinned blocks.
-- **Stage 1 complete; Stage 2 underway:** 18 of 20 folders in `engine/` now have **0 `Unknown`** (`ai/`, `arena/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` — 4,642 routines total).
+- Routines: 6,505 in `engine/`, 6,045 named, 460 `Unknown` (92.9% named). 172 pinned blocks.
+- **Stage 1 complete; Stage 2 underway:** 19 of 20 folders in `engine/` now have **0 `Unknown`** (`ai/`, `arena/`, `battle_scene/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` — 5,432 routines total).
 - Reference pages: `docs/reference/core.md`, `ai.md`, `arena.md`, `battle_scene.md`, `castle.md`, `demo.md`, `dialogue.md`, `epilogue.md`, `events.md`, `map_battle.md`, `map_menu.md`, `map.md`, `menus.md`, `save.md`, `title.md`, `worldmap.md` (`tools/reference.py` output is gitignored).
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
@@ -19,13 +19,12 @@ From `python3 tools/counts.py --fast --breakdown` (top-level `rl`/`rs` routines 
 | System | Unknown | Total | Where | Notes |
 |---|---:|---:|---|---|
 | `battle/` | 460 | 1,073 | `map_magic_effects.asm` 434, `map_battle_magic.asm` 13, `effects.asm` 5, `battle.asm` 3, `map_battle.asm` 3, others 2 | Spell visuals and bank `$87` ripple (`procUnknown87C70A`) intentionally left `Unknown`; mechanics done |
-| `battle_scene/` | 301 | 790 | `effects.asm` 224, `screen.asm` 58, `hud.asm` 5, `script.asm` 5, others 9 | Visual/HDMA/effect helpers intentionally left `Unknown`; mechanics done |
-| `ai/`, `arena/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` | 0 | 4,642 | — | 0 `Unknown` |
-| **Total** | **761** | **6,505** | | **5,744 named (88.3%)** |
+| `ai/`, `arena/`, `battle_scene/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` | 0 | 5,432 | — | 0 `Unknown` |
+| **Total** | **460** | **6,505** | | **6,045 named (92.9%)** |
 
 ## Who wrote what
 
-Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), and Wave 16 (`495d670`..`3e59646`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`). Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
+Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), Wave 16 (`495d670`..`80c1e1d`), and Wave 17 (`d7054ee`..`4fa5320`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`). Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
 
 ## Active decisions
 
@@ -35,8 +34,7 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5e
 
 ## Next session
 
-1. **Stage 2 — Literal 0 `Unknown` (761 visual/effect routines, if continuing "Stage 2"):**
-   - **Wave 17 — Battle scene visuals (301 `Unknown`):** `effects.asm` (224), `screen.asm` (58), `hud.asm` (5), `script.asm` (5), `results.asm` (4), `rounds.asm` (3), `animation_moves.asm` (1), `combatants.asm` (1).
+1. **Stage 2 — Literal 0 `Unknown` (460 visual/effect routines remaining):**
    - **Wave 18 — Map magic & battle visuals (460 `Unknown`):** `map_magic_effects.asm` (434), `map_battle_magic.asm` (13), `effects.asm` (5), `battle.asm` (3), `map_battle.asm` (3), `battle_stats.asm` (1), `scripted_crits.asm` (1).
 2. **Engine guide outline:**
    - Draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide"). Every major gameplay system is documented.

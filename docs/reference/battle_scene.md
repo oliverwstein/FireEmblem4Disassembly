@@ -20,9 +20,9 @@ Per-routine details: [routines/battle_scene.md](routines/battle_scene.md) (gener
 | [loading.asm](../../engine/battle_scene/loading.asm) | Loading each combatant's graphics and palette, the background and foreground, and placing the combatants. |
 | [backgrounds.asm](../../engine/battle_scene/backgrounds.asm) | The backgrounds by terrain and the foreground layers. |
 | [script.asm](../../engine/battle_scene/script.asm) | The battle scene script interpreter and its commands. |
-| [screen.asm](../../engine/battle_scene/screen.asm) | IRQ splits, the INIDISP and window HDMA tables, VBlank work. Low-level, mostly `Unknown`. |
+| [screen.asm](../../engine/battle_scene/screen.asm) | IRQ splits, the INIDISP, BG2 and window HDMA tables, brightness fades, level-up number sprites, OAM buffer management, and VBlank work. |
 | [hud.asm](../../engine/battle_scene/hud.asm) | The HUD: HP numbers and bars, stats, names and banners; the gauge behind the experience bar and the level up window; battle type 2's colors; the HUD's shake. |
-| [effects.asm](../../engine/battle_scene/effects.asm) | The script's routine commands, the palette effects (named), and the window, HDMA, scroll and mosaic effects and spell sprites (low-level, mostly `Unknown`). |
+| [effects.asm](../../engine/battle_scene/effects.asm) | The script's routine commands, palette effects, spell/polygon/gradient/mosaic window effects, HDMA scroll/wave effects, BG animation slots, and hit/dodge effect sprites. |
 | [data.asm](../../engine/battle_scene/data.asm) | Tables in banks `$97`-`$99` and `$E0` read by the code above. |
 | [include/BattleScene.h](../../include/BattleScene.h) | `structBattleSceneCombatant`, the bits of `wBattleSceneFlags` and `bBattleSceneRoundState`, the palette effect entries (`PALETTE_EFFECT_*`) and slots, the upload and afterimage structs, the level up gauge rows (`BATTLE_SCENE_GAUGE`, `BATTLE_SCENE_STAT_GAUGE`). |
 | [include/BattleAnimation.h](../../include/BattleAnimation.h) | Sequence commands (`ANIM_CMD_*`), the animation lookup, move programs, `WRITE_RAM_*` lists. |
@@ -188,7 +188,7 @@ Four slots of `$43` bytes from `$0AF3`: the two combatants (`X` = 0 and `$43`) a
 
 ## Script routines
 
-Script commands 4, 5 and 8 take an index into `aBattleSceneScriptRoutines` (72 long pointers in bank `$97`): call once, call every frame until it clears bit 0 of `$7FE4B7`, or set as the routine run every frame (`lBattleSceneScriptRoutine`). Entries 1, 2 and 13 are the experience bar and the level up window above; most others are effects still `Unknown`.
+Script commands 4, 5 and 8 take an index into `aBattleSceneScriptRoutines` (72 long pointers in bank `$97`): call once, call every frame until it clears bit 0 of `$7FE4B7`, or set as the routine run every frame (`lBattleSceneScriptRoutine`). Entries 1, 2 and 13 are the experience bar and the level up window above; the rest are screen/window fades, stat-gain/level-up floating sprites (`rlBattleSceneScriptInitStatGains`, `rlBattleSceneScriptInitLevelUpNumber`), portrait palette loaders, and effect helpers.
 
 ## Depends on
 
@@ -204,4 +204,4 @@ Script commands 4, 5 and 8 take an index into `aBattleSceneScriptRoutines` (72 l
 - **Extra tiles ID 0** copies `$C0` tiles from `$86E000` (`ANIM_NO_EXTRA_TILES_SOURCE`), event data in the released ROM. Whether that VRAM is ever shown is not known.
 - **The magic sword's spell rows.** Bits 3-5 of `bBattleAnimationCombatantFlags` pick one of eight rows of `aBattleSceneMagicSwordSpellActions`, but only `rlBattleSceneRunSpellRowCommand`, which nothing reaches, sets a row other than 0.
 - **`rlBattleAnimationGetEffectArcHeight`** reads the defender's height with X = `$0E` for combatant 1's effect, an offset into `aBattleSceneCombatant1`, not into the slots. It reads the wrong byte; what difference that makes on screen is not known.
-- **Unknown routines.** The visual effects (`effects.asm`, `screen.asm`), the script routines that run them, and a few slot helpers are still `Unknown`, as is the window effect data (`$97/F64E`, `$97/A7C7`).
+- **Data tables.** All 790 routines in `engine/battle_scene/` are named; the window effect data tables (`$97/F64E`, `$97/A7C7`) are still `aUnknown*`.
