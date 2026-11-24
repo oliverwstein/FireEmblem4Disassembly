@@ -1945,8 +1945,8 @@
       ; 3 = never attack; also no castle capture
       ; 4 = cautious: HP - 5 + turn / 2 and damage dealt / 2 + turn / 2 must both cover the damage
       ;     expected back, and 3 x HP the tile's threat; no threat map is built
-      ; 5 = attack only from the tile the unit stands on; threat range is weapon range alone; no threat
-      ;     map (units guarding a castle always use 5)
+      ; 5 = attack only from the tile the unit stands on; no threat map (units guarding a castle
+      ;     always use 5)
       ; 6 = never attack
       ; 7 = as 2, but leave alone foes guarding a castle; no castle capture
       ; 8 = as 2 (no script sets it)

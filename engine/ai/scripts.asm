@@ -1487,6 +1487,9 @@
         .databank $7E
 
         ; X = aAIUnitList pointer
+        ; SEC if the member's longest-reaching weapon covers some target's tile from where it can move.
+        ; The test meant to skip defeated and hidden targets reads the deployment offset through X
+        ; (the member's entry) instead of Y (the target's), so it tests the member's own state.
 
         phx
         phy
@@ -1596,7 +1599,8 @@
         .autsiz
         .databank ?
 
-        ; Check expected damage and if unit HP + def/res >= target might; SEC to engage
+        ; SEC to engage. A failed damage estimate (the member can't hurt the target) also returns SEC;
+        ; otherwise the member must have HP + defense (resistance against magic) >= the target's might.
 
         stz wAITemp000E96,b
         stz wAITemp000E98,b

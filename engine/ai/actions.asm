@@ -1125,7 +1125,10 @@
         .autsiz
         .databank ?
 
-        ; Objective handler 8: move adjacent to target unit and execute wAIInteractionActionID
+        ; Objective handler 8: move to the first reachable, empty tile beside the target (above, left,
+        ; right, below) and run wAIInteractionActionID there; only the leader talks (12). For a target
+        ; guarding a castle it also tries the gate below, but rsAICheckIfInteractionTileReachable
+        ; rejects gate tiles, so that try never succeeds.
 
         phb
         php

@@ -341,6 +341,12 @@
         .autsiz
         .databank ?
 
+        ; How far the selected unit could attack: its longest-reaching weapon's maximum range plus
+        ; (movement + 1) x 10/7 tiles, rounded up (the reach on roads, which cost 7 tenths). With mode 5
+        ; it would be the weapon range alone, but cycle 2 sets the mode to 0 before rlBuildAIUnitList,
+        ; and every command that sets mode 5 ends the script, so AI_REINFORCE_EVERY_N_TURNS's rebuild
+        ; never sees it either.
+
         phx
         jsl rlGetHighestRangeItemInInventory
 

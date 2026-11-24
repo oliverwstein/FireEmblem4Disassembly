@@ -1913,7 +1913,7 @@
         .databank ?
 
         ; The threat map: clears aRangeMap, then for every foe in the target list within 16 tiles of
-        ; the group's leader (a 33 x 33 box) that holds a weapon reaching less than 3, adds 1 to every
+        ; the group's leader (a 32 x 32 box, clamped to the map) that holds a weapon reaching less than 3, adds 1 to every
         ; tile it could attack after moving (rsFillAITargetsRangeMap, rsFillRangeMap). A foe's threat
         ; uses its first weapon. The code after the branch to _End, which would score the targets
         ; (rsAIScoreTargetsNearLeader) and map only the best three, is never reached.
