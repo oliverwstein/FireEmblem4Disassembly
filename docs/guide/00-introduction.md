@@ -10,7 +10,7 @@ None of it requires reading 65816 assembly. Where code helps, it appears as Rust
 
 A little hardware goes a long way toward explaining why the code looks the way it does.
 
-**The CPU (the 65816)** is a 16-bit descendant of the 6502 in the NES and the Apple II. It has three registers that matter: an accumulator `A` and two index registers, `X` and `Y` (see the sidebar below). It can switch each between 8-bit and 16-bit mode at any moment, which is why the source is full of `.al`/`.as` (16-bit/8-bit accumulator) and `.xl`/`.xs` markers. Addresses are 24 bits wide: a *bank* byte and a 16-bit offset, written `$80/9B01` in this project ("bank `$80`, offset `$9B01`"). The cartridge is mapped into banks `$80`-`$FF`. Work RAM is banks `$7E`-`$7F`, and its first 8 KB is also visible in every bank, which makes it the cheapest memory to reach.
+**The CPU (the 65816)** is a 16-bit descendant of the 6502 in the NES and the Apple II. It has three registers that matter: an accumulator `A` and two index registers, `X` and `Y` (see the sidebar below). It can switch each between 8-bit and 16-bit mode at any moment, which is why the source is full of `.al`/`.as` (16-bit/8-bit accumulator) and `.xl`/`.xs` markers. Addresses are 24 bits wide: a *bank* byte and a 16-bit offset, written `$80/9B01` in this project ("bank `$80`, offset `$9B01`"). The cartridge is mapped into banks `$80`-`$FF`. Work RAM is banks `$7E`-`$7F`, and its first 8 KB is also visible in banks `$00`-`$3F` and `$80`-`$BF`, where nearly all the code runs, which makes it the cheapest memory to reach.
 
 **The PPU (the picture processor)** draws the screen from video RAM: up to four *background layers* made of 8×8 tiles, plus up to 128 *sprites*. It isn't programmable the way a modern GPU is. It draws whatever video RAM and its registers describe, and nothing else. The CPU cannot touch video RAM while the screen is being drawn. It gets a window of about 2,300 microseconds per frame, the **vertical blank** (VBlank), after the last line is drawn and before the next frame starts. Everything that changes on screen has to be squeezed through that window, usually by **DMA**, a hardware copier much faster than the CPU. **HDMA** is DMA that fires once per scanline, which lets the game change a register partway down the screen. That's how it gets wavy water, gradients, and the dialogue box folding open.
 
@@ -131,7 +131,7 @@ struct ProcInfo {            // structProcInfo
 
 Up to sixteen procs can be alive at once. Every frame, `rlProcEngineMainProcLoop` walks the slots and gives each live proc its turn: run its on-cycle routine, then step its script until it yields (`PROC_YIELD n` waits n frames), halts, or ends. A fade, for instance, is a proc whose on-cycle routine nudges the screen brightness one step each frame and whose script ends when it reaches the target. Whoever started the fade doesn't wait for it; it goes on with its own work, and can ask later whether the proc has ended (`rlProcEngineCheckProcEnded`).
 
-There are about 160 proc definitions in the game, and they're the glue of the presentation layer: the map's scrolling, every screen transition, the dialogue scenes, the event scripts themselves (an event runs *inside* a proc), the castle name pop-up, and so on.
+There are about 175 proc definitions in the game, and they're the glue of the presentation layer: the map's scrolling, every screen transition, the dialogue scenes, the event scripts themselves (an event runs *inside* a proc), the castle name pop-up, and so on.
 
 Procs can look like an event system, but nothing is broadcast and nothing subscribes. Two classic game-architecture patterns describe them better:
 
@@ -162,71 +162,18 @@ In Rust, either layout reads naturally: `procs[i].body3` or `system.body3[i]`, a
 
 Two more engines run beside the procs as **VBlank hooks**. These are entries in `aTaskTable`, a short list of per-frame engines that `rlRunVBlankHooks` walks, set up at boot by `rlRegisterVBlankHook`:
 
-- **Active sprites** ([engine/core/active_sprites.asm](../../engine/core/active_sprites.asm)): scripted, animated sprites. The map's units, cursors, and icons are active sprites, each with its own little animation script.
+- **Active sprites** ([engine/core/active_sprites.asm](../../engine/core/active_sprites.asm)): scripted, animated sprites, each with its own little animation script. The map battle's weapons and spell effects, the map's action animations, and some event effects are active sprites. The map's units and cursor are not; the map's VBlank routine draws them directly.
 - **The HDMA engine** ([engine/core/hdma.asm](../../engine/core/hdma.asm)): per-frame scanline effects, also scripted, such as the dialogue box folding, gradients, and the battle scene's wobbles.
 
 All three engines share the same shape: a fixed number of slots, a definition record in ROM, an on-cycle routine, and a script.
 
-## The data model: what a unit is
+## The data model: a war in 128 KB
 
-Scheduling work handles *time*. Representing an entire war inside 128 KB of RAM is the *memory* problem, and it's where FE4's scale meets its budget.
+Scheduling work handles *time*. The other half of the problem is *memory*: up to 72 units on the map at once, each needing stats, growths, class, inventory, skills, holy blood, love points, and a position, plus every weapon in the world, all inside 128 KB of RAM.
 
-A Fire Emblem unit needs a lot of data: stats, growths, class, level, experience, money, HP, status, inventory, skills, holy blood, a lover, love points with every eligible partner, and a place on the map. FE4 has up to 72 units at once and only 128 KB of RAM for everything. It can't afford a full record for every bandit.
+FE4's answer is to keep the rules in ROM and only what changes in RAM, in fixed pools sized to the game's exact cast. A unit is not one record but a small header pointing at *parts*, and each kind of unit gets only the parts it needs: an ordinary soldier costs under forty bytes, a playable character more, a generation-2 child more still. Every weapon is an individual record in one 256-slot table, which is how a sword remembers its kills. Where a unit stands lives in a separate table from who it is, and allegiance is kept per pair of armies rather than per unit. Each of these choices is also a hard limit the designers had to live with.
 
-So a unit is assembled from **parts**, and each kind of unit gets only the parts it needs ([include/Characters.h](../../include/Characters.h), [include/WRAM.h](../../include/WRAM.h)). Every unit has a small header record, `structCharacterDataRAM`, which is a type byte and a list of pointers:
-
-```rust
-struct CharacterDataRAM {               // one per unit, 72 in all (aUnitRAMArea)
-    kind: u8,
-    personal: Ptr<PersonalData>,        // HP now, status, faction, AI, deployment, castle…
-    extended: Ptr<ExtendedData>,        // stats, class, level, money, experience
-    constant: Ptr<ConstantData>,        // growths, skills, holy blood (gen-2 children)
-    enemy_rom: Ptr<CharacterROMEntry>,  // or: read the rest straight from ROM
-    inventory: Ptr<InventoryData>,
-    lover: Ptr<LoverData>,              // love points with each partner
-}
-```
-
-```
-CharacterDataRAM (aUnitRAMArea, 72 slots)
-  ├── personal   ──▶ PersonalData      (HP, status, faction, AI)
-  ├── extended   ──▶ ExtendedData      (stats, class, level, gold, EXP)  [playable & gen-2]
-  ├── constant   ──▶ ConstantData      (growths, skills, holy blood)     [gen-2 only]
-  ├── enemy_rom  ──▶ CharacterROMEntry (stats & growths in ROM)          [enemies & bosses]
-  ├── inventory  ──▶ InventoryData     (8 item slots + equipped flags)
-  └── lover      ──▶ LoverData         (love points with 15 men)         [playable women only]
-```
-
-The parts live in separate pools, each sized for its kind:
-
-| Pool | Size | Who gets one | Parts |
-|---|---|---|---|
-| `aStaticUnitRAMArea` | 24 | the playable characters | personal + extended |
-| `aDynamicUnitRAMArea` | 17 | generation-2 children, whose growths and blood are *computed* from their parents | personal + extended + constant |
-| `aHolyAndEnemyRAMArea` | 63 | bosses, holy-blood enemies, and ordinary enemies | personal only; everything else is read from the character's ROM entry |
-| `aInventoryRAMArea` | 73 | anyone with items | 8 slots + equipped flags |
-| `aLoverRAMArea` | 9 | the playable women of the current generation | love points with 15 men |
-
-An ordinary enemy soldier costs its header plus a 15-byte personal part: under forty bytes. A playable character adds a 15-byte block of stats, and a generation-2 child adds its computed growths and blood on top of that. Data that can't change, like an enemy's stats, is never copied out of ROM. This is the *Flyweight* idea: share what is common, store only what differs. It explains a lot of the game's code, because almost everything that reads a stat goes through a *getter* (`engine/units/unit_info.asm`, `unit_data.asm`) that knows which part to look in for this kind of unit. The separate pools also mean each kind of unit has a fixed budget, set when the game was built, rather than all kinds competing for one heap.
-
-**Items are objects too.** In most Fire Emblem games an inventory slot holds an item type and its uses left. In FE4 every weapon is an individual: `aItemRAMData` holds 256 item records, each with its type, durability, owner, and **kill count** ([include/Items.h](../../include/Items.h)). An inventory slot holds just a one-byte index into that table. That's how a sword can remember its kills, and how a father's weapon passes intact to his child.
-
-**The map knows units through the deployment table.** `aDeploymentTable` is another structure of arrays, 72 entries per field: state, tile position, pixel position, faction slot, map sprite, and a pointer back to the unit's record ([engine/map/deployment.asm](../../engine/map/deployment.asm)). The deployment entry tracks *where* a unit stands and what it looks like on the map, while the unit record tracks *who* it is. Questions like "which foes can reach this tile?" are answered from whole-map grids built from this table, such as the AI's movement, range, and threat maps ([engine/ai/maps.asm](../../engine/ai/maps.asm)). Passing units to functions doesn't come into it: the data is global, and a query is a walk over a grid or a table.
-
-**Allegiance is per faction, not per unit.** Units belong to *factions* (Sigurd's army, Verdane, Augustria…), each faction sits in a faction slot, and relations are kept per pair of factions ([engine/units/factions.asm](../../engine/units/factions.asm)). That's how an army can be neutral to the player but at war with someone else, and why the castle-and-army structure of FE4's chapters works at all.
-
-### What the structures cost the design
-
-Fixed pools are cheap and predictable, and every one of them is also a rule the designers had to live with. Several of FE4's familiar limits follow straight from these allocations:
-
-- **Armies arrive and leave in waves.** With only 72 deployment slots total and 63 non-player slots, a chapter that wants a fresh enemy army often has to clear out the old one through events first.
-- **Playable casts and children are hard-capped.** Generation 1's 24-character budget and generation 2's 17 child slots are baked into the RAM pools.
-- **Every weapon in the world shares one 256-slot table.** Player weapons and enemy drops alike come out of the same `aItemRAMData` budget; creating a sword uses up a slot.
-- **A fixed 7-item inventory and a 9 × 15 love grid.** Each playable woman tracks love points against 15 eligible men. An inventory has eight slots, but the eighth only holds a new item until the player chooses one to give up.
-- **Stats are bytes; money is a word.** Each stat fits in 0-255, and a unit's gold in 0-65,535, before any cap the rules impose.
-- **Sixteen procs at once.** A scene that wants more simultaneous effects must wait for some to end.
-
-Each limit fits the game as it shipped, and they matter to anyone modding it. The chapters on units, items, and events show where each one is enforced and what it takes to lift it.
+[Part I](part-1-the-pieces-on-the-board.md) takes these structures one at a time.
 
 ## Data-driven content: the game is mostly scripts and tables
 
@@ -243,7 +190,7 @@ Count the bytes and the "engine" is the smaller part of the cartridge. Most of F
   ```
 
   It's a screenplay. Event *conditions* (who fights whom, who talks to whom, who stands where) decide which scripts fire. When a scene needs something the language can't express, `RUN_ASM` escapes to a hand-written routine (an "ASMC", [engine/events/asmc.asm](../../engine/events/asmc.asm)). This is the *Bytecode* pattern nearly by the book, including its escape hatch. The language stays small and each command does one concrete thing; anything unusual goes in code, where it can be as odd as it needs to be, rather than stretching the language to fit.
-- **Dialogue** ([text/dialogue/](../../text/dialogue/)): about 1,700 texts in their own little language of text, pauses, portraits, and music cues, drawn a character at a time by [engine/dialogue/](../../engine/dialogue/).
+- **Dialogue** ([text/dialogue/](../../text/dialogue/)): about 2,000 texts in their own little language of text, pauses, portraits, and music cues, drawn a character at a time by [engine/dialogue/](../../engine/dialogue/).
 - **The battle scene** has its own script language too ([engine/battle_scene/script.asm](../../engine/battle_scene/script.asm)), with 25 commands for loading backgrounds, showing quotes, shaking the screen, and playing the fight. Battle *animations* are yet another layer: frame sequences and movement programs ([data/battle_animation/](../../data/battle_animation/)).
 - **The AI** reads one script per *group* of enemy units ([engine/ai/scripts.asm](../../engine/ai/scripts.asm), [include/AI.h](../../include/AI.h)). The scripts set goals, not moves: raid the villages, hold formation, target this unit, wait until turn N or until an event flag is set, charge once the leader's HP drops below a threshold. The per-unit tactics (whom to hit, from which tile) are computed by general code. The gain is authored pacing: armies sit in their castles and march when the story says so, which is what makes FE4's huge maps feel like a campaign. The cost is predictability. A group only ever does what its script names, players learn the triggers, and any behavior outside the command set needs new code.
 - **Tables** carry the rules: classes ([data/class/](../../data/class/)), characters ([data/character/](../../data/character/)), items ([data/item/](../../data/item/)), terrain ([data/terrain/](../../data/terrain/)), and chapter setups ([data/chapter/](../../data/chapter/)).

@@ -47,7 +47,7 @@ The parts of the game written as content rather than code.
 |---|---|---|---|---|---|
 | 11 | **The game is watching** | A castle seized, a talk, a death, a turn count: each might start a scene. | Gameplay announces an action; each chapter's list of conditions checks it (close to Observer, without subscriptions); event flags | `events/event_engine`, `chapter_data`, `talk_events` | Ready (events.md) |
 | 12 | **Screenplays** | Writers need to stage scenes without writing assembly. | Bytecode with an escape hatch (`RUN_ASM`); scripts that block on procs | `events/event_scripts`, `event_procs`, `event_movement`, `asmc`, `events/` | Ready (events.md) |
-| 13 | **Dialogue and text** | About 1,700 texts with portraits, pauses, and music cues, drawn a letter at a time alongside menu glyphs. | A text markup language; glyph/tile-run rendering; the box as a proc | `dialogue/`, `text/dialogue/`, `menus/menu_text` | Ready (dialogue.md) |
+| 13 | **Dialogue and text** | About 2,000 texts with portraits, pauses, and music cues, drawn a letter at a time alongside menu glyphs. | A text markup language; glyph/tile-run rendering; the box as a proc | `dialogue/`, `text/dialogue/`, `menus/menu_text` | Ready (dialogue.md) |
 | 14 | **Armies with a mind** | Dozens of enemies have to think without dropping a frame. | Time-slicing in the main loop; a cycle state machine; group scripts that set goals; general tactics code | `ai/` | Ready (ai.md) |
 
 - **Interlude: One enemy turn** — A vertical slice tracing how the main loop time-slices AI group scripts, threat maps, movement, and combat without dropping a frame.
@@ -107,6 +107,6 @@ How a program with no operating system keeps sixty frames a second, schedules co
 
 The order of reading is not the order of writing. Chapters marked Ready can be written now, in any order. A chapter that leans on a later one can link ahead until that one exists.
 
-Proposed first: **Part I**—starting with the reference pages for `units/` and `items/` alongside Chapters 1–4, while Chapter 5 (**Who stands where**) is already Ready from `map.md`. A draft of **The turn** (now Chapter 6) is archived in `wip/the-turn-draft.md` until Part I is in place.
+Proposed first: **Part I**, Chapters 1–5, in order; all five have reference pages (`units.md`, `items.md`, `map.md`). A draft of **The turn** (now Chapter 6) is archived in `wip/the-turn-draft.md` until Part I is in place.
 
 Before Part III can be written, the reference needs a page for `battle/`.
