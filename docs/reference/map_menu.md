@@ -54,32 +54,34 @@ After a unit moves, `rlOpenUnitMenu` opens `procUnitMenu` with a mode from `wMap
 
 | Command | Shown when (check) | Does (handler) |
 |---|---|---|
-| はなす talk | `rsUnitMenuCheckTalkHere` | `rlUnitMenuTalk` |
+| はなす talk | a talk event in range 1, or between a guarding unit and a unit on its gate (`rlCheckCanTalk`, filter 6) | `rlUnitMenuTalk` |
 | たすける help | a civilian or child adjacent | target filter 5 |
 | とつげき assault | at an enemy castle that is guarded, or guarding a castle; a weapon in `aUnitMenuAssaultSlots` | item list on those weapons |
 | こうげき attack | not mode 2, a weapon in `aUnitMenuWeaponSlots` | item list on those weapons |
 | つえ staff | a support staff (effect below `$0C`) usable | item list on `aUnitMenuStaffSlots` |
 | おどる dance | the unit has Dance and an adjacent unit has moved | choose a unit |
-| はいる enter | at a castle that is not an enemy's | `rlUnitMenuEnter` |
-| せいあつ seize | at an enemy castle, not destroyed or guarded, and the unit's class is 6 or `$2C` | `rlUnitMenuSeize` |
+| はいる enter | at a castle of its own army or an ally | `rlUnitMenuEnter` |
+| せいあつ seize | at an enemy castle, not destroyed or guarded, and the unit is a `KnightLord` or `JuniorLord` (Sigurd, Seliph) | `rlUnitMenuSeize` |
 | まち town | at a location of type 1 | fades to the castle screen |
 | むら village | at a village that is neither destroyed nor closed | `rlUnitMenuVillage` |
 | しゅび guard | at an unguarded castle of the unit's army or an ally | `rlUnitMenuGuard` |
 | しゅつげき depart | guarding a castle, and the gate (two tiles below) is empty | `rlUnitMenuDepart` |
-| はなす talk | someone to talk to in range 1 | `rlUnitMenuTalk` |
+| はなす talk | no talk event, but a unit in range 1 that is the unit's `TalkTarget` (filter 3) | `rlUnitMenuTalk` |
 | たいき wait | unless standing on its own army's castle | ends the action |
 | つえ staff | only offensive staves usable | as above |
-| もちもの items | an item in `aUnitMenuItemSlots` | item list on those items |
+| もちもの items | an item in `aUnitMenuItemSlots`; never, since no non-staff item has a staff effect | item list on those items |
 | あげる give gold | with Steal: gold, and an army member adjacent (filter `$0A`) | choose a target |
 | あげる give gold | without Steal: gold, and the lover adjacent (filter `$0B`) | choose a target |
 | のる mount | dismounted (`UnitStateDismounted`) | `rlUnitMenuMount` |
-| おりる dismount | mounted, and the unit and class have the skill bits | `rlUnitMenuDismount` |
+| おりる dismount | mounted, with `UnitSkill1Dismount` (only Seliph, set at the generation change) and `ClassSkillDismount` (only `KnightLord`) | `rlUnitMenuDismount` |
 | そうび equip | two or more weapons in `aUnitMenuEquipSlots` | item list to equip |
 | アニメ animation | always | `procUnitAnimationMenu` |
 | 城にもどる return | Return (skill or item), not at its own castle | `rlUnitMenuReturnSkill` |
 | 城にもどる return | guarding its home castle | `rlUnitMenuReturnToCastle` |
 
 Most checks also leave a command out while bit 3 of `wMapStateFlags` is set (mode 1). B closes the menu and undoes the move (`rlUndoUnitMove`), except in mode 1.
+
+Mode 1 at the home castle's gate lists enter, guard (if unguarded), equip, animation and Seliph's mount or dismount: wait is hidden at the army's own castle, and the other commands test bit 3. Equip and animation reopen the menu in mode 1, so the unit must enter or guard. Mode 2 (on the guarding spot, which is no location's gate) lists wait (terrain 9), equip, animation, and any range-1 command with a neighbor.
 
 ### The item list and what follows
 
@@ -109,7 +111,6 @@ The terrain window and the unit window (`procTerrainWindow`, `procUnitWindow`, "
 
 ## Open questions
 
-- What the player sees in unit menu modes 1 and 2. From the code: mode 1 reopens the menu when a player unit's action ends on its home castle's gate (`rlFinishUnitAction`) or a canto unit has nowhere to go, and B can't close it; mode 2 follows the guard command, with the unit already on the guarding spot, and B undoes the guard (`rlUndoUnitMove`, [map.md](map.md)).
 - `UnitStateAssault` (was `UnitState0400`; the debug menu labels bit $0400 とつげ(き)): set while assaulting. `rlFindTargetsForSelectedWeapon` uses target filter 4 when it is set, and `rlBuildUnitMenuSlotLists` clears it. Assault targets are found at range 2 only, for weapons with minimum range 1 (`rlFindTargetsForItemRange`).
 - The まち (town) command: location type 1, and its handler opens the castle screen.
 - The "RP" proc in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm), `procUnknown8583B3` (an empty list menu nothing creates), and the gradient table helpers (`rsWriteMapMenuGradientTop`...).

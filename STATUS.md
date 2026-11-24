@@ -16,7 +16,7 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | II | 6 [Resolving a battle](docs/guide/06-resolving-a-battle.md), 7 [Growing stronger](docs/guide/07-growing-stronger.md) | draft |
 | III | 8 [The turn](docs/guide/08-the-turn.md) | draft, reviewed |
 | III | 9 [Moving a unit](docs/guide/09-moving-a-unit.md) | draft, not yet reviewed |
-| III | 10 Menus over the map | not started (map_menu.md) |
+| III | 10 [Menus over the map](docs/guide/10-menus-over-the-map.md) | draft, not yet reviewed |
 | IV–VII | 11–31 | not started; OUTLINE.md marks which have a reference page |
 
 **Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (Chapters 6–7 were written from the source; the battle interlude needs it) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
@@ -51,6 +51,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `rlUnitMenuGuard`, `Dismount`, `Mount` and `ReturnSkill` said to be unreached; each is in its option table | engine/menus/unit_menu.asm | `2e80d68` |
 | AI actions 6 and 7 had swapped names: 6 (`rsAIActionGuardCastle`) guards, 7 (`rsAIActionEnterGuardedCastle`) leaves the guarding spot and goes inside | engine/ai/threat.asm | `2e80d68` |
 | `rsGetMapCursorMove` said Y only skips the repeat delay; it also skips the range-edge stop (map.md and Ch. 9 draft copied it) | engine/map/map_cursor.asm | `5fb4143` |
+| `rsUnitMenuCheckEnter` comment gave the enemy relation as 2 (it is 1, `AllegianceEnemy`); several checks called the mode-1 bit "after acting"; seize, dismount and items had no word on who qualifies (raw `$0006`/`$002C`, `$0008`, `$0400`) | engine/menus/unit_menu.asm, unit_menu_slots.asm | `f624192` |
 | `wChapterFlags` `$0100` called unknown; it marks a chapter resumed from a map save (enter at map step 7) | include/WRAM.h | `2da731d` |
 | `rsMoveCursorToPhaseStart` comment had the auto cursor option backwards (on goes to the first unit, off to the saved tile); Ch. 8 draft copied it | engine/map/map_step.asm | `2da731d` |
 | `rlPhaseBannerCheckSkip` comment listed Select; the mask `$D0C0` is A, B, X, Y and Start; Ch. 8 draft copied it | engine/map/phase_banner.asm | `2da731d` |
@@ -69,6 +70,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | The phase-flag table said to hold an army's phases back; it gates only the banner and music, and the army's events and AI still run | map.md, wip/the-turn-draft.md | `f111508` |
 | Only units that can't move were said to open the command menu at once; a unit that can wield a range-10 weapon (ballistae, Meteor, Bolting, Blizzard, Fenrir) gets a fixed range map and can't move either. Closed areas and road costs were missing | map.md | with Ch. 9 |
 | `wMapActionMode` 1 called an ordinary move (0 is; 1 is a sortie); AI actions 6 and 7 listed in the wrong order | map.md, ai.md | `5fe5568` |
+| Seize gated on "class 6 or `$2C`" and dismount on "the skill bits" without naming them; mode 1 and 2 contents left as an open question | map_menu.md | with Ch. 10 |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
 ## Retail bugs and quirks found
@@ -108,12 +110,15 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 - Location bit `$40` is set on a seize and never read; `rlCheckLocationState40` has no callers (Ch. 5).
 - `aInventoryRAMArea` has 73 slots (declared 72 + 1); nothing in the code explains the extra one (Ch. 1).
 - Location types 1 and 3–6 exist in the type table, but no chapter uses them (Ch. 5).
+- The unit menu's もちもの (items) never appears: it needs an item whose staff effect has a target, and every non-staff item has `StaffEffect None`; the use/discard menu behind it is unreachable (Ch. 10).
+- Only Seliph can dismount: `UnitSkill1Dismount` is set only by `rsOverwriteSeliphUnitData` at the generation change, and only `KnightLord` has `ClassSkillDismount` (Ch. 10).
+- Only Sigurd and Seliph can seize: the check compares the class with `KnightLord` and `JuniorLord` (Ch. 10).
 
 ## Next session
 
-1. **Review Chapter 9** (moving a unit). Worth checking against the screen only if the code leaves it open; the long-range rule (a unit holding Meteor can't move) is a complete code path.
-2. **Chapter 10, Menus over the map**, from `map_menu.md`; it completes Part III. The action modes and undo are in Chapter 9 (castle moves); Chapter 10 needs the unit menu's modes 1 and 2 from the menu side: which commands each lists.
-3. Before more Part II revision or the battle interlude: write `docs/reference/battle.md`.
+1. **Review Chapters 9 and 10.** Chapter 10's unit-menu rules come from the 24 checks; mode 1's contents at the home gate (enter, guard, equip, animation) were settled from the code, so that emulator question is closed.
+2. Before the battle interlude and Part II revision: write `docs/reference/battle.md`.
+3. Then Part IV (events, Chapter 11), from `events.md`.
 
 ## Who wrote what
 
@@ -124,9 +129,8 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line; Gemini's are listed 
 Each is one screen. Answers to earlier ones are in HISTORY.md under the wave that asked them. Ask only what the code can't settle: a complete code path is an answer.
 
 1. (When a save reaches chapter 6.) Augury with a generation 2 child: are there three topics (love, record, parents)? The code reads the topic count from `$7F8183`; only the screen shows which topics a child gets.
-2. The unit command menu's mode 1: move a player unit onto its own home castle's gate and choose たいき (wait). Which commands does the reopened menu list? The code settles that it reopens by itself (`rlFinishUnitAction`), hides attack, staff, items, dance, talk and give, and that B cannot close it (Ch. 9). May be settled from the check routines while writing Ch. 10.
-3. Does まち (town) ever appear? The code offers it at a location of type 1 and its handler opens the castle screen, but no chapter's location data uses type 1 (59 castles, 73 villages; Chapter 5 of the guide). If it never shows up in play, the question is closed: the command is unreachable.
-4. The item window (from the map menu's item command) with a weapon selected: what is the sprite at the right edge, about (195, 76)? The code draws it only for weapons (`aUnknown89BE50`, tile `$0E`); the weapon type icon and the weapon triangle icons beside it are known.
-5. (Needs a save that has finished the game.) The ranking screen: what are the 16 letters drawn from `aUnknown7FC70A`, and what row appears after the secret code (Select, Up, A, Down, B, Left, X, Right, Y, L, R, Start)? The code shows the code check (`rlCheckEpilogueSecretCode`) and where the row is uploaded; only the screen shows what it says.
-6. The title screen's intro (let the game sit after the attract opening, about two minutes): what each of its eight scenes shows and what the captions say. The code shows the scenes' timing and setup (title.md); the captions are graphics, so only the screen shows their words.
-7. A battle scene with Fortify or a dance (both combatants at the center, `BattleSceneFlagSolo2`): what does the screen show besides the two combatants? The code shows that the flag turns on HDMA entries 3 and 6; only the screen shows what they draw.
+2. Does まち (town) ever appear? The code offers it at a location of type 1 and its handler opens the castle screen, but no chapter's location data uses type 1 (59 castles, 73 villages; Chapter 5 of the guide). If it never shows up in play, the question is closed: the command is unreachable.
+3. The item window (from the map menu's item command) with a weapon selected: what is the sprite at the right edge, about (195, 76)? The code draws it only for weapons (`aUnknown89BE50`, tile `$0E`); the weapon type icon and the weapon triangle icons beside it are known.
+4. (Needs a save that has finished the game.) The ranking screen: what are the 16 letters drawn from `aUnknown7FC70A`, and what row appears after the secret code (Select, Up, A, Down, B, Left, X, Right, Y, L, R, Start)? The code shows the code check (`rlCheckEpilogueSecretCode`) and where the row is uploaded; only the screen shows what it says.
+5. The title screen's intro (let the game sit after the attract opening, about two minutes): what each of its eight scenes shows and what the captions say. The code shows the scenes' timing and setup (title.md); the captions are graphics, so only the screen shows their words.
+6. A battle scene with Fortify or a dance (both combatants at the center, `BattleSceneFlagSolo2`): what does the screen show besides the two combatants? The code shows that the flag turns on HDMA entries 3 and 6; only the screen shows what they draw.

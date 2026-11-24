@@ -35,7 +35,7 @@ How the player commands a chapter once the pieces are on the board.
 |---|---|---|---|---|---|
 | 8 | **[The turn](08-the-turn.md)** | A turn is where almost every system in the game converges: phases, music fades, healing, love points, and multi-step battle fallout that cannot collide on the same frame. | A thirteen-step state machine; consequences left as notes and handled on the next frame (an event queue) | `map/map_step`, `units/turn_start`, `map/phase_banner` | Drafted |
 | 9 | **[Moving a unit](09-moving-a-unit.md)** | Where can this unit go, given terrain, foes, and its class? | Flood fill over a cost grid (a bucket queue); paths by climbing; the range overlay | `map/range_maps`, `unit_movement`, `map_cursor`, `input` | Drafted |
-| 10 | **Menus over the map** | A turn is a chain of choices, each with a way back. | A stack of option lists; windows as procs; which commands appear, and why; battle forecast and popups | `menus/map_menu`, `main_map_menu`, `unit_menu`, `item_list`, `inventory_full`, `battle_forecast`, `map/windows`, `map/popups`, `map/map_actions` | Ready (map_menu.md) |
+| 10 | **[Menus over the map](10-menus-over-the-map.md)** | A turn is a chain of choices, each with a way back. | A stack of option lists; windows as procs; which commands appear, and why; battle forecast and popups | `menus/map_menu`, `main_map_menu`, `unit_menu`, `item_list`, `inventory_full`, `battle_forecast`, `map/windows`, `map/popups`, `map/map_actions` | Drafted |
 
 - **Interlude: One attack, cursor press to HP loss** — A vertical slice tracing a single player attack from target selection through the battle forecast, combat resolution, presentation, experience gain, and deferred turn consequences.
 

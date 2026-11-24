@@ -193,7 +193,7 @@ Among equally cheap routes, the frame on which A was pressed picks one: on even 
 
 Once the path is built, the overlay is hidden and the cursor travels back to the unit at 8 pixels a frame, one tile per step (cursor state 1). The walk (state 2) then reuses the cursor's stepping code: it reads the path from its last entry, which is the first step out from the unit, merges each run of steps in the same direction into one distance, turns the moving sprite to face that way, and moves the cursor along the run with the sprite drawn at the cursor. The map scrolls at the screen's margins as it does for the cursor. A unit whose speed stat is 5 or more walks at 3 pixels a frame, any other at 1. A walking sound chosen by the unit's map sprite plays throughout, panned to the cursor's side of the screen, with a water flag set on sea, river, and swamp for units that don't fly.
 
-At the end of the path, the unit's deployment row is moved to the cursor's tile ([Chapter 5](05-who-stands-where.md)) and its command menu opens ([Chapter 10](OUTLINE.md)). The move isn't final until a command ends the unit's action. Until then, B in the command menu puts the unit back on the tile it started from, and the player can pick it up again.
+At the end of the path, the unit's deployment row is moved to the cursor's tile ([Chapter 5](05-who-stands-where.md)) and its command menu opens ([Chapter 10](10-menus-over-the-map.md)). The move isn't final until a command ends the unit's action. Until then, B in the command menu puts the unit back on the tile it started from, and the player can pick it up again.
 
 B before a destination is chosen puts the unit down where it stands. The tile the unit returns to is the one it was picked up from, which the cursor code keeps as the move's origin.
 
@@ -209,7 +209,7 @@ A castle has two tiles that matter to movement: the location's own tile, the **g
 
 The guard command isn't offered to a unit that has just departed.
 
-**Guard.** The guard command moves the unit onto the guarding spot at once, but the unit isn't guarding yet. Guarding starts when its action finishes on that tile, which is how the engine recognizes it: any unit whose action ends on a guarding spot starts guarding there. After the command, the cursor travels to the unit, a walk with no steps ends on its tile, and the command menu opens again in a second mode for the guard ([Chapter 10](OUTLINE.md)). B in that menu undoes the guard according to how the move began:
+**Guard.** The guard command moves the unit onto the guarding spot at once, but the unit isn't guarding yet. Guarding starts when its action finishes on that tile, which is how the engine recognizes it: any unit whose action ends on a guarding spot starts guarding there. After the command, the cursor travels to the unit, a walk with no steps ends on its tile, and the command menu opens again in a second mode for the guard ([Chapter 10](10-menus-over-the-map.md)). B in that menu undoes the guard according to how the move began:
 
 | Guard chosen | Mode | B in the guard menu |
 |---|---|---|
