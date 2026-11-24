@@ -6223,7 +6223,7 @@
         .autsiz
         .databank ?
 
-        ; R: finds the player unit with the next generation ID (1-$18, wrapping) that is alive and not captive (any unit while Select is held, dead ones included: seen in the emulator), and fades out to reopen the screen for it. Sets carry and does nothing for a non-player unit or when the revive screen opened the status screen.
+        ; R: finds the player unit with the next generation ID (1-$18, wrapping) that is alive and not captive (with Select held, any unit still in faction slot 0, so dead and captured units too), and fades out to reopen the screen for it. Sets carry and does nothing for a non-player unit or when the revive screen opened the status screen.
 
         lda wSelectedUnitDataRAMPointer,b
         sta wStatusScreenTemp3
@@ -6262,7 +6262,7 @@
         lda @l wSelectedUnitDataRAMPointer
         beq _A610
         lda wJoy1Input
-        bit #$2000
+        bit #JOY_Select
         bne _A651
         jsl rlGetSelectedUnitStates
         bit #UnitStateDead
@@ -6343,7 +6343,7 @@
         lda wSelectedUnitDataRAMPointer,b
         beq _A6B7
         lda wJoy1Input
-        bit #$2000
+        bit #JOY_Select
         bne _A6F4
         jsl rlGetSelectedUnitStates
         bit #UnitStateDead
