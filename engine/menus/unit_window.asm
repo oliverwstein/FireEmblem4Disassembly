@@ -971,7 +971,7 @@
         cpy #$0080
         bne _C9AD
         jsl rlUnitWindowGetUnitSpriteInfos
-        lda $7E5335
+        lda bUnitWindowHasSavedOrder
         and #$00FF
         beq _C9E9
         lda wUnitWindowSortType
@@ -997,7 +997,7 @@
         _C9FD
         sep #$20
         lda #$01
-        sta $7E5335
+        sta bUnitWindowHasSavedOrder
         rep #$20
         jsl rlUnitWindowGetPromotionFlagsAndWeapons
         jsl rlUnitWindowDrawUnitNames
@@ -5867,7 +5867,7 @@
         jsl rlGetSelectedUnitGenerationID
         dec a
         tax
-        lda $7E5336,x
+        lda aUnitWindowSavedOrder[0],x
         and #$00FF
         ldx wR14
         sta aUnitWindowSortScores,x
@@ -6489,7 +6489,7 @@
         .autsiz
         .databank ?
 
-        ; Saves each listed unit's place, negated, at $7E5336 by generation ID, so the list can reopen in the same order. FE5: rlUnitWindowUnknown90DF80.
+        ; Saves each listed unit's place, negated, at aUnitWindowSavedOrder by generation ID, so the list can reopen in the same order. FE5: rlUnitWindowUnknown90DF80.
 
         lda wSelectedUnitDataRAMPointer,b
         sta wR1
@@ -6498,7 +6498,7 @@
         ldx #$0017
 
         _CE35
-        sta $7E5336,x
+        sta aUnitWindowSavedOrder[0],x
         dec x
         bne _CE35
         rep #$20
@@ -6519,7 +6519,7 @@
         eor #$FFFF
         inc a
         sep #$20
-        sta $7E5336,x
+        sta aUnitWindowSavedOrder[0],x
         rep #$20
         lda wR0
         inc a
@@ -6561,7 +6561,7 @@
         sta wUnitWindowPage
         sta wUnitWindowSortType
         sta wUnitWindowSortDirection
-        sta $7E5333
+        sta wItemWindowSortMode
         sep #$20
         lda #$00
         ldx #$0017
@@ -6574,11 +6574,11 @@
         ldx #$0017
 
         _CE9B
-        sta $7E5336,x
+        sta aUnitWindowSavedOrder[0],x
         dec x
         bne _CE9B
         lda #$00
-        sta $7E5335
+        sta bUnitWindowHasSavedOrder
         rep #$20
         plp
         plb
@@ -6605,12 +6605,12 @@
         .databank $8B
         sep #$20
         lda #$00
-        sta $7E5335
+        sta bUnitWindowHasSavedOrder
         lda #$00
         ldx #$0017
 
         _CEBE
-        sta $7E5336,x
+        sta aUnitWindowSavedOrder[0],x
         dec x
         bne _CEBE
         rep #$20

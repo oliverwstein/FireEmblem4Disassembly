@@ -1,5 +1,5 @@
 ; The item window: map menu option アイテム (Item). Lists every item the player's
-; units hold, sorted by owner, type or name ($7E5333, kept between visits), with
+; units hold, sorted by owner, type or name (wItemWindowSortMode, kept between visits), with
 ; the selected item's details; A jumps to the unit holding it. Opened by
 ; rsItemWindowOpen, then run by game state routines $23 (rlItemWindowRender), $24
 ; (rlItemWindowShow) and $25 (rlItemWindowRunStep), with wGameStateStep as the
@@ -349,7 +349,7 @@
         sta wR0
         ldx #$006C
         jsl rlDrawBG3TileRun
-        lda $7E5333
+        lda wItemWindowSortMode
         beq _CFD8
         dec a
         beq _D00A
@@ -2792,17 +2792,17 @@
         .autsiz
         .databank ?
 
-        ; Picks the sort mode ($7E5333: 0 owner, 1 type, 2 name) from aItemWindowNextSortModes, scores and sorts the list, then redraws it.
+        ; Picks the sort mode (wItemWindowSortMode: 0 owner, 1 type, 2 name) from aItemWindowNextSortModes, scores and sorts the list, then redraws it.
 
-        lda $7E5333
+        lda wItemWindowSortMode
         asl a
         asl a
         ora wItemWindowSortPanelRow
         tax
         lda aItemWindowNextSortModes,x
         and #$00FF
-        sta $7E5333
-        lda $7E5333
+        sta wItemWindowSortMode
+        lda wItemWindowSortMode
         cmp #$0003
         bmi _C2F0
 
@@ -3142,7 +3142,7 @@
 
         ; Draws the sort panel for the current mode.
 
-        lda $7E5333
+        lda wItemWindowSortMode
         beq _C493
         dec a
         beq _C4F0

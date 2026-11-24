@@ -2131,12 +2131,19 @@
     wUnitWindowSortDirection .word ?      ; $7E5317
     wUnitWindowSortType .word ?      ; $7E5319
     aUnitJoinOrder .brept 24    ; $7E531B
-      .word ?
+      .byte ?
     .endrept
     ; Is indexed by unit generation ID and stores value of how many player units existed when unit was loaded.
     ; If someone dies, their value gets zero'd, and anyone with a higher value gets decremented.
 
-    .fill 3 ; $7E534B
+    wItemWindowSortMode .word ?        ; $7E5333
+      ; The item window's sort: 0 owner, 1 type, 2 name. Saved with the game.
+    bUnitWindowHasSavedOrder .byte ?   ; $7E5335
+      ; Set once the unit window has opened; from then on it reopens in aUnitWindowSavedOrder.
+    aUnitWindowSavedOrder .brept 24    ; $7E5336
+      .byte ?
+    .endrept
+      ; Each listed unit's place in the unit window, negated, by generation ID.
 
     wEpilogueOtherUnitsExistFlag .word ? ; $7E534E
     aEpilogueUnitMovement .block

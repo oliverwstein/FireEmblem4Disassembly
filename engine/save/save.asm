@@ -3880,7 +3880,7 @@
         .long wUnitWindowSortDirection
         
         .byte 2 
-        .long aUnitJoinOrder[12]
+        .long wItemWindowSortMode
 
         .byte $FF
 
