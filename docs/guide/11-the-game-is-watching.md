@@ -112,8 +112,8 @@ The opcodes fall into four groups:
 |---|---|---|---|
 | `$01`–`$1F` | **action conditions**: compare the action, a flag, and parameters | run the next command, then skip to the next `BREAK_ACTION_EVENT_CHECKS` | skip the next command |
 | `$21`–`$24` | **turn checks** | run on through the following commands | skip to the next `BREAK_TURN_EVENT_CHECKS` |
-| `$29`–`$2D`, `$38`–`$47` | **state checks**: flags, permanent flags, counters, who is alive or married | run on | skip to the next `BREAK_STATE_CHECKS` |
-| the rest | **actions**: start a script, set a flag, load an army, give an item, set a quote | do it | — |
+| `$29`–`$2A`, `$2C`–`$2D`, `$38`–`$3A`, `$3F`–`$47` | **state checks**: flags, permanent flags, counters, who is alive or married | run on | skip to the next `BREAK_STATE_CHECKS` |
+| the rest | **actions**: start a script, set a flag, change a counter, load an army, give an item, set a quote | do it | — |
 
 The three break markers are an opcode (`$20`, `$25`, or `$2E`) followed by the word `$6666`. Reached in normal flow, a break does nothing. The skip routines don't parse commands to find them: they scan forward one byte at a time for the opcode followed by `$6666`, a value chosen because no parameter is likely to contain it.
 
@@ -154,7 +154,7 @@ fn evaluate_action_condition(action: u8, flag: u8, test: fn() -> bool) {   // rs
 }
 ```
 
-The parameter test compares each parameter with the matching argument, and a negative parameter (`AnyCharacter`, `AnyFactionSlot`, `AnyLocation`, and `AnyTurn` are all -1) matches anything. A few conditions do more. `CHECK_UNITS_FIGHTING` matches its two units in either order, so a quote for Midir against Munnir plays whoever attacks. `CHECK_UNITS_FIGHTING_1TO2RANGE` also needs the battle distance to be under 3. `CHECK_UNIT_IN_AREA` tests that the tile lies inside a rectangle ([Chapter 5](05-who-stands-where.md)). `CHECK_UNITS_WITHIN_DISTANCE` finds both units on the map and compares their distance. Conditions about a talk, an area, or an arena win also record the units involved in `wEventUnit1Pointer` and `wEventUnit2Pointer`, for commands that act on "the event's unit".
+The parameter test compares each parameter with the matching argument, and a negative parameter (`AnyCharacter`, `AnyFactionSlot`, `AnyLocation`, and `AnyTurn` are all -1) matches anything. A few conditions do more. `CHECK_UNITS_FIGHTING` matches its two units in either order, so a quote for Midir against Munnir plays whoever attacks. `CHECK_UNITS_FIGHTING_1TO2RANGE` also needs the battle distance to be under 3. `CHECK_UNIT_IN_AREA` tests that the tile lies inside a rectangle ([Chapter 5](05-who-stands-where.md)). `CHECK_UNITS_WITHIN_DISTANCE` finds both units on the map and compares their distance. Most conditions also record the units involved in `wEventUnit1Pointer` (and, for a talk, `wEventUnit2Pointer`), for commands that act on "the event's unit": a talk, a village visit, a castle entry, a rescue, an area, an arena win. Chapter 2's Armorslayer village gives its item with `GIVE_UNIT_PID AnyCharacter`, and a character of -1 means that unit.
 
 A flag byte with bit 7 set turns the flag into a precondition that the match consumes. No chapter uses that form; every flag in the retail lists is either `FlagAlways` or a once-only flag.
 
@@ -164,7 +164,7 @@ After a match, the evaluator skips to the next action break, so among the action
 
 ### Turn checks
 
-`CHECK_TURN_PHASE_AI_ACTOR` takes four signed bytes and a word: turn, army, AI setting, and character, each matching anything at -1. It compares them with action `$21`'s arguments and skips to the next turn break if anything differs. Otherwise it lets the list run on, and every command up to the break runs: a turn check has a block for a body. Every turn block that matches runs, in list order.
+`CHECK_TURN_PHASE_AI_ACTOR` takes three signed bytes and a word: turn, army, AI setting, and character, each matching anything at -1. It compares them with action `$21`'s arguments and skips to the next turn break if anything differs. Otherwise it lets the list run on, and every command up to the break runs: a turn check has a block for a body. Every turn block that matches runs, in list order.
 
 The AI setting and the character default to 0, the values a phase start announces, so a block written with only a turn and an army runs at the start of that army's phase. A block with an AI setting and `AnyCharacter` runs before each unit of that AI group acts. Chapter 1 uses both:
 
@@ -225,7 +225,7 @@ The layout that results is the same in every chapter:
   END_CHAPTER_EVENTS ($FFFF)
 ```
 
-Chapter 1's map list has 136 commands: 38 action conditions with their bodies, 10 turn blocks, and the state checks and breaks around them. At each announcement the evaluator reads all of it: a skipped condition still costs its opcode dispatch and a comparison of the action number.
+Chapter 1's map list has 141 commands: 38 action conditions with their bodies, 10 turn blocks, and the state checks and breaks around them. At each announcement the evaluator reads all of it: a skipped condition still costs its opcode dispatch and a comparison of the action number.
 
 ## Flags
 
@@ -272,7 +272,7 @@ The map-change table pairs a flag with a tile position and a block of replacemen
 
 ### Counters
 
-Each chapter entry also has two byte counters, which the list can set, add to, step up or down, and compare. Chapter 6 uses both to count how often two siblings end an action next to each other:
+Each chapter entry also has two byte counters, which the list can set, add to, step up or down, and compare. Chapter 6 uses both to count how often each of two brothers, Iuchar and Iucharba, ends an action next to Creidne. The counter 1 half:
 
 ```
 CHECK_FLAG_SET FlagChapter06_LarceiCreidne_IucharbaTalk
@@ -286,7 +286,7 @@ CHECK_CHAPTER_EVENT_COUNTER_EQUAL 1, 10
 BREAK_STATE_CHECKS
 ```
 
-Once their talk has happened, each action Iucharba ends next to Creidne adds 1, and the tenth starts a scene. The action condition sits inside a state block, with an action break of its own right after it.
+Once their talk has happened, each action Iucharba ends next to Creidne adds 1, and the tenth starts a scene; counter 0 does the same for Iuchar. The action condition sits inside a state block, with an action break of its own right after it.
 
 ## The chapter's RAM entry
 
@@ -307,7 +307,7 @@ Saving writes the permanent flags and the whole pool. Loading reads them back an
 
 ## Characters across generations
 
-Fourteen of the generation 2 children have a substitute who joins in the child's place when the child doesn't exist ([Chapter 17](OUTLINE.md)): Scathach for Dalvin, Febail for Asaello, Larcei for Creidne, and so on. A talk written for one should usually work for the other. The `CHECK_CHILD_` conditions map every character ID from Seliph's onward through `aEventsUnifiedGen2CharacterIds`, which sends each substitute to the child it replaces and every other character to itself, and compare the mapped IDs. `CHECK_CHILD_TALK Creidne, Iucharba` therefore matches a talk started by Creidne or by Larcei. Chapters 6 to 10 and the final chapter use `CHECK_CHILD_TALK` 38 times; the other `CHILD` variants exist and no chapter uses them.
+Fourteen of the generation 2 children have a substitute who joins in the child's place when the child doesn't exist ([Chapter 17](OUTLINE.md)): Dalvin for Scathach, Asaello for Febail, Creidne for Larcei, and so on. A talk written for one should usually work for the other. The `CHECK_CHILD_` conditions map every character ID from Seliph's onward through `aEventsUnifiedGen2CharacterIds`, which sends each child to its substitute and every other character (the substitutes included) to itself, and compare the mapped IDs. A `CHECK_CHILD_TALK` written for Creidne and Iucharba therefore matches a talk started by Creidne or by Larcei. Chapters 6 to 10 and the final chapter use `CHECK_CHILD_TALK` 38 times; the other `CHILD` variants exist and no chapter uses them.
 
 ## Conditions that change a battle
 
@@ -325,7 +325,7 @@ CHECK_UNIT_DIED FlagAlways, ElliotCh01
 
 The battle shows no death. On the next frame the map step's defeat handler sees the stay-on-map bit and leaves Elliot visible, then announces `$17`, and the second condition starts the retreat script. The script walks him to the top edge of the map and removes him with a condition-list command, `REMOVE_UNIT`.
 
-Action `$14` comes after the rounds are built, before the battle is shown. `SET_BATTLE_OR_DEATH_QUOTE` gives one combatant a quote to say in the battle scene, or replaces its death quote; a battle quote is skipped if the defender is asleep or silenced. `SET_PRECOMBAT_DIALOGUE` plays a conversation with a song before the fight. It builds a short script in RAM (sound, song, dialogue, the phase music again) that ends by starting the combat animation, since the battle code, seeing a script start, didn't start it. Battles are the most common trigger in the condition lists: the chapters have 187 fighting conditions, 129 `SET_BATTLE_OR_DEATH_QUOTE` commands, and 70 `SET_PRECOMBAT_DIALOGUE` commands.
+Action `$14` comes after the rounds are built, before the battle is shown. `SET_BATTLE_OR_DEATH_QUOTE` gives one combatant a quote to say in the battle scene, or replaces its death quote; a battle quote is skipped if the defender is asleep or silenced. `SET_PRECOMBAT_DIALOGUE` plays a conversation before the fight, with a song if its song ID isn't 0. It builds a short script in RAM (with a song: sound, song, dialogue, the phase music again; without: the dialogue alone) that ends by starting the combat animation, since the battle code, seeing a script start, didn't start it. Battles are the most common trigger in the condition lists: the chapters have 187 fighting conditions, 129 `SET_BATTLE_OR_DEATH_QUOTE` commands, and 70 `SET_PRECOMBAT_DIALOGUE` commands.
 
 ## Scripts reach back
 

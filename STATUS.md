@@ -17,7 +17,7 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | III | 8 [The turn](docs/guide/08-the-turn.md) | draft, reviewed |
 | III | 9 [Moving a unit](docs/guide/09-moving-a-unit.md) | draft, not yet reviewed |
 | III | 10 [Menus over the map](docs/guide/10-menus-over-the-map.md) | draft, not yet reviewed |
-| IV | 11 [The game is watching](docs/guide/11-the-game-is-watching.md) | draft, not yet reviewed |
+| IV | 11 [The game is watching](docs/guide/11-the-game-is-watching.md) | draft, reviewed |
 | IV–VII | 12–31 | not started; OUTLINE.md marks which have a reference page |
 
 **Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (Chapters 6–7 were written from the source; the battle interlude needs it) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
@@ -55,6 +55,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `rsUnitMenuCheckEnter` comment gave the enemy relation as 2 (it is 1, `AllegianceEnemy`); several checks called the mode-1 bit "after acting"; seize, dismount and items had no word on who qualifies (raw `$0006`/`$002C`, `$0008`, `$0400`) | engine/menus/unit_menu.asm, unit_menu_slots.asm | `f624192` |
 | `bEventActionIdentifier` documented as ten guesses ("$18 = ?", "$20 = start player phase?"); `bEventStatus` bits marked "?"; `wEventEngineFlags` `$0008` described only as cleared; now every announced action with its arguments and announcer | include/WRAM.h | `c59719b` |
 | `EC_73` ("something to do with battle animations") starts the combat animation: now `START_COMBAT_ANIMATION`. Opcode `$2F`'s handler is the state-break scan every failed state check uses: now `rsEventFindStateCheckBreak`. Condition comments said nobody knew who announces `$05`/`$07` (nothing does), called `CHECK_VILLAGE_DESTROYED` unused without saying `rlUnitRaidVillage` announces `$02`, and had `CHECK_TURN_PHASE_AI_ACTOR` doing "a cycle with AI and CharacterID ignored" (phase start announces 0 and 0) | include/events/Conditions.h, engine/events/event_engine.asm, engine/dialogue/death_quotes.asm | `c59719b` |
+| Eight condition commands said a character of -1 targets `EventUnitSlot1` (the script's unit slot); they act on `wEventUnit1Pointer`, the unit the matching condition recorded | include/events/Conditions.h | `4aa5583` |
 | `wChapterFlags` `$0100` called unknown; it marks a chapter resumed from a map save (enter at map step 7) | include/WRAM.h | `2da731d` |
 | `rsMoveCursorToPhaseStart` comment had the auto cursor option backwards (on goes to the first unit, off to the saved tile); Ch. 8 draft copied it | engine/map/map_step.asm | `2da731d` |
 | `rlPhaseBannerCheckSkip` comment listed Select; the mask `$D0C0` is A, B, X, Y and Start; Ch. 8 draft copied it | engine/map/phase_banner.asm | `2da731d` |
@@ -74,6 +75,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | Only units that can't move were said to open the command menu at once; a unit that can wield a range-10 weapon (ballistae, Meteor, Bolting, Blizzard, Fenrir) gets a fixed range map and can't move either. Closed areas and road costs were missing | map.md | with Ch. 9 |
 | `wMapActionMode` 1 called an ordinary move (0 is; 1 is a sortie); AI actions 6 and 7 listed in the wrong order | map.md, ai.md | `5fe5568` |
 | Seize gated on "class 6 or `$2C`" and dismount on "the skill bits" without naming them; mode 1 and 2 contents left as an open question | map_menu.md | with Ch. 10 |
+| Ch. 11 draft (review): child/substitute mapping reversed (the table maps each child to its substitute); state-check opcode range included `EC_JUMP` and the counter mutators; `CHECK_TURN_PHASE_AI_ACTOR` given four signed bytes (three); Iucharba and Creidne called siblings; Chapter 1's list counted without the expanded `macroSetFactions*` (141, not 136); event-unit recording and the songless pre-combat dialogue omitted | docs/guide/11 | with review |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
 ## Retail bugs and quirks found
@@ -122,7 +124,7 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 
 ## Next session
 
-1. **Review Chapters 9, 10, and 11.** Chapter 10's unit-menu rules come from the 24 checks; mode 1's contents at the home gate (enter, guard, equip, animation) were settled from the code, so that emulator question is closed.
+1. **Review Chapters 9 and 10.** Chapter 10's unit-menu rules come from the 24 checks; mode 1's contents at the home gate (enter, guard, equip, animation) were settled from the code, so that emulator question is closed.
 2. Before the battle interlude and Part II revision: write `docs/reference/battle.md`.
 3. Then Chapter 12 (scripts), from `events.md` and `event_scripts.asm`; Chapter 11 links ahead to it in three places.
 
