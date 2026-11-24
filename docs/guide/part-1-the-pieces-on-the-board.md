@@ -32,7 +32,7 @@ The [introduction](00-introduction.md) sketched the hardware and the main loop. 
 1. **[A unit is made of parts](01-a-unit-is-made-of-parts.md)** — The four unit types (`Static`, `Dynamic`, `Holy`, `Enemy`), how each pairs a ROM template with a subset of the RAM pools, and the getters that let gameplay code ask any unit the same questions without knowing where its fields live.
 2. **[Classes, stats, skills, and weapon ranks](02-classes-stats-skills-and-weapon-ranks.md)** — How class templates, rings, weapons, and Holy Blood compose behind shared queries, and why the same skill occupies different bit positions across character, class, and item tables.
 3. **[Every sword is an individual](03-every-sword-is-an-individual.md)** — The 256-slot `aItemRAMData` table, how `ItemState` partitions one array into inventories, storage, shops, and the pawn shop, and how broken weapons keep their kill counts intact.
-4. **Armies and allegiance** — The seven faction slots, pairwise hostility and alliance bitmasks, and how an army can be neutral to the player while fighting another faction.
+4. **[Armies and allegiance](04-armies-and-allegiance.md)** — The seven faction slots, pairwise hostility and alliance bitmasks, and how an army can be neutral to the player while fighting another faction.
 5. **Who stands where** — The 72-entry `aDeploymentTable` structure of arrays, the handoff between residing in a castle and standing on the field, and the sixteen chapter locations (castles, villages, and gates).
 
 Each chapter closes with the hard limits its layout imposes—and where in the source those limits are enforced.
