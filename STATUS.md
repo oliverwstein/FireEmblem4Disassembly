@@ -42,6 +42,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `aDeploymentTable._DeploymentOffsets` holds each unit's row in the map sprite pool, not a deployment offset | include/WRAM.h and 59 uses | `ac1f7e4` |
 | `wActionEndedDeploymentOffset` commented "faction/castle deployment helper"; it is the unit whose action just ended, for event action 3 | include/WRAM.h | `b3937a8` |
 | Raw `$2000` for the Select button; comment said dead units were "seen in the emulator" without saying why the code finds them | engine/menus/status_screen.asm | `f16dd1b` |
+| Round flags `$02` and `$10` called unknown; `$10` is `BattleRoundFlagFatal`, and `$02` is set by staff effects and Dance | include/Battle.h | `126e33b` |
 
 **In the documentation** (reference pages, guide drafts):
 
@@ -76,9 +77,12 @@ Retail-ROM behavior, left as it is in the source and documented. Fix nothing her
 | Self-recursive routine | `rlGetWeaponEffectivenessTextUnused` (items.asm) | Calls itself instead of `rlGetItemEffectiveness`; unreached | items.md |
 | Animation command crashes | `rsBattleAnimationCmdBroken` (combatants.asm) | No `rep #$20`, so `adc #$0002` assembles short and the CPU hits `brk`; sequence byte `$F8` unusable | source comment, BattleAnimation.h |
 | Branch to the wrong unit | `rlStartScriptedMapBattleAnimation` (cutscenes.asm) | With no usable weapon for the second unit, branches back to the first unit's code; unreached | source comment |
+| Adept can loop forever | `rsActionStructGetNumberOfStrikes` (battle.asm) | With Adept, `AttackSpeed + 20 < 0` takes `bmi -` back to the Astra check, which falls through to the same test; probably unreachable (needs weight over speed + 20) | not yet |
 
 Quirks that aren't bugs, recorded so they aren't rediscovered:
 
+- Battle experience comes from the last connecting hit: each hit overwrites `GainedExperience` instead of adding to it; non-lethal arena hits earn none (Ch. 6, 7).
+- Promotion level is read from the target class; Myrmidon, Archer, Pegasus Rider and Dragonrider store `PromotionLevel = 1`, which nothing reads (Ch. 7).
 - Tyrfing starts broken: `rlInitiateItemRAMData` sets `PI_Tyrfing`'s durability to 0, and Byron hands it over that way (Ch. 3).
 - Only 140 of the item table's 256 slots are ever used; nothing creates item records after a new game (`rlAppendItemsFromList` has no callers) (Ch. 3).
 - Promotion never raises a player unit's max HP: HP has no class term (Ch. 2).
