@@ -2088,7 +2088,7 @@
     .endsection CheckIfCharacterHasFemaleGenerationIDSection
 
 
-    .section Unsorted879EE7Section
+    .section CheckIsTalkTargetOfSection
 
       .al
       .xl
@@ -2138,6 +2138,6 @@
 
         ; 87/9F12
 
-    .endsection Unsorted879EE7Section
+    .endsection CheckIsTalkTargetOfSection
 
 

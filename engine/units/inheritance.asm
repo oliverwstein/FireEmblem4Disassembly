@@ -6,7 +6,7 @@
       .al
       .xl
 
-      rsFillChildExtendedPersonalData ; 87/A6E6
+      rlFillChildExtendedPersonalData ; 87/A6E6
 
         .al
         .autsiz
@@ -83,37 +83,37 @@
         jsl rlGetSelectedUnitLevel
         sta wR0
         jsl rlGetSelectedUnitTotalHPGrowth
-        jsr rlGetAverageStatsForLevel
+        jsr rsGetAverageStatsForLevel
         clc
         adc #15
         sta aChildAverageLevelStats.HP
 
         jsl rlGetSelectedUnitTotalStrGrowth
-        jsr rlGetAverageStatsForLevel
+        jsr rsGetAverageStatsForLevel
         sta aChildAverageLevelStats.Strength
 
         jsl rlGetSelectedUnitTotalMagGrowth
-        jsr rlGetAverageStatsForLevel
+        jsr rsGetAverageStatsForLevel
         sta aChildAverageLevelStats.Magic
 
         jsl rlGetSelectedUnitTotalSklGrowth
-        jsr rlGetAverageStatsForLevel
+        jsr rsGetAverageStatsForLevel
         sta aChildAverageLevelStats.Skill
 
         jsl rlGetSelectedUnitTotalSpdGrowth
-        jsr rlGetAverageStatsForLevel
+        jsr rsGetAverageStatsForLevel
         sta aChildAverageLevelStats.Speed
 
         jsl rlGetSelectedUnitTotalDefGrowth
-        jsr rlGetAverageStatsForLevel
+        jsr rsGetAverageStatsForLevel
         sta aChildAverageLevelStats.Defense
 
         jsl rlGetSelectedUnitTotalResGrowth
-        jsr rlGetAverageStatsForLevel
+        jsr rsGetAverageStatsForLevel
         sta aChildAverageLevelStats.Resistance
 
         jsl rlGetSelectedUnitTotalLuckGrowth
-        jsr rlGetAverageStatsForLevel
+        jsr rsGetAverageStatsForLevel
         sta aChildAverageLevelStats.Luck
 
         phy
@@ -126,7 +126,7 @@
         sta wR1
         lda aChildAverageLevelStats.HP,x
         sta wR2
-        jsr rlGetChildAdjustedBaseStat
+        jsr rsGetChildAdjustedBaseStat
 
         sep #$20
         sta structExtendedCharacterDataRAM.HP,b,y
@@ -137,7 +137,7 @@
         cpx #size(aChildAverageLevelStats)
         bcc -
 
-        ; Add a random amount of 0-9 luck to a child
+        ; Add a random amount of 1-10 luck to a child
         ply
         lda #9 +1
         jsl rlGetRandomNumber100
@@ -160,7 +160,7 @@
 
         .databank 0
 
-      rlGetAverageStatsForLevel ; 87/A80A
+      rsGetAverageStatsForLevel ; 87/A80A
 
         .al
         .autsiz
@@ -199,7 +199,7 @@
 
         .databank 0
 
-      rlGetChildAdjustedBaseStat ; 87/A83A
+      rsGetChildAdjustedBaseStat ; 87/A83A
 
         .al
         .autsiz
@@ -316,7 +316,7 @@
         sta wR0
         lda aUnit2DataBuffer._ROM.HPGrowth - structCharacterROMDataBuffer.HPGrowth,x
         sta wR1
-        jsr rlGetChildGrowthRate
+        jsr rsGetChildGrowthRate
 
         sep #$20
         sta structCharacterConstantData.HPGrowth,b,y
@@ -358,14 +358,14 @@
         sta wR0
         lda aUnit2DataBuffer._ROM.HolyBlood1
         sta wR1
-        jsr rlGetChildHolyBlood
+        jsr rsGetChildHolyBlood
         sta structCharacterConstantData.HolyBlood1,b,y
 
         lda aUnit1DataBuffer._ROM.HolyBlood2
         sta wR0
         lda aUnit2DataBuffer._ROM.HolyBlood2
         sta wR1
-        jsr rlGetChildHolyBlood
+        jsr rsGetChildHolyBlood
         sta structCharacterConstantData.HolyBlood2,b,y
         bra ++
 
@@ -375,14 +375,14 @@
         sta wR0
         lda aUnit1DataBuffer._ROM.HolyBlood1
         sta wR1
-        jsr rlGetChildHolyBlood
+        jsr rsGetChildHolyBlood
         sta structCharacterConstantData.HolyBlood1,b,y
 
         lda aUnit2DataBuffer._ROM.HolyBlood2
         sta wR0
         lda aUnit1DataBuffer._ROM.HolyBlood2
         sta wR1
-        jsr rlGetChildHolyBlood
+        jsr rsGetChildHolyBlood
         sta structCharacterConstantData.HolyBlood2,b,y
 
         +
@@ -407,7 +407,7 @@
 
       aValidInheritableSkills .binclude "../../data/character/ValidInheritableSkills.asm"  ; 87/A975
 
-      rlGetChildGrowthRate ; 87/A9EA
+      rsGetChildGrowthRate ; 87/A9EA
 
         .al
         .autsiz
@@ -439,7 +439,7 @@
 
         .databank 0
 
-      rlGetChildHolyBlood ; 87/A9FB
+      rsGetChildHolyBlood ; 87/A9FB
 
         .al
         .autsiz
@@ -612,7 +612,7 @@
             cpx wR1
             beq +
 
-              jsl rlRevertItemAquirement
+              jsl rlRevertItemAcquirement
               bra -
 
           +
@@ -645,7 +645,7 @@
 
                 tya
                 jsl rlRemoveItemInSpecifiedInventorySlot
-                jsl rlRevertItemAquirement
+                jsl rlRevertItemAcquirement
                 bra _AB2C
 
             +
@@ -794,7 +794,7 @@
         bra _End
         
         _NotInheritable
-        jsl rlRevertItemAquirement
+        jsl rlRevertItemAcquirement
         
         _End
         rts

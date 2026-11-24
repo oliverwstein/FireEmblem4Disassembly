@@ -589,11 +589,11 @@
 
         sta lStructPointer1,b
         ldx wSelectedUnitDataRAMPointer,b
-        lda $7E000E,x
+        lda $7E0000+structCharacterDataRAM.InventoryData+1,x
         sta lStructPointer2+1,b
-        lda $7E000D,x
+        lda $7E0000+structCharacterDataRAM.InventoryData,x
         clc
-        adc #1
+        adc #structInventoryDataRAM.CurrentStructCount
         sta lStructPointer2,b
         jsl rlFindRAMStructEntry
 
@@ -797,7 +797,7 @@
         ; In:
         ; A = inventory slot, 1 indexed
 
-        ; Returns the item ROM pointer in A and wCurrentItemDataRAMPointer
+        ; Returns the item ROM pointer in wCurrentItemDataROMPointer (and sets wCurrentItemDataRAMPointer for player units, or 0 for enemies).
 
         phb
         php
@@ -1049,7 +1049,7 @@
         sta wRoutineVariable2,b
         jsl rlGetSelectedUnitInventoryRAMPointer
 
-        lda $0000,b,x
+        lda structInventoryDataRAM.EquippedWeaponBitfield,b,x
         xba
         sta wRoutineVariable1,b
 
@@ -1181,7 +1181,7 @@
                 cmp #$000C
                 bcc _Next
 
-                  ; everything but silence, sleep, berserk and thief
+                  ; silence, sleep, berserk, and thief (effects >= $0C)
                   jsl rlGetItemMinimumRange
                   jsr rsGetWeaponRangeFlags
                   tsb wR2
@@ -1246,7 +1246,7 @@
         ; A = range
 
         ; Out:
-        ; X = inv slot
+        ; A = inv slot
 
         phb
         php

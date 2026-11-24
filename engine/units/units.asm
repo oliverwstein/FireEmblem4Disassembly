@@ -46,7 +46,7 @@
         .databank ?
 
         ; This removes a unit from the Unit RAM pointer table, clears their aDeploymentTable data,
-        ; decrements the deployment count, unstets all unit states, flags all pointers in their structCharacterDataRAM
+        ; decrements the deployment count, unsets all unit states, flags all pointers in their structCharacterDataRAM
         ; as free and decrements the loaded unit count
 
         phb
@@ -600,7 +600,7 @@
 
         ; Input:
         ; A = CharacterID
-        ; wR0 = Equipment slot: 1 or 2
+        ; X = Equipment slot: 1 or 2
 
         ; Output:
         ; wCurrentItemDataROMPointer
@@ -1232,7 +1232,7 @@
         cmp wR10
         bcs +
 
-          ; Min range = Max range
+          ; Max range < Min range
           jml _End
 
         +
@@ -1290,7 +1290,7 @@
           lda $4428,b
           asl a
           tax
-          lda aUnknown8489F5,x
+          lda aRangeDiamondStepDeltas,x
           sta aAIAction.wAttackMapTileIndexModifier
 
             -
@@ -1356,7 +1356,7 @@
 
         .databank 0
 
-      aUnknown8489F5 ; 84/89F5
+      aRangeDiamondStepDeltas ; 84/89F5
 
         .word 31
         .word 33
@@ -1602,7 +1602,7 @@
     .endsection LoadUNITGroupMapSpritesSection
 
 
-    .section UnitsTable848A0DEntriesSection
+    .section TargetFilterRoutinesSection
 
       .al
       .xl
@@ -1828,10 +1828,10 @@
 
         ; 84/8BFE
 
-    .endsection UnitsTable848A0DEntriesSection
+    .endsection TargetFilterRoutinesSection
 
 
-    .section Unsorted848BFESection
+    .section CheckUnitPassesTargetFilterSection
 
       .al
       .xl
@@ -1891,6 +1891,6 @@
 
         ; 84/8C31
 
-    .endsection Unsorted848BFESection
+    .endsection CheckUnitPassesTargetFilterSection
 
 

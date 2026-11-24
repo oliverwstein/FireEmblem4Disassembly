@@ -1278,7 +1278,7 @@
     .endsection UnitDataSection
 
 
-    .section Unsorted8499B5Section
+    .section SaveSelectedUnitTotalStatsSection
 
       .al
       .xl
@@ -1362,7 +1362,7 @@
 
         ; 84/9A4C
 
-    .endsection Unsorted8499B5Section
+    .endsection SaveSelectedUnitTotalStatsSection
     .section LoadExtendedCharacterDataFromBufferSection
 
       .al

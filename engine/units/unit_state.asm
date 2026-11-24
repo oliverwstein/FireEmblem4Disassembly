@@ -1145,7 +1145,7 @@
     .endsection FieldedUnitFactionSection
 
 
-    .section Unsorted87A040Section
+    .section CheckCharacterWaitingInHomeCastleSection
 
       .al
       .xl
@@ -1156,7 +1156,7 @@
         .autsiz
         .databank ?
 
-        ; wRoutineVariable1 = character ID: carry set if that unit exists, is alive and not on the map, is a player unit, and its home castle is the player's castle.
+        ; A = character ID: carry set if that unit exists, is alive and not on the map, is a player unit, and its home castle is the player's castle.
 
         ; Check if selected unit alive in home castle.
 
@@ -1203,10 +1203,10 @@
 
         ; 87/A082
 
-    .endsection Unsorted87A040Section
+    .endsection CheckCharacterWaitingInHomeCastleSection
 
 
-    .section Unsorted84B349Section
+    .section RepairSelectedUnitItemSection
 
       .al
       .xl
@@ -1325,6 +1325,6 @@
 
         ; 84/B3E4
 
-    .endsection Unsorted84B349Section
+    .endsection RepairSelectedUnitItemSection
 
 

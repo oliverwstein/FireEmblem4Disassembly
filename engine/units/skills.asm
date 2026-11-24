@@ -311,7 +311,7 @@
 
         .databank 0
 
-      rsDebugFlagSkillPossesstion ; 87/A352
+      rsDebugFlagSkillPossession ; 87/A352
 
         .al
         .autsiz
@@ -363,7 +363,7 @@
           bit wR1
           beq +
 
-            jsr rsDebugFlagSkillPossesstion
+            jsr rsDebugFlagSkillPossession
 
           +
           dec wR0
@@ -405,7 +405,7 @@
           beq ++
 
             +
-            jsr rsDebugFlagSkillPossesstion
+            jsr rsDebugFlagSkillPossession
           
           +
           dec wR0
@@ -460,7 +460,7 @@
           bit wR1
           beq +
 
-            jsr rsDebugFlagSkillPossesstion
+            jsr rsDebugFlagSkillPossession
 
           +
           dec wR0

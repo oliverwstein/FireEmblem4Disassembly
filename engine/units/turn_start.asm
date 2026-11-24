@@ -39,15 +39,15 @@
 
       aTurnStartEffectsByStatus ; 84/AFBB
 
-        .word <>rlGetTurnStartNormalEffect
+        .word <>rsGetTurnStartNormalEffect
         .word <>rsGetTurnStartCuredEffect
         .word <>rsGetTurnStartFreelancerEffect
         .word <>rsGetTurnStartCaptiveEffect
-        .word <>rlGetTurnStartNormalEffect
-        .word <>rlGetTurnStartNormalEffect
-        .word <>rlGetTurnStartNormalEffect
+        .word <>rsGetTurnStartNormalEffect
+        .word <>rsGetTurnStartNormalEffect
+        .word <>rsGetTurnStartNormalEffect
 
-      rlGetTurnStartNormalEffect ; 84/AFC9
+      rsGetTurnStartNormalEffect ; 84/AFC9
 
         .al
         .autsiz

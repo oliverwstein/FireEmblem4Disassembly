@@ -265,7 +265,7 @@
                 bne _81E9
 
               +
-              jsl rlRevertItemAquirement
+              jsl rlRevertItemAcquirement
             
             _81E9
             inc x

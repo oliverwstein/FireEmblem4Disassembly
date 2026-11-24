@@ -1657,9 +1657,9 @@
 
       .dsection LoadUNITGroupMapSpritesSection
 
-      .dsection UnitsTable848A0DEntriesSection
+      .dsection TargetFilterRoutinesSection
 
-      .dsection Unsorted848BFESection
+      .dsection CheckUnitPassesTargetFilterSection
 
       .dsection LoversSection
 
@@ -1678,7 +1678,7 @@
 
       .dsection UnitDataSection
 
-      .dsection Unsorted8499B5Section
+      .dsection SaveSelectedUnitTotalStatsSection
 
       .dsection LoadExtendedCharacterDataFromBufferSection
 
@@ -1717,7 +1717,7 @@
 
       .dsection Unsorted84B32BSection
 
-      .dsection Unsorted84B349Section
+      .dsection RepairSelectedUnitItemSection
 
       .dsection UnitInventoryStateSection
 
@@ -1756,15 +1756,15 @@
 
       .dsection FactionRelationsSection
 
-      .dsection Unsorted84C398Section
+      .dsection TurnStartLoveGrowthHelpersSection
 
-      .dsection Unsorted84C412Section
+      .dsection ListFactionSlotUnitsByGenerationIDSection
 
       .dsection FactionUnitsSection
 
       .dsection Unsorted84C5D7Section
 
-      .dsection Unsorted84C62ESection
+      .dsection SetFactionSlotUnitsMapAnimationSection
 
       .dsection DeploymentSection
 
@@ -2727,13 +2727,13 @@
 
       .dsection CheckTalkEventEntryAvailableSection
 
-      .dsection Unsorted879EE7Section
+      .dsection CheckIsTalkTargetOfSection
 
       .dsection Unsorted879F12Section
 
       .dsection Unsorted87A006Section
 
-      .dsection Unsorted87A040Section
+      .dsection CheckCharacterWaitingInHomeCastleSection
 
       .dsection Unsorted87A082Section
 
@@ -2875,34 +2875,7 @@
 
       .dsection ItemsSection
 
-      .dsection Unsorted87E6D3Section
-
-      .dsection Unsorted87E6D7Section
-
-      .dsection Unsorted87E705Section
-      .dsection Unsorted87E707Section
-
-      .dsection Unsorted87E709Section
-
-      .dsection Table87E715Section
-
-      .dsection Unsorted87E737Section
-
-      .dsection Unsorted87E762Section
-
-      .dsection Unsorted87E779Section
-
-      .dsection Unsorted87E801Section
-
-      .dsection Table87E811Section
-
-      .dsection Unsorted87E833Section
-      .dsection Unsorted87E834Section
-      .dsection Unsorted87E83FSection
-      .dsection Unsorted87E84ASection
-      .dsection Unsorted87E855Section
-
-      .dsection Unsorted87E86ASection
+      .dsection StavesSection
 
       .dsection ChapterLocationsSection
 

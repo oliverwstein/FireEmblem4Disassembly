@@ -150,7 +150,7 @@
         sta $7E0000+structCharacterDataRAM.EnemyROMData,x
 
         jsl rlFillChildsConstantData
-        jsl rsFillChildExtendedPersonalData
+        jsl rlFillChildExtendedPersonalData
         jsr rsFillUnitRAMPersonalData
         jsr rsFillUnitRAMInventoryData
         jsr rsInitUnitLoverData
@@ -693,7 +693,7 @@
               bne _Next
 
             +
-            jsl rlRevertItemAquirement
+            jsl rlRevertItemAcquirement
 
           _Next
           inc y

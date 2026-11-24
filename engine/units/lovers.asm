@@ -59,7 +59,7 @@
               pla
               sta wEventEngineArgument2,b
 
-              ; Arg 1 holds male, arg 2 holds female
+              ; Arg 1 holds female, arg 2 holds male
               jsl rlGetAndRunChapterMapEventConditions
 
         _End

@@ -156,9 +156,9 @@
         sta lStructPointer2+1,b
         lda #<>aItemRAMData
         sta lStructPointer2,b
-        lda #(`aUnknown87E001)<<8
+        lda #(`aEmptyItemRAMEntry)<<8
         sta lStructPointer1+1,b
-        lda #<>aUnknown87E001
+        lda #<>aEmptyItemRAMEntry
         sta lStructPointer1,b
         jsl rlSaveRAMStructDataByIndex
         plb
@@ -166,7 +166,7 @@
 
         .databank 0
 
-      aUnknown87E001 ; 87/E001
+      aEmptyItemRAMEntry ; 87/E001
 
         .byte $FF
         .byte $FF
@@ -424,7 +424,7 @@
         .autsiz
         .databank ?
 
-        ; Return clc if broken, sec if not
+        ; Decrements non-zero durability; returns sec if it just broke (hit 0), clc otherwise.
 
         phb
         phx
@@ -437,17 +437,17 @@
         ldx wCurrentItemDataRAMPointer,b
         sep #$20
         lda structItemRAMEntry.Durability,b,x
-        beq _Broken
+        beq _NotBroken
 
         dec a
         sta structItemRAMEntry.Durability,b,x
-        bne _Broken
+        bne _NotBroken
 
         rep #$20
         sec
         bra +
         
-        _Broken
+        _NotBroken
         rep #$20
         clc
 
@@ -639,7 +639,7 @@
 
         .databank 0
 
-      rlRevertItemAquirement ; 87/E1C7
+      rlRevertItemAcquirement ; 87/E1C7
 
         .al
         .autsiz
@@ -1044,7 +1044,7 @@
         php
 
         sep #$20
-        lda #$83
+        lda #`aItemData
         pha
         rep #$20
         plb
@@ -1194,25 +1194,25 @@
         php
 
         sep #$20
-        lda #$83
+        lda #`aMainDataOffsets.ItemDescriptionOffsets
         pha
         rep #$20
         plb
 
         phx
         ldx wCurrentItemDataROMPointer,b
-        lda $0000,b,x
+        lda structItemROMEntry.Name,b,x
         and #$00FF
         asl a
         clc
         adc aMainDataOffsets.ItemDescriptionOffsets
         tax
-        lda #$8300
+        lda #(`aMainDataOffsets)<<8
         sta lRoutineVariable+1,b
         lda aMainDataOffsets,x
         clc
         adc aMainDataOffsets.ItemDescriptionOffsets
-        adc #$8000
+        adc #<>aMainDataOffsets
         sta lRoutineVariable,b
         plx
         plp

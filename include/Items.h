@@ -75,7 +75,7 @@
 
   ItemStateInventory  = 1
   ItemStateSupply     = 2
-  ItemStateUnknwon3   = 3
+  ItemStateUnknown3   = 3
   ItemStateShop       = 4
   ItemStatePawnbroker = 5
   ItemStateUnknown6   = 6

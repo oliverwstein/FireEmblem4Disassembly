@@ -1,9 +1,6 @@
 ; Staves: whether a staff has a target (on the map and in the castle), starting
 ; to choose one by the staff's effect, the heal amount, and fortify.
-
-
-    .section Unsorted87E6D3Section
-
+    .section StavesSection
       .al
       .xl
 
@@ -36,14 +33,6 @@
         .databank 0
 
         ; 87/E6D7
-
-    .endsection Unsorted87E6D3Section
-
-
-    .section Unsorted87E6D7Section
-
-      .al
-      .xl
 
       rsStaffTargetCheckHealOnMap ; 87/E6D7
 
@@ -143,14 +132,6 @@
 
         ; 87/E705
 
-    .endsection Unsorted87E6D7Section
-
-
-    .section Unsorted87E705Section
-
-      .al
-      .xl
-
       rsStaffTargetCheckValkyrie ; 87/E705
 
         .al
@@ -167,14 +148,6 @@
 
         ; 87/E707
 
-    .endsection Unsorted87E705Section
-
-
-    .section Unsorted87E707Section
-
-      .al
-      .xl
-
       rsStaffTargetCheckNone ; 87/E707
 
         .al
@@ -188,14 +161,6 @@
         .databank 0
 
         ; 87/E709
-
-    .endsection Unsorted87E707Section
-
-
-    .section Unsorted87E709Section
-
-      .as
-      .xl
 
       rlCheckStaffHasCastleTargets ; 87/E709
 
@@ -218,14 +183,6 @@
 
         ; 87/E715
 
-    .endsection Unsorted87E709Section
-
-
-    .section Table87E715Section
-
-      .al
-      .xl
-
       aCastleStaffTargetChecks ; 87/E715
 
         ; Jump table of rlCheckStaffHasCastleTargets.
@@ -246,14 +203,6 @@
         .word <>rsCastleStaffTargetCheckFail
         .word <>rsCastleStaffTargetCheckFail
         .word <>rsCastleStaffTargetCheckFail
-
-    .endsection Table87E715Section
-
-
-    .section Unsorted87E737Section
-
-      .al
-      .xl
 
       rsCastleStaffTargetCheckHeal ; 87/E737
 
@@ -356,14 +305,6 @@
 
         ; 87/E762
 
-    .endsection Unsorted87E737Section
-
-
-    .section Unsorted87E762Section
-
-      .al
-      .xl
-
       rlStartStaffTargetSelection ; 87/E762
 
         .al
@@ -388,14 +329,6 @@
         .databank 0
 
         ; 87/E779
-
-    .endsection Unsorted87E762Section
-
-
-    .section Unsorted87E779Section
-
-      .al
-      .xl
 
       aStaffTargetSelectionHandlers ; 87/E779
 
@@ -591,14 +524,6 @@
 
         ; 87/E801
 
-    .endsection Unsorted87E779Section
-
-
-    .section Unsorted87E801Section
-
-      .al
-      .xl
-
       rlStartCastleStaffTargetSelection ; 87/E801
 
         .al
@@ -621,14 +546,6 @@
 
         ; 87/E811
 
-    .endsection Unsorted87E801Section
-
-
-    .section Table87E811Section
-
-      .al
-      .xl
-
       aCastleStaffTargetSelectionHandlers ; 87/E811
 
         ; Jump table of rlStartCastleStaffTargetSelection.
@@ -650,14 +567,6 @@
         .word <>rsCastleStaffSelectionNone
         .word <>rsCastleStaffSelectionNone
 
-    .endsection Table87E811Section
-
-
-    .section Unsorted87E833Section
-
-      .al
-      .xl
-
       rsCastleStaffSelectionNone ; 87/E833
 
         .al
@@ -670,14 +579,6 @@
         .databank 0
 
         ; 87/E834
-
-    .endsection Unsorted87E833Section
-
-
-    .section Unsorted87E834Section
-
-      .al
-      .xl
 
       rsCastleStaffSelectTarget ; 87/E834
 
@@ -697,14 +598,6 @@
 
         ; 87/E83F
 
-    .endsection Unsorted87E834Section
-
-
-    .section Unsorted87E83FSection
-
-      .al
-      .xl
-
       rsCastleStaffSelectWarpTarget ; 87/E83F
 
         .al
@@ -723,14 +616,6 @@
 
         ; 87/E84A
 
-    .endsection Unsorted87E83FSection
-
-
-    .section Unsorted87E84ASection
-
-      .al
-      .xl
-
       rsCastleStaffFortify ; 87/E84A
 
         .al
@@ -748,14 +633,6 @@
         .databank 0
 
         ; 87/E855
-
-    .endsection Unsorted87E84ASection
-
-
-    .section Unsorted87E855Section
-
-      .al
-      .xl
 
       rsCastleStaffValkyrie ; 87/E855
 
@@ -778,14 +655,6 @@
         .databank 0
 
         ; 87/E86A
-
-    .endsection Unsorted87E855Section
-
-
-    .section Unsorted87E86ASection
-
-      .al
-      .xl
 
       rlGetStaffHealAmount ; 87/E86A
 
@@ -956,7 +825,4 @@
         .databank 0
 
         ; 87/E93F
-
-    .endsection Unsorted87E86ASection
-
-
+    .endsection StavesSection

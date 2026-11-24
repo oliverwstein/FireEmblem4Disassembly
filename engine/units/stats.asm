@@ -918,7 +918,7 @@
         .databank ?
 
         ; Input:
-        ; wR0 = stat increase
+        ; A = stat increase
         ; wRoutineVariable1 = stat index
 
         ; Output:

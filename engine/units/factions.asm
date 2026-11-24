@@ -868,7 +868,7 @@
         .databank ?
 
         ; Input: A = faction slot, wRoutineVariable1 = character ID; if wR10 is not 0,
-        ; the unit must be fielded. Output: wSelectedUnitDataRAMPointer, or 0.
+        ; the unit must not be fielded (UnitStateFielded clear). Output: wSelectedUnitDataRAMPointer, or 0.
 
         phb
         php
@@ -1731,7 +1731,7 @@
     .endsection FactionRelationsSection
 
 
-    .section Unsorted84C398Section
+    .section TurnStartLoveGrowthHelpersSection
 
       .al
       .xl
@@ -1825,10 +1825,10 @@
 
         ; 84/C412
 
-    .endsection Unsorted84C398Section
+    .endsection TurnStartLoveGrowthHelpersSection
 
 
-    .section Unsorted84C412Section
+    .section ListFactionSlotUnitsByGenerationIDSection
 
       .al
       .xl
@@ -1906,7 +1906,7 @@
 
         ; 84/C461
 
-    .endsection Unsorted84C412Section
+    .endsection ListFactionSlotUnitsByGenerationIDSection
 
 
     .section FactionUnitsSection
@@ -2229,7 +2229,7 @@
     .endsection FactionUnitsSection
 
 
-    .section Unsorted84C62ESection
+    .section SetFactionSlotUnitsMapAnimationSection
 
       .al
       .xl
@@ -2284,4 +2284,4 @@
 
         ; 84/C65E
 
-    .endsection Unsorted84C62ESection
+    .endsection SetFactionSlotUnitsMapAnimationSection
