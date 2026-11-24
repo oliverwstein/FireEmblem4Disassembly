@@ -1,6 +1,6 @@
 # Chapter 6: Resolving a Battle
 
-Combat in *Genealogy of the Holy War* draws on nearly every data structure in Part I at once: each unit's stats, its equipped weapon's traits, terrain, the weapon triangle, leadership and Charm auras from nearby allies, effectiveness, and more than a dozen combat skills that change turn order, strike count, accuracy, critical hits, defense, and extra rounds. The same rules have to drive five presentations: the battle forecast ([Chapter 10](10-menus-over-the-map.md)), quick map battles ([Chapter 23](OUTLINE.md)), full battle scenes ([Chapter 24](OUTLINE.md)), the arena ([Chapter 16](OUTLINE.md)), and scripted cutscene fights.
+Combat in *Genealogy of the Holy War* draws on nearly every data structure in Part I at once: each unit's stats, its equipped weapon's traits, terrain, the weapon triangle, leadership and Charm auras from nearby allies, effectiveness, and more than a dozen combat skills that change turn order, strike count, accuracy, critical hits, defense, and extra rounds. The same rules have to drive five presentations: the battle forecast ([Chapter 10](10-menus-over-the-map.md)), quick map battles ([Chapter 23](OUTLINE.md)), full battle scenes ([Chapter 24](OUTLINE.md)), the arena ([Chapter 16](16-the-arena.md)), and scripted cutscene fights.
 
 The engine settles every fight in memory before drawing a frame, and each presentation plays back the recorded result. This chapter explains the combat rules first, then the data model, the execution pipeline, and the random number generator underneath.
 

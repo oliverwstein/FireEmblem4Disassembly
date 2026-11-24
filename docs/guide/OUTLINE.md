@@ -58,8 +58,8 @@ What carries across castles, chapters, and generations, along with the bookends 
 
 | # | Chapter | Opening problem | Patterns | Source | Status |
 |---|---|---|---|---|---|
-| 15 | **Castles and towns** | A home base inside the map: shops, the pawn shop, repair, storage, the augury, class change, and conversations. | A screen within a screen; lists shared by many facilities | `castle/` | Ready (castle.md) |
-| 16 | **The arena** | An opponent ladder inside the castle that reuses the battle engine while tracking yields, defeats, and prizes. | Reusing combat in a controlled loop; arena state per unit | `arena/` | Ready (arena.md) |
+| 15 | **[Castles and towns](15-castles-and-towns.md)** | A home base inside the map: shops, the pawn shop, repair, storage, the augury, class change, and conversations. | A screen within a screen; lists shared by many facilities | `castle/` | Drafted |
+| 16 | **[The arena](16-the-arena.md)** | An opponent ladder inside the castle that reuses the battle engine while tracking yields, defeats, and prizes. | Reusing combat in a controlled loop; arena state per unit | `arena/` | Drafted |
 | 17 | **Love and lineage** | Love points every turn, and children whose growths, blood, and weapons come from whom their parents married. | A 9 × 15 grid; derived data computed once at a generation change | `units/lovers`, `generations`, `inheritance`, `events/first_generation_ending` | Ready (units.md) |
 | 18 | **Saving** | Battery-backed SRAM, three slots, and data that must be written the moment it happens. | Serializing the pools; checksums | `save/` | Ready (save.md) |
 | 19 | **Between chapters** | The world map, the chapter intro, and the history pages. | Another screen with its own frame; edge IRQs and layer HDMA | `worldmap/`, `save/jugdral_history` | Ready (worldmap.md) |

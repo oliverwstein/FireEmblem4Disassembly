@@ -21,7 +21,8 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | IV | 12 [Screenplays](docs/guide/12-screenplays.md) | draft, not yet reviewed |
 | IV | 13 [Dialogue and text](docs/guide/13-dialogue-and-text.md) | draft, reviewed |
 | IV | 14 [Armies with a mind](docs/guide/14-armies-with-a-mind.md) | draft, not yet reviewed |
-| V–VII | 15–31 | not started; OUTLINE.md marks which have a reference page |
+| V | 15 [Castles and towns](docs/guide/15-castles-and-towns.md), 16 [The arena](docs/guide/16-the-arena.md) | draft, not yet reviewed |
+| V–VII | 17–31 | not started; OUTLINE.md marks which have a reference page |
 
 **Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (Chapters 6–7 were written from the source; the battle interlude needs it) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
 
@@ -71,6 +72,13 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `wChapterFlags` `$0100` called unknown; it marks a chapter resumed from a map save (enter at map step 7) | include/WRAM.h | `2da731d` |
 | `rsMoveCursorToPhaseStart` comment had the auto cursor option backwards (on goes to the first unit, off to the saved tile); Ch. 8 draft copied it | engine/map/map_step.asm | `2da731d` |
 | `rlPhaseBannerCheckSkip` comment listed Select; the mask `$D0C0` is A, B, X, Y and Start; Ch. 8 draft copied it | engine/map/phase_banner.asm | `2da731d` |
+| Castle location byte `$05` called `Unknown`; it is the town's facility bits (now `Facilities`, `CastleFacility*`). The arena opponent tables were `aUnknown86CBC0` and nine more with raw character IDs (now `aChapterNNArenaOpponents`, `_Melee`/`_Ranged`). `$0AD7`/`$0AD9` unnamed (`wArenaFightsWithOpponent`, `wArenaMoneyCounter`) | include/Chapters.h, events/, include/WRAM.h, arena.asm | `6532ccb` |
+| `rlCheckItemObtainable` checks the selected unit's weapon rank and gender (now `rlCheckSelectedUnitCanUseItem`); `aCastleListItemUnavailable` said "cannot be bought yet"; `rlBuildStockList` didn't say it ignores the owner | inventory.asm, lists.asm, WRAM.h and 4 users | `6532ccb` |
+| `rsCastleUnitCommandStaff` read `aUnitMenuStaffSlots` as the AI's `wAIGroupLeaderFieldMovement`; `aUnitMenuCastleStaffSlots` and `aCastleUnitDeploymentOffsets+2` read by raw address | courtyard.asm, staves.asm | `6532ccb` |
+| `DIALOGUE_WITH_BG`'s third argument called `DialogueType`; it is the exit mode (now `ExitMode`, and the 204 uses write `CONVERSATION_EXIT_*`) | include/events/Main.h, events/ | `6532ccb` |
+| `rlArenaMenuRunStep` called unreachable (castle step `$04` runs it); arena header spoke of a wager (no entry fee); event action `$1C` said to fire on leaving the arena (it fires after every win) | arena.asm, WRAM.h | `6532ccb` |
+| `rlEndUnitAction` wrote `wCastleSavedUnitRAMPointer` by raw address (how the town knows its visitor); the lover visit comment said the lover must be fielded (it must be off the map) | unit_movement.asm, lover_conversation.asm | `507ceaa` |
+| `TerrainShrine` called unused; arena fighters stand on it (`rlPopulateArenaActionStruct` wrote it as `$0017`) | include/Terrain.h, unit_commands.asm | `09cd71d` |
 
 **In the documentation** (reference pages, guide drafts):
 
@@ -93,6 +101,10 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | Ch. 5: the range search, the AI's maps and target selection said to use `rlBuild32x32MapUnitGrid`; the range search fills its own input grid, the AI fills 64 × 64 whole-map grids, and only the unit menu, staves and scripted crits use the 32 × 32 grid | docs/guide/05 | with Ch. 14 |
 | ai.md: the open questions (modes, objectives, `bUnknown000E7B` bits, whether actions 3/12/13 are chosen) | docs/reference/ai.md | with Ch. 14 |
 | events.md called `$FEFE` a yield (it is the skip point) and `$3B` an unnamed command | docs/reference/events.md | with Ch. 12 |
+| Ch. 3: the pawn shop said to list items owned by that castle, and a sold weapon to turn up "at the castle where it was sold"; no shop list compares the owner | docs/guide/03 | with Ch. 15 |
+| castle.md: stale names (`rlUnknown88B316`/`B339`, `rlUnknown8DB52C`), the home castle entered by a unit (it is the cursor), stock "that cannot be had yet", the secondhand shop per castle, the lover "fielded" | docs/reference/castle.md | with Ch. 15 |
+| arena.md: "records current gold" as a wager, "yield/draw", the win event said to fire on leaving | docs/reference/arena.md | with Ch. 16 (rewritten) |
+| Ch. 11: event action `$1C` said to fire when a unit leaves the arena with winnings (after every win) | docs/guide/11 | with Ch. 16 |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
 ## Retail bugs and quirks found
@@ -151,14 +163,21 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 - The AI's target scoring by class priority, effectiveness and triangle (`rsAIScoreTargetsNearLeader`, `aAIClassTargetPriorityTable`) sits after an unconditional branch and never runs; `aAIClassWeightTable` has no reader at all (Ch. 14).
 - Neither AI list checks its count: 24 group members, 48 targets; a 49th target would overwrite `aPermanentEventFlags` (Ch. 14).
 - Seven AI script commands are unused, among them `AI_TARGET_VILLAGE` and the three copies of the surround command `$1A`-`$1C` (Ch. 14).
+- Every item shop sells one pooled stock and every secondhand shop offers everything sold anywhere: shop and pawnbroker records have an owning castle that no list reads (`rlBuildStockList`). One castle per chapter has a shop list; the stock accumulates until Chapter 6 reverts it (Ch. 15).
+- Every return to the town (after each facility) announces event action 6 again (`rlCastleOpenTown`) (Ch. 15).
+- Class change sets the list item state to 3, which no item has; its list is always empty. Class change is refused in Chapter 6, whose castles also lack the arena (Ch. 15).
+- A dance inside the castle refreshes every unit in the dancer's castle (`rsActionStructDance`, castle bit) (Ch. 15).
+- Arena fights don't end the unit's action, and arena wins and losses aren't recorded; a fallen player unit keeps 1 HP (Ch. 16).
+- After a yield, changing weapons changes the fight's distance and the opponent window's lookup, but not the opponent already built at `$2100`: Chapter 1's level-3 Shark can be fought with a bow at two tiles, where he can't reach (Ch. 16).
+- A weapon that breaks in the arena keeps swinging for the rest of the fight: `rsCheckForWeaponInventorySlot` only rejects an empty slot there (Ch. 6, 16).
 - No condition list uses a flag byte with bit 7 ("must be set, cleared on match"), opcodes `$22`-`$24`, or any `CHILD` condition other than `CHECK_CHILD_TALK` (Ch. 11).
 
 ## Next session
 
-1. **Review Chapters 9, 10, 12 and 14.** Chapter 14 was checked against the code while writing (scripts, cycle, scoring, moves); a reviewer should recheck the mode table and the objective table against `aAIAttackTypeRoutines` and `aAIGroupObjectiveRoutines`, and the claim that a step can outlast a frame (the `$10` flag exists for it; no timing was measured).
+1. **Review Chapters 9, 10, 12, 14, 15 and 16.** Chapter 14: recheck the mode and objective tables against `aAIAttackTypeRoutines` and `aAIGroupObjectiveRoutines`, and the claim that a step can outlast a frame. Chapter 15: the shop pooling (`rlBuildStockList` never compares the owner) and the facility counts are the claims most worth a second look; the conversation scene's sections cover what Chapter 13 left to it. Chapter 16: the yield-and-switch-weapon consequence (a melee opponent fought at range 2) follows from `rlSetupArenaBattleStats` and the strike's range check, not from a test.
 2. Before the battle interlude and Part II revision: write `docs/reference/battle.md`.
-3. Then the Part IV interlude (one enemy turn) and Chapter 15 (castles and towns), from `castle.md`. Chapter 13 leaves the conversation screen's own steps (background, portrait fades, exits) to Chapter 15 and the world map's dialogue commands (bit 7) to Chapter 19.
-4. Still unnamed in the AI: the event wait procs `procEventWaitFlag0E7B*` (they wait on `bAIEngineFlags` bit 0) and `lAITemp*`/`wAITemp*` scratch.
+3. Then the Part IV interlude (one enemy turn) and Chapter 17 (love and lineage), from `units.md`. Chapter 15 points to Chapter 17 for generation IDs, the love table's woman's side, and the Chapter 6 item revert (`rlResetUnitsForChapter`). Chapter 13 leaves the world map's dialogue commands (bit 7) to Chapter 19.
+4. Still unnamed: the AI's event wait procs `procEventWaitFlag0E7B*` and `lAITemp*`/`wAITemp*` scratch; in the castle, `rlUnknown84D334` and `rlUnknown9EDAE7` (giving money) and what sets `wChapterFlags` `$0800` (the minimap choosing a Warp destination) for a staff used inside the castle.
 
 ## Who wrote what
 
@@ -166,11 +185,10 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line; Gemini's are listed 
 
 ## Emulator questions (for one batched session)
 
-Each is one screen. Answers to earlier ones are in HISTORY.md under the wave that asked them. Ask only what the code can't settle: a complete code path is an answer.
+Each is one screen. Answers to earlier ones are in HISTORY.md under the wave that asked them. The augury question (does a child get three topics?) was settled from the code while writing Chapter 15: the setup writes topics 0-2 and a last index of 2 for `UnitTypeDynamic`. Ask only what the code can't settle: a complete code path is an answer.
 
-1. (When a save reaches chapter 6.) Augury with a generation 2 child: are there three topics (love, record, parents)? The code reads the topic count from `$7F8183`; only the screen shows which topics a child gets.
-2. Does まち (town) ever appear? The code offers it at a location of type 1 and its handler opens the castle screen, but no chapter's location data uses type 1 (59 castles, 73 villages; Chapter 5 of the guide). If it never shows up in play, the question is closed: the command is unreachable.
-3. The item window (from the map menu's item command) with a weapon selected: what is the sprite at the right edge, about (195, 76)? The code draws it only for weapons (`aUnknown89BE50`, tile `$0E`); the weapon type icon and the weapon triangle icons beside it are known.
-4. (Needs a save that has finished the game.) The ranking screen: what are the 16 letters drawn from `aUnknown7FC70A`, and what row appears after the secret code (Select, Up, A, Down, B, Left, X, Right, Y, L, R, Start)? The code shows the code check (`rlCheckEpilogueSecretCode`) and where the row is uploaded; only the screen shows what it says.
-5. The title screen's intro (let the game sit after the attract opening, about two minutes): what each of its eight scenes shows and what the captions say. The code shows the scenes' timing and setup (title.md); the captions are graphics, so only the screen shows their words.
-6. A battle scene with Fortify or a dance (both combatants at the center, `BattleSceneFlagSolo2`): what does the screen show besides the two combatants? The code shows that the flag turns on HDMA entries 3 and 6; only the screen shows what they draw.
+1. Does まち (town) ever appear? The code offers it at a location of type 1 and its handler opens the castle screen, but no chapter's location data uses type 1 (59 castles, 73 villages; Chapter 5 of the guide). If it never shows up in play, the question is closed: the command is unreachable.
+2. The item window (from the map menu's item command) with a weapon selected: what is the sprite at the right edge, about (195, 76)? The code draws it only for weapons (`aUnknown89BE50`, tile `$0E`); the weapon type icon and the weapon triangle icons beside it are known.
+3. (Needs a save that has finished the game.) The ranking screen: what are the 16 letters drawn from `aUnknown7FC70A`, and what row appears after the secret code (Select, Up, A, Down, B, Left, X, Right, Y, L, R, Start)? The code shows the code check (`rlCheckEpilogueSecretCode`) and where the row is uploaded; only the screen shows what it says.
+4. The title screen's intro (let the game sit after the attract opening, about two minutes): what each of its eight scenes shows and what the captions say. The code shows the scenes' timing and setup (title.md); the captions are graphics, so only the screen shows their words.
+5. A battle scene with Fortify or a dance (both combatants at the center, `BattleSceneFlagSolo2`): what does the screen show besides the two combatants? The code shows that the flag turns on HDMA entries 3 and 6; only the screen shows what they draw.

@@ -1,6 +1,6 @@
 # Chapter 3: Every Sword Is an Individual
 
-A Silver Sword that has felled fifty enemies starts landing critical hits, and grows more likely to with every kill after that. When its uses run out it becomes a Broken Sword, and repairing it at a castle brings back the same sword, kills and all. When its owner's child inherits it a generation later, the count comes too. Sell it, and it waits in that castle's pawn shop for someone else to buy.
+A Silver Sword that has felled fifty enemies starts landing critical hits, and grows more likely to with every kill after that. When its uses run out it becomes a Broken Sword, and repairing it at a castle brings back the same sword, kills and all. When its owner's child inherits it a generation later, the count comes too. Sell it, and it waits in the pawn shop for someone else to buy.
 
 Each item the player owns is its own record, with its own durability, kill count, owner, and location. This chapter covers the global table of those records, the inventories that hold indices into it, and the state field that says where each record is.
 
@@ -42,7 +42,7 @@ Each way of getting an item hands over one of those records:
 
 - **Starting equipment.** A playable character's ROM entry lists player item indices, not item types: Sigurd starts with `PI_SteelSword1` and `PI_IronLance1`.
 - **Gifts and villages.** Event scripts give a specific record: `GIVE_UNIT_PID_EQUIP Sigurd, PI_Tyrfing`.
-- **Shops.** A castle's shop list names records too. When the castle's location is set up (`rlInitLocation`), each listed record still unobtained moves to `ItemStateShop`, owned by that castle. Buying one (`rlBuyItemForSelectedUnit`) changes its state and owner; nothing is created.
+- **Shops.** A castle's shop list names records too. When the castle's location is set up (`rlInitLocation`), each listed record still unobtained moves to `ItemStateShop`, owned by that castle (an owner no list reads, [Chapter 15](15-castles-and-towns.md)). Buying one (`rlBuyItemForSelectedUnit`) changes its state and owner; nothing is created.
 - **Enemy drops.** An enemy that carries a prize names it in its `Drops` field as a player item index, and `rlCheckForValidUniqueItemOrDrops` treats the record as held only while it is still unobtained or already that unit's.
 
 A closed world has a few consequences. The table can never fill, because only 140 of its 256 slots are ever used. Two Silver Swords are always two distinct records with two names in the source. And a save file never has to say *which* item a record is: loading rebuilds all 140 records from the table and then restores each one's durability, state, owner, and kills (`rsLoadItemRAMData`). An item costs 25 bits of battery-backed RAM instead of 48.
@@ -59,20 +59,20 @@ The `state` field says where a record is, and the `owner` field says whose it is
 | `ItemStatePawnbroker` | 5 | a castle | sold there, for anyone to buy back |
 | `ItemStateUnobtained` | 7 | none | not yet in the game |
 
-Values 3 and 6 are never used. Only one of these places has a list of its own, the unit's eight-slot inventory, which keeps the order the player sees. Every other place is a *query*. The supply screen, a shop's stock, and the pawn shop are built by walking the table and keeping the records with the right state and owner:
+Values 3 and 6 are never used. Only one of these places has a list of its own, the unit's eight-slot inventory, which keeps the order the player sees. Every other place is a *query*. The depot, the shop, and the pawn shop are built by walking the table and keeping the records in the right state. The depot also checks the owner:
 
 ```rust
-fn pawn_shop_stock(castle: CastleId) -> Vec<PlayerItemIndex> {
+fn stored_items(unit: UnitPointer) -> Vec<PlayerItemIndex> {   // rlBuildUnitStoredItemList
     (1..=item_count())                                   // rlGetItemRAMDataCount
         .filter(|&i| {
             let item = &aItemRAMData[i];                 // rlGetItemRAMStructEntryByPlayerItemIndex
-            item.state == Pawnbroker && item.owner == castle
+            item.state == Supply && item.owner == unit
         })
         .collect()
 }
 ```
 
-Moving an item between places is a two-field write. Sending a sword to storage (`rlSendInventorySlotItemToSupply`) sets its state to `Supply` and removes it from the inventory list. Selling it (`rlSellInventorySlotItem`, then `rlMoveItemToSecondhandStock`) sets its state to `Pawnbroker` with the castle as owner, which is why a sold weapon shows up for sale at the castle where it was sold, still carrying its kills.
+Moving an item between places is a two-field write. Sending a sword to storage (`rlSendInventorySlotItemToSupply`) sets its state to `Supply` and removes it from the inventory list. Selling it (`rlSellInventorySlotItem`, then `rlMoveItemToSecondhandStock`) sets its state to `Pawnbroker` with the castle as owner. The shop lists compare only the state, so a sold weapon is for sale in every pawn shop, still carrying its kills ([Chapter 15](15-castles-and-towns.md)).
 
 The cost is a scan of 140 records each time one of those lists opens, which is cheap next to drawing the screen. The gain is that an item can never be in two places at once, because its place is one field.
 

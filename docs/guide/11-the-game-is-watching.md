@@ -26,7 +26,7 @@ Eighteen action numbers are announced. Each comes from one or two places in the 
 | `$18` | a strike brings a unit to 0 HP, while the rounds are being built | the dead character, the attacker | `CHECK_UNIT_DIED_TO` |
 | `$1A` | the help command rescues a civilian | rescuer, formation + 1 | `RESCUE_CIVILIAN` |
 | `$1B` | a seize frees a captured player unit held in the castle | character | `CHECK_PLAYER_UNCAPTURED_IF_SEIZING` |
-| `$1C` | a unit leaves the arena with winnings | character, location, last opponent | `CHECK_WON_IN_ARENA` |
+| `$1C` | a unit wins an arena fight (after every win) | character, location, opponent | `CHECK_WON_IN_ARENA` |
 | `$1D` | a lover, sibling, or triangle crit, after the rounds are built | crit type, character | `CHECK_SPECIAL_CRIT` |
 | `$20` | the end of a turn (map step 9) | the turn that just ended | `START_PLAYER_PHASE` |
 | `$21` | a phase starts (map step 3), and before each computer unit acts | turn, army, AI setting, character | `CHECK_TURN_PHASE_AI_ACTOR` |

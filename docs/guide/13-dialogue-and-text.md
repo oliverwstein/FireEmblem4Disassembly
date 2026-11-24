@@ -193,7 +193,7 @@ The boxes are opened by the text itself. `DIALOGUE_OPEN_BOX` in mode 1 creates `
 
 ### The other hosts
 
-The conversation screen is a step of the castle screen ([Chapter 15](OUTLINE.md)): a full-screen background picture (`DIALOGUE_BG_*`) with a window on each side. `DIALOGUE_WITH_BG` reaches it by fading out the map and switching the main loop to the castle screen's conversation handler; when the text ends, the screen leaves for the map, the courtyard, the town, or an epilogue page, as `wConversationExitMode` says. In this mode `DIALOGUE_OPEN_BOX` opens a window, and the portrait commands start fade-in and fade-out procs instead of drawing tiles.
+The conversation screen is a step of the castle screen ([Chapter 15](15-castles-and-towns.md)): a full-screen background picture (`DIALOGUE_BG_*`) with a window on each side. `DIALOGUE_WITH_BG` reaches it by fading out the map and switching the main loop to the castle screen's conversation handler; when the text ends, the screen leaves for the map, the courtyard, the town, or an epilogue page, as `wConversationExitMode` says. In this mode `DIALOGUE_OPEN_BOX` opens a window, and the portrait commands start fade-in and fade-out procs instead of drawing tiles.
 
 Keepers use mode 3. `rsSetupKeeperDialogueBox` gives the slot a 30 × 6 area and sets the speed to two frames per character, whatever the option says. Mode 0 draws text into a tilemap area its caller set up: the castle name pop-up gives slot 0 a 10 × 4 area, and the battle scene draws its quotes into its own layout.
 
