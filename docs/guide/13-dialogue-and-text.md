@@ -18,7 +18,7 @@ The texts live in [text/dialogue/](../../text/dialogue/), one file each, grouped
 | Death quotes | 187 |
 | Lovers' home castle visits | 130 |
 | Shops and other keepers | 79 |
-| Attract-mode battles, battle scene, opening, debug | 49 |
+| Attract-mode battles, battle scene, opening, game over, debug | 49 |
 
 A source file is plain Japanese with commands in braces. Chapter 1's talk between Quan and Ayra begins:
 
@@ -57,7 +57,7 @@ A command byte below `$10` is a one-byte command. `$00` is an escape: the next b
 | Speakers and boxes | `DIALOGUE_RIGHT` (2,934), `DIALOGUE_LEFT` (2,698), `DIALOGUE_OPEN_BOX` (1,802), `DIALOGUE_CLOSE_BOX` (260) |
 | Portraits | `DIALOGUE_LOAD_PORTRAIT` (1,676), `DIALOGUE_UNLOAD_PORTRAIT` (261), `DIALOGUE_LOAD_UNIT1_PORTRAIT` (93), `DIALOGUE_LOAD_UNIT2_PORTRAIT` (27) |
 | Pacing | `DIALOGUE_WAIT_PRESS` (4,103), `DIALOGUE_PAUSE` (2,831), `DIALOGUE_SET_SPEED` (9) |
-| Inserted text | `DIALOGUE_UNIT1_NAME` (221), `DIALOGUE_UNIT2_NAME` (173), `DIALOGUE_SET_TEXT` (172), `DIALOGUE_CHILD_NAME` (171), `DIALOGUE_NUMBER1` (20), and five more used under 15 times |
+| Inserted text | `DIALOGUE_UNIT1_NAME` (221), `DIALOGUE_UNIT2_NAME` (173), `DIALOGUE_SET_TEXT` (172), `DIALOGUE_CHILD_NAME` (171), `DIALOGUE_NUMBER1` (20), `DIALOGUE_CHILD_SIBLING_NAME` (14), and three more used twice each |
 | Escapes | `DIALOGUE_ASMC` (237) |
 | Sound | `DIALOGUE_PLAY_SONG` (34), `DIALOGUE_PLAY_SFX2B` (32), and two more |
 | End | `DIALOGUE_EOF` (1,982) |
@@ -74,7 +74,7 @@ glyph = page × 240 + (byte − $10)
 
 and the same number indexes the width table, `aDialogueFontWidth` ([data/dialogue/DialogueFontWidth.asm](../../data/dialogue/DialogueFontWidth.asm)). Most glyphs are 12 pixels wide (784 of them) or 13 (265); the narrowest punctuation is 1 or 2.
 
-Page 0 gets one more adjustment. When the current page is 0, the engine looks at the next character in the text and may draw the current one a pixel narrower. A following て, で, or ョ always tightens it (`aDialogueAdjustPriorCharacterWidth`). For any other following character, `aDialogueCustomWidthAdjustTable` points to a list of characters that tighten before it, and the current character loses a pixel if it is on the list. This is kerning by pairs, stored as one list per right-hand character.
+Page 0 gets one more adjustment. When the current page is 0, the engine looks at the next character in the text and may draw the current one a pixel narrower. A following て, で, or ョ always tightens it. For any other following character, a table points to a list of characters that tighten before it, and the current character loses a pixel if it is on the list. This is kerning by pairs, stored as one list per right-hand character.
 
 ## Drawing a character
 
@@ -115,7 +115,7 @@ Several of these take more than one frame. Opening a map box takes about ten, an
 
 The SNES draws backgrounds from 8 × 8 tiles, and a proportional font doesn't line up with them. The engine composes text in a small buffer of 8 × 16-pixel **cells** (`aCharacterGraphicsBuffer`, 512 bytes, sixteen cells). Each cell is two tiles, one above the other. `wGraphicBufferPixelOffset` is the pen position in pixels from the left edge of the buffer's first cell.
 
-To draw a glyph, `rsDialogueLoadCharacterGraphicIntoBuffer` reads its four tiles, shifts each row right by the pen's position within its cell (`offset & 7`), and ORs the result into the buffer, so a glyph that starts partway into a cell shares that cell with the previous one. Then the pen advances by the glyph's width:
+To draw a glyph, the engine reads its four tiles, shifts each row right by the pen's position within its cell (`offset & 7`), and ORs the result into the buffer, so a glyph that starts partway into a cell shares that cell with the previous one. Then the pen advances by the glyph's width:
 
 ```
 pixel   0       8       16      24      32
@@ -127,11 +127,11 @@ cells   0       1       2       3
 
 After drawing, the engine writes tilemap entries for every cell the pen has touched into the slot's area of the BG3 tilemap buffer (`aBG3TilemapBuffer`), each cell as a tile above and the next tile below, and queues the touched part of the buffer for upload to the slot's tiles in VRAM. The upload happens during the next vertical blank ([Chapter 26](OUTLINE.md)).
 
-Before the next character, `rsDialogueHandleGraphicBufferClearing` moves the finished cells out. If the pen has passed one or more whole cells, those cells are already in VRAM; the buffer shifts left by that many cells, the slot's tile and tilemap positions advance, and the pen keeps only its offset within the partly filled cell. The cell under the pen is uploaded again with each glyph that touches it.
+Before the next character, the engine moves the finished cells out. If the pen has passed one or more whole cells, those cells are already in VRAM; the buffer shifts left by that many cells, the slot's tile and tilemap positions advance, and the pen keeps only its offset within the partly filled cell. The cell under the pen is uploaded again with each glyph that touches it.
 
 ## Pace: speed, pauses, and buttons
 
-The message speed option has five settings, which `rsDialogueGetOptionsTextSpeed` turns into frames per character:
+The message speed option has five settings, which the engine turns into frames per character:
 
 | Setting | 0 | 1 | 2 | 3 | 4 |
 |---|---|---|---|---|---|
@@ -139,12 +139,12 @@ The message speed option has five settings, which `rsDialogueGetOptionsTextSpeed
 
 The formula is 6 − setting, and the fastest setting's 2 is replaced by 1. A text can override it with `DIALOGUE_SET_SPEED` (nine uses).
 
-`DIALOGUE_PAUSE n` sets the timer to `n` frames and stops. The most common values are 16 (1,385 uses, almost all before a reply), 96 (608), and 32 (331). The epilogue's pages advance themselves: its 604 pauses of 96 frames stand where other texts wait for a button, and the epilogue sets the speed to six frames per character and `DialogueStatusPreventASpeedUp`, so the player can't hurry them. `DIALOGUE_WAIT_PRESS` stops the text with the wait bit set, and the caret beside the box blinks, light for 20 frames and dark for 12.
+`DIALOGUE_PAUSE n` sets the timer to `n` frames and stops. The most common values are 16 (1,385 uses, almost all before a reply), 96 (608), and 32 (331). The epilogue's pages advance themselves: its 606 pauses of 96 frames stand where other texts wait for a button, and the epilogue sets the speed to six frames per character and `DialogueStatusPreventASpeedUp`, so the player can't hurry them. `DIALOGUE_WAIT_PRESS` stops the text with the wait bit set, and the caret beside the box blinks, light for 20 frames and dark for 12.
 
 The buttons:
 
-- **A or B** during a wait resumes the text. At any other time it sets the timer to `$FFFF`, which cuts short a running pause and draws one character every frame until the next pause or wait command sets the timer again. `DialogueStatusPreventASpeedUp` and `DialogueStatusPreventBSkipping` turn this off; the castle name pop-up sets both.
-- **Start** ends the text. `rlAbortDialogueAndFreeBoxes` frees the boxes, empties the insert stack, and points the engine at a two-byte script holding only the end command, so the closing sequence runs as if the text had ended there. It doesn't apply in the keeper mode, while a song change is still running (`wMusicID` nonzero), with `DialogueStatusPreventASpeedUp` set, or while a multi-frame command is running.
+- **A or B** during a wait resumes the text. At any other time it sets the timer to `$FFFF`, which cuts short a running pause and draws one character every frame until the next pause or wait command sets the timer again. `DialogueStatusPreventASpeedUp` blocks the fast-forward (and Start) but still lets A or B end a wait; `DialogueStatusPreventBSkipping` ignores A and B altogether. The castle name pop-up sets both.
+- **Start** ends the text. The engine frees the boxes, empties the insert stack, and points the engine at a two-byte script holding only the end command, so the closing sequence runs as if the text had ended there. It doesn't apply in the keeper mode, while a song change is still running (`wMusicID` nonzero), with `DialogueStatusPreventASpeedUp` set, or while a multi-frame command is running.
 
 Each frame that draws a character also plays the text sound chosen by `wTextSound`. The map boxes and the conversation screen set it to 1, sound effect 1. At the fastest speed or while fast-forwarding, the sound plays only on every fourth frame.
 
@@ -199,13 +199,13 @@ Keepers use mode 3. `rsSetupKeeperDialogueBox` gives the slot a 30 × 6 area and
 
 ## Portraits
 
-In mode 1, `DIALOGUE_LOAD_PORTRAIT` takes several frames: it waits until no song change is running, decompresses the portrait, copies its 16 colors into background palette 6 (upper box) or 7 (lower box), uploads its 64 tiles to VRAM `$7000` or `$7800`, and writes its tilemap into the box. The face is 6 × 8 tiles, 48 × 64 pixels. The upper box's portrait is mirrored, with its columns reversed and the tiles' horizontal flip bit set, so the two speakers face each other. The other 16 of the 64 tiles hold mouth frames, which `rlUpdateDialoguePortraitOverlayTiles` swaps into the face's tilemap.
+In mode 1, `DIALOGUE_LOAD_PORTRAIT` takes several frames: it waits until no song change is running, decompresses the portrait, copies its 16 colors into background palette 6 (upper box) or 7 (lower box), uploads its 64 tiles to VRAM `$7000` or `$7800`, and writes its tilemap into the box. The face is 6 × 8 tiles, 48 × 64 pixels. The upper box's portrait is mirrored, with its columns reversed and the tiles' horizontal flip bit set, so the two speakers face each other. The other 16 of the 64 tiles hold mouth frames. While a speaker talks, the engine builds a 4 × 2 mouth patch from them in a separate buffer and uploads it over the face each frame.
 
 While a slot draws characters, its speaker's mouth moves. Every frame that draws a character other than ･ sets `wMouthTimer` to 15, and the mouth keeps moving while the timer is 8 or above, changing every eighth frame through the sequence in `aDialogueMouthAnimationFrames` (frames 0, 1, 2, 1, 0, 2, 1, 2, where 0 is closed). It closes about seven frames after the last character, so a speaker falls silent partway through the ･･･ that end so many lines.
 
 ### Children and substitutes
 
-From Chapter 6 on, fourteen pairs of characters share their texts. Each child of the first generation has a substitute who joins in their place if the child was never born ([Chapter 17](OUTLINE.md)): Lester or Deimne, Arthur or Amid, Nanna or Jeanne. Every portrait command and the child name command pass their character through `rlDialogueTryGetActiveChildCharacterID`. If the character belongs to one of the pairs in `aDialogueChildrenCharacterIDs`, the routine finds whoever holds that pair's generation ID and returns them, and falls back to the substitute if no one does. Chapter 6's talk between Arthur and Seliph is written once:
+From Chapter 6 on, fourteen pairs of characters share their texts. Each child of the first generation has a substitute who joins in their place if the child was never born ([Chapter 17](OUTLINE.md)): Lester or Deimne, Arthur or Amid, Nanna or Jeanne. Every portrait command and the child name command pass their character through one lookup. If the character belongs to one of the pairs in `aDialogueChildrenCharacterIDs`, it finds whoever holds that pair's generation ID and returns them, and falls back to the substitute if no one does. Chapter 6's talk between Arthur and Seliph is written once:
 
 ```
 {DIALOGUE_LEFT}{DIALOGUE_OPEN_BOX}{DIALOGUE_LOAD_PORTRAIT PortraitArthur}
@@ -255,7 +255,7 @@ Everyone else is looked up in one of four tables, chosen by whether the unit is 
 
 ## Menu text
 
-Menus draw text with a different renderer and a different encoding. Menu strings ([text/menutext/](../../text/menutext/), `include/MenuText.h`) are Shift-JIS, two bytes per character, ending in a zero word. `rlDrawMenuTextLine` writes a whole string into a map window's tilemap in one call. For each character it looks up two tiles, the top and bottom halves of an 8 × 16 cell, and writes them on two rows. Kana and symbols, with lead bytes `$81` to `$83`, are found by a table indexed by the two bytes. Kanji are found by a search of a 15-entry list, and the menu font has no others:
+Menus draw text with a different renderer and a different encoding. Menu strings ([text/menutext/](../../text/menutext/), [include/MenuText.h](../../include/MenuText.h)) are Shift-JIS, two bytes per character, ending in a zero word. `rlDrawMenuTextLine` writes a whole string into a map window's tilemap in one call. For each character it looks up two tiles, the top and bottom halves of an 8 × 16 cell, and writes them on two rows. Kana and symbols, with lead bytes `$81` to `$83`, are found by a table indexed by the two bytes. Kanji are found by a search of a 15-entry list, and the menu font has no others:
 
 ```
 剣 庫 回 城 兵 大 書 杖 国 軍 帝 系 特 効 部
@@ -289,11 +289,11 @@ The limits:
 
 ## Where it lives in the source
 
-- [engine/dialogue/dialogue.asm](../../engine/dialogue/dialogue.asm): the dialogue engine. `rlDialogueStartText`, `rlRunDialogueCycle`, glyph drawing (`rsDialogueLoadCharacterGraphicIntoBuffer`, `rsDialogueAdvancePixelOffset`, `rsDialogueAdjustCharacterWidthByNextCharacter`), the uploads, lines and scrolling (`rsDialogueAdvanceLine`, `rsDialogueStepAutoscroll`, `rlDialogueUpdateHDMATable`), `aDialogueCommandPointers` and every command, the insert stack, the end sequence, box and portrait commands, the mouth animation, and the width and kerning tables.
+- [engine/dialogue/dialogue.asm](../../engine/dialogue/dialogue.asm): the dialogue engine. `rlDialogueStartText`, `rlRunDialogueCycle`, glyph drawing (`rsDialogueLoadCharacterGraphicIntoBuffer`, `rsDialogueAdvancePixelOffset`, `rsDialogueAdjustCharacterWidthByNextCharacter`, `rsDialogueHandleGraphicBufferClearing`), the option speed (`rsDialogueGetOptionsTextSpeed`), Start (`rlAbortDialogueAndFreeBoxes`), the uploads, lines and scrolling (`rsDialogueAdvanceLine`, `rsDialogueStepAutoscroll`, `rlDialogueUpdateHDMATable`), `aDialogueCommandPointers` and every command, the insert stack, the end sequence, box and portrait commands, the mouth animation, and the width and kerning tables (`aDialogueFontWidth`, `aDialogueAdjustPriorCharacterWidth`, `aDialogueCustomWidthAdjustTable`).
 - [engine/dialogue/dialogue_procs.asm](../../engine/dialogue/dialogue_procs.asm): `procDialogue` and `rlStartMapDialogue`, `procDialogueWithBG` (the `DIALOGUE_WITH_BG` command), and the color math that darkens the map.
-- [engine/dialogue/dialogue_box.asm](../../engine/dialogue/dialogue_box.asm): `procDialogueBox` and its folding and unfolding HDMA, the slot setup for the map boxes, and the portrait overlay tiles.
+- [engine/dialogue/dialogue_box.asm](../../engine/dialogue/dialogue_box.asm): `procDialogueBox` and its folding and unfolding HDMA, the slot setup for the map boxes, and the mouth patch (`rlUpdateDialoguePortraitOverlayTiles`, `rlUploadDialoguePortraitOverlayTiles`).
 - [engine/dialogue/death_quotes.asm](../../engine/dialogue/death_quotes.asm): death quote selection, the child and substitute lookup (`rlDialogueTryGetActiveChildCharacterID`), and the pre-combat dialogue templates ([Chapter 12](12-screenplays.md)).
-- [engine/dialogue/portraits.asm](../../engine/dialogue/portraits.asm) and [backgrounds.asm](../../engine/dialogue/backgrounds.asm): portrait decompression and the conversation backgrounds.
+- [engine/dialogue/portraits.asm](../../engine/dialogue/portraits.asm) and [engine/dialogue/backgrounds.asm](../../engine/dialogue/backgrounds.asm): portrait decompression and the conversation backgrounds.
 - [engine/castle/conversation.asm](../../engine/castle/conversation.asm): the conversation screen; [engine/castle/keepers.asm](../../engine/castle/keepers.asm): the keepers' box.
 - [engine/menus/menu_text.asm](../../engine/menus/menu_text.asm): menu text (`rlDrawMenuTextLine`, `rlDrawBG3TileRun`, `rlDrawMenuTextNumber`) and the menu font loaders.
 - [text/dialogue/](../../text/dialogue/): every text, the font list, and the page encodings; [tools/process_dialogue.py](../../tools/process_dialogue.py): the page-command pass; [data/dialogue/](../../data/dialogue/): the width tables and the name tables; [gfx/font/](../../gfx/font/): the dialogue font.

@@ -19,7 +19,7 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | III | 10 [Menus over the map](docs/guide/10-menus-over-the-map.md) | draft, not yet reviewed |
 | IV | 11 [The game is watching](docs/guide/11-the-game-is-watching.md) | draft, reviewed |
 | IV | 12 [Screenplays](docs/guide/12-screenplays.md) | draft, not yet reviewed |
-| IV | 13 [Dialogue and text](docs/guide/13-dialogue-and-text.md) | draft, not yet reviewed |
+| IV | 13 [Dialogue and text](docs/guide/13-dialogue-and-text.md) | draft, reviewed |
 | IV–VII | 14–31 | not started; OUTLINE.md marks which have a reference page |
 
 **Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (Chapters 6–7 were written from the source; the battle interlude needs it) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
@@ -85,6 +85,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | Seize gated on "class 6 or `$2C`" and dismount on "the skill bits" without naming them; mode 1 and 2 contents left as an open question | map_menu.md | with Ch. 10 |
 | Ch. 11 draft (review): child/substitute mapping reversed (the table maps each child to its substitute); state-check opcode range included `EC_JUMP` and the counter mutators; `CHECK_TURN_PHASE_AI_ACTOR` given four signed bytes (three); Iucharba and Creidne called siblings; Chapter 1's list counted without the expanded `macroSetFactions*` (141, not 136); event-unit recording and the songless pre-combat dialogue omitted | docs/guide/11 | with review |
 | dialogue.md: `rlStartConversationDialogue` said to run castle conversations, and "two modes" where there are four | docs/reference/dialogue.md | `fe85132` |
+| dialogue.md: portrait tilemap called 4×6 (it is 6×8 tiles, 48×64 px); dialogue_box.asm called the mouth-patch routines unexplained | docs/reference/dialogue.md, engine/dialogue/dialogue_box.asm | with Ch. 13 review |
 | events.md called `$FEFE` a yield (it is the skip point) and `$3B` an unnamed command | docs/reference/events.md | with Ch. 12 |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
@@ -142,7 +143,7 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 
 ## Next session
 
-1. **Review Chapters 9, 10, 12 and 13.** Chapter 10's unit-menu rules come from the 24 checks; mode 1's contents at the home gate (enter, guard, equip, animation) were settled from the code, so that emulator question is closed.
+1. **Review Chapters 9, 10 and 12.** Chapter 10's unit-menu rules come from the 24 checks; mode 1's contents at the home gate (enter, guard, equip, animation) were settled from the code, so that emulator question is closed.
 2. Before the battle interlude and Part II revision: write `docs/reference/battle.md`.
 3. Then Chapter 14 (armies with a mind), from `ai.md`. Chapter 13 leaves the conversation screen's own steps (background, portrait fades, exits) to Chapter 15 and the world map's dialogue commands (bit 7) to Chapter 19.
 
