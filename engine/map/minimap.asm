@@ -1709,7 +1709,7 @@
       .al
       .xl
 
-      rsUnknown889E6E ; 88/9E6E
+      rsDebugAdjustBGPaletteRGBUnused ; 88/9E6E
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -1726,19 +1726,19 @@
         lda wJoy1Input
         bit #$0080
         beq _9E86
-        jsr rsUnknown889EC2
+        jsr rsIncBGPaletteRedUnused
 
         _9E86
         lda wJoy1Input
         bit #$4000
         beq _9E90
-        jsr rsUnknown889EE9
+        jsr rsIncBGPaletteGreenUnused
 
         _9E90
         lda wJoy1Input
         bit #$0040
         beq _9E9C
-        jsr rsUnknown889F1A
+        jsr rsIncBGPaletteBlueUnused
         bra _9EC1
 
 
@@ -1749,19 +1749,19 @@
         lda wJoy1Input
         bit #$0080
         beq _9EAD
-        jsr rsUnknown889F47
+        jsr rsDecBGPaletteRedUnused
 
         _9EAD
         lda wJoy1Input
         bit #$4000
         beq _9EB7
-        jsr rsUnknown889F6B
+        jsr rsDecBGPaletteGreenUnused
 
         _9EB7
         lda wJoy1Input
         bit #$0040
         beq _9EC1
-        jsr rsUnknown889F99
+        jsr rsDecBGPaletteBlueUnused
 
         _9EC1
         rts
@@ -1770,7 +1770,7 @@
 
         ; 88/9EC2
 
-      rsUnknown889EC2 ; 88/9EC2
+      rsIncBGPaletteRedUnused ; 88/9EC2
 
         ; Found by tools/sweep.py.
         .al
@@ -1804,7 +1804,7 @@
 
         ; 88/9EE9
 
-      rsUnknown889EE9 ; 88/9EE9
+      rsIncBGPaletteGreenUnused ; 88/9EE9
 
         ; Found by tools/sweep.py.
         .al
@@ -1848,7 +1848,7 @@
 
         ; 88/9F1A
 
-      rsUnknown889F1A ; 88/9F1A
+      rsIncBGPaletteBlueUnused ; 88/9F1A
 
         ; Found by tools/sweep.py.
         .al
@@ -1888,7 +1888,7 @@
 
         ; 88/9F47
 
-      rsUnknown889F47 ; 88/9F47
+      rsDecBGPaletteRedUnused ; 88/9F47
 
         ; Found by tools/sweep.py.
         .al
@@ -1921,7 +1921,7 @@
 
         ; 88/9F6B
 
-      rsUnknown889F6B ; 88/9F6B
+      rsDecBGPaletteGreenUnused ; 88/9F6B
 
         ; Found by tools/sweep.py.
         .al
@@ -1964,7 +1964,7 @@
 
         ; 88/9F99
 
-      rsUnknown889F99 ; 88/9F99
+      rsDecBGPaletteBlueUnused ; 88/9F99
 
         ; Found by tools/sweep.py.
         .al

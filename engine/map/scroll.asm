@@ -227,7 +227,7 @@
       .al
       .xl
 
-      rlUnknown818FA1 ; 81/8FA1
+      rlSpawnMovingMapSprite ; 81/8FA1
 
         .al
         .autsiz
@@ -591,7 +591,7 @@
 
         .databank 0
 
-      rlUnknown819305 ; 81/9305
+      rlMapScrollByDirectionBits ; 81/9305
 
         .al
         .autsiz
@@ -1057,7 +1057,7 @@
       .al
       .xl
 
-      rlUnknown88857E ; 88/857E
+      rlRotateOAMPriorityOnOverflowUnused ; 88/857E
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -1098,7 +1098,7 @@
 
         ; 88/85AE
 
-      rlUnknown8885AE ; 88/85AE
+      rlRotateOAMPrioritySimpleUnused ; 88/85AE
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al

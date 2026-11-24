@@ -362,7 +362,7 @@
         jsr rsCheckMovingMapSpriteInsideMargins
         bcs +
 
-          jsl rlUnknown819305
+          jsl rlMapScrollByDirectionBits
         
         +
         rts

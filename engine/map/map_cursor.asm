@@ -528,7 +528,7 @@
       .al
       .xl
 
-      rlUnknown88A383 ; 88/A383
+      rlCheckMapScrollingFlagUnused ; 88/A383
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -814,7 +814,7 @@
 
         ; 88/A505
 
-      rlUnknown88A505 ; 88/A505
+      rlDispatchUnusedWindowPalette88A505 ; 88/A505
 
         .al
         .xl
@@ -832,30 +832,12 @@
 
       aUnknown88A50D ; 88/A50D
 
-        .word <>rlUnknown88A524
-        .word <>rlUnknown88A542
-        .word <>rlUnknown88A515
-        .word <>rlUnknown88A533
+        .word <>rlCopyWindowPaletteTail2Unused
+        .word <>rlCopyWindowPaletteTail4Unused
+        .word <>rlCopyWindowPaletteTail1Unused
+        .word <>rlCopyWindowPaletteTail3Unused
 
-      rlUnknown88A515 ; 88/A515
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
-        ; entries of aUnknown88A50D are the same code).
-
-        lda aWindowPalette+18
-        sta $0112,b
-        lda aWindowPalette+20
-        sta $0114,b
-        rtl
-
-        .databank 0
-
-      rlUnknown88A524 ; 88/A524
+      rlCopyWindowPaletteTail1Unused ; 88/A515
 
         .al
         .xl
@@ -873,7 +855,7 @@
 
         .databank 0
 
-      rlUnknown88A533 ; 88/A533
+      rlCopyWindowPaletteTail2Unused ; 88/A524
 
         .al
         .xl
@@ -891,7 +873,25 @@
 
         .databank 0
 
-      rlUnknown88A542 ; 88/A542
+      rlCopyWindowPaletteTail3Unused ; 88/A533
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
+        ; entries of aUnknown88A50D are the same code).
+
+        lda aWindowPalette+18
+        sta $0112,b
+        lda aWindowPalette+20
+        sta $0114,b
+        rtl
+
+        .databank 0
+
+      rlCopyWindowPaletteTail4Unused ; 88/A542
 
         .al
         .xl
@@ -1171,7 +1171,7 @@
         ; 88/A6CA; nothing reads either copy.
         .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
 
-      rsUnknown88A6D3 ; 88/A6D3
+      rsDrawCursorTileCoordsUnused ; 88/A6D3
 
         .al
         .xl
@@ -1865,7 +1865,7 @@
       .al
       .xl
 
-      rsUnknown88AD09 ; 88/AD09
+      rsFindOtherFactionUnitAtTileUnused ; 88/AD09
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2109,7 +2109,7 @@
       .al
       .xl
 
-      rlUnknown88B3C2 ; 88/B3C2
+      rlClearMapDataTileUnused ; 88/B3C2
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2130,7 +2130,7 @@
 
         ; 88/B3D1
 
-      rlUnknown88B3D1 ; 88/B3D1
+      rlSetMapDataTileUnused ; 88/B3D1
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2942,7 +2942,7 @@
       .al
       .xl
 
-      rlUnknown88BEFF ; 88/BEFF
+      rlComputeMapRowOffsetUnused ; 88/BEFF
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al

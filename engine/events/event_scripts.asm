@@ -1488,7 +1488,7 @@
             _Continue
             lda #0
             sta wR7
-            jsl rlUnknown818FA1
+            jsl rlSpawnMovingMapSprite
             jsr rsEventInitMovingSpriteCommon
 
         _End
@@ -1593,7 +1593,7 @@
 
         lda #1
         sta wR7
-        jsl rlUnknown818FA1
+        jsl rlSpawnMovingMapSprite
         jsr rsEventInitMovingSpriteCommon
 
         ply
@@ -1731,7 +1731,7 @@
 
         lda #0
         sta wR7
-        jsl rlUnknown818FA1
+        jsl rlSpawnMovingMapSprite
 
         plx
 
@@ -1855,7 +1855,7 @@
         phx
         lda #1
         sta wR7
-        jsl rlUnknown818FA1
+        jsl rlSpawnMovingMapSprite
         plx
 
         phx

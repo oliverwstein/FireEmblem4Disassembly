@@ -1,5 +1,5 @@
 ; Pop-ups on the map: the castle name, gold, seizing a castle, getting an item; a
-; second pop-up proc (procUnknown85BB52) and the window colours by army
+; second pop-up proc (procMapPopUpWindow) and the window colours by army
 ; (rlSetWindowColoursByRelation).
 
     .section CastleNamePopUpSection
@@ -58,7 +58,7 @@
         ; Load the text position
         lda #(7 << 8 | 11)
         sta aProcSystem.aBody0,b,x
-        jsl rlUnknown8287C1
+        jsl rlInitCastleNamePopUpText
 
         lda #(DialogueStatusPreventBSkipping | DialogueStatusPreventASpeedUp)
         tsb aDialogue.wStatus,b
@@ -123,7 +123,7 @@
 
           lda #<>rlProcCastleNamePopUpCycle2
           sta aProcSystem.aHeaderOnCycle,b,x
-          jsl rlUnknown8287C1
+          jsl rlInitCastleNamePopUpText
 
           lda #(DialogueStatusPreventBSkipping | DialogueStatusPreventASpeedUp)
           tsb aDialogue.wStatus,b
@@ -165,7 +165,7 @@
           tay
           lda aProcSystem.aBody0,b,x
           ldx wR0
-          jsl rlUnknown85BBA5
+          jsl rlOpenMapPopUpWindow
 
         _End
         rtl
@@ -187,7 +187,7 @@
           trb bBufferTM
 
           phx
-          jsl rlUnknown85BBE0
+          jsl rlSignalCloseMapPopUpWindow
           jsl rlFreeHDMAEntry0
           plx
 
@@ -199,7 +199,7 @@
 
         .databank 0
 
-      rlUnknown8287C1 ; 82/87C1
+      rlInitCastleNamePopUpText ; 82/87C1
 
         .al
         .autsiz
@@ -258,17 +258,17 @@
 
         ; 82/8816
 
-      procUnknown828816 ; 82/8816
+      procUnusedChapterIntroSkip ; 82/8816
 
         ; Unreferenced: nothing creates this event proc. While it runs,
         ; Start (or wEventEngineFlags being 0) fades out to the
         ; chapter intro and ends the event.
 
-        .structProcInfo "TT", rlProcUnknown828816Init, rlProcUnknown828816Cycle, aProcUnknown828816Code
+        .structProcInfo "TT", rlProcUnusedChapterIntroSkipInit, rlProcUnusedChapterIntroSkipCycle, aProcUnusedChapterIntroSkipCode
 
         .word 0
 
-      rlProcUnknown828816Init ; 82/8820
+      rlProcUnusedChapterIntroSkipInit ; 82/8820
 
         .al
         .xl
@@ -283,7 +283,7 @@
 
         ; 82/8827
 
-      rlProcUnknown828816Cycle ; 82/8827
+      rlProcUnusedChapterIntroSkipCycle ; 82/8827
 
         .al
         .xl
@@ -322,7 +322,7 @@
 
         ; 82/8863
 
-      aProcUnknown828816Code ; 82/8863
+      aProcUnusedChapterIntroSkipCode ; 82/8863
 
         PROC_HALT
 
@@ -349,9 +349,9 @@
       .al
       .xl
 
-      procUnknown85BB52 ; 85/BB52
+      procMapPopUpWindow ; 85/BB52
 
-        .structProcInfo "PW", rlProcUnknown85BB52Init, rlProcUnknown85BB52Cycle, aProcDialogueBoxCode
+        .structProcInfo "PW", rlProcMapPopUpWindowInit, rlProcMapPopUpWindowCycle, aProcDialogueBoxCode
 
 
         .long aUnknown85BB46
@@ -365,7 +365,7 @@
       .al
       .xl
 
-      rlProcUnknown85BB52Init ; 85/BB5E
+      rlProcMapPopUpWindowInit ; 85/BB5E
 
         .al
         .xl
@@ -389,7 +389,7 @@
 
         ; 85/BB83
 
-      rlProcUnknown85BB52Cycle ; 85/BB83
+      rlProcMapPopUpWindowCycle ; 85/BB83
 
         .al
         .xl
@@ -407,7 +407,7 @@
         _BB8C
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlCloseMapMenuFromProc
-        jsl rlUnknown85C0C7
+        jsl rlSetPopUpWindowCloseOnCycle
         lda #$FFFF
         jsl rlSetWindowColoursByRelation
         jsl rlShowMapWindows
@@ -425,7 +425,7 @@
       .al
       .xl
 
-      rlUnknown85BBA5 ; 85/BBA5
+      rlOpenMapPopUpWindow ; 85/BBA5
 
         .al
         .xl
@@ -457,9 +457,9 @@
         sty aProcSystem.wInput1,b
         sta aProcSystem.wInput2,b
         stx aProcSystem.wInput3,b
-        lda #(`procUnknown85BB52)<<8
+        lda #(`procMapPopUpWindow)<<8
         sta lR44+1
-        lda #<>procUnknown85BB52
+        lda #<>procMapPopUpWindow
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -468,7 +468,7 @@
 
         ; 85/BBE0
 
-      rlUnknown85BBE0 ; 85/BBE0
+      rlSignalCloseMapPopUpWindow ; 85/BBE0
 
         .al
         .xl
@@ -476,9 +476,9 @@
         .databank ?
 
         phx
-        lda #(`procUnknown85BB52)<<8
+        lda #(`procMapPopUpWindow)<<8
         sta lR44+1
-        lda #<>procUnknown85BB52
+        lda #<>procMapPopUpWindow
         sta lR44
         jsl rlProcEngineFindProc
         bcc _BBFD
@@ -507,7 +507,7 @@
       .al
       .xl
 
-      rlUnknown85C0C7 ; 85/C0C7
+      rlSetPopUpWindowCloseOnCycle ; 85/C0C7
 
         .al
         .xl
@@ -896,7 +896,7 @@
         _BA13
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlCloseMapMenuFromProc
-        jsl rlUnknown85C0C7
+        jsl rlSetPopUpWindowCloseOnCycle
         jsl rlShowMapWindows
         lda #$00E8
         jsl rlSendSoundCommand
@@ -1117,7 +1117,7 @@
         _BB1A
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlCloseMapMenuFromProc
-        jsl rlUnknown85C0C7
+        jsl rlSetPopUpWindowCloseOnCycle
         lda #$0000
         sta wSoundUploadBusyFlag,b
         bra _BB19

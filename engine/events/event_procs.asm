@@ -673,7 +673,7 @@
 
         +
         lda wMapScrollDirectionIdentifier,b
-        jsl rlUnknown819305
+        jsl rlMapScrollByDirectionBits
         clc
 
         _End
