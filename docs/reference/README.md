@@ -10,7 +10,7 @@ Documentation of every part of the engine, at every level, so that any piece can
 | File | the comment at the top of each source file: what it is responsible for | hand |
 | Routine | the comment under each routine's label: what it does, its inputs and outputs, side effects | hand |
 | Data | the comments in `include/` (structs, `WRAM.h`, constants) | hand |
-| Index | [routines/](routines/), [ram.md](ram.md), [INDEX.md](INDEX.md): every named routine and table with its comment, callers and callees; every RAM name | `tools/reference.py` |
+| Index | [routines/](routines/), [ram.md](ram.md), [constants.md](constants.md), [INDEX.md](INDEX.md): every named routine and table with its comment, callers and callees; every RAM name with its comment; every constant in `include/` with its group and comment | `tools/reference.py` |
 
 The generated pages are not committed (they are in `.gitignore`): run `python3 tools/reference.py` to build them locally. `--check` reports whether they are out of date. A page under `routines/` covers one folder of `engine/`; `Unknown` routines are counted there but not listed.
 
