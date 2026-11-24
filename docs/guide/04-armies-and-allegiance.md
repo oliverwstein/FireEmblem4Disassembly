@@ -2,7 +2,7 @@
 
 Chapter 1 opens with Sigurd's army marching on Verdane. Genoa, Marpha, and Verdane are his enemies and allies of one another. Nordion's army sits to the east, neutral: Sigurd can't attack it, and it can't attack him, but its units still block his path. Partway through, Heirhein's army appears, at war with Sigurd and allied with Nordion. A scene later, Heirhein and Nordion are at war, and Nordion has become Sigurd's ally.
 
-Most tactics games give each unit a team: player, enemy, or ally. A team flag can't express any of that. Nordion is not "an ally" or "an enemy" in general; it is neutral to one army, allied to another, and at war with a third, and those relations change mid-chapter. *Genealogy of the Holy War* moves allegiance off the unit entirely and onto pairs of armies. This chapter covers the faction slots that hold the armies, the two bitmasks that relate them, and the one relation each unit caches for itself.
+Each army is a *faction*, and each pair of factions has its own relation: enemy, allied, or neutral. A unit's allegiance comes from its faction's relations, so two computer-controlled armies can fight each other, an army can be neutral to the player and at war with its neighbor, and a script can change any pair mid-chapter. This chapter covers the faction slots that hold the armies, the two bitmasks that store their relations, and the copy of the player's relation that each unit keeps.
 
 ## Groups and slots
 
@@ -83,7 +83,7 @@ macroSetFactionsNeutral [FS_Ch01Genoa,   FS_Ch01Nordion]
 | **Verdane** | enemy | allied | allied | own | neutral |
 | **Nordion** | neutral | neutral | neutral | neutral | own |
 
-When Heirhein arrives, the script loads it into slot 5 and writes five more pairs: enemy to the player, neutral to the three Verdane-side armies, allied with Nordion. Nordion's scene later rewrites two cells, Nordion–Heirhein to enemy and Player–Nordion to allied. The whole story of Chapter 1's shifting alliances is a handful of bit writes, and nearly two hundred such macro calls across the event scripts tell the rest of the game's.
+When Heirhein arrives, the script loads it into slot 5 and writes five more pairs: enemy to the player, neutral to the three Verdane-side armies, allied with Nordion. Nordion's scene later rewrites two cells, Nordion–Heirhein to enemy and Player–Nordion to allied. The event scripts make nearly two hundred of these calls across the game.
 
 ## A cache for the player's view
 
@@ -100,7 +100,7 @@ fn is_enemy(deployment: usize) -> bool {             // rlCheckIfDeployedUnitIsE
 }
 ```
 
-That split is what lets Heirhein fight Nordion while Sigurd watches. The cache holds only the player's point of view; any question between two other armies goes to the masks.
+Heirhein's units attack Nordion's because the Heirhein–Nordion pair is marked hostile; the deployment bits, which record only each army's relation to the player, play no part in it.
 
 ## Membership, three times over
 
@@ -110,13 +110,13 @@ When a script unloads an army (`rlUnloadFactionSlot`), its units are deleted, ex
 
 ## Castles
 
-Castles belong to slots, not to units. Each location records the slot that owns it (`rlSetLocationFactionSlotOwner`), and an army's home is the castle in its header's `location_id`, where `rlSetUnitResidingInCastle` keeps units that haven't been sent out. Seizing a castle changes its owner slot ([Chapter 5](OUTLINE.md)).
+Each location records the faction slot that owns it (`rlSetLocationFactionSlotOwner`), and an army's home is the castle in its header's `location_id`, where `rlSetUnitResidingInCastle` keeps units that haven't been sent out. Seizing a castle changes its owner slot ([Chapter 5](OUTLINE.md)).
 
 Castle income is paid at the end of a chapter, by the ending event's `ADD_CASTLE_MONEY` command. `rlAddCastleMoneyToAllUnitsInFaction` counts the castles held by the player or an ally (not neutral, not enemy), subtracts two, and gives each living unit of the army that many thousand gold.
 
 ## Trade-offs and hard limits
 
-Moving allegiance to pairs of armies costs a little: a relation is two bit tests and a header lookup rather than one field on the unit, and the player's view needs a cache kept in sync by hand. What it buys is a diplomatic map the scripts can redraw at will, with no unit-by-unit bookkeeping, and armies that can be at war with each other while the player watches.
+A relation costs a header lookup and two bit tests, and the player's relation is stored twice: in the masks and in every unit's deployment bits, which the setter rewrites by hand. Changing a relation never touches the units of either army, except for those deployment bits.
 
 The limits:
 

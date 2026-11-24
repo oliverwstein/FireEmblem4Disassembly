@@ -47,7 +47,7 @@ Because the class is a live term in every sum, a unit doesn't store its class-ad
 
 `rlSetSelectedUnitClass` writes a single byte, the class ID in the unit's extended part. No stat is rewritten. The class change screen ([engine/castle/class_change.asm](../../engine/castle/class_change.asm)) only learns what the unit gained by unpacking its totals into a buffer before the change and again after it, then showing the difference. One consequence follows directly: promotion never raises a player unit's max HP, since HP has no class term to change. When and how a unit promotes is [Chapter 10](OUTLINE.md)'s subject.
 
-This is data-driven design in the strict sense. A class is a row of numbers ([data/class/ClassData.csv](../../data/class/ClassData.csv), 72 rows): a promotion level, seven stat bases, seven growth rates, ten weapon ranks, movement and terrain types, a skill word, and the gold a generic enemy of that class carries. No code anywhere knows what a Paladin is.
+A class is a row of numbers ([data/class/ClassData.csv](../../data/class/ClassData.csv), 72 rows): a promotion level, seven stat bases, seven growth rates, ten weapon ranks, movement and terrain types, a skill word, and the gold a generic enemy of that class carries.
 
 ## Holy blood: one table, three jobs
 
@@ -136,7 +136,7 @@ fn inventory_has_skill(id: SkillId) -> bool {           // rlCheckIfInventoryIte
 
 Callers ask both questions in turn. The turn-start Renewal check (`rsGetRenewalHealing`) tries character and class first, then the inventory. The item rule explains the bands and rings: a weapon's skill counts only while that weapon is equipped, but any other item counts just by being carried. A Renewal Band works from the bottom of the bag.
 
-The separate encodings pack each table tightly. Each source stores only the skills it can grant: 13 in a class's word, 12 in an item's word, 22 in a character's three bytes. A shared 30-bit layout would need four bytes in every class, item, and character entry, about 500 bytes more of ROM in total. The price is the translation tables and a rule that every skill query goes through an ID.
+The separate encodings pack each table tightly. Each source stores only the skills it can grant: 13 in a class's word, 12 in an item's word, 22 in a character's three bytes. A shared 30-bit layout would need four bytes in every class, item, and character entry, about 500 bytes more of ROM in total. In exchange, a skill query goes through a translation table.
 
 ## Trade-offs and hard limits
 

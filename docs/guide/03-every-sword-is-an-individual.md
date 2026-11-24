@@ -2,7 +2,7 @@
 
 A Silver Sword that has felled fifty enemies starts landing critical hits, and grows more likely to with every kill after that. When its uses run out it becomes a Broken Sword, and repairing it at a castle brings back the same sword, kills and all. When its owner's child inherits it a generation later, the count comes too. Sell it, and it waits in that castle's pawn shop for someone else to buy.
 
-Most games in the series store an inventory slot as an item type and a number of uses. That is enough to fight with, but a slot like that has no identity: two Silver Swords are interchangeable, and nothing can remember what one of them has done. *Genealogy of the Holy War* needs swords that can be told apart. This chapter covers how it gives every item an identity: one global table of item records, inventories that hold handles into it, and a state field that decides where each record is.
+Each item the player owns is its own record, with its own durability, kill count, owner, and location. This chapter covers the global table of those records, the inventories that hold indices into it, and the state field that says where each record is.
 
 ## One table for every item
 

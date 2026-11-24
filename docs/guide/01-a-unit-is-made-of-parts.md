@@ -61,7 +61,7 @@ structStaticCharacterROMEntry (bank $83)
 
 So `rsCreateStaticUnitRAMData` gives Sigurd 30 bytes of RAM for his personal and extended parts, copies his starting stats in, and points his `constant` part at offset `$0D` of his ROM entry. His growths and skills are never copied: the ROM *is* his constant data.
 
-A child has a ROM entry too, but a 12-byte `structDynamicCharacterROMEntry` holds only the starting class and level, identity, starting equipment, and `MajorInfluence` (which parent dominates inheritance). Growths, skills, and holy blood exist nowhere until `rlFillChildsConstantData` computes them, so `rsCreateDynamicUnitRAMData` allocates all three parts in RAM. That is the whole reason for the `Dynamic` type.
+A child has a ROM entry too, but a 12-byte `structDynamicCharacterROMEntry` holds only the starting class and level, identity, starting equipment, and `MajorInfluence` (which parent dominates inheritance). Growths, skills, and holy blood exist nowhere until `rlFillChildsConstantData` computes them, so `rsCreateDynamicUnitRAMData` allocates all three parts in RAM. The `Dynamic` type exists to hold that computed data.
 
 A `Holy` unit goes the other way: only its personal part is in RAM. Its `extended` pointer aims at ROM offset `$01`, where HP through leadership stars line up exactly with the first eleven fields of an extended part.
 
@@ -112,7 +112,7 @@ fn get_enemy_strength() -> u8 {                    // rlGetEnemyStrength
 
 DiMaggio, a level 10 Fighter, works out to strength 8 + 30 × 10 / 100 = 11 and HP 35 + 100 × 10 / 100 = 45. Gerrard, a level 20 Fighter, gets 14 and 55. A player unit's strength uses a different formula ([Chapter 2](OUTLINE.md)), but the caller can't tell: `rlGetSelectedUnitTotalStrength` checks the type and picks one.
 
-This is the *Flyweight* pattern: a Fighter's bases and growths are stored once in the class table and shared by every Fighter, and each instance keeps only its own HP, status, position, and faction. FE4's variant derives the stats from the shared data rather than merely sharing them. The price is a multiply and a divide on every query, made through the 16-bit helper routines `rlUnsignedMultiply16By16High` and `rlUnsignedDivide16By16`, since the CPU has no multiply instruction. Battle code asks for these numbers constantly.
+This is the *Flyweight* pattern: a Fighter's bases and growths are stored once in the class table and shared by every Fighter, and each instance keeps only its own HP, status, position, and faction. FE4 goes one step further and derives the stats from the shared data. Each query costs a multiply and a divide, made through the helper routines `rlUnsignedMultiply16By16High` and `rlUnsignedDivide16By16`, since the CPU has no multiply instruction.
 
 ## The selected unit
 
@@ -170,16 +170,16 @@ Most of the game runs with a 16-bit accumulator, so each read of a byte field en
 
 Per unit, the parts scheme saves memory. A generic enemy costs 65 bytes of RAM, counting header, personal part, inventory, and block headers. A playable man costs 80, a playable woman 116, and a generation-2 daughter 138. One record holding everything would be about 95 bytes.
 
-Totaled over the pools, the saving disappears. The six pools reserve 6,732 bytes; seventy-two uniform 95-byte records would need 6,840. The six-byte block headers alone take over 1,500 bytes, about what the split saves. Whatever the developers bought with this design, it wasn't a smaller budget.
+Totaled over the pools, the saving disappears. The six pools reserve 6,732 bytes; seventy-two uniform 95-byte records would need 6,840. The six-byte block headers alone take over 1,500 bytes, about what the split saves.
 
-What they bought:
+The split does provide:
 
 - **No copies of data that never changes.** Creating an enemy writes 15 bytes and an inventory. Boss stats, playable characters' growths and skills, and class bases stay in ROM, the single source of truth: changing a Fighter's base strength in the class table changes every Fighter.
 - **A home for computed data.** Only the children, whose genes exist nowhere else, pay for a constant part in RAM.
 - **Separate budgets.** Enemies draw on their own 63 slots and can never crowd out the 41 player stat sheets, though all units share the 72 headers.
 - **Uniform questions.** Everything above the getters asks for "strength" or "level" without knowing the unit's type.
 
-What it costs:
+Its costs:
 
 - **Every getter is a type switch**, and a generic enemy's stats cost a multiply and a divide each time.
 - **The ROM overlay is an unwritten rule.** A `Holy` unit's gold must never be read through its `extended` pointer, and only the getters enforce that.
