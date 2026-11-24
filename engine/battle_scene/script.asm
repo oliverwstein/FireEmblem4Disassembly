@@ -2386,7 +2386,7 @@
         .databank ?
 
         ; lR18 = data: fills one of three slots ($7FE475, picked by the low two bits of
-        ; the first byte); rlUnknown96DD6E applies them to the BG1-BG3 scroll registers.
+        ; the first byte); rlBattleSceneUpdateBGScrolls applies them to the BG1-BG3 scroll registers.
 
         phx
         phy
@@ -5227,31 +5227,31 @@
         .byte $02, $BF, $96, $00, $00, $00, $00, $00
 
       _BD3E_BD6D ; 97/BD6D
-        .long rlUnknown96BFE5
+        .long rlBattleSceneInitBG3WaveHDMA
         .byte $00, $00, $00, $00, $00
 
       _BD3E_BD75 ; 97/BD75
-        .long rlUnknown96BFE5
+        .long rlBattleSceneInitBG3WaveHDMA
         .byte $00, $00, $00, $04, $00
 
       _BD3E_BD7D ; 97/BD7D
-        .long rlUnknown96BFE5
+        .long rlBattleSceneInitBG3WaveHDMA
         .byte $00, $00, $00, $32, $00
 
       _BD3E_BD85 ; 97/BD85
-        .long rlUnknown96BFE5
+        .long rlBattleSceneInitBG3WaveHDMA
         .byte $00, $00, $00, $36, $00
 
       _BD3E_BD8D ; 97/BD8D
-        .long rlUnknown96BFE5
+        .long rlBattleSceneInitBG3WaveHDMA
         .byte $00, $00, $00, $78, $00
 
       _BD3E_BD95 ; 97/BD95
-        .long rlUnknown96BFE5
+        .long rlBattleSceneInitBG3WaveHDMA
         .byte $00, $00, $00, $BA, $00
 
       _BD3E_BD9D ; 97/BD9D
-        .long rlUnknown96BFE5
+        .long rlBattleSceneInitBG3WaveHDMA
         .byte $00, $00, $00, $BE, $00
 
       _BD3E_BDA5 ; 97/BDA5
@@ -5672,7 +5672,7 @@
 
       aUnknown97C462 ; 97/C462
 
-        ; Read by rlUnknown96C008.
+        ; Read by rlBattleSceneStepBG3WaveHDMA.
 
         .byte $01, $00, $01, $80, $04, $00, $00, $01, $00, $02, $00, $03, $00, $04, $00, $06
         .byte $00, $08, $00, $0A, $00, $0C, $00, $0E, $00, $11, $00, $15, $00, $19, $00, $1E

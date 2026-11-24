@@ -215,7 +215,7 @@
         .long rlBattleSceneDrawLevelUpWindow ; $02
         .long rlBattleSceneScriptFadeOutWindow1 ; $03
         .long rlBattleSceneScriptFadeInWindow1 ; $04
-        .long rlUnknown96CAA7 ; $05
+        .long rlBattleSceneScriptLoadAttackerPortraitPal ; $05
         .long rlBattleSceneScriptFadeOutWindowSlow ; $06
         .long rlBattleSceneScriptFadeInWindow3 ; $07
         .long rlBattleSceneScriptFadeOutWindow3 ; $08
@@ -225,7 +225,7 @@
         .long 0 ; $0C
         .long rlBattleSceneStartExperienceGauge ; $0D
         .long rlBattleSceneScriptInitStatGains ; $0E
-        .long rlUnknown96DCC8 ; $0F
+        .long rlBattleSceneScriptInitTileWipe ; $0F
         .long rlBattleSceneScriptInitLevelUpNumber ; $10
         .long rlBattleSceneScriptHideAttacker ; $11
         .long rlBattleSceneScriptShowDefender ; $12
@@ -244,7 +244,7 @@
         .long rlBattleSceneScriptClearMessageWindow ; $1F
         .long rlBattleSceneScriptStartMessage ; $20
         .long rlBattleSceneScriptStartMessage2 ; $21
-        .long rlUnknown96CAAD ; $22
+        .long rlBattleSceneScriptLoadDialoguePortraitPal ; $22
         .long rlBattleSceneScriptContinueMessage ; $23
         .long rlUnknown96F356 ; $24
         .long rlUnknown96F41A ; $25
@@ -1975,7 +1975,7 @@
 
       aUnknown998000 ; 99/8000
 
-        ; 101 percentage-scaling pairs (0..100). Read by rlUnknown96C8A1.
+        ; 101 percentage-scaling pairs (0..100). Read by rlBattleSceneStepWaveOffsetTable.
 
         .word $0000, $FFFF
         .word $0002, $7F00

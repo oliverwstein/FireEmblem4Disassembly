@@ -22,7 +22,7 @@
         rep #$20
         jsl rlBattleSceneRunUploads
         jsl rlBattleSceneToggleOAMExtBuffer
-        jsl rlUnknown96D5DB
+        jsl rlBattleSceneBuildGradientWindowHDMA
         jsl rlBattleSceneRunQueuedCopies
         jsl rlUnknown96EB1E
         jsl rlProcessDMAStructArray

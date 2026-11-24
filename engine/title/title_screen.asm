@@ -19,7 +19,7 @@
         .autsiz
         .databank ?
 
-        ; The title screen's VBlank: the battle scene's VBlank helpers (rlBattleSceneRunUploads, rlUnknown96D5DB),
+        ; The title screen's VBlank: the battle scene's VBlank helpers (rlBattleSceneRunUploads, rlBattleSceneBuildGradientWindowHDMA),
         ; rlRunTitleVBlankRoutines, then DMA, OAM, HDMA, PPU registers, sound, input and the game state.
 
         php
@@ -28,7 +28,7 @@
         sta $2100,b
         rep #$20
         jsl rlBattleSceneRunUploads
-        jsl rlUnknown96D5DB
+        jsl rlBattleSceneBuildGradientWindowHDMA
         jsl rlRunTitleVBlankRoutines
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
@@ -1442,7 +1442,7 @@
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlBattleSceneStepLargeUpload
         jsl rlBattleSceneRunPaletteEffects
-        jsl rlUnknown96CB44
+        jsl rlBattleSceneUpdatePolygonWindows
         jsl rlBattleSceneUpdateSpellWindowEffects
         jsl rlUpdateTitleSprites
         jsl rlSetTitleEdgeBrightness
@@ -1481,7 +1481,7 @@
         jsl rlBattleSceneStepLargeUpload
         jsl rlBattleSceneRunPaletteEffects
         jsl rlBattleSceneUpdateSpellWindowEffects
-        jsl rlUnknown96CB44
+        jsl rlBattleSceneUpdatePolygonWindows
         jsl rlUpdateTitleSprites
         lda bTitleScreenDone
         and #$00FF

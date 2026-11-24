@@ -175,7 +175,7 @@
         jsl rlBattleSceneClearScriptRoutine
         jsl rlFreeBattleScenePaletteSlots
         jsl rlBattleSceneLoadHUD
-        jsl rlUnknown96D67B
+        jsl rlBattleSceneSavePalette
         jsl rlBattleSceneDimPalettesForType2
         jsl rlBattleSceneBuildWhiteFadePalettes
         jsl rlBattleSceneCreateSolo2HDMA
@@ -320,7 +320,7 @@
         stz Flags,b
         rep #$20
         jsl rlBattleSceneClearFade
-        jsl rlUnknown96DD39
+        jsl rlBattleSceneResetBGScrolls
         jsl rlUnknown96EB02
         jsl rlUnknown96EBC9
         jsl rlBattleSceneResetArenaBreak
@@ -345,7 +345,7 @@
         jsl rlBattleSceneClearKnockback
         jsl rlBattleAnimationClearMoveQueues
         jsl rlBattleSceneInitEffectBuffers
-        jsl rlUnknown96CB0A
+        jsl rlBattleSceneResetPolygonWindows
         jsl rlUnknown96EE8A
         jsl rlResetBattleSceneScript
         jsl rlBattleSceneScriptClearLoading
@@ -510,7 +510,7 @@
         jsl rlBattleSceneRestoreOAMOffset
         jsl rlBattleAnimationRunSignals
         jsl rlRunBattleSceneScript
-        jsl rlUnknown96CB44
+        jsl rlBattleSceneUpdatePolygonWindows
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlBattleSceneBuildColorHDMATable
         jsl rlUnknown96EBE3
@@ -518,9 +518,9 @@
         jsr rsBattleSceneUpdateBG1Scroll
         jsl rlUnknown96DE6F
         jsl rlBattleSceneUpdateSpellWindowEffects
-        jsl rlUnknown96DD6E
+        jsl rlBattleSceneUpdateBGScrolls
         jsl rlBattleSceneRunCameraPan
-        jsl rlUnknown96BE28
+        jsl rlBattleSceneRunHDMAEffects
         jsl rlBattleAnimationUpdateAll
         jsl rlBattleSceneScriptSaveOAMExt
         jsl rlBattleSceneDrawAfterimages
@@ -530,7 +530,7 @@
         jsl rlBattleSceneRunPaletteEffects
         jsl rlBattleSceneCheckDecompressing
         jsl rlBattleSceneRunLargeUpload
-        jsl rlUnknown96C8A1
+        jsl rlBattleSceneStepWaveOffsetTable
         jsr rsBattleSceneStepDamageFlash
         jsl rlBattleSceneRunHUDShake
         jsl rlBattleSceneQueueHPUpload

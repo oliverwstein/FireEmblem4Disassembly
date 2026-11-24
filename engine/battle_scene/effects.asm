@@ -4265,7 +4265,7 @@
       .al
       .xl
 
-      rlUnknown96BE28 ; 96/BE28
+      rlBattleSceneRunHDMAEffects ; 96/BE28
 
         .al
         .xl
@@ -4284,7 +4284,7 @@
         bit #$0001
         beq _BE45
         phb
-        jsl rlUnknown96BE53
+        jsl rlBattleSceneDispatchHDMAEffect
         plb
         .databank ?
 
@@ -4305,7 +4305,7 @@
 
         ; 96/BE53
 
-      rlUnknown96BE53 ; 96/BE53
+      rlBattleSceneDispatchHDMAEffect ; 96/BE53
 
         .al
         .xl
@@ -4330,7 +4330,7 @@
         ; Unreachable: it follows a return.
         rtl
 
-      rlUnknown96BE69 ; 96/BE69
+      rlBattleSceneInitBG2ScrollHDMA1 ; 96/BE69
 
         .al
         .xl
@@ -4363,9 +4363,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96BEC1)<<8
+        lda #(`rlBattleSceneStepBG2ScrollHDMA1)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96BEC1
+        lda #<>rlBattleSceneStepBG2ScrollHDMA1
         sta $7FED04,x
         plx
         rtl
@@ -4374,7 +4374,7 @@
 
         ; 96/BEC1
 
-      rlUnknown96BEC1 ; 96/BEC1
+      rlBattleSceneStepBG2ScrollHDMA1 ; 96/BEC1
 
         .al
         .xl
@@ -4452,23 +4452,23 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96BF76)<<8
+        lda #(`rlBattleSceneStepBG2ScrollHDMA2)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96BF76
+        lda #<>rlBattleSceneStepBG2ScrollHDMA2
         sta $7FED04,x
         plx
         rtl
 
         .databank 0
 
-      rlUnknown96BF76 ; 96/BF76
+      rlBattleSceneStepBG2ScrollHDMA2 ; 96/BF76
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; The step rlUnknown96BEC1 stores for its slot.
+        ; The step rlBattleSceneStepBG2ScrollHDMA1 stores for its slot.
 
         phx
         phy
@@ -4545,7 +4545,7 @@
       .al
       .xl
 
-      rlUnknown96BFE5 ; 96/BFE5
+      rlBattleSceneInitBG3WaveHDMA ; 96/BFE5
 
         ; Found through fe4.cdl.
         .al
@@ -4559,10 +4559,10 @@
         ora #$02
         sta $7FED03
         rep #$20
-        jsl rlUnknown96C7DB
-        lda #(`rlUnknown96C008)<<8
+        jsl rlBattleSceneCreateBG2VScrollHDMA5
+        lda #(`rlBattleSceneStepBG3WaveHDMA)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C008
+        lda #<>rlBattleSceneStepBG3WaveHDMA
         sta $7FED04,x
         plx
         rtl
@@ -4571,7 +4571,7 @@
 
         ; 96/C008
 
-      rlUnknown96C008 ; 96/C008
+      rlBattleSceneStepBG3WaveHDMA ; 96/C008
 
         ; Found through fe4.cdl.
         .al
@@ -4598,7 +4598,7 @@
         cmp #$8001
         bne _C035
         lda #$0000
-        jsl rlUnknown96C975
+        jsl rlBattleSceneClearHDMAEffectSlot
         bra _C04D
 
 
@@ -4637,7 +4637,7 @@
         sta $7FED0A,x
 
         _C078
-        jsl rlUnknown96C817
+        jsl rlBattleSceneBuildBG2WaveTable
 
         _C07C
         ply
@@ -4656,7 +4656,7 @@
       .al
       .xl
 
-      rlUnknown96C07F ; 96/C07F
+      rlBattleSceneInitBG1ScrollHDMA ; 96/C07F
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -4691,9 +4691,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96C0DC)<<8
+        lda #(`rlBattleSceneStepBG1ScrollHDMA)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C0DC
+        lda #<>rlBattleSceneStepBG1ScrollHDMA
         sta $7FED04,x
         plx
         rtl
@@ -4702,7 +4702,7 @@
 
         ; 96/C0DC
 
-      rlUnknown96C0DC ; 96/C0DC
+      rlBattleSceneStepBG1ScrollHDMA ; 96/C0DC
 
         ; Found by tools/sweep.py.
         .al
@@ -4775,7 +4775,7 @@
 
         ; 96/C161
 
-      rlUnknown96C161 ; 96/C161
+      rlBattleSceneInitBG2ScrollHDMA3 ; 96/C161
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -4807,9 +4807,9 @@
         lda #$0006
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96C1B9)<<8
+        lda #(`rlBattleSceneStepBG2ScrollHDMA3)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C1B9
+        lda #<>rlBattleSceneStepBG2ScrollHDMA3
         sta $7FED04,x
         plx
         rtl
@@ -4818,7 +4818,7 @@
 
         ; 96/C1B9
 
-      rlUnknown96C1B9 ; 96/C1B9
+      rlBattleSceneStepBG2ScrollHDMA3 ; 96/C1B9
 
         ; Found by tools/sweep.py.
         .al
@@ -4888,7 +4888,7 @@
 
         ; 96/C23A
 
-      rlUnknown96C23A ; 96/C23A
+      rlBattleSceneInitBG2ScrollHDMA4 ; 96/C23A
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -4920,9 +4920,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96C292)<<8
+        lda #(`rlBattleSceneStepBG2ScrollHDMA4)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C292
+        lda #<>rlBattleSceneStepBG2ScrollHDMA4
         sta $7FED04,x
         plx
         rtl
@@ -4931,7 +4931,7 @@
 
         ; 96/C292
 
-      rlUnknown96C292 ; 96/C292
+      rlBattleSceneStepBG2ScrollHDMA4 ; 96/C292
 
         ; Found by tools/sweep.py.
         .al
@@ -4977,7 +4977,7 @@
 
         ; 96/C2CF
 
-      rlUnknown96C2CF ; 96/C2CF
+      rlBattleSceneInitBackdropHDMA ; 96/C2CF
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -4986,7 +4986,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown96C30A
+        jsl rlBattleSceneStepBackdropHDMA
         lda #(`aUnknown95E732)<<8
         sta lR44+1
         lda #<>aUnknown95E732
@@ -5001,9 +5001,9 @@
         lda #$0006
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96C30A)<<8
+        lda #(`rlBattleSceneStepBackdropHDMA)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C30A
+        lda #<>rlBattleSceneStepBackdropHDMA
         sta $7FED04,x
         plx
         rtl
@@ -5012,7 +5012,7 @@
 
         ; 96/C30A
 
-      rlUnknown96C30A ; 96/C30A
+      rlBattleSceneStepBackdropHDMA ; 96/C30A
 
         ; Found by tools/sweep.py.
         .al
@@ -5053,7 +5053,7 @@
 
         ; 96/C34F
 
-      rlUnknown96C34F ; 96/C34F
+      rlBattleSceneInitAttackerColorHDMA ; 96/C34F
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -5077,7 +5077,7 @@
         _C364
         plx
         sta $7FED07,x
-        jsl rlUnknown96C390
+        jsl rlBattleSceneStepAttackerColorHDMA
         lda #(`aUnknown95E749)<<8
         sta lR44+1
         lda #<>aUnknown95E749
@@ -5085,9 +5085,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96C390)<<8
+        lda #(`rlBattleSceneStepAttackerColorHDMA)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C390
+        lda #<>rlBattleSceneStepAttackerColorHDMA
         sta $7FED04,x
         plx
         rtl
@@ -5096,7 +5096,7 @@
 
         ; 96/C390
 
-      rlUnknown96C390 ; 96/C390
+      rlBattleSceneStepAttackerColorHDMA ; 96/C390
 
         ; Found by tools/sweep.py.
         .al
@@ -5162,7 +5162,7 @@
 
         ; 96/C411
 
-      rlUnknown96C411 ; 96/C411
+      rlBattleSceneInitBG2ScrollHDMA5 ; 96/C411
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -5202,9 +5202,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96C485)<<8
+        lda #(`rlBattleSceneStepBG2ScrollHDMA5)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C485
+        lda #<>rlBattleSceneStepBG2ScrollHDMA5
         sta $7FED04,x
         plx
         rtl
@@ -5213,7 +5213,7 @@
 
         ; 96/C485
 
-      rlUnknown96C485 ; 96/C485
+      rlBattleSceneStepBG2ScrollHDMA5 ; 96/C485
 
         ; Found by tools/sweep.py.
         .al
@@ -5288,7 +5288,7 @@
 
         ; 96/C4F4
 
-      rlUnknown96C4F4 ; 96/C4F4
+      rlBattleSceneInitColorMathHDMA ; 96/C4F4
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -5315,9 +5315,9 @@
         jsl rlHDMAEngineCreateEntryByIndex
         lda #1,s
         tax
-        lda #(`rlUnknown96C52D)<<8
+        lda #(`rlBattleSceneStepColorMathHDMA)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C52D
+        lda #<>rlBattleSceneStepColorMathHDMA
         sta $7FED04,x
         plx
         rtl
@@ -5326,7 +5326,7 @@
 
         ; 96/C52D
 
-      rlUnknown96C52D ; 96/C52D
+      rlBattleSceneStepColorMathHDMA ; 96/C52D
 
         ; Found by tools/sweep.py.
         .al
@@ -5385,7 +5385,7 @@
 
         ; 96/C580
 
-      rlUnknown96C580 ; 96/C580
+      rlBattleSceneInitBG2HShakeHDMA ; 96/C580
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -5427,9 +5427,9 @@
         jsl rlHDMAEngineCreateEntryByIndex
         lda #1,s
         tax
-        lda #(`rlUnknown96C5D1)<<8
+        lda #(`rlBattleSceneStepBG2HShakeHDMA)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C5D1
+        lda #<>rlBattleSceneStepBG2HShakeHDMA
         sta $7FED04,x
         plx
         rtl
@@ -5438,7 +5438,7 @@
 
         ; 96/C5D1
 
-      rlUnknown96C5D1 ; 96/C5D1
+      rlBattleSceneStepBG2HShakeHDMA ; 96/C5D1
 
         ; Found by tools/sweep.py.
         .al
@@ -5548,7 +5548,7 @@
 
         ; 96/C702
 
-      rlUnknown96C702 ; 96/C702
+      rlBattleSceneInitBG2ScrollHDMA6 ; 96/C702
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -5588,9 +5588,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown96C776)<<8
+        lda #(`rlBattleSceneStepBG2ScrollHDMA6)<<8
         sta $7FED05,x
-        lda #<>rlUnknown96C776
+        lda #<>rlBattleSceneStepBG2ScrollHDMA6
         sta $7FED04,x
         plx
         rtl
@@ -5599,7 +5599,7 @@
 
         ; 96/C776
 
-      rlUnknown96C776 ; 96/C776
+      rlBattleSceneStepBG2ScrollHDMA6 ; 96/C776
 
         ; Found by tools/sweep.py.
         .al
@@ -5676,7 +5676,7 @@
       .al
       .xl
 
-      rlUnknown96C7DB ; 96/C7DB
+      rlBattleSceneCreateBG2VScrollHDMA5 ; 96/C7DB
 
         .al
         .xl
@@ -5710,7 +5710,7 @@
 
         ; 96/C817
 
-      rlUnknown96C817 ; 96/C817
+      rlBattleSceneBuildBG2WaveTable ; 96/C817
 
         .al
         .xl
@@ -5805,7 +5805,7 @@
       .al
       .xl
 
-      rlUnknown96C8A1 ; 96/C8A1
+      rlBattleSceneStepWaveOffsetTable ; 96/C8A1
 
         .al
         .xl
@@ -5821,7 +5821,7 @@
 
 
         _C8AE
-        jsl rlUnknown96C904
+        jsl rlBattleSceneResetWaveOffsetTable
         lda $7FF5AC
         and #$00FF
         pha
@@ -5879,7 +5879,7 @@
 
         ; 96/C904
 
-      rlUnknown96C904 ; 96/C904
+      rlBattleSceneResetWaveOffsetTable ; 96/C904
 
         .al
         .xl
@@ -5968,7 +5968,7 @@
 
         ; 96/C975
 
-      rlUnknown96C975 ; 96/C975
+      rlBattleSceneClearHDMAEffectSlot ; 96/C975
 
         .al
         .xl
@@ -6215,7 +6215,7 @@
 
         ; 96/CAA7
 
-      rlUnknown96CAA7 ; 96/CAA7
+      rlBattleSceneScriptLoadAttackerPortraitPal ; 96/CAA7
 
         ; Found through fe4.cdl.
         .al
@@ -6224,14 +6224,14 @@
         .databank ?
 
         clc
-        jsl rlUnknown96CAB3
+        jsl rlBattleSceneLoadPortraitPalette7
         rtl
 
         .databank 0
 
         ; 96/CAAD
 
-      rlUnknown96CAAD ; 96/CAAD
+      rlBattleSceneScriptLoadDialoguePortraitPal ; 96/CAAD
 
         ; Found through fe4.cdl.
         .al
@@ -6240,14 +6240,14 @@
         .databank ?
 
         sec
-        jsl rlUnknown96CAB3
+        jsl rlBattleSceneLoadPortraitPalette7
         rtl
 
         .databank 0
 
         ; 96/CAB3
 
-      rlUnknown96CAB3 ; 96/CAB3
+      rlBattleSceneLoadPortraitPalette7 ; 96/CAB3
 
         .al
         .xl
@@ -6307,7 +6307,7 @@
 
         ; 96/CB0A
 
-      rlUnknown96CB0A ; 96/CB0A
+      rlBattleSceneResetPolygonWindows ; 96/CB0A
 
         .al
         .xl
@@ -6345,7 +6345,7 @@
       .al
       .xl
 
-      rlUnknown96CB44 ; 96/CB44
+      rlBattleSceneUpdatePolygonWindows ; 96/CB44
 
         .al
         .xl
@@ -6362,12 +6362,12 @@
         beq _CB5F
         bit #$0002
         bne _CB5C
-        jsr rsUnknown96CB6D
+        jsr rsBattleSceneRunPolygonWindowScript
         bra _CB5F
 
 
         _CB5C
-        jsr rsUnknown96D43F
+        jsr rsBattleSceneRunGradientWindowScript
 
         _CB5F
         txa
@@ -6384,7 +6384,7 @@
 
         ; 96/CB6D
 
-      rsUnknown96CB6D ; 96/CB6D
+      rsBattleSceneRunPolygonWindowScript ; 96/CB6D
 
         .al
         .xl
@@ -6403,59 +6403,59 @@
         rep #$20
 
         _CB7E
-        jsr rsUnknown96CDA3
+        jsr rsBattleSceneReadPolygonWindowWord
         xba
         and #$00FF
         cmp #$00FF
         bne _CB8F
-        jsr rsUnknown96CBE1
+        jsr rsBattleSceneEndPolygonWindow
         bra _CBD2
 
 
         _CB8F
         cmp #$00FD
         bne _CB99
-        jsr rsUnknown96CC1A
+        jsr rsBattleSceneStopPolygonWindow
         bra _CBD2
 
 
         _CB99
         cmp #$00FE
         bne _CBA3
-        jsr rsUnknown96CC40
+        jsr rsBattleScenePolygonWindowLoop
         bra _CBD0
 
 
         _CBA3
         cmp #$00FC
         bne _CBAD
-        jsr rsUnknown96CC7B
+        jsr rsBattleScenePolygonWindowSetAttackerPos
         bra _CBD0
 
 
         _CBAD
         cmp #$00FB
         bne _CBB7
-        jsr rsUnknown96CCAF
+        jsr rsBattleScenePolygonWindowSetDefenderPos
         bra _CBD0
 
 
         _CBB7
         cmp #$00FA
         bne _CBC1
-        jsr rsUnknown96CD23
+        jsr rsBattleScenePolygonWindowWait1
         bra _CBD0
 
 
         _CBC1
         cmp #$00F9
         bne _CBCB
-        jsr rsUnknown96CD32
+        jsr rsBattleScenePolygonWindowResetScale
         bra _CBD0
 
 
         _CBCB
-        jsr rsUnknown96CD51
+        jsr rsBattleScenePolygonWindowReadFrame
         bra _CBD2
 
 
@@ -6466,16 +6466,16 @@
         _CBD2
         .as
         rep #$20
-        jsl rlUnknown96D256
-        jsl rlUnknown96D05F
-        jsl rlUnknown96CEE6
+        jsl rlBattleSceneRasterizePolygonWindows
+        jsl rlBattleSceneTransformPolygonBuffers
+        jsl rlBattleSceneBuildPolygonWindowHDMA
         rts
 
         .databank 0
 
         ; 96/CBE1
 
-      rsUnknown96CBE1 ; 96/CBE1
+      rsBattleSceneEndPolygonWindow ; 96/CBE1
 
         .al
         .xl
@@ -6498,7 +6498,7 @@
         and #$FE
         sta $7FED5C,x
         rep #$20
-        jsl rlUnknown96CECE
+        jsl rlBattleSceneFreePolygonWindowHDMA
         sep #$20
         lda bBattleSceneScriptWaitCount
         beq _CC13
@@ -6513,7 +6513,7 @@
 
         ; 96/CC1A
 
-      rsUnknown96CC1A ; 96/CC1A
+      rsBattleSceneStopPolygonWindow ; 96/CC1A
 
         .al
         .xl
@@ -6545,7 +6545,7 @@
 
         ; 96/CC40
 
-      rsUnknown96CC40 ; 96/CC40
+      rsBattleScenePolygonWindowLoop ; 96/CC40
 
         .al
         .xl
@@ -6568,7 +6568,7 @@
 
 
         _CC62
-        jsr rsUnknown96CDA3
+        jsr rsBattleSceneReadPolygonWindowWord
         and #$00FF
         beq _CC72
         sep #$20
@@ -6586,7 +6586,7 @@
 
         ; 96/CC7B
 
-      rsUnknown96CC7B ; 96/CC7B
+      rsBattleScenePolygonWindowSetAttackerPos ; 96/CC7B
 
         .al
         .xl
@@ -6618,7 +6618,7 @@
 
         ; 96/CCAF
 
-      rsUnknown96CCAF ; 96/CCAF
+      rsBattleScenePolygonWindowSetDefenderPos ; 96/CCAF
 
         .al
         .xl
@@ -6682,7 +6682,7 @@
       .al
       .xl
 
-      rsUnknown96CD0E ; 96/CD0E
+      rsBattleScenePolygonWindowLaunchProjectile ; 96/CD0E
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -6711,7 +6711,7 @@
       .al
       .xl
 
-      rsUnknown96CD23 ; 96/CD23
+      rsBattleScenePolygonWindowWait1 ; 96/CD23
 
         .al
         .xl
@@ -6732,7 +6732,7 @@
 
         ; 96/CD32
 
-      rsUnknown96CD32 ; 96/CD32
+      rsBattleScenePolygonWindowResetScale ; 96/CD32
 
         .al
         .xl
@@ -6757,7 +6757,7 @@
 
         ; 96/CD51
 
-      rsUnknown96CD51 ; 96/CD51
+      rsBattleScenePolygonWindowReadFrame ; 96/CD51
 
         .al
         .xl
@@ -6806,7 +6806,7 @@
 
         ; 96/CDA3
 
-      rsUnknown96CDA3 ; 96/CDA3
+      rsBattleSceneReadPolygonWindowWord ; 96/CDA3
 
         .al
         .xl
@@ -6835,7 +6835,7 @@
       .al
       .xl
 
-      rlUnknown96CECE ; 96/CECE
+      rlBattleSceneFreePolygonWindowHDMA ; 96/CECE
 
         .al
         .xl
@@ -6862,7 +6862,7 @@
 
         ; 96/CEE6
 
-      rlUnknown96CEE6 ; 96/CEE6
+      rlBattleSceneBuildPolygonWindowHDMA ; 96/CEE6
 
         .al
         .xl
@@ -6894,7 +6894,7 @@
         lda $7FED74
         and #$00FF
         sta wR5
-        jsl rlUnknown96CF58
+        jsl rlBattleSceneWritePolygonHDMAEntries
 
         _CF23
         lda $7FED8A
@@ -6918,7 +6918,7 @@
         lda $7FED90
         and #$00FF
         sta wR5
-        jsl rlUnknown96CF58
+        jsl rlBattleSceneWritePolygonHDMAEntries
 
         _CF56
         plx
@@ -6928,7 +6928,7 @@
 
         ; 96/CF58
 
-      rlUnknown96CF58 ; 96/CF58
+      rlBattleSceneWritePolygonHDMAEntries ; 96/CF58
 
         ; TRACE: stack-args
         .al
@@ -7103,7 +7103,7 @@
 
         ; 96/D05F
 
-      rlUnknown96D05F ; 96/D05F
+      rlBattleSceneTransformPolygonBuffers ; 96/D05F
 
         .al
         .xl
@@ -7120,13 +7120,13 @@
         bit #$0001
         bne _D082
         lda $7FED79
-        jsl rlUnknown96D0B6
+        jsl rlBattleSceneTransformPolygonSlot0Buf0
         bra _D08A
 
 
         _D082
         lda $7FED79
-        jsl rlUnknown96D185
+        jsl rlBattleSceneTransformPolygonSlot0Buf1
 
         _D08A
         lda $7FED8A
@@ -7138,13 +7138,13 @@
         bit #$0001
         bne _D0AC
         lda $7FED95
-        jsl rlUnknown96D11D
+        jsl rlBattleSceneTransformPolygonSlot1Buf0
         bra _D0B4
 
 
         _D0AC
         lda $7FED95
-        jsl rlUnknown96D1EC
+        jsl rlBattleSceneTransformPolygonSlot1Buf1
 
         _D0B4
         plx
@@ -7154,7 +7154,7 @@
 
         ; 96/D0B6
 
-      rlUnknown96D0B6 ; 96/D0B6
+      rlBattleSceneTransformPolygonSlot0Buf0 ; 96/D0B6
 
         .al
         .xl
@@ -7236,7 +7236,7 @@
 
         ; 96/D11D
 
-      rlUnknown96D11D ; 96/D11D
+      rlBattleSceneTransformPolygonSlot1Buf0 ; 96/D11D
 
         .al
         .xl
@@ -7318,7 +7318,7 @@
 
         ; 96/D185
 
-      rlUnknown96D185 ; 96/D185
+      rlBattleSceneTransformPolygonSlot0Buf1 ; 96/D185
 
         .al
         .xl
@@ -7400,7 +7400,7 @@
 
         ; 96/D1EC
 
-      rlUnknown96D1EC ; 96/D1EC
+      rlBattleSceneTransformPolygonSlot1Buf1 ; 96/D1EC
 
         .al
         .xl
@@ -7493,7 +7493,7 @@
       .al
       .xl
 
-      rlUnknown96D256 ; 96/D256
+      rlBattleSceneRasterizePolygonWindows ; 96/D256
 
         .al
         .xl
@@ -7541,7 +7541,7 @@
         clc
         adc #$0200
         sta $7FEDA8
-        jsl rlUnknown96D2D7
+        jsl rlBattleSceneRasterizeTriangle
         sep #$20
         sta $7FED79,x
         rep #$20
@@ -7575,7 +7575,7 @@
       .al
       .xl
 
-      rlUnknown96D2D7 ; 96/D2D7
+      rlBattleSceneRasterizeTriangle ; 96/D2D7
 
         .al
         .xl
@@ -7611,12 +7611,12 @@
         lda wR4
         cmp wR6
         bcs _D30F
-        jsr rsUnknown96D417
+        jsr rsBattleSceneStepEdgeUpPostInc
         bra _D312
 
 
         _D30F
-        jsr rsUnknown96D402
+        jsr rsBattleSceneStepEdgeDownPreDec
 
         _D312
         txa
@@ -7648,12 +7648,12 @@
         lda wR4
         cmp wR8
         bcs _D34D
-        jsr rsUnknown96D3ED
+        jsr rsBattleSceneStepEdgeUpPreInc
         bra _D350
 
 
         _D34D
-        jsr rsUnknown96D42C
+        jsr rsBattleSceneStepEdgeDownPostDec
 
         _D350
         txa
@@ -7705,12 +7705,12 @@
         lda wR6
         cmp wR8
         bcs _D3AA
-        jsr rsUnknown96D402
+        jsr rsBattleSceneStepEdgeDownPreDec
         bra _D3AD
 
 
         _D3AA
-        jsr rsUnknown96D3ED
+        jsr rsBattleSceneStepEdgeUpPreInc
 
         _D3AD
         txa
@@ -7733,12 +7733,12 @@
         lda wR8
         cmp wR6
         bcs _D3D4
-        jsr rsUnknown96D402
+        jsr rsBattleSceneStepEdgeDownPreDec
         bra _D3D7
 
 
         _D3D4
-        jsr rsUnknown96D3ED
+        jsr rsBattleSceneStepEdgeUpPreInc
 
         _D3D7
         txa
@@ -7771,7 +7771,7 @@
       .al
       .xl
 
-      rsUnknown96D3ED ; 96/D3ED
+      rsBattleSceneStepEdgeUpPreInc ; 96/D3ED
 
         .al
         .xl
@@ -7808,7 +7808,7 @@
       .al
       .xl
 
-      rsUnknown96D402 ; 96/D402
+      rsBattleSceneStepEdgeDownPreDec ; 96/D402
 
         .al
         .xl
@@ -7845,7 +7845,7 @@
       .al
       .xl
 
-      rsUnknown96D417 ; 96/D417
+      rsBattleSceneStepEdgeUpPostInc ; 96/D417
 
         .al
         .xl
@@ -7882,7 +7882,7 @@
       .al
       .xl
 
-      rsUnknown96D42C ; 96/D42C
+      rsBattleSceneStepEdgeDownPostDec ; 96/D42C
 
         .al
         .xl
@@ -7908,7 +7908,7 @@
 
         ; 96/D43F
 
-      rsUnknown96D43F ; 96/D43F
+      rsBattleSceneRunGradientWindowScript ; 96/D43F
 
         .al
         .xl
@@ -7966,14 +7966,14 @@
         and #$00FF
         cmp #$00FF
         bne _D4B1
-        jsr rsUnknown96CBE1
+        jsr rsBattleSceneEndPolygonWindow
         jml _D5D8
 
 
         _D4B1
         cmp #$00FD
         bne _D4BD
-        jsr rsUnknown96CC1A
+        jsr rsBattleSceneStopPolygonWindow
         jml _D5D8
 
 
@@ -8169,7 +8169,7 @@
       .al
       .xl
 
-      rlUnknown96D5DB ; 96/D5DB
+      rlBattleSceneBuildGradientWindowHDMA ; 96/D5DB
 
         .al
         .xl
@@ -8288,7 +8288,7 @@
       .al
       .xl
 
-      rlUnknown96D67B ; 96/D67B
+      rlBattleSceneSavePalette ; 96/D67B
 
         .al
         .xl
@@ -9313,7 +9313,7 @@
       .al
       .xl
 
-      rlUnknown96DB20 ; 96/DB20
+      rlBattleSceneStopPaletteSlot ; 96/DB20
 
         .al
         .xl
@@ -9449,7 +9449,7 @@
       .al
       .xl
 
-      rlUnknown96DCC8 ; 96/DCC8
+      rlBattleSceneScriptInitTileWipe ; 96/DCC8
 
         ; Found by tools/sweep.py.
         .al
@@ -9469,9 +9469,9 @@
         bcc _DCCF
         lda #$00FC
         sta $7FE48C
-        lda #(`rlUnknown96DCF1)<<8
+        lda #(`rlBattleSceneScriptStepTileWipe)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96DCF1
+        lda #<>rlBattleSceneScriptStepTileWipe
         sta lBattleSceneScriptRoutine
         plx
         rtl
@@ -9480,7 +9480,7 @@
 
         ; 96/DCF1
 
-      rlUnknown96DCF1 ; 96/DCF1
+      rlBattleSceneScriptStepTileWipe ; 96/DCF1
 
         ; Found by tools/sweep.py.
         .al
@@ -9536,7 +9536,7 @@
       .al
       .xl
 
-      rlUnknown96DD39 ; 96/DD39
+      rlBattleSceneResetBGScrolls ; 96/DD39
 
         .al
         .xl
@@ -9572,7 +9572,7 @@
       .al
       .xl
 
-      rlUnknown96DD6E ; 96/DD6E
+      rlBattleSceneUpdateBGScrolls ; 96/DD6E
 
         .al
         .xl
@@ -14044,7 +14044,7 @@
         sta $7FFC5F
         rep #$20
         lda #$0009
-        jsl rlUnknown96DB20
+        jsl rlBattleSceneStopPaletteSlot
         jml _F9BD
 
 
@@ -14518,8 +14518,8 @@
 
         jsl rlBattleSceneInitEffectBuffers
         jsl rlBattleSceneClearHDMAEffects
-        jsl rlUnknown96CB0A
-        jsl rlUnknown96DD39
+        jsl rlBattleSceneResetPolygonWindows
+        jsl rlBattleSceneResetBGScrolls
         jsl rlUnknown96EE8A
         jsl rlUnknown96EBC9
         jsl rlBattleSceneClearScriptRoutine
@@ -14568,8 +14568,8 @@
 
         jsl rlBattleSceneInitEffectBuffers
         jsl rlBattleSceneClearHDMAEffects
-        jsl rlUnknown96CB0A
-        jsl rlUnknown96DD39
+        jsl rlBattleSceneResetPolygonWindows
+        jsl rlBattleSceneResetBGScrolls
         jsl rlUnknown96EE8A
         jsl rlUnknown96EBC9
         lda #$0005
@@ -14603,7 +14603,7 @@
 
         jsl rlBattleSceneInitEffectBuffers
         jsl rlBattleSceneClearHDMAEffects
-        jsl rlUnknown96CB0A
+        jsl rlBattleSceneResetPolygonWindows
         jsl rlUnknown96EE8A
         jsl rlUnknown96EBC9
         jsl rlBattleSceneClearScriptRoutine
