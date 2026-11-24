@@ -19,7 +19,8 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | III | 10 [Menus over the map](docs/guide/10-menus-over-the-map.md) | draft, not yet reviewed |
 | IV | 11 [The game is watching](docs/guide/11-the-game-is-watching.md) | draft, reviewed |
 | IV | 12 [Screenplays](docs/guide/12-screenplays.md) | draft, not yet reviewed |
-| IV–VII | 13–31 | not started; OUTLINE.md marks which have a reference page |
+| IV | 13 [Dialogue and text](docs/guide/13-dialogue-and-text.md) | draft, not yet reviewed |
+| IV–VII | 14–31 | not started; OUTLINE.md marks which have a reference page |
 
 **Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (Chapters 6–7 were written from the source; the battle interlude needs it) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
 
@@ -61,6 +62,8 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `rlShowQueuedSeizePopUpUnused`: the Chapter 3 and 5 seize scripts run it (`rlASMCShowQueuedSeizePopUp`); `wEventUnitSlot1ID`/`2ID` hold RAM pointers (`...Pointer`) | map_step.asm, WRAM.h, 5 users | `0e00942` |
 | `wEventEngineFlags` `$0002` said to mean the event waits for its procs; the poll sets it when none is alive | include/WRAM.h | `0e00942` |
 | `procEventWaitMapBattleEndAlt` labeled `82/8AD9` (it is at `$8B09`); the music-wait routines beside it are unreferenced | event_scripts.asm | `0e00942` |
+| `aDialogue.wUnknown0018D0` commented "1 = BG, 2 = no BG?"; it is the dialogue mode (0 none, 1 map boxes, 2 conversation screen with its background, 3 keeper box), now `wMode` with `DIALOGUE_MODE_*`. Scroll offset, slow-scroll rate and timer, mouth frames and timer, pending upload size and address named | include/WRAM.h, include/Dialogue.h, 11 users | `fe85132` |
+| `rlStartConversationDialogue` starts the `DIALOGUE` command's map boxes (mode 1), not castle conversations: now `rlStartMapDialogue`. The handler commented `DIALOGUE_ESCAPE` is the newline, and `$35`-`$39` ("escape commands") are newlines too | engine/dialogue/dialogue_procs.asm, dialogue.asm, include/Dialogue.h | `fe85132` |
 | `wChapterFlags` `$0100` called unknown; it marks a chapter resumed from a map save (enter at map step 7) | include/WRAM.h | `2da731d` |
 | `rsMoveCursorToPhaseStart` comment had the auto cursor option backwards (on goes to the first unit, off to the saved tile); Ch. 8 draft copied it | engine/map/map_step.asm | `2da731d` |
 | `rlPhaseBannerCheckSkip` comment listed Select; the mask `$D0C0` is A, B, X, Y and Start; Ch. 8 draft copied it | engine/map/phase_banner.asm | `2da731d` |
@@ -81,6 +84,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `wMapActionMode` 1 called an ordinary move (0 is; 1 is a sortie); AI actions 6 and 7 listed in the wrong order | map.md, ai.md | `5fe5568` |
 | Seize gated on "class 6 or `$2C`" and dismount on "the skill bits" without naming them; mode 1 and 2 contents left as an open question | map_menu.md | with Ch. 10 |
 | Ch. 11 draft (review): child/substitute mapping reversed (the table maps each child to its substitute); state-check opcode range included `EC_JUMP` and the counter mutators; `CHECK_TURN_PHASE_AI_ACTOR` given four signed bytes (three); Iucharba and Creidne called siblings; Chapter 1's list counted without the expanded `macroSetFactions*` (141, not 136); event-unit recording and the songless pre-combat dialogue omitted | docs/guide/11 | with review |
+| dialogue.md: `rlStartConversationDialogue` said to run castle conversations, and "two modes" where there are four | docs/reference/dialogue.md | `fe85132` |
 | events.md called `$FEFE` a yield (it is the skip point) and `$3B` an unnamed command | docs/reference/events.md | with Ch. 12 |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
@@ -130,13 +134,17 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 - `LOAD_UNIT_BY_GROUP`'s sprite color parameter is read and then overwritten with the unit's allegiance color (Ch. 12).
 - `TEST_FLAG_IN_CHAPTER_SET` for a chapter other than the current one leaves the truth flag as the last test left it (Ch. 12).
 - 37 of the 93 script commands are never used; the only relative jump is in the pre-combat dialogue template copied to RAM (Ch. 12).
+- Message speed settings 0-4 give 6, 5, 4, 3 and 1 frames per character (6 − setting, with 2 replaced by 1); keepers always talk at 2 and the epilogue at 6 (Ch. 13).
+- The dialogue insert stack holds six pointers; a seventh insert (name, number, piece) is skipped without notice. Dialogue command numbers `$41`-`$7F` hang in an endless loop. Sixteen dialogue commands appear in no text (Ch. 13).
+- The menu font has 15 kanji (剣庫回城兵大書杖国軍帝系特効部); menu strings are Shift-JIS and any other character draws blank (Ch. 13).
+- Map dialogue slots draw at VRAM `$8000`/`$9000` over the menu font and icons, so `procDialogue` decompresses them again after every map conversation (Ch. 13).
 - No condition list uses a flag byte with bit 7 ("must be set, cleared on match"), opcodes `$22`-`$24`, or any `CHILD` condition other than `CHECK_CHILD_TALK` (Ch. 11).
 
 ## Next session
 
-1. **Review Chapters 9, 10 and 12.** Chapter 10's unit-menu rules come from the 24 checks; mode 1's contents at the home gate (enter, guard, equip, animation) were settled from the code, so that emulator question is closed.
+1. **Review Chapters 9, 10, 12 and 13.** Chapter 10's unit-menu rules come from the 24 checks; mode 1's contents at the home gate (enter, guard, equip, animation) were settled from the code, so that emulator question is closed.
 2. Before the battle interlude and Part II revision: write `docs/reference/battle.md`.
-3. Then Chapter 13 (dialogue and text), from `dialogue.md`; Chapter 12 leaves the conversation screen (`DIALOGUE_WITH_BG`) to it.
+3. Then Chapter 14 (armies with a mind), from `ai.md`. Chapter 13 leaves the conversation screen's own steps (background, portrait fades, exits) to Chapter 15 and the world map's dialogue commands (bit 7) to Chapter 19.
 
 ## Who wrote what
 
