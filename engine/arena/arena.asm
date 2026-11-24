@@ -1705,7 +1705,7 @@
 
         _E461
         stz wCastleMenuOptionIndex,b
-        jsr rsUnknown8AA142
+        jsr rsCastleDrawListItemIcons
         stz wMenuState,b
         stz wCastleMenuOptionIndex,b
         stz wCastleConfirmCursorIndex,b
@@ -1779,7 +1779,7 @@
         jsl rlCreateUnit
 
         _B530
-        jsl rlUnknown84B72C
+        jsl rlSetupArenaBattleStats
         sep #$20
         lda #$01
         sta $7E4EA9

@@ -568,13 +568,15 @@
       .al
       .xl
 
-      rsUnknown8AA142 ; 8A/A142
+      rsCastleDrawListItemIcons ; 8A/A142
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws 8 item icons for the active castle list or unit inventory
 
         lda lKeeperOptionList+1
         sta lR20+1
@@ -603,7 +605,7 @@
 
 
         _A17B
-        jml rsUnknown8AA222
+        jml rsCastleDrawInventoryItemIcons
 
 
         _A17F
@@ -645,10 +647,10 @@
 
       aUnknown8AA1B0 ; 8A/A1B0
 
-        ; Tile positions of the item icons drawn by rsUnknown8AA142, as the two tables below.
+        ; Tile positions of the item icons drawn by rsCastleDrawListItemIcons, as the two tables below.
         .word $0050, $0052, $0054, $0056, $0058, $005A, $005C, $005E
 
-      rsUnknown8AA1C0 ; 8A/A1C0
+      rsCastleDrawTopRowListItemIcon ; 8A/A1C0
 
         .al
         .xl
@@ -677,7 +679,7 @@
 
         .word $0050, $0052, $0054, $0056, $0058, $005A, $005C, $005E
 
-      rsUnknown8AA1EF ; 8A/A1EF
+      rsCastleDrawBottomRowListItemIcon ; 8A/A1EF
 
         .al
         .xl
@@ -708,7 +710,7 @@
 
         .word $0050, $0052, $0054, $0056, $0058, $005A, $005C, $005E
 
-      rsUnknown8AA222 ; 8A/A222
+      rsCastleDrawInventoryItemIcons ; 8A/A222
 
         .al
         .xl
@@ -750,7 +752,7 @@
 
       aUnknown8AA241 ; 8A/A241
 
-        ; Read by rsUnknown8AA142.
+        ; Read by rsCastleDrawListItemIcons.
 
         .word $0050, $0052, $0054, $0056, $0058, $005A, $005C, $005E
 
@@ -1080,12 +1082,12 @@
 
 
         _A464
-        jsr rsUnknown8AA1C0
+        jsr rsCastleDrawTopRowListItemIcon
         bra _A45D
 
 
         _A469
-        jsr rsUnknown8AA1EF
+        jsr rsCastleDrawBottomRowListItemIcon
         bra _A45D
 
         .databank 0
@@ -1665,9 +1667,9 @@
 
 
       aUnknown8AA7F5 ; 8A/A7F5
-        .word <>rsUnknown8AA7FD, <>rsUnknown8AA80A, <>rsUnknown8AA817, <>rsUnknown8AA7FD
+        .word <>rsCastleSetRankStringA, <>rsCastleSetRankStringB, <>rsCastleSetRankStringC, <>rsCastleSetRankStringA
 
-      rsUnknown8AA7FD ; 8A/A7FD
+      rsCastleSetRankStringA ; 8A/A7FD
 
         .al
         .xl
@@ -1684,7 +1686,7 @@
 
         ; 8A/A80A
 
-      rsUnknown8AA80A ; 8A/A80A
+      rsCastleSetRankStringB ; 8A/A80A
 
         .al
         .xl
@@ -1701,7 +1703,7 @@
 
         ; 8A/A817
 
-      rsUnknown8AA817 ; 8A/A817
+      rsCastleSetRankStringC ; 8A/A817
 
         .al
         .xl
@@ -3365,7 +3367,7 @@
       .al
       .xl
 
-      aUnknown8AB230 .dstruct structHDMADirectEntryInfo, rlUnknown8AB23B, rlUnknown8AB23B, $B261, $0008C8, PPU_REG_BASE + $31, $00 ; 8A/B230
+      aUnknown8AB230 .dstruct structHDMADirectEntryInfo, rlHDMACastleColorMath1, rlHDMACastleColorMath1, $B261, $0008C8, PPU_REG_BASE + $31, $00 ; 8A/B230
 
     .endsection Table8AB230Section
 
@@ -3375,7 +3377,7 @@
       .al
       .xl
 
-      rlUnknown8AB23B ; 8A/B23B
+      rlHDMACastleColorMath1 ; 8A/B23B
 
         .al
         .xl
@@ -3409,9 +3411,9 @@
 
         HDMA_HALT
 
-      aUnknown8AB263 .dstruct structHDMADirectEntryInfo, rlUnknown8AB26E, rlUnknown8AB26E, aHDMAUnknown8AB294Code, $0008C8, PPU_REG_BASE + $31, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B263
+      aUnknown8AB263 .dstruct structHDMADirectEntryInfo, rlHDMACastleColorMath2, rlHDMACastleColorMath2, aHDMAUnknown8AB294Code, $0008C8, PPU_REG_BASE + $31, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B263
 
-      rlUnknown8AB26E ; 8A/B26E
+      rlHDMACastleColorMath2 ; 8A/B26E
 
               .al
               .xl
@@ -3442,9 +3444,9 @@
 
         HDMA_HALT
 
-      aUnknown8AB296 .dstruct structHDMADirectEntryInfo, rlUnknown8AB2A1, rlUnknown8AB2A1, aHDMAUnknown8AB2C2Code, $7F80A3, PPU_REG_BASE + $32, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B296
+      aUnknown8AB296 .dstruct structHDMADirectEntryInfo, rlHDMACastleColorData, rlHDMACastleColorData, aHDMAUnknown8AB2C2Code, $7F80A3, PPU_REG_BASE + $32, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B296
 
-      rlUnknown8AB2A1 ; 8A/B2A1
+      rlHDMACastleColorData ; 8A/B2A1
 
               .al
               .xl
@@ -3483,9 +3485,9 @@
         .byte $60, $E0, $10, $E1, $10, $E2, $10, $E3, $10, $E4
         .byte $10, $E6, $10, $E7, $10, $E8, $10, $EA, $00, $00
 
-      aUnknown8AB2D8 .dstruct structHDMADirectEntryInfo, rlUnknown8AB2E3, rlUnknown8AB2E3, aHDMAUnknown8AB315Code, $0008C8, PPU_REG_BASE + $2D, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B2D8
+      aUnknown8AB2D8 .dstruct structHDMADirectEntryInfo, rlHDMACastleSubscreenMask, rlHDMACastleSubscreenMask, aHDMAUnknown8AB315Code, $0008C8, PPU_REG_BASE + $2D, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B2D8
 
-      rlUnknown8AB2E3 ; 8A/B2E3
+      rlHDMACastleSubscreenMask ; 8A/B2E3
 
               .al
               .xl

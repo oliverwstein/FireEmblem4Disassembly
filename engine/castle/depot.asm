@@ -125,7 +125,7 @@
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
         jsl rlBuildUnitStoredItemList
-        jsr rsUnknown8AA142
+        jsr rsCastleDrawListItemIcons
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aCastleMenuTilemapData
@@ -203,7 +203,7 @@
         _F2A4
         lda #$0000
         sta wCastleRedrawIcons
-        jsr rsUnknown8AA142
+        jsr rsCastleDrawListItemIcons
 
         _F2AE
         jsr rsPushCastleListSprites

@@ -339,7 +339,7 @@
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
         jsl rlBuildItemListInState
-        jsr rsUnknown8AA142
+        jsr rsCastleDrawListItemIcons
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aCastleMenuTilemapData
@@ -404,7 +404,7 @@
         _EECA
         lda #$0000
         sta wCastleRedrawIcons
-        jsr rsUnknown8AA142
+        jsr rsCastleDrawListItemIcons
 
         _EED4
         lda wMenuState,b

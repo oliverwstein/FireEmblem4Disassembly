@@ -2498,7 +2498,7 @@
         .word <>rsSoundScriptQueueCommandChecked
         .word <>rsSoundScriptBattleTerrainCommand
 
-      rsUnknown809727 ; 80/9727
+      rsSoundScriptNoOpUnused ; 80/9727
 
         ; Unreferenced: does nothing.
 

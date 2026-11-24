@@ -153,7 +153,7 @@
         sta wR0
         lda wRoutineVariable1,b
         sta wR1
-        jsl rlUnknown84B72C
+        jsl rlSetupArenaBattleStats
         sep #$20
         lda #$03
         sta $7E4EA9
@@ -256,13 +256,15 @@
 
         ; 84/B72C
 
-      rlUnknown84B72C ; 84/B72C
+      rlSetupArenaBattleStats ; 84/B72C
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Initializes attacker/defender action structs for arena or castle preview
 
         phb
         php
@@ -292,7 +294,7 @@
         sta wR0
         ldx #$4EB5
         lda @l wActionStructAttackerDeploymentNumber
-        jsl rlUnknown84B7EE
+        jsl rlPopulateArenaActionStruct
         lda @l aActionStructUnit1.WeaponMinRange
         sta @l wBattleDistance
         lda @l wBattleStatus
@@ -301,7 +303,7 @@
         sta wR0
         ldx #$4F15
         lda @l wActionStructDefenderDeploymentNumber
-        jsl rlUnknown84B7EE
+        jsl rlPopulateArenaActionStruct
         lda @l wBattleStatus
         and #$0001
         sta wR0
@@ -341,13 +343,15 @@
 
         ; 84/B7EE
 
-      rlUnknown84B7EE ; 84/B7EE
+      rlPopulateArenaActionStruct ; 84/B7EE
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Populates action struct at X for deployment number A
 
         cmp #$0000
         bpl _B7F7

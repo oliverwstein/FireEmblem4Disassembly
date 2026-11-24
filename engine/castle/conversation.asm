@@ -1198,13 +1198,13 @@
 
         ; 8A/DD98
 
-      aUnknown8ADD98 .dstruct structHDMADirectEntryInfo, rlUnknown8ADDA3, rlUnknown8ADDA3, aUnknown8ADDA4, aUnknown8ADDB4, PPU_REG_BASE + $21, $00 ; 8A/DD98
+      aUnknown8ADD98 .dstruct structHDMADirectEntryInfo, rlHDMACastleConvCGADDNoOp, rlHDMACastleConvCGADDNoOp, aUnknown8ADDA4, aUnknown8ADDB4, PPU_REG_BASE + $21, $00 ; 8A/DD98
 
         ; Unreferenced: two HDMA effects that write a colour gradient line by
         ; line, the colour index (CGADD) from aUnknown8ADDB4 and the colour
         ; (CGDATA) from aUnknown8ADE99.
 
-      rlUnknown8ADDA3 ; 8A/DDA3
+      rlHDMACastleConvCGADDNoOp ; 8A/DDA3
 
         .al
         .xl
@@ -1219,9 +1219,9 @@
 
         HDMA_HALT
 
-      aUnknown8ADDA6 .dstruct structHDMADirectEntryInfo, rlUnknown8ADDB1, rlUnknown8ADDB1, aUnknown8ADDB2, aUnknown8ADE99, PPU_REG_BASE + $22, $02 ; 8A/DDA6
+      aUnknown8ADDA6 .dstruct structHDMADirectEntryInfo, rlHDMACastleConvCGDATANoOp, rlHDMACastleConvCGDATANoOp, aUnknown8ADDB2, aUnknown8ADE99, PPU_REG_BASE + $22, $02 ; 8A/DDA6
 
-      rlUnknown8ADDB1 ; 8A/DDB1
+      rlHDMACastleConvCGDATANoOp ; 8A/DDB1
 
         .al
         .xl
