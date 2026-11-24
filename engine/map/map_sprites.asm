@@ -1985,7 +1985,7 @@
           phx
           jsl rlAddDeployedMapSprite
           plx
-          sta aDeploymentTable._DeploymentOffsets,x
+          sta aDeploymentTable._MapSpriteSlot,x
           plx
           lda aMovingMapSprites.wUnknown001804,b,x
           xba
@@ -2686,7 +2686,7 @@
 
         _C91E
         ldx wActiveUnitDeploymentOffset,b
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         cmp #$0060
         bcs _C939
         sep #$20
@@ -2707,7 +2707,7 @@
         .databank $88
         rep #$20
         phx
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
@@ -2791,14 +2791,14 @@
         sta $0865,b
 
         ldx wActiveUnitDeploymentOffset,b
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
         bne _Tall
 
           ldx wActiveUnitDeploymentOffset,b
-          lda aDeploymentTable._DeploymentOffsets,x
+          lda aDeploymentTable._MapSpriteSlot,x
           tax
           lda aDeploymentTable._MapSpriteID,x
           and #~$8000
@@ -2823,7 +2823,7 @@
         
         _Tall
         ldx wActiveUnitDeploymentOffset,b
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #~$8000
@@ -2877,7 +2877,7 @@
         lda wMovingUnitSpriteTimer,b
         bne _CA73
         ldx wActiveUnitDeploymentOffset,b
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
@@ -2886,7 +2886,7 @@
         and #$00FF
         sta wMovingUnitSpriteTimer,b
         ldx wActiveUnitDeploymentOffset,b
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
@@ -4944,7 +4944,7 @@
         lda $0865,b
         beq _DB2F
         ldx wActiveUnitDeploymentOffset,b
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
@@ -5855,7 +5855,7 @@
         phk
         plb
         .databank $88
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$8000

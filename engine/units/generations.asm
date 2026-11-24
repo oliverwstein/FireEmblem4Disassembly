@@ -217,7 +217,7 @@
           jsl rlGetSelectedUnitMapSprite
           sta wR1
           jsl rlAddDeployedMapSprite
-          sta aDeploymentTable._DeploymentOffsets,x
+          sta aDeploymentTable._MapSpriteSlot,x
           lda aDeploymentTable._StateBuffer,x
           and #DeploymentAllegianceMask
           ora #DeploymentStateHidden

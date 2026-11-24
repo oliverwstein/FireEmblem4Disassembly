@@ -450,7 +450,7 @@
         lda #$003C
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$04
+        sta aDeploymentTable._MapSpriteSlot+$04
         lda #$00C2
         sta aDeploymentTable._State+$04
         lda #$02C0
@@ -460,7 +460,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$06
+        sta aDeploymentTable._MapSpriteSlot+$06
         lda #$0082
         sta aDeploymentTable._State+$06
         lda #$02D0
@@ -470,7 +470,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$08
+        sta aDeploymentTable._MapSpriteSlot+$08
         lda #$0082
         sta aDeploymentTable._State+$08
         lda #$02E0
@@ -480,7 +480,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$0A
+        sta aDeploymentTable._MapSpriteSlot+$0A
         lda #$0082
         sta aDeploymentTable._State+$0A
         lda #$02F0
@@ -490,7 +490,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$0C
+        sta aDeploymentTable._MapSpriteSlot+$0C
         lda #$0082
         sta aDeploymentTable._State+$0C
         lda #$0300
@@ -500,7 +500,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$0E
+        sta aDeploymentTable._MapSpriteSlot+$0E
         lda #$0082
         sta aDeploymentTable._State+$0E
         lda #$02D0
@@ -510,7 +510,7 @@
         lda #$0029
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$10
+        sta aDeploymentTable._MapSpriteSlot+$10
         lda #$0082
         sta aDeploymentTable._State+$10
         lda #$02E0
@@ -520,7 +520,7 @@
         lda #$0029
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$12
+        sta aDeploymentTable._MapSpriteSlot+$12
         lda #$0082
         sta aDeploymentTable._State+$12
         lda #$02F0
@@ -530,7 +530,7 @@
         lda #$0029
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$14
+        sta aDeploymentTable._MapSpriteSlot+$14
         lda #$0082
         sta aDeploymentTable._State+$14
         lda #$02D0
@@ -540,7 +540,7 @@
         lda #$0028
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$16
+        sta aDeploymentTable._MapSpriteSlot+$16
         lda #$0082
         sta aDeploymentTable._State+$16
         lda #$02E0
@@ -550,7 +550,7 @@
         lda #$0028
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$18
+        sta aDeploymentTable._MapSpriteSlot+$18
         lda #$0082
         sta aDeploymentTable._State+$18
         lda #$02F0
@@ -560,7 +560,7 @@
         lda #$0028
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$1A
+        sta aDeploymentTable._MapSpriteSlot+$1A
         lda #$0082
         sta aDeploymentTable._State+$1A
         lda #$02D0
@@ -570,7 +570,7 @@
         lda #$0031
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$1C
+        sta aDeploymentTable._MapSpriteSlot+$1C
         lda #$0082
         sta aDeploymentTable._State+$1C
         lda #$02F0
@@ -580,7 +580,7 @@
         lda #$002D
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$1E
+        sta aDeploymentTable._MapSpriteSlot+$1E
         lda #$0082
         sta aDeploymentTable._State+$1E
         lda #$02E0
@@ -590,7 +590,7 @@
         lda #$801C
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$20
+        sta aDeploymentTable._MapSpriteSlot+$20
         lda #$00C2
         sta aDeploymentTable._State+$20
         lda #$02F0
@@ -600,7 +600,7 @@
         lda #$801C
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$22
+        sta aDeploymentTable._MapSpriteSlot+$22
         lda #$0082
         sta aDeploymentTable._State+$22
         lda #$0300
@@ -610,7 +610,7 @@
         lda #$801C
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$24
+        sta aDeploymentTable._MapSpriteSlot+$24
         lda #$0082
         sta aDeploymentTable._State+$24
         lda #$02D0
@@ -620,7 +620,7 @@
         lda #$801D
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$26
+        sta aDeploymentTable._MapSpriteSlot+$26
         lda #$00C2
         sta aDeploymentTable._State+$26
         lda #$02E0
@@ -630,7 +630,7 @@
         lda #$801D
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$28
+        sta aDeploymentTable._MapSpriteSlot+$28
         lda #$00C2
         sta aDeploymentTable._State+$28
         lda #$0300
@@ -640,7 +640,7 @@
         lda #$801D
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$2A
+        sta aDeploymentTable._MapSpriteSlot+$2A
         lda #$0082
         sta aDeploymentTable._State+$2A
         lda #$0310
@@ -650,7 +650,7 @@
         lda #$801D
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$2C
+        sta aDeploymentTable._MapSpriteSlot+$2C
         lda #$0082
         sta aDeploymentTable._State+$2C
         lda #$02F0
@@ -660,7 +660,7 @@
         lda #$801E
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$2E
+        sta aDeploymentTable._MapSpriteSlot+$2E
         lda #$0082
         sta aDeploymentTable._State+$2E
         lda #$0260
@@ -670,7 +670,7 @@
         lda #$800F
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$30
+        sta aDeploymentTable._MapSpriteSlot+$30
         lda #$00C2
         sta aDeploymentTable._State+$30
         lda #$0260
@@ -680,7 +680,7 @@
         lda #$800F
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$32
+        sta aDeploymentTable._MapSpriteSlot+$32
         lda #$00C2
         sta aDeploymentTable._State+$32
         lda #$0260
@@ -690,7 +690,7 @@
         lda #$800F
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$34
+        sta aDeploymentTable._MapSpriteSlot+$34
         lda #$00C2
         sta aDeploymentTable._State+$34
         lda #$0260
@@ -700,7 +700,7 @@
         lda #$800F
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$36
+        sta aDeploymentTable._MapSpriteSlot+$36
         lda #$00C2
         sta aDeploymentTable._State+$36
         lda #$0260
@@ -710,7 +710,7 @@
         lda #$800F
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$38
+        sta aDeploymentTable._MapSpriteSlot+$38
         lda #$00C2
         sta aDeploymentTable._State+$38
         lda #$0270
@@ -720,7 +720,7 @@
         lda #$800B
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$3A
+        sta aDeploymentTable._MapSpriteSlot+$3A
         lda #$00C2
         sta aDeploymentTable._State+$3A
         lda #$0270
@@ -730,7 +730,7 @@
         lda #$800B
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$3C
+        sta aDeploymentTable._MapSpriteSlot+$3C
         lda #$00C2
         sta aDeploymentTable._State+$3C
         lda #$0270
@@ -740,7 +740,7 @@
         lda #$800B
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$3E
+        sta aDeploymentTable._MapSpriteSlot+$3E
         lda #$00C2
         sta aDeploymentTable._State+$3E
         lda #$0270
@@ -750,7 +750,7 @@
         lda #$800B
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$40
+        sta aDeploymentTable._MapSpriteSlot+$40
         lda #$00C2
         sta aDeploymentTable._State+$40
         lda #$0270
@@ -760,7 +760,7 @@
         lda #$800B
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$42
+        sta aDeploymentTable._MapSpriteSlot+$42
         lda #$00C2
         sta aDeploymentTable._State+$42
         lda #$0250
@@ -770,7 +770,7 @@
         lda #$8013
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$44
+        sta aDeploymentTable._MapSpriteSlot+$44
         lda #$00C2
         sta aDeploymentTable._State+$44
         lda #$0280
@@ -780,7 +780,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$46
+        sta aDeploymentTable._MapSpriteSlot+$46
         lda #$0082
         sta aDeploymentTable._State+$46
         lda #$0290
@@ -790,7 +790,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$48
+        sta aDeploymentTable._MapSpriteSlot+$48
         lda #$0082
         sta aDeploymentTable._State+$48
         lda #$02A0
@@ -800,7 +800,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$4A
+        sta aDeploymentTable._MapSpriteSlot+$4A
         lda #$0082
         sta aDeploymentTable._State+$4A
         lda #$02B0
@@ -810,7 +810,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$4C
+        sta aDeploymentTable._MapSpriteSlot+$4C
         lda #$0082
         sta aDeploymentTable._State+$4C
         lda #$02C0
@@ -820,7 +820,7 @@
         lda #$0010
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$4E
+        sta aDeploymentTable._MapSpriteSlot+$4E
         lda #$0082
         sta aDeploymentTable._State+$4E
         lda #$02A0
@@ -830,7 +830,7 @@
         lda #$001D
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets+$50
+        sta aDeploymentTable._MapSpriteSlot+$50
         lda #$0082
         sta aDeploymentTable._State+$50
         rtl
@@ -856,7 +856,7 @@
         sta aDeploymentTable,x
         sta aDeploymentTable._XPixelPosition,x
         sta aDeploymentTable._YPixelPosition,x
-        sta aDeploymentTable._DeploymentOffsets,x
+        sta aDeploymentTable._MapSpriteSlot,x
         lda #$FFFF
         sta aDeploymentTable._MapSpriteID,x
         dec x
@@ -998,7 +998,7 @@
         lda [lR18],y
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets,x
+        sta aDeploymentTable._MapSpriteSlot,x
         inc y
         inc y
         lda [lR18],y

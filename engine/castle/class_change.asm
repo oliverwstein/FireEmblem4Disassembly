@@ -41,7 +41,7 @@
         jsl rlGetSelectedUnitMapSprite
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets,x
+        sta aDeploymentTable._MapSpriteSlot,x
         lda #$7F00
         sta lRAMBufferPointer+1,b
         lda #$EBF4

@@ -1986,10 +1986,13 @@
       _YTilePosition .fill (size(word) * 72)      ; $7E44AB
       _XPixelPosition .fill (size(word) * 72)     ; $7E453B
       _YPixelPosition .fill (size(word) * 72)     ; $7E45CB
-      _DeploymentOffsets .fill (size(word) * 72)  ; $7E465B
+      _MapSpriteSlot .fill (size(word) * 72)  ; $7E465B
+        ; Per unit: its row in _MapSpriteID (x2), the shared map sprite it is drawn with.
       _UnitRAMPointer .fill (size(word) * 72)     ; $7E46EB
       _FactionSlot .fill (size(word) * 72)        ; $7E477B
       _MapSpriteID .fill (size(word) * 72)        ; $7E480B
+        ; Not per unit: a pool of the distinct map sprites in use ($FFFF free). Units of one
+        ; class share a row. Short sprites take rows 0-47; tall ones ($8000 set) search from row 71 down.
       _StateBuffer .fill (size(word) * 72)        ; $7E489B
     .bend
 

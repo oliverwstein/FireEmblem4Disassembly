@@ -3181,7 +3181,7 @@
         sta wR5
 
         _991F
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
@@ -3243,7 +3243,7 @@
         sta wR5
 
         _999C
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$8000

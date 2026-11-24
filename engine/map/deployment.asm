@@ -125,7 +125,7 @@
         sta aDeploymentTable._YPixelPosition,x
 
         jsl rlAddDeployedMapSprite
-        sta aDeploymentTable._DeploymentOffsets,x
+        sta aDeploymentTable._MapSpriteSlot,x
 
         jsl rlGetSelectedUnitFactionSlot
         sta aDeploymentTable._FactionSlot,x
@@ -164,6 +164,9 @@
         phx
 
         ldx wDeployedUnitsCount,b
+        ; A bug: this compares the count with $058B, the address of wDeployedUnitsCount
+        ; itself, so it never fails. The real check is rsAddUnitToDeploymentTable's
+        ; search for a free row.
         cpx #$058B
         bcs _SEC
 
@@ -1177,7 +1180,7 @@
         sta aDeploymentTable._YTilePosition,x
         sta aDeploymentTable._XPixelPosition,x
         sta aDeploymentTable._YPixelPosition,x
-        sta aDeploymentTable._DeploymentOffsets,x
+        sta aDeploymentTable._MapSpriteSlot,x
         sta aDeploymentTable._UnitRAMPointer,x
         sta aDeploymentTable._FactionSlot,x
         dec wDeployedUnitsCount,b

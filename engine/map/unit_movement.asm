@@ -1452,7 +1452,7 @@
         ; Starts the active unit's walking sound (by its map sprite, rlGetMapSpriteMovementSound), panned by the cursor's X and with the water flag of rlGetWalkingSoundTerrainFlag.
 
         ldx wActiveUnitDeploymentOffset,b
-        lda aDeploymentTable._DeploymentOffsets,x
+        lda aDeploymentTable._MapSpriteSlot,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         jsl rlGetMapSpriteMovementSound
