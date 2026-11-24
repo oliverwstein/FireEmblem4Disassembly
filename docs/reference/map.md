@@ -52,7 +52,7 @@ The map's main loop runs the game state routines: `rlMapStep` (below) runs the t
 | 2 | `rsMapStepPhaseBanner` | if the army takes a phase (`rlCheckFactionTakesPhase`), starts its music (`rlStartPhaseMusic`) and shows the phase banner |
 | 3 | `rsMapStepPhaseStartEvents` | event action `$21` (turn, army) |
 | 4 | `rsMapStepStartPhase` | love points at the start of the player's turns (`rlAddTurnStartLovePoints`, below), the turn start effects of the army's units (healing, status), the AI on |
-| 5 | `rsMapStepTurnStartHealing` | one window per unit healed at the turn's start, then the map windows; the cursor goes to the saved tile (auto cursor option) or the army's first unit |
+| 5 | `rsMapStepTurnStartHealing` | one window per unit healed at the turn's start, then the map windows; the cursor goes to the army's first unit on turn 1 or with the auto cursor option on, otherwise to the tile saved at End Turn |
 | 6 | `rsMapStepAutoSavePrompt` | from turn 2, with the auto save option, the save prompt |
 | 7 | `rsMapStepPhase` | the phase: the cursor and the camera move, the AI runs, until bit 5 of `wMapStateFlags` ends it |
 | 8 | `rsMapStepNextFaction` | the next army that exists (step 1), or after the last the end of the turn (step 9) |
@@ -61,7 +61,7 @@ The map's main loop runs the game state routines: `rlMapStep` (below) runs the t
 | 11 | `rsMapStepResume` | back from another screen: windows, fade in, a canto move if the active unit has one, then the saved step |
 | 12 | `rsMapStepGameOver` | fades to the game over screen |
 
-An army takes a phase only if it has a name and units on the map, and, if the chapter's `FactionPhaseFlagsPointer` table lists it, once the event flag given there is set, so a chapter can hold an army's phases back until an event sets the flag.
+An army takes a phase (gets its banner and music) only if it is the player's, or has a name and units on the map and, if the chapter's `FactionPhaseFlagsPointer` table lists it, the event flag given there is set. The check gates only steps 1, 2 and 4's music and banner: every loaded army still runs steps 3-8, with its phase start events, turn start effects and AI. Step 8's skip of a slot whose name ID is `$80` never fires (an empty slot reads `$FFFF`).
 
 The music: a chapter's first phase plays the chapter's own song (`aChapterFirstPhaseSongIDs`), later phases the army's phase song (`rsGetActiveFactionSongID`), and once every enemy is gone the victory theme (`rlCheckVictoryTheme`). `wPhaseSongID` holds it, and `rlResumePhaseMusic` plays it again after an event, a scene or the castle.
 
@@ -173,5 +173,5 @@ At the end of chapter 5, after Arvis attacks Sigurd, `procFirstGenerationEnding`
 - The help command's relocation (type 7 with `wR0` and `wR1`) and why the helper gets 100 experience.
 - What the chapter 5 flags `$14`-`$2C` record (the ending only reads them).
 - `rlDrawActiveUnitOverlaySpriteUnused` and its two sprite arrays: nothing reaches it.
-- `wChapterFlags` bit `$0100` (set by the map menu and bank `$91`), and what `$70` means to `rsOpenQueuedInventoryFullMenu`.
+- What `$70` means to `rsOpenQueuedInventoryFullMenu`.
 - The `CharacterID` of `MOVE_TEMPORARY_TO_COORDS_CLASS` and the help command's relocation (type 7: the target leaves the map with a scene).

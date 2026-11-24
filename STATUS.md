@@ -43,6 +43,11 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `wActionEndedDeploymentOffset` commented "faction/castle deployment helper"; it is the unit whose action just ended, for event action 3 | include/WRAM.h | `b3937a8` |
 | Raw `$2000` for the Select button; comment said dead units were "seen in the emulator" without saying why the code finds them | engine/menus/status_screen.asm | `f16dd1b` |
 | Round flags `$02` and `$10` called unknown; `$10` is `BattleRoundFlagFatal`, and `$02` is set by staff effects and Dance | include/Battle.h | `126e33b` |
+| The turn start healing list was written through raw `$7E2000`-`$7E2008` and two fields of `aDebugMenuSkillFlags` (`bWrath`, `bAdept`); now `aTurnStartHealingList` | include/WRAM.h, turn_start.asm, map_step.asm | `2da731d` |
+| `wMapStateFlags` `$0020` called an "AI/busy action lock"; it is the phase-over bit set by End Turn and the AI | include/WRAM.h | `2da731d` |
+| `wChapterFlags` `$0100` called unknown; it marks a chapter resumed from a map save (enter at map step 7) | include/WRAM.h | `2da731d` |
+| `rsMoveCursorToPhaseStart` comment had the auto cursor option backwards (on goes to the first unit, off to the saved tile); Ch. 8 draft copied it | engine/map/map_step.asm | `2da731d` |
+| `rlPhaseBannerCheckSkip` comment listed Select; the mask `$D0C0` is A, B, X, Y and Start; Ch. 8 draft copied it | engine/map/phase_banner.asm | `2da731d` |
 
 **In the documentation** (reference pages, guide drafts):
 
@@ -55,6 +60,8 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | About 160 procs (175), about 1,700 dialogue texts (1,987), low work RAM "visible in every bank" (only `$00`-`$3F` and `$80`-`$BF`) | introduction, OUTLINE.md | `d829d5c` |
 | A soldier "under forty bytes" (65 with its inventory and block headers) | introduction | `fba2948` |
 | Locations listed as "castles, villages, and gates"; chapters have no gates. "All 256 individual items" (140 are used); "every mutable piece" of a chapter in one RAM block | Part I opener, OUTLINE.md | `8760225` |
+| The phase-flag table said to hold an army's phases back; it gates only the banner and music, and the army's events and AI still run | map.md, wip/the-turn-draft.md | `db30b1e` |
+| Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
 ## Retail bugs and quirks found
 
@@ -78,6 +85,8 @@ Retail-ROM behavior, left as it is in the source and documented. Fix nothing her
 | Animation command crashes | `rsBattleAnimationCmdBroken` (combatants.asm) | No `rep #$20`, so `adc #$0002` assembles short and the CPU hits `brk`; sequence byte `$F8` unusable | source comment, BattleAnimation.h |
 | Branch to the wrong unit | `rlStartScriptedMapBattleAnimation` (cutscenes.asm) | With no usable weapon for the second unit, branches back to the first unit's code; unreached | source comment |
 | Adept can loop forever | `rsActionStructGetNumberOfStrikes` (battle.asm) | With Adept, `AttackSpeed + 20 < 0` takes `bmi -` back to the Astra check, which falls through to the same test; probably unreachable (needs weight over speed + 20) | not yet |
+| Empty-slot test never matches | `rsMapStepNextFaction` (map_step.asm) | Skips a slot whose name ID is `$80`; no group uses `$80` and an empty slot reads `$FFFF`, so every loaded slot runs steps 1-8 | Ch. 8, map.md |
+| Status counted down twice | `rsMapStepStartTurn` and `rsGetTurnStartCuredEffect` / `rsGetTurnStartFreelancerEffect` | Cured and Freelancer units count down at the turn's start and again at their army's phase; a countdown that ends at the turn's start clears the status without its reward (full HP, 3,000 gold) | Ch. 8 |
 
 Quirks that aren't bugs, recorded so they aren't rediscovered:
 

@@ -33,7 +33,7 @@ How the player commands a chapter once the pieces are on the board.
 
 | # | Chapter | Opening problem | Patterns | Source | Status |
 |---|---|---|---|---|---|
-| 8 | **The turn** | A turn is where almost every system in the game converges: phases, music fades, healing, love points, and multi-step battle fallout that cannot collide on the same frame. | A thirteen-step state machine; consequences left as notes and handled on the next frame (an event queue) | `map/map_step`, `units/turn_start`, `map/phase_banner` | Ready (map.md) |
+| 8 | **[The turn](08-the-turn.md)** | A turn is where almost every system in the game converges: phases, music fades, healing, love points, and multi-step battle fallout that cannot collide on the same frame. | A thirteen-step state machine; consequences left as notes and handled on the next frame (an event queue) | `map/map_step`, `units/turn_start`, `map/phase_banner` | Drafted |
 | 9 | **Moving a unit** | Where can this unit go, given terrain, foes, and its class? | Flood fill over a cost grid; paths; the range overlay | `map/range_maps`, `unit_movement`, `map_cursor`, `input` | Ready (map.md) |
 | 10 | **Menus over the map** | A turn is a chain of choices, each with a way back. | A stack of option lists; windows as procs; which commands appear, and why; battle forecast and popups | `menus/map_menu`, `main_map_menu`, `unit_menu`, `item_list`, `inventory_full`, `battle_forecast`, `map/windows`, `map/popups`, `map/map_actions` | Ready (map_menu.md) |
 
@@ -107,6 +107,6 @@ How a program with no operating system keeps sixty frames a second, schedules co
 
 The order of reading is not the order of writing. Chapters marked Ready can be written now, in any order. A chapter that leans on a later one can link ahead until that one exists.
 
-Proposed first: **Part I**, Chapters 1–5, in order; all five have reference pages (`units.md`, `items.md`, `map.md`). A draft of **The turn** (now Chapter 8) is archived in `wip/the-turn-draft.md` until Part I is in place.
+Proposed first: **Part I**, Chapters 1–5, in order; all five have reference pages (`units.md`, `items.md`, `map.md`).
 
 Before Part II can be written, the reference needs a page for `battle/`.
