@@ -116,7 +116,7 @@
     .autsiz
     .databank ?
 
-    jsl rlUnknown9FF4C5
+    jsl rlStartMapMagicCutsceneSeqUnused
     jsl rlCreateProcEventWaitFlag7F4C07Bit10
     rtl
 

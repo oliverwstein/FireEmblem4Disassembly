@@ -171,7 +171,7 @@
 
       procUnknown87C70A ; 87/C70A
 
-        ; BG2 HDMA ripple visual effect created by rlUnknown9FF947 in map_magic_effects.asm.
+        ; BG2 HDMA ripple visual effect created by rlMapMagicCutsceneStartRipple in map_magic_effects.asm.
         .structProcInfo "RP", rlProcMapMagicRippleInit, rlProcMapMagicRippleUploadTiles, aProcUnknown87C70ACode
 
     .endsection Unsorted87C70ASection

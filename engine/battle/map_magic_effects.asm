@@ -11817,7 +11817,7 @@
         sta aProcSystem.aBody3,b,x
         sta aProcSystem.aBody4,b,x
         sta aProcSystem.aBody7,b,x
-        jml rlUnknown9FECB2
+        jml rlMapMagicClearWindowBuffers
 
 
         _D7F3
@@ -11837,7 +11837,7 @@
         sta aProcSystem.aBody3,b,x
         sta aProcSystem.aBody4,b,x
         sta aProcSystem.aBody7,b,x
-        jml rlUnknown9FECB2
+        jml rlMapMagicClearWindowBuffers
 
         .databank 0
 
@@ -14187,7 +14187,7 @@
       .al
       .xl
 
-      rlUnknown9FEBA8 ; 9F/EBA8
+      rlMapMagicUnusedStub ; 9F/EBA8
 
         .al
         .xl
@@ -14217,35 +14217,35 @@
 
       procUnknown9FEBAB ; 9F/EBAB
 
-        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF060, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicScrollWindowInit, rlMapMagicFireWindowCycle, aProcMapMagicHaltCode
 
         .byte $10, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEBBA ; 9F/EBBA
 
         ; Part of the Elfire effect.
-        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF04F, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicScrollWindowInit, rlMapMagicElfireWindowCycle, aProcMapMagicHaltCode
 
         .byte $10, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEBC9 ; 9F/EBC9
 
         ; Part of the Aura effect.
-        .structProcInfo "ON", rlUnknown9FED29, rlUnknown9FF071, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicAuraWindowInit, rlMapMagicAuraWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $00, $12, $00, $00, $00, $00
 
       procUnknown9FEBD8 ; 9F/EBD8
 
         ; Shared by the Heal, Light, Mend, Physic and Recover effects.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $12, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEBE7 ; 9F/EBE7
 
         ; Part of the Thunder effect.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $01, $02, $00, $00, $00, $00
 
@@ -14257,83 +14257,83 @@
       procUnknown9FEBFE ; 9F/EBFE
 
         ; Part of the Mjolnir effect.
-        .structProcInfo "ON", rlUnknown9FED54, rlUnknown9FEE45, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicMjolnirWindowSetDelay, rlMapMagicMjolnirWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEC0D ; 9F/EC0D
 
         ; Part of the Fortify effect.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $80, $00, $10, $00, $00, $00, $00
 
       procUnknown9FEC1C ; 9F/EC1C
 
         ; Part of the Fenrir effect.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $60, $00, $02, $00, $00, $D4, $00
 
       procUnknown9FEC2B ; 9F/EC2B
 
         ; Part of the Berserk effect.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $20, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEC3A ; 9F/EC3A
 
         ; Shared by the Blizzard and Hel effects.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $01, $01, $00, $00, $00, $00
 
       procUnknown9FEC49 ; 9F/EC49
 
         ; Part of the Bolganone effect.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $30, $01, $10, $00, $00, $F0, $FF
 
       procUnknown9FEC58 ; 9F/EC58
 
         ; Part of the Thoron effect.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $1E, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEC67 ; 9F/EC67
 
         ; Shared by the Restore, Return and Sleep effects.
-        .structProcInfo "ON", rlUnknown9FF0DC, rlUnknown9FF100, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicStaffWindowInit, rlMapMagicStaffWindowWaitGrow, aProcMapMagicHaltCode
 
         .byte $0C, $30, $00, $00, $00, $0E, $00
 
       procUnknown9FEC76 ; 9F/EC76
 
         ; Part of the Forseti effect.
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FF1BC, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicForsetiWindowCycle, aProcMapMagicHaltCode
 
         .byte $F0, $00, $02, $00, $00, $00, $00
 
       procUnknown9FEC85 ; 9F/EC85
 
         ; Part of the Silence effect.
-        .structProcInfo "ON", rlUnknown9FED5A, rlMapMagicSilenceStepBeamHDMA, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicSilenceStepBeamHDMA, aProcMapMagicHaltCode
 
         .byte $22, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEC94 ; 9F/EC94
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $01, $01, $00, $00, $00, $00
 
       procUnknown9FECA3 ; 9F/ECA3
 
         ; Part of the Meteor effect.
-        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF000, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicScrollWindowInit, rlMapMagicMeteorWindowInit, aProcMapMagicHaltCode
 
         .byte $10, $00, $01, $00, $00, $00, $00
 
@@ -14345,7 +14345,7 @@
       .al
       .xl
 
-      rlUnknown9FECB2 ; 9F/ECB2
+      rlMapMagicClearWindowBuffers ; 9F/ECB2
 
         .al
         .xl
@@ -14394,7 +14394,7 @@
 
         ; 9F/ECFE
 
-      rlUnknown9FECFE ; 9F/ECFE
+      rlMapMagicScrollWindowInit ; 9F/ECFE
 
         ; Found through fe4.cdl.
         .al
@@ -14403,7 +14403,7 @@
         .databank ?
         ; Shared by the Elfire and Meteor effects.
 
-        jsl rlUnknown9FED5A
+        jsl rlMapMagicCircleWindowInit
         lda wMapMagicTargetPixel
         and #$00FF
         sec
@@ -14432,7 +14432,7 @@
       .al
       .xl
 
-      rlUnknown9FED29 ; 9F/ED29
+      rlMapMagicAuraWindowInit ; 9F/ED29
 
         .al
         .xl
@@ -14440,7 +14440,7 @@
         .databank ?
         ; Part of the Aura effect.
 
-        jsl rlUnknown9FED5A
+        jsl rlMapMagicCircleWindowInit
         lda wMapMagicTargetPixel
         and #$00FF
         sec
@@ -14460,7 +14460,7 @@
         .databank 0
 
         ; 9F/ED54
-      rlUnknown9FED54 ; 9F/ED54
+      rlMapMagicMjolnirWindowSetDelay ; 9F/ED54
 
         .al
         .xl
@@ -14483,7 +14483,7 @@
       .al
       .xl
 
-      rlUnknown9FED5A ; 9F/ED5A
+      rlMapMagicCircleWindowInit ; 9F/ED5A
 
         .al
         .xl
@@ -14522,13 +14522,13 @@
         eor #$FFFF
         inc a
         sta $7F50CF
-        jml rlUnknown9FECB2
+        jml rlMapMagicClearWindowBuffers
 
         .databank 0
 
         ; 9F/EDB3
 
-      rlUnknown9FEDB3 ; 9F/EDB3
+      rlMapMagicCircleWindowCycle ; 9F/EDB3
 
         ; Found through fe4.cdl.
         .al
@@ -14619,7 +14619,7 @@
       .al
       .xl
 
-      rlUnknown9FEE45 ; 9F/EE45
+      rlMapMagicMjolnirWindowCycle ; 9F/EE45
 
         .al
         .xl
@@ -14716,7 +14716,7 @@
         sta aProcSystem.aBody3,b,x
         lda #$0008
         sta aProcSystem.aBody6,b,x
-        lda #<>rlUnknown9FEF1D
+        lda #<>rlMapMagicMjolnirWindowWaitExpand
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _EF1C
@@ -14725,7 +14725,7 @@
         .databank 0
 
         ; 9F/EF1D
-      rlUnknown9FEF1D ; 9F/EF1D
+      rlMapMagicMjolnirWindowWaitExpand ; 9F/EF1D
 
         .al
         .xl
@@ -14734,18 +14734,18 @@
         ; Part of the Mjolnir effect.
 
         dec aProcSystem.aBody6,b,x
-        bne rlUnknown9FEF48
+        bne rlMapMagicMjolnirWindowShrink
         lda #$0001
         sta $7ECC08
-        lda #<>rlUnknown9FEF37
+        lda #<>rlMapMagicMjolnirWindowWaitHold
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0030
         sta aProcSystem.aBody6,b,x
-        bra rlUnknown9FEF48
+        bra rlMapMagicMjolnirWindowShrink
         .databank 0
 
         ; 9F/EF37
-      rlUnknown9FEF37 ; 9F/EF37
+      rlMapMagicMjolnirWindowWaitHold ; 9F/EF37
 
         .al
         .xl
@@ -14754,16 +14754,16 @@
         ; Part of the Mjolnir effect.
 
         dec aProcSystem.aBody6,b,x
-        bne rlUnknown9FEF48
+        bne rlMapMagicMjolnirWindowShrink
         lda #$001A
         sta aProcSystem.aBody3,b,x
-        lda #<>rlUnknown9FEF48
+        lda #<>rlMapMagicMjolnirWindowShrink
         sta aProcSystem.aHeaderOnCycle,b,x
 
         .databank 0
 
         ; 9F/EF48
-      rlUnknown9FEF48 ; 9F/EF48
+      rlMapMagicMjolnirWindowShrink ; 9F/EF48
 
         .al
         .xl
@@ -14858,7 +14858,7 @@
         .databank 0
 
         ; 9F/F000
-      rlUnknown9FF000 ; 9F/F000
+      rlMapMagicMeteorWindowInit ; 9F/F000
 
         .al
         .xl
@@ -14906,7 +14906,7 @@
         .databank 0
 
         ; 9F/F04F
-      rlUnknown9FF04F ; 9F/F04F
+      rlMapMagicElfireWindowCycle ; 9F/F04F
 
         .al
         .xl
@@ -14920,7 +14920,7 @@
         sta wR1
         lda #$FFFE
         sta wR3
-        bra rlUnknown9FF071._F07D
+        bra rlMapMagicAuraWindowCycle._F07D
 
         .databank 0
 
@@ -14934,7 +14934,7 @@
       .al
       .xl
 
-      rlUnknown9FF060 ; 9F/F060
+      rlMapMagicFireWindowCycle ; 9F/F060
 
         ; Found through fe4.cdl.
         .al
@@ -14948,9 +14948,9 @@
         sta wR1
         lda #$FFFE
         sta wR3
-        bra rlUnknown9FF071._F07D
+        bra rlMapMagicAuraWindowCycle._F07D
 
-      rlUnknown9FF071 ; 9F/F071
+      rlMapMagicAuraWindowCycle ; 9F/F071
 
         .al
         .xl
@@ -15001,7 +15001,7 @@
         lda wR1
         tay
         lda $7F50E3
-        jsr rsUnknown9FF250
+        jsr rsMapMagicAuraDrawMask
         ply
 
         _F0DB
@@ -15019,7 +15019,7 @@
       .al
       .xl
 
-      rlUnknown9FF0DC ; 9F/F0DC
+      rlMapMagicStaffWindowInit ; 9F/F0DC
 
         .al
         .xl
@@ -15039,7 +15039,7 @@
         sta aProcSystem.aBody2,b,x
         lda #$0100
         sta aProcSystem.aBody3,b,x
-        jml rlUnknown9FECB2
+        jml rlMapMagicClearWindowBuffers
 
         .databank 0
 
@@ -15053,7 +15053,7 @@
       .al
       .xl
 
-      rlUnknown9FF100 ; 9F/F100
+      rlMapMagicStaffWindowWaitGrow ; 9F/F100
 
         ; Found by tools/sweep.py.
         .al
@@ -15063,15 +15063,15 @@
         ; Shared by the Restore, Return and Sleep effects.
 
         dec aProcSystem.aBody0,b,x
-        bne rlUnknown9FF111
-        lda #<>rlUnknown9FF111
+        bne rlMapMagicStaffWindowGrow
+        lda #<>rlMapMagicStaffWindowGrow
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$00C0
         sta aProcSystem.aBody4,b,x
 
         .databank 0
 
-      rlUnknown9FF111 ; 9F/F111
+      rlMapMagicStaffWindowGrow ; 9F/F111
 
         .al
         .xl
@@ -15173,7 +15173,7 @@
       .al
       .xl
 
-      rlUnknown9FF1BC ; 9F/F1BC
+      rlMapMagicForsetiWindowCycle ; 9F/F1BC
 
         .al
         .xl
@@ -15263,7 +15263,7 @@
       .al
       .xl
 
-      rsUnknown9FF250 ; 9F/F250
+      rsMapMagicAuraDrawMask ; 9F/F250
 
         .al
         .xl
@@ -15283,9 +15283,9 @@
         sta wR3
         pla
         phx
-        jsr rsUnknown9FF275
-        jsr rsUnknown9FF376
-        jsr rsUnknown9FF2E4
+        jsr rsMapMagicAuraInitMaskParams
+        jsr rsMapMagicAuraDrawMaskRows
+        jsr rsMapMagicAuraFillMaskBottom
         plx
         rts
 
@@ -15293,7 +15293,7 @@
 
         ; 9F/F275
 
-      rsUnknown9FF275 ; 9F/F275
+      rsMapMagicAuraInitMaskParams ; 9F/F275
 
         .al
         .xl
@@ -15373,7 +15373,7 @@
 
         ; 9F/F2E4
 
-      rsUnknown9FF2E4 ; 9F/F2E4
+      rsMapMagicAuraFillMaskBottom ; 9F/F2E4
 
         .al
         .xl
@@ -15401,7 +15401,7 @@
 
         .databank 0
 
-      rsUnknown9FF2FD ; 9F/F2FD
+      rsMapMagicAuraDrawMaskHalfUnused ; 9F/F2FD
 
         .al
         .xl
@@ -15492,7 +15492,7 @@
       .al
       .xl
 
-      rsUnknown9FF376 ; 9F/F376
+      rsMapMagicAuraDrawMaskRows ; 9F/F376
 
         .al
         .xl
@@ -15588,7 +15588,7 @@
       .al
       .xl
 
-      rlUnknown9FF3ED ; 9F/F3ED
+      rlMapMagicGetOctantAngle ; 9F/F3ED
 
         .al
         .xl
@@ -15615,7 +15615,7 @@
         _F408
         sta wR1
         cmp wR0
-        bpl rlUnknown9FF42F
+        bpl rlMapMagicDivideAngleOctant
         sep #$20
         stz $4204,b
         lda wR1
@@ -15634,13 +15634,13 @@
 
       aUnknown9FF427 ; 9F/F427
 
-        ; Jump table of rlUnknown9FF3ED.
-        .word <>rsUnknown9FF450
-        .word <>rsUnknown9FF45E
-        .word <>rsUnknown9FF468
-        .word <>rsUnknown9FF476
+        ; Jump table of rlMapMagicGetOctantAngle.
+        .word <>rsMapMagicAngleOctant0
+        .word <>rsMapMagicAngleOctant1
+        .word <>rsMapMagicAngleOctant2
+        .word <>rsMapMagicAngleOctant3
 
-      rlUnknown9FF42F ; 9F/F42F
+      rlMapMagicDivideAngleOctant ; 9F/F42F
 
         .al
         .xl
@@ -15675,11 +15675,11 @@
 
       aUnknown9FF448 ; 9F/F448
 
-        ; Jump table of rlUnknown9FF3ED.
-        .word <>rsUnknown9FF487
-        .word <>rsUnknown9FF495
-        .word <>rsUnknown9FF4A6
-        .word <>rsUnknown9FF4B7
+        ; Jump table of rlMapMagicGetOctantAngle.
+        .word <>rsMapMagicAngleOctant4
+        .word <>rsMapMagicAngleOctant5
+        .word <>rsMapMagicAngleOctant6
+        .word <>rsMapMagicAngleOctant7
 
     .endsection Table9FF448Section
 
@@ -15689,7 +15689,7 @@
       .al
       .xl
 
-      rsUnknown9FF450 ; 9F/F450
+      rsMapMagicAngleOctant0 ; 9F/F450
 
         .al
         .xl
@@ -15709,7 +15709,7 @@
 
         ; 9F/F45E
 
-      rsUnknown9FF45E ; 9F/F45E
+      rsMapMagicAngleOctant1 ; 9F/F45E
 
         .al
         .xl
@@ -15727,7 +15727,7 @@
 
         ; 9F/F468
 
-      rsUnknown9FF468 ; 9F/F468
+      rsMapMagicAngleOctant2 ; 9F/F468
 
         .al
         .xl
@@ -15747,7 +15747,7 @@
 
         ; 9F/F476
 
-      rsUnknown9FF476 ; 9F/F476
+      rsMapMagicAngleOctant3 ; 9F/F476
 
         .al
         .xl
@@ -15776,7 +15776,7 @@
       .al
       .xl
 
-      rsUnknown9FF487 ; 9F/F487
+      rsMapMagicAngleOctant4 ; 9F/F487
 
         .al
         .xl
@@ -15804,7 +15804,7 @@
       .al
       .xl
 
-      rsUnknown9FF495 ; 9F/F495
+      rsMapMagicAngleOctant5 ; 9F/F495
 
         .al
         .xl
@@ -15833,7 +15833,7 @@
       .al
       .xl
 
-      rsUnknown9FF4A6 ; 9F/F4A6
+      rsMapMagicAngleOctant6 ; 9F/F4A6
 
         .al
         .xl
@@ -15862,7 +15862,7 @@
       .al
       .xl
 
-      rsUnknown9FF4B7 ; 9F/F4B7
+      rsMapMagicAngleOctant7 ; 9F/F4B7
 
         .al
         .xl
@@ -15890,7 +15890,7 @@
       .al
       .xl
 
-      rlUnknown9FF4C5 ; 9F/F4C5
+      rlStartMapMagicCutsceneSeqUnused ; 9F/F4C5
 
         .al
         .xl
@@ -15920,7 +15920,7 @@
 
       procUnknown9FF4D6 ; 9F/F4D6
 
-        .structProcInfo "ON", rlUnknown9FF4DE, rlUnknown9FF54E, aProcUnknown9FF4D6Code
+        .structProcInfo "ON", rlProcMapMagicCutsceneSeqInit, rlProcMapMagicCutsceneSeqIdle, aProcUnknown9FF4D6Code
 
     .endsection Unsorted9FF4D6Section
 
@@ -15930,7 +15930,7 @@
       .al
       .xl
 
-      rlUnknown9FF4DE ; 9F/F4DE
+      rlProcMapMagicCutsceneSeqInit ; 9F/F4DE
 
         .al
         .xl
@@ -15951,8 +15951,8 @@
         sta aMapAction.wMapBattleStrikeSignal
         sta aMapAction.wMapBattleStrikeDone
         sta aMapAction.wMapBattleRoundRunning
-        jsl rlUnknown9FF697
-        jsl rlUnknown9FF6B6
+        jsl rlMapMagicCutsceneQueueGfx1
+        jsl rlMapMagicCutsceneQueueGfx2
         lda #$0005
         jsl rlGetEventLocationEntryCoordinatesByID
         pha
@@ -15962,7 +15962,7 @@
         xba
         and #$00FF
         sta $7F57EC
-        jsr rsUnknown9FF95C
+        jsr rsMapMagicCutsceneSavePalettes
         lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta $15E5,b
         lda #<>rlPushToOAMBufferDualTileBase
@@ -15979,7 +15979,7 @@
 
         ; 9F/F54E
 
-      rlUnknown9FF54E ; 9F/F54E
+      rlProcMapMagicCutsceneSeqIdle ; 9F/F54E
 
         .al
         .xl
@@ -15992,7 +15992,7 @@
 
         ; 9F/F54F
 
-      rlUnknown9FF54F ; 9F/F54F
+      rlProcMapMagicCutsceneSeqFadeWhite ; 9F/F54F
 
         .al
         .xl
@@ -16002,11 +16002,11 @@
         phx
         lda aProcSystem.aBody3,b,x
         bne _F563
-        jsr rsUnknown9FF97A
+        jsr rsMapMagicCutsceneStepFadeWhite
         bcc _F563
         lda #1,s
         tax
-        lda #<>rlUnknown9FF54E
+        lda #<>rlProcMapMagicCutsceneSeqIdle
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _F563
@@ -16026,7 +16026,7 @@
 
         ; 9F/F574
 
-      rlUnknown9FF574 ; 9F/F574
+      rlProcMapMagicCutsceneSeqFadeIn ; 9F/F574
 
         .al
         .xl
@@ -16036,7 +16036,7 @@
         phx
         lda @l $001037,x
         bne _F58A
-        jsr rsUnknown9FF968
+        jsr rsMapMagicCutsceneStepFadeIn
         bcc _F58A
         lda #1,s
         tax
@@ -16073,58 +16073,58 @@
         PROC_YIELD 1
         _F59F
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FF6D5
+        PROC_CALL rlMapMagicCutsceneWaitDecomp
         PROC_JUMP_IF_BITS_UNSET _F59F, $0001
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FF6F0
+        PROC_CALL rlMapMagicCutsceneUploadGfx
         PROC_YIELD 2
-        PROC_CALL rlUnknown9FF887
+        PROC_CALL rlMapMagicCutsceneStartDarken
         _F5BA
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FF899
+        PROC_CALL rlMapMagicCutsceneStepDarken
         PROC_JUMP_IF_BITS_UNSET _F5BA, $0004
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FF65A
+        PROC_CALL rlMapMagicCutscenePlayCastSound
         _F5CE
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FF67D
+        PROC_CALL rlMapMagicCutsceneWaitSound
         PROC_JUMP_IF_BITS_UNSET _F5CE, $0004
-        PROC_CALL rlUnknown9FF9A8
-        PROC_CALL rlUnknown9FF8B5
+        PROC_CALL rlMapMagicCutsceneStartShake
+        PROC_CALL rlMapMagicCutsceneStartBrighten
         _F5E5
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FF8C7
+        PROC_CALL rlMapMagicCutsceneStepBrighten
         PROC_JUMP_IF_BITS_UNSET _F5E5, $0004
         PROC_YIELD 1
         PROC_YIELD 120
-        PROC_CALL rlUnknown9FF864
+        PROC_CALL rlMapMagicCutsceneSetSignal10
         PROC_YIELD 64
-        PROC_CALL rlUnknown9FF749
+        PROC_CALL rlMapMagicCutsceneSetupSprites
         _F602
         PROC_YIELD 12
-        PROC_CALL rlUnknown9FF839
+        PROC_CALL rlMapMagicCutsceneSlideSpriteUp
         PROC_JUMP_IF_BITS_UNSET _F602, $0004
         PROC_YIELD 240
-        PROC_CALL rlUnknown9FF870
-        PROC_CALL rlUnknown9FF68F
+        PROC_CALL rlMapMagicCutsceneTriggerStrike
+        PROC_CALL rlMapMagicCutscenePlayImpactSound
         PROC_YIELD 18
-        PROC_CALL rlUnknown9FF947
+        PROC_CALL rlMapMagicCutsceneStartRipple
         PROC_YIELD 6
-        PROC_CALL rlUnknown9FF870
+        PROC_CALL rlMapMagicCutsceneTriggerStrike
         PROC_YIELD 32
-        PROC_CALL rlUnknown9FF905
-        PROC_SET_ONCYCLE rlUnknown9FF54F
+        PROC_CALL rlMapMagicCutsceneStartFadeWhite
+        PROC_SET_ONCYCLE rlProcMapMagicCutsceneSeqFadeWhite
         PROC_YIELD 80
         PROC_YIELD 120
-        PROC_CALL rlUnknown9FF90C
-        PROC_SET_ONCYCLE rlUnknown9FF574
+        PROC_CALL rlMapMagicCutsceneStartFadeIn
+        PROC_SET_ONCYCLE rlProcMapMagicCutsceneSeqFadeIn
         PROC_YIELD 64
-        PROC_CALL rlUnknown9FFAB4
+        PROC_CALL rlMapMagicCutsceneStopShake
         PROC_YIELD 120
-        PROC_CALL rlUnknown9FFAC0
+        PROC_CALL rlMapMagicCutsceneSetDoneSignal
         PROC_YIELD 96
         PROC_YIELD 180
-        PROC_CALL rlUnknown9FF916
+        PROC_CALL rlMapMagicCutsceneEnd
         PROC_HALT
 
 
@@ -16138,7 +16138,7 @@
       .al
       .xl
 
-      rlUnknown9FF65A ; 9F/F65A
+      rlMapMagicCutscenePlayCastSound ; 9F/F65A
 
         .al
         .xl
@@ -16156,7 +16156,7 @@
 
         .databank 0
 
-      rlUnknown9FF66D ; 9F/F66D
+      rlMapMagicCutsceneResumeMusicUnused ; 9F/F66D
 
         .al
         .xl
@@ -16181,7 +16181,7 @@
       .al
       .xl
 
-      rlUnknown9FF67D ; 9F/F67D
+      rlMapMagicCutsceneWaitSound ; 9F/F67D
 
         .al
         .xl
@@ -16203,7 +16203,7 @@
 
         ; 9F/F68F
 
-      rlUnknown9FF68F ; 9F/F68F
+      rlMapMagicCutscenePlayImpactSound ; 9F/F68F
 
         .al
         .xl
@@ -16218,7 +16218,7 @@
 
         ; 9F/F697
 
-      rlUnknown9FF697 ; 9F/F697
+      rlMapMagicCutsceneQueueGfx1 ; 9F/F697
 
         .al
         .xl
@@ -16244,7 +16244,7 @@
 
         ; 9F/F6B6
 
-      rlUnknown9FF6B6 ; 9F/F6B6
+      rlMapMagicCutsceneQueueGfx2 ; 9F/F6B6
 
         .al
         .xl
@@ -16270,7 +16270,7 @@
 
         ; 9F/F6D5
 
-      rlUnknown9FF6D5 ; 9F/F6D5
+      rlMapMagicCutsceneWaitDecomp ; 9F/F6D5
 
         .al
         .xl
@@ -16294,7 +16294,7 @@
 
         ; 9F/F6F0
 
-      rlUnknown9FF6F0 ; 9F/F6F0
+      rlMapMagicCutsceneUploadGfx ; 9F/F6F0
 
         .al
         .xl
@@ -16347,7 +16347,7 @@
 
       aUnknown9FF729 ; 9F/F729
 
-        ; Read by rlUnknown9FF6F0.
+        ; Read by rlMapMagicCutsceneUploadGfx.
 
         .word $3800, $7FFF, $6739, $41F0, $292A, $1485, $0C43, $1919
         .word $10B2, $0C49, $375F, $0000, $0000, $0000, $0000, $0000
@@ -16362,7 +16362,7 @@
       .al
       .xl
 
-      rlUnknown9FF749 ; 9F/F749
+      rlMapMagicCutsceneSetupSprites ; 9F/F749
 
         .al
         .xl
@@ -16463,7 +16463,7 @@
 
         ; 9F/F839
 
-      rlUnknown9FF839 ; 9F/F839
+      rlMapMagicCutsceneSlideSpriteUp ; 9F/F839
 
         .al
         .xl
@@ -16499,7 +16499,7 @@
 
         ; 9F/F864
 
-      rlUnknown9FF864 ; 9F/F864
+      rlMapMagicCutsceneSetSignal10 ; 9F/F864
 
         .al
         .xl
@@ -16515,7 +16515,7 @@
 
         ; 9F/F870
 
-      rlUnknown9FF870 ; 9F/F870
+      rlMapMagicCutsceneTriggerStrike ; 9F/F870
 
         .al
         .xl
@@ -16535,7 +16535,7 @@
 
         ; 9F/F887
 
-      rlUnknown9FF887 ; 9F/F887
+      rlMapMagicCutsceneStartDarken ; 9F/F887
 
         .al
         .xl
@@ -16555,7 +16555,7 @@
 
         ; 9F/F899
 
-      rlUnknown9FF899 ; 9F/F899
+      rlMapMagicCutsceneStepDarken ; 9F/F899
 
         .al
         .xl
@@ -16587,7 +16587,7 @@
 
         ; 9F/F8B5
 
-      rlUnknown9FF8B5 ; 9F/F8B5
+      rlMapMagicCutsceneStartBrighten ; 9F/F8B5
 
         .al
         .xl
@@ -16607,7 +16607,7 @@
 
         ; 9F/F8C7
 
-      rlUnknown9FF8C7 ; 9F/F8C7
+      rlMapMagicCutsceneStepBrighten ; 9F/F8C7
 
         .al
         .xl
@@ -16631,7 +16631,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlUnknown9FF54E
+        lda #<>rlProcMapMagicCutsceneSeqIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _F8FF
 
@@ -16655,7 +16655,7 @@
 
         ; 9F/F905
 
-      rlUnknown9FF905 ; 9F/F905
+      rlMapMagicCutsceneStartFadeWhite ; 9F/F905
 
         .al
         .xl
@@ -16670,7 +16670,7 @@
 
         ; 9F/F90C
 
-      rlUnknown9FF90C ; 9F/F90C
+      rlMapMagicCutsceneStartFadeIn ; 9F/F90C
 
         .al
         .xl
@@ -16686,7 +16686,7 @@
 
         ; 9F/F916
 
-      rlUnknown9FF916 ; 9F/F916
+      rlMapMagicCutsceneEnd ; 9F/F916
 
         .al
         .xl
@@ -16713,7 +16713,7 @@
 
         ; 9F/F947
 
-      rlUnknown9FF947 ; 9F/F947
+      rlMapMagicCutsceneStartRipple ; 9F/F947
 
         .al
         .xl
@@ -16733,7 +16733,7 @@
 
         ; 9F/F95C
 
-      rsUnknown9FF95C ; 9F/F95C
+      rsMapMagicCutsceneSavePalettes ; 9F/F95C
 
         .al
         .xl
@@ -16750,7 +16750,7 @@
 
         ; 9F/F968
 
-      rsUnknown9FF968 ; 9F/F968
+      rsMapMagicCutsceneStepFadeIn ; 9F/F968
 
         .al
         .xl
@@ -16770,7 +16770,7 @@
 
         ; 9F/F97A
 
-      rsUnknown9FF97A ; 9F/F97A
+      rsMapMagicCutsceneStepFadeWhite ; 9F/F97A
 
         .al
         .xl
@@ -16815,7 +16815,7 @@
       .al
       .xl
 
-      rlUnknown9FF9A8 ; 9F/F9A8
+      rlMapMagicCutsceneStartShake ; 9F/F9A8
 
         .al
         .xl
@@ -16845,7 +16845,7 @@
 
       procUnknown9FF9B9 ; 9F/F9B9
 
-        .structProcInfo "ON", rlUnknown9FF9C1, rlUnknown9FF9DA, aProcUnknown9FF9B9Code
+        .structProcInfo "ON", rlProcMapMagicCutsceneShakeInit, rlProcMapMagicCutsceneShakeCycle, aProcUnknown9FF9B9Code
 
     .endsection Unsorted9FF9B9Section
 
@@ -16855,7 +16855,7 @@
       .al
       .xl
 
-      rlUnknown9FF9C1 ; 9F/F9C1
+      rlProcMapMagicCutsceneShakeInit ; 9F/F9C1
 
         .al
         .xl
@@ -16876,7 +16876,7 @@
 
         ; 9F/F9DA
 
-      rlUnknown9FF9DA ; 9F/F9DA
+      rlProcMapMagicCutsceneShakeCycle ; 9F/F9DA
 
         .al
         .xl
@@ -16970,7 +16970,7 @@
 
       aUnknown9FFA78 ; 9F/FA78
 
-        ; Read by rlUnknown9FF9DA.
+        ; Read by rlProcMapMagicCutsceneShakeCycle.
 
         .word $0001, $0000, $0001, $0001, $0001, $0000, $0001, $0001
 
@@ -16978,7 +16978,7 @@
 
       aUnknown9FFA88 ; 9F/FA88
 
-        ; Read by rlUnknown9FF9DA.
+        ; Read by rlProcMapMagicCutsceneShakeCycle.
 
         .word $0002, $0000, $0002, $0002, $0002, $0000, $0002, $0002
 
@@ -17007,7 +17007,7 @@
       .al
       .xl
 
-      rlUnknown9FFA9A ; 9F/FA9A
+      rlMapMagicCutsceneSetScrollUnused ; 9F/FA9A
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -17038,7 +17038,7 @@
       .al
       .xl
 
-      rlUnknown9FFAB4 ; 9F/FAB4
+      rlMapMagicCutsceneStopShake ; 9F/FAB4
 
         .al
         .xl
@@ -17054,7 +17054,7 @@
 
         ; 9F/FAC0
 
-      rlUnknown9FFAC0 ; 9F/FAC0
+      rlMapMagicCutsceneSetDoneSignal ; 9F/FAC0
 
         .al
         .xl

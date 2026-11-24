@@ -346,7 +346,7 @@
         asl a
         asl a
         sta wR1
-        jsl rlUnknown9FF3ED
+        jsl rlMapMagicGetOctantAngle
         sec
         sbc #$0010
         and #$00FF
