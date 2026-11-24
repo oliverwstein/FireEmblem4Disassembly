@@ -2338,10 +2338,10 @@
         beq _8D57
         phx
         lda aMovingMapSprites.wMovingSound,b,x
-        jsl rlUnknown91C472
+        jsl rlAssignMovingSpriteSoundChannel
         plx
         sta aMovingMapSprites.wMovingSound,b,x
-        jsl rlUnknown91C4CE
+        jsl rlStartMovingSpriteSound
 
         _8D57
         rts

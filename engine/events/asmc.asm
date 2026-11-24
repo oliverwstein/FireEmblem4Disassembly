@@ -266,7 +266,7 @@
         .autsiz
         .databank ?
 
-        ; If a dialogue is running, marks its proc as one the event does not wait for (rlUnknown91A4AC), so the script goes on while the text shows.
+        ; If a dialogue is running, marks its proc as one the event does not wait for (rlEventEngineMarkProcNonBlocking), so the script goes on while the text shows.
 
         lda #(`procDialogue)<<8
         sta lR44+1
@@ -275,7 +275,7 @@
         jsl rlProcEngineFindProc
         bcc _End
 
-          jsl rlUnknown91A4AC
+          jsl rlEventEngineMarkProcNonBlocking
 
         _End
         rtl

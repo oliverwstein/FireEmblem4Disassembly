@@ -607,7 +607,7 @@
         lda #<>procMainLoopChangeFadeByTimer
         sta lR44
         jsl rlProcEngineCreateProc
-        jsl rlUnknown91C611
+        jsl rlClearMovingMapSpritesAndSound
         bra +
 
         +

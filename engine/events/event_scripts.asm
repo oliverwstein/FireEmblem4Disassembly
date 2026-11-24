@@ -37,7 +37,7 @@
         jsl rlZeroEventMenuWindowList
         jsr rsGetEventLength
         jsl rlEventEngineFreeAllProcs
-        jsl rlUnknown91C611
+        jsl rlClearMovingMapSpritesAndSound
         jsl rlActiveSpriteEngineClearAllSprites
 
         lda wGameStateRoutine1,b
@@ -165,11 +165,13 @@
 
         .databank 0
 
-      rlUnknown91A4AC ; 91/A4AC
+      rlEventEngineMarkProcNonBlocking ; 91/A4AC
 
         .al
         .autsiz
         .databank ?
+
+        ; Marks event proc X non-blocking ($0200) in wEventProcBanks; returns carry set if $0400 is set
 
         php
         rep #$30
@@ -195,11 +197,13 @@
 
         .databank 0
 
-      rsUnknown91A4C8 ; 91/A4C8
+      rsEventEnginePollBlockingProcs ; 91/A4C8
 
         .al
         .autsiz
         .databank ?
+
+        ; Polls blocking event procs in wEventProcBanks and clears finished slots
 
         lda #$0002
         tsb wEventEngineFlags,b
@@ -353,7 +357,7 @@
         phk
         plb
 
-        jsr rsUnknown91A629
+        jsr rsEventEngineCheckProcsDone
         bcc _End
 
           lda lActiveEventPointer+1,b
@@ -420,17 +424,19 @@
 
         .databank 0
 
-      rsUnknown91A629 ; 91/A629
+      rsEventEngineCheckProcsDone ; 91/A629
 
         .al
         .autsiz
         .databank ?
 
+        ; Polls blocking event procs when $0004 is set in wEventEngineFlags; carry set when all done
+
         lda wEventEngineFlags,b
         bit #$0004
         beq _SEC
 
-          jsr rsUnknown91A4C8
+          jsr rsEventEnginePollBlockingProcs
 
           lda #$0002
           bit wEventEngineFlags,b
@@ -1254,7 +1260,7 @@
         ; EVENT_1D
 
         jsl rlEnableActiveSpriteEngine
-        jsl rlUnknown91C611
+        jsl rlClearMovingMapSpritesAndSound
 
         clc
         rts
@@ -1373,11 +1379,13 @@
 
         .databank 0
 
-      rlUnknown91C0EF ; 91/C0EF
+      rlEventCommandUnused91C0EF ; 91/C0EF
 
         .al
         .autsiz
         .databank ?
+
+        ; Unreferenced stub (php/rep #$30/plp/rtl)
 
         php
         rep #$30
@@ -1386,21 +1394,25 @@
 
         .databank 0
 
-      rsUnknown91C0F4 ; 91/C0F4
+      rsEventSetupMovingSpriteWithFollow ; 91/C0F4
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets moving-sprite mode 1 (follow) and falls through to rsEventSetupMovingSprite
 
         lda #1
         sta aMovingMapSprites.wUnknown0017C2,b
         jml +
 
-      rsUnknown91C0FE ; 91/C0FE
+      rsEventSetupMovingSprite ; 91/C0FE
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 7-byte moving sprite entry from [lR18], resolves slot 1/2 coords, and spawns mover
 
         lda #0
         sta aMovingMapSprites.wUnknown0017C2,b
@@ -1477,7 +1489,7 @@
             lda #0
             sta wR7
             jsl rlUnknown818FA1
-            jsr rsUnknown91C38C
+            jsr rsEventInitMovingSpriteCommon
 
         _End
         ply
@@ -1487,11 +1499,13 @@
 
         .databank 0
 
-      rsUnknown91C191 ; 91/C191
+      rsEventSetupLoadUnitByGroup ; 91/C191
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads unit group entry and spawns unit/mover for LOAD_UNIT_BY_GROUP
 
         ; LOAD_UNIT_BY_GROUP ?
 
@@ -1580,7 +1594,7 @@
         lda #1
         sta wR7
         jsl rlUnknown818FA1
-        jsr rsUnknown91C38C
+        jsr rsEventInitMovingSpriteCommon
 
         ply
         plx
@@ -1631,11 +1645,13 @@
 
         .databank 0
 
-      rsUnknown91C241 ; 91/C241
+      rsEventSetupLoadUnitDirect ; 91/C241
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 9-byte direct unit entry (mode 4) and spawns unit/mover for LOAD_UNIT_DIRECT
 
         ; LOAD_UNIT_DIRECT ?
 
@@ -1725,7 +1741,7 @@
         lda wR5
         pha
 
-        jsr rsUnknown91C38C
+        jsr rsEventInitMovingSpriteCommon
 
         pla
         sta wR8
@@ -1769,11 +1785,13 @@
 
         .databank 0
 
-      rsUnknown91C2FD ; 91/C2FD
+      rsEventSetupMovingSpriteWithClass ; 91/C2FD
 
         .al
         .autsiz
         .databank ?
+
+        ; Reads 9-byte entry with class sprite override (mode 8) and spawns mover
 
         phx
         stx aMovingMapSprites.wOffset,b
@@ -1841,7 +1859,7 @@
         plx
 
         phx
-        jsr rsUnknown91C38C
+        jsr rsEventInitMovingSpriteCommon
         plx
 
         pla
@@ -1862,21 +1880,25 @@
 
         .databank 0
 
-      rsUnknown91C382 ; 91/C382
+      rsEventSetupMovingSpriteByScript ; 91/C382
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears moving-sprite mode/override and falls through to rsEventInitMovingSpriteCommon
 
         lda #0
         sta aMovingMapSprites.wUnknown0017C2
         stz aMovingMapSprites.wUnknown0017C0,b
 
-      rsUnknown91C38C ; 91/C38C
+      rsEventInitMovingSpriteCommon ; 91/C38C
 
         .al
         .autsiz
         .databank ?
+
+        ; Resolves map sprite, queues decompression, sets sound, spawn pixel coords, and speed for mover X
 
         ; X = mover ID
 
@@ -1932,8 +1954,8 @@
         plx
 
         ; Sound
-        jsr rsUnknown91C447
-        jsl rlUnknown91C4CE
+        jsr rsEventSetMovingSpriteSound
+        jsl rlStartMovingSpriteSound
 
         ldy #aMovingMapSpriteData[0].aSpawnCoordinates - aMovingMapSpriteData[0]
         lda [lR18],y
@@ -2004,11 +2026,13 @@
 
         .databank 0
 
-      rsUnknown91C447 ; 91/C447
+      rsEventSetMovingSpriteSound ; 91/C447
 
         .al
         .autsiz
         .databank ?
+
+        ; Looks up character map sprite movement sound, assigns channel, and stores wMovingSound
 
         ; Sound stuff
 
@@ -2027,7 +2051,7 @@
         lda [lR18],y
         jsl rlGetCharacterMapSprite
         jsl rlGetMapSpriteMovementSound
-        jsl rlUnknown91C472
+        jsl rlAssignMovingSpriteSoundChannel
 
         plx
         sta aMovingMapSprites.wMovingSound,b,x
@@ -2045,11 +2069,13 @@
 
         .databank 0
 
-      rlUnknown91C472 ; 91/C472
+      rlAssignMovingSpriteSoundChannel ; 91/C472
 
         .al
         .autsiz
         .databank ?
+
+        ; Assigns channel $0100/$0200 for moving sprite sound A and clears prior user
 
         ; Input:
         ; A = map sprite movement sound
@@ -2117,11 +2143,13 @@
 
         .databank 0
 
-      rlUnknown91C4CE ; 91/C4CE
+      rlStartMovingSpriteSound ; 91/C4CE
 
         .al
         .autsiz
         .databank ?
+
+        ; Starts sound channel fade for moving sprite X when no BGM is playing
 
         ; Something with the playing song and the movement sound.
 
@@ -2304,7 +2332,7 @@
         phx
         asl a
         tax
-        lda aUnknown91C57D,x
+        lda aEventUnitMoveHandlers,x
         sta lR23
         plx
 
@@ -2316,14 +2344,14 @@
 
         .databank 0
 
-      aUnknown91C57D ; 91/C57D
+      aEventUnitMoveHandlers ; 91/C57D
 
-        .word <>rsUnknown91C382
-        .word <>rsUnknown91C0FE
-        .word <>rsUnknown91C191
-        .word <>rsUnknown91C241
-        .word <>rsUnknown91C0F4
-        .word <>rsUnknown91C2FD
+        .word <>rsEventSetupMovingSpriteByScript
+        .word <>rsEventSetupMovingSprite
+        .word <>rsEventSetupLoadUnitByGroup
+        .word <>rsEventSetupLoadUnitDirect
+        .word <>rsEventSetupMovingSpriteWithFollow
+        .word <>rsEventSetupMovingSpriteWithClass
 
       rsEventCommandWaitUnitSpriteDecompressed ; 91/C589
 
@@ -2415,11 +2443,11 @@
             bne +
 
               lda aMovingMapSprites.wMovingSound,b,x
-              jsl rlUnknown91C472
+              jsl rlAssignMovingSpriteSoundChannel
               sta aMovingMapSprites.wMovingSound,b,x
 
             +
-            jsl rlUnknown91C4CE
+            jsl rlStartMovingSpriteSound
 
         _Next
         dec y
@@ -2457,7 +2485,7 @@
           dec y
           bpl _Loop
 
-        jsl rlUnknown91C611
+        jsl rlClearMovingMapSpritesAndSound
 
         ply
         plx
@@ -2466,11 +2494,13 @@
 
         .databank 0
 
-      rlUnknown91C611 ; 91/C611
+      rlClearMovingMapSpritesAndSound ; 91/C611
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears all 4 moving map sprite slots and resets map sprite sound panning
 
         lda #$FFFF
         sta aMovingMapSprites.wActiveSpriteOffset,b 
@@ -2658,11 +2688,13 @@
 
         .databank 0
 
-      rlUnknown91C6D8 ; 91/C6D8
+      rlCallEventSubroutineR23 ; 91/C6D8
 
         .al
         .autsiz
         .databank ?
+
+        ; Calls indirect subroutine at (lR23) and returns rtl
 
         pea #<>(+)-1
         jmp (lR23)
@@ -2736,7 +2768,7 @@
         stz wBufferBG3VOFS
 
         lda #$00FF
-        jsl rlUnknown91A7BC
+        jsl rlFillAndUploadBG3Tilemap
 
         sep #$20
         lda #$17
@@ -3444,7 +3476,7 @@
         sta lR18+1
 
         phx
-        jsl rlUnknown91A9BB
+        jsl rlInitEventSimpleMapMenuFrame
         plx
 
         lda lMapMenuRAMEntryPointer,b
@@ -3470,7 +3502,7 @@
         sta bBufferBGMODE
         rep #$20
 
-        jsl rlUnknown91A7DF
+        jsl rlEnableMapMenuLayerFlags
 
         pla
         clc
@@ -4421,11 +4453,13 @@
 
         .databank 0
 
-      rlUnknown91CE2A ; 91/CE2A
+      rlEventCommandUnusedStub91CE2A ; 91/CE2A
 
         .al
         .autsiz
         .databank ?
+
+        ; Unreferenced stub (rtl)
 
         rtl
         
@@ -5417,7 +5451,7 @@
         .databank ?
 
         ldx aProcSystem.wOffset,b
-        jsl rlUnknown91A4AC
+        jsl rlEventEngineMarkProcNonBlocking
 
         lda aProcSystem.aBody4,b,x
         cmp aProcSystem.aBody3,b,x
@@ -5554,7 +5588,7 @@
 
         _8D05
         ldx aProcSystem.wOffset,b
-        jsl rlUnknown91A4AC
+        jsl rlEventEngineMarkProcNonBlocking
         bcc +
 
           jsr rsUnknown828D12
@@ -6061,7 +6095,7 @@
 
         _8F23
         ldx aProcSystem.wOffset,b
-        jsl rlUnknown91A4AC
+        jsl rlEventEngineMarkProcNonBlocking
         bcc +
 
           jsr rsUnknown828F30
@@ -6181,7 +6215,7 @@
       procUnknown829285 ; 82/9285
 
         ; Unreferenced: nothing creates this event proc. Its script calls
-        ; rlUnknown91A7BC and ends; init and cycle do nothing.
+        ; rlFillAndUploadBG3Tilemap and ends; init and cycle do nothing.
 
         .structProcInfo "e0", rlProcUnknown829285Nothing, rlProcUnknown829285Nothing, aProcUnknown829285Code
 
@@ -6189,7 +6223,7 @@
 
       aProcUnknown829285Code ; 82/928F
 
-        PROC_CALL rlUnknown91A7BC
+        PROC_CALL rlFillAndUploadBG3Tilemap
         PROC_END
 
       rlProcUnknown829285Nothing ; 82/9296
@@ -6205,7 +6239,7 @@
 
       procUnknown829297 ; 82/9297
 
-        ; Unreferenced: as procUnknown829285, calling rlUnknown91A7DF.
+        ; Unreferenced: as procUnknown829285, calling rlEnableMapMenuLayerFlags.
 
         .structProcInfo "e1", rlProcUnknown829297Nothing, rlProcUnknown829297Nothing, aProcUnknown829297Code
 
@@ -6213,7 +6247,7 @@
 
       aProcUnknown829297Code ; 82/92A1
 
-        PROC_CALL rlUnknown91A7DF
+        PROC_CALL rlEnableMapMenuLayerFlags
         PROC_END
 
       rlProcUnknown829297Nothing ; 82/92A8
@@ -6289,7 +6323,7 @@
         bne +
 
           ldx aProcSystem.wOffset,b
-          jsl rlUnknown91A4AC
+          jsl rlEventEngineMarkProcNonBlocking
 
         +
         lda #$FFFF
@@ -6410,7 +6444,7 @@
           inc y
           inc y
           sty wActiveEventOffset,b
-          jsl rlUnknown91C6D8
+          jsl rlCallEventSubroutineR23
 
           txa
           plx
@@ -6527,7 +6561,7 @@
         sta aProcSystem.aBody4,b,x
 
         ldx aProcSystem.wOffset,b
-        jsl rlUnknown91A4AC
+        jsl rlEventEngineMarkProcNonBlocking
         rtl
 
         .databank 0
@@ -7576,11 +7610,13 @@
       .al
       .xl
 
-      rlUnknown91A7BC ; 91/A7BC
+      rlFillAndUploadBG3Tilemap ; 91/A7BC
 
         .al
         .autsiz
         .databank ?
+
+        ; Fills aBG3TilemapBuffer with A, DMAs to VRAM $B000, and disables map menu uploads
 
         ; A = fill value
 
@@ -7615,12 +7651,14 @@
       .al
       .xl
 
-      rlUnknown91A7DF ; 91/A7DF
+      rlEnableMapMenuLayerFlags ; 91/A7DF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets $0084 in bMapMenuFlags
 
         php
         rep #$30
@@ -7641,13 +7679,15 @@
       .al
       .xl
 
-      rlUnknown91A7EA ; 91/A7EA
+      rlFreeNonDemoEventProcs ; 91/A7EA
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced; frees all procs except $8865 and resets wEventProcBanks
 
         ldx #$001E
 
@@ -7681,11 +7721,13 @@
       .al
       .xl
 
-      rlUnknown91A9BB ; 91/A9BB
+      rlInitEventSimpleMapMenuFrame ; 91/A9BB
 
         .al
         .autsiz
         .databank ?
+
+        ; Loads map menu data, clears map menu tiles, and draws aEventSimpleMapMenuFrameTiles
 
         jsl rlLoadMapMenuData
 
@@ -7697,16 +7739,16 @@
         sta wMapMenuClearTile,b
         jsl rlClearMapMenuTiles
 
-        lda #(`aUnknown91A9E4)<<8
+        lda #(`aEventSimpleMapMenuFrameTiles)<<8
         sta lR18+1
-        lda #<>aUnknown91A9E4
+        lda #<>aEventSimpleMapMenuFrameTiles
         sta lR18
         jsl rlDrawMapMenuSimpleFrame
         rtl
 
         .databank 0
 
-      aUnknown91A9E4 ; 91/A9E4
+      aEventSimpleMapMenuFrameTiles ; 91/A9E4
 
         .word $6106
         .word $2107
@@ -7718,12 +7760,14 @@
 
         .word $A106
 
-      rlUnknown91A9F4 ; 91/A9F4
+      rlDrawFiveDigitNumberInWR4 ; 91/A9F4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced; draws A as five digits with lR19 pointing at wR4
 
         ; Unreferenced: draws the number in A as five digits (rsSplitNumberIntoFiveDigits,
         ; rsDrawFiveDigitNumber) with lR19 pointing at wR4.
