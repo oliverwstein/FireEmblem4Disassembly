@@ -214,7 +214,7 @@
     .endsection BelhallaMagesAttackSection
 
 
-    .section Unknown9EF791Section
+    .section ClearBelhallaMagesProcBit4Section
 
       .al
       .xl
@@ -236,7 +236,7 @@
 
         .databank 0
 
-    .endsection Unknown9EF791Section
+    .endsection ClearBelhallaMagesProcBit4Section
 
 
     .section BelhallaAttackingMagePositionsSection
@@ -299,7 +299,7 @@
     .endsection BelhallaAttackingMageDirectionsSection
 
 
-    .section ProcUnknown9EF837InitSection
+    .section ProcBelhallaAttackingMageInitSection
 
       .al
       .xl
@@ -500,7 +500,7 @@
 
         .databank 0
 
-    .endsection ProcUnknown9EF837InitSection
+    .endsection ProcBelhallaAttackingMageInitSection
 
 
     .section Unsorted9EF79DSection

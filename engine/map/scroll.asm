@@ -222,7 +222,7 @@
     .endsection MapScrollScriptSection
 
 
-    .section Unknown818FA1Section
+    .section SpawnMovingMapSpriteSection
 
       .al
       .xl
@@ -331,7 +331,7 @@
 
         .databank 0
 
-    .endsection Unknown818FA1Section
+    .endsection SpawnMovingMapSpriteSection
 
 
     .section GetMapPixelScrollDistanceSection

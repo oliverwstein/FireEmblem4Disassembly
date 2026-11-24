@@ -462,7 +462,7 @@
     .endsection MapMenu8780F9Section
 
 
-    .section Unknown87819ASection
+    .section FindLastMapMenuSection
 
       .al
       .xl
@@ -529,7 +529,7 @@
 
         .databank 0
 
-    .endsection Unknown87819ASection
+    .endsection FindLastMapMenuSection
 
 
     .section LoadMapMenuDataSection

@@ -1016,7 +1016,7 @@
     .endsection GetUnitByCoordinatesSection
 
 
-    .section Unknown8488AESection
+    .section DeployUnitByPlaceholderIDSection
 
       .al
       .xl
@@ -1129,7 +1129,7 @@
 ; 00 1D C8 PauseText $C8
 ; 01 EndText
 
-    .endsection Unknown8488AESection
+    .endsection DeployUnitByPlaceholderIDSection
 
 
     .section LoadUNITGroupMapSpritesSection

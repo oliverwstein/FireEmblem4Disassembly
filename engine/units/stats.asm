@@ -991,7 +991,7 @@
     .endsection UnitStatsSection
 
 
-    .section Unknown849FB9Section
+    .section StatsUnusedStubsSection
 
       .al
       .xl
@@ -1024,4 +1024,4 @@
 
         ; 84/9FBB
 
-    .endsection Unknown849FB9Section
+    .endsection StatsUnusedStubsSection

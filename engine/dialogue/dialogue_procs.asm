@@ -389,7 +389,7 @@
     .endsection ProcDialogueCycle1Section
 
 
-    .section Unknown82862ESection
+    .section DialogueSlotAPressArrowsSection
 
       .al
       .xl
@@ -423,10 +423,10 @@
 
         ; 82/8648
 
-    .endsection Unknown82862ESection
+    .endsection DialogueSlotAPressArrowsSection
 
 
-    .section Unknown828653Section
+    .section StartConversationDialogueSection
 
       .al
       .xl
@@ -475,7 +475,7 @@
 
         .databank 0
 
-    .endsection Unknown828653Section
+    .endsection StartConversationDialogueSection
 
 
     .section ProcDialogueCodeSection

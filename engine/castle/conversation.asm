@@ -1554,7 +1554,7 @@
     .endsection Unsorted8AE199Section
 
 
-    .section ProcUnknown8AE199InitSection
+    .section ProcConversationFadeInRightPortraitInitSection
 
       .al
       .xl
@@ -1586,7 +1586,7 @@
 
         .databank 0
 
-    .endsection ProcUnknown8AE199InitSection
+    .endsection ProcConversationFadeInRightPortraitInitSection
 
 
     .section Unsorted8AE1C1Section

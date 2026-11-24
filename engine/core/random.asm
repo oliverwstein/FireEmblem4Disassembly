@@ -104,7 +104,7 @@
     .endsection RandomNumberSection
 
 
-    .section Unknown80A773Section
+    .section InitRNArraySection
 
       .al
       .xl
@@ -279,7 +279,7 @@
 
         ; 80/A836
 
-    .endsection Unknown80A773Section
+    .endsection InitRNArraySection
 
 
     .section RandomChanceSection

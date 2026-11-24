@@ -428,7 +428,7 @@
 
       .dsection RandomNumberSection
 
-      .dsection Unknown80A773Section
+      .dsection InitRNArraySection
 
       .dsection Unsorted80A836Section
 
@@ -856,7 +856,7 @@
 
       .dsection MapScrollScriptSection
 
-      .dsection Unknown818FA1Section
+      .dsection SpawnMovingMapSpriteSection
 
       .dsection CapSpawnDestinationCoordinates100Section
 
@@ -908,7 +908,7 @@
 
       .dsection MapStepStartPhaseSection
 
-      .dsection Unknown81AB90Section
+      .dsection MapStepTurnStartHealingSection
 
       .dsection Unsorted81AC02Section
 
@@ -1223,11 +1223,11 @@
 
       .dsection ProcDialogueCycle1Section
 
-      .dsection Unknown82862ESection
+      .dsection DialogueSlotAPressArrowsSection
 
       .dsection Unsorted828648Section
 
-      .dsection Unknown828653Section
+      .dsection StartConversationDialogueSection
 
       .dsection ProcDialogueCodeSection
       .dsection CastleNamePopUpSection
@@ -1653,7 +1653,7 @@
 
       .dsection GetUnitByCoordinatesSection
 
-      .dsection Unknown8488AESection
+      .dsection DeployUnitByPlaceholderIDSection
 
       .dsection LoadUNITGroupMapSpritesSection
 
@@ -1684,7 +1684,7 @@
 
       .dsection UnitStatsSection
 
-      .dsection Unknown849FB9Section
+      .dsection StatsUnusedStubsSection
       .dsection GetSelectedUnitFactionNameIDSection
 
       .dsection UnitClassInfoSection
@@ -2642,7 +2642,7 @@
 
       .dsection Unsorted878148Section
 
-      .dsection Unknown87819ASection
+      .dsection FindLastMapMenuSection
 
       .dsection LoadMapMenuDataSection
 
@@ -4306,7 +4306,7 @@
 
       .dsection Unsorted8AE199Section
 
-      .dsection ProcUnknown8AE199InitSection
+      .dsection ProcConversationFadeInRightPortraitInitSection
 
       .dsection Unsorted8AE1C1Section
 
@@ -6281,7 +6281,7 @@
 
       .dsection Unsorted91A928Section
 
-      .dsection DialogueUnknownSection
+      .dsection DialogueFontAndColorsSection
 
       .dsection Unsorted91A9BBSection
 
@@ -8427,7 +8427,7 @@
       .dsection Unsorted9EF60FSection
       .dsection BelhallaMagesAttackSection
 
-      .dsection Unknown9EF791Section
+      .dsection ClearBelhallaMagesProcBit4Section
 
       .dsection Unsorted9EF79DSection
 
@@ -8435,7 +8435,7 @@
 
       .dsection BelhallaAttackingMageDirectionsSection
 
-      .dsection ProcUnknown9EF837InitSection
+      .dsection ProcBelhallaAttackingMageInitSection
 
       .dsection Unsorted9EF9DFSection
 

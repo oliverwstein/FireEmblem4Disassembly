@@ -459,7 +459,7 @@
     .endsection MapStepStartPhaseSection
 
 
-    .section Unknown81AB90Section
+    .section MapStepTurnStartHealingSection
 
       .al
       .xl
@@ -527,7 +527,7 @@
 
         .databank 0
 
-    .endsection Unknown81AB90Section
+    .endsection MapStepTurnStartHealingSection
 
 
     .section Unsorted81AC02Section

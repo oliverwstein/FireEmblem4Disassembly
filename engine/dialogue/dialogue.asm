@@ -7162,7 +7162,7 @@
     .endsection DialogueEventCommandSection
 
 
-    .section DialogueUnknownSection
+    .section DialogueFontAndColorsSection
 
       .al
       .xl
@@ -7197,4 +7197,4 @@
 
         ; 91/A9BB
 
-    .endsection DialogueUnknownSection
+    .endsection DialogueFontAndColorsSection
