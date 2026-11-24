@@ -706,7 +706,9 @@
     wCastleTownFacility .word ?                ; $000895 ; CASTLE_TOWN_* (include/Castle.h)
     wCastleGridSlot .word ?                    ; $000897 ; 0-23, slot on the 4x6 courtyard grid
     wCastleGridSavedSlot .word ?               ; $000899 ; wCastleGridSlot kept while choosing a target
-    wCastleSavedUnitRAMPointer .word ?         ; $00089B ; the unit that entered the castle ($FFFF none)
+    wCastleSavedUnitRAMPointer .word ?         ; $00089B ; the unit that entered the castle ($FFFF none): set by
+      ; rlEndUnitAction for every action, so a unit entering an allied castle is already here;
+      ; $FFFF when the cursor opens the home castle; the arena saves its unit here
     wLoverHomeCastleConversationPending .word ? ; $00089D ; nonzero: rlBuildLoverHomeCastleConversation builds the next conversation's text
     wEnteredCastleLocationID .word ?           ; $00089F ; location ID of the castle entered
     wCastleMenuOptionIndex .word ?             ; $0008A1 ; the keeper option under the cursor

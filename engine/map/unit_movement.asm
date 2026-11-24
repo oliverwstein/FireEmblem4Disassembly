@@ -690,7 +690,7 @@
         lda aDeploymentTable._UnitRAMPointer,x
         beq +
 
-          sta $00089B
+          sta @l wCastleSavedUnitRAMPointer ; the town opened next (an allied castle's) is this unit's
         
         +
         ldx wActiveUnitDeploymentOffset,b

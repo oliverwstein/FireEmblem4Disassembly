@@ -149,7 +149,7 @@
         .autsiz
         .databank ?
 
-        ; When the selected unit reaches its home castle (map step, rsEventCommandLoverHomeCastle): if its lover is fielded and waiting in that castle (rlCheckCharacterWaitingInHomeCastle) and the woman's flag in aLoverHomeCastleFlags is not set yet, sets the flag and starts the conversation (rlStartLoverHomeCastleConversation) with the arriving unit on the left. Carry set if it started.
+        ; When the selected unit reaches its home castle (map step, rsEventCommandLoverHomeCastle): if its lover is alive and waiting inside the player's home castle, off the map (rlCheckCharacterWaitingInHomeCastle) and the woman's flag in aLoverHomeCastleFlags is not set yet, sets the flag and starts the conversation (rlStartLoverHomeCastleConversation) with the arriving unit on the left. Carry set if it started.
 
         lda wSelectedUnitDataRAMPointer,b
         sta wTempVariable1,b
