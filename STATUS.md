@@ -10,7 +10,7 @@ Numbers come from `python3 tools/counts.py --fast --breakdown`; quote nothing el
 - Routines: 6,505 in `engine/`, 6,505 named, 0 `Unknown` (100.0% named). 172 pinned blocks.
 - **Stage 1 and Stage 2 complete:** all 20 folders in `engine/` now have **0 `Unknown`** (`ai/`, `arena/`, `battle/`, `battle_scene/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` — 6,505 routines total).
 - Reference pages: `docs/reference/core.md`, `ai.md`, `arena.md`, `battle_scene.md`, `castle.md`, `demo.md`, `dialogue.md`, `epilogue.md`, `events.md`, `items.md`, `map_battle.md`, `map_menu.md`, `map.md`, `menus.md`, `save.md`, `title.md`, `units.md`, `worldmap.md` (`tools/reference.py` output is gitignored). Still missing: `battle/` (blocks Part III) and `rankings/`.
-- Engine guide: [00-introduction.md](docs/guide/00-introduction.md), [OUTLINE.md](docs/guide/OUTLINE.md) (31 chapters in 7 parts, data first), [STYLE.md](docs/guide/STYLE.md), and the Part I opener [part-1-the-pieces-on-the-board.md](docs/guide/part-1-the-pieces-on-the-board.md), Chapter 1 [01-a-unit-is-made-of-parts.md](docs/guide/01-a-unit-is-made-of-parts.md), and Chapter 2 [02-classes-stats-skills-and-weapon-ranks.md](docs/guide/02-classes-stats-skills-and-weapon-ranks.md) (drafts); a draft of Chapter 6 (The turn) waits in `wip/the-turn-draft.md`.
+- Engine guide: [00-introduction.md](docs/guide/00-introduction.md), [OUTLINE.md](docs/guide/OUTLINE.md) (31 chapters in 7 parts, data first), [STYLE.md](docs/guide/STYLE.md), and the Part I opener [part-1-the-pieces-on-the-board.md](docs/guide/part-1-the-pieces-on-the-board.md), Chapter 1 [01-a-unit-is-made-of-parts.md](docs/guide/01-a-unit-is-made-of-parts.md), Chapter 2 [02-classes-stats-skills-and-weapon-ranks.md](docs/guide/02-classes-stats-skills-and-weapon-ranks.md), and Chapter 3 [03-every-sword-is-an-individual.md](docs/guide/03-every-sword-is-an-individual.md) (drafts); a draft of Chapter 6 (The turn) waits in `wip/the-turn-draft.md`.
 
 ## Remaining Unknowns
 
@@ -45,7 +45,7 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5e
 
 ## Next session
 
-1. **Engine guide, Part I:** Chapters 1 and 2 are drafted (Chapter 2 awaiting the user's read). Next: Chapter 3 (*Every sword is an individual*) from `items.md`, then 4–5. The old limits list in `git show 9da974d:docs/guide/00-introduction.md` ("What the structures cost the design") is raw material for each chapter's closing limits.
+1. **Engine guide, Part I:** Chapters 1–3 are drafted (3 awaiting the user's read). Next: Chapter 4 (*Armies and allegiance*) from `units.md` (factions), then Chapter 5 (*Who stands where*) from `map.md`. The old limits list in `git show 9da974d:docs/guide/00-introduction.md` ("What the structures cost the design") is raw material for each chapter's closing limits.
 2. **Loose ends:**
    - Pad-test banks `$88`, `$9B`, and `$9F` (`./build.sh pad SECTION N`).
    - Fix `tools/songs.py` (stops at stale `aUnknown8A9D79`) before regenerating `audio/SONGS.md`, and investigate why `tools/stream_catalog.py` deleted catalog previews.
@@ -63,3 +63,4 @@ Each is one screen. Answers so far are in HISTORY.md under the wave that asked t
 5. (Needs a save that has finished the game.) The ranking screen: what are the 16 letters drawn from `aUnknown7FC70A`, and what row appears after the secret code (Select, Up, A, Down, B, Left, X, Right, Y, L, R, Start)? The code shows the code check (`rlCheckEpilogueSecretCode`) and where the row is uploaded; only the screen shows what it says.
 6. The title screen's intro (let the game sit after the attract opening, about two minutes): what each of its eight scenes shows and what the captions say. The code shows the scenes' timing and setup (title.md); the captions are graphics, so only the screen shows their words.
 7. A battle scene with Fortify or a dance (both combatants at the center, `BattleSceneFlagSolo2`): what does the screen show besides the two combatants? The code shows that the flag turns on HDMA entries 3 and 6; only the screen shows what they draw.
+8. Chapter 5, after Sigurd talks to Byron: how many uses does Sigurd's Tyrfing show, and is it named Tyrfing or a broken holy sword? `rlInitiateItemRAMData` sets `PI_Tyrfing`'s durability to 0 at new game, and nothing found restores it before the Chapter 5 `GIVE_UNIT_PID_EQUIP`; deleting Sigurd at the generation change restores it to full for Seliph's Chapter 10 gift.

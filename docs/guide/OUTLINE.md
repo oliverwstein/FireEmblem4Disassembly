@@ -14,7 +14,7 @@ The structured game data—the nouns of *Genealogy of the Holy War*—and how th
 |---|---|---|---|---|---|
 | 1 | **[A unit is made of parts](01-a-unit-is-made-of-parts.md)** | A playable lord needs a hundred bytes; a bandit needs almost none. | Flyweight; getters that hide where a field lives; fixed pools | `units/unit_data`, `unit_info`, `units`, `unit_creation`, `include/Characters.h` | Drafted |
 | 2 | **[Classes, stats, skills, and weapon ranks](02-classes-stats-skills-and-weapon-ranks.md)** | A skill can come from a character, a class, or an item; a stat from a base, a class, a ring, and a weapon; a weapon rank from class and Holy Blood. | Data-driven tables; one query over several sources | `units/classes`, `stats`, `skills`, `data/class/`, `data/character/` | Drafted |
-| 3 | **Every sword is an individual** | Weapons that remember their kills and pass from parent to child. | A global object table with indices as handles | `items/items`, `inventory`, `staves`, `include/Items.h` | Ready (items.md) |
+| 3 | **[Every sword is an individual](03-every-sword-is-an-individual.md)** | Weapons that remember their kills and pass from parent to child. | A global object table with indices as handles | `items/items`, `inventory`, `staves`, `include/Items.h` | Drafted |
 | 4 | **Armies and allegiance** | An army can be neutral to the player and at war with its neighbor. | Relations per pair of factions instead of per unit | `units/factions`, `unit_state` | Ready (units.md) |
 | 5 | **Who stands where** | The unit record says who someone is; something has to say where they are. | The deployment table (structure of arrays); locations: castles, villages, gates | `map/deployment`, `locations`, `map_sprites` | Ready (map.md) |
 
