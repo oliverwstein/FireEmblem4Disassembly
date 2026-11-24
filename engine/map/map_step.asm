@@ -470,37 +470,37 @@
         .autsiz
         .databank ?
 
-        ; Map step 5: shows each entry of the turn start healing list in procMapExperienceWindow, one a step ($7E2002 entries of 5 bytes from $7E2004), then the map windows, and moves the cursor to the phase's start.
+        ; Map step 5: shows each entry of the turn start healing list in procMapExperienceWindow, one a step (wTurnStartHealingCount entries of aTurnStartHealingList), then the map windows, and moves the cursor to the phase's start.
 
 
-        lda $7E2002
+        lda wTurnStartHealingCount
         beq _ABF1
 
-          lda $7E2000
+          lda wTurnStartHealingShownOffset
           tax
           clc
           adc #5
-          sta $7E2000
+          sta wTurnStartHealingShownOffset
 
-          lda $7E2006,x
+          lda aTurnStartHealingList.bCurrentHP,x
           and #$00FF
           sta aProcSystem.wInput0,b
 
-          lda aDebugMenuSkillFlags.bAdept,x
+          lda aTurnStartHealingList.bHealing,x
           and #$00FF
           xba
           ora aProcSystem.wInput0,b
           sta aProcSystem.wInput0,b
 
-          lda $7E2008,x
+          lda aTurnStartHealingList.bMaxHP,x
           and #$00FF
           sta aProcSystem.wInput1,b
 
-          lda aDebugMenuSkillFlags.bWrath,x
+          lda aTurnStartHealingList.bDeploymentOffset,x
           and #$00FF
           sta aProcSystem.wInput2,b
 
-          lda $7E2004,x
+          lda aTurnStartHealingList.bType,x
           and #$00FF
           sta aProcSystem.wInput3,b
 
@@ -510,9 +510,9 @@
           sta $62
           jsl rlProcEngineCreateProc
 
-          lda $7E2002
+          lda wTurnStartHealingCount
           dec a
-          sta $7E2002
+          sta wTurnStartHealingCount
           rts
 
         _ABF1
@@ -541,7 +541,7 @@
         .autsiz
         .databank ?
 
-        ; At the start of the player phase: the cursor goes to the saved cursor tile when the auto cursor option is on and the turn is not the first, otherwise to the army's first unit (generation ID 0 in faction slot 0).
+        ; At the start of the player phase: the cursor goes to the saved cursor tile (where End Turn was chosen) when the auto cursor option is off (bit 0 of wOptionSettings set) and the turn is not the first, otherwise to the army's first unit.
 
         lda wActiveFactionSlot,b
         bne _End

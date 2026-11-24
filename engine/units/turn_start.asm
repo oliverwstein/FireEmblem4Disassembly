@@ -360,44 +360,44 @@
         .databank ?
 
         ; Records the unit (deployment slot, HP, maximum HP and the healing in
-        ; wRoutineVariable1) in the turn start healing list at $7E2002, unless its HP
+        ; wRoutineVariable1) in the turn start healing list (aTurnStartHealingList), unless its HP
         ; is full.
 
         phx
-        lda $7E2002
+        lda wTurnStartHealingCount
         asl a
         asl a
         clc
-        adc $7E2002
+        adc wTurnStartHealingCount
         tax
         cpx #$00FF
         bcs _End
 
           tya
-          sta $7E2004,x
+          sta aTurnStartHealingList.bType,x
 
           jsl rlGetSelectedUnitDeploymentOffset
-          sta aDebugMenuSkillFlags.bWrath,x
+          sta aTurnStartHealingList.bDeploymentOffset,x
 
           jsl rlGetSelectedUnitCurrentHP
-          sta $7E2006,x
+          sta aTurnStartHealingList.bCurrentHP,x
 
           jsl rlGetSelectedUnitMaxHP
           sep #$20
-          sta $7E2008,x
+          sta aTurnStartHealingList.bMaxHP,x
           rep #$20
 
-          cmp $7E2006,x
+          cmp aTurnStartHealingList.bCurrentHP,x
           beq _End
 
             lda wRoutineVariable1,b
             sep #$20
-            sta aDebugMenuSkillFlags.bAdept,x
+            sta aTurnStartHealingList.bHealing,x
             rep #$20
 
-            lda $7E2002
+            lda wTurnStartHealingCount
             inc a
-            sta $7E2002
+            sta wTurnStartHealingCount
         
         _End
         plx
@@ -478,8 +478,8 @@
 
         sta $04
         lda #0
-        sta $7E2000
-        sta $7E2002
+        sta wTurnStartHealingShownOffset
+        sta wTurnStartHealingCount
 
         ldx #1
 

@@ -502,7 +502,7 @@
         .autsiz
         .databank ?
 
-        ; A button (A, B, X, Y, Start or Select): faster slide (speed 4) and 100 frames less.
+        ; A button (A, B, X, Y or Start; not Select): faster slide (speed 4) and 100 frames less.
 
         lda wJoy1New
         bit #$D0C0

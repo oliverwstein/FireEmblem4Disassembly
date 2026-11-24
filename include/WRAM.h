@@ -1167,7 +1167,7 @@
       ; $0020 = the castle screen is open: relocations refresh its units, battles are type 3
       ; $0040 = open the castle screen after the unit goes into the castle (rsRelocateIntoCastle)
       ; $0080 = the AI queued an event for the unit about to act (rsRunQueuedAIUnitEvent)
-      ; $0100 = set by the map menu and bank $91; meaning unknown
+      ; $0100 = the chapter is resumed from a map save (rsSaveMenuStartLoadedMap, the map menu's reload): rsStartChapterMap enters at map step 7
       ; $0200 = the map step does not move the cursor (rsMapStepPhase)
       ; $0400 = the chapter has ended (rlSaveChapterTurncount); no seize popup
       ; $0800 = the minimap is choosing a Warp destination
@@ -1205,7 +1205,7 @@
       ; $0004 = cursor hovering selectable unit/tile in rlGetMapMenuPosition
       ; $0008 = unit/action map menu open
       ; $0010 = secondary sub-menu open
-      ; $0020 = AI/busy action lock blocking normal map menus
+      ; $0020 = the phase is over (End Turn, or the AI has no group left); rsMapStepPhase clears it and moves on
       ; $8000 = pending post-action handler dispatch
     wInventoryFullDeploymentOffset .word ?           ; $000D89 ; inventory-full & turn setup scratch
     wActionEndedDeploymentOffset .word ?           ; $000D8B ; the unit whose action just ended (rlFinishUnitAction), announced as event action 3 by rsRunActionEndedEvents; $FFFF none
@@ -1834,6 +1834,24 @@
 
 
 
+
+  ; The turn start healing list: rlRunTurnStartEffectsForAllUnitsInFaction clears it,
+  ; rsAddTurnStartHealingEntry adds a unit healed at the start of its army's phase, and
+  ; map step 5 (rsMapStepTurnStartHealing) shows one entry a step.
+
+  .virtual $7E2000
+
+    wTurnStartHealingShownOffset .word ?   ; $7E2000 ; offset of the next entry to show
+    wTurnStartHealingCount .word ?         ; $7E2002 ; entries not yet shown
+    aTurnStartHealingList .block           ; $7E2004 ; entries of 5 bytes (offset by 5 * index)
+      bType             .byte ?            ; 1 guarding a castle, 2 church, 3 Recover or Renewal
+      bDeploymentOffset .byte ?
+      bCurrentHP        .byte ?            ; before the healing
+      bHealing          .byte ?
+      bMaxHP            .byte ?
+    .bend
+
+  .endvirtual
 
   ; $7E2000 - some table for unit RAM pointers indexed by unit number?
 
