@@ -65,7 +65,7 @@ After a unit moves, `rlOpenUnitMenu` opens `procUnitMenu` with a mode from `wMap
 | まち town | at a location of type 1 | fades to the castle screen |
 | むら village | at a village that is neither destroyed nor closed | `rlUnitMenuVillage` |
 | しゅび guard | at an unguarded castle of the unit's army or an ally | `rlUnitMenuGuard` |
-| しゅつげき depart | guarding a castle | `rlUnitMenuDepart` |
+| しゅつげき depart | guarding a castle, and the gate (two tiles below) is empty | `rlUnitMenuDepart` |
 | はなす talk | someone to talk to in range 1 | `rlUnitMenuTalk` |
 | たいき wait | unless standing on its own army's castle | ends the action |
 | つえ staff | only offensive staves usable | as above |
@@ -109,8 +109,7 @@ The terrain window and the unit window (`procTerrainWindow`, `procUnitWindow`, "
 
 ## Open questions
 
-- What modes 1 and 2 of the unit menu are for. Mode 1 follows `rlRequestUnitMenuMode1` (a player unit ending its action at its home castle), mode 2 the guard command's `rlRequestUnitMenuMode2`; the code only shows what each hides.
-- The depart check passes when `rlGetUnitByCoordinates` returns carry set for the tile two below the unit; what that tile means.
+- What the player sees in unit menu modes 1 and 2. From the code: mode 1 reopens the menu when a player unit's action ends on its home castle's gate (`rlFinishUnitAction`) or a canto unit has nowhere to go, and B can't close it; mode 2 follows the guard command, with the unit already on the guarding spot, and B undoes the guard (`rlUndoUnitMove`, [map.md](map.md)).
 - `UnitStateAssault` (was `UnitState0400`; the debug menu labels bit $0400 とつげ(き)): set while assaulting. `rlFindTargetsForSelectedWeapon` uses target filter 4 when it is set, and `rlBuildUnitMenuSlotLists` clears it. Assault targets are found at range 2 only, for weapons with minimum range 1 (`rlFindTargetsForItemRange`).
 - The まち (town) command: location type 1, and its handler opens the castle screen.
 - The "RP" proc in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm), `procUnknown8583B3` (an empty list menu nothing creates), and the gradient table helpers (`rsWriteMapMenuGradientTop`...).

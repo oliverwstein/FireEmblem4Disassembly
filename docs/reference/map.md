@@ -102,7 +102,7 @@ The free cursor's buttons (`rsMapInputHandler`, [input.asm](../../engine/map/inp
 5. **Walking**: the cursor goes back to the unit (state 1), then the unit walks the path from its end (state 2, `rsWalkUnitAlongPath`), turning its sprite (`wMovingUnitSpriteFacing`) and playing its walking sound (`rlStartWalkingSound`: by map sprite, panned by the cursor, with a water flag on sea, river and swamp unless the class flies). A unit with speed 5 or more walks 3 pixels a frame, others 1.
 6. **Arriving**: the unit is moved to the tile (`rlMoveDeploymentToTile`) and the unit menu opens ([map_menu.md](map_menu.md)). B in the unit menu puts it back (`rlUndoUnitMove`).
 
-`wMapActionMode` changes what the end of a move does: values `$8002`-`$8004` are set by the depart and guard commands before the move, and `rlStartCursorToUnitAfterMove` turns them into 2-4; 1 is an ordinary move.
+`wMapActionMode` (`MAP_ACTION_MODE_*`) records how a move began, for undoing it; `rlEndUnitAction` clears it. 0 is an ordinary move. The castle screen's sortie sets `$FFFF` and depart `$8002` (the unit is on the castle's gate); next frame `rlStartCursorToUnitAfterMove` makes them 1 and 2 and picks the unit up there. B with the unit picked up sends it back inside (1) or to guarding (2) (`rsMapPressBWithUnitSelected`); the unit menu hides guard in mode 2. The guard command (`rlUnitGuardCastle`) moves the unit onto the guarding spot at once: from the unit menu it sets `$8004` (becomes 4), or 5 / 9 after a sortie or from unit menu mode 1 (`rlStartCursorToActiveUnitForAction`); the castle screen sets 3. Cursor state 8 then ends an empty walk, which requests unit menu mode 2; guarding starts when the action finishes on the spot (`rlFinishUnitAction`). B in the unit menu (`rlUndoUnitMove`) undoes by mode: 0 back to the origin; 5 becomes 1; with unit menu mode 1 open or the unit able to move, back to the origin and picked up again; otherwise 1 and 3 go back inside, 2 guards again, 9 stays put. After the castle screen's guard, the move test reads an `aMovementMap` the castle screen used for its item lists.
 
 ### Targets
 
@@ -168,7 +168,6 @@ At the end of chapter 5, after Arvis attacks Sigurd, `procFirstGenerationEnding`
 
 ## Open questions
 
-- `wMapActionMode`: the meaning of each value. 1 is an ordinary move, `$8002`-`$8004` are set by depart and guard, and 4, 5 and 9 change what happens at the end of a walk; the castle sets 3 and `$FFFF`.
 - `wUnknown00075A`: bit 1 adds a second layer of map tiles from `$7F6400` into `$065C`, which nothing seems to upload.
 - `wUnitSelectedFlag` takes the values 1 and 2 in an unused routine (`rlMoveFreeMapCursorUnused`, a different cursor frame for 2); only 1 is used.
 - The help command's relocation (type 7 with `wR0` and `wR1`) and why the helper gets 100 experience.

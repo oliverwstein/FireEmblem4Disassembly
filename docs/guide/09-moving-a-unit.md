@@ -195,17 +195,44 @@ Once the path is built, the overlay is hidden and the cursor travels back to the
 
 At the end of the path, the unit's deployment row is moved to the cursor's tile ([Chapter 5](05-who-stands-where.md)) and its command menu opens (Chapter 10). The move isn't final until a command ends the unit's action. Until then, B in the command menu puts the unit back on the tile it started from, and the player can pick it up again.
 
-B before a destination is chosen puts the unit down where it stands. Some commands set a mode before moving the unit, such as leaving a castle or a guarding spot, and B then returns the unit to where it came from; Chapter 10 covers those modes.
+B before a destination is chosen puts the unit down where it stands. The tile the unit returns to is the one it was picked up from, which the cursor code keeps as the move's origin.
+
+### Moves that begin at a castle
+
+A castle has two tiles that matter to movement: the location's own tile, the **guarding spot**, which no movement type can enter, and the **gate**, two tiles below it, where units stand to enter or seize the castle ([Chapter 5](05-who-stands-where.md)). Four commands put a unit on one of them without walking: sortie from the castle screen, depart, and guard from the command menu or from the castle screen. Each records how the move began in `wMapActionMode` (`MAP_ACTION_MODE_*` in [include/Map.h](../../include/Map.h)), and undoing the move reads it to put the unit back where it came from. The mode is cleared when the unit's action ends.
+
+**Sortie and depart.** Sortie places a unit from inside the castle on the gate (mode 1). Depart takes a guarding unit off the guarding spot and onto the gate (mode 2); the command is offered only when the gate is empty. On the next frame the cursor travels to the gate and picks the unit up there. From that point:
+
+- B with the unit picked up sends it back: inside the castle after a sortie, guarding again after depart.
+- After a move, B in the command menu returns the unit to the gate and picks it up again, so a second B sends it back.
+- If the unit has nowhere to go from the gate, its command menu opens at once, and B in it sends the unit back directly.
+
+The guard command isn't offered to a unit that has just departed.
+
+**Guard.** The guard command moves the unit onto the guarding spot at once, but the unit isn't guarding yet. Guarding starts when its action finishes on that tile, which is how the engine recognizes it: any unit whose action ends on a guarding spot starts guarding there. After the command, the cursor travels to the unit, a walk with no steps ends on its tile, and the command menu opens again in a second mode for the guard (Chapter 10). B in that menu undoes the guard according to how the move began:
+
+| Guard chosen | Mode | B in the guard menu |
+|---|---|---|
+| in the command menu after an ordinary move | 4, cleared when the walk ends | back to the tile the unit was picked up from, put down |
+| after a sortie | 5, which B turns back into 1 | back to the gate and picked up; another B sends it inside |
+| on the castle screen | 3 | back inside the castle (below) |
+| in the home-castle menu (below) | 5 or 9 | back to the gate, and the home-castle menu opens again |
+
+**The home castle.** A player unit whose action ends on the gate of its own army's home castle doesn't finish its action. Its command menu opens again in a mode that B can't close, from which it can still enter or guard. The same mode opens for a Canto unit with nowhere to go. A computer unit that ends its action on its home castle's gate goes inside.
+
+The castle-screen row has a catch. Before going back inside, the undo checks whether the unit could move, using the four tiles next to the center of the movement map. Nothing has rebuilt that map since the castle screen, which keeps its item lists in the same memory and clears it each time it opens. Those four bytes stay 0 unless a list of at least 93 items was shown, so the unit normally goes back inside. With a value from 1 to `$7F` left in one of them, the undo instead puts the unit on the gate and picks it up, still in mode 3.
 
 ### Canto
 
 After an attack or a staff use that it started on the map, a unit with the `Canto` skill (personal, class, or from an item) that is still alive, awake, and not already in a Canto move gets a second move. Its budget is the movement map's value on the tile it acted from, which is the movement left after its first move, and it is stored in the unit's personal data. A cavalier with a budget of 81 that crossed 3 plains tiles to attack has 51 left, enough for 5 more tiles.
 
-The battle code stores the budget, and the map step picks the unit up again on a later frame ([Chapter 8](08-the-turn.md)). Its range maps are built from the stored budget with no range flags, so a Canto move shows only blue. If the Canto budget leaves it nowhere to go, its command menu opens instead. B can't cancel a Canto move: it sends the cursor to the unit and opens its command menu. After a Canto move, B in the command menu returns the unit to where the Canto move began.
+The battle code stores the budget, and the map step picks the unit up again on a later frame ([Chapter 8](08-the-turn.md)). Its range maps are built from the stored budget with no range flags, so a Canto move shows only blue. If the Canto budget leaves it nowhere to go, its command menu opens instead. B can't cancel a Canto move: it sends the cursor to the unit and opens its command menu. After a Canto move, B in the command menu returns the unit to where the Canto move began and picks it up again.
 
 ## Computer units
 
 A computer unit's move goes through the same code. The AI's move step sends the cursor to the unit, picks it up (building the same range maps, without drawing the overlay), and then runs the player's destination check on the destination the AI chose, with the camera moved there for the call. If the check passes, the path is built and the unit walks it at the speed of the enemy speed option. If the check fails, the next byte is a `brk` instruction, and the game stops. The AI's own planning therefore has to agree with the movement map: a destination within reach, on a tile that isn't an attack tile and has no unit on it.
+
+The castle commands have computer versions among the AI's actions. Action 6 runs the same guard routine with a nonzero argument, which finishes the unit's action on the guarding spot at once, so it starts guarding. Action 7 takes a guarding unit off its spot and inside.
 
 ## Trade-offs and hard limits
 
@@ -231,11 +258,12 @@ The limits:
 - [engine/map/unit_movement.asm](../../engine/map/unit_movement.asm): picking up a unit, the overlay's window and color math, the destination check, building the path, the walk and its speed, undoing a move, walking sounds, and the computer phase's moves.
 - [engine/map/map_cursor.asm](../../engine/map/map_cursor.asm): the cursor's states and stepping, the stop at the edge of the range, and the overlay's pulsing colors.
 - [engine/map/map_tilemap.asm](../../engine/map/map_tilemap.asm): building the overlay's rows and columns from the movement map.
-- [engine/map/input.asm](../../engine/map/input.asm): A and B with a unit picked up.
+- [engine/map/input.asm](../../engine/map/input.asm): A and B with a unit picked up, including sending a unit back into its castle or to guarding.
+- [engine/map/map_actions.asm](../../engine/map/map_actions.asm): the guard, depart, and return commands; [engine/map/deployment.asm](../../engine/map/deployment.asm): `rlFinishUnitAction`, which starts guarding and reopens the menu at the home castle.
 - [engine/map/deployment.asm](../../engine/map/deployment.asm): `rlTryStartUnitCanto` and the Canto budget.
 - [engine/units/stats.asm](../../engine/units/stats.asm): the movement budget and the Leg Ring; [engine/units/unit_info.asm](../../engine/units/unit_info.asm): the class's movement cost row.
 - [engine/items/inventory.asm](../../engine/items/inventory.asm): range flags from the inventory's weapons and staves.
 - [engine/events/event_engine.asm](../../engine/events/event_engine.asm): `REMOVE_AREA_RESTRICTION` and `SET_AREA_RESTRICTION`.
 - [data/terrain/MovementCost.csv](../../data/terrain/MovementCost.csv): costs by movement type and terrain; [include/Terrain.h](../../include/Terrain.h): the terrain IDs.
-- [include/WRAM.h](../../include/WRAM.h): `aRangeMap`, `aMovementMap`, `aMovementPath`, `wMovementMapWindow*`, `wAreaRestrictionBitfield`.
+- [include/Map.h](../../include/Map.h): `MAP_ACTION_MODE_*` and the cursor states; [include/WRAM.h](../../include/WRAM.h): `aRangeMap`, `aMovementMap`, `aMovementPath`, `wMovementMapWindow*`, `wAreaRestrictionBitfield`, `wMapActionMode`.
 - [docs/reference/map.md](../reference/map.md): the reference page.
