@@ -62,7 +62,7 @@ defeated                (as it was)        defeated            hidden on the map
 
 ## Locations
 
-A chapter's castles and villages are its **locations**. Each chapter lists up to 16 of them in ROM ([data/chapter/](../../data/chapter/)); Chapter 1's are Evans, Nordion, Genoa, Marpha, and Verdane castles and three villages:
+A chapter's castles and villages are its **locations**. Each chapter lists up to 16 of them in ROM: a table of pointers in [data/chapter/](../../data/chapter/) to entries in the chapter's event file, here [events/Chapter01.asm](../../events/Chapter01.asm). Chapter 1's are Evans, Nordion, Genoa, Marpha, and Verdane castles and three villages:
 
 ```
 .structChapterCastleLocationEntry  Ch01_Evans, EvansName, [46, 11], $FC, aChapter01ShopData
@@ -78,7 +78,7 @@ What changes during play is held in two arrays indexed by location ID. `aChapter
 | `$07` | owning faction slot (`LocationFactionSlotOwnerMask`) |
 | `$08` | destroyed (`LocationDestroyed`) |
 | `$20` | village visited and closed (`VillageClosed`) |
-| `$40` | set when an army seizes a castle (`LocationState40`); no code found reads it, and its check routine has no callers |
+| `$40` | set when an army seizes a castle (`LocationState40`); no routine reads it, and its check routine, `rlCheckLocationState40`, has no callers |
 | `$80` | a unit is guarding the castle (`CastleGuarded`) |
 
 `aChapterLocationMoneyRewards` holds a word per location: the gold it still has. `rlInitLocation` sets it from the type's starting gold (5,000 for a village, 0 for a castle), and for a castle, moves its shop's unobtained items into the shop.
@@ -90,7 +90,7 @@ The map actions ([engine/map/map_actions.asm](../../engine/map/map_actions.asm))
 - **Seize** (`rlUnitSeizeCastle`): makes the seizing unit's army the castle's owner. When the player seizes a castle, captured characters are freed; when another army seizes one of the player's castles other than location 0, the castle is destroyed and its tiles change.
 - **Guard** and **depart**: a unit standing on the castle's tile sets or clears `CastleGuarded`. While a castle is guarded, it can't be seized.
 
-Ownership feeds back into the factions: an army's home castle is a location ID, castle income counts the castles held by the player and its allies (Chapter 4), and the save file stores all 16 location bytes.
+Ownership feeds back into the factions: an army's home castle is a location ID, castle income counts the castles held by the player and its allies ([Chapter 4](04-armies-and-allegiance.md)), and the save file stores all 16 location bytes.
 
 ## Arriving on a tile
 
@@ -128,8 +128,8 @@ Splitting *where* from *who* keeps the per-frame work small: drawing and cursor 
 The limits:
 
 - **72 deployment rows.** A unit keeps its row for life, so units waiting in castles count against the 72 as well. `rsAddUnitToDeploymentTable` sets carry when no row is free. `rlDeployUnit` also compares the deployed count with `$058B` before trying, but `$058B` is the address of the count variable itself, so that check never fails.
-- **48 distinct short sprites** in the shared pool, with tall sprites taking rows from the top. `rlAddDeployedMapSprite` halts with `brk` if no row is free.
-- **16 locations per chapter**, castles and villages only.
+- **72 distinct sprites, at most 48 of them short.** Short sprites must fit in rows 0 to 47; tall sprites search from row 71 down and can take any free row, including those. `rlAddDeployedMapSprite` halts with `brk` if no row is free.
+- **16 locations per chapter.** Only castles and villages are used.
 - **Village gold in steps of 500.** Raids take a fixed 500, so a village's fate depends only on how many raids reach it.
 
 ## Where it lives in the source
@@ -137,8 +137,8 @@ The limits:
 - [include/WRAM.h](../../include/WRAM.h): `aDeploymentTable`, `aChapterLocationRAMData`, and `aChapterLocationMoneyRewards`.
 - [include/Deployment.h](../../include/Deployment.h): the `DeploymentState*` flags.
 - [include/Chapters.h](../../include/Chapters.h): location entry structs, type data, and the location state bits.
-- [engine/map/deployment.asm](../../engine/map/deployment.asm): adding units to the table, moving them, hiding, and defeat.
-- [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): the shared sprite pool and drawing.
+- [engine/map/deployment.asm](../../engine/map/deployment.asm): adding units to the table, the shared sprite pool (`rlAddDeployedMapSprite`), moving units, hiding, and defeat.
+- [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): drawing and animating the map sprites.
 - [engine/map/locations.asm](../../engine/map/locations.asm): location data, owners, gold, and tile changes.
 - [engine/map/map_actions.asm](../../engine/map/map_actions.asm): visit, raid, seize, guard, and depart.
 - [engine/units/unit_state.asm](../../engine/units/unit_state.asm) and [level_up.asm](../../engine/units/level_up.asm): `rlSetUnitResidingInCastle` and `rlDeploySelectedUnit`.
