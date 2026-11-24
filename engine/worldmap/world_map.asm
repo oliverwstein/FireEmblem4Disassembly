@@ -245,7 +245,7 @@
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD96C00, $0800, $80, $B000
+          .structDMAToVRAM gWorldMapTilemap, $0800, $80, $B000
 
         lda #(`aDecompressionDMAEntry80B636)<<8
         sta lR19+1

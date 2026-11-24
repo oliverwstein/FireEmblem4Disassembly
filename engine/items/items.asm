@@ -1205,13 +1205,13 @@
         and #$00FF
         asl a
         clc
-        adc aMainDataOffsets+14
+        adc aMainDataOffsets.ItemDescriptionOffsets
         tax
         lda #$8300
         sta lRoutineVariable+1,b
         lda aMainDataOffsets,x
         clc
-        adc aMainDataOffsets+14
+        adc aMainDataOffsets.ItemDescriptionOffsets
         adc #$8000
         sta lRoutineVariable,b
         plx

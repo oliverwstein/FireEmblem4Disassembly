@@ -264,15 +264,15 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDD6730, $02C0, $80, $4000
+          .structDMAToVRAM gStatusScreenTilemap1, $02C0, $80, $4000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDD69F0, $08C0, $80, $5280
+          .structDMAToVRAM gStatusScreenTilemap2, $08C0, $80, $5280
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE1A40, $0440, $80, $5B40
+          .structDMAToVRAM gStatusScreenTilemap3, $0440, $80, $5B40
 
         ldx #$0200
 
@@ -299,7 +299,7 @@
         beq _BE30
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE1600, $0440, $80, $4800
+          .structDMAToVRAM gStatusScreenTilemap4, $0440, $80, $4800
 
         bra _BE3D
 
@@ -307,7 +307,7 @@
         _BE30
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE1E80, $0440, $80, $4800
+          .structDMAToVRAM gStatusScreenTilemap4Loptous, $0440, $80, $4800
 
 
         _BE3D

@@ -3023,9 +3023,9 @@
         sta aDialogue.lActivePointer,b
 
         _Dialogue
-        lda #(`dialogueChapterEpilogueWorldMap_Grannvale_Piece_Unknown8DF329)<<8
+        lda #(`dialogueChapterEpilogueWorldMap_WaitFrame)<<8
         sta lR18+1
-        lda #<>dialogueChapterEpilogueWorldMap_Grannvale_Piece_Unknown8DF329
+        lda #<>dialogueChapterEpilogueWorldMap_WaitFrame
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rtl

@@ -182,7 +182,7 @@
         .autsiz
         .databank ?
 
-        ; Called only by the unreferenced rlUnusedWorldMapTestFrame, with the buttons pressed this frame. A: loads the next four world map portraits (counting with aWorldMapMarker.wID[0]). B: clears marker 0's timer. X: highlights a region (rlHighlightWorldMapPart, by the frame count). R: opens a dialogue box. L: uploads gUnknownD96C00 to VRAM. Select: returns to the chapter map (rsReturnToMapMainLoop).
+        ; Called only by the unreferenced rlUnusedWorldMapTestFrame, with the buttons pressed this frame. A: loads the next four world map portraits (counting with aWorldMapMarker.wID[0]). B: clears marker 0's timer. X: highlights a region (rlHighlightWorldMapPart, by the frame count). R: opens a dialogue box. L: uploads gWorldMapTilemap to VRAM. Select: returns to the chapter map (rsReturnToMapMainLoop).
 
         bit #$0080
         bne _8804
@@ -233,7 +233,7 @@
         _883D
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD96C00, $0800, $80, $B000
+          .structDMAToVRAM gWorldMapTilemap, $0800, $80, $B000
 
         jsl rlResetHDMAEngine
         rts

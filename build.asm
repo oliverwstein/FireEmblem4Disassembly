@@ -246,7 +246,7 @@
     .logical $808000
 
       ; 80/8000: two unreferenced bytes before the first routine.
-      aUnknown808000 .byte $02, $FE
+      aUnused808000 .byte $02, $FE
 
       .dsection Unsorted808002Section
 
@@ -1047,7 +1047,7 @@
       ; above (structUNITEntry: character, X, Y, leader flag, AI, faction slot,
       ; formation; $FFFF ends a group) that no chapter uses, then zeros to the end
       ; of the bank.
-      aUnknown81EBBC .byte $03, $03
+      aUnused81EBBC .byte $03, $03
 
       aUNITGroupDataUnused81EBBE
         .word $01AD
@@ -1573,7 +1573,7 @@
         ItemNameOffsets         .word <>aItemNameOffsets          - aMainDataOffsets ; $0C
         ItemDescriptionOffsets  .word <>aItemDescriptionOffsets   - aMainDataOffsets ; $0E
         ItemDataOffsets         .word <>aItemDataOffsets          - aMainDataOffsets ; $10
-                                .word <>aUnknown83D8E6            - aMainDataOffsets ; $12
+        Entry12Unused           .word <>aMainDataEntry12Unused    - aMainDataOffsets ; $12, read by nothing
         FactionNameOffsets      .word <>aFactionNameOffsets       - aMainDataOffsets ; $14
       .bend
 
@@ -1610,7 +1610,7 @@
       aCharacterNames .binclude "text/menutext/CharacterNames.asm"                                        ; 83/9ECD
       aCharacterDataOffsets .include "data/offset/CharacterDataOffsets.csv.asm"                         ; 83/ADF5
       aCharacterData .binclude "data/character/CharacterData.csv.asm"                                   ; 83/B267
-      aUnknown83D8E6 .word 0                                                                              ; 83/D8E6
+      aMainDataEntry12Unused .word 0                                                                              ; 83/D8E6
       aFactionNameOffsets .include "data/offset/FactionNameOffsets.csv.asm"                             ; 83/D8E8
       aFactionNames .binclude "text/menutext/FactionNames.asm"                                            ; 83/D956
       aItemNameOffsets .include "data/offset/ItemNameOffsets.csv.asm"                                   ; 83/DC12
@@ -3814,7 +3814,7 @@
     .logical $D05639
 
       ; Unreferenced: 58 bytes after the last class card.
-      aUnknownD05639
+      aUnusedD05639
       .byte $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF
       .byte $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF
       .byte $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF
@@ -4095,7 +4095,7 @@
       aPortraitPalettePointers .include "data/PortraitPalettePointers.csv.asm" ; 8A/B7E1
 
       ; 8A/BAC9: unreferenced, two long pointers to aDialogueBackgroundPointers.
-      aUnknown8ABAC9 .long aDialogueBackgroundPointers, aDialogueBackgroundPointers
+      aUnused8ABAC9 .long aDialogueBackgroundPointers, aDialogueBackgroundPointers
 
       .dsection DialogueBackgroundsSection
 
@@ -5465,7 +5465,7 @@
       dialogueChapterEpilogueWorldMap_Grannvale_Piece_Yngvi_Lana .include "text/dialogue/EpilogueWorldMap/WorldMap_Grannvale_Piece_Yngvi_Lana.dialogue.txt" ; 8DF2C6
       dialogueChapterEpilogueWorldMap_Grannvale_Piece_Chalphy_Oifey .include "text/dialogue/EpilogueWorldMap/WorldMap_Grannvale_Piece_Chalphy_Oifey.dialogue.txt" ; 8DF2E0
       dialogueChapterEpilogueWorldMap_Grannvale_Piece_Chalphy_OifeysLover .include "text/dialogue/EpilogueWorldMap/WorldMap_Grannvale_Piece_Chalphy_OifeysLover.dialogue.txt" ; 8DF314
-      dialogueChapterEpilogueWorldMap_Grannvale_Piece_Unknown8DF329 .include "text/dialogue/EpilogueWorldMap/WorldMap_Grannvale_Piece_Unknown8DF329.dialogue.txt" ; 8DF329
+      dialogueChapterEpilogueWorldMap_WaitFrame .include "text/dialogue/EpilogueWorldMap/WorldMap_WaitFrame.dialogue.txt" ; 8DF329
 
       dialogueChapter07LeifSeliphTalk .include "text/dialogue/Chapter07/LeifSeliphTalk.dialogue.txt" ; 8DF32D
       dialogueChapter07DiarmuidNannaTalk .include "text/dialogue/Chapter07/DiarmuidNannaTalk.dialogue.txt" ; 8DF6F8
@@ -7415,7 +7415,7 @@
 
       aUnknownD96800 .binary "gfx/map/UnknownD96800.bin" ; D96800, unreferenced
 
-      gUnknownD96C00 .binary "gfx/ui/tilemaps/UnknownD96C00.bin" ; D96C00
+      gWorldMapTilemap .binary "gfx/ui/tilemaps/WorldMapTilemap.bin" ; D96C00
 
       gUnknownD97400 .binary "gfx/ui/tilemaps/UnknownD97400.bin" ; D97400, unreferenced
 
@@ -7423,7 +7423,7 @@
 
       gUnknownD97B00 .binary "gfx/ui/tilemaps/UnknownD97B00.bin" ; D97B00, unreferenced
 
-      aUnknownD97C00 .binary "gfx/ui/tilemaps/UnknownD97C00.bin" ; D97C00
+      aFirstGenerationEndingBG2Tilemap .binary "gfx/ui/tilemaps/FirstGenerationEndingBG2Tilemap.bin" ; D97C00
 
     .here
 
@@ -7699,9 +7699,9 @@
     * = $1D6730
     .logical $DD6730
 
-      gUnknownDD6730 .binary "gfx/ui/tilemaps/UnknownDD6730.bin" ; DD6730
+      gStatusScreenTilemap1 .binary "gfx/ui/tilemaps/StatusScreenTilemap1.bin" ; DD6730
 
-      gUnknownDD69F0 .binary "gfx/ui/tilemaps/UnknownDD69F0.bin" ; DD69F0
+      gStatusScreenTilemap2 .binary "gfx/ui/tilemaps/StatusScreenTilemap2.bin" ; DD69F0
 
       g4bppWindowFrames .binary "gfx/ui/WindowFrames.4bpp" ; DD72B0
 
@@ -7719,7 +7719,7 @@
       dialogueChapterPrologueWorldMap4 .include "text/dialogue/ChapterPrologue/WorldMap4.dialogue.txt" ; 9D8490
       dialogueChapterPrologueWorldMap5 .include "text/dialogue/ChapterPrologue/WorldMap5.dialogue.txt" ; 9D84BA
       dialogueChapterPrologueWorldMap6 .include "text/dialogue/ChapterPrologue/WorldMap6.dialogue.txt" ; 9D8504
-      dialogueChapterPrologueWorldMapUnknown .include "text/dialogue/ChapterPrologue/WorldMapUnknown.dialogue.txt" ; 9D8702
+      dialogueChapterPrologueWorldMapEmpty .include "text/dialogue/ChapterPrologue/WorldMapEmpty.dialogue.txt" ; 9D8702
 
       .include "events/Chapter03/EventChapter03Opening.asm"
       .include "events/Chapter03/EventChapter03MadinoSeized.asm"
@@ -7977,11 +7977,11 @@
 
       g4bppUnknownDE0A00 .binary "gfx/ui/UnknownDE0A00.4bpp" ; DE0A00
 
-      gUnknownDE1600 .binary "gfx/ui/tilemaps/UnknownDE1600.bin" ; DE1600
+      gStatusScreenTilemap4 .binary "gfx/ui/tilemaps/StatusScreenTilemap4.bin" ; DE1600
 
-      gUnknownDE1A40 .binary "gfx/ui/tilemaps/UnknownDE1A40.bin" ; DE1A40
+      gStatusScreenTilemap3 .binary "gfx/ui/tilemaps/StatusScreenTilemap3.bin" ; DE1A40
 
-      gUnknownDE1E80 .binary "gfx/ui/tilemaps/UnknownDE1E80.bin" ; DE1E80
+      gStatusScreenTilemap4Loptous .binary "gfx/ui/tilemaps/StatusScreenTilemap4Loptous.bin" ; DE1E80
 
       gUnitWindowListTilemap .binary "gfx/ui/tilemaps/UnitWindowListTilemap.bin" ; DE22C0
 

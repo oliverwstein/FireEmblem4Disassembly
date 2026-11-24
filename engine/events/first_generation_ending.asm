@@ -71,7 +71,7 @@
         ldx #$01FE
 
         _E07A
-        lda aUnknownD97C00,x
+        lda aFirstGenerationEndingBG2Tilemap,x
         sta aBG2TilemapBuffer.Page1,x
         dec x
         dec x
