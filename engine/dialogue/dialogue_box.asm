@@ -1,8 +1,8 @@
 ; Dialogue boxes: procDialogueBox, the HDMA effects that fold and unfold the
 ; boxes, freeing and closing them (rlCloseDialogueBox, rlCheckDialogueBoxesClosed).
 ; At the end, helpers from bank $85 the dialogue code calls whose purpose is not
-; worked out yet (rlUnknown85BCD4, rlUnknown85BD12, rlUnknown85BD93) and an
-; unreached proc (procUnknown85C01F). Last, from bank $81, rlRedrawDialogueBoxTilemaps:
+; worked out yet (rlInitDialogueBoxHDMA, rlUpdateDialoguePortraitOverlayTiles, rlUploadDialoguePortraitOverlayTiles) and an
+; unreached proc (procExpandingWindowAnimation). Last, from bank $81, rlRedrawDialogueBoxTilemaps:
 ; each frame on the map it copies the two boxes' tilemaps when bit 1 of
 ; wChapterFlags asks for it.
 
@@ -1102,13 +1102,15 @@
       .al
       .xl
 
-      rlUnknown85BCD4 ; 85/BCD4
+      rlInitDialogueBoxHDMA ; 85/BCD4
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Initializes dialogue box HDMA Y-position, cycle counter, and pointer words
 
         pha
         sep #$20
@@ -1141,11 +1143,11 @@
         ; 85/BD10
 
 
-      aUnknown85BD10 ; 85/BD10
+      aDialogueBoxHDMAZeroByte ; 85/BD10
 
         .byte $00
 
-      aUnknown85BD11 ; 85/BD11
+      aDialogueBoxHDMAOneByte ; 85/BD11
 
         .byte $01
 
@@ -1157,12 +1159,14 @@
       .al
       .xl
 
-      rlUnknown85BD12 ; 85/BD12
+      rlUpdateDialoguePortraitOverlayTiles ; 85/BD12
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Writes portrait eye/mouth overlay tilemap entries for slot Y
 
         sty wR7
         sta wR6
@@ -1190,7 +1194,7 @@
         _BD35
         asl a
         tax
-        lda aUnknown85BD8D,x
+        lda aDialoguePortraitOverlayTileOffsets,x
         clc
         adc wR0
         sta wR1
@@ -1270,9 +1274,9 @@
       .al
       .xl
 
-      aUnknown85BD8D ; 85/BD8D
+      aDialoguePortraitOverlayTileOffsets ; 85/BD8D
 
-        ; Read by rlUnknown85BD12.
+        ; Read by rlUpdateDialoguePortraitOverlayTiles.
 
         .word $0009, $000F, $002F
 
@@ -1286,12 +1290,14 @@
       .al
       .xl
 
-      rlUnknown85BD93 ; 85/BD93
+      rlUploadDialoguePortraitOverlayTiles ; 85/BD93
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; DMAs $7E7F48 portrait overlay tilemap ($80 bytes) to VRAM $ABC0
 
         jsl rlDMAByStruct
 
@@ -1311,13 +1317,15 @@
       .al
       .xl
 
-      rlUnknown85BDA1 ; 85/BDA1
+      rlDrawExpandingWindowSprites ; 85/BDA1
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds OAM sprites for an expanding/shrinking window animation step
 
         phb
         php
@@ -1415,7 +1423,7 @@
         lda wR6
         cmp #$0070
         bmi _BE50
-        lda @l aUnknown85BE76,x
+        lda @l aExpandingWindowStepSizes,x
         and #$00FF
         sta wR7
         lda wR1
@@ -1425,7 +1433,7 @@
 
 
         _BE50
-        lda @l aUnknown85BE76,x
+        lda @l aExpandingWindowStepSizes,x
         and #$00FF
         clc
         adc wR1
@@ -1463,9 +1471,9 @@
       .al
       .xl
 
-      aUnknown85BE76 ; 85/BE76
+      aExpandingWindowStepSizes ; 85/BE76
 
-        ; Read by rlUnknown85BDA1.
+        ; Read by rlDrawExpandingWindowSprites.
 
         .byte $00, $01, $02, $03, $04, $05, $06, $07, $08, $07, $06, $05, $04, $03, $02, $01
         .byte $00
@@ -1482,7 +1490,7 @@
 
       aUnknown85BE87 ; 85/BE87
 
-        ; Read by rlUnknown85BDA1.
+        ; Read by rlDrawExpandingWindowSprites.
 
         .word <>aUnknown85BEA9
         .word <>aUnknown85BF6F
@@ -1665,7 +1673,7 @@
       .al
       .xl
 
-      procUnknown85C01F .structProcInfo "PW", rlUnknown85C028, rlUnknown85C051, aProcDialogueBoxCode ; 85/C01F
+      procExpandingWindowAnimation .structProcInfo "PW", rlProcExpandingWindowAnimationInit, rlProcExpandingWindowAnimationCycle, aProcDialogueBoxCode ; 85/C01F
 
         .byte $01
 
@@ -1679,12 +1687,14 @@
       .al
       .xl
 
-      rlUnknown85C028 ; 85/C028
+      rlProcExpandingWindowAnimationInit ; 85/C028
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced expanding window animation proc init; saves OAM palette 0
 
         lda aProcSystem.wInput3,b
         sta aProcSystem.aBody6,b,x
@@ -1711,12 +1721,14 @@
         ; 85/C051
 
 
-      rlUnknown85C051 ; 85/C051
+      rlProcExpandingWindowAnimationCycle ; 85/C051
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced expanding window animation proc cycle; steps rlDrawExpandingWindowSprites
 
         lda aProcSystem.aBody7,b,x
         inc a
@@ -1742,7 +1754,7 @@
         lda aProcSystem.aBody6,b,x
         tax
         lda wR0
-        jsl rlUnknown85BDA1
+        jsl rlDrawExpandingWindowSprites
         rtl
 
 
@@ -1765,16 +1777,18 @@
         ; 85/C094
 
 
-      rlUnknown85C094 ; 85/C094
+      rlStartExpandingWindowAnimation ; 85/C094
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`procUnknown85C01F)<<8
+        ; Unreferenced; creates procExpandingWindowAnimation
+
+        lda #(`procExpandingWindowAnimation)<<8
         sta lR44+1
-        lda #<>procUnknown85C01F
+        lda #<>procExpandingWindowAnimation
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -1784,17 +1798,19 @@
         ; 85/C0A3
 
 
-      rlUnknown85C0A3 ; 85/C0A3
+      rlCheckExpandingWindowAnimationActive ; 85/C0A3
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Unreferenced; returns carry set if procExpandingWindowAnimation is active
+
         phx
-        lda #(`procUnknown85C01F)<<8
+        lda #(`procExpandingWindowAnimation)<<8
         sta lR44+1
-        lda #<>procUnknown85C01F
+        lda #<>procExpandingWindowAnimation
         sta lR44
         jsl rlProcEngineFindProc
         bcc _C0B7
@@ -1821,12 +1837,14 @@
       .al
       .xl
 
-      rlUnknown85C0BA ; 85/C0BA
+      rlClosePopUpWindowAndRestoreMap ; 85/C0BA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Frees HDMA entry 0, frees proc, and restores map windows
 
         jsl rlFreeHDMAEntry0
         jsl rlProcEngineFreeProc

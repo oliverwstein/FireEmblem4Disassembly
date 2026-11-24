@@ -123,11 +123,13 @@
 
         .databank 0
 
-      rlUnknown91AD7F ; 91/AD7F
+      rlGetMapBattleDeathQuote ; 91/AD7F
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs rlUnknown84EFA5 and rlGetDeathQuote for map battle death quote
 
         php
         phx
@@ -187,11 +189,13 @@
 
         .databank 0
 
-      rlUnknown91ADC7 ; 91/ADC7
+      rlRunInlineDialogueEventScript ; 91/ADC7
 
         .al
         .autsiz
         .databank ?
+
+        ; Copies map-dialogue or song+dialogue event template to aEventScriptBuffer and starts it
 
         php
         phx
@@ -207,11 +211,11 @@
         lda lR19
         bne +
 
-        jsr rsUnknown91ADE5
+        jsr rsRunMapDialogueEventScript
         bra _End
         
         +
-        jsr rsUnknown91AE14
+        jsr rsRunSongAndDialogueEventScript
         
         _End
         ply
@@ -221,19 +225,21 @@
 
         .databank 0
 
-      rsUnknown91ADE5 ; 91/ADE5
+      rsRunMapDialogueEventScript ; 91/ADE5
 
         .al
         .autsiz
         .databank ?
 
+        ; Copies aMapDialogueEventTemplate with pointer lR18 to aEventScriptBuffer and starts it
+
         php
 
         sep #$20
-        ldx #size(aUnknown91AE49)
+        ldx #size(aMapDialogueEventTemplate)
 
           -
-          lda aUnknown91AE49,x
+          lda aMapDialogueEventTemplate,x
           sta aEventScriptBuffer,x
           dec x
           bpl -
@@ -255,19 +261,21 @@
 
         .databank 0
 
-      rsUnknown91AE14 ; 91/AE14
+      rsRunSongAndDialogueEventScript ; 91/AE14
 
         .al
         .autsiz
         .databank ?
 
+        ; Copies aSongAndDialogueEventTemplate with song lR19 and pointer lR18 to aEventScriptBuffer and starts it
+
         php
 
         sep #$20
-        ldx #size(aUnknown91AE58)
+        ldx #size(aSongAndDialogueEventTemplate)
 
           -
-          lda aUnknown91AE58,x
+          lda aSongAndDialogueEventTemplate,x
           sta aEventScriptBuffer,x
           dec x
           bpl -
@@ -294,7 +302,7 @@
 
         .databank 0
 
-      aUnknown91AE49 .block ; 91/AE49
+      aMapDialogueEventTemplate .block ; 91/AE49
 
         macroMapDialogue 0
 
@@ -305,7 +313,7 @@
 
         .bend
 
-      aUnknown91AE58 .block ; 91/AE58
+      aSongAndDialogueEventTemplate .block ; 91/AE58
 
         PLAY_SFX_WORD $00E0
         PAUSE 35
@@ -609,11 +617,13 @@
 
         .databank 0
 
-      rlUnknown91AFC2 ; 91/AFC2
+      rlLoadBattleBannerGraphicsAndPalette ; 91/AFC2
 
         .al
         .autsiz
         .databank ?
+
+        ; Decompresses battle/phase banner graphics and sets lR18 to palette slice
 
         php
         rep #$30
@@ -696,66 +706,78 @@
         .word <>g4bppcBattleBannerLoptr
         .word <>g4bppcBattleBannerDefault
 
-      rlUnknown91B038 ; 91/B038
+      rlMoveTemporaryByScript ; 91/B038
 
         .al
         .autsiz
         .databank ?
+
+        ; Event unit-move wrapper 0 (MOVE_TEMPORARY_BY_SCRIPT)
 
         ; MOVE_TEMPORARY_BY_SCRIPT
 
         lda #0
         jml +
 
-      rlUnknown91B03F ; 91/B03F
+      rlMoveTemporaryToCoords ; 91/B03F
 
         .al
         .autsiz
         .databank ?
+
+        ; Event unit-move wrapper 1 (MOVE_TEMPORARY_TO_COORDS)
 
         ; MOVE_TEMPORARY_TO_COORDS
 
         lda #1
         jml +
 
-      rlUnknown91B046 ; 91/B046
+      rlLoadUnitByGroup ; 91/B046
 
         .al
         .autsiz
         .databank ?
+
+        ; Event unit-move wrapper 2 (LOAD_UNIT_BY_GROUP)
 
         ; LOAD_UNIT_BY_GROUP
 
         lda #2
         jml +
 
-      rlUnknown91B04D ; 91/B04D
+      rlLoadUnitDirect ; 91/B04D
 
         .al
         .autsiz
         .databank ?
+
+        ; Event unit-move wrapper 3 (LOAD_UNIT_DIRECT)
 
         ; LOAD_UNIT_DIRECT
 
         lda #3
         jml +
 
-      rlUnknown91B054 ; 91/B054
+      rlMoveTemporaryToCoordsFollow ; 91/B054
 
         .al
         .autsiz
         .databank ?
+
+        ; Event unit-move wrapper 4 (MOVE_TEMPORARY_TO_COORDS_FOLLOW)
 
         ; MOVE_TEMPORARY_TO_COORDS_FOLLOW
 
         lda #4
         jml +
 
-      rlUnknown91B05B ; 91/B05B
+      rlMoveTemporaryToCoordsClass ; 91/B05B
 
         .al
         .autsiz
         .databank ?
+
+        ; Event unit-move wrapper 5 (MOVE_TEMPORARY_TO_COORDS_CLASS)
 
         ; MOVE_TEMPORARY_TO_COORDS_CLASS
 
@@ -825,11 +847,13 @@
 
         .databank 0
 
-      rlUnknown91B0B4 ; 91/B0B4
+      rlCreateProcDialogueWithBGFromPointer ; 91/B0B4
 
         .al
         .autsiz
         .databank ?
+
+        ; Unreferenced; creates blocking procDialogueWithBGFromPointer
 
         lda #(`procDialogueWithBGFromPointer)<<8
         sta lR44+1

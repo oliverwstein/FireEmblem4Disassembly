@@ -3154,7 +3154,7 @@
         asl a
         asl a
         sta wR1
-        jsl rlUnknown85BCD4
+        jsl rlInitDialogueBoxHDMA
         jsl rlDrawSaveMenuHand
         ply
         plx

@@ -41,14 +41,14 @@
         inc y
         lda [lR22],y
         sta lR18+1
-        jsl rlUnknown828653
+        jsl rlStartConversationDialogue
 
         lda wEventUnit1Pointer,b
-        jsl rlUnknown828A1C
+        jsl rlGetCharacterIDOrSigurdFromUnitPointer
         sta aDialogue.wUnit1,b
 
         lda wEventUnit2Pointer,b
-        jsl rlUnknown828A1C
+        jsl rlGetCharacterIDOrSigurdFromUnitPointer
         sta aDialogue.wUnit2,b
 
         lda #5
@@ -176,7 +176,7 @@
           phx
           lda #4
           sta wBufferBG3HOFS
-          jsl rlUnknown8285E1
+          jsl rlRunDialogueCycleAndSprites
           plx
 
           lda aDialogue.wStatus,b
@@ -326,24 +326,28 @@
 
         .databank 0
 
-      rlUnknown8285E1 ; 82/85E1
+      rlRunDialogueCycleAndSprites ; 82/85E1
 
         .al
         .autsiz
         .databank ?
 
+        ; Runs rlRunDialogueCycle, updates portrait overlay sprites, and displays A-press arrows
+
         jsl rlRunDialogueCycle
-        jsr rsUnknown8285EC
-        jsr rsUnknown82862E
+        jsr rsUpdateDialoguePortraitSprites
+        jsr rsDisplayDialogueSlotAPressArrows
         rtl
 
         .databank 0
 
-      rsUnknown8285EC ; 82/85EC
+      rsUpdateDialoguePortraitSprites ; 82/85EC
 
         .al
         .autsiz
         .databank ?
+
+        ; Updates dialogue portrait overlay tiles for slots 0 and 1
 
         lda aDialogue._Slot[0].wPortraitID
         cmp #$FFFF
@@ -351,7 +355,7 @@
 
           lda aDialogue.wUnknown0018A3,b
           ldy #0
-          jsl rlUnknown85BD12
+          jsl rlUpdateDialoguePortraitOverlayTiles
 
         +
         lda aDialogue._Slot[1].wPortraitID
@@ -360,7 +364,7 @@
 
           lda aDialogue.wUnknown0018A5,b
           ldy #1
-          jsl rlUnknown85BD12
+          jsl rlUpdateDialoguePortraitOverlayTiles
 
         +
         lda aDialogue._Slot[0].wPortraitID
@@ -375,7 +379,7 @@
         lda aDialogue.wUnknown0018A7,b
         beq _End
 
-          jsl rlUnknown85BD93
+          jsl rlUploadDialoguePortraitOverlayTiles
 
         _End
         rts
@@ -390,11 +394,13 @@
       .al
       .xl
 
-      rsUnknown82862E ; 82/862E
+      rsDisplayDialogueSlotAPressArrows ; 82/862E
 
         .al
         .autsiz
         .databank ?
+
+        ; Displays A-press arrow at (224, 56) or (224, 200) for active dialogue slot
 
         ; Sets the position of the A press arrow based on the currently active slot
 
@@ -425,11 +431,13 @@
       .al
       .xl
 
-      rlUnknown828653 ; 82/8653
+      rlStartConversationDialogue ; 82/8653
 
         .al
         .autsiz
         .databank ?
+
+        ; Starts conversation dialogue HDMA/text in mode 1 and sets up conversation boxes
 
         ; Input:
         ; lR18 = dialogue pointer
@@ -584,10 +592,10 @@
         beq +
 
           lda wEventUnit1Pointer,b
-          jsl rlUnknown828A1C
+          jsl rlGetCharacterIDOrSigurdFromUnitPointer
           sta aDialogue.wUnit1,b
           lda wEventUnit2Pointer,b
-          jsl rlUnknown828A1C
+          jsl rlGetCharacterIDOrSigurdFromUnitPointer
           sta aDialogue.wUnit2,b
 
         +
@@ -649,7 +657,7 @@
           lda #<>rlProcDialogueWithBGCycle3
           sta aProcSystem.aHeaderOnCycle,b,x
           jsl rlClearAllFadeInProcs
-          jsl rlUnknown8AE29F
+          jsl rlFreeConversationPortraitFadeProcs
 
         +
         rtl
@@ -742,11 +750,13 @@
 
         PROC_HALT
 
-      rlUnknown828A1C ; 82/8A1C
+      rlGetCharacterIDOrSigurdFromUnitPointer ; 82/8A1C
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns character ID for unit pointer A, or 1 (Sigurd) if A is 0
 
         php
         and #$FFFF
@@ -775,12 +785,14 @@
       .al
       .xl
 
-      rlUnknown8AE29F ; 8A/E29F
+      rlFreeConversationPortraitFadeProcs ; 8A/E29F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Finds and frees all four conversation portrait fade procs
 
         lda #(`procConversationFadeInLeftPortrait)<<8
         sta lR44+1
@@ -847,10 +859,10 @@
         .autsiz
         .databank ?
 
-        ; Start dialogue HDMA/text in mode 1 (rlUnknown828653) and load box graphics/palette
+        ; Start dialogue HDMA/text in mode 1 (rlStartConversationDialogue) and load box graphics/palette
 
         php
-        jsl rlUnknown828653
+        jsl rlStartConversationDialogue
         jsl rlGetDialogueBoxGraphicsAndPalette
         plp
         rtl

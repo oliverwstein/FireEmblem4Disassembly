@@ -4790,7 +4790,7 @@
         bne _A0DD
         lda wDeathQuotePointer
         beq _A0DD
-        jsl rlUnknown91AD7F
+        jsl rlGetMapBattleDeathQuote
         jsl rlMapBattleOpenQuote
 
         _A0DD
@@ -4867,7 +4867,7 @@
         .databank ?
 
         phb
-        jsl rlUnknown8285E1
+        jsl rlRunDialogueCycleAndSprites
         plb
         .databank ?
         rtl

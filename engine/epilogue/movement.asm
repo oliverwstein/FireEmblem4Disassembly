@@ -387,7 +387,7 @@
         sta lR18+1
         lda #<>aEpilogueUnitMovement
         sta lR18
-        jsl rlUnknown91B03F
+        jsl rlMoveTemporaryToCoords
         plx
         bcs _95D3
 

@@ -3358,7 +3358,7 @@
           lda $0001+1,b,y
           sta lR18+1
           lda $0004,b,y
-          jsl rlUnknown91ADC7
+          jsl rlRunInlineDialogueEventScript
 
           pla
           sta wSelectedUnitDataRAMPointer,b

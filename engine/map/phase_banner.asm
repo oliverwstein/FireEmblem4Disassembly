@@ -36,7 +36,7 @@
         .autsiz
         .databank ?
 
-        ; Holds the game state (aBody5), hides the map menus, saves the palettes it changes, loads the army's colours (by its relation to the player) and its banner graphics (rlUnknown91AFC2). aBody6 = frames to stay (120).
+        ; Holds the game state (aBody5), hides the map menus, saves the palettes it changes, loads the army's colours (by its relation to the player) and its banner graphics (rlLoadBattleBannerGraphicsAndPalette). aBody6 = frames to stay (120).
 
         phx
         lda #$0008
@@ -65,7 +65,7 @@
         phx
         lda wActiveFactionSlot,b
         jsl rlGetFactionBattleBannerID
-        jsl rlUnknown91AFC2
+        jsl rlLoadBattleBannerGraphicsAndPalette
 
         plx
         rtl

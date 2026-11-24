@@ -514,7 +514,7 @@
         .autsiz
         .databank ?
 
-        lda #<>rlUnknown85C0BA
+        lda #<>rlClosePopUpWindowAndRestoreMap
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 

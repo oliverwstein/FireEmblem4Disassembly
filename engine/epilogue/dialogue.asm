@@ -685,7 +685,7 @@
       procUnknown91BD51 ; 91/BD51
 
         ; Created only by the unreferenced rlUnknown91BD42. For 7 frames it
-        ; runs MOVE_TEMPORARY_TO_COORDS (rlUnknown91B03F) with the arguments
+        ; runs MOVE_TEMPORARY_TO_COORDS (rlMoveTemporaryToCoords) with the arguments
         ; at aUnknown91BD8A, then ends.
 
         .structProcInfo "ED", rlProcUnknown91BD51Init, rlProcUnknown91BD51Cycle, aProcUnknown91BD51Code
@@ -722,7 +722,7 @@
         sta lR18+1
         lda #<>aUnknown91BD8A
         sta lR18
-        jsl rlUnknown91B03F
+        jsl rlMoveTemporaryToCoords
         plx
         bcs _BD89
         lda aProcSystem.aBody0,b,x
