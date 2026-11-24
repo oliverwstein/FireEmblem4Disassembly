@@ -27,9 +27,35 @@ The build is byte-identical and checksums verify. Code changes made while writin
 - Start from the reference page, then check every claim the chapter makes against the code. Outlines and reviews have been wrong too: the outline promised "gates", and a review proposed a 24-sprite cap the code doesn't have.
 - A complete code path is the answer; don't contradict it from memory of how the game plays. Raise an emulator question only when the code leaves the outcome open.
 - Plain prose: no strawman contrasts with "most games", no "not X but Y" reframes, no closing flourishes. Open on a game moment, say what the system is and what it enables, end sections on a fact. Check each chapter for these before handing it over.
-- Fix wrong names and comments found while writing (byte-identical, separate commit), and log bugs below.
+- Fix wrong names, comments and doc claims found while writing (source changes byte-identical, separate commit), and log each in "Mistakes found in earlier work". Retail-ROM bugs go in their own table.
 
-## Bugs and quirks found
+## Mistakes found in earlier work
+
+Places where the earlier disassembly or documentation was wrong, found while writing. Fix each one when found (source changes byte-identical, in their own commit) and add a row here. Earlier wrong-name finds from the code phase are in HISTORY.md.
+
+**In the source** (names, comments, declarations):
+
+| What was wrong | Where | Fixed in |
+|---|---|---|
+| `aUnitJoinOrder` declared as 24 words; the code uses 24 bytes, and the other 24 bytes held three variables read by raw address (item window sort mode, unit window saved order and its flag); `save.asm` saved the sort mode as `aUnitJoinOrder[12]` | include/WRAM.h | `496621f` |
+| `rlGetSelectedUnitTotal*Effect` (7 routines) return the capped base and the bonus, not a total or an effect | engine/units/stats.asm | `0a237e0` |
+| `aDeploymentTable._DeploymentOffsets` holds each unit's row in the map sprite pool, not a deployment offset | include/WRAM.h and 59 uses | `ac1f7e4` |
+| `wActionEndedDeploymentOffset` commented "faction/castle deployment helper"; it is the unit whose action just ended, for event action 3 | include/WRAM.h | `b3937a8` |
+| Raw `$2000` for the Select button; comment said dead units were "seen in the emulator" without saying why the code finds them | engine/menus/status_screen.asm | `f16dd1b` |
+
+**In the documentation** (reference pages, guide drafts):
+
+| What was wrong | Where | Fixed in |
+|---|---|---|
+| Love data said to belong only to generation 1 women; generation 2 daughters have it too | introduction, Part I opener | `9da974d` |
+| Inventories said to have 7 slots; there are 8, the eighth holding a new item until one is given up | introduction | `9da974d` |
+| Stale name `rsFillChildExtendedPersonalData`; Thief staff's 0 durability omitted | units.md, items.md | `9da974d` |
+| Map units and the cursor said to be active sprites; they are drawn directly by `rlDrawDeployedUnitMapSprites` | introduction | `d829d5c` |
+| About 160 procs (175), about 1,700 dialogue texts (1,987), low work RAM "visible in every bank" (only `$00`-`$3F` and `$80`-`$BF`) | introduction, OUTLINE.md | `d829d5c` |
+| A soldier "under forty bytes" (65 with its inventory and block headers) | introduction | `fba2948` |
+| Locations listed as "castles, villages, and gates"; chapters have no gates. "All 256 individual items" (140 are used); "every mutable piece" of a chapter in one RAM block | Part I opener, OUTLINE.md | `8760225` |
+
+## Retail bugs and quirks found
 
 Retail-ROM behavior, left as it is in the source and documented. Fix nothing here; the build must stay identical.
 
@@ -60,10 +86,6 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 - Location bit `$40` is set on a seize and never read; `rlCheckLocationState40` has no callers (Ch. 5).
 - `aInventoryRAMArea` has 73 slots (declared 72 + 1); nothing in the code explains the extra one (Ch. 1).
 - Location types 1 and 3–6 exist in the type table, but no chapter uses them (Ch. 5).
-
-## Cleanups made while writing
-
-All byte-identical. `aUnitJoinOrder` split into the four variables its 48 bytes covered (`496621f`); `rlGetSelectedUnitTotal*Effect` renamed `rlGetSelectedUnit*BaseAndBonus` (`0a237e0`); `JOY_Select` in the status screen's unit cycling (`f16dd1b`); `aDeploymentTable._DeploymentOffsets` renamed `_MapSpriteSlot` (`ac1f7e4`); comments on `rlDeployUnit` and `wActionEndedDeploymentOffset` (`ac1f7e4`, `b3937a8`).
 
 ## Next session
 
