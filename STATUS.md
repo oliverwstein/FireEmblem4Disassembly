@@ -4,15 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-23, after wave 9: map_battle.asm finished)
+## Current state (2026-11-23, after wave 10: map battle finished)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
 - `./build.sh` is byte-identical and the checksums verify (about 3 s; `./build.sh clean` first only when a converter changed). **The build is 100% source**; `./build.sh mod` makes the identical ROM without `fe4.sfc`. GAPS.md is empty.
-- Routines: 6,505 in `engine/`, 5,018 named, 1,487 `Unknown`. 172 pinned blocks.
+- Routines: 6,505 in `engine/`, 5,115 named, 1,390 `Unknown`. 172 pinned blocks.
 - Pad tests pass for `$85`, `$87`, `$89`, `$91`, `$95`, `$9E` (16 bytes) and `$96` (8). `$8B` and `$A0` end where pinned graphics streams begin. `$87` and `$91` touch the code the game checksums (`--fix-checksums`).
 - **The battle scene's mechanics are done** ([docs/reference/battle_scene.md](docs/reference/battle_scene.md)); only visual helpers are left there.
-- **The map battle** ([docs/reference/map_battle.md](docs/reference/map_battle.md)): `map_battle.asm` is done (4 `Unknown` left, all unreferenced: `rlUnknown9E9320`, `procUnknown9ECEB9` and its two routines). `aMapAction` and the flags at `$7F4BD9`-`$7F4C39` are named; all 31 active sprite commands have macros (`include/ActiveSpriteEngine.h`). Left: `map_battle_hud.asm` 17, `map_battle_magic.asm` 51, `map_action_animations.asm` 42.
+- **The map battle is done** ([docs/reference/map_battle.md](docs/reference/map_battle.md)): `map_battle.asm` (4 unreferenced `Unknown` left), `map_battle_hud.asm` (0 `Unknown` left), `map_action_animations.asm` (0 `Unknown` left), and `map_battle_magic.asm` (only the bank `$87` BG2 HDMA ripple visual `procUnknown87C70A` left `Unknown`). `aMapAction` and the flags at `$7F4BD9`-`$7F4C39` are named; all 31 active sprite commands have macros (`include/ActiveSpriteEngine.h`).
 - Reference pages: `docs/reference/core.md`, `ai.md`, `battle_scene.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md`, `map_menu.md`, `map.md`, `menus.md`, `save.md`, `title.md`, `worldmap.md`. `tools/reference.py` output is gitignored; run it locally.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
@@ -31,7 +31,6 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 ## Next session, in order
 
 1. **Talk to the user before starting.** The candidates:
-   - **Finish the map battle**: `map_battle_hud.asm` (17; started in wave 9: `rsUnknown85D29F` places the HP windows when magic effects play, by `wMapMagicFlags`' edge bits; `rlUnknown85D337`/`D347` return 0 when the right/left HP window is idle (request `$8000`); `rlUnknown85D442`, `rsUnknown85D4B2`, `rsUnknown85D5AA`, `rsUnknown85D5C3` and `rlUnknown85D81F` draw a gauge in five-step tiles from `aUnknown85D591`, also used by map_menu.asm), then `map_battle_magic.asm` (51, skipping the spell visuals: the `rlUnknown9F90F2`/`F6`/`FA` wrappers are darken, fade back and save colours), then `map_action_animations.asm` (42: village raid, return home, holy weapon shine, give gold).
    - **The event engine** (`event_engine.asm` 40, `event_scripts.asm` 79, `cutscenes.asm` 20).
    - **The engine guide's outline**: draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide").
    Wave 9 notes: `$XXXX,b` operands under data bank `$7F` are written `<>name,b` (name_ram.py skips them; the script used is described in the wave 9 commit). `$7E4F77`-`$7E4F7F` are shared temporaries: a staff's destination tile (Return, Warp, Rescue) and the scripted critical partners' tiles; unnamed. `aChildAverageLevelStats` overlaps `aActionStructUnit1`, so name_ram.py leaves `$7E4EC5`-`$7E4ED3` raw: write `aActionStructUnit1.Field` by hand. The compressed graphics labels (`gcUnknownACC8C3`, the dance sprites; `gcUnknownACCC17`, the weapon icons) live in `gfx/compressed/A08000/`, which `rename.py` does not touch.
