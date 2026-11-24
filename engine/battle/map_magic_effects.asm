@@ -67,7 +67,7 @@
 
       procUnknown9F924B ; 9F/924B
 
-        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F9253, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicFireProcInit, rlMapMagicVillageFireInit, aProcMapMagicHaltCode
 
     .endsection Unsorted9F924BSection
 
@@ -77,17 +77,17 @@
       .al
       .xl
 
-      rlUnknown9F9253 ; 9F/9253
+      rlMapMagicVillageFireInit ; 9F/9253
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rlUnknown9F9341
+        jsr rlMapMagicVillageFireSpawnEffects
         lda #$0020
         sta aProcSystem.aBody4,b,x
-        lda #<>rlUnknown9F926E
+        lda #<>rlMapMagicVillageFireWait
         sta aProcSystem.aHeaderOnCycle,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -109,7 +109,7 @@
       .al
       .xl
 
-      rlUnknown9F926E ; 9F/926E
+      rlMapMagicVillageFireWait ; 9F/926E
 
         .al
         .xl
@@ -120,7 +120,7 @@
         dec a
         sta aProcSystem.aBody4,b,x
         bne _927D
-        lda #<>rlUnknown9F927E
+        lda #<>rlMapMagicVillageFireFadeOut
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _927D
@@ -130,16 +130,16 @@
 
         ; 9F/927E
 
-      rlUnknown9F927E ; 9F/927E
+      rlMapMagicVillageFireFadeOut ; 9F/927E
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown9F9691
-        bcc rlUnknown9F9295
-        lda #<>rlUnknown9F9295
+        jsl rlMapMagicFireStepPaletteAnim
+        bcc rlMapMagicVillageFireDone
+        lda #<>rlMapMagicVillageFireDone
         sta aProcSystem.aHeaderOnCycle,b,x
         stz aProcSystem.aHeaderTypeOffset,b,x
         jsl rlEndMapMagicEffect
@@ -147,7 +147,7 @@
 
         .databank 0
 
-      rlUnknown9F9295 ; 9F/9295
+      rlMapMagicVillageFireDone ; 9F/9295
 
         .al
         .xl
@@ -211,12 +211,12 @@
       procUnknown9F92C2 ; 9F/92C2
 
         ; Part of the Fire effect.
-        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F92F3, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicFireProcInit, rlMapMagicFireWaitHit, aProcMapMagicHaltCode
 
       procUnknown9F92CA ; 9F/92CA
 
         ; Part of the Elfire effect.
-        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F9302, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicFireProcInit, rlMapMagicElfireWaitHit, aProcMapMagicHaltCode
 
     .endsection Unsorted9F926ESection
 
@@ -226,7 +226,7 @@
       .al
       .xl
 
-      rlUnknown9F92D2 ; 9F/92D2
+      rlMapMagicFireProcInit ; 9F/92D2
 
         .al
         .xl
@@ -242,7 +242,7 @@
         sta $7ECC0C
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
-        jsl rlUnknown9F9691
+        jsl rlMapMagicFireStepPaletteAnim
         rtl
 
         .databank 0
@@ -257,7 +257,7 @@
       .al
       .xl
 
-      rlUnknown9F92F3 ; 9F/92F3
+      rlMapMagicFireWaitHit ; 9F/92F3
 
         ; Found through fe4.cdl.
         .al
@@ -272,15 +272,15 @@
 
 
         _92FA
-        lda #<>rlUnknown9F932D
+        lda #<>rlMapMagicFireWaitDone
         sta aProcSystem.aHeaderOnCycle,b,x
-        bra rlUnknown9F932D
+        bra rlMapMagicFireWaitDone
 
         .databank 0
 
         ; 9F/9302
 
-      rlUnknown9F9302 ; 9F/9302
+      rlMapMagicElfireWaitHit ; 9F/9302
 
         .al
         .xl
@@ -294,8 +294,8 @@
 
 
         _9309
-        jsr rsUnknown9F934D
-        lda #<>rlUnknown9F9313
+        jsr rsMapMagicElfireSpawnEffects
+        lda #<>rlMapMagicElfireWaitFade
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9312
@@ -305,7 +305,7 @@
 
         ; 9F/9313
 
-      rlUnknown9F9313 ; 9F/9313
+      rlMapMagicElfireWaitFade ; 9F/9313
 
         .al
         .xl
@@ -314,19 +314,19 @@
         ; Part of the Elfire effect.
 
         lda $7ECC08
-        beq rlUnknown9F9302._9312
-        jsl rlUnknown9F9691
-        bcc rlUnknown9F9302._9312
+        beq rlMapMagicElfireWaitHit._9312
+        jsl rlMapMagicFireStepPaletteAnim
+        bcc rlMapMagicElfireWaitHit._9312
         lda #$0001
         sta wMapMagicDone
-        lda #<>rlUnknown9F932C
+        lda #<>rlMapMagicElfireDone
         sta aProcSystem.aHeaderOnCycle,b,x
 
         .databank 0
 
         ; 9F/932C
 
-      rlUnknown9F932C ; 9F/932C
+      rlMapMagicElfireDone ; 9F/932C
 
         .al
         .xl
@@ -340,7 +340,7 @@
 
         ; 9F/932D
 
-      rlUnknown9F932D ; 9F/932D
+      rlMapMagicFireWaitDone ; 9F/932D
 
         .al
         .xl
@@ -349,15 +349,15 @@
         ; Part of the Fire effect.
 
         lda $7ECC08
-        beq rlUnknown9F9340
+        beq rlMapMagicFireDone
         lda #$0001
         sta wMapMagicDone
-        lda #<>rlUnknown9F9340
+        lda #<>rlMapMagicFireDone
         sta aProcSystem.aHeaderOnCycle,b,x
 
         .databank 0
 
-      rlUnknown9F9340 ; 9F/9340
+      rlMapMagicFireDone ; 9F/9340
 
         .al
         .xl
@@ -379,7 +379,7 @@
       .al
       .xl
 
-      rlUnknown9F9341 ; 9F/9341
+      rlMapMagicVillageFireSpawnEffects ; 9F/9341
 
         .al
         .xl
@@ -394,13 +394,13 @@
 
           .word <>aUnknown9FDE4E
 
-        bra rsUnknown9F934D._9357
+        bra rsMapMagicElfireSpawnEffects._9357
 
         .databank 0
 
         ; 9F/934D
 
-      rsUnknown9F934D ; 9F/934D
+      rsMapMagicElfireSpawnEffects ; 9F/934D
 
         .al
         .xl
@@ -449,10 +449,10 @@
       .xl
 
       aUnknown9F936C ; 9F/936C
-        .word <>rlUnknown9F939E, <>rlUnknown9F9378, <>aUnknown9F9527
+        .word <>rlMapMagicFireballSpriteInit, <>rlMapMagicFireSpriteDummyInit, <>aUnknown9F9527
 
       aUnknown9F9372 ; 9F/9372
-        .word <>rlUnknown9F939E, <>rlUnknown9F9378, <>aUnknown9F9584
+        .word <>rlMapMagicFireballSpriteInit, <>rlMapMagicFireSpriteDummyInit, <>aUnknown9F9584
 
     .endsection Table9F936CSection
 
@@ -462,7 +462,7 @@
       .al
       .xl
 
-      rlUnknown9F9378 ; 9F/9378
+      rlMapMagicFireSpriteDummyInit ; 9F/9378
 
         .al
         .xl
@@ -476,7 +476,7 @@
 
         ; 9F/9379
 
-      rsUnknown9F9379 ; 9F/9379
+      rsMapMagicCalcSpriteVelocityFromAngle ; 9F/9379
 
         .al
         .xl
@@ -502,7 +502,7 @@
 
         ; 9F/939E
 
-      rlUnknown9F939E ; 9F/939E
+      rlMapMagicFireballSpriteInit ; 9F/939E
 
         .al
         .xl
@@ -540,7 +540,7 @@
 
         ; 9F/93E0
 
-      rlUnknown9F93E0 ; 9F/93E0
+      rlMapMagicFireballSpriteRise ; 9F/93E0
 
         ; Found through fe4.cdl.
         .al
@@ -560,7 +560,7 @@
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda #$000E
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9F9406
+        lda #<>rlMapMagicFireballSpriteDecelAndAim
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _9405
@@ -570,7 +570,7 @@
 
         ; 9F/9406
 
-      rlUnknown9F9406 ; 9F/9406
+      rlMapMagicFireballSpriteDecelAndAim ; 9F/9406
 
         .al
         .xl
@@ -603,8 +603,8 @@
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0100
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
-        lda #<>rlUnknown9F944F
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
+        lda #<>rlMapMagicFireballSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _944E
@@ -614,7 +614,7 @@
 
         ; 9F/944F
 
-      rlUnknown9F944F ; 9F/944F
+      rlMapMagicFireballSpriteFlyToTarget ; 9F/944F
 
         .al
         .xl
@@ -626,7 +626,7 @@
         clc
         adc #$0040
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
         jsl rlMoveActiveSpriteByVelocity
         lda wMapMagicTargetPixel
         and #$00FF
@@ -644,7 +644,7 @@
         sta $7ECC06
         lda #$000D
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9F94FE
+        lda #<>rlMapMagicFireballSpriteSignalElfire
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -658,7 +658,7 @@
         _94AA
         lda #$002D
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9F94D5
+        lda #<>rlMapMagicFireballSpriteWaitImpact
         sta aActiveSpriteSystem.aOnCycle,b,x
         sta $7ECC06
         lda #$0002
@@ -677,7 +677,7 @@
 
         ; 9F/94D5
 
-      rlUnknown9F94D5 ; 9F/94D5
+      rlMapMagicFireballSpriteWaitImpact ; 9F/94D5
 
         .al
         .xl
@@ -689,7 +689,7 @@
         bne _94ED
         lda #$0008
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9F94EE
+        lda #<>rlMapMagicFireballSpriteEndFire
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
@@ -701,7 +701,7 @@
 
         ; 9F/94EE
 
-      rlUnknown9F94EE ; 9F/94EE
+      rlMapMagicFireballSpriteEndFire ; 9F/94EE
 
         .al
         .xl
@@ -730,7 +730,7 @@
       .al
       .xl
 
-      rlUnknown9F94FE ; 9F/94FE
+      rlMapMagicFireballSpriteSignalElfire ; 9F/94FE
 
         .al
         .xl
@@ -739,10 +739,10 @@
         ; Shared by the Elfire and Fire effects.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9F9517._9526
+        bne rlMapMagicFireballSpriteEndElfire._9526
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9F9517
+        lda #<>rlMapMagicFireballSpriteEndElfire
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0020
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -752,7 +752,7 @@
 
         ; 9F/9517
 
-      rlUnknown9F9517 ; 9F/9517
+      rlMapMagicFireballSpriteEndElfire ; 9F/9517
 
         .al
         .xl
@@ -775,26 +775,26 @@
 
         ; Part of the Fire effect.
         ACTIVE_SPRITE_FRAME 5, aUnknown9F9601
-        ACTIVE_SPRITE_CALL rlUnknown9F9570
+        ACTIVE_SPRITE_CALL rlMapMagicFirePlayLaunchSound
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
         ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
-        ACTIVE_SPRITE_SET_ONCYCLE rlUnknown9F93E0
+        ACTIVE_SPRITE_SET_ONCYCLE rlMapMagicFireballSpriteRise
 
         _953D
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
         ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
-        ACTIVE_SPRITE_CALL rlUnknown9F95E1
+        ACTIVE_SPRITE_CALL rlMapMagicFireWaitSpritePhase1
         .word <>_953D
 
         _954E
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
         ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
-        ACTIVE_SPRITE_CALL rlUnknown9F95F1
+        ACTIVE_SPRITE_CALL rlMapMagicFireWaitSpritePhase2
         .word <>_954E
-        ACTIVE_SPRITE_CALL rlUnknown9F957A
+        ACTIVE_SPRITE_CALL rlMapMagicFirePlayImpactSound
         ACTIVE_SPRITE_FRAME 2, aUnknown9F9618
         ACTIVE_SPRITE_FRAME 2, aUnknown9F961F
 
@@ -803,7 +803,7 @@
         ACTIVE_SPRITE_JUMP_RELATIVE _956A
 
         ; 9F/9570
-      rlUnknown9F9570 ; 9F/9570
+      rlMapMagicFirePlayLaunchSound ; 9F/9570
 
         .al
         .xl
@@ -823,7 +823,7 @@
         .databank 0
 
         ; 9F/957A
-      rlUnknown9F957A ; 9F/957A
+      rlMapMagicFirePlayImpactSound ; 9F/957A
 
         .al
         .xl
@@ -847,26 +847,26 @@
 
         ; Part of the Elfire effect.
         ACTIVE_SPRITE_FRAME 5, aUnknown9F9601
-        ACTIVE_SPRITE_CALL rlUnknown9F95CD
+        ACTIVE_SPRITE_CALL rlMapMagicElfirePlayLaunchSound
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9626
         ACTIVE_SPRITE_FRAME 1, aUnknown9F962D
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9634
-        ACTIVE_SPRITE_SET_ONCYCLE rlUnknown9F93E0
+        ACTIVE_SPRITE_SET_ONCYCLE rlMapMagicFireballSpriteRise
 
         _959A
         ACTIVE_SPRITE_FRAME 1, aUnknown9F963B
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9642
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9649
-        ACTIVE_SPRITE_CALL rlUnknown9F95E1
+        ACTIVE_SPRITE_CALL rlMapMagicFireWaitSpritePhase1
         .word <>_959A
 
         _95AB
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9650
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9657
         ACTIVE_SPRITE_FRAME 1, aUnknown9F965E
-        ACTIVE_SPRITE_CALL rlUnknown9F95F1
+        ACTIVE_SPRITE_CALL rlMapMagicFireWaitSpritePhase2
         .word <>_95AB
-        ACTIVE_SPRITE_CALL rlUnknown9F95D7
+        ACTIVE_SPRITE_CALL rlMapMagicElfirePlayImpactSound
         ACTIVE_SPRITE_FRAME 2, aUnknown9F9665
         ACTIVE_SPRITE_FRAME 2, aUnknown9F967B
 
@@ -875,7 +875,7 @@
         ACTIVE_SPRITE_JUMP_RELATIVE _95C7
 
         ; 9F/95CD
-      rlUnknown9F95CD ; 9F/95CD
+      rlMapMagicElfirePlayLaunchSound ; 9F/95CD
 
         .al
         .xl
@@ -895,7 +895,7 @@
         .databank 0
 
         ; 9F/95D7
-      rlUnknown9F95D7 ; 9F/95D7
+      rlMapMagicElfirePlayImpactSound ; 9F/95D7
 
         .al
         .xl
@@ -915,7 +915,7 @@
         .databank 0
 
         ; 9F/95E1
-      rlUnknown9F95E1 ; 9F/95E1
+      rlMapMagicFireWaitSpritePhase1 ; 9F/95E1
 
         .al
         .xl
@@ -939,7 +939,7 @@
         .databank 0
 
         ; 9F/95F1
-      rlUnknown9F95F1 ; 9F/95F1
+      rlMapMagicFireWaitSpritePhase2 ; 9F/95F1
 
         .al
         .xl
@@ -1098,7 +1098,7 @@
       .al
       .xl
 
-      rlUnknown9F9691 ; 9F/9691
+      rlMapMagicFireStepPaletteAnim ; 9F/9691
 
         .al
         .xl
@@ -1183,9 +1183,9 @@
       procUnknown9F97BD ; 9F/97BD
 
         ; Part of the Aura effect.
-        .structProcInfo "ON", rlUnknown9F97C5, rlUnknown9F97D6, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicAuraInit, rlMapMagicAuraTintGreen, aProcMapMagicHaltCode
 
-      rlUnknown9F97C5 ; 9F/97C5
+      rlMapMagicAuraInit ; 9F/97C5
 
         .al
         .xl
@@ -1197,12 +1197,12 @@
         jsr rsSaveMapMagicColors
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
-        jsl rlUnknown9F985F._9860
+        jsl rlMapMagicAuraDone._9860
         rtl
 
         .databank 0
 
-      rlUnknown9F97D6 ; 9F/97D6
+      rlMapMagicAuraTintGreen ; 9F/97D6
 
         .al
         .xl
@@ -1212,14 +1212,14 @@
 
         jsr rsTintMapMagicColorsGreen
         bcc _97E1
-        lda #<>rlUnknown9F97E2
+        lda #<>rlMapMagicAuraSpawnEffects
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _97E1
         rtl
 
 
-      rlUnknown9F97E2 ; 9F/97E2
+      rlMapMagicAuraSpawnEffects ; 9F/97E2
 
         .al
         .xl
@@ -1259,14 +1259,14 @@
 
           .byte $60
 
-        lda #<>rlUnknown9F9818
+        lda #<>rlMapMagicAuraWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0028
         sta aProcSystem.aBody0,b,x
         rtl
 
 
-      rlUnknown9F9818 ; 9F/9818
+      rlMapMagicAuraWaitStrike ; 9F/9818
 
         .al
         .xl
@@ -1278,7 +1278,7 @@
         bne _9830
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9F9831
+        lda #<>rlMapMagicAuraWaitFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0008
         sta aProcSystem.aBody0,b,x
@@ -1287,7 +1287,7 @@
         rtl
 
 
-      rlUnknown9F9831 ; 9F/9831
+      rlMapMagicAuraWaitFade ; 9F/9831
 
         .al
         .xl
@@ -1297,14 +1297,14 @@
 
         dec aProcSystem.aBody0,b,x
         bne _983C
-        lda #<>rlUnknown9F983D
+        lda #<>rlMapMagicAuraStepPaletteAnim
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _983C
         rtl
 
 
-      rlUnknown9F983D ; 9F/983D
+      rlMapMagicAuraStepPaletteAnim ; 9F/983D
 
         .al
         .xl
@@ -1312,9 +1312,9 @@
         .databank ?
         ; Part of the Aura effect.
 
-        jsl rlUnknown9F985F._9860
+        jsl rlMapMagicAuraDone._9860
         bcc _984C
-        lda #<>rlUnknown9F984D
+        lda #<>rlMapMagicAuraFadeBack
         sta aProcSystem.aHeaderOnCycle,b,x
         jsr rsFreeMapMagicHDMA
 
@@ -1322,7 +1322,7 @@
         rtl
 
 
-      rlUnknown9F984D ; 9F/984D
+      rlMapMagicAuraFadeBack ; 9F/984D
 
         .al
         .xl
@@ -1331,13 +1331,13 @@
         ; Part of the Aura effect.
 
         jsr rsFadeBackMapMagicColors
-        bcc rlUnknown9F985F
-        lda #<>rlUnknown9F985F
+        bcc rlMapMagicAuraDone
+        lda #<>rlMapMagicAuraDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta wMapMagicDone
 
-      rlUnknown9F985F ; 9F/985F
+      rlMapMagicAuraDone ; 9F/985F
 
         .al
         .xl
@@ -1557,7 +1557,7 @@
       .al
       .xl
 
-      rsUnknown9F999E ; 9F/999E
+      rsMapMagicHealingInitBlendingAndHDMA ; 9F/999E
 
         .al
         .xl
@@ -1595,13 +1595,13 @@
 
       procMapMagicHealingStaff ; 9F/99BB
 
-        .structProcInfo "ON", rlUnknown9F99CE, rlUnknown9F99E6, aProcUnknown9F99C3Code
+        .structProcInfo "ON", rlMapMagicHealingInit, rlMapMagicHealingWaitStrike, aProcUnknown9F99C3Code
 
       aProcUnknown9F99C3Code ; 9F/99C3
 
         ; Shared by the Heal, Mend, Physic and Recover effects.
         PROC_YIELD 1
-        PROC_CALL rlUnknown9F9ABF
+        PROC_CALL rlMapMagicHealingStepPaletteAnim
         PROC_JUMP aProcUnknown9F99C3Code
 
     .endsection Unsorted9F999ESection
@@ -1612,7 +1612,7 @@
       .al
       .xl
 
-      rlUnknown9F99CE ; 9F/99CE
+      rlMapMagicHealingInit ; 9F/99CE
 
         ; Found through fe4.cdl.
         .al
@@ -1626,7 +1626,7 @@
           .word <>procUnknown9FEBD8
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F999E
+        jsr rsMapMagicHealingInitBlendingAndHDMA
         lda #$0001
         sta aProcSystem.aBody0,b,x
         stz aProcSystem.aBody2,b,x
@@ -1637,7 +1637,7 @@
 
         ; 9F/99E6
 
-      rlUnknown9F99E6 ; 9F/99E6
+      rlMapMagicHealingWaitStrike ; 9F/99E6
 
         ; Found through fe4.cdl.
         .al
@@ -1650,7 +1650,7 @@
         bne _99FE
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9F99FF
+        lda #<>rlMapMagicHealingReverseFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0040
         sta aProcSystem.aBody0,b,x
@@ -1662,7 +1662,7 @@
 
         ; 9F/99FF
 
-      rlUnknown9F99FF ; 9F/99FF
+      rlMapMagicHealingReverseFade ; 9F/99FF
 
         .al
         .xl
@@ -1677,7 +1677,7 @@
         eor #$FFFF
         inc a
         sta aProcSystem.aBody4,b,y
-        lda #<>rlUnknown9F9A1E
+        lda #<>rlMapMagicHealingWaitDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000C
         sta aProcSystem.aBody0,b,x
@@ -1689,7 +1689,7 @@
 
         ; 9F/9A1E
 
-      rlUnknown9F9A1E ; 9F/9A1E
+      rlMapMagicHealingWaitDone ; 9F/9A1E
 
         .al
         .xl
@@ -1719,9 +1719,9 @@
 
       procMapMagicFortify ; 9F/9A2B
 
-        .structProcInfo "ON", rlUnknown9F9A33, rlUnknown9F9A5C, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicFortifyInit, rlMapMagicFortifySignalStrike, aProcMapMagicHaltCode
 
-      rlUnknown9F9A33 ; 9F/9A33
+      rlMapMagicFortifyInit ; 9F/9A33
 
         .al
         .xl
@@ -1736,7 +1736,7 @@
           .word <>procUnknown9FEC0D
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F999E
+        jsr rsMapMagicHealingInitBlendingAndHDMA
         lda #$0008
         sta aProcSystem.aBody0,b,x
         stz aProcSystem.aBody2,b,x
@@ -1752,7 +1752,7 @@
         .databank 0
 
         ; 9F/9A5C
-      rlUnknown9F9A5C ; 9F/9A5C
+      rlMapMagicFortifySignalStrike ; 9F/9A5C
 
         .al
         .xl
@@ -1762,8 +1762,8 @@
 
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        jsr rsUnknown9F9B56
-        lda #<>rlUnknown9F9A73
+        jsr rsMapMagicFortifyStepPaletteAnim
+        lda #<>rlMapMagicFortifyWaitFlash
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0018
         sta aProcSystem.aBody0,b,x
@@ -1772,7 +1772,7 @@
         .databank 0
 
         ; 9F/9A73
-      rlUnknown9F9A73 ; 9F/9A73
+      rlMapMagicFortifyWaitFlash ; 9F/9A73
 
         .al
         .xl
@@ -1780,10 +1780,10 @@
         .databank ?
         ; Part of the Fortify effect.
 
-        jsr rsUnknown9F9B56
+        jsr rsMapMagicFortifyStepPaletteAnim
         dec aProcSystem.aBody0,b,x
         bne _9A81
-        lda #<>rlUnknown9F9A82
+        lda #<>rlMapMagicFortifyFadeToWhite
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9A81
@@ -1792,7 +1792,7 @@
         .databank 0
 
         ; 9F/9A82
-      rlUnknown9F9A82 ; 9F/9A82
+      rlMapMagicFortifyFadeToWhite ; 9F/9A82
 
         .al
         .xl
@@ -1800,11 +1800,11 @@
         .databank ?
         ; Part of the Fortify effect.
 
-        jsr rsUnknown9F9B56
+        jsr rsMapMagicFortifyStepPaletteAnim
         jsr rsFadeMapMagicColorsToWhite
         bcc _9A99
         jsr rsFreeMapMagicHDMA
-        lda #<>rlUnknown9F9AA0
+        lda #<>rlMapMagicFortifyWaitHold
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
         sta aProcSystem.aBody0,b,x
@@ -1818,7 +1818,7 @@
         .databank 0
 
         ; 9F/9AA0
-      rlUnknown9F9AA0 ; 9F/9AA0
+      rlMapMagicFortifyWaitHold ; 9F/9AA0
 
         .al
         .xl
@@ -1828,7 +1828,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _9AAB
-        lda #<>rlUnknown9F9AAC
+        lda #<>rlMapMagicFortifyFadeBack
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9AAB
@@ -1837,7 +1837,7 @@
         .databank 0
 
         ; 9F/9AAC
-      rlUnknown9F9AAC ; 9F/9AAC
+      rlMapMagicFortifyFadeBack ; 9F/9AAC
 
         .al
         .xl
@@ -1846,8 +1846,8 @@
         ; Part of the Fortify effect.
 
         jsr rsFadeBackMapMagicColors
-        bcc rlUnknown9F9ABE
-        lda #<>rlUnknown9F9ABE
+        bcc rlMapMagicFortifyDone
+        lda #<>rlMapMagicFortifyDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta wMapMagicDone
@@ -1855,7 +1855,7 @@
         .databank 0
 
         ; 9F/9ABE
-      rlUnknown9F9ABE ; 9F/9ABE
+      rlMapMagicFortifyDone ; 9F/9ABE
 
         .al
         .xl
@@ -1877,7 +1877,7 @@
       .al
       .xl
 
-      rlUnknown9F9ABF ; 9F/9ABF
+      rlMapMagicHealingStepPaletteAnim ; 9F/9ABF
 
         ; Found through fe4.cdl.
         .al
@@ -1934,7 +1934,7 @@
         .word $7E93, $7ED5, $7EF7, $7F38, $7F5A, $7F9C, $7FBD, $7FFF
         .word $7FFF, $7FBD, $7F9C, $7F5A, $7F38, $7EF7, $7ED5
 
-      rsUnknown9F9B56 ; 9F/9B56
+      rsMapMagicFortifyStepPaletteAnim ; 9F/9B56
 
         .al
         .xl
@@ -2003,9 +2003,9 @@
       procUnknown9F9C03 ; 9F/9C03
 
         ; Part of the Berserk effect.
-        .structProcInfo "ON", rlUnknown9F9C0B, rlUnknown9F9C47, aProcUnknown9F9C8CCode
+        .structProcInfo "ON", rlMapMagicBerserkInit, rlMapMagicBerserkWaitStrike, aProcUnknown9F9C8CCode
 
-      rlUnknown9F9C0B ; 9F/9C0B
+      rlMapMagicBerserkInit ; 9F/9C0B
 
         .al
         .xl
@@ -2052,7 +2052,7 @@
         rtl
 
 
-      rlUnknown9F9C47 ; 9F/9C47
+      rlMapMagicBerserkWaitStrike ; 9F/9C47
 
         .al
         .xl
@@ -2060,17 +2060,17 @@
         .databank ?
         ; Part of the Berserk effect.
         dec aProcSystem.aBody0,b,x
-        bne rlUnknown9F9C7F._9C8B
+        bne rlMapMagicBerserkWaitDone._9C8B
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9F9C60
+        lda #<>rlMapMagicBerserkReverseFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
         rtl
 
 
-      rlUnknown9F9C60 ; 9F/9C60
+      rlMapMagicBerserkReverseFade ; 9F/9C60
 
         .al
         .xl
@@ -2079,20 +2079,20 @@
         ; Part of the Berserk effect.
 
         dec aProcSystem.aBody0,b,x
-        bne rlUnknown9F9C7F._9C8B
+        bne rlMapMagicBerserkWaitDone._9C8B
         ldy aProcSystem.aBody7,b,x
         lda aProcSystem.aBody4,b,y
         eor #$FFFF
         inc a
         sta aProcSystem.aBody4,b,y
-        lda #<>rlUnknown9F9C7F
+        lda #<>rlMapMagicBerserkWaitDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
         rtl
 
 
-      rlUnknown9F9C7F ; 9F/9C7F
+      rlMapMagicBerserkWaitDone ; 9F/9C7F
 
         .al
         .xl
@@ -2114,10 +2114,10 @@
 
         ; Part of the Berserk effect.
         PROC_YIELD 1
-        PROC_CALL rlUnknown9F9C97
+        PROC_CALL rlMapMagicBerserkStepPaletteAnim
         PROC_JUMP aProcUnknown9F9C8CCode
 
-      rlUnknown9F9C97 ; 9F/9C97
+      rlMapMagicBerserkStepPaletteAnim ; 9F/9C97
 
         .al
         .xl
@@ -2462,7 +2462,7 @@
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
 
         .databank 0
 
@@ -5255,7 +5255,7 @@
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
 
         _B052
         rtl
@@ -9263,7 +9263,7 @@
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0100
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda #<>rlUnknown9FC934
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -9585,7 +9585,7 @@
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda #<>rlUnknown9FCB42
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -9638,7 +9638,7 @@
 
         _CB7A
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
         jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCB00._CB41
@@ -10955,7 +10955,7 @@
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda #<>rlUnknown9FD341
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -11002,7 +11002,7 @@
 
         _D36D
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
         jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FD2FF._D340
@@ -11540,7 +11540,7 @@
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
         sta aActiveSpriteSystem.aUnknown001300,b,x
-        jsr rsUnknown9F9379
+        jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsPlayMapMagicSound
 
