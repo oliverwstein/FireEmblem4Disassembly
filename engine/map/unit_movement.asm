@@ -483,7 +483,7 @@
         lda wMapStateFlags,b
         bit #$0008
         bne _AE76
-        jsl rlCheckAdjacentTilesEmptyInRangeMap
+        jsl rlCheckSelectedUnitCannotMove
         bcc _AE76
         lda wMapActionMode,b
         cmp #$0002

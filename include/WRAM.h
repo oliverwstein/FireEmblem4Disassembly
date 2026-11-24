@@ -2712,9 +2712,12 @@
           ; or neutral to, the AI faction. It cannot fight the neutral ones, but
           ; they block its movement like enemies.
         aRangeMap .fill $1000           ; $7F654A
-          ; Filled with flagged tiles that can be attacked.
+          ; For the AI, flagged tiles that can be attacked. For a unit picked up
+          ; (rlBuildSelectedUnitRangeMaps), the flood fill's input: 1 for a unit of its
+          ; army or an ally, $FF for an enemy or neutral, $FE for the map's edge.
         aMovementMap .fill $1000        ; $7F754A
-          ; Filled with the remaining field movement after movement to a specific tile.
+          ; The movement left on each tile (movement x10 + 1 at the unit's tile, 32,32),
+          ; $80 for a tile it can only attack, $80 + n in a closed area it can cross.
         aTargetDistanceMap .fill $1000  ; $7F854A
           ; Filled with the total movement cost required to reach certain target tiles.
         aTargetMap .fill $1000        ; $7F954A

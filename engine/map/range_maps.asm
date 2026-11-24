@@ -1,5 +1,8 @@
-; The range maps: where the selected unit can move (aMovementMap, a flood fill of
-; its movement) and what it can reach (aRangeMap), and the targets of a weapon.
+; The range maps: where the selected unit can move and what it can attack. aRangeMap
+; is the fill's input (units and the map's edge); aMovementMap is its result: the
+; movement left on each tile (1-$7F), $80 for a tile it can only attack, $80 + n for
+; a closed area it can cross, $FF for another army's long-range staff reach. Also
+; the targets of a weapon.
 
 
     .section Unsorted87B512Section
@@ -63,7 +66,8 @@
         .autsiz
         .databank ?
 
-        ; Builds aMovementMap and aRangeMap for the selected unit: where it can move (none during canto) and, from its weapons' range flags, what it can reach.
+        ; Builds aMovementMap for the selected unit: where it can move and, from its weapons' range flags (none during canto), the tiles it can attack ($80).
+        ; A weapon of range 10 gives the fixed range map instead (no movement). Carry set if the unit cannot move.
 
         phx
         phy
@@ -113,7 +117,7 @@
               jsl rlMarkMaxRangeDiamond
 
         +
-        jsl rlCheckAdjacentTilesEmptyInRangeMap
+        jsl rlCheckSelectedUnitCannotMove
 
         _End
         ply
@@ -191,6 +195,11 @@
         .al
         .autsiz
         .databank $7F
+
+        ; Fills aMovementMap from the unit's tile with wR12 movement, a bucket queue: one list per
+        ; amount left (heads at $7F894A, 4-byte entries of next and tile from $7F8A4A, wR3 the next
+        ; free entry), taken from the most left down, so a tile's first value is its best.
+        ; wR17 nonzero is a fixed cost per tile in place of the terrain's.
 
         ldx #64 - 2
         lda #$FFFF
@@ -535,7 +544,7 @@
         .autsiz
         .databank $7F
 
-        ; fills map buffer with enemy and ally values?
+        ; Marks each living, visible unit in aRangeMap: 1 for the selected unit's army and its allies (passable), $FF for enemies and neutrals (walls).
 
         ldx #(72 - 1) * size(word)
         
@@ -1127,6 +1136,8 @@
         .autsiz
         .databank ?
 
+        ; Marks $FF on every empty tile within 10 of the unit (another army's unit with a Silence, Sleep, Berserk or Thief staff, seen on the player's phase).
+
         phb
         php
         phk
@@ -1141,10 +1152,10 @@
         ldx #$0000
 
         _BA91
-        lda aUnknown87BAD1,x
+        lda aMaxRangeDiamondRows,x
         beq _BAB7
         tay
-        lda aUnknown87BAD1+2,x
+        lda aMaxRangeDiamondRows+2,x
         inc x
         inc x
         inc x
@@ -1214,9 +1225,9 @@
       .al
       .xl
 
-      aUnknown87BAD1 ; 87/BAD1
+      aMaxRangeDiamondRows ; 87/BAD1
 
-        ; Read by rlMarkMaxRangeDiamond.
+        ; Read by rlMarkMaxRangeDiamond: per row, a half-width and the row's centre index in aMovementMap, 1 to 11 to 1 (radius 10).
 
         .word $0001, $05A0, $0002, $05E0, $0003, $0620, $0004, $0660
         .word $0005, $06A0, $0006, $06E0, $0007, $0720, $0008, $0760
@@ -1235,12 +1246,14 @@
       .al
       .xl
 
-      rlCheckAdjacentTilesEmptyInRangeMap ; 87/BB27
+      rlCheckSelectedUnitCannotMove ; 87/BB27
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if none of the four tiles next to the unit's (the centre of aMovementMap) is one it can move to (1-$7F).
 
         sep #$20
         lda $7F7D2A
