@@ -1196,6 +1196,8 @@
         .databank ?
 
         ; X = the aMovementMap index of tile (wTempVariable1, wTempVariable2); also keeps the row part in wUnknown000790.
+        ; The grid has the unit at (32, 32), so the index is tile - unit + 32 in each coordinate, mod 64. Subtracting
+        ; the window's right/bottom edge (unit + 32, never clamped, unlike left/top) gives the same value mod 64.
 
         lda wTempVariable1,b
         sec

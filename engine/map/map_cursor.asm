@@ -924,7 +924,10 @@
         .autsiz
         .databank ?
 
-        ; Puts the D-pad direction in wMapScrollDirectionIdentifier and returns carry set if the cursor moves (Y held skips the repeat delay). While a unit is selected, a held (not newly pressed) direction stops at the edge of its movement range. | Moves the cursor one tile in the D-pad direction, scrolling the map when the cursor is near the edge; returns carry set when the map has to scroll.
+        ; Puts the D-pad direction in wMapScrollDirectionIdentifier and returns carry set if the cursor moves.
+        ; With Y held, the held direction moves at once (no repeat delay) and nothing else is checked. Otherwise,
+        ; while a unit is selected, a held (not newly pressed) direction moves only from a tile of its movement to
+        ; another (aMovementMap & $7F nonzero, so closed areas count), stopping the cursor at the edge.
 
         lda wJoy1Input
         bit #$4000
