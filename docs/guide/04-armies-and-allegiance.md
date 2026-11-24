@@ -32,7 +32,7 @@ struct FactionHeader {          // structFactionHeader
 
 Sixteen bytes of offsets, seven five-byte headers, and 72 two-byte unit pointers add up to exactly 195. The 72 pointers are shared: one army can hold most of them, as long as the total across all seven stays within the 72 units the engine can hold ([Chapter 1](01-a-unit-is-made-of-parts.md)).
 
-The event command `LOAD_FACTION_GROUP FS_Ch01Verdane, FG_Ch01Verdane` puts a group into a slot. `rlLoadFactionGroup` records the group, gives the slot each castle in the group's list (the first becomes its home), creates any of the group's units that don't exist yet, assigns them to the slot, and places them inside the home castle. It also clears the slot's two relation masks, so a newly loaded army is neutral to everyone until the script says otherwise.
+The event command `LOAD_FACTION_GROUP FS_Ch01Verdane, FG_Ch01Verdane` puts a group into a slot. `rlLoadFactionGroup` records the group, gives the slot each castle in the group's list (the first becomes its home), creates any of the group's units that don't exist yet, assigns them to the slot, and places them inside the home castle. It also clears the slot's two relation masks, so a newly loaded army regards every other army as neutral until the script says otherwise.
 
 ## Relations as two bitmasks
 
@@ -96,7 +96,7 @@ Everything else asks the pair. `rlCheckIfDeployedUnitIsEnemy`, which the battle 
 ```rust
 fn is_enemy(deployment: usize) -> bool {             // rlCheckIfDeployedUnitIsEnemy
     let target = aDeploymentTable.faction_slot[deployment];
-    faction_relation(selected_unit_faction(), target) == Enemy
+    faction_relation(selected_unit_faction(), target) == Enemy   // rlGetSelectedUnitFactionSlot
 }
 ```
 
@@ -104,7 +104,11 @@ Heirhein's units attack Nordion's because the Heirhein–Nordion pair is marked 
 
 ## Membership, three times over
 
-A unit's army is recorded in three places: the `FactionSlot` byte of its personal data, its pointer in the slot's list in `aFactionArea`, and the `_FactionSlot` column of the deployment table. `rlAssignUnitToFactionSlot` writes the first two (and, for the player's army, the join order the unit window sorts by); the deployment column is written when the unit is placed on the map. Each copy serves a different reader: the unit's own byte answers "which army am I in" through the getters, the slot's list lets code walk an army's units, and the deployment column lets map code find a unit's army from its tile without touching the unit record.
+A unit's army is recorded in three places: the `FactionSlot` byte of its personal data, its pointer in the slot's list in `aFactionArea`, and the `_FactionSlot` column of the deployment table. `rlAssignUnitToFactionSlot` writes the first two (and, for the player's army, the join order the unit window sorts by); the deployment column is written when the unit is placed on the map. Each copy serves a different reader:
+
+- the unit's own byte answers "which army is this unit in" through the getters;
+- the slot's list lets code walk an army's units;
+- the deployment column lets map code find a unit's army from its tile without touching the unit record.
 
 When a script unloads an army (`rlUnloadFactionSlot`), its units are deleted, except `Dynamic` units, the second-generation children, who are set to `Factionless` so they survive to join later. Unloading slot 0 starts the game over sequence.
 
@@ -112,7 +116,7 @@ When a script unloads an army (`rlUnloadFactionSlot`), its units are deleted, ex
 >
 > On a unit's status screen, L and R step through the player's other units. Holding Select while pressing them also shows the dead.
 >
-> A player unit that dies is not deleted. `rlActionStructHandleUnitDeath` marks its deployment entry defeated and sets `UnitStateDead`, but the unit keeps its header, its parts, and its place in slot 0's list. The status screen's cycling (`rsStatusScreenNextUnit` and `rsStatusScreenPreviousUnit`) walks generation IDs 1 to 24 and looks each one up in slot 0 with `rlFindGenerationIDInFactionSlotData`, so it finds dead units like any other. It then skips any unit that is dead or captive, unless Select is held:
+> A player unit that dies is not deleted. `rlActionStructHandleUnitDeath` marks its deployment entry defeated and sets `UnitStateDead`, but the unit keeps its header, its parts, and its place in slot 0's list. The status screen's cycling (`rsStatusScreenNextUnit` and `rsStatusScreenPreviousUnit` in [status_screen.asm](../../engine/menus/status_screen.asm)) walks generation IDs 1 to 24 and looks each one up in slot 0 with `rlFindGenerationIDInFactionSlotData`, so it finds dead units like any other. It then skips any unit that is dead or captive, unless Select is held:
 >
 > ```rust
 > if !joypad.held(JOY_Select) {
@@ -126,7 +130,7 @@ When a script unloads an army (`rlUnloadFactionSlot`), its units are deleted, ex
 
 Each location records the faction slot that owns it (`rlSetLocationFactionSlotOwner`), and an army's home is the castle in its header's `location_id`, where `rlSetUnitResidingInCastle` keeps units that haven't been sent out. Seizing a castle changes its owner slot ([Chapter 5](OUTLINE.md)).
 
-Castle income is paid at the end of a chapter, by the ending event's `ADD_CASTLE_MONEY` command. `rlAddCastleMoneyToAllUnitsInFaction` counts the castles held by the player or an ally (not neutral, not enemy), subtracts two, and gives each living unit of the army that many thousand gold.
+Castle income is paid at the end of a chapter, by the ending event's `ADD_CASTLE_MONEY` command. `rlAddCastleMoneyToAllUnitsInFaction` counts the castles held by the player or the player's allies (it measures every castle's owner against slot 0, whichever army is being paid), subtracts two, and gives each living unit of the army that many thousand gold.
 
 ## Trade-offs and hard limits
 
@@ -146,6 +150,7 @@ The limits:
 - [include/Characters.h](../../include/Characters.h): `FS_Player` and the four `Allegiance*` values, with a comment on what each permits.
 - [engine/units/factions.asm](../../engine/units/factions.asm): loading and unloading slots, membership, relations, the hostility setters, and castle income.
 - [engine/battle/battle.asm](../../engine/battle/battle.asm): `rlCheckIfDeployedUnitIsEnemy` and the friendly checks.
+- [engine/menus/status_screen.asm](../../engine/menus/status_screen.asm): `rsStatusScreenNextUnit` and `rsStatusScreenPreviousUnit`, the sidebar's unit cycling.
 - [engine/events/event_engine.asm](../../engine/events/event_engine.asm): the `LOAD_FACTION_GROUP`, `SET_FACTION_HOSTILITY`, and `ADD_CASTLE_MONEY` commands.
 - [events/Chapter01.asm](../../events/Chapter01.asm): a chapter's faction setup, start to finish.
 - [docs/reference/units.md](../reference/units.md): the reference page.
