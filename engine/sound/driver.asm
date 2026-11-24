@@ -2322,3 +2322,189 @@
     .endsection Unsorted809933Section
 
 
+    .section Unsorted809654Section
+
+      .al
+      .xs
+
+      rlStepMusicScript ; 80/9654
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Steps the music script (channel 0, wMusicID) now and runs a deferred upload,
+        ; outside the frame's rlUpdateSound; called after setting wMusicID.
+
+        php
+        phb
+        phk
+        plb
+        .databank $80
+        rep #$30
+        pha
+        phx
+        phy
+        lda wMusicID,b
+        bne _9667
+        sta aSoundScriptRunning,b
+        bra _9671
+
+
+        _9667
+        ldx #$0000
+        jsr rsStepSoundScript
+        jsl rlRunDeferredSoundUpload
+
+        _9671
+        ply
+        plx
+        pla
+        plb
+        .databank ?
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/9677
+
+      rsStepSoundScript ; 80/9677
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = channel (0, 2), A = its script ID: starts the script if it is not the one
+        ; running, else counts down its wait and runs commands up to the next wait. At
+        ; the script's end the channel stops and aSoundScriptPrevious keeps the ID.
+
+        ldy lR38
+        phy
+        ldy lR38+1
+        phy
+        ldy wSoundDataBankHigh,b
+        sty lR38+1
+        stx wSoundScriptChannel,b
+        cmp aSoundScriptRunning,b,x
+        beq _96A3
+        sta aSoundScriptRunning,b,x
+        and #$00FF
+        dec a
+        asl a
+        tay
+        lda #$0001
+        sta aSoundScriptWaits,b,x
+        lda aSoundHeader.Scripts
+        sta lR38
+        lda [lR38],y
+        bra _96A6
+
+
+        _96A3
+        lda aSoundScriptPositions,b,x
+
+        _96A6
+        tay
+        lda wMusicID,b,x
+        and #$8000
+        xba
+        sep #$20
+        sta bSoundUploadNoVBlank,b
+        rep #$20
+        dec aSoundScriptWaits,b,x
+        bne _96E9
+        stz lR38
+
+        _96BC
+        lda [lR38],y
+        beq _96F0
+        inc y
+        inc y
+        sta wSoundScriptCommand,b
+        and #$FC00
+        beq _96D7
+        xba
+        lsr a
+        lsr a
+        dec a
+        asl a
+        tax
+        lda [lR38],y
+        inc y
+        inc y
+        jsr (aSoundScriptCommands,x)
+
+        _96D7
+        lda wSoundScriptCommand,b
+        and #$03FF
+        beq _96BC
+        ldx wSoundScriptChannel,b
+        sta aSoundScriptWaits,b,x
+        tya
+        sta aSoundScriptPositions,b,x
+
+        _96E9
+        pla
+        sta lR38+1
+        pla
+        sta lR38
+        rts
+
+
+        _96F0
+        ldx wSoundScriptChannel,b
+        pha
+        lda wMusicID,b,x
+        sta aSoundScriptPrevious,b,x
+        pla
+        sta wMusicID,b,x
+        sta aSoundScriptRunning,b,x
+        bra _96E9
+
+        .databank 0
+
+        ; 80/9703
+
+    .endsection Unsorted809654Section
+
+
+    .section Table809703Section
+
+      .al
+      .xl
+
+      aSoundScriptCommands ; 80/9703
+
+        ; Jump table of rsStepSoundScript.
+        .word <>rsSoundScriptPlaySoundEffect
+        .word <>rsSoundScriptPlaySoundEffect
+        .word <>rsSoundScriptPlaySoundEffect2
+        .word <>rsSoundScriptPlaySoundEffect2
+        .word <>rsSoundScriptSendCommand
+        .word <>rsSoundScriptQueueCommand
+        .word <>rsSoundScriptUploadFD
+        .word <>rsSoundScriptUploadFC
+        .word <>rsSoundScriptUploadFB
+        .word <>rsSoundScriptUploadFA
+        .word <>rsSoundScriptDeferUploadFD
+        .word <>rlSoundScriptDeferUploadFC
+        .word <>rlSoundScriptDeferUploadFB
+        .word <>rlSoundScriptDeferUploadFA
+        .word <>rsSoundScriptWaitForAPUStatus
+        .word <>rsSoundScriptWaitForDeferredUpload
+        .word <>rsSoundScriptQueueCommandChecked
+        .word <>rsSoundScriptBattleTerrainCommand
+
+      rsUnknown809727 ; 80/9727
+
+        ; Unreferenced: does nothing.
+
+        nop
+        rts
+
+    .endsection Table809703Section
+
+
