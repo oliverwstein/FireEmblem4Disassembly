@@ -1165,7 +1165,7 @@
         sta lR19
 
         ; Routine does nothing
-        jsl rlUnknown9183A8
+        jsl rlDialogueCastleNameStub
 
         pla
         clc
@@ -1187,7 +1187,7 @@
         ; EVENT_1A
 
         phy
-        jsl rlUnknown9183A9
+        jsl rlUploadDialogueSlot0FontTiles
         ply
 
         clc
@@ -1210,7 +1210,7 @@
         lda [lR22],y
         sta lR18+1
 
-        jsl rlUnknown9183CC
+        jsl rlSetDialogueFontTilesPointer
 
         ply
         inc y
@@ -1238,7 +1238,7 @@
         lda [lR22],y
         sta lR18+1
 
-        jsl rlUnknown9183D7
+        jsl rlSetDialogueActivePointer
 
         ply
         inc y

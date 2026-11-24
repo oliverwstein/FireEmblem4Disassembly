@@ -607,7 +607,7 @@
 
               lda #2
               sta wEventEngineState,b
-              jsl rlUnknown9180BC
+              jsl rlClearDialogueStatusAndTimers
 
         +
         jsr rsHandleWorldMapPortraits

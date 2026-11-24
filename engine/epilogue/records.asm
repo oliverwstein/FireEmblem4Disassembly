@@ -252,7 +252,7 @@
         rep #$20
         jsl rlDisableVBlank
         jsl rlResetHDMAEngine
-        jsl rlUnknown9180BC
+        jsl rlClearDialogueStatusAndTimers
         jsl rlDialogueFreeHDMA
         stz wBufferBG2VOFS
         stz wBufferBG3VOFS

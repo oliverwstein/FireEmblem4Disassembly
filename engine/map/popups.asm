@@ -229,7 +229,7 @@
         lda aProcSystem.aBody0,b,x
         clc
         adc #$0101
-        jsl rlUnknown9180F0
+        jsl rlCoordsToTilemapOffset
         tay
 
         lda #$8000 >> 1

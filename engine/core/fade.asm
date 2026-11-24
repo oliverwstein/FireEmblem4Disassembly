@@ -489,7 +489,7 @@
         +
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlShowMapWindows
-        jsl rlUnknown9180BC
+        jsl rlClearDialogueStatusAndTimers
         jsl rlDialogueFreeHDMA
         plp
         rts
