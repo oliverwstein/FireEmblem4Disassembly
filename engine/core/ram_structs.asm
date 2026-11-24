@@ -1461,13 +1461,15 @@
       .al
       .xl
 
-      rlUnknown82EDBB ; 82/EDBB
+      rlFreeRAMAreaByHandleUnused ; 82/EDBB
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: dereferences 3-byte handle at [lR25], marks entry $80, frees header and coalesces
 
         phb
         php
@@ -1490,7 +1492,7 @@
         sta lR25+1
         lda $0000,b,y
         sta lR25
-        jsr rsUnknown82F207
+        jsr rsMarkRAMAreaEntryFreeFlagUnused
         jsr rsFreeSpecifiedRAMAreaEntryHeader
         jsr rsCombineAdjacentFreeRAMAreaEntries
         ply
@@ -2512,13 +2514,15 @@
       .al
       .xl
 
-      rsUnknown82F207 ; 82/F207
+      rsMarkRAMAreaEntryFreeFlagUnused ; 82/F207
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 7 ($80) on byte $03 of RAM area entry header at Y
 
         sep #$20
         lda #$80
@@ -3005,13 +3009,15 @@
       .al
       .xl
 
-      rlUnknown82F7A2 ; 82/F7A2
+      rlRemoveOffsetTableEntryUnused ; 82/F7A2
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: removes 1-based entry A from offset table at lR18
 
         phb
         php
@@ -3122,13 +3128,15 @@
 
         ; 82/F847
 
-      rlUnknown82F847 ; 82/F847
+      rlCopyAllOffsetTableEntriesUnused ; 82/F847
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: copies wR1 entries from offset table lR18 to lR19
 
         phb
         php
@@ -3597,7 +3605,7 @@
       .al
       .xl
 
-      rlUnknown82EB4C ; 82/EB4C
+      rlInitByteStackAreaUnused ; 82/EB4C
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -3605,12 +3613,14 @@
         .autsiz
         .databank ?
 
+        ; Unreferenced: initializes byte stack area at lR18 and sets $055F pointer
+
         phb
         php
         phk
         plb
         .databank $82
-        jsl rlUnknown82EC70
+        jsl rlSetByteStackAreaPointerUnused
         ldy lR18
         sep #$20
         lda lR18+2
@@ -3641,7 +3651,7 @@
         ; Unreachable: it follows a return.
         rtl
 
-      rlUnknown82EB78 ; 82/EB78
+      rlPushByteStackAreaUnused ; 82/EB78
 
         .al
         .xl
@@ -3649,7 +3659,7 @@
         .databank ?
 
         ; Unreferenced: works on the RAM area whose pointer is at $055F (see
-        ; rlUnknown82EC81): takes wR1 bytes from it, filled from [lR18] or with 0.
+        ; rlPushByteStackAreaPointerUnused): takes wR1 bytes from it, filled from [lR18] or with 0.
         ; Carry set if there is not enough.
 
         phb
@@ -3752,7 +3762,7 @@
 
         ; 82/EC00
 
-      rlUnknown82EC00 ; 82/EC00
+      rlPopByteStackAreaUnused ; 82/EC00
 
         .al
         .xl
@@ -3837,7 +3847,7 @@
 
         ; 82/EC5F
 
-      rlUnknown82EC5F ; 82/EC5F
+      rlGetByteStackAreaPointerUnused ; 82/EC5F
 
         .al
         .xl
@@ -3872,13 +3882,15 @@
       .al
       .xl
 
-      rlUnknown82EC70 ; 82/EC70
+      rlSetByteStackAreaPointerUnused ; 82/EC70
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets $055F byte stack area pointer to lR18
 
         phb
         php
@@ -3898,7 +3910,7 @@
 
         ; 82/EC81
 
-      rlUnknown82EC81 ; 82/EC81
+      rlPushByteStackAreaPointerUnused ; 82/EC81
 
         .al
         .xl
@@ -3930,7 +3942,7 @@
 
         ; 82/EC9E
 
-      rlUnknown82EC9E ; 82/EC9E
+      rlPopByteStackAreaPointerUnused ; 82/EC9E
 
         .al
         .xl
@@ -4022,13 +4034,15 @@
       .al
       .xl
 
-      rlUnknown82F54F ; 82/F54F
+      rlGetOffsetTableCountUnused ; 82/F54F
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: returns number of entries in offset table lR18
 
         phb
         php

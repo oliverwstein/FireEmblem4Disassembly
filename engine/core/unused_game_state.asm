@@ -80,13 +80,15 @@
       .al
       .xl
 
-      rlUnknown80C1BA ; 80/C1BA
+      rlStartChapterEvent1IfClearUnused ; 80/C1BA
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: starts chapter event 1 if bit 0 of wEventEngineFlags is clear
 
         lda wEventEngineFlags,b
         bit #$0001

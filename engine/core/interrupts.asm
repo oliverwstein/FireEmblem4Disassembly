@@ -640,7 +640,7 @@
 
         .databank 0
 
-      rlUnknown82E134 ; 82/E134
+      rlWriteINIDISPForcedBlankOnlyUnused ; 82/E134
 
         .al
         .xl

@@ -221,13 +221,15 @@
       .al
       .xl
 
-      rlUnknown809FB2 ; 80/9FB2
+      rlSignedMultiply32By32Unused ; 80/9FB2
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: signed 32x32 multiply using rlUnsignedMultiply32By32
 
         lda wR11
         eor wR13
@@ -286,13 +288,15 @@
 
         ; 80/A01A
 
-      rlUnknown80A01A ; 80/A01A
+      rlSignedDivide32By32Unused ; 80/A01A
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: signed shifted 32/32 divide using rlUnsignedDivide32By32
 
         lda wR13
         eor wR15

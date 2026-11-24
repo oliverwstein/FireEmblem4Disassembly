@@ -108,13 +108,15 @@
       .al
       .xl
 
-      rlUnknown808372 ; 80/8372
+      rlInlineDMATransferUnused ; 80/8372
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: reads inline channel mask + 7-byte DMA descriptors from stack and triggers $420B
 
         php
         phb

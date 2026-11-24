@@ -279,13 +279,15 @@
       .as
       .xl
 
-      rlUnknown809C3E ; 80/9C3E
+      rlFindAndJumpTaskTableUnused ; 80/9C3E
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: searches aTaskTable for [lR44]+2 and jumps via lTaskJumpPointer
 
         phb
         phk
@@ -321,7 +323,7 @@
         ldy #$0004
         lda [lR44],y
         sta lTaskJumpPointer,b
-        jsl rlUnknown809C77
+        jsl rlJumpTaskPointerUnused
         clc
         rtl
 
@@ -329,9 +331,9 @@
 
         ; 80/9C77
 
-      rlUnknown809C77 ; 80/9C77
+      rlJumpTaskPointerUnused ; 80/9C77
 
-        ; Called only by the unreferenced rlUnknown809C3E: jumps through the
+        ; Called only by the unreferenced rlFindAndJumpTaskTableUnused: jumps through the
         ; long pointer at $0306.
 
         jml [$0306]

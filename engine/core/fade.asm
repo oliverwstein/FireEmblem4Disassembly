@@ -404,15 +404,15 @@
 
       ; 82/83B5
 
-      procUnknown8283B5 ; 82/83B5
+      procDecompressToBufferUnused ; 82/83B5
 
         ; Unreferenced: nothing creates this proc. Its init queues a
         ; decompression of the stream at lR44 into aDecompressionBuffer; its
         ; cycle ends the proc when the decompression list is done.
 
-        .structProcInfo "De", rlProcUnknown8283B5Init, rlProcUnknown8283B5Cycle, aProcUnknown8283B5Code
+        .structProcInfo "De", rlProcDecompressToBufferInit, rlProcDecompressToBufferCycle, aProcDecompressToBufferCode
 
-      rlProcUnknown8283B5Init ; 82/83BD
+      rlProcDecompressToBufferInit ; 82/83BD
 
         .al
         .xl
@@ -434,7 +434,7 @@
 
         ; 82/83D4
 
-      rlProcUnknown8283B5Cycle ; 82/83D4
+      rlProcDecompressToBufferCycle ; 82/83D4
 
         .al
         .xl
@@ -453,7 +453,7 @@
 
         ; 82/83E1
 
-      aProcUnknown8283B5Code ; 82/83E1
+      aProcDecompressToBufferCode ; 82/83E1
 
         PROC_HALT
 

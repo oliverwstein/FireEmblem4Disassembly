@@ -486,12 +486,14 @@
         plp
         rtl
 
-      rlUnknown80AE01 ; 80/AE01
+      rlQueueDecompDMA80AE10Unused ; 80/AE01
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: queues decompression DMA entry aUnknown80AE10
 
         ; Unreferenced: queues the decompression DMA entry aUnknown80AE10.
 
@@ -508,16 +510,18 @@
 
       aUnknown80AE10 ; 80/AE10
 
-        ; Read only by the unreferenced rlUnknown80AE01.
+        ; Read only by the unreferenced rlQueueDecompDMA80AE10Unused.
 
         .byte $00, $18, $00, $40, $01, $2B, $0A, $C0
 
-      rlUnknown80AE18 ; 80/AE18
+      rlSetTMAndBGModeUnused80AE18 ; 80/AE18
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: sets bBufferTM=$16 and bBufferBGMODE=$09
 
         ; Unreferenced.
 
