@@ -76,9 +76,9 @@
 
         jsr rsDialogueClearCharacterGraphicsBuffer
 
-        lda #(`rlUnknown91949E)<<8
+        lda #(`rlDialogueUpdateHDMATable)<<8
         sta aDialogue.lHDMARoutine+1,b
-        lda #<>rlUnknown91949E
+        lda #<>rlDialogueUpdateHDMATable
         sta aDialogue.lHDMARoutine,b
 
         lda #(`g2bppDialogueFont)<<8
@@ -152,11 +152,11 @@
         sta aDialogueHDMATable1
         sta aDialogueHDMATable2
 
-        jsl rlUnknown9196A9
+        jsl rlDialogueCreateBG3ScrollHDMA
 
-        lda #(`rlUnknown91949E)<<8
+        lda #(`rlDialogueUpdateHDMATable)<<8
         sta aDialogue.lHDMARoutine+1,b
-        lda #<>rlUnknown91949E
+        lda #<>rlDialogueUpdateHDMATable
         sta aDialogue.lHDMARoutine,b
         rtl
 
@@ -571,7 +571,7 @@
           tsb aDialogue.wStatus,b
 
         _End
-        jsr rsUnknown919855
+        jsr rsDialogueUpdateMouthAnimation
         jsr rsDialogueUploadPendingTiles
         phk
         pea #<>(+)-1
@@ -2143,7 +2143,7 @@
           bra _End
 
         _8AF4
-        jsl rlUnknown91907E
+        jsl rlDialogueAdvanceLineAndEnsureTimer
         
         lda aDialogue.wStatus,b
         bit #DialogueStatusAutoscroll
@@ -2248,7 +2248,7 @@
 
         ; Calls rlDialogueScrollSlotLine
 
-        jsl rlUnknown91907E
+        jsl rlDialogueAdvanceLineAndEnsureTimer
         rts
 
         .databank 0
@@ -2377,7 +2377,7 @@
         ; DIALOGUE_SET_TEXT_POSITION
 
         lda [lR18],y
-        jsl rlUnknown91909D
+        jsl rlDialogueSetBG3TilemapPosition
 
         inc aDialogue.lActivePointer,b
         inc aDialogue.lActivePointer,b
@@ -2484,7 +2484,7 @@
 
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown9190FB
+        jsl rlDialoguePlaySoundEffect1
 
         inc aDialogue.lActivePointer,b
         clc
@@ -2500,7 +2500,7 @@
 
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown919103
+        jsl rlDialoguePlaySoundEffect1Alt
 
         inc aDialogue.lActivePointer,b
         clc
@@ -2518,7 +2518,7 @@
 
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown91910B
+        jsl rlDialoguePlaySoundEffect2
 
         inc aDialogue.lActivePointer,b
         clc
@@ -2599,7 +2599,7 @@
         ; DIALOGUE_SET_BUFFER_OFFSET
 
         lda [lR18],y
-        jsl rlUnknown919134
+        jsl rlDialogueSetBGBufferOffset
 
         inc aDialogue.lActivePointer,b
         inc aDialogue.lActivePointer,b
@@ -2714,7 +2714,7 @@
 
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown919182
+        jsl rlDialogueSetPauseTimer
 
         inc aDialogue.lActivePointer,b
         sec
@@ -2730,7 +2730,7 @@
 
         ; DIALOGUE_OPEN_BOX
 
-        jsl rlUnknown919186
+        jsl rlDialogueOpenActiveSlotBox
         jsr rsDialogueSetDefaultPauseTimer
         sec
         rts
@@ -2745,7 +2745,7 @@
 
         ; DIALOGUE_CLOSE_BOX
 
-        jsl rlUnknown919256
+        jsl rlDialogueCloseActiveSlotBox
         jsr rsDialogueSetDefaultPauseTimer
         sec
         rts
@@ -2761,7 +2761,7 @@
         ; DIALOGUE_LOAD_PORTRAIT
 
         lda [lR18],y
-        jsl rlUnknown91931D
+        jsl rlDialogueLoadPortraitWaitMusic
 
         inc aDialogue.lActivePointer,b
         inc aDialogue.lActivePointer,b
@@ -2820,7 +2820,7 @@
           lda aDialogue.wUnit2,b
 
         +
-        jsl rlUnknown9193C6
+        jsl rlDialogueLoadPortraitImmediate
         jsr rsDialogueSetDefaultPauseTimer
         sec
         rts
@@ -2834,7 +2834,7 @@
         .databank ?
 
         ldx aDialogue.wSlotOffset,b
-        jsl rlUnknown919420
+        jsl rlDialogueHideActivePortrait
         jsr rsDialogueSetDefaultPauseTimer
         sec
         rts
@@ -3467,9 +3467,9 @@
         bne rlDialogueEndRestoreMap
 
         ldx #0
-        jsr rsUnknown9197DC
+        jsr rsDialogueClearPortraitTilemap
         ldx #1
-        jsr rsUnknown9197DC
+        jsr rsDialogueClearPortraitTilemap
         lda #$0002
         tsb wChapterFlags,b
         inc aDialogue.wCommandCycle,b
@@ -3599,11 +3599,13 @@
 
         .databank 0
 
-      rlUnknown91907E ; 91/907E
+      rlDialogueAdvanceLineAndEnsureTimer ; 91/907E
 
         .al
         .autsiz
         .databank ?
+
+        ; Advances active slot to next line and ensures pause timer is set
 
         ldx aDialogue.wSlotOffset,b
         jsr rsDialogueAdvanceLine
@@ -3639,11 +3641,13 @@
 
         .databank 0
 
-      rlUnknown91909D ; 91/909D
+      rlDialogueSetBG3TilemapPosition ; 91/909D
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets active slot BG3 buffer position from packed (X, Y) tile coords
 
         ldx aDialogue.wSlotOffset,b
         sta aDialogue._Slot[0].wUnknown0018D9,b,x
@@ -3738,7 +3742,21 @@
 
         .databank 0
 
-      rlUnknown9190FB ; 91/90FB
+      rlDialoguePlaySoundEffect1 ; 91/90FB
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Plays sound effect (A & $FF) via rlPlaySoundEffect
+
+        and #$00FF
+        jsl rlPlaySoundEffect
+        rtl
+
+        .databank 0
+
+      rlDialoguePlaySoundEffect1Alt ; 91/9103
 
         .al
         .autsiz
@@ -3750,23 +3768,13 @@
 
         .databank 0
 
-      rlUnknown919103 ; 91/9103
+      rlDialoguePlaySoundEffect2 ; 91/910B
 
         .al
         .autsiz
         .databank ?
 
-        and #$00FF
-        jsl rlPlaySoundEffect
-        rtl
-
-        .databank 0
-
-      rlUnknown91910B ; 91/910B
-
-        .al
-        .autsiz
-        .databank ?
+        ; Plays sound effect (A & $FF) via rlPlaySoundEffect2
 
         and #$00FF
         jsl rlPlaySoundEffect2
@@ -3821,11 +3829,13 @@
 
         .databank 0
 
-      rlUnknown919134 ; 91/9134
+      rlDialogueSetBGBufferOffset ; 91/9134
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets active slot wBGBufferOffset from A
 
         ldx aDialogue.wSlotOffset,b
         sta aDialogue._Slot[0].wBGBufferOffset,b,x
@@ -3898,22 +3908,26 @@
 
         .databank 0
 
-      rlUnknown919182 ; 91/9182
+      rlDialogueSetPauseTimer ; 91/9182
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets aDialogue.wPauseTimer from A
 
         sta aDialogue.wPauseTimer,b
         rtl
 
         .databank 0
 
-      rlUnknown919186 ; 91/9186
+      rlDialogueOpenActiveSlotBox ; 91/9186
 
         .al
         .autsiz
         .databank ?
+
+        ; Opens dialogue box for active slot (conversation or map mode)
 
         lda aDialogue.wUnknown0018D0,b
         cmp #0
@@ -3935,12 +3949,12 @@
 
         lda aDialogue.wUnknown0018D0,b
         cmp #1
-        beq rlUnknown9191F3
+        beq rlDialogueOpenMapSlotBox
 
         lda aDialogue.wCommandCycle,b
         asl a
         tax
-        lda aUnknown9191C6,x
+        lda aDialogueOpenConvBoxSteps,x
         sta lR23
         pea #<>(+)-1
         jmp (lR23)
@@ -3955,18 +3969,20 @@
 
         .databank 0
 
-      aUnknown9191C6 ; 91/91C6
+      aDialogueOpenConvBoxSteps ; 91/91C6
 
-        .word <>rsUnknown9191CE
-        .word <>rsUnknown9191DE
-        .word <>rsUnknown9191DE
-        .word <>rsUnknown9191DE
+        .word <>rsDialogueOpenConvBoxStep
+        .word <>rsDialogueOpenConvBoxWait
+        .word <>rsDialogueOpenConvBoxWait
+        .word <>rsDialogueOpenConvBoxWait
 
-      rsUnknown9191CE ; 91/91CE
+      rsDialogueOpenConvBoxStep ; 91/91CE
 
         .al
         .autsiz
         .databank ?
+
+        ; Opens left or right conversation window for active slot
 
         ldx aDialogue.wSlotOffset,b
         bne +
@@ -3982,11 +3998,13 @@
 
         .databank 0
 
-      rsUnknown9191DE ; 91/91DE
+      rsDialogueOpenConvBoxWait ; 91/91DE
 
         .al
         .autsiz
         .databank ?
+
+        ; Waits 3 cycles then marks conversation dialogue box open
 
         lda aDialogue.wCommandCycle,b
         cmp #1
@@ -4004,11 +4022,13 @@
 
         .databank 0
 
-      rlUnknown9191F3 ; 91/91F3
+      rlDialogueOpenMapSlotBox ; 91/91F3
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs multi-step map dialogue box open sequence
 
         lda aDialogue.wCommandCycle,b
         asl a
@@ -4105,11 +4125,13 @@
 
         .databank 0
 
-      rlUnknown919256 ; 91/9256
+      rlDialogueCloseActiveSlotBox ; 91/9256
 
         .al
         .autsiz
         .databank ?
+
+        ; Closes dialogue box for active slot (conversation or map mode)
 
         lda aDialogue.wUnknown0018D0,b
         cmp #0
@@ -4131,12 +4153,12 @@
 
         lda aDialogue.wUnknown0018D0,b
         cmp #1
-        beq rlUnknown9192C3
+        beq rlDialogueCloseMapSlotBox
 
         lda aDialogue.wCommandCycle,b
         asl a
         tax
-        lda aUnknown919296,x
+        lda aDialogueCloseConvBoxSteps,x
         sta lR23
         pea #<>(+)-1
         jmp (lR23)
@@ -4151,18 +4173,20 @@
 
         .databank 0
 
-      aUnknown919296 ; 91/9296
+      aDialogueCloseConvBoxSteps ; 91/9296
 
-        .word <>rsUnknown91929E
-        .word <>rsUnknown9192AE
-        .word <>rsUnknown9192AE
-        .word <>rsUnknown9192AE
+        .word <>rsDialogueCloseConvBoxStart
+        .word <>rsDialogueCloseConvBoxWait
+        .word <>rsDialogueCloseConvBoxWait
+        .word <>rsDialogueCloseConvBoxWait
 
-      rsUnknown91929E ; 91/929E
+      rsDialogueCloseConvBoxStart ; 91/929E
 
         .al
         .autsiz
         .databank ?
+
+        ; Closes left or right conversation window for active slot
 
         ldx aDialogue.wSlotOffset,b
         bne +
@@ -4178,11 +4202,13 @@
 
         .databank 0
 
-      rsUnknown9192AE ; 91/92AE
+      rsDialogueCloseConvBoxWait ; 91/92AE
 
         .al
         .autsiz
         .databank ?
+
+        ; Waits 3 cycles then clears conversation dialogue box open flag
 
         lda aDialogue.wCommandCycle,b
         cmp #3
@@ -4193,23 +4219,25 @@
         +
         stz aDialogue.wCommandCycle,b
         jsr rsDialogueSetDefaultPauseTimer
-        jsr rsUnknown91930E
+        jsr rsDialogueClearDialogueBoxOpen
         pla
         sec
         rtl
 
         .databank 0
 
-      rlUnknown9192C3 ; 91/92C3
+      rlDialogueCloseMapSlotBox ; 91/92C3
 
         .al
         .autsiz
         .databank ?
 
+        ; Runs multi-step map dialogue box close sequence
+
         lda aDialogue.wCommandCycle,b
         asl a
         tax
-        lda aUnknown9192DF,x
+        lda aDialogueCloseMapBoxSteps,x
         sta lR23
         pea #<>(+)-1
         jmp (lR23)
@@ -4223,17 +4251,19 @@
 
         .databank 0
 
-      aUnknown9192DF ; 91/92DF
+      aDialogueCloseMapBoxSteps ; 91/92DF
 
-        .word <>rsUnknown9192E5
-        .word <>rsUnknown9192F7
-        .word <>rsUnknown919302
+        .word <>rsDialogueCloseMapBoxStart
+        .word <>rsDialogueCloseMapBoxWait
+        .word <>rsDialogueCloseMapBoxDone
 
-      rsUnknown9192E5 ; 91/92E5
+      rsDialogueCloseMapBoxStart ; 91/92E5
 
         .al
         .autsiz
         .databank ?
+
+        ; Closes map dialogue box 0 or 1 for active slot
 
         inc aDialogue.wCommandCycle,b
         lda aDialogue.wSlotOffset,b
@@ -4248,11 +4278,13 @@
 
         .databank 0
 
-      rsUnknown9192F7 ; 91/92F7
+      rsDialogueCloseMapBoxWait ; 91/92F7
 
         .al
         .autsiz
         .databank ?
+
+        ; Waits until map dialogue boxes are closed
 
         jsl rlCheckDialogueBoxesClosed
         bcs +
@@ -4265,26 +4297,30 @@
 
         .databank 0
 
-      rsUnknown919302 ; 91/9302
+      rsDialogueCloseMapBoxDone ; 91/9302
 
         .al
         .autsiz
         .databank ?
 
+        ; Finishes map dialogue box close sequence
+
         stz aDialogue.wCommandCycle,b
         jsr rsDialogueSetDefaultPauseTimer
-        jsr rsUnknown91930E
+        jsr rsDialogueClearDialogueBoxOpen
         pla
         sec
         rtl
 
         .databank 0
 
-      rsUnknown91930E ; 91/930E
+      rsDialogueClearDialogueBoxOpen ; 91/930E
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears DialogueStatusTopOpened or DialogueStatusBottomOpened for active slot
 
         lda #DialogueStatusTopOpened
         ldx aDialogue.wSlotOffset,b
@@ -4298,11 +4334,13 @@
 
         .databank 0
 
-      rlUnknown91931D ; 91/931D
+      rlDialogueLoadPortraitWaitMusic ; 91/931D
 
         .al
         .autsiz
         .databank ?
+
+        ; Loads portrait for active slot, waiting for wMusicID == 0 in conversation mode
 
         ; Input:
         ; A = PortraitID
@@ -4448,11 +4486,13 @@
 
         .databank 0
 
-      rlUnknown9193C6 ; 91/93C6
+      rlDialogueLoadPortraitImmediate ; 91/93C6
 
         .al
         .autsiz
         .databank ?
+
+        ; Loads portrait for active slot without waiting for music
 
         jsl rlDialogueTryGetActiveChildCharacterID
 
@@ -4487,7 +4527,7 @@
         lda aDialogue.wCommandCycle,b
         asl a
         tax
-        lda aUnknown919416,x
+        lda aDialogueLoadPortraitSteps,x
         sta lR23
         pea #<>(+)-1
         jmp (lR23)
@@ -4501,7 +4541,7 @@
 
         .databank 0
 
-      aUnknown919416 ; 91/9416
+      aDialogueLoadPortraitSteps ; 91/9416
 
         .word <>rsDialogueLoadPortraitCycle1
         .word <>rsDialogueLoadPortraitCycle2
@@ -4509,11 +4549,13 @@
         .word <>rsDialogueLoadPortraitCycle4
         .word <>rsDialogueLoadPortraitCycle5
 
-      rlUnknown919420 ; 91/9420
+      rlDialogueHideActivePortrait ; 91/9420
 
         .al
         .autsiz
         .databank ?
+
+        ; Hides/clears active slot's portrait
 
         ldx aDialogue.wSlotOffset,b
         lda #$FFFF
@@ -4542,7 +4584,7 @@
         rtl
 
         _944B
-        jsr rsUnknown9197DC
+        jsr rsDialogueClearPortraitTilemap
         lda #$0002
         tsb wChapterFlags,b
         rtl
@@ -4661,11 +4703,13 @@
 
         .databank 0
 
-      rlUnknown91949E ; 91/949E
+      rlDialogueUpdateHDMATable ; 91/949E
 
         .al
         .autsiz
         .databank ?
+
+        ; Builds BG3HOFS/BG3VOFS HDMA table for active dialogue boxes
 
         ; Sets up HDMA table for dialogue
 
@@ -4745,7 +4789,7 @@
           lda aDialogue._Slot[0].wUnknown0018E1,b
           sec
           sbc lR21
-          jsl rlUnknown91969C
+          jsl rlDivideWR13ByWR14
           txa
           beq _9579
 
@@ -4879,7 +4923,7 @@
           lda aDialogue._Slot[1].wUnknown0018E1,b
           sec
           sbc lR21
-          jsl rlUnknown91969C
+          jsl rlDivideWR13ByWR14
           txa
           beq _964D
 
@@ -5018,11 +5062,13 @@
 
         .databank 0
 
-      rlUnknown91969C ; 91/969C
+      rlDivideWR13ByWR14 ; 91/969C
 
         .al
         .autsiz
         .databank ?
+
+        ; Divides A by X via rlUnsignedDivide16By16R13; returns quotient in A and remainder in X
 
         sta wR13
         stx wR14
@@ -5033,15 +5079,17 @@
 
         .databank 0
 
-      rlUnknown9196A9 ; 91/96A9
+      rlDialogueCreateBG3ScrollHDMA ; 91/96A9
 
         .al
         .autsiz
         .databank ?
 
-        lda #(`aHDMAUnknown9196BD)<<8
+        ; Creates HDMA entry 4 for hdmaDialogueBG3Scroll
+
+        lda #(`hdmaDialogueBG3Scroll)<<8
         sta lR44+1
-        lda #<>aHDMAUnknown9196BD
+        lda #<>hdmaDialogueBG3Scroll
         sta lR44
         lda #4
         sta wR40
@@ -5050,13 +5098,13 @@
 
         .databank 0
 
-      aHDMAUnknown9196BD ; 91/96BD
+      hdmaDialogueBG3Scroll ; 91/96BD
 
-        .structHDMADirectEntryInfo rlHDMAUnknown9196BDInit, rlHDMAUnknown9196BDCycle, aHDMAUnknown9196BDCode, aDialogueHDMATable1, BG3HOFS, DMAP_HDMA_Setting(DMAP_CPUToIO, DMAP_Increment, DMAP_Mode3)
+        .structHDMADirectEntryInfo rlHDMADialogueBG3ScrollInit, rlHDMADialogueBG3ScrollCycle, aHDMADialogueBG3ScrollCode, aDialogueHDMATable1, BG3HOFS, DMAP_HDMA_Setting(DMAP_CPUToIO, DMAP_Increment, DMAP_Mode3)
 
         .word $30C2
 
-      rlHDMAUnknown9196BDInit ; 91/96CA
+      rlHDMADialogueBG3ScrollInit ; 91/96CA
 
         .al
         .autsiz
@@ -5066,7 +5114,7 @@
 
         .databank 0
 
-      rlHDMAUnknown9196BDCycle ; 91/96CB
+      rlHDMADialogueBG3ScrollCycle ; 91/96CB
 
         .al
         .autsiz
@@ -5076,7 +5124,7 @@
 
         .databank 0
 
-      aHDMAUnknown9196BDCode ; 91/96CC
+      aHDMADialogueBG3ScrollCode ; 91/96CC
 
         HDMA_HALT
 
@@ -5111,11 +5159,13 @@
 
         .databank 0
 
-      rlUnknown9196EE ; 91/96EE
+      rlDialogueLoadAndDrawPortrait ; 91/96EE
 
         .al
         .autsiz
         .databank ?
+
+        ; Decompresses portrait A for slot X and writes its tilemap
 
         phx
         jsr rsDialogueLoadPortraitData
@@ -5235,7 +5285,7 @@
           sta lR21
 
             _InnerLoop
-            jsr rsUnknown9197BD
+            jsr rsDialogueFlipSlot0PortraitTile
             sta [lR20],y
             inc wR0
             clc
@@ -5267,11 +5317,13 @@
 
         .databank 0
 
-      rsUnknown9197BD ; 91/97BD
+      rsDialogueFlipSlot0PortraitTile ; 91/97BD
 
         .al
         .autsiz
         .databank ?
+
+        ; Mirrors portrait tile index in wR0 horizontally for slot 0
 
         ; Flips the portrait dest tile horizontally
 
@@ -5301,11 +5353,13 @@
 
         .databank 0
 
-      rsUnknown9197DC ; 91/97DC
+      rsDialogueClearPortraitTilemap ; 91/97DC
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears 4x6 portrait tilemap buffer for slot X
 
         php
         lda #5
@@ -5376,11 +5430,13 @@
 
         .databank 0
 
-      rlUnknown919849 ; 91/9849
+      rlDialogueAdvanceLineWrapper ; 91/9849
 
         .al
         .autsiz
         .databank ?
+
+        ; Long wrapper for rsDialogueAdvanceLine
 
         jsr rsDialogueAdvanceLine
         rtl
@@ -5398,22 +5454,26 @@
 
         .databank 0
 
-      rlUnknown919851 ; 91/9851
+      rlDialogueClearNextLineBGBufferWrapper ; 91/9851
 
         .al
         .autsiz
         .databank ?
+
+        ; Long wrapper for rsDialogueClearNextLineBGBuffer
 
         jsr rsDialogueClearNextLineBGBuffer
         rtl
 
         .databank 0
 
-      rsUnknown919855 ; 91/9855
+      rsDialogueUpdateMouthAnimation ; 91/9855
 
         .al
         .autsiz
         .databank ?
+
+        ; Updates portrait mouth animation frame for active slot
 
         lda aDialogue.wStatus,b
         bit #DialogueStatusToggleMouthMove
@@ -5445,7 +5505,7 @@
           lsr a
           and #$0007
           tax
-          lda aUnknown9198AB,x
+          lda aDialogueMouthAnimationFrames,x
           and #$00FF
           sta aDialogue._Slot[0].wUnknown0018E9,b
 
@@ -5470,7 +5530,7 @@
 
         .databank 0
 
-      aUnknown9198AB ; 91/98AB
+      aDialogueMouthAnimationFrames ; 91/98AB
 
         .byte $00
         .byte $01
@@ -5481,11 +5541,13 @@
         .byte $01
         .byte $02
 
-      rlUnknown9198B3 ; 91/98B3
+      rlDialogueFindPortraitIDInText ; 91/98B3
 
         .al
         .autsiz
         .databank ?
+
+        ; Scans [lR18] for $3F00 portrait command and resolves Gen 2 child character ID
 
         php
         phy
@@ -5517,11 +5579,13 @@
 
         .databank 0
 
-      rlUnknown9198D6 ; 91/98D6
+      rlDialogueFindRawPortraitIDInText ; 91/98D6
 
         .al
         .autsiz
         .databank ?
+
+        ; Scans [lR18] for $3F00 portrait command and returns raw portrait ID
 
         php
         phy
@@ -7049,12 +7113,14 @@
 
         ; 91/A8E4
 
-      rsUnknown91A8E4 ; 91/A8E4
+      rsDialogueUnusedSetup91A8E4 ; 91/A8E4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced; sets up slot 0 at $4000 / $7E8388
 
         ; Unreferenced.
 

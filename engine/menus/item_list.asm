@@ -699,7 +699,7 @@
         .autsiz
         .databank ?
 
-        ; Draws the unit's portrait beside the list (rlUnknown9196EE), except in the castle (bit 5 of wChapterFlags).
+        ; Draws the unit's portrait beside the list (rlDialogueLoadAndDrawPortrait), except in the castle (bit 5 of wChapterFlags).
 
         lda wChapterFlags,b
         bit #$0020
@@ -709,7 +709,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
         ldx #$0000
-        jsl rlUnknown9196EE
+        jsl rlDialogueLoadAndDrawPortrait
         plx
         phx
         ldx #$005E

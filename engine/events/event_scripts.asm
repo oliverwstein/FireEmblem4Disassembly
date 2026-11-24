@@ -7483,7 +7483,7 @@
         lda $18E1,b
         sec
         sbc $2D
-        jsl rlUnknown91969C
+        jsl rlDivideWR13ByWR14
         txa
         beq _9352
 
@@ -7598,7 +7598,7 @@
         lda $18FA,b
         sec
         sbc $2D
-        jsl rlUnknown91969C
+        jsl rlDivideWR13ByWR14
         txa
         beq _941D
 

@@ -453,10 +453,10 @@
         jsl rlSetupConversationDialogueBoxes
 
         ldx #0
-        jsl rlUnknown919420._944B
+        jsl rlDialogueHideActivePortrait._944B
 
         ldx #$0019
-        jsl rlUnknown919420._944B
+        jsl rlDialogueHideActivePortrait._944B
 
         lda #4
         sta wBufferBG3HOFS

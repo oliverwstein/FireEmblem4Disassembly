@@ -1386,12 +1386,12 @@
         and #$00FF
         cmp #$00FF
         beq _F7BA
-        jsl rlUnknown9198B3
+        jsl rlDialogueFindPortraitIDInText
         bra _F7BE
 
 
         _F7BA
-        jsl rlUnknown9198D6
+        jsl rlDialogueFindRawPortraitIDInText
 
         _F7BE
         rts
