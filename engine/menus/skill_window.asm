@@ -1632,7 +1632,7 @@
       .al
       .xl
 
-      rsUnknown8BDC49 ; 8B/DC49
+      rsCollectUnitsWithSelectedSkill ; 8B/DC49
 
         .al
         .xl

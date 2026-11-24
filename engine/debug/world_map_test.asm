@@ -135,7 +135,7 @@
       .al
       .xl
 
-      rsUnknown8B81EC ; 8B/81EC
+      rsUploadWorldMapTestTilemapUnused ; 8B/81EC
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al

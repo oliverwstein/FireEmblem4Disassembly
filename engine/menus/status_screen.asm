@@ -372,7 +372,7 @@
         cpy #$0020
         bne _BEAC
         jsl rlStatusScreenLoadPortrait
-        jsl rlUnknown8990DA
+        jsl rlLoadUnitInventoryIcons
         lda #(`aStatusScreenBG3SplitHDMA)<<8
         sta lR44+1
         lda #<>aStatusScreenBG3SplitHDMA
@@ -2248,7 +2248,7 @@
         .autsiz
         .databank ?
 
-        ; The drop marker (rsStatusScreenDrawDropMarker), then an item icon for each of the wCastleListSubCount items, scrolling with BG3. rlUnknown8990DA loaded the icons into consecutive sprite tiles.
+        ; The drop marker (rsStatusScreenDrawDropMarker), then an item icon for each of the wCastleListSubCount items, scrolling with BG3. rlLoadUnitInventoryIcons loaded the icons into consecutive sprite tiles.
 
         jsr rsStatusScreenDrawDropMarker
         lda wCastleListSubCount,b
@@ -2316,7 +2316,7 @@
 
       aStatusScreenInventoryIconTiles ; 89/8B88
 
-        ; A byte per inventory row: the tile offset of its item icon (rlUnknown8990DA loaded
+        ; A byte per inventory row: the tile offset of its item icon (rlLoadUnitInventoryIcons loaded
         ; the icons in that order).
 
         .byte $00, $02, $04, $06, $08, $0A, $0C, $0E
@@ -3434,7 +3434,7 @@
 
         ; 89/91D3
 
-      rlUnknown8991D3 ; 89/91D3
+      rlStatusScreenBuildBG2SplitTableUnused ; 89/91D3
 
         .al
         .xl

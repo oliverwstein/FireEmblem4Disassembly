@@ -392,7 +392,7 @@
         .word <>rsJugdralHistoryUploadBG3Tilemap
         .word <>rsJugdralHistoryNextTextTiles
 
-      rsUnknown91B1FB ; 91/B1FB
+      rsJugdralHistoryNoOpUnused ; 91/B1FB
 
         ; Unreferenced: a lone rts.
 

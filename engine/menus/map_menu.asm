@@ -2381,7 +2381,7 @@
       .al
       .xl
 
-      rlUnknown82F4BF ; 82/F4BF
+      rlSetMapMenuDummyPairUnused ; 82/F4BF
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -4632,14 +4632,14 @@
         beq _9E41
         cmp #$0001
         beq _9E3A
-        jsr rsUnknown859E5F
-        jsr rsUnknown859ECB
+        jsr rsWriteMapMenuGradientTop
+        jsr rsTerminateMapMenuGradientHDMA
         rts
 
 
         _9E3A
-        jsr rsUnknown859E7E
-        jsr rsUnknown859ECB
+        jsr rsWriteMapMenuGradientMiddle
+        jsr rsTerminateMapMenuGradientHDMA
         rts
 
 
@@ -4649,24 +4649,24 @@
         sta wR3
         lda wR4
         sta wR0
-        jsr rsUnknown859E7E
+        jsr rsWriteMapMenuGradientMiddle
         lda wR0
         sta wR4
-        jsr rsUnknown859E5F
-        jsr rsUnknown859ECB
+        jsr rsWriteMapMenuGradientTop
+        jsr rsTerminateMapMenuGradientHDMA
         rts
 
 
         _9E58
-        jsr rsUnknown859EA2
-        jsr rsUnknown859ECB
+        jsr rsWriteMapMenuGradientBottom
+        jsr rsTerminateMapMenuGradientHDMA
         rts
 
         .databank 0
 
         ; 85/9E5F
 
-      rsUnknown859E5F ; 85/9E5F
+      rsWriteMapMenuGradientTop ; 85/9E5F
 
         .al
         .xl
@@ -4678,8 +4678,8 @@
         stz wR1
 
         _9E66
-        jsr rsUnknown859FA3
-        jsr rsUnknown859F97
+        jsr rsStepMapMenuGradientScanlineHeight
+        jsr rsWriteMapMenuGradientScanlineCount
         lda <>aMapMenuGradientSteps,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
@@ -4698,7 +4698,7 @@
 
         ; 85/9E7E
 
-      rsUnknown859E7E ; 85/9E7E
+      rsWriteMapMenuGradientMiddle ; 85/9E7E
 
         .al
         .xl
@@ -4714,8 +4714,8 @@
         tay
 
         _9E8A
-        jsr rsUnknown859FA3
-        jsr rsUnknown859F97
+        jsr rsStepMapMenuGradientScanlineHeight
+        jsr rsWriteMapMenuGradientScanlineCount
         lda <>aMapMenuGradientSteps+$40,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
@@ -4734,7 +4734,7 @@
 
         ; 85/9EA2
 
-      rsUnknown859EA2 ; 85/9EA2
+      rsWriteMapMenuGradientBottom ; 85/9EA2
 
         .al
         .xl
@@ -4753,8 +4753,8 @@
         tay
 
         _9EB3
-        jsr rsUnknown859FA3
-        jsr rsUnknown859F97
+        jsr rsStepMapMenuGradientScanlineHeight
+        jsr rsWriteMapMenuGradientScanlineCount
         lda <>aMapMenuGradientSteps+$68,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
@@ -4773,7 +4773,7 @@
 
         ; 85/9ECB
 
-      rsUnknown859ECB ; 85/9ECB
+      rsTerminateMapMenuGradientHDMA ; 85/9ECB
 
         .al
         .xl
@@ -4823,7 +4823,7 @@
       .al
       .xl
 
-      rsUnknown859F97 ; 85/9F97
+      rsWriteMapMenuGradientScanlineCount ; 85/9F97
 
         .al
         .xl
@@ -4841,7 +4841,7 @@
 
         ; 85/9FA3
 
-      rsUnknown859FA3 ; 85/9FA3
+      rsStepMapMenuGradientScanlineHeight ; 85/9FA3
 
         .al
         .xl

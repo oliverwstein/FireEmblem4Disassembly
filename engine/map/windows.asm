@@ -1007,7 +1007,7 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda aProcSystem.wInput2,b
-        jsl rlUnknown848EFB
+        jsl rlGetTerrainNamePointer
         lda lRoutineVariable+1,b
         sta lR18+1
         lda lRoutineVariable,b

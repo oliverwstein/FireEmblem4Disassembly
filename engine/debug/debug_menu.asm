@@ -1179,7 +1179,7 @@
         lda wSelectedUnitDataRAMPointer,b
         sta $7F842E
 
-        jsr rsUnknown89D34C
+        jsr rsDebugCollectGen1MalePointers
 
         lda #0
         
@@ -1449,7 +1449,7 @@
         lda wSelectedUnitDataRAMPointer,b
         sta $7F842E
 
-        jsr rsUnknown89D34C
+        jsr rsDebugCollectGen1MalePointers
 
         lda #9
         
@@ -1656,7 +1656,7 @@
 
         .text "あいしょう\n"
 
-      rsUnknown89D34C ; 89/D34C
+      rsDebugCollectGen1MalePointers ; 89/D34C
 
         .al
         .autsiz
@@ -2691,7 +2691,7 @@
         jsl rlDrawMenuTextNumber
 
         lda aActionStructUnit2.TerrainType
-        jsl rlUnknown848EFB
+        jsl rlGetTerrainNamePointer
 
         lda lRoutineVariable,b
         sta lR18
@@ -2709,7 +2709,7 @@
         jsl rlDrawMenuTextNumber
 
         lda aActionStructUnit1.TerrainType
-        jsl rlUnknown848EFB
+        jsl rlGetTerrainNamePointer
 
         lda lRoutineVariable,b
         sta lR18
@@ -4066,7 +4066,7 @@
       .al
       .xl
 
-      rlUnknown848EFB ; 84/8EFB
+      rlGetTerrainNamePointer ; 84/8EFB
 
         .al
         .xl
@@ -4105,7 +4105,7 @@
       .al
       .xl
 
-      rlUnknown8990DA ; 89/90DA
+      rlLoadUnitInventoryIcons ; 89/90DA
 
         .al
         .autsiz
@@ -4141,7 +4141,7 @@
 
       aUnknown899109 ; 89/9109
 
-        ; One word per inventory slot (1-8), read by rlUnknown8990DA and passed in X
+        ; One word per inventory slot (1-8), read by rlLoadUnitInventoryIcons and passed in X
         ; to rlCopyItemIcon along with the slot's item.
 
         .word $0060, $0062, $0064, $0066, $0068, $006A, $006C, $006E

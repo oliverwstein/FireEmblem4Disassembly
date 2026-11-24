@@ -2347,7 +2347,7 @@
       .al
       .xl
 
-      rsUnknown91DF08 ; 91/DF08
+      rsDrawSaveMenuRowTextUnused ; 91/DF08
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2522,79 +2522,79 @@
 
         ; 91/E006
 
-      rsUnknown91E006 ; 91/E006
+      rsFadeSaveBGPalette1ToWhiteUnused ; 91/E006
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Unreferenced: fades to white over 16 steps (rsUnknown91E05C).
+        ; Unreferenced: fades to white over 16 steps (rsStepFadeSaveBGPalette1Unused).
 
         lda #$7FFF
         sta aPaletteFading.wDesiredColor,b
         lda #$0010
         sta aPaletteFading.wMaxSteps,b
         clc
-        jml rsUnknown91E05C
+        jml rsStepFadeSaveBGPalette1Unused
 
         .databank 0
 
-      rsUnknown91E017 ; 91/E017
+      rsFadeSaveBGPalette1ToBlackUnused ; 91/E017
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Unreferenced: fades to black over 16 steps (rsUnknown91E05C).
+        ; Unreferenced: fades to black over 16 steps (rsStepFadeSaveBGPalette1Unused).
 
         lda #$0000
         sta aPaletteFading.wDesiredColor,b
         lda #$0010
         sta aPaletteFading.wMaxSteps,b
         clc
-        jml rsUnknown91E05C
+        jml rsStepFadeSaveBGPalette1Unused
 
         .databank 0
 
-      rsUnknown91E028 ; 91/E028
+      rsFadeSaveObjPalettesToWhiteUnused ; 91/E028
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Unreferenced: fades to white over 16 steps (rsUnknown91E069).
+        ; Unreferenced: fades to white over 16 steps (rsStepFadeSaveObjPalettesUnused).
 
         lda #$7FFF
         sta aPaletteFading.wDesiredColor,b
         lda #$0010
         sta aPaletteFading.wMaxSteps,b
         clc
-        jml rsUnknown91E069
+        jml rsStepFadeSaveObjPalettesUnused
 
         .databank 0
 
-      rsUnknown91E039 ; 91/E039
+      rsFadeSaveObjPalettesToBlackUnused ; 91/E039
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Unreferenced: fades to black over 16 steps (rsUnknown91E069).
+        ; Unreferenced: fades to black over 16 steps (rsStepFadeSaveObjPalettesUnused).
 
         lda #$0000
         sta aPaletteFading.wDesiredColor,b
         lda #$0010
         sta aPaletteFading.wMaxSteps,b
         clc
-        jml rsUnknown91E069
+        jml rsStepFadeSaveObjPalettesUnused
 
         .databank 0
 
-      rsUnknown91E04A ; 91/E04A
+      rsFadeAllPalettesFromCopyUnused ; 91/E04A
 
         .al
         .xl
@@ -2616,7 +2616,7 @@
 
         .databank 0
 
-      rsUnknown91E05C ; 91/E05C
+      rsStepFadeSaveBGPalette1Unused ; 91/E05C
 
         .al
         .xl
@@ -2638,7 +2638,7 @@
         .word $0022, 15
         .word $FFFF
 
-      rsUnknown91E069 ; 91/E069
+      rsStepFadeSaveObjPalettesUnused ; 91/E069
 
         .al
         .xl

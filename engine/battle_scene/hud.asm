@@ -2093,13 +2093,13 @@
         .autsiz
         .databank ?
 
-        ; Draws the character at lR18 (its two font tiles from rlUnknown879DD1) into the name tiles at X, top half and bottom half, and steps lR18 and X.
+        ; Draws the character at lR18 (its two font tiles from rlGetMenuFontTilesForChar) into the name tiles at X, top half and bottom half, and steps lR18 and X.
 
         pha
         phy
         ldy #$0000
         lda [lR18],y
-        jsl rlUnknown879DD1
+        jsl rlGetMenuFontTilesForChar
         lda #$7E00
         sta lR19+1
         lda wR10
@@ -2171,7 +2171,7 @@
         phy
         ldy #$0000
         lda [lR18],y
-        jsl rlUnknown879DD1
+        jsl rlGetMenuFontTilesForChar
         lda #$7E00
         sta lR19+1
         lda wR10

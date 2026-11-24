@@ -452,7 +452,7 @@
 
         ; 87/9DD1
 
-      rlUnknown879DD1 ; 87/9DD1
+      rlGetMenuFontTilesForChar ; 87/9DD1
 
         .al
         .xl
