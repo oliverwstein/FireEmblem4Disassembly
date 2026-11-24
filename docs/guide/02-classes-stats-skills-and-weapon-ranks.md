@@ -118,7 +118,7 @@ FE4 has 30 skills, from Canto to Return ([include/Skills.h](../../include/Skills
 | Astra | `$000800` | — | — |
 | Renewal | `$010000` | — | `$0020` |
 
-Code never tests these bits directly. It asks by skill ID (`SkillIDCritical = $10`), and three translation tables in [engine/units/skills.asm](../../engine/units/skills.asm) map each ID to its bit in each source: `aValidPersonalSkillTable`, `aValidClassSkillTable`, and `aValidItemSkillTable`. A zero entry means the source can't grant that skill. Dance comes only from a class, Astra only from a character, and Renewal from a character or a band, never a class.
+General skill checks don't test these bits directly. They ask by skill ID (`SkillIDCritical = $10`), and three translation tables in [engine/units/skills.asm](../../engine/units/skills.asm) map each ID to its bit in each source: `aValidPersonalSkillTable`, `aValidClassSkillTable`, and `aValidItemSkillTable`. A zero entry means the source can't grant that skill. A few specialized routines still test a raw bit; the battle crit check, for one, looks for `ItemSkillCritical` on the weapon itself ([Chapter 3](03-every-sword-is-an-individual.md)). Dance comes only from a class, Astra only from a character, and Renewal from a character or a band, never a class.
 
 ```rust
 fn has_personal_or_class_skill(id: SkillId) -> bool {   // rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
@@ -146,8 +146,8 @@ The limits:
 
 - **A ceiling of class base + 15, at most 30.** Personal stats cap at 15 (HP 80, luck 30) and class plus personal at 30; holy weapons, rings, and the two special swords add on top of both.
 - **Promotion never adds HP.** Max HP has no class term.
-- **13 holy blood lines**, 2 bits each, in two words of constant data. Holy weapon stat boosts are bound to those 13 rows: a new holy weapon with its own boosts needs a new blood or must share one's row.
-- **Two non-holy stat bonuses** (Safeguard and Barrier Blade), each special-cased in code, and **seven rings**, one bit each.
+- **13 holy blood lines.** Each takes 2 bits in two words of constant data. Holy weapon stat boosts are bound to those 13 rows: a new holy weapon with its own boosts needs a new blood or must share one's row.
+- **Two non-holy stat bonuses and seven rings.** The Safeguard and Barrier Blade are each special-cased in code; each ring takes one bit of `RingStatBonusBitfield`.
 - **30 skill IDs.** A skill can only come from a source whose encoding has a bit for it. A new class skill needs one of the class word's three spare bits, and a new item skill one of the item word's four.
 - **Rank order matters.** A Minor blood listed after a Major blood of the same weapon type can block `★`.
 
@@ -158,5 +158,6 @@ The limits:
 - [engine/units/unit_info.asm](../../engine/units/unit_info.asm): holy blood checks, total growths, weapon ranks, and holy weapon boosts.
 - [engine/units/skills.asm](../../engine/units/skills.asm): the three skill translation tables and the skill queries.
 - [include/Classes.h](../../include/Classes.h), [include/Skills.h](../../include/Skills.h), [include/Items.h](../../include/Items.h): class, skill, and item constants and structs.
+- [include/Characters.h](../../include/Characters.h): the personal skill bits (`UnitSkill1*`–`UnitSkill3*`) and the holy blood bits (`Minor*Blood`, `Major*Blood`).
 - [data/class/ClassData.csv](../../data/class/ClassData.csv) and [data/item/HolyBloodData.csv](../../data/item/HolyBloodData.csv): the tables themselves.
 - [docs/reference/units.md](../reference/units.md): the reference page.

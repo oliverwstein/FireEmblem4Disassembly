@@ -90,7 +90,7 @@ fn effective_item_id(record: &ItemRAMEntry) -> ItemId {   // rlGetEffectiveItemI
 }
 ```
 
-`rsGetBrokenWeaponID` looks up the weapon's type and rank in [data/item/BrokenWeaponData.csv](../../data/item/BrokenWeaponData.csv): a broken B-rank lance is a Broken Lance B, and a broken holy weapon of any kind is its type's broken holy version. The table is indexed by rank plus one, which turns the holy rank `$FF` into column 0 without a special case. Broken weapons have 0 might, 30 hit, and 30 weight: the unit can still carry one, but not fight well with it.
+`rsGetBrokenWeaponID` looks up the weapon's type and rank in [data/item/BrokenWeaponData.csv](../../data/item/BrokenWeaponData.csv): a broken B-rank lance is a Broken Lance B, and a broken holy weapon of any kind is its type's broken holy version. The table is indexed by rank plus one, which turns the holy rank `$FF` into column 0 without a special case. Broken physical weapons (and the broken holy staff) have 0 might, 30 hit, and 30 weight; broken tomes have zeroes across the board, and ordinary broken staves 80 hit. The unit can still carry one, but not fight well with it.
 
 Repair (`rlRepairSelectedUnitItem`) writes the maximum durability back, and the effective ID is the original weapon again. Because the record was never replaced, its kill count was never lost.
 
@@ -98,7 +98,8 @@ Kills are counted on the record by `rlAddWinToSelectedUnitAndWeapon` and capped 
 
 ```rust
 fn battle_crit() -> u8 {                              // rlGetSelectedUnitBattleCrit
-    let kills = weapon_record().kill_count;          // rlGetItemRAMKillCountAndCritAbility
+    // Holy and Enemy units have no item records, so they skip the kill check.
+    let kills = if unit.is_player() { weapon_record().kill_count } else { 0 };   // rlGetItemRAMKillCountAndCritAbility
     if kills >= 50 {
         return total_skill() + (kills - 50);          // a veteran weapon: +1 per kill past 50
     }
@@ -137,7 +138,7 @@ The limits:
 
 - **140 player items, fixed at build time.** The table has room for 256, but nothing creates a record after a new game. A new item for the player needs a new row in `PlayerItemTable`, and every shop, gift, and drop names its records by index.
 - **8 slots, 7 kept.** The eighth slot only holds a new arrival until the player gives an item up.
-- **100 kills**, with critical hits from 50 and +1 crit per kill past it. Seven bits in the save file.
+- **100 kills.** Critical hits start at 50, with +1 crit per kill past it. The count takes seven bits in the save file.
 - **Durability up to 63 in the save file.** It is stored in six bits; an unbreakable `$FF` is saved as 63 and restored as `$FF` on load (`rlFillItemDurabilityData`).
 - **Non-player items are anonymous.** Only an enemy's single `Drops` record can pass to the player.
 
