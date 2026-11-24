@@ -1,7 +1,9 @@
 ; Dialogue boxes: procDialogueBox, the HDMA effects that fold and unfold the
 ; boxes, freeing and closing them (rlCloseDialogueBox, rlCheckDialogueBoxesClosed).
-; At the end, helpers from bank $85 the dialogue code calls whose purpose is not
-; worked out yet (rlInitDialogueBoxHDMA, rlUpdateDialoguePortraitOverlayTiles, rlUploadDialoguePortraitOverlayTiles) and an
+; At the end, helpers from bank $85 the dialogue code calls: rlInitDialogueBoxHDMA
+; (purpose not worked out yet), and the mouth patch, which
+; rlUpdateDialoguePortraitOverlayTiles builds as a 4 x 2 tilemap in $7E7F48 from the
+; slot's mouth frame and rlUploadDialoguePortraitOverlayTiles DMAs to VRAM $ABC0; and an
 ; unreached proc (procExpandingWindowAnimation). Last, from bank $81, rlRedrawDialogueBoxTilemaps:
 ; each frame on the map it copies the two boxes' tilemaps when bit 1 of
 ; wChapterFlags asks for it.
