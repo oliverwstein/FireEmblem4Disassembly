@@ -368,8 +368,8 @@
         sta $0002,b,x
         lda $44AB,b,y
         sta $0004,b,x
-        lda #$0017
-        sta $000E,b,x
+        lda #TerrainShrine
+        sta structActionStructEntry.TerrainType,b,x
         jsl rlGetSelectedUnitCharacterID
         sta $0008,b,x
         jsl rlGetSelectedUnitClassID

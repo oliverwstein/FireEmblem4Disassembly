@@ -22,7 +22,7 @@
   TerrainStore           = $14 ; unused
   TerrainRuins2          = $15 ; unused?
   TerrainChurch          = $16
-  TerrainShrine          = $17 ; unused
+  TerrainShrine          = $17 ; on no map; arena fighters stand on it (rlPopulateArenaActionStruct)
   TerrainBragiTower      = $18
   TerrainRoad            = $19
 
