@@ -2061,18 +2061,18 @@
       aEventLocationTypeOffsets ; 87/F453
 
         .word aCastleLocationTypeData   - aEventLocationTypeOffsets
-        .word aUnknown87F46B            - aEventLocationTypeOffsets
+        .word aLocationType1Data            - aEventLocationTypeOffsets
         .word aVillageLocationTypeData  - aEventLocationTypeOffsets
-        .word aUnknown87F47F            - aEventLocationTypeOffsets
-        .word aUnknown87F489            - aEventLocationTypeOffsets
-        .word aUnknown87F493            - aEventLocationTypeOffsets
-        .word aUnknown87F49D            - aEventLocationTypeOffsets
+        .word aLocationType3Data            - aEventLocationTypeOffsets
+        .word aLocationType4Data            - aEventLocationTypeOffsets
+        .word aLocationType5Data            - aEventLocationTypeOffsets
+        .word aLocationType6Data            - aEventLocationTypeOffsets
 
       aCastleLocationTypeData ; 87/F461
 
         .structEventLocationType 0, [-1, -1], [1, 2], [0, 2], aCastleDestroyedTileData
 
-      aUnknown87F46B ; 87/F46B
+      aLocationType1Data ; 87/F46B
 
         .structEventLocationType 0, [0, 0], [1, 0], [0, 1], 0
 
@@ -2080,19 +2080,19 @@
 
         .structEventLocationType 5000, [-1, -1], [1, 0], [0, 0], aVillageDestroyedTileData
 
-      aUnknown87F47F ; 87/F47F
+      aLocationType3Data ; 87/F47F
 
         .structEventLocationType 0, [0, 0], [0, 0], [0, 0], 0
 
-      aUnknown87F489 ; 87/F489
+      aLocationType4Data ; 87/F489
 
         .structEventLocationType 0, [0, 0], [0, 0], [0, 0], 0
 
-      aUnknown87F493 ; 87/F493
+      aLocationType5Data ; 87/F493
 
         .structEventLocationType 0, [0, 0], [0, 0], [0, 0], 0
 
-      aUnknown87F49D ; 87/F49D
+      aLocationType6Data ; 87/F49D
 
         .structEventLocationType 0, [0, 0], [0, 0], [0, 0], 0
 

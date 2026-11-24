@@ -629,7 +629,7 @@
       .al
       .xl
 
-      aUnknown968000 ; 96/8000
+      aBattleSceneIRQ5Setup ; 96/8000
         .word $0060, $00CF, <>rlBattleSceneIRQ5Handler, <>aUnknown96800D
 
     .endsection Table968000Section
@@ -666,7 +666,7 @@
       aUnknown96800D ; 96/800D
         .word <>rsIRQCodeHalt
 
-      aUnknown96800F ; 96/800F
+      aBattleSceneIRQ2Setup ; 96/800F
         .word $0060, $007E, <>rlBattleSceneIRQ2Handler, <>aUnknown96804E
 
     .endsection Table96800DSection
@@ -732,7 +732,7 @@
       aUnknown96804E ; 96/804E
         .word <>rsIRQCodeHalt
 
-      aUnknown968050 ; 96/8050
+      aBattleSceneIRQ3Setup ; 96/8050
         .word $0060, $009C, <>rlBattleSceneIRQ3Handler, <>aUnknown968076
 
     .endsection Table96804ESection
@@ -784,7 +784,7 @@
       aUnknown968076 ; 96/8076
         .word <>rsIRQCodeHalt
 
-      aUnknown968078 ; 96/8078
+      aBattleSceneIRQ4Setup ; 96/8078
         .word $0060, $00A1, <>rlBattleSceneIRQ4Handler, <>aUnknown968093
 
     .endsection Table968076Section
@@ -829,7 +829,7 @@
       aUnknown968093 ; 96/8093
         .word <>rsIRQCodeHalt
 
-      aUnknown968095 ; 96/8095
+      aBattleSceneIRQ1Setup ; 96/8095
         .word $0060, $000E, <>rlBattleSceneIRQ1Handler, <>aUnknown9680A2
 
     .endsection Table968093Section

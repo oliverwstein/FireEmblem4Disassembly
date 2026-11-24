@@ -99,29 +99,29 @@
         sta $0B49,b
         rep #$20
         jsl rlBattleSceneInit
-        lda #(`aUnknown968095)<<8
+        lda #(`aBattleSceneIRQ1Setup)<<8
         sta lR44+1
-        lda #<>aUnknown968095
+        lda #<>aBattleSceneIRQ1Setup
         sta lR44
         jsl rlIRQEngineCreateEntry
-        lda #(`aUnknown968000)<<8
+        lda #(`aBattleSceneIRQ5Setup)<<8
         sta lR44+1
-        lda #<>aUnknown968000
+        lda #<>aBattleSceneIRQ5Setup
         sta lR44
         jsl rlIRQEngineCreateEntry
-        lda #(`aUnknown96800F)<<8
+        lda #(`aBattleSceneIRQ2Setup)<<8
         sta lR44+1
-        lda #<>aUnknown96800F
+        lda #<>aBattleSceneIRQ2Setup
         sta lR44
         jsl rlIRQEngineCreateEntry
-        lda #(`aUnknown968050)<<8
+        lda #(`aBattleSceneIRQ3Setup)<<8
         sta lR44+1
-        lda #<>aUnknown968050
+        lda #<>aBattleSceneIRQ3Setup
         sta lR44
         jsl rlIRQEngineCreateEntry
-        lda #(`aUnknown968078)<<8
+        lda #(`aBattleSceneIRQ4Setup)<<8
         sta lR44+1
-        lda #<>aUnknown968078
+        lda #<>aBattleSceneIRQ4Setup
         sta lR44
         jsl rlIRQEngineCreateEntry
         jsl rlEnableIRQEngine

@@ -1492,176 +1492,176 @@
 
         ; Read by rlDrawExpandingWindowSprites.
 
-        .word <>aUnknown85BEA9
-        .word <>aUnknown85BF6F
-        .word <>aUnknown85BEBF
-        .word <>aUnknown85BF85
-        .word <>aUnknown85BED5
-        .word <>aUnknown85BF9B
-        .word <>aUnknown85BEEB
-        .word <>aUnknown85BFB1
-        .word <>aUnknown85BF01
-        .word <>aUnknown85BFC7
-        .word <>aUnknown85BF17
-        .word <>aUnknown85BFDD
-        .word <>aUnknown85BF2D
-        .word <>aUnknown85BFF3
-        .word <>aUnknown85BF43
-        .word <>aUnknown85C009
-        .word <>aUnknown85BF59
+        .word <>aExpandingWindowFrame00
+        .word <>aExpandingWindowFrame01
+        .word <>aExpandingWindowFrame02
+        .word <>aExpandingWindowFrame03
+        .word <>aExpandingWindowFrame04
+        .word <>aExpandingWindowFrame05
+        .word <>aExpandingWindowFrame06
+        .word <>aExpandingWindowFrame07
+        .word <>aExpandingWindowFrame08
+        .word <>aExpandingWindowFrame09
+        .word <>aExpandingWindowFrame10
+        .word <>aExpandingWindowFrame11
+        .word <>aExpandingWindowFrame12
+        .word <>aExpandingWindowFrame13
+        .word <>aExpandingWindowFrame14
+        .word <>aExpandingWindowFrame15
+        .word <>aExpandingWindowFrame16
 
-      aUnknown85BEA9 ; 85/BEA9
+      aExpandingWindowFrame00 ; 85/BEA9
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(   8,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,    8), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(   8,    8), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BEA9._Sprites
+        .structSpriteArray aExpandingWindowFrame00._Sprites
 
-      aUnknown85BEBF ; 85/BEBF
+      aExpandingWindowFrame02 ; 85/BEBF
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  12,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   20), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  12,   20), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BEBF._Sprites
+        .structSpriteArray aExpandingWindowFrame02._Sprites
 
-      aUnknown85BED5 ; 85/BED5
+      aExpandingWindowFrame04 ; 85/BED5
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  16,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   26), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  16,   26), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BED5._Sprites
+        .structSpriteArray aExpandingWindowFrame04._Sprites
 
-      aUnknown85BEEB ; 85/BEEB
+      aExpandingWindowFrame06 ; 85/BEEB
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  20,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   32), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  20,   32), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BEEB._Sprites
+        .structSpriteArray aExpandingWindowFrame06._Sprites
 
-      aUnknown85BF01 ; 85/BF01
+      aExpandingWindowFrame08 ; 85/BF01
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  24,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   38), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  24,   38), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BF01._Sprites
+        .structSpriteArray aExpandingWindowFrame08._Sprites
 
-      aUnknown85BF17 ; 85/BF17
+      aExpandingWindowFrame10 ; 85/BF17
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  28,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   44), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  28,   44), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BF17._Sprites
+        .structSpriteArray aExpandingWindowFrame10._Sprites
 
-      aUnknown85BF2D ; 85/BF2D
+      aExpandingWindowFrame12 ; 85/BF2D
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  32,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   50), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  32,   50), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BF2D._Sprites
+        .structSpriteArray aExpandingWindowFrame12._Sprites
 
-      aUnknown85BF43 ; 85/BF43
+      aExpandingWindowFrame14 ; 85/BF43
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  36,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   56), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  36,   56), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BF43._Sprites
+        .structSpriteArray aExpandingWindowFrame14._Sprites
 
-      aUnknown85BF59 ; 85/BF59
+      aExpandingWindowFrame16 ; 85/BF59
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  40,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   62), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  40,   62), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BF59._Sprites
+        .structSpriteArray aExpandingWindowFrame16._Sprites
 
-      aUnknown85BF6F ; 85/BF6F
+      aExpandingWindowFrame01 ; 85/BF6F
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  10,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   11), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  10,   11), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BF6F._Sprites
+        .structSpriteArray aExpandingWindowFrame01._Sprites
 
-      aUnknown85BF85 ; 85/BF85
+      aExpandingWindowFrame03 ; 85/BF85
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  14,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   23), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  14,   23), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BF85._Sprites
+        .structSpriteArray aExpandingWindowFrame03._Sprites
 
-      aUnknown85BF9B ; 85/BF9B
+      aExpandingWindowFrame05 ; 85/BF9B
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  18,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   29), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  18,   29), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BF9B._Sprites
+        .structSpriteArray aExpandingWindowFrame05._Sprites
 
-      aUnknown85BFB1 ; 85/BFB1
+      aExpandingWindowFrame07 ; 85/BFB1
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  22,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   35), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  22,   35), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BFB1._Sprites
+        .structSpriteArray aExpandingWindowFrame07._Sprites
 
-      aUnknown85BFC7 ; 85/BFC7
+      aExpandingWindowFrame09 ; 85/BFC7
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  26,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   41), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  26,   41), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BFC7._Sprites
+        .structSpriteArray aExpandingWindowFrame09._Sprites
 
-      aUnknown85BFDD ; 85/BFDD
+      aExpandingWindowFrame11 ; 85/BFDD
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  30,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   47), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  30,   47), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BFDD._Sprites
+        .structSpriteArray aExpandingWindowFrame11._Sprites
 
-      aUnknown85BFF3 ; 85/BFF3
+      aExpandingWindowFrame13 ; 85/BFF3
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  34,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   53), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  34,   53), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85BFF3._Sprites
+        .structSpriteArray aExpandingWindowFrame13._Sprites
 
-      aUnknown85C009 ; 85/C009
+      aExpandingWindowFrame15 ; 85/C009
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
         _Sprites ..= [[(  38,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
         _Sprites ..= [[(   0,   59), $00, SpriteSmall, $0010, 3, 0, false, false]]
         _Sprites ..= [[(  38,   59), $00, SpriteSmall, $0011, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown85C009._Sprites
+        .structSpriteArray aExpandingWindowFrame15._Sprites
 
         ; 85/C01F
 

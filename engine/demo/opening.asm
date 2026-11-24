@@ -1025,21 +1025,21 @@
       aDemoSceneSpriteLists ; 90/F23E
 
         ; The map sprites of each demo scene, by wDemoIndex (rlASMCPlaceDemoSceneSprites).
-        .long aUnknown90F5CD
-        .long aUnknown90F584
-        .long aUnknown90F529
-        .long aUnknown90F4E0
-        .long aUnknown90F48B
-        .long aUnknown90F43C
-        .long aUnknown90F3F9
-        .long aUnknown90F392
-        .long aUnknown90F337
-        .long aUnknown90F2F4
-        .long aUnknown90F2BD
-        .long aUnknown90F262
+        .long aDemoScene00Sprites
+        .long aDemoScene01Sprites
+        .long aDemoScene02Sprites
+        .long aDemoScene03Sprites
+        .long aDemoScene04Sprites
+        .long aDemoScene05Sprites
+        .long aDemoScene06Sprites
+        .long aDemoScene07Sprites
+        .long aDemoScene08Sprites
+        .long aDemoScene09Sprites
+        .long aDemoScene10Sprites
+        .long aDemoScene11Sprites
 
 
-      aUnknown90F262 ; 90/F262
+      aDemoScene11Sprites ; 90/F262
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 51, 8
@@ -1075,7 +1075,7 @@
         .byte 0
 
 
-      aUnknown90F2BD ; 90/F2BD
+      aDemoScene10Sprites ; 90/F2BD
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 17, 6
@@ -1099,7 +1099,7 @@
         .byte 0
 
 
-      aUnknown90F2F4 ; 90/F2F4
+      aDemoScene09Sprites ; 90/F2F4
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 28, 51
@@ -1127,7 +1127,7 @@
         .byte 0
 
 
-      aUnknown90F337 ; 90/F337
+      aDemoScene08Sprites ; 90/F337
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 40, 20
@@ -1163,7 +1163,7 @@
         .byte 0
 
 
-      aUnknown90F392 ; 90/F392
+      aDemoScene07Sprites ; 90/F392
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 32, 52
@@ -1203,7 +1203,7 @@
         .byte 0
 
 
-      aUnknown90F3F9 ; 90/F3F9
+      aDemoScene06Sprites ; 90/F3F9
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 45, 45
@@ -1231,7 +1231,7 @@
         .byte 0
 
 
-      aUnknown90F43C ; 90/F43C
+      aDemoScene05Sprites ; 90/F43C
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 47, 38
@@ -1263,7 +1263,7 @@
         .byte 0
 
 
-      aUnknown90F48B ; 90/F48B
+      aDemoScene04Sprites ; 90/F48B
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 8, 6
@@ -1297,7 +1297,7 @@
         .byte 0
 
 
-      aUnknown90F4E0 ; 90/F4E0
+      aDemoScene03Sprites ; 90/F4E0
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 34, 26
@@ -1327,7 +1327,7 @@
         .byte 0
 
 
-      aUnknown90F529 ; 90/F529
+      aDemoScene02Sprites ; 90/F529
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 51, 30
@@ -1363,7 +1363,7 @@
         .byte 0
 
 
-      aUnknown90F584 ; 90/F584
+      aDemoScene01Sprites ; 90/F584
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 57, 59
@@ -1393,7 +1393,7 @@
         .byte 0
 
 
-      aUnknown90F5CD ; 90/F5CD
+      aDemoScene00Sprites ; 90/F5CD
 
         ; X and Y tile, map sprite, deployment state; ends with 0.
         .byte 50, 59

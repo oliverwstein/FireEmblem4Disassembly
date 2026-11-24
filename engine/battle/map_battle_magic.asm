@@ -401,27 +401,27 @@
 
         ; Draws the 4x4 small ripple tilemap.
 
-        lda #(`aUnknown87C866)<<8
+        lda #(`aMapMagicRippleSmallTilemapRow1)<<8
         sta lR18+1
-        lda #<>aUnknown87C866
+        lda #<>aMapMagicRippleSmallTilemapRow1
         sta lR18
         ldx #$000F
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown87C86B)<<8
+        lda #(`aMapMagicRippleSmallTilemapRow2)<<8
         sta lR18+1
-        lda #<>aUnknown87C86B
+        lda #<>aMapMagicRippleSmallTilemapRow2
         sta lR18
         ldx #$010F
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown87C870)<<8
+        lda #(`aMapMagicRippleSmallTilemapRow3)<<8
         sta lR18+1
-        lda #<>aUnknown87C870
+        lda #<>aMapMagicRippleSmallTilemapRow3
         sta lR18
         ldx #$020F
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown87C875)<<8
+        lda #(`aMapMagicRippleSmallTilemapRow4)<<8
         sta lR18+1
-        lda #<>aUnknown87C875
+        lda #<>aMapMagicRippleSmallTilemapRow4
         sta lR18
         ldx #$030F
         jsl rlDrawTileStringToTilemapEntry
@@ -439,16 +439,16 @@
       .al
       .xl
 
-      aUnknown87C866 ; 87/C866
+      aMapMagicRippleSmallTilemapRow1 ; 87/C866
         .byte $10, $11, $12, $13, $00
 
-      aUnknown87C86B ; 87/C86B
+      aMapMagicRippleSmallTilemapRow2 ; 87/C86B
         .byte $20, $21, $22, $23, $00
 
-      aUnknown87C870 ; 87/C870
+      aMapMagicRippleSmallTilemapRow3 ; 87/C870
         .byte $30, $31, $32, $33, $00
 
-      aUnknown87C875 ; 87/C875
+      aMapMagicRippleSmallTilemapRow4 ; 87/C875
         .byte $40, $41, $42, $43, $00
 
     .endsection Table87C866Section
@@ -468,39 +468,39 @@
 
         ; Draws the 9x6 large ripple tilemap.
 
-        lda #(`aUnknown87C8E1)<<8
+        lda #(`aMapMagicRippleLargeTilemapRow1)<<8
         sta lR18+1
-        lda #<>aUnknown87C8E1
+        lda #<>aMapMagicRippleLargeTilemapRow1
         sta lR18
         ldx #$000C
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown87C8EB)<<8
+        lda #(`aMapMagicRippleLargeTilemapRow2)<<8
         sta lR18+1
-        lda #<>aUnknown87C8EB
+        lda #<>aMapMagicRippleLargeTilemapRow2
         sta lR18
         ldx #$010C
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown87C8F5)<<8
+        lda #(`aMapMagicRippleLargeTilemapRow3)<<8
         sta lR18+1
-        lda #<>aUnknown87C8F5
+        lda #<>aMapMagicRippleLargeTilemapRow3
         sta lR18
         ldx #$020C
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown87C8FF)<<8
+        lda #(`aMapMagicRippleLargeTilemapRow4)<<8
         sta lR18+1
-        lda #<>aUnknown87C8FF
+        lda #<>aMapMagicRippleLargeTilemapRow4
         sta lR18
         ldx #$030C
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown87C909)<<8
+        lda #(`aMapMagicRippleLargeTilemapRow5)<<8
         sta lR18+1
-        lda #<>aUnknown87C909
+        lda #<>aMapMagicRippleLargeTilemapRow5
         sta lR18
         ldx #$040C
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown87C913)<<8
+        lda #(`aMapMagicRippleLargeTilemapRow6)<<8
         sta lR18+1
-        lda #<>aUnknown87C913
+        lda #<>aMapMagicRippleLargeTilemapRow6
         sta lR18
         ldx #$050C
         jsl rlDrawTileStringToTilemapEntry
@@ -518,22 +518,22 @@
       .al
       .xl
 
-      aUnknown87C8E1 ; 87/C8E1
+      aMapMagicRippleLargeTilemapRow1 ; 87/C8E1
         .byte $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $00
 
-      aUnknown87C8EB ; 87/C8EB
+      aMapMagicRippleLargeTilemapRow2 ; 87/C8EB
         .byte $24, $25, $26, $27, $28, $29, $2A, $2B, $2C, $00
 
-      aUnknown87C8F5 ; 87/C8F5
+      aMapMagicRippleLargeTilemapRow3 ; 87/C8F5
         .byte $34, $35, $36, $37, $38, $39, $3A, $3B, $3C, $00
 
-      aUnknown87C8FF ; 87/C8FF
+      aMapMagicRippleLargeTilemapRow4 ; 87/C8FF
         .byte $44, $45, $46, $47, $48, $49, $4A, $4B, $4C, $00
 
-      aUnknown87C909 ; 87/C909
+      aMapMagicRippleLargeTilemapRow5 ; 87/C909
         .byte $54, $55, $56, $57, $58, $59, $5A, $5B, $5C, $00
 
-      aUnknown87C913 ; 87/C913
+      aMapMagicRippleLargeTilemapRow6 ; 87/C913
         .byte $64, $65, $66, $67, $68, $69, $6A, $6B, $6C, $00
 
       aUnknown87C91D .dstruct structHDMAIndirectEntryInfo, rsHDMAMapMagicRippleSmallInit, rsHDMAMapMagicRippleCycle, aUnknown87C9C3, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/C91D

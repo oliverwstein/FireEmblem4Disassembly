@@ -393,7 +393,7 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDE4E
+          .word <>aMapMagicVillageFireSpawnParams
 
         bra rsMapMagicElfireSpawnEffects._9357
 
@@ -415,7 +415,7 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDE5E
+          .word <>aMapMagicElfireSpawnParams
 
 
         _9357
@@ -1250,7 +1250,7 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDE6E
+          .word <>aMapMagicAuraSpawnParams
 
         lda wMapMagicTargetPixel
         and #$00FF
@@ -6345,7 +6345,7 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDE9E
+          .word <>aMapMagicBlizzardSpawnParams
 
         rts
 
@@ -7835,7 +7835,7 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDE8E
+          .word <>aMapMagicForsetiSpawnParams
 
         lda wMapMagicTargetPixel
         and #$00FF
@@ -11382,7 +11382,7 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDE7E
+          .word <>aMapMagicValflameSpawnParams
 
         phx
         lda #(`aMapMagicValflameSpriteInfo)<<8
@@ -12936,22 +12936,22 @@
 
         .databank 0
 
-      aUnknown9FDE4E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed1, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE4E
+      aMapMagicVillageFireSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed1, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE4E
         .word $FDC0, $0130
 
-      aUnknown9FDE5E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed2, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE5E
+      aMapMagicElfireSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed2, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE5E
         .word $FDC0, $01C0
 
-      aUnknown9FDE6E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveSmall, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE6E
+      aMapMagicAuraSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveSmall, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE6E
         .word $FDF0, $02C0
 
-      aUnknown9FDE7E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE7E
+      aMapMagicValflameSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE7E
         .word $0240, $FCC0
 
-      aUnknown9FDE8E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicClearWaveBuffer, rlHDMAMapMagicBuildRippleWave, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE8E
+      aMapMagicForsetiSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicClearWaveBuffer, rlHDMAMapMagicBuildRippleWave, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE8E
         .word $0000, $0000
 
-      aUnknown9FDE9E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE9E
+      aMapMagicBlizzardSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE9E
         .word $0100, $FC80
 
       aUnknown9FDEAE .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DEAE

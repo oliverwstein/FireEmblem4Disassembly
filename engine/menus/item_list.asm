@@ -975,62 +975,62 @@
 
       aMapItemListIconSprites ; 85/9831
 
-        .word <>aUnknown859841
-        .word <>aUnknown859848
-        .word <>aUnknown85984F
-        .word <>aUnknown859856
-        .word <>aUnknown85985D
-        .word <>aUnknown859864
-        .word <>aUnknown85986B
-        .word <>aUnknown859872
+        .word <>aMapItemListIconFrame0
+        .word <>aMapItemListIconFrame1
+        .word <>aMapItemListIconFrame2
+        .word <>aMapItemListIconFrame3
+        .word <>aMapItemListIconFrame4
+        .word <>aMapItemListIconFrame5
+        .word <>aMapItemListIconFrame6
+        .word <>aMapItemListIconFrame7
 
-      aUnknown859841 ; 85/9841
+      aMapItemListIconFrame0 ; 85/9841
 
         _Sprites := [[(   0,    0), $21, SpriteLarge, $040, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown859841._Sprites
+        .structSpriteArray aMapItemListIconFrame0._Sprites
 
-      aUnknown859848 ; 85/9848
+      aMapItemListIconFrame1 ; 85/9848
 
         _Sprites := [[(   0,   16), $21, SpriteLarge, $042, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown859848._Sprites
+        .structSpriteArray aMapItemListIconFrame1._Sprites
 
-      aUnknown85984F ; 85/984F
+      aMapItemListIconFrame2 ; 85/984F
 
         _Sprites := [[(   0,   32), $21, SpriteLarge, $044, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown85984F._Sprites
+        .structSpriteArray aMapItemListIconFrame2._Sprites
 
-      aUnknown859856 ; 85/9856
+      aMapItemListIconFrame3 ; 85/9856
 
         _Sprites := [[(   0,   48), $21, SpriteLarge, $046, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown859856._Sprites
+        .structSpriteArray aMapItemListIconFrame3._Sprites
 
-      aUnknown85985D ; 85/985D
+      aMapItemListIconFrame4 ; 85/985D
 
         _Sprites := [[(   0,   64), $21, SpriteLarge, $048, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown85985D._Sprites
+        .structSpriteArray aMapItemListIconFrame4._Sprites
 
-      aUnknown859864 ; 85/9864
+      aMapItemListIconFrame5 ; 85/9864
 
         _Sprites := [[(   0,   80), $21, SpriteLarge, $04A, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown859864._Sprites
+        .structSpriteArray aMapItemListIconFrame5._Sprites
 
-      aUnknown85986B ; 85/986B
+      aMapItemListIconFrame6 ; 85/986B
 
         _Sprites := [[(   0,   96), $21, SpriteLarge, $04C, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown85986B._Sprites
+        .structSpriteArray aMapItemListIconFrame6._Sprites
 
-      aUnknown859872 ; 85/9872
+      aMapItemListIconFrame7 ; 85/9872
 
         _Sprites := [[(   0,    0), $21, SpriteLarge, $04E, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown859872._Sprites
+        .structSpriteArray aMapItemListIconFrame7._Sprites
 
       aMapItemWeaponStatsTilemapData ; 85/9879
 
