@@ -171,7 +171,7 @@ All three engines share the same shape: a fixed number of slots, a definition re
 
 Scheduling work handles *time*. The other half of the problem is *memory*: up to 72 units on the map at once, each needing stats, growths, class, inventory, skills, holy blood, love points, and a position, plus every weapon in the world, all inside 128 KB of RAM.
 
-FE4's answer is to keep the rules in ROM and only what changes in RAM, in fixed pools sized to the game's exact cast. A unit is not one record but a small header pointing at *parts*, and each kind of unit gets only the parts it needs: an ordinary soldier costs under forty bytes, a playable character more, a generation-2 child more still. Every weapon is an individual record in one 256-slot table, which is how a sword remembers its kills. Where a unit stands lives in a separate table from who it is, and allegiance is kept per pair of armies rather than per unit. Each of these choices is also a hard limit the designers had to live with.
+FE4's answer is to keep the rules in ROM and only what changes in RAM, in fixed pools sized to the game's exact cast. A unit is not one record but a small header pointing at *parts*, and each kind of unit gets only the parts it needs: an ordinary soldier costs about 65 bytes, a playable character 80 or more, a generation-2 daughter about 140. Every weapon is an individual record in one 256-slot table, which is how a sword remembers its kills. Where a unit stands lives in a separate table from who it is, and allegiance is kept per pair of armies rather than per unit. Each of these choices is also a hard limit the designers had to live with.
 
 [Part I](part-1-the-pieces-on-the-board.md) takes these structures one at a time.
 
