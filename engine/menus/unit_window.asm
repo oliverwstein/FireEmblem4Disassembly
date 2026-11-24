@@ -1179,7 +1179,7 @@
         lda aUnitWindowDeploymentSlots,x
         beq _CCC5
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown87A415
+        jsl rlCollectSelectedUnitIconSkills
         lda $7E2000
         beq _CCBD
         lda #$0000
@@ -6187,7 +6187,7 @@
         lda aUnitWindowDeploymentSlots,x
         beq _CCA8
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown87A415
+        jsl rlCollectSelectedUnitIconSkills
         lda $7E2000
         beq _CC9E
         phx

@@ -996,7 +996,7 @@
       .al
       .xl
 
-      rlUnknown849FB9 ; 84/9FB9
+      rlStatsUnusedStub1 ; 84/9FB9
 
         ; Only rtl, as is the next routine.
 
@@ -1011,7 +1011,7 @@
 
         ; 84/9FBA
 
-      rlUnknown849FBA ; 84/9FBA
+      rlStatsUnusedStub2 ; 84/9FBA
 
         .al
         .xl

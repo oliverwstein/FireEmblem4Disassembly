@@ -143,7 +143,7 @@
         jsl rlGetSelectedUnitCharacterID
         sta wStatusScreenCharacter
         jsl rlStatusScreenGetHolyBloodLevels
-        jsl rlUnknown849FC4
+        jsl rlGetSelectedUnitCommanderCharacterID
         sta wStatusScreenCommander
         cmp #$0000
         bne _BCB1
@@ -3642,7 +3642,7 @@
 
       aStatusScreenSkillIcons ; 89/92FE
 
-        ; A word per skill, as rlUnknown87A415 numbers them: the tile offset of its icon,
+        ; A word per skill, as rlCollectSelectedUnitIconSkills numbers them: the tile offset of its icon,
         ; or $FFFF for a skill the status screen does not show.
 
         .word $FFFF, $FFFF, $0006, $0000, $0002, $0004, $0044, $FFFF
@@ -5815,10 +5815,10 @@
         .autsiz
         .databank ?
 
-        ; Lists the unit's skills that have an icon (rlUnknown87A415, aStatusScreenSkillIcons): their IDs in aStatusScreenSkillIDs, icon tiles in aStatusScreenSkillIconTiles, the count in wStatusScreenSkillCount.
+        ; Lists the unit's skills that have an icon (rlCollectSelectedUnitIconSkills, aStatusScreenSkillIcons): their IDs in aStatusScreenSkillIDs, icon tiles in aStatusScreenSkillIconTiles, the count in wStatusScreenSkillCount.
 
         stz wR13
-        jsl rlUnknown87A415
+        jsl rlCollectSelectedUnitIconSkills
         lda $7E2000
         beq _A3B9
         lda #$0000
@@ -6609,7 +6609,7 @@
 
       aSkillDescriptionPointers ; 89/ABF9
 
-        ; A long pointer per skill, as rlUnknown87A415 numbers them (0 for none). Read by
+        ; A long pointer per skill, as rlCollectSelectedUnitIconSkills numbers them (0 for none). Read by
         ; rsStatusScreenDrawSkillDescription.
 
         .long 0

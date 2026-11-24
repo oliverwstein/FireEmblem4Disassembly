@@ -1914,7 +1914,7 @@
       .al
       .xl
 
-      rlUnknown84C461 ; 84/C461
+      rlGetFactionGroupLeaderCharacterID ; 84/C461
 
         .al
         .autsiz

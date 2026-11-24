@@ -6,11 +6,13 @@
       .al
       .xl
 
-      rlUnknown849FC4 ; 84/9FC4
+      rlGetSelectedUnitCommanderCharacterID ; 84/9FC4
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns commander character ID of selected unit, or 0
 
         phb
         php
@@ -31,7 +33,7 @@
         cmp #0
         beq +
 
-          jsl rlUnknown84C461
+          jsl rlGetFactionGroupLeaderCharacterID
           bra _End
 
         +
@@ -66,13 +68,13 @@
 
         .databank 0
 
-      rlUnknown84A018 ; 84/A018
+      rlGetSelectedUnitPortraitOrCommanderID ; 84/A018
 
         .al
         .autsiz
         .databank ?
 
-        jsl rlUnknown849FC4
+        jsl rlGetSelectedUnitCommanderCharacterID
         ora #0
         beq +
 
@@ -1453,7 +1455,7 @@
 
         .databank 0
 
-      rlUnknown84A69F ; 84/A69F
+      rlGetHolyBloodHolyWeaponID ; 84/A69F
 
         .al
         .autsiz

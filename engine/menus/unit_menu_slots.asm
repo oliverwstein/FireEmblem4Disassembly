@@ -85,7 +85,7 @@
         sta lRoutineVariable+1,b
         lda #<>$7F654A
         sta lRoutineVariable,b
-        jsl rlUnknown8483F3
+        jsl rlBuild32x32MapUnitGrid
         lda #$0400
         jsl rlUnsetSelectedUnitStates
         lda #$0000
@@ -376,7 +376,7 @@
         sta lRoutineVariable+1,b
         lda #<>aRangeMap
         sta lRoutineVariable,b
-        jsl rlUnknown8483F3
+        jsl rlBuild32x32MapUnitGrid
         lda #$0000
         sta aUnitMenuStaffSlots
         sta aUnitMenuItemSlots

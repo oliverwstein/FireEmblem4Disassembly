@@ -74,7 +74,7 @@
 
         .databank 0
 
-      rlUnknown848C96 ; 84/8C96
+      rlBuildAlivePlayerCharacterMap ; 84/8C96
 
         .al
         .autsiz

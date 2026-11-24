@@ -2981,7 +2981,7 @@
     wStatusScreenLeadership .word ?                 ; $7F8197
       ; Leadership stars, drawn when the unit has no commander.
     wStatusScreenCommander .word ?                  ; $7F8199
-      ; The character ID of the unit's commander (rlUnknown849FC4), or 0.
+      ; The character ID of the unit's commander (rlGetSelectedUnitCommanderCharacterID), or 0.
     wStatusScreenCanPromote .word ?                 ; $7F819B
       ; 1 when a player unit is at its promotion level.
     wStatusScreenReopenMode .word ?                 ; $7F819D
@@ -3005,7 +3005,7 @@
     wStatusScreenSavedInventorySlot .word ?         ; $7F81AF
     wStatusScreenSkillCount .word ?                 ; $7F81B1
     aStatusScreenSkillIDs .fill 14                  ; $7F81B3
-      ; A word per skill with an icon, as rlUnknown87A415 numbers them.
+      ; A word per skill with an icon, as rlCollectSelectedUnitIconSkills numbers them.
     aStatusScreenSkillIconTiles .fill 14            ; $7F81C1
     wStatusScreenSkillCursor .word ?                ; $7F81CF
     wStatusScreenGreyIndex .word ?                  ; $7F81D1

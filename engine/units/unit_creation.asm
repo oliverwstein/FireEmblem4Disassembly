@@ -57,7 +57,7 @@
         jsr rsFillUnitRAMExtendedPersonalData
         jsr rsFillUnitRAMPersonalData
         jsr rsFillUnitRAMInventoryData
-        jsr rsUnknown849294
+        jsr rsInitUnitLoverData
         plx
         rts
 
@@ -153,7 +153,7 @@
         jsl rsFillChildExtendedPersonalData
         jsr rsFillUnitRAMPersonalData
         jsr rsFillUnitRAMInventoryData
-        jsr rsUnknown849294
+        jsr rsInitUnitLoverData
 
         pla
         sta wR0
@@ -502,7 +502,7 @@
 
         .databank 0
 
-      rsUnknown849294 ; 84/9294
+      rsInitUnitLoverData ; 84/9294
 
         .al
         .autsiz
@@ -514,7 +514,7 @@
         lda wRoutineVariable1,b
         pha
 
-        jsl rlUnknown848C96
+        jsl rlBuildAlivePlayerCharacterMap
         jsl rlGetSelectedUnitGenerationID
         bcs _9304
 

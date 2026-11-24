@@ -479,7 +479,7 @@
 
         .databank 0
 
-      rlUnknown87A415 ; 87/A415
+      rlCollectSelectedUnitIconSkills ; 87/A415
 
         .al
         .autsiz

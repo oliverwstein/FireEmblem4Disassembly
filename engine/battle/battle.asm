@@ -1232,7 +1232,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitLoverGenerationID
         sta wR3
-        jsl rlUnknown849FC4
+        jsl rlGetSelectedUnitCommanderCharacterID
         sta wR4
 
         lda aDeploymentTable._FactionSlot,x
@@ -1448,7 +1448,7 @@
 
           lda aDeploymentTable._UnitRAMPointer,x
           sta wSelectedUnitDataRAMPointer,b
-          jsl rlUnknown84B321
+          jsl rlApplySelectedInventorySlotBonus
 
         +
         jsl rlActionStructBuildBattleRounds

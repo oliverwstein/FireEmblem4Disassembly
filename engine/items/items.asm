@@ -141,7 +141,7 @@
 
         .databank 0
 
-      rlUnknown87DFDA ; 87/DFDA
+      rlClearItemRAMDataEntryUnused ; 87/DFDA
 
         .al
         .autsiz
@@ -1348,7 +1348,7 @@
 
         .databank 0
 
-      rlUnknown87E513 ; 87/E513
+      rlGetItemZeroUnused ; 87/E513
 
         .al
         .autsiz
@@ -1517,7 +1517,7 @@
 
         .databank 0
 
-      rlUnknown87E5C5 ; 87/E5C5
+      rlGetWeaponEffectivenessTextUnused ; 87/E5C5
 
         .al
         .autsiz
@@ -1530,7 +1530,7 @@
         phk
         plb
         phx
-        jsl rlUnknown87E5C5
+        jsl rlGetWeaponEffectivenessTextUnused
         ora #0
         beq +
 

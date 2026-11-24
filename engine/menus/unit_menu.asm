@@ -545,7 +545,7 @@
         sta wMapActionTargetType,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown84B474
+        jsl rlSetSelectedUnitState0400
         lda wSelectedUnitDataRAMPointer,b
         sta aProcSystem.wInput0,b
         lda #$2010

@@ -86,7 +86,7 @@
 
         .databank 0
 
-      rlUnknown8483F3 ; 84/83F3
+      rlBuild32x32MapUnitGrid ; 84/83F3
 
         .al
         .autsiz
@@ -904,7 +904,7 @@
         +
         txa
         jsl rlAssignUnitToFactionSlot
-        jsr rsUnknown8488AE
+        jsr rsDeployUnitByPlaceholderID
         bcs +
 
         lda structUNITEntry.DestinationCoords,b,y
@@ -1021,7 +1021,7 @@
       .al
       .xl
 
-      rsUnknown8488AE ; 84/88AE
+      rsDeployUnitByPlaceholderID ; 84/88AE
 
         .al
         .autsiz
@@ -1377,7 +1377,7 @@
         .word <>rsTargetFilterEnemy
         .word <>rsTargetFilterFriendly
         .word <>rsTargetFilterOwnFaction
-        .word <>rsTargetFilterTalkEventOrUnknown
+        .word <>rsTargetFilterTalkEventOrPair
         .word <>rsTargetFilterEnemyAtCastle
         .word <>rsTargetFilterCivilianOrChild
         .word <>rsTargetFilterTalkEvent
@@ -1422,7 +1422,7 @@
 
         .databank 0
 
-      rsTargetFilterTalkEventOrUnknown ; 84/8A38
+      rsTargetFilterTalkEventOrPair ; 84/8A38
 
         .al
         .autsiz

@@ -41,7 +41,7 @@
         sta lRoutineVariable+1,b
         lda #<>$7F654A
         sta lRoutineVariable,b
-        jsl rlUnknown8483F3
+        jsl rlBuild32x32MapUnitGrid
 
         pla
         sta wR11

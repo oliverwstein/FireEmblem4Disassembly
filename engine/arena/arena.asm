@@ -1042,7 +1042,7 @@
         beq _EC68
         lda wRoutineVariable1,b
         sta wSelectedInventorySlot,b
-        jsl rlUnknown84B321
+        jsl rlApplySelectedInventorySlotBonus
         jsr rsClearItemDetailsWindow
         jsr rsClearCastleList
         lda #$0000

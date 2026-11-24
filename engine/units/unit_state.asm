@@ -553,7 +553,7 @@
 
         .databank 0
 
-      rlUnknown84B321 ; 84/B321
+      rlApplySelectedInventorySlotBonus ; 84/B321
 
         .al
         .autsiz
@@ -713,7 +713,7 @@
 
         .databank 0
 
-      rlUnknown84B474 ; 84/B474
+      rlSetSelectedUnitState0400 ; 84/B474
 
         .al
         .autsiz

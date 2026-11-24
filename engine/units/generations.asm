@@ -408,7 +408,7 @@
         plb
 
         ldx wSelectedUnitDataRAMPointer,b
-        jsr rsUnknown849294
+        jsr rsInitUnitLoverData
         jsl rlUndeployUnit
         ply
         rts

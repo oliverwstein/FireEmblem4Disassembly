@@ -503,7 +503,7 @@
         plb
         phx
         phy
-        jsr rsUnknown87AAC9
+        jsr rsInheritParentInventory
         jsl rlGetSelectedUnitInventorySize
         sta wR3
 
@@ -580,7 +580,7 @@
 
         .databank 0
 
-      rsUnknown87AAC9 ; 87/AAC9
+      rsInheritParentInventory ; 87/AAC9
 
         .al
         .autsiz

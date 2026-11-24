@@ -957,7 +957,7 @@
         bit #ItemSkillCritical
         bne _FDD4
 
-        jsl rlUnknown87E513
+        jsl rlGetItemZeroUnused
         beq _End
 
         _FDD4

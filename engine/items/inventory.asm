@@ -245,7 +245,7 @@
 
         .databank 0
 
-      rsUnknown84F108 ; 84/F108
+      rsGivePlayerItemIDToSelectedUnitUnused ; 84/F108
 
         .al
         .autsiz
@@ -1384,7 +1384,7 @@
 
         -
         txa
-        jsl rlUnknown84A69F
+        jsl rlGetHolyBloodHolyWeaponID
         ora #0
         beq +
 

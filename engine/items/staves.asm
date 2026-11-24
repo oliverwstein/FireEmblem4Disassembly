@@ -341,7 +341,7 @@
 
         ; 87/E761
 
-      rlUnknown87E761 ; 87/E761
+      rlStaffUnusedStub ; 87/E761
 
         .al
         .xl
@@ -890,7 +890,7 @@
         sta wR10
         lda aDeploymentTable._YTilePosition,x
         sta wR11
-        jsl rlUnknown8483F3
+        jsl rlBuild32x32MapUnitGrid
         lda #$0001
         sta wR12
         lda #$0001
