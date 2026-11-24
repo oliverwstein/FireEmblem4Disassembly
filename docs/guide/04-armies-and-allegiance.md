@@ -120,7 +120,7 @@ When a script unloads an army (`rlUnloadFactionSlot`), its units are deleted, ex
 > }
 > ```
 >
-> With the check skipped, every unit still in the player's army comes up, including units captured through the PoW skill.
+> With the check skipped, every unit still in the player's army comes up. That includes captives: Deirdre and Julia carry a skill the source calls `PoW` (prisoner of war), which makes a defeated unit captured (`StatusCaptive`) instead of killed, except in chapter 11. A unit with the `Escape` skill (Finn, Quan, Ethlyn) is removed from its army when defeated, so it doesn't appear.
 
 ## Castles
 
