@@ -3567,16 +3567,16 @@
       procUnknown9FA678 ; 9F/A678
 
         ; Part of the Thunder effect.
-        .structProcInfo "ON", rlUnknown9FA68C, rlUnknown9FA693, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicThunderInit, rlMapMagicThunderDarkenAndSpawn, aProcMapMagicHaltCode
         .word <>aUnknown9FA6CB
 
       procUnknown9FA682 ; 9F/A682
 
         ; Part of the Elthunder effect.
-        .structProcInfo "ON", rlUnknown9FA68C, rlUnknown9FA693, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicThunderInit, rlMapMagicThunderDarkenAndSpawn, aProcMapMagicHaltCode
         .word <>aUnknown9FA6D1
 
-      rlUnknown9FA68C ; 9F/A68C
+      rlMapMagicThunderInit ; 9F/A68C
 
         .al
         .xl
@@ -3589,7 +3589,7 @@
         rtl
 
 
-      rlUnknown9FA693 ; 9F/A693
+      rlMapMagicThunderDarkenAndSpawn ; 9F/A693
 
         .al
         .xl
@@ -3597,13 +3597,13 @@
         .databank ?
         ; Shared by the Elthunder and Thunder effects.
         jsr rsDarkenMapMagicColors
-        bcc rlUnknown9FA6CA
+        bcc rlMapMagicThunderProcDone
         lda $0EF6,b,x
         sta lR44+1
         ldy aProcSystem.aHeaderTypeOffset,b,x
         lda $0008,b,y
         sta lR44
-        lda #<>rlUnknown9FA6CA
+        lda #<>rlMapMagicThunderProcDone
         sta aProcSystem.aHeaderOnCycle,b,x
         phx
         phy
@@ -3620,7 +3620,7 @@
         plx
         stz aProcSystem.aHeaderTypeOffset,b,x
 
-      rlUnknown9FA6CA ; 9F/A6CA
+      rlMapMagicThunderProcDone ; 9F/A6CA
 
         .al
         .xl
@@ -3633,25 +3633,25 @@
         .databank 0
 
       aUnknown9FA6CB ; 9F/A6CB
-        .word <>rlUnknown9FA6FF, <>rlUnknown9FA8EB, <>aUnknown9FA972
+        .word <>rlMapMagicThunderSpriteInit, <>rlMapMagicThunderFallToTarget, <>aUnknown9FA972
 
       aUnknown9FA6D1 ; 9F/A6D1
-        .word <>rlUnknown9FA6EF, <>rlUnknown9FA77A, <>aUnknown9FA8BC
+        .word <>rlMapMagicElthunderSpriteInit, <>rlMapMagicElthunderCasterBoltCycle, <>aUnknown9FA8BC
 
       aUnknown9FA6D7 ; 9F/A6D7
-        .word <>rlUnknown9FA71B, <>rlUnknown9FA77A, <>aUnknown9FA8C8
+        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderCasterBoltCycle, <>aUnknown9FA8C8
 
       aUnknown9FA6DD ; 9F/A6DD
-        .word <>rlUnknown9FA71B, <>rlUnknown9FA79B, <>aUnknown9FA8C8
+        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderMidBoltCycle, <>aUnknown9FA8C8
 
       aUnknown9FA6E3 ; 9F/A6E3
-        .word <>rlUnknown9FA71B, <>rlUnknown9FA7BC, <>aUnknown9FA8D6
+        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderLowBoltCycle, <>aUnknown9FA8D6
 
       aUnknown9FA6E9 ; 9F/A6E9
-        .word <>rlUnknown9FA729, <>rlUnknown9FA74B, <>aUnknown9FA967
+        .word <>rlMapMagicElthunderTargetInit, <>rlMapMagicThunderWaitPaletteAnim, <>aUnknown9FA967
 
 
-      rlUnknown9FA6EF ; 9F/A6EF
+      rlMapMagicElthunderSpriteInit ; 9F/A6EF
 
         .al
         .xl
@@ -3666,12 +3666,12 @@
 
           .byte $56
 
-        bra rlUnknown9FA6FF._A70D
+        bra rlMapMagicThunderSpriteInit._A70D
 
         .databank 0
 
         ; 9F/A6FF
-      rlUnknown9FA6FF ; 9F/A6FF
+      rlMapMagicThunderSpriteInit ; 9F/A6FF
 
         .al
         .xl
@@ -3696,7 +3696,7 @@
         .databank 0
 
         ; 9F/A71B
-      rlUnknown9FA71B ; 9F/A71B
+      rlMapMagicThunderBoltInit ; 9F/A71B
 
         .al
         .xl
@@ -3712,7 +3712,7 @@
         .databank 0
 
         ; 9F/A729
-      rlUnknown9FA729 ; 9F/A729
+      rlMapMagicElthunderTargetInit ; 9F/A729
 
         .al
         .xl
@@ -3734,25 +3734,25 @@
         .databank 0
 
         ; 9F/A74B
-      rlUnknown9FA74B ; 9F/A74B
+      rlMapMagicThunderWaitPaletteAnim ; 9F/A74B
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown9FAACC
-        bcc rlUnknown9FA76A._A779
+        jsl rlMapMagicThunderStepPaletteAnim
+        bcc rlMapMagicThunderFadeBack._A779
         lda #$000C
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9FA75E
+        lda #<>rlMapMagicThunderWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
 
         ; 9F/A75E
-      rlUnknown9FA75E ; 9F/A75E
+      rlMapMagicThunderWaitFade ; 9F/A75E
 
         .al
         .xl
@@ -3760,15 +3760,15 @@
         .databank ?
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FA76A._A779
-        lda #<>rlUnknown9FA76A
+        bne rlMapMagicThunderFadeBack._A779
+        lda #<>rlMapMagicThunderFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
 
         ; 9F/A76A
-      rlUnknown9FA76A ; 9F/A76A
+      rlMapMagicThunderFadeBack ; 9F/A76A
 
         .al
         .xl
@@ -3787,7 +3787,7 @@
         .databank 0
 
         ; 9F/A77A
-      rlUnknown9FA77A ; 9F/A77A
+      rlMapMagicElthunderCasterBoltCycle ; 9F/A77A
 
         .al
         .xl
@@ -3796,10 +3796,10 @@
         ; Part of the Elthunder effect.
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq rlUnknown9FA792._A79A
+        beq rlMapMagicElthunderCasterBoltEnd._A79A
         stz aActiveSpriteSystem.aUnknown001320,b,x
-        jsr rsUnknown9FA7F6
-        lda #<>rlUnknown9FA792
+        jsr rsMapMagicElthunderSpawnNextBolt
+        lda #<>rlMapMagicElthunderCasterBoltEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0040
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -3808,7 +3808,7 @@
         .databank 0
 
         ; 9F/A792
-      rlUnknown9FA792 ; 9F/A792
+      rlMapMagicElthunderCasterBoltEnd ; 9F/A792
 
         .al
         .xl
@@ -3826,7 +3826,7 @@
         .databank 0
 
         ; 9F/A79B
-      rlUnknown9FA79B ; 9F/A79B
+      rlMapMagicElthunderMidBoltCycle ; 9F/A79B
 
         .al
         .xl
@@ -3834,9 +3834,9 @@
         .databank ?
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq rlUnknown9FA7B0._A7BB
+        beq rlMapMagicElthunderMidBoltEnd._A7BB
         stz aActiveSpriteSystem.aUnknown001320,b,x
-        lda #<>rlUnknown9FA7B0
+        lda #<>rlMapMagicElthunderMidBoltEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0040
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -3845,7 +3845,7 @@
         .databank 0
 
         ; 9F/A7B0
-      rlUnknown9FA7B0 ; 9F/A7B0
+      rlMapMagicElthunderMidBoltEnd ; 9F/A7B0
 
         .al
         .xl
@@ -3854,7 +3854,7 @@
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _A7BB
-        jsr rsUnknown9FA843
+        jsr rsMapMagicElthunderSpawnImpact1
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _A7BB
@@ -3863,7 +3863,7 @@
         .databank 0
 
         ; 9F/A7BC
-      rlUnknown9FA7BC ; 9F/A7BC
+      rlMapMagicElthunderLowBoltCycle ; 9F/A7BC
 
         .al
         .xl
@@ -3871,10 +3871,10 @@
         .databank ?
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq rlUnknown9FA7ED._A7F5
+        beq rlMapMagicElthunderLowBoltEnd._A7F5
         stz aActiveSpriteSystem.aUnknown001320,b,x
-        jsr rsUnknown9FA86B
-        lda #<>rlUnknown9FA7D4
+        jsr rsMapMagicElthunderSpawnImpact2
+        lda #<>rlMapMagicElthunderLowBoltSignal
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$003C
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -3883,7 +3883,7 @@
         .databank 0
 
         ; 9F/A7D4
-      rlUnknown9FA7D4 ; 9F/A7D4
+      rlMapMagicElthunderLowBoltSignal ; 9F/A7D4
 
         .al
         .xl
@@ -3894,7 +3894,7 @@
         bne _A7EC
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FA7ED
+        lda #<>rlMapMagicElthunderLowBoltEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0004
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -3905,7 +3905,7 @@
         .databank 0
 
         ; 9F/A7ED
-      rlUnknown9FA7ED ; 9F/A7ED
+      rlMapMagicElthunderLowBoltEnd ; 9F/A7ED
 
         .al
         .xl
@@ -3922,7 +3922,7 @@
         .databank 0
 
         ; 9F/A7F6
-      rsUnknown9FA7F6 ; 9F/A7F6
+      rsMapMagicElthunderSpawnNextBolt ; 9F/A7F6
 
         .al
         .xl
@@ -3977,7 +3977,7 @@
         .databank 0
 
         ; 9F/A843
-      rsUnknown9FA843 ; 9F/A843
+      rsMapMagicElthunderSpawnImpact1 ; 9F/A843
 
         .al
         .xl
@@ -4007,7 +4007,7 @@
         .databank 0
 
         ; 9F/A86B
-      rsUnknown9FA86B ; 9F/A86B
+      rsMapMagicElthunderSpawnImpact2 ; 9F/A86B
 
         .al
         .xl
@@ -4047,7 +4047,7 @@
 
           .byte $57
 
-        jsr rlUnknown9FAA16
+        jsr rlMapMagicThunderSpawnEffects
         lda #(`aUnknown9FA6E9)<<8
         sta lR44+1
         lda #<>aUnknown9FA6E9
@@ -4070,7 +4070,7 @@
         ; 9F/A8C8
       aUnknown9FA8C8 ; 9F/A8C8
 
-        ACTIVE_SPRITE_CALL rlUnknown9FA8E4
+        ACTIVE_SPRITE_CALL rlMapMagicElthunderSetSpriteReady
 
         _A8CB
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA5D
@@ -4080,7 +4080,7 @@
         ; 9F/A8D6
       aUnknown9FA8D6 ; 9F/A8D6
 
-        ACTIVE_SPRITE_CALL rlUnknown9FA8E4
+        ACTIVE_SPRITE_CALL rlMapMagicElthunderSetSpriteReady
 
         _A8D9
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAAA3
@@ -4088,7 +4088,7 @@
         ACTIVE_SPRITE_JUMP _A8D9
 
         ; 9F/A8E4
-      rlUnknown9FA8E4 ; 9F/A8E4
+      rlMapMagicElthunderSetSpriteReady ; 9F/A8E4
 
         .al
         .xl
@@ -4102,7 +4102,7 @@
         .databank 0
 
         ; 9F/A8EB
-      rlUnknown9FA8EB ; 9F/A8EB
+      rlMapMagicThunderFallToTarget ; 9F/A8EB
 
         .al
         .xl
@@ -4112,7 +4112,7 @@
 
         lda aActiveSpriteSystem.aUnknown001240,b,x
         cmp #$000A
-        bpl rlUnknown9FA917
+        bpl rlMapMagicThunderSpriteDummy
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda wMapMagicTargetPixel
@@ -4123,13 +4123,13 @@
         sec
         sbc #$0020
         sta aActiveSpriteSystem.aUnknown001240,b,x
-        lda #<>rlUnknown9FA917
+        lda #<>rlMapMagicThunderSpriteDummy
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         .databank 0
 
         ; 9F/A917
-      rlUnknown9FA917 ; 9F/A917
+      rlMapMagicThunderSpriteDummy ; 9F/A917
 
         .al
         .xl
@@ -4142,7 +4142,7 @@
         .databank 0
 
         ; 9F/A918
-      rlUnknown9FA918 ; 9F/A918
+      rlMapMagicThunderImpactInit ; 9F/A918
 
         .al
         .xl
@@ -4161,14 +4161,14 @@
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         stz aActiveSpriteSystem.aUnknown001320,b,x
         stz aActiveSpriteSystem.aUnknown001340,b,x
-        lda #<>rlUnknown9FA938
+        lda #<>rlMapMagicThunderImpactWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
 
         ; 9F/A938
-      rlUnknown9FA938 ; 9F/A938
+      rlMapMagicThunderImpactWaitStrike ; 9F/A938
 
         .al
         .xl
@@ -4177,8 +4177,8 @@
         ; Part of the Thunder effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FA94A
-        lda #<>rlUnknown9FA94A
+        bne rlMapMagicThunderImpactWaitAnim
+        lda #<>rlMapMagicThunderImpactWaitAnim
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
@@ -4186,7 +4186,7 @@
         .databank 0
 
         ; 9F/A94A
-      rlUnknown9FA94A ; 9F/A94A
+      rlMapMagicThunderImpactWaitAnim ; 9F/A94A
 
         .al
         .xl
@@ -4194,16 +4194,16 @@
         .databank ?
         ; Part of the Thunder effect.
 
-        jsl rlUnknown9FAACC
-        bcc rlUnknown9FA957._A966
-        lda #<>rlUnknown9FA957
+        jsl rlMapMagicThunderStepPaletteAnim
+        bcc rlMapMagicThunderImpactFadeBack._A966
+        lda #<>rlMapMagicThunderImpactFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
 
         ; 9F/A957
-      rlUnknown9FA957 ; 9F/A957
+      rlMapMagicThunderImpactFadeBack ; 9F/A957
 
         .al
         .xl
@@ -4244,20 +4244,20 @@
         ACTIVE_SPRITE_MOVE 0, -10
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA6E
         ACTIVE_SPRITE_MOVE 0, -10
-        ACTIVE_SPRITE_CALL rlUnknown9FA9F7
+        ACTIVE_SPRITE_CALL rlMapMagicThunderWaitPhase1
         .word <>_A97E
-        ACTIVE_SPRITE_CALL rlUnknown9FAA12
+        ACTIVE_SPRITE_CALL rlMapMagicThunderClearPhase
         ACTIVE_SPRITE_FRAME 29, aUnknown9FAA37
 
         _A998
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA92
-        ACTIVE_SPRITE_CALL rlUnknown9FA9C1
+        ACTIVE_SPRITE_CALL rlMapMagicThunderBoltDescend
         .word <>aUnknown9FA9B6
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAAA3
-        ACTIVE_SPRITE_CALL rlUnknown9FA9C1
+        ACTIVE_SPRITE_CALL rlMapMagicThunderBoltDescend
         .word <>aUnknown9FA9B6
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAAB4
-        ACTIVE_SPRITE_CALL rlUnknown9FA9C1
+        ACTIVE_SPRITE_CALL rlMapMagicThunderBoltDescend
         .word <>aUnknown9FA9B6
         ACTIVE_SPRITE_JUMP _A998
 
@@ -4272,7 +4272,7 @@
         ACTIVE_SPRITE_JUMP _A9BA
 
         ; 9F/A9C1
-      rlUnknown9FA9C1 ; 9F/A9C1
+      rlMapMagicThunderBoltDescend ; 9F/A9C1
 
         .al
         .xl
@@ -4291,11 +4291,11 @@
         sta aActiveSpriteSystem.aUnknown001240,b,x
         cmp wR0
         bmi _A9F4
-        jsr rlUnknown9FAA16
+        jsr rlMapMagicThunderSpawnEffects
         lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
-        lda #<>rlUnknown9FA918
+        lda #<>rlMapMagicThunderImpactInit
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda $0000,b,y
         tay
@@ -4310,7 +4310,7 @@
         .databank 0
 
         ; 9F/A9F7
-      rlUnknown9FA9F7 ; 9F/A9F7
+      rlMapMagicThunderWaitPhase1 ; 9F/A9F7
 
         .al
         .xl
@@ -4320,7 +4320,7 @@
 
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         cmp #$0001
-        bne rlUnknown9FAA02._AA0D
+        bne rlMapMagicThunderWaitPhase2._AA0D
         inc y
         inc y
         rtl
@@ -4328,7 +4328,7 @@
         .databank 0
 
         ; 9F/AA02
-      rlUnknown9FAA02 ; 9F/AA02
+      rlMapMagicThunderWaitPhase2 ; 9F/AA02
 
         .al
         .xl
@@ -4351,7 +4351,7 @@
         .databank 0
 
         ; 9F/AA12
-      rlUnknown9FAA12 ; 9F/AA12
+      rlMapMagicThunderClearPhase ; 9F/AA12
 
         .al
         .xl
@@ -4365,7 +4365,7 @@
         .databank 0
 
         ; 9F/AA16
-      rlUnknown9FAA16 ; 9F/AA16
+      rlMapMagicThunderSpawnEffects ; 9F/AA16
 
         .al
         .xl
@@ -4499,7 +4499,7 @@
 
         .structSpriteArray aUnknown9FAAC5._Sprites
 
-      rlUnknown9FAACC ; 9F/AACC
+      rlMapMagicThunderStepPaletteAnim ; 9F/AACC
 
         .al
         .xl
@@ -4605,16 +4605,16 @@
       procUnknown9FAC61 ; 9F/AC61
 
         ; Part of the Light effect.
-        .structProcInfo "ON", rlUnknown9FAC74, rlUnknown9FAC81, aProcUnknown9FAC69Code
+        .structProcInfo "ON", rlMapMagicLightInit, rlMapMagicLightDarkenAndSpawn, aProcUnknown9FAC69Code
 
       aProcUnknown9FAC69Code ; 9F/AC69
 
         ; Part of the Light effect.
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FACE3
+        PROC_CALL rlMapMagicLightStepBGPaletteAnim
         PROC_JUMP aProcUnknown9FAC69Code
 
-      rlUnknown9FAC74 ; 9F/AC74
+      rlMapMagicLightInit ; 9F/AC74
 
         .al
         .xl
@@ -4629,7 +4629,7 @@
         rtl
 
 
-      rlUnknown9FAC81 ; 9F/AC81
+      rlMapMagicLightDarkenAndSpawn ; 9F/AC81
 
         .al
         .xl
@@ -4663,7 +4663,7 @@
 
           .word <>aUnknown9FDC77
 
-        lda #<>rlUnknown9FACC9
+        lda #<>rlMapMagicLightReverseFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0078
         sta aProcSystem.aBody0,b,x
@@ -4682,7 +4682,7 @@
         rtl
 
 
-      rlUnknown9FACC9 ; 9F/ACC9
+      rlMapMagicLightReverseFade ; 9F/ACC9
 
         .al
         .xl
@@ -4697,14 +4697,14 @@
         eor #$FFFF
         inc a
         sta aProcSystem.aBody4,b,y
-        lda #<>rlUnknown9FACE2
+        lda #<>rlMapMagicLightDone
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _ACE1
         rtl
 
 
-      rlUnknown9FACE2 ; 9F/ACE2
+      rlMapMagicLightDone ; 9F/ACE2
 
         .al
         .xl
@@ -4715,7 +4715,7 @@
         rtl
 
 
-      rlUnknown9FACE3 ; 9F/ACE3
+      rlMapMagicLightStepBGPaletteAnim ; 9F/ACE3
 
         .al
         .xl
@@ -4771,9 +4771,9 @@
       aUnknown9FAD72 ; 9F/AD72
 
         ; Part of the Light effect.
-        .word <>rlUnknown9FAD78, <>rlUnknown9FADA3, <>aUnknown9FAE9C
+        .word <>rlMapMagicLightSpriteInit, <>rlMapMagicLightSpriteWaitAppear, <>aUnknown9FAE9C
 
-      rlUnknown9FAD78 ; 9F/AD78
+      rlMapMagicLightSpriteInit ; 9F/AD78
 
         .al
         .xl
@@ -4793,12 +4793,12 @@
         stz aActiveSpriteSystem.aUnknown0013C0,b,x
         lda #$0028
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        jml rlUnknown9FAE19
+        jml rlMapMagicLightStepSpritePaletteAnim
 
         .databank 0
 
         ; 9F/ADA3
-      rlUnknown9FADA3 ; 9F/ADA3
+      rlMapMagicLightSpriteWaitAppear ; 9F/ADA3
 
         .al
         .xl
@@ -4806,10 +4806,10 @@
         .databank ?
         ; Part of the Light effect.
 
-        jsl rlUnknown9FAE19
+        jsl rlMapMagicLightStepSpritePaletteAnim
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FAE05._AE18
-        lda #<>rlUnknown9FADB9
+        bne rlMapMagicLightSpriteFadeBack._AE18
+        lda #<>rlMapMagicLightSpriteWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0020
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -4818,7 +4818,7 @@
         .databank 0
 
         ; 9F/ADB9
-      rlUnknown9FADB9 ; 9F/ADB9
+      rlMapMagicLightSpriteWaitStrike ; 9F/ADB9
 
         .al
         .xl
@@ -4826,12 +4826,12 @@
         .databank ?
         ; Part of the Light effect.
 
-        jsl rlUnknown9FAE19
+        jsl rlMapMagicLightStepSpritePaletteAnim
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FAE05._AE18
+        bne rlMapMagicLightSpriteFadeBack._AE18
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FADD6
+        lda #<>rlMapMagicLightSpriteWaitFlash
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0018
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -4840,7 +4840,7 @@
         .databank 0
 
         ; 9F/ADD6
-      rlUnknown9FADD6 ; 9F/ADD6
+      rlMapMagicLightSpriteWaitFlash ; 9F/ADD6
 
         .al
         .xl
@@ -4848,12 +4848,12 @@
         .databank ?
         ; Part of the Light effect.
 
-        jsl rlUnknown9FAE19
+        jsl rlMapMagicLightStepSpritePaletteAnim
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FAE05._AE18
+        bne rlMapMagicLightSpriteFadeBack._AE18
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
-        lda #<>rlUnknown9FADF2
+        lda #<>rlMapMagicLightSpriteWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0028
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -4862,7 +4862,7 @@
         .databank 0
 
         ; 9F/ADF2
-      rlUnknown9FADF2 ; 9F/ADF2
+      rlMapMagicLightSpriteWaitFade ; 9F/ADF2
 
         .al
         .xl
@@ -4870,10 +4870,10 @@
         .databank ?
         ; Part of the Light effect.
 
-        jsl rlUnknown9FAE19
+        jsl rlMapMagicLightStepSpritePaletteAnim
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FAE05._AE18
-        lda #<>rlUnknown9FAE05
+        bne rlMapMagicLightSpriteFadeBack._AE18
+        lda #<>rlMapMagicLightSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
         jsr rsFreeMapMagicHDMA
         rtl
@@ -4881,7 +4881,7 @@
         .databank 0
 
         ; 9F/AE05
-      rlUnknown9FAE05 ; 9F/AE05
+      rlMapMagicLightSpriteFadeBack ; 9F/AE05
 
         .al
         .xl
@@ -4889,7 +4889,7 @@
         .databank ?
         ; Part of the Light effect.
 
-        jsl rlUnknown9FAE19
+        jsl rlMapMagicLightStepSpritePaletteAnim
         jsr rsFadeBackMapMagicColors
         bcc _AE18
         stz aActiveSpriteSystem.aTypeOffset,b,x
@@ -4902,7 +4902,7 @@
         .databank 0
 
         ; 9F/AE19
-      rlUnknown9FAE19 ; 9F/AE19
+      rlMapMagicLightStepSpritePaletteAnim ; 9F/AE19
 
         .al
         .xl
@@ -4967,7 +4967,7 @@
         ACTIVE_SPRITE_FRAME 3, aUnknown9FAF0D
         ACTIVE_SPRITE_FRAME 3, aUnknown9FAF14
         ACTIVE_SPRITE_FRAME 3, aUnknown9FAF1B
-        ACTIVE_SPRITE_CALL rlUnknown9FAED8
+        ACTIVE_SPRITE_CALL rlMapMagicLightWaitSpritePhase
         .word <>_AEAC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FAEFF
         ACTIVE_SPRITE_FRAME 3, aUnknown9FAEF8
@@ -4979,7 +4979,7 @@
         ACTIVE_SPRITE_JUMP _AED1
 
         ; 9F/AED8
-      rlUnknown9FAED8 ; 9F/AED8
+      rlMapMagicLightWaitSpritePhase ; 9F/AED8
 
         .al
         .xl
@@ -5083,9 +5083,9 @@
       procUnknown9FAF28 ; 9F/AF28
 
         ; Part of the Thoron effect.
-        .structProcInfo "ON", rlUnknown9FAF30, rlUnknown9FAF37, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicThoronInit, rlMapMagicThoronDarkenAndSpawn, aProcMapMagicHaltCode
 
-      rlUnknown9FAF30 ; 9F/AF30
+      rlMapMagicThoronInit ; 9F/AF30
 
         .al
         .xl
@@ -5098,7 +5098,7 @@
         rtl
 
 
-      rlUnknown9FAF37 ; 9F/AF37
+      rlMapMagicThoronDarkenAndSpawn ; 9F/AF37
 
         .al
         .xl
@@ -5107,7 +5107,7 @@
         ; Part of the Thoron effect.
         jsr rsDarkenMapMagicColors
         bcc _AF56
-        lda #<>rlUnknown9FAF57
+        lda #<>rlMapMagicThoronCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
@@ -5121,7 +5121,7 @@
         rtl
 
 
-      rlUnknown9FAF57 ; 9F/AF57
+      rlMapMagicThoronCycle ; 9F/AF57
 
         .al
         .xl
@@ -5129,11 +5129,11 @@
         .databank ?
         ; Part of the Thoron effect.
 
-        jsl rlUnknown9FAF5C
+        jsl rlMapMagicThoronStepPaletteAnim
         rtl
 
 
-      rlUnknown9FAF5C ; 9F/AF5C
+      rlMapMagicThoronStepPaletteAnim ; 9F/AF5C
 
         .al
         .xl
@@ -5189,9 +5189,9 @@
       aUnknown9FAFD9 ; 9F/AFD9
 
         ; Part of the Thoron effect.
-        .word <>rlUnknown9FAFDF, <>rlUnknown9FB011, <>aUnknown9FB111
+        .word <>rlMapMagicThoronSpriteInit, <>rlMapMagicThoronSpriteAim, <>aUnknown9FB111
 
-      rlUnknown9FAFDF ; 9F/AFDF
+      rlMapMagicThoronSpriteInit ; 9F/AFDF
 
         .al
         .xl
@@ -5221,7 +5221,7 @@
         .databank 0
 
         ; 9F/B011
-      rlUnknown9FB011 ; 9F/B011
+      rlMapMagicThoronSpriteAim ; 9F/B011
 
         .al
         .xl
@@ -5231,7 +5231,7 @@
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B052
-        lda #<>rlUnknown9FB053
+        lda #<>rlMapMagicThoronSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -5263,7 +5263,7 @@
         .databank 0
 
         ; 9F/B053
-      rlUnknown9FB053 ; 9F/B053
+      rlMapMagicThoronSpriteFlyToTarget ; 9F/B053
 
         .al
         .xl
@@ -5273,7 +5273,7 @@
 
         jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FB011._B052
+        bne rlMapMagicThoronSpriteAim._B052
         lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
@@ -5282,7 +5282,7 @@
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
-        lda #<>rlUnknown9FB0AB
+        lda #<>rlMapMagicThoronSpriteWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0032
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -5321,7 +5321,7 @@
         .databank 0
 
         ; 9F/B0AB
-      rlUnknown9FB0AB ; 9F/B0AB
+      rlMapMagicThoronSpriteWaitStrike ; 9F/B0AB
 
         .al
         .xl
@@ -5330,10 +5330,10 @@
         ; Part of the Thoron effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FB0C4._B0E4
+        bne rlMapMagicThoronSpriteReverseFade._B0E4
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FB0C4
+        lda #<>rlMapMagicThoronSpriteReverseFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$000A
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -5342,7 +5342,7 @@
         .databank 0
 
         ; 9F/B0C4
-      rlUnknown9FB0C4 ; 9F/B0C4
+      rlMapMagicThoronSpriteReverseFade ; 9F/B0C4
 
         .al
         .xl
@@ -5357,7 +5357,7 @@
         sta aProcSystem.aBody4,b,y
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
-        lda #<>rlUnknown9FB0E5
+        lda #<>rlMapMagicThoronSpriteWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -5368,7 +5368,7 @@
         .databank 0
 
         ; 9F/B0E5
-      rlUnknown9FB0E5 ; 9F/B0E5
+      rlMapMagicThoronSpriteWaitFade ; 9F/B0E5
 
         .al
         .xl
@@ -5378,7 +5378,7 @@
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B0F0
-        lda #<>rlUnknown9FB0F1
+        lda #<>rlMapMagicThoronSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _B0F0
@@ -5387,7 +5387,7 @@
         .databank 0
 
         ; 9F/B0F1
-      rlUnknown9FB0F1 ; 9F/B0F1
+      rlMapMagicThoronSpriteFadeBack ; 9F/B0F1
 
         .al
         .xl
@@ -5421,7 +5421,7 @@
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB1EA
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB171
         ACTIVE_SPRITE_JUMP aUnknown9FB111
 
@@ -5433,7 +5433,7 @@
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB210
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB171
         ACTIVE_SPRITE_JUMP aUnknown9FB129
 
@@ -5445,7 +5445,7 @@
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB1FD
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB171
         ACTIVE_SPRITE_JUMP aUnknown9FB141
 
@@ -5457,7 +5457,7 @@
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB223
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB171
         ACTIVE_SPRITE_JUMP aUnknown9FB159
 
@@ -5466,31 +5466,31 @@
 
         ; Part of the Thoron effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1FD
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1FD
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB240
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB240
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB256
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB256
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
         .word <>aUnknown9FB1C5
         ACTIVE_SPRITE_JUMP aUnknown9FB171
 
@@ -5502,7 +5502,7 @@
         ACTIVE_SPRITE_JUMP aUnknown9FB1C5
 
         ; 9F/B1CC
-      rlUnknown9FB1CC ; 9F/B1CC
+      rlMapMagicThoronWaitSpritePhase ; 9F/B1CC
 
         .al
         .xl
