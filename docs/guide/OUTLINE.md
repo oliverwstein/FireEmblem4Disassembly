@@ -12,10 +12,10 @@ The structured game data—the nouns of *Genealogy of the Holy War*—and how th
 
 | # | Chapter | Opening problem | Patterns | Source | Status |
 |---|---|---|---|---|---|
-| 1 | **A unit is made of parts** | A playable lord needs a hundred bytes; a bandit needs almost none. | Flyweight; getters that hide where a field lives; fixed pools | `units/unit_data`, `unit_info`, `units`, `unit_creation`, `include/Characters.h` | Needs reference (units) |
-| 2 | **Classes, stats, skills, and weapon ranks** | A skill can come from a character, a class, or an item; a stat from a base, a class, a ring, and a weapon; a weapon rank from class and Holy Blood. | Data-driven tables; one query over several sources | `units/classes`, `stats`, `skills`, `data/class/`, `data/character/` | Needs reference (units) |
-| 3 | **Every sword is an individual** | Weapons that remember their kills and pass from parent to child. | A global object table with indices as handles | `items/items`, `inventory`, `staves`, `include/Items.h` | Needs reference (items) |
-| 4 | **Armies and allegiance** | An army can be neutral to the player and at war with its neighbor. | Relations per pair of factions instead of per unit | `units/factions`, `unit_state` | Needs reference (units) |
+| 1 | **A unit is made of parts** | A playable lord needs a hundred bytes; a bandit needs almost none. | Flyweight; getters that hide where a field lives; fixed pools | `units/unit_data`, `unit_info`, `units`, `unit_creation`, `include/Characters.h` | Ready (units.md) |
+| 2 | **Classes, stats, skills, and weapon ranks** | A skill can come from a character, a class, or an item; a stat from a base, a class, a ring, and a weapon; a weapon rank from class and Holy Blood. | Data-driven tables; one query over several sources | `units/classes`, `stats`, `skills`, `data/class/`, `data/character/` | Ready (units.md) |
+| 3 | **Every sword is an individual** | Weapons that remember their kills and pass from parent to child. | A global object table with indices as handles | `items/items`, `inventory`, `staves`, `include/Items.h` | Ready (items.md) |
+| 4 | **Armies and allegiance** | An army can be neutral to the player and at war with its neighbor. | Relations per pair of factions instead of per unit | `units/factions`, `unit_state` | Ready (units.md) |
 | 5 | **Who stands where** | The unit record says who someone is; something has to say where they are. | The deployment table (structure of arrays); locations: castles, villages, gates | `map/deployment`, `locations`, `map_sprites` | Ready (map.md) |
 
 ## Part II: The map and the turn
@@ -35,7 +35,7 @@ How a fight is settled in memory and how units grow from it.
 | # | Chapter | Opening problem | Patterns | Source | Status |
 |---|---|---|---|---|---|
 | 9 | **Resolving a battle** | Weapon triangle, leadership, skills that fire on chance, doubling, durability, and a linear RNG that the boot checksums can quietly sabotage—all settled before anything is drawn. | Compute first, show later: battle rounds as a recorded result; linear RNG and anti-tamper hook | `battle/battle`, `battle_stats`, `effects`, `scripted_crits`, `core/random` | Needs reference (battle); RNG in core.md |
-| 10 | **Growing stronger** | Experience, level-ups, and class promotion. | Growth rolls against tables; promotion rules and class changes | `units/level_up`, `battle_scene/results`, class-change mechanics | Needs reference (units) |
+| 10 | **Growing stronger** | Experience, level-ups, and class promotion. | Growth rolls against tables; promotion rules and class changes | `units/level_up`, `battle_scene/results`, class-change mechanics | Ready (units.md) |
 
 - **Interlude: One attack, cursor press to HP loss** — A vertical slice tracing a single player attack from target selection through the battle forecast, combat resolution, presentation, experience gain, and deferred turn consequences.
 
@@ -60,7 +60,7 @@ What carries across castles, chapters, and generations, along with the bookends 
 |---|---|---|---|---|---|
 | 15 | **Castles and towns** | A home base inside the map: shops, the pawn shop, repair, storage, the augury, class change, and conversations. | A screen within a screen; lists shared by many facilities | `castle/` | Ready (castle.md) |
 | 16 | **The arena** | An opponent ladder inside the castle that reuses the battle engine while tracking yields, defeats, and prizes. | Reusing combat in a controlled loop; arena state per unit | `arena/` | Ready (arena.md) |
-| 17 | **Love and lineage** | Love points every turn, and children whose growths, blood, and weapons come from whom their parents married. | A 9 × 15 grid; derived data computed once at a generation change | `units/lovers`, `generations`, `inheritance`, `events/first_generation_ending` | Needs reference (units) |
+| 17 | **Love and lineage** | Love points every turn, and children whose growths, blood, and weapons come from whom their parents married. | A 9 × 15 grid; derived data computed once at a generation change | `units/lovers`, `generations`, `inheritance`, `events/first_generation_ending` | Ready (units.md) |
 | 18 | **Saving** | Battery-backed SRAM, three slots, and data that must be written the moment it happens. | Serializing the pools; checksums | `save/` | Ready (save.md) |
 | 19 | **Between chapters** | The world map, the chapter intro, and the history pages. | Another screen with its own frame; edge IRQs and layer HDMA | `worldmap/`, `save/jugdral_history` | Ready (worldmap.md) |
 | 20 | **The opening** | The title screen, its intro, and an attract mode that plays real battles. | Timelines; reusing gameplay code as a demo | `title/`, `demo/` | Ready (title.md, demo.md) |
