@@ -11,36 +11,36 @@
       .al
       .xl
 
-      aUnknown8AE4B9 ; 8A/E4B9
+      aArenaUnusedByte8AE4B9 ; 8A/E4B9
 
         .byte $00
 
 
-      aUnknown8AE4BA ; 8A/E4BA
+      aArenaVRAMClearByte ; 8A/E4BA
 
         ; Read as a zero word (with the next byte) by a fixed-source DMA that clears VRAM.
         .byte $00
 
 
-      aUnknown8AE4BB ; 8A/E4BB
+      aArenaDecompressionEntry4000 ; 8A/E4BB
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
         .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000
 
 
-      aUnknown8AE4C3 ; 8A/E4C3
+      aArenaDecompressionEntry0000 ; 8A/E4C3
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
         .structDecompressionDMAEntry gcUnknownD306D6, $1000, $0000
 
 
-      aUnknown8AE4CB ; 8A/E4CB
+      aArenaDecompressionEntry2800 ; 8A/E4CB
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
         .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800
 
 
-      aUnknown8AE4D3 ; 8A/E4D3
+      aArenaDecompressionEntry2C00 ; 8A/E4D3
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
         .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00
@@ -91,15 +91,17 @@
 
       aArenaMenuStepHandlers ; 8A/E510
 
-        .word <>rsUnknown8AE530, <>rsUnknown8AE673, <>rsUnknown8AE593, <>rsUnknown8AE647, <>rsUnknown8AE68E, <>rsUnknown8AE7B7, <>rsUnknown8AE7DF, <>rsUnknown8AE832, <>rsUnknown8AE917, <>rsUnknown8AEA64, <>rsUnknown8AEA7F, <>rsUnknown8AEB92, <>rsUnknown8AEBB7, <>rsUnknown8AEBD1, <>rsUnknown8AECBF, <>rsUnknown8AECE0
+        .word <>rsArenaMenuStepInit, <>rsArenaMenuStepWaitDialogue, <>rsArenaMenuStepAfterBattle, <>rsArenaMenuStepAfterYield, <>rsArenaMenuStepFightOrQuit, <>rsArenaMenuStepWaitGoldDialogue, <>rsArenaMenuStepCountUpGold, <>rsArenaMenuStepConfirmNextRound, <>rsArenaMenuStepLeaveContinueWeapon, <>rsArenaMenuStepShowOpponent, <>rsArenaMenuStepStartQuitChangeWeapon, <>rsArenaMenuStepFadeAndStartBattle, <>rsArenaMenuStepOpenWeaponList, <>rsArenaMenuStepSelectWeapon, <>rsArenaMenuStepExitArena, <>rsArenaMenuStepExitAfterLoss
 
 
-      rsUnknown8AE530 ; 8A/E530
+      rsArenaMenuStepInit ; 8A/E530
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 0: checks arena level (<7) and starts welcome or cleared dialogue
 
         ; Arena menu step 0 (aArenaMenuStepHandlers).
 
@@ -149,12 +151,14 @@
 
         ; 8A/E593
 
-      rsUnknown8AE593 ; 8A/E593
+      rsArenaMenuStepAfterBattle ; 8A/E593
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 2: handles battle result (win, loss, yield) and starts reward/champion/loss dialogue
 
         ; Arena menu step 2 (aArenaMenuStepHandlers).
 
@@ -192,7 +196,7 @@
 
 
         _E5E3
-        jml rsUnknown8AE647
+        jml rsArenaMenuStepAfterYield
 
 
         _E5E7
@@ -240,12 +244,14 @@
 
         ; 8A/E647
 
-      rsUnknown8AE647 ; 8A/E647
+      rsArenaMenuStepAfterYield ; 8A/E647
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 3: starts yield/draw dialogue and advances to step 8
 
         ; Arena menu step 3 (aArenaMenuStepHandlers).
 
@@ -271,12 +277,14 @@
 
         ; 8A/E673
 
-      rsUnknown8AE673 ; 8A/E673
+      rsArenaMenuStepWaitDialogue ; 8A/E673
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 1: waits for dialogue to finish, draws A-press arrows, then advances to wNextMenuState
 
         ; Arena menu step 1 (aArenaMenuStepHandlers).
 
@@ -299,12 +307,14 @@
 
         ; 8A/E68E
 
-      rsUnknown8AE68E ; 8A/E68E
+      rsArenaMenuStepFightOrQuit ; 8A/E68E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 4: Fight or Quit menu
 
         ; Arena menu step 4 (aArenaMenuStepHandlers).
 
@@ -434,12 +444,14 @@
         .byte $58, $88
 
 
-      rsUnknown8AE7B7 ; 8A/E7B7
+      rsArenaMenuStepWaitGoldDialogue ; 8A/E7B7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 5: waits for reward dialogue and triggers gold count-up
 
         ; Arena menu step 5 (aArenaMenuStepHandlers).
 
@@ -470,12 +482,14 @@
 
         ; 8A/E7DF
 
-      rsUnknown8AE7DF ; 8A/E7DF
+      rsArenaMenuStepCountUpGold ; 8A/E7DF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 6: animates prize gold count-up by 100G per frame
 
         ; Arena menu step 6 (aArenaMenuStepHandlers).
 
@@ -520,12 +534,14 @@
 
         ; 8A/E832
 
-      rsUnknown8AE832 ; 8A/E832
+      rsArenaMenuStepConfirmNextRound ; 8A/E832
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 7: Yes/No prompt to fight the next arena round
 
         ; Arena menu step 7 (aArenaMenuStepHandlers).
 
@@ -629,12 +645,14 @@
 
         ; 8A/E917
 
-      rsUnknown8AE917 ; 8A/E917
+      rsArenaMenuStepLeaveContinueWeapon ; 8A/E917
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 8: Leave, Continue, or Change Weapon menu after a draw/yield
 
         ; Arena menu step 8 (aArenaMenuStepHandlers).
 
@@ -777,12 +795,14 @@
         .text "りだつ　　　けいぞく　　　ぶきもちかえ\n"
 
 
-      rsUnknown8AEA64 ; 8A/EA64
+      rsArenaMenuStepShowOpponent ; 8A/EA64
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 9: draws opponent window and advances to step 10
 
         ; Arena menu step 9 (aArenaMenuStepHandlers).
 
@@ -800,12 +820,14 @@
 
         ; 8A/EA7F
 
-      rsUnknown8AEA7F ; 8A/EA7F
+      rsArenaMenuStepStartQuitChangeWeapon ; 8A/EA7F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 10: Start, Quit, or Change Weapon menu
 
         ; Arena menu step 10 (aArenaMenuStepHandlers).
 
@@ -914,12 +936,14 @@
         .text "かいし　　　やめる\n"
 
 
-      rsUnknown8AEB92 ; 8A/EB92
+      rsArenaMenuStepFadeAndStartBattle ; 8A/EB92
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 11: fades out screen, saves money, and calls rlStartArenaBattle
 
         ; Arena menu step 11 (aArenaMenuStepHandlers).
 
@@ -950,12 +974,14 @@
 
         ; 8A/EBB7
 
-      rsUnknown8AEBB7 ; 8A/EBB7
+      rsArenaMenuStepOpenWeaponList ; 8A/EBB7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 12: opens weapon selection list
 
         ; Arena menu step 12 (aArenaMenuStepHandlers).
 
@@ -973,12 +999,14 @@
 
         ; 8A/EBD1
 
-      rsUnknown8AEBD1 ; 8A/EBD1
+      rsArenaMenuStepSelectWeapon ; 8A/EBD1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 13: handles weapon selection input and equips chosen weapon
 
         ; Arena menu step 13 (aArenaMenuStepHandlers).
 
@@ -1083,12 +1111,14 @@
 
         ; 8A/ECBF
 
-      rsUnknown8AECBF ; 8A/ECBF
+      rsArenaMenuStepExitArena ; 8A/ECBF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 14: blanks screen, returns to CASTLE_STEP_REOPEN_TOWN, and fires exit event if needed
 
         ; Arena menu step 14 (aArenaMenuStepHandlers).
 
@@ -1112,12 +1142,14 @@
 
         ; 8A/ECE0
 
-      rsUnknown8AECE0 ; 8A/ECE0
+      rsArenaMenuStepExitAfterLoss ; 8A/ECE0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Arena menu step 15: blanks screen and returns to CASTLE_STEP_REOPEN_TOWN after a loss
 
         ; Arena menu step 15 (aArenaMenuStepHandlers).
 
@@ -1141,13 +1173,15 @@
       .al
       .xl
 
-      rlUnknown87A082 ; 87/A082
+      rlGetArenaOpponentCharacterID ; 87/A082
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns arena opponent character ID in A for current chapter, arena level, and weapon range (carry set if >= 7)
 
         phb
         php
@@ -1219,13 +1253,15 @@
 
         ; 87/A0DF
 
-      rlUnknown87A0DF ; 87/A0DF
+      rlGetArenaOpponentEquippedWeapons ; 87/A0DF
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Gets arena opponent's equipped weapon ROM pointers for display
 
         phb
         php
@@ -1234,7 +1270,7 @@
         .databank $87
         phx
         phy
-        jsl rlUnknown87A082
+        jsl rlGetArenaOpponentCharacterID
         bcs _A135
         tay
         stz wTempItemDataROMPointer,b
@@ -1402,7 +1438,7 @@
         jsl rlDrawMenuTextLine
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsl rlUnknown87A082
+        jsl rlGetArenaOpponentCharacterID
         sta wTempVariable1,b
         jsl rlGetCharacterNamePointer
         lda lRoutineVariable,b
@@ -1420,7 +1456,7 @@
         sta lR18+1
         ldx #$0E0E
         jsl rlDrawMenuTextLine
-        jsl rlUnknown87A0DF
+        jsl rlGetArenaOpponentEquippedWeapons
         jsl rlGetItemNamePointer
         lda lRoutineVariable,b
         sta lR18
@@ -1539,9 +1575,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #(`aUnknown8AE4BA)<<8
+        lda #(`aArenaVRAMClearByte)<<8
         sta $4303,b
-        lda #<>aUnknown8AE4BA
+        lda #<>aArenaVRAMClearByte
         sta $4302,b
         lda #$2000
         sta $4305,b
@@ -1576,9 +1612,9 @@
         lda #$3800
         sta wR8
         jsl rlSetLayerPositionsAndSizes
-        lda #(`aUnknown8AE4C3)<<8
+        lda #(`aArenaDecompressionEntry0000)<<8
         sta lR19+1
-        lda #<>aUnknown8AE4C3
+        lda #<>aArenaDecompressionEntry0000
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
@@ -1589,23 +1625,23 @@
 
           .structDMAToVRAM g4bppWeaponTypeIcons, $0800, $80, $D600
 
-        lda #(`aUnknown8AE4CB)<<8
+        lda #(`aArenaDecompressionEntry2800)<<8
         sta lR19+1
-        lda #<>aUnknown8AE4CB
+        lda #<>aArenaDecompressionEntry2800
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #(`aUnknown8AE4D3)<<8
+        lda #(`aArenaDecompressionEntry2C00)<<8
         sta lR19+1
-        lda #<>aUnknown8AE4D3
+        lda #<>aArenaDecompressionEntry2C00
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
           .structDMAToVRAM g2bppItemStatLabels, $0800, $80, $9800
 
-        lda #(`aUnknown8AE4BB)<<8
+        lda #(`aArenaDecompressionEntry4000)<<8
         sta lR19+1
-        lda #<>aUnknown8AE4BB
+        lda #<>aArenaDecompressionEntry4000
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlGetDialogueBoxGraphicsAndPalette
@@ -1720,7 +1756,7 @@
         .autsiz
         .databank ?
 
-        ; Unless wChapterFlags bit $10 is set, creates the arena opponent as unit $2100 (rlUnknown87A082, rlCreateUnit); returns if rlUnknown87A082 sets carry. Then builds the rounds and starts the battle scene with wBattleType 1 and battle song $3B.
+        ; Unless wChapterFlags bit $10 is set, creates the arena opponent as unit $2100 (rlGetArenaOpponentCharacterID, rlCreateUnit); returns if rlGetArenaOpponentCharacterID sets carry. Then builds the rounds and starts the battle scene with wBattleType 1 and battle song $3B.
 
         phb
         php
@@ -1734,7 +1770,7 @@
         lda wChapterFlags,b
         bit #$0010
         bne _B530
-        jsl rlUnknown87A082
+        jsl rlGetArenaOpponentCharacterID
         bcs _B54D
         pha
         lda #$2100
