@@ -184,7 +184,7 @@
         lda #$0001
         sta aDialogue.wTextSpeed,b
         lda #$0004
-        sta aDialogue.wUnknown00188C,b
+        sta aDialogue.wSlowScrollRate,b
         lda #$0080
         sta $18E1,b,x
         lda #$0026

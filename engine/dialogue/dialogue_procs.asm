@@ -41,7 +41,7 @@
         inc y
         lda [lR22],y
         sta lR18+1
-        jsl rlStartConversationDialogue
+        jsl rlStartMapDialogue
 
         lda wEventUnit1Pointer,b
         jsl rlGetCharacterIDOrSigurdFromUnitPointer
@@ -111,7 +111,7 @@
         .autsiz
         .databank ?
 
-        ; Grabs graphics and palette
+        ; Loads the box graphics and palette
 
         lda #<>rlProcDialogueCycle3
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -127,7 +127,10 @@
         .autsiz
         .databank ?
 
-        ; Darkens the background
+        ; Darkens the map: raises the subtracted colour (COLDATA) by 1 every second
+        ; frame up to 5. Then cycle 4 runs the text, cycle 5 brightens again, and
+        ; cycles 6-11 reload the menu font and icons, whose VRAM the text slots
+        ; ($8000 and $9000) wrote over.
 
         lda aProcSystem.aBody0,b,x
         beq +
@@ -353,7 +356,7 @@
         cmp #$FFFF
         beq +
 
-          lda aDialogue.wUnknown0018A3,b
+          lda aDialogue.wSlot0MouthFrame,b
           ldy #0
           jsl rlUpdateDialoguePortraitOverlayTiles
 
@@ -362,7 +365,7 @@
         cmp #$FFFF
         beq +
 
-          lda aDialogue.wUnknown0018A5,b
+          lda aDialogue.wSlot1MouthFrame,b
           ldy #1
           jsl rlUpdateDialoguePortraitOverlayTiles
 
@@ -376,7 +379,7 @@
           beq _End
 
         +
-        lda aDialogue.wUnknown0018A7,b
+        lda aDialogue.wMouthTimer,b
         beq _End
 
           jsl rlUploadDialoguePortraitOverlayTiles
@@ -431,13 +434,17 @@
       .al
       .xl
 
-      rlStartConversationDialogue ; 82/8653
+      rlStartMapDialogue ; 82/8653
 
         .al
         .autsiz
         .databank ?
 
-        ; Starts conversation dialogue HDMA/text in mode 1 and sets up conversation boxes
+        ; Starts the text at lR18 in DIALOGUE_MODE_MAP with the BG3 scroll HDMA, sets
+        ; the slots up as the upper and lower map boxes, clears both portraits and
+        ; sets the colour math that procDialogue uses to darken the map. Callers:
+        ; procDialogue (the DIALOGUE event command) and, through
+        ; rlStartDialogueWithBoxGraphics, the map battle quotes.
 
         ; Input:
         ; lR18 = dialogue pointer
@@ -859,10 +866,10 @@
         .autsiz
         .databank ?
 
-        ; Start dialogue HDMA/text in mode 1 (rlStartConversationDialogue) and load box graphics/palette
+        ; rlStartMapDialogue, then loads the box graphics and palette
 
         php
-        jsl rlStartConversationDialogue
+        jsl rlStartMapDialogue
         jsl rlGetDialogueBoxGraphicsAndPalette
         plp
         rtl

@@ -867,7 +867,7 @@
         lda #0
         sta aBGPaletteBuffer,b
         lda #2
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         ldx #0
         jsr rsConversationSetupSlots
 
@@ -1136,8 +1136,8 @@
         sta aDialogue._Slot[0].wDisplayArea,b
         lda #pack([30, 6])
         sta aDialogue._Slot[1].wDisplayArea,b
-        stz aDialogue._Slot[0].wUnknown0018E1,b
-        stz aDialogue._Slot[1].wUnknown0018E1,b
+        stz aDialogue._Slot[0].wScrollOffset,b
+        stz aDialogue._Slot[1].wScrollOffset,b
 
         lda #pack([4, 2])
         sta wR1

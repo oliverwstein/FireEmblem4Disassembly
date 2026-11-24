@@ -139,7 +139,7 @@
         lda #<>rsRunFrameTasks
         sta wMainLoopPointer
         lda #$0002
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         lda #$0020
         tsb wChapterFlags,b
         jsl rlDispatchCastleState

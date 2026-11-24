@@ -715,13 +715,13 @@
         .databank ?
 
         lda #$0003
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         lda #$0480
         tsb aDialogue.wStatus,b
         lda #$0001
         sta aDialogue.wTextSpeed,b
         lda #$0004
-        sta aDialogue.wUnknown00188C,b
+        sta aDialogue.wSlowScrollRate,b
         lda #$0040
         sta $18E1,b,x
         lda #$0200

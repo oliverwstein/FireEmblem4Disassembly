@@ -183,7 +183,7 @@
         lda #$0000
         sta wR5
         sta wR4
-        lda aDialogue.wUnknown0018A3,b,x
+        lda aDialogue.wSlot0MouthFrame,b,x
         beq _9534
         cmp #$0001
         beq _952F
@@ -227,7 +227,7 @@
         lda wCurrentChapter,b
         cmp #$FFFF
         beq _956A
-        lda aDialogue.wUnknown0018A3,b,x
+        lda aDialogue.wSlot0MouthFrame,b,x
         beq _956A
         cmp #$0001
         beq _9565
@@ -638,7 +638,7 @@
         ; Sets up the dialogue box for a castle keeper: text speed 2, text sound, buffer and VRAM targets.
 
         lda #$0003
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         lda #$0002
         sta aDialogue.wTextSpeed,b
         lda #$0001

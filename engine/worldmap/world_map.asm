@@ -182,7 +182,7 @@
         lda #$03FF
         sta wMapTileIDMask,b
         lda #$0002
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         lda #(`aDecompressionDMAEntry80B61E)<<8
         sta lR19+1
         lda #<>aDecompressionDMAEntry80B61E

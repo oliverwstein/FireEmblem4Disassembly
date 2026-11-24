@@ -45,11 +45,11 @@
         stz aDialogue.wStatus,b
         stz aDialogue.wCommandCycle,b
         stz aDialogue.wPauseTimer,b
-        stz aDialogue.wUnknown00188C,b
-        stz aDialogue.wUnknown00188E,b
-        stz aDialogue.wUnknown0018A3,b
-        stz aDialogue.wUnknown0018A5,b
-        stz aDialogue.wUnknown0018A7,b
+        stz aDialogue.wSlowScrollRate,b
+        stz aDialogue.wSlowScrollTimer,b
+        stz aDialogue.wSlot0MouthFrame,b
+        stz aDialogue.wSlot1MouthFrame,b
+        stz aDialogue.wMouthTimer,b
         stz aDialogue.wFreeHDMATable,b
 
         jsl rlDialogueClearActivePointerStack
@@ -117,7 +117,7 @@
         lda #0
         sta aDialogue._Slot[0].wBGBufferOffset,b,x
         sta aDialogue._Slot[0].wVRAMTileOffset,b,x
-        sta aDialogue._Slot[0].wUnknown0018E1,b,x
+        sta aDialogue._Slot[0].wScrollOffset,b,x
         sta aDialogue.wUnknown001890,b
         sta aDialogue.wGraphicBufferPixelOffset,b
         sta aDialogue.wStringPixelLength,b
@@ -135,9 +135,9 @@
 
         stz aDialogue.wStatus,b
         stz aDialogue.wPauseTimer,b
-        stz aDialogue.wUnknown0018A3,b
-        stz aDialogue.wUnknown0018A5,b
-        stz aDialogue.wUnknown0018A7,b
+        stz aDialogue.wSlot0MouthFrame,b
+        stz aDialogue.wSlot1MouthFrame,b
+        stz aDialogue.wMouthTimer,b
         rtl
 
         .databank 0
@@ -268,12 +268,12 @@
         .autsiz
         .databank ?
 
-        ; A = mode (kept in aDialogue.wUnknown0018D0; the dialogue code treats 1, 2 and
-        ; 3 differently, not worked out), lR18 = text. Clears both slots, sets the text
-        ; speed from the options and enables the dialogue engine.
+        ; A = mode (DIALOGUE_MODE_*, kept in aDialogue.wMode), lR18 = text. Clears
+        ; both slots, sets the text speed from the options and enables the dialogue
+        ; engine.
 
         php
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         lda lR18
         sta aDialogue.lActivePointer,b
         lda lR18+1
@@ -337,12 +337,12 @@
         .autsiz
         .databank ?
 
-        ; Unreferenced; resets wSlotOffset, _Slot[0].wUnknown0018E1, and wPauseTimer
+        ; Unreferenced; resets wSlotOffset, _Slot[0].wScrollOffset, and wPauseTimer
 
         rep #$30
         lda #0
         sta aDialogue.wSlotOffset
-        sta aDialogue._Slot[0].wUnknown0018E1
+        sta aDialogue._Slot[0].wScrollOffset
         sta aDialogue.wPauseTimer
         rtl
 
@@ -441,13 +441,14 @@
         .autsiz
         .databank ?
 
-        ; Runs the dialogue engine for one frame: the next characters or commands of the active text, unless it is paused. Callers wait until aDialogue.wStatus and aDialogue.wUnknown0018C9 (the tiles still to upload) are both 0.
+        ; Runs the dialogue engine for one frame: the next characters or commands of the active text, unless it is paused. Callers wait until aDialogue.wStatus and aDialogue.wPendingTileBytes (the tiles still to upload) are both 0.
+        ; wPauseTimer is the frames left before the next character; $FFFF (A or B pressed) draws one character a frame until a wait or pause. Start ends the text (rlAbortDialogueAndFreeBoxes) unless the mode is DIALOGUE_MODE_KEEPER, a song is loading (wMusicID), DialogueStatusPreventASpeedUp is set, or a multi-frame command is running.
 
         php
         rep #$30
 
         lda #0
-        sta aDialogue.wUnknown0018C9,b
+        sta aDialogue.wPendingTileBytes,b
 
         lda #DialogueStatusToggleMouthMove
         trb aDialogue.wStatus,b
@@ -484,7 +485,7 @@
               lda wMusicID,b
               bne _825E
 
-                lda aDialogue.wUnknown0018D0,b
+                lda aDialogue.wMode,b
                 cmp #3
                 beq _825E
 
@@ -641,51 +642,51 @@
         bit #DialogueStatusAutoscroll
         beq +
 
-          inc aDialogue.wUnknown00188E,b
-          lda aDialogue.wUnknown00188E,b
+          inc aDialogue.wSlowScrollTimer,b
+          lda aDialogue.wSlowScrollTimer,b
           and #$7FFF
-          cmp aDialogue.wUnknown00188C,b
+          cmp aDialogue.wSlowScrollRate,b
           bcc _CLC
 
-            stz aDialogue.wUnknown00188E,b
-            lda aDialogue._Slot[0].wUnknown0018E1,b,x
+            stz aDialogue.wSlowScrollTimer,b
+            lda aDialogue._Slot[0].wScrollOffset,b,x
             clc
             adc #1
-            sta aDialogue._Slot[0].wUnknown0018E1,b,x
+            sta aDialogue._Slot[0].wScrollOffset,b,x
             bra _CLC
 
         +
-        lda aDialogue._Slot[0].wUnknown0018E1,b,x
+        lda aDialogue._Slot[0].wScrollOffset,b,x
         and #$000F
         beq _CLC
 
-          lda aDialogue.wUnknown00188C,b
+          lda aDialogue.wSlowScrollRate,b
           beq +
 
-            inc aDialogue.wUnknown00188E,b
-            lda aDialogue.wUnknown00188E,b
+            inc aDialogue.wSlowScrollTimer,b
+            lda aDialogue.wSlowScrollTimer,b
             and #$7FFF
-            cmp aDialogue.wUnknown00188C,b
+            cmp aDialogue.wSlowScrollRate,b
             bcc _SEC
 
-            stz aDialogue.wUnknown00188E,b
-            lda aDialogue._Slot[0].wUnknown0018E1,b,x
+            stz aDialogue.wSlowScrollTimer,b
+            lda aDialogue._Slot[0].wScrollOffset,b,x
             clc
             adc #1
-            sta aDialogue._Slot[0].wUnknown0018E1,b,x
+            sta aDialogue._Slot[0].wScrollOffset,b,x
             bra ++
 
           +
-          lda aDialogue._Slot[0].wUnknown0018E1,b,x
+          lda aDialogue._Slot[0].wScrollOffset,b,x
           clc
           adc #2
-          sta aDialogue._Slot[0].wUnknown0018E1,b,x
+          sta aDialogue._Slot[0].wScrollOffset,b,x
 
           +
           and #$000F
           beq _SEC
 
-            lda aDialogue._Slot[0].wUnknown0018E1,b,x
+            lda aDialogue._Slot[0].wScrollOffset,b,x
             and #$000E
             cmp #$000E
             bne _SEC
@@ -693,7 +694,7 @@
               jsr rsDialogueClearNextLineBGBuffer
               jsr rsDialogueSetDefaultPauseTimer
 
-              lda aDialogue.wUnknown0018D0,b
+              lda aDialogue.wMode,b
               cmp #2
               beq _SEC
 
@@ -1314,7 +1315,7 @@
         asl a
         clc
         adc #$0020
-        sta aDialogue.wUnknown0018C9,b
+        sta aDialogue.wPendingTileBytes,b
 
         ldx aDialogue.wSlotOffset,b
         lda aDialogue._Slot[0].wVRAMTileOffset,b,x
@@ -1323,7 +1324,7 @@
         asl a
         clc
         adc aDialogue._Slot[0].wVRAMAddress,b,x
-        sta aDialogue.wUnknown0018CB,b
+        sta aDialogue.wPendingTileVRAMAddress,b
         rts
 
         .databank 0
@@ -1457,13 +1458,13 @@
 
         ; Plays text sound and uploads pending character tiles to VRAM
 
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         bne +
 
           rts
 
         +
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #2
         beq +
 
@@ -1481,7 +1482,7 @@
         asl a
         asl a
 
-        lda aDialogue.wUnknown0018CB,b
+        lda aDialogue.wPendingTileVRAMAddress,b
         sec
         sbc aDialogue._Slot[0].wVRAMAddress,b,x
         lsr a
@@ -1489,7 +1490,7 @@
         lsr a
         sta wR0
 
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         lsr a
         lsr a
         lsr a
@@ -1506,7 +1507,7 @@
         sta wR0
         tay
 
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         lsr a
         lsr a
         lsr a
@@ -1529,12 +1530,12 @@
         asl a
         sta wR0
 
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         sec
         sbc wR0
         sta wR0
 
-        lda aDialogue.wUnknown0018CB,b
+        lda aDialogue.wPendingTileVRAMAddress,b
         sta wR1
 
         ; wR0 = size, wR1 = dest, lR18 = source
@@ -1570,7 +1571,7 @@
           asl a
           asl a
           clc
-          adc aDialogue.wUnknown0018CB,b
+          adc aDialogue.wPendingTileVRAMAddress,b
           sec
           sbc #$2000
           sta wR1
@@ -1779,21 +1780,21 @@
         bit #DialogueStatusAutoscroll
         bne _8921
 
-          lda aDialogue.wUnknown00188C,b
+          lda aDialogue.wSlowScrollRate,b
           beq +
 
-            lda aDialogue._Slot[0].wUnknown0018E1,b,x
+            lda aDialogue._Slot[0].wScrollOffset,b,x
             clc
             adc #1
             bra ++
 
             +
-            lda aDialogue._Slot[0].wUnknown0018E1,b,x
+            lda aDialogue._Slot[0].wScrollOffset,b,x
             clc
             adc #2
 
           +
-          sta aDialogue._Slot[0].wUnknown0018E1,b,x
+          sta aDialogue._Slot[0].wScrollOffset,b,x
           lda #1
           sta aDialogue.wPauseTimer,b
 
@@ -2121,18 +2122,19 @@
         .autsiz
         .databank ?
 
-        ; DIALOGUE_ESCAPE
+        ; DIALOGUE_NL (opcode $02; also $00 $00 and $35-$39): moves to the next
+        ; line, which starts a one-line scroll (see wScrollOffset).
 
         ldx aDialogue.wSlotOffset,b
         lda aDialogue.wStatus,b
         bit #DialogueStatusAutoscroll
         beq _8AF4
 
-          lda aDialogue.wUnknown00188E,b
+          lda aDialogue.wSlowScrollTimer,b
           bit #$8000
           bne +
 
-            lda aDialogue._Slot[0].wUnknown0018E1,b,x
+            lda aDialogue._Slot[0].wScrollOffset,b,x
             and #$000F
             beq _8AF4
 
@@ -2150,7 +2152,7 @@
         beq +
 
           lda #$8000
-          tsb aDialogue.wUnknown00188E,b
+          tsb aDialogue.wSlowScrollTimer,b
 
           jsr rsDialogueClearNextLineBGBuffer
 
@@ -3422,7 +3424,7 @@
 
         ; Pauses map sprite and tile animations when dialogue ends in mode 1
 
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #1
         bne _End
 
@@ -3462,7 +3464,7 @@
         sta @l aDialogue._Slot[0].wPortraitID
         sta @l aDialogue._Slot[1].wPortraitID
 
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #1
         bne rlDialogueEndRestoreMap
 
@@ -3563,7 +3565,7 @@
 
         ; Restores map animations and finishes dialogue end sequence
 
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #1
         bne _End
 
@@ -3715,6 +3717,9 @@
         .autsiz
         .databank ?
 
+        ; Frames per character for the message speed option (0-4): 6 - option,
+        ; with 2 raised to the fastest, 1. So 6, 5, 4, 3, 1.
+
         jsl rlGetTextSpeedOption
         sta wR0
 
@@ -3858,8 +3863,8 @@
 
         lda #0
         sta aDialogue._Slot[0].wUnknown0018E9,b
-        sta aDialogue.wUnknown0018A3,b
-        sta aDialogue.wUnknown0018A5,b
+        sta aDialogue.wSlot0MouthFrame,b
+        sta aDialogue.wSlot1MouthFrame,b
         rtl
 
         .databank 0
@@ -3929,7 +3934,7 @@
 
         ; Opens dialogue box for active slot (conversation or map mode)
 
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #0
         bne +
 
@@ -3947,7 +3952,7 @@
         bit aDialogue.wStatus,b
         bne -
 
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #1
         beq rlDialogueOpenMapSlotBox
 
@@ -4133,7 +4138,7 @@
 
         ; Closes dialogue box for active slot (conversation or map mode)
 
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #0
         bne +
         
@@ -4151,7 +4156,7 @@
         bit aDialogue.wStatus,b
         beq -
 
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #1
         beq rlDialogueCloseMapSlotBox
 
@@ -4351,7 +4356,7 @@
         cmp aDialogue._Slot[0].wPortraitID,b,x
         beq _End
 
-        ldx aDialogue.wUnknown0018D0,b
+        ldx aDialogue.wMode,b
         cpx #0
         beq _End
 
@@ -4500,7 +4505,7 @@
         cmp aDialogue._Slot[0].wPortraitID,b,x
         beq _End
 
-        ldx aDialogue.wUnknown0018D0,b
+        ldx aDialogue.wMode,b
         cpx #0
         beq _End
 
@@ -4564,7 +4569,7 @@
 
         sta aDialogue._Slot[0].wPortraitID,b,x
 
-        lda aDialogue.wUnknown0018D0,b
+        lda aDialogue.wMode,b
         cmp #0
         beq _End
 
@@ -4775,7 +4780,7 @@
         sta lR19
         sec
         sbc #8 * 2
-        cmp aDialogue._Slot[0].wUnknown0018E1,b
+        cmp aDialogue._Slot[0].wScrollOffset,b
         bcs _9579
 
           sta lR21
@@ -4786,7 +4791,7 @@
 
           lda lR19
           tax
-          lda aDialogue._Slot[0].wUnknown0018E1,b
+          lda aDialogue._Slot[0].wScrollOffset,b
           sec
           sbc lR21
           jsl rlDivideWR13ByWR14
@@ -4907,7 +4912,7 @@
 
         sec
         sbc #$0010
-        cmp aDialogue._Slot[1].wUnknown0018E1,b
+        cmp aDialogue._Slot[1].wScrollOffset,b
         bcs _964D
 
         sta lR21
@@ -4920,7 +4925,7 @@
           lda lR19
           tax
 
-          lda aDialogue._Slot[1].wUnknown0018E1,b
+          lda aDialogue._Slot[1].wScrollOffset,b
           sec
           sbc lR21
           jsl rlDivideWR13ByWR14
@@ -5479,21 +5484,21 @@
         bit #DialogueStatusToggleMouthMove
         bne +
 
-          lda aDialogue.wUnknown0018A7,b
+          lda aDialogue.wMouthTimer,b
           beq _989E
 
           cmp #8
           bcs ++
 
-          dec aDialogue.wUnknown0018A7,b
+          dec aDialogue.wMouthTimer,b
           bra _989E
 
         +
         lda #$000F
-        sta aDialogue.wUnknown0018A7,b
+        sta aDialogue.wMouthTimer,b
 
         +
-        dec aDialogue.wUnknown0018A7,b
+        dec aDialogue.wMouthTimer,b
 
         lda wVBlankEnabledFramecount
         and #$0007
@@ -5512,18 +5517,18 @@
           ldx aDialogue.wSlotOffset,b
           bne +
 
-            sta aDialogue.wUnknown0018A3,b
+            sta aDialogue.wSlot0MouthFrame,b
             bra _End
 
           +
-          sta aDialogue.wUnknown0018A5,b
+          sta aDialogue.wSlot1MouthFrame,b
           bra _End
 
           _989E
           lda #0
           sta aDialogue._Slot[0].wUnknown0018E9,b
-          sta aDialogue.wUnknown0018A3,b
-          sta aDialogue.wUnknown0018A5,b
+          sta aDialogue.wSlot0MouthFrame,b
+          sta aDialogue.wSlot1MouthFrame,b
 
         _End
         rts

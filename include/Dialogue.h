@@ -6,7 +6,7 @@
   DialogueStatusWaitForInput      = bits($0004)
   DialogueStatusAssetLoading      = bits($0008)
   DialogueStatusUpdateMouth       = bits($0010)
-  DialogueStatusToggleMouthMove   = bits($0020) ; set if displaying anything but character $BF?
+  DialogueStatusToggleMouthMove   = bits($0020) ; set on a frame that draws a character other than ･ (page 0 $BF)
   DialogueStatusPreventInput      = bits($0040) ; if set: ignore the display height for the BG area?
   DialogueStatusPreventBSkipping  = bits($0080)
   DialogueStatusPreventASpeedUp   = bits($0100)
@@ -17,6 +17,13 @@
   DialogueStatus2000              = bits($2000)
   DialogueStatusCaretLight        = bits($4000) ; the little "press A" indicator
   DialogueStatusCaretDark         = bits($8000) ; the little "press A" indicator
+
+  ; aDialogue.wMode, passed to rlDialogueStartText. The modes differ in what
+  ; DIALOGUE_OPEN_BOX, DIALOGUE_CLOSE_BOX and the portrait commands do.
+  DIALOGUE_MODE_NONE         = 0 ; no boxes or portraits: castle name pop-ups, battle scene quotes, world map, save menu
+  DIALOGUE_MODE_MAP          = 1 ; the two map boxes (procDialogueBox) with portraits in them: DIALOGUE, map battle quotes
+  DIALOGUE_MODE_CONVERSATION = 2 ; the conversation screen's two windows and portraits: DIALOGUE_WITH_BG, castle talks, credits
+  DIALOGUE_MODE_KEEPER       = 3 ; a keeper's box: shops, arena, augury, class change; Start can't skip the text
 
   WM_PortraitSlot0 = $00
   WM_PortraitSlot1 = $02
@@ -321,7 +328,7 @@
     .byte $00, $34
   .endsegment
 
-  ; $35 - $39 are all escape commands
+  ; $35 - $39 are all newlines (the same handler as DIALOGUE_NL and $00 $00)
   ; $3A calls $03
   ; $3B calls $04
   ; $3C calls $05

@@ -427,7 +427,7 @@
 
         jsl rlEvaluateEpilogueEndings
         lda #$0002
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         ldx #$07FE
         lda #$00FF
 
@@ -558,7 +558,7 @@
         sta $420B,b
         rep #$20
         lda #$0002
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         lda #(`aDecompressionDMAEntry80EFA8)<<8
         sta lR19+1
         lda #<>aDecompressionDMAEntry80EFA8
@@ -749,7 +749,7 @@
         sta $420B,b
         rep #$20
         lda #$0002
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         ldx #$07FE
         lda #$03FF
 
@@ -1091,7 +1091,7 @@
         lda #$0001
         sta aDialogue.wTextSpeed,b
         lda #$0004
-        sta aDialogue.wUnknown00188C,b
+        sta aDialogue.wSlowScrollRate,b
         lda #$0080
         sta $18E1,b,x
         lda #$0818

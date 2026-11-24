@@ -7369,7 +7369,7 @@
         bne +
 
           lda #4
-          sta aDialogue.wUnknown00188C,b
+          sta aDialogue.wSlowScrollRate,b
           lda #6
           sta aDialogue.wTextSpeed,b
           lda #0
@@ -7377,7 +7377,7 @@
 
         +
         lda #2
-        sta aDialogue.wUnknown0018D0,b
+        sta aDialogue.wMode,b
         lda #(4 << 8 | 30)
         sta aDialogue._Slot[0].wDisplayArea,b,x
         lda #$9000 >> 1

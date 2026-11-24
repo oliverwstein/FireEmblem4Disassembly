@@ -1745,7 +1745,7 @@
         jsl rlRunDialogueCycle
         lda aDialogue.wStatus,b
         bne _DC4F
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         bne _DC4F
         inc wGameStateStep,b
 
@@ -1809,7 +1809,7 @@
         jsl rlRunDialogueCycle
         lda aDialogue.wStatus,b
         bne _DC91
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         bne _DC91
         lda wSaveMenuSlotRow,b
         jsr rsSaveMenuDrawRowTiles
@@ -2085,7 +2085,7 @@
         jsl rlRunDialogueCycle
         lda aDialogue.wStatus,b
         bne _DDA7
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         bne _DDA7
         lda wSaveMenuRowsDrawn,b
         jsr rsSaveMenuRenderSlotTitle
@@ -2094,7 +2094,7 @@
         jsl rlRunDialogueCycle
         lda aDialogue.wStatus,b
         bne _DDBB
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         bne _DDBB
         lda wSaveMenuRowsDrawn,b
         inc wSaveMenuRowsDrawn,b
@@ -3490,7 +3490,7 @@
         jsl rlRunDialogueCycle
         lda aDialogue.wStatus,b
         bne _E691
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         bne _E691
         lda wSaveMenuRowsDrawn,b
         inc wSaveMenuRowsDrawn,b
@@ -3523,7 +3523,7 @@
         jsl rlRunDialogueCycle
         lda aDialogue.wStatus,b
         bne _E6B9
-        lda aDialogue.wUnknown0018C9,b
+        lda aDialogue.wPendingTileBytes,b
         bne _E6B9
         lda wSaveMenuRowsDrawn,b
         inc wSaveMenuRowsDrawn,b

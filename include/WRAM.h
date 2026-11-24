@@ -1653,8 +1653,13 @@
       wUnknown001886            .word ? ; $001886
       wTextSpeed                .word ? ; $001888
       wPauseTimer               .word ? ; $00188A
-      wUnknown00188C            .word ? ; $00188C
-      wUnknown00188E            .word ? ; $00188E
+      wSlowScrollRate           .word ? ; $00188C
+        ; Frames per pixel of a slow scroll (the credits, the records, the first
+        ; generation's ending); 0 in ordinary dialogue, where a line scrolls 2
+        ; pixels a frame.
+      wSlowScrollTimer          .word ? ; $00188E
+        ; Counts up to wSlowScrollRate. Bit 15 is set by a newline while
+        ; DialogueStatusAutoscroll is on.
       wUnknown001890            .word ? ; $001890
       wUnknown001892            .word ? ; $001892
       bFontPage                 .byte ? ; $001894
@@ -1666,9 +1671,14 @@
       wClearTile                .word ? ; $00189D
       wBaseTile                 .word ? ; $00189F ; X indexed?
       wFreeHDMATable            .word ? ; $0018A1
-      wUnknown0018A3            .word ? ; $0018A3
-      wUnknown0018A5            .word ? ; $0018A5
-      wUnknown0018A7            .word ? ; $0018A7
+      wSlot0MouthFrame          .word ? ; $0018A3
+      wSlot1MouthFrame          .word ? ; $0018A5
+        ; Mouth overlay frame (0 closed, 1, 2) of each slot's portrait, from
+        ; aDialogueMouthAnimationFrames; read as a pair indexed by slot.
+      wMouthTimer               .word ? ; $0018A7
+        ; Set to 15 on each frame a character other than ･ is drawn and counted
+        ; down; the mouth moves while it is 8 or more, so it stops about 7
+        ; frames after the last character.
       wUnit1                    .word ? ; $0018A9
       wUnit2                    .word ? ; $0018AB
       wNumber1                  .word ? ; $0018AD
@@ -1680,10 +1690,14 @@
 
       lFontGraphics             .long ? ; $0018C3
       lFontWidthTable           .long ? ; $0018C6
-      wUnknown0018C9            .word ? ; $0018C9 ; current size to copy to VRAM
-      wUnknown0018CB            .word ? ; $0018CB ; current VRAM destination
+      wPendingTileBytes         .word ? ; $0018C9
+        ; Bytes of aCharacterGraphicsBuffer drawn this frame, to upload; callers
+        ; wait for it and wStatus to be 0 before they reuse the screen.
+      wPendingTileVRAMAddress   .word ? ; $0018CB ; their VRAM destination
       lHDMARoutine              .long ? ; $0018CD
-      wUnknown0018D0            .word ? ; $0018D0 ; dialogue type? 1 = BG, 2 = no BG?
+      wMode                     .word ? ; $0018D0
+        ; DIALOGUE_MODE_* (include/Dialogue.h): which boxes the text opens and
+        ; how portraits are shown. Set by rlDialogueStartText.
 
       _Slot .brept 2
 
@@ -1700,7 +1714,12 @@
         .endunion
         wBGBufferOffset       .word ? ; $0018DD
         wVRAMTileOffset       .word ? ; $0018DF
-        wUnknown0018E1        .word ? ; $0018E1
+        wScrollOffset         .word ? ; $0018E1
+          ; Pixels the slot's text has scrolled up. A newline adds 2 and the
+          ; scroll step (rsDialogueStepAutoscroll) adds 2 a frame until the next
+          ; multiple of 16, so one line takes 8 frames; the BG3 HDMA
+          ; (rlDialogueUpdateHDMATable) scrolls the box by it once the text
+          ; passes the box's last line. Cleared when the slot is reset.
         wUnknown0018E3        .word ? ; $0018E3
         wPortraitID           .word ? ; $0018E5 ; can also be portrait RAM address?
         wUnknown0018E7        .word ? ; $0018E7
