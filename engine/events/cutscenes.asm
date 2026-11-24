@@ -46,12 +46,12 @@
 
       aProcBelhallaMagesAttackCode ; 9E/F64D
 
-        PROC_CALL rlUnknown9EF79D
+        PROC_CALL rlSpawnNextBelhallaAttackingMage
         PROC_JUMP_IF_BITS_SET _MagesAttacked, $0002
 
         -
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EF822
+        PROC_CALL rlCheckBelhallaMageProcEnded
         PROC_JUMP_IF_BITS_UNSET -, $0004
 
         PROC_YIELD 1
@@ -59,7 +59,7 @@
 
         ; Check targets to hit
         _MagesAttacked
-        PROC_CALL rlUnknown9EF703
+        PROC_CALL rlInitBelhallaMeteorEffect
         PROC_SET_ONCYCLE rlQueueMapMagicBackgroundAll
         PROC_YIELD 16
         PROC_CALL rlUploadMapMagicBackgroundTiles
@@ -92,7 +92,7 @@
 
         ; Meteors fall
         -
-        PROC_CALL rlUnknown9EF724
+        PROC_CALL rlAdvanceBelhallaMeteorTarget
         PROC_CALL rlStartBelhallaMagesBlast
         PROC_CALL rlStartMapMagicEffect
         PROC_YIELD 128
@@ -101,7 +101,7 @@
         PROC_YIELD 1
         PROC_JUMP_WHILE_UNK_TIMER -
 
-        PROC_CALL rlUnknown9EF791
+        PROC_CALL rlClearBelhallaMagesProcBit4
 
         -
         PROC_CALL rlScriptedCritFadeBack
@@ -110,14 +110,16 @@
 
         _F6FA
         PROC_YIELD 16
-        PROC_CALL rlUnknown9EF76F
+        PROC_CALL rlEndBelhallaMagesAttack
         PROC_END
 
-      rlUnknown9EF703 ; 9E/F703
+      rlInitBelhallaMeteorEffect ; 9E/F703
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets Meteor magic effect (4), flags $8401, and caster pixel $00FF
 
         lda #4
         sta wMapMagicAttackerEffect
@@ -132,20 +134,22 @@
 
         .databank 0
 
-      rlUnknown9EF724 ; 9E/F724
+      rlAdvanceBelhallaMeteorTarget ; 9E/F724
 
         .al
         .autsiz
         .databank ?
 
+        ; Sets wMapMagicTargetPixel from next entry in aBelhallaMeteorTargets
+
         phx
         lda aProcSystem.aBody6,x
         asl a
         tax
-        lda aUnknown9EF765+1,x
+        lda aBelhallaMeteorTargets+1,x
         and #$00FF
         tay
-        lda aUnknown9EF765,x
+        lda aBelhallaMeteorTargets,x
         and #$00FF
         tax
         lda aActionStructUnit1.UnitRAMPointer
@@ -171,7 +175,7 @@
 
         .databank 0
 
-      aUnknown9EF765 ; 9E/F765
+      aBelhallaMeteorTargets ; 9E/F765
 
         .word $3106
         .word $3007
@@ -179,11 +183,13 @@
         .word $2E07
         .word $2D06
 
-      rlUnknown9EF76F ; 9E/F76F
+      rlEndBelhallaMagesAttack ; 9E/F76F
 
         .al
         .autsiz
         .databank ?
+
+        ; Signals animation end, resumes map sprite/tile animations, and restores OAM palettes
 
         lda wMapAnimationSignals
         ora #$0002
@@ -213,11 +219,13 @@
       .al
       .xl
 
-      rlUnknown9EF791 ; 9E/F791
+      rlClearBelhallaMagesProcBit4 ; 9E/F791
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears bit $0004 of aProcSystem.aHeaderBitfield
 
         phx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -261,11 +269,13 @@
         .byte 0
         .byte 4
 
-      rlUnknown9EF822 ; 9E/F822
+      rlCheckBelhallaMageProcEnded ; 9E/F822
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets proc bit $0004 when child Belhalla mage proc aBody4 has ended
 
         phx
         lda aProcSystem.aBody4,b,x
@@ -304,7 +314,7 @@
         phx
         phb
 
-        jsl rlUnknown9EFA17
+        jsl rlFillScriptedUnitMapAction
 
         pea #$7F00
         plb
@@ -498,11 +508,13 @@
       .al
       .xl
 
-      rlUnknown9EF79D ; 9E/F79D
+      rlSpawnNextBelhallaAttackingMage ; 9E/F79D
 
         .al
         .autsiz
         .databank ?
+
+        ; Spawns procBelhallaAttackingMage for next entry in aBelhallaAttackingMagePositions
 
         phx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -756,7 +768,7 @@
 
         ; 9E/F1B3
 
-      rlUnknown9EF1B3 ; 9E/F1B3
+      rlCutsceneUnusedPlxRtl9EF1B3 ; 9E/F1B3
 
         ; Only plx / rtl; nothing reaches it.
 
@@ -764,6 +776,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced (plx/rtl)
 
         plx
         rtl
@@ -1127,7 +1141,7 @@
         PROC_YIELD 1
         _F4A0
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EF55B
+        PROC_CALL rlWaitWarpDecompressionAndTimer
         PROC_JUMP_IF_BITS_UNSET _F4A0, $0001
         PROC_SET_ONCYCLE rlProcReturnHomeQueueSpriteData
         PROC_YIELD 56
@@ -1138,7 +1152,7 @@
         PROC_CALL rlMapActionUploadEffectGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
-        PROC_CALL rlUnknown9EF578
+        PROC_CALL rlFreezeWarpAttackerSprites
         PROC_YIELD 2
         PROC_CALL rlLoadMapMagicSprites
         PROC_JUMP_IF_BITS_UNSET _F4F3, $0002
@@ -1164,11 +1178,11 @@
         PROC_YIELD 4
         PROC_CALL rlEndMapMagicEffect
         PROC_CALL rlRestoreMapMagicScreenRegisters
-        PROC_CALL rlUnknown9EF5D0
+        PROC_CALL rlWaitMapAnimationSignalBit2
         PROC_JUMP_IF_BITS_UNSET _F53F, $0002
         _F52E
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EF5F1
+        PROC_CALL rlSignalMapAnimationAndWaitBit3
         PROC_JUMP_IF_BITS_UNSET _F52E, $0004
         PROC_JUMP _F541
 
@@ -1194,12 +1208,14 @@
       .al
       .xl
 
-      rlUnknown9EF55B ; 9E/F55B
+      rlWaitWarpDecompressionAndTimer ; 9E/F55B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Waits for aBody3 timer and bDecompressionArrayFlag == 0, then sets proc bit $0001
 
         lda aProcSystem.aBody3,b,x
         bne _F570
@@ -1223,12 +1239,14 @@
 
         ; 9E/F578
 
-      rlUnknown9EF578 ; 9E/F578
+      rlFreezeWarpAttackerSprites ; 9E/F578
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies attacker sprite slots to defender slots and freezes their active sprites ($8000)
 
         phx
         lda aMapAction.wMapBattleAttackerSpriteSlot
@@ -1254,12 +1272,14 @@
 
         .databank 0
 
-      rlUnknown9EF5AC ; 9E/F5AC
+      rlUnfreezeWarpAttackerSprites ; 9E/F5AC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unfreezes attacker active sprites (clears $8000)
 
         phx
         lda aMapAction.wMapBattleAttackerSpriteSlot
@@ -1291,12 +1311,14 @@
       .al
       .xl
 
-      rlUnknown9EF5D0 ; 9E/F5D0
+      rlWaitMapAnimationSignalBit2 ; 9E/F5D0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets proc bit $0002 when wMapAnimationSignals bit $0004 is set
 
         phx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -1318,12 +1340,14 @@
 
         ; 9E/F5F1
 
-      rlUnknown9EF5F1 ; 9E/F5F1
+      rlSignalMapAnimationAndWaitBit3 ; 9E/F5F1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets wMapAnimationSignals bit $0010 and sets proc bit $0004 when bit $0008 is set
 
         lda wMapAnimationSignals
         ora #$0010
@@ -1401,9 +1425,9 @@
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_CALL rlMapBattlePlaySound32
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EFA4F
+        PROC_CALL rlStartBelhallaMageRoundScript
         PROC_YIELD 32
-        PROC_CALL rlUnknown9EFA9A
+        PROC_CALL rlEndBelhallaMageRoundScript
         PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 4
         PROC_CALL rlLoadMapSpriteOAMPalettes
@@ -1418,11 +1442,13 @@
       .al
       .xl
 
-      rlUnknown9EFA17 ; 9E/FA17
+      rlFillScriptedUnitMapAction ; 9E/FA17
 
         .al
         .autsiz
         .databank ?
+
+        ; Copies selected unit fields into aScriptedUnitMapAction
 
         phx
         jsl rlGetSelectedUnitDeploymentOffset
@@ -1444,11 +1470,13 @@
 
         .databank 0
 
-      rlUnknown9EFA4F ; 9E/FA4F
+      rlStartBelhallaMageRoundScript ; 9E/FA4F
 
         .al
         .autsiz
         .databank ?
+
+        ; Starts round script for Belhalla attacking mage via rsGetMapBattleRoundScripts
 
         phb
         php
@@ -1490,11 +1518,13 @@
 
         .databank 0
 
-      rlUnknown9EFA9A ; 9E/FA9A
+      rlEndBelhallaMageRoundScript ; 9E/FA9A
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears mage sprite slots, unhides unit, and restores wGameStateRoutine1 and sprite engine flag
 
         phx
         lda aMapAction.wMapBattleAttackerSpriteSlot
@@ -1559,15 +1589,15 @@
 
         .databank 0
 
-      aUnknown9EFAF8 ; 9E/FAF8
+      aBelhallaBlastUnitCoordLists ; 9E/FAF8
 
-        .long aUnknown9EFB07
-        .long aUnknown9EFB1B
-        .long aUnknown9EFB29
-        .long aUnknown9EFB37
-        .long aUnknown9EFB45
+        .long aBelhallaBlastUnitCoords0
+        .long aBelhallaBlastUnitCoords1
+        .long aBelhallaBlastUnitCoords2
+        .long aBelhallaBlastUnitCoords3
+        .long aBelhallaBlastUnitCoords4
 
-      aUnknown9EFB07 ; 9E/FB07
+      aBelhallaBlastUnitCoords0 ; 9E/FB07
 
         .byte $05, $30
         .byte $06, $30
@@ -1580,7 +1610,7 @@
         .byte $07, $32
         .word $FFFF
 
-      aUnknown9EFB1B ; 9E/FB1B
+      aBelhallaBlastUnitCoords1 ; 9E/FB1B
 
         .byte $06, $2F
         .byte $07, $2F
@@ -1590,7 +1620,7 @@
         .byte $07, $31
         .word $FFFF
 
-      aUnknown9EFB29 ; 9E/FB29
+      aBelhallaBlastUnitCoords2 ; 9E/FB29
 
         .byte $05, $2E
         .byte $06, $2E
@@ -1600,7 +1630,7 @@
         .byte $06, $30
         .word $FFFF
 
-      aUnknown9EFB37 ; 9E/FB37
+      aBelhallaBlastUnitCoords3 ; 9E/FB37
 
         .byte $06, $2D
         .byte $07, $2D
@@ -1610,7 +1640,7 @@
         .byte $07, $2F
         .word $FFFF
 
-      aUnknown9EFB45 ; 9E/FB45
+      aBelhallaBlastUnitCoords4 ; 9E/FB45
 
         .byte $06, $2C
         .byte $05, $2D
@@ -1637,24 +1667,26 @@
 
         -
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EFB80
+        PROC_CALL rlWaitBelhallaBlastStrikeStart
         PROC_JUMP_IF_BITS_UNSET -, $0004
 
         -
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EFBB6
-        PROC_CALL rlUnknown9EFB9B
+        PROC_CALL rlStepBelhallaBlastFlash
+        PROC_CALL rlWaitBelhallaBlastStrikeEnd
         PROC_JUMP_IF_BITS_UNSET -, $0004
 
-        PROC_CALL rlUnknown9EFC9B
+        PROC_CALL rlUngrayBelhallaBlastUnits
         PROC_YIELD 16
         PROC_END
 
-      rlUnknown9EFB80 ; 9E/FB80
+      rlWaitBelhallaBlastStrikeStart ; 9E/FB80
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets proc bit $0004 when aMapAction.wMapBattleStrikeSignal != 0
 
         phx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -1674,11 +1706,13 @@
 
         .databank 0
 
-      rlUnknown9EFB9B ; 9E/FB9B
+      rlWaitBelhallaBlastStrikeEnd ; 9E/FB9B
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets proc bit $0004 when aMapAction.wMapBattleStrikeSignal == 0
 
         phx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -1698,11 +1732,13 @@
 
         .databank 0
 
-      rlUnknown9EFBB6 ; 9E/FBB6
+      rlStepBelhallaBlastFlash ; 9E/FBB6
 
         .al
         .autsiz
         .databank ?
+
+        ; Grays out blast target units and runs Belhalla blast palette flash
 
         phy
         phx
@@ -1715,7 +1751,7 @@
         lda aMapAction.wMapBattlePaletteRestoreFlag
         bne _FC23
 
-          jsl rlUnknown9EFC47
+          jsl rlGrayOutBelhallaBlastUnits
 
           lda #9
           xba
@@ -1801,11 +1837,13 @@
       .al
       .xl
 
-      rlUnknown9EFC47 ; 9E/FC47
+      rlGrayOutBelhallaBlastUnits ; 9E/FC47
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets DeploymentStateGrayed on units listed in aBelhallaBlastUnitCoordLists[$7F57F0]
 
         phb
         phk
@@ -1817,9 +1855,9 @@
         clc
         adc $7F57F0
         tax
-        lda aUnknown9EFAF8,x
+        lda aBelhallaBlastUnitCoordLists,x
         sta lR18,b
-        lda aUnknown9EFAF8+1,x
+        lda aBelhallaBlastUnitCoordLists+1,x
         sta lR18+1,b
         ldy #0
 
@@ -1857,11 +1895,13 @@
 
         .databank 0
 
-      rlUnknown9EFC9B ; 9E/FC9B
+      rlUngrayBelhallaBlastUnits ; 9E/FC9B
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears DeploymentStateGrayed on units listed in aBelhallaBlastUnitCoordLists[$7F57F0]
 
         phb
         phk
@@ -1877,9 +1917,9 @@
         clc
         adc $7F57F0
         tax
-        lda aUnknown9EFAF8,x
+        lda aBelhallaBlastUnitCoordLists,x
         sta lR18,b
-        lda aUnknown9EFAF8+1,x
+        lda aBelhallaBlastUnitCoordLists+1,x
         sta lR18+1,b
         ldy #0
         

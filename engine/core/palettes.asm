@@ -40,7 +40,7 @@
 
       aPortraitAndMapUIOAMPalettes ; 8C/951E
 
-        ; Read by rlSetUpChapterMapDisplay, rlSetUpChapterMapDisplayAllFrames, rlUnknown9EF76F, rsUnitWindowCopyGraphics, rsReviveScreenLoadGraphics.
+        ; Read by rlSetUpChapterMapDisplay, rlSetUpChapterMapDisplayAllFrames, rlEndBelhallaMagesAttack, rsUnitWindowCopyGraphics, rsReviveScreenLoadGraphics.
 
         .word $0000, $3800, $7FFF, $0000, $0000, $4EB5, $2129, $7F56
         .word $7D28, $2862, $19DA, $0CCF, $1484, $4AFB, $2590, $1041

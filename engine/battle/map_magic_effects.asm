@@ -5628,7 +5628,7 @@
         .autsiz
         .databank ?
 
-        ; Also the Belhalla mages' meteors (rlUnknown9EF703 sets effect 4).
+        ; Also the Belhalla mages' meteors (rlInitBelhallaMeteorEffect sets effect 4).
 
         jsr rsCreateMapMagicProc
 
@@ -10153,7 +10153,7 @@
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0030
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        jsl rlUnknown9EF5AC
+        jsl rlUnfreezeWarpAttackerSprites
         rtl
 
         .databank 0
