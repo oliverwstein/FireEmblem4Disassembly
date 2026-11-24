@@ -561,9 +561,9 @@
 
 
         _EFB1
-        lda #(`dialogueShopUnknown8AD7A4)<<8
+        lda #(`dialogueShopClassChangeOfferGen2)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD7A4
+        lda #<>dialogueShopClassChangeOfferGen2
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -580,17 +580,17 @@
         lda wCurrentChapter,b
         cmp #$0006
         bcs _EFE9
-        lda #(`dialogueShopUnknown8AD756)<<8
+        lda #(`dialogueShopClassChangeLevelTooLowGen1)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD756
+        lda #<>dialogueShopClassChangeLevelTooLowGen1
         sta lR18
         bra _EFF3
 
 
         _EFE9
-        lda #(`dialogueShopUnknown8AD7D0)<<8
+        lda #(`dialogueShopClassChangeLevelTooLowGen2)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD7D0
+        lda #<>dialogueShopClassChangeLevelTooLowGen2
         sta lR18
 
         _EFF3
@@ -609,17 +609,17 @@
         lda wCurrentChapter,b
         cmp #$0006
         bcs _F021
-        lda #(`dialogueShopUnknown8AD785)<<8
+        lda #(`dialogueShopClassChangeCannotGen1)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD785
+        lda #<>dialogueShopClassChangeCannotGen1
         sta lR18
         bra _F02B
 
 
         _F021
-        lda #(`dialogueShopUnknown8AD7FC)<<8
+        lda #(`dialogueShopClassChangeCannotGen2)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD7FC
+        lda #<>dialogueShopClassChangeCannotGen2
         sta lR18
 
         _F02B

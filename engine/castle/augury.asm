@@ -561,9 +561,9 @@
         .autsiz
         .databank ?
 
-        lda #(`dialogueShopUnknown8AD616)<<8
+        lda #(`dialogueShopAuguryGreeting)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD616
+        lda #<>dialogueShopAuguryGreeting
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -692,9 +692,9 @@
         _FB32
         lda #$0021
         jsl rlPlaySoundEffect
-        lda #(`dialogueShopUnknown8AD6DA)<<8
+        lda #(`dialogueShopAuguryFarewell)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD6DA
+        lda #<>dialogueShopAuguryFarewell
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -756,9 +756,9 @@
         sta aDialogue.wNumber1,b
         jsl rlGetUnitLossCount
         sta aDialogue.wNumber2,b
-        lda #(`dialogueShopUnknown8AD6E7)<<8
+        lda #(`dialogueShopAuguryRecord)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD6E7
+        lda #<>dialogueShopAuguryRecord
         sta lR18
         bra _FBE2
 
@@ -768,9 +768,9 @@
         sta aDialogue.wUnit1,b
         jsl rlGetSelectedUnitMotherID
         sta aDialogue.wUnit2,b
-        lda #(`dialogueShopUnknown8AD70D)<<8
+        lda #(`dialogueShopAuguryParents)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD70D
+        lda #<>dialogueShopAuguryParents
         sta lR18
         bra _FBE2
 
@@ -788,9 +788,9 @@
 
 
         _FBFD
-        lda #(`dialogueShopUnknown8AD6BE)<<8
+        lda #(`dialogueShopAuguryLoveNone)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD6BE
+        lda #<>dialogueShopAuguryLoveNone
         sta lR18
         bra _FBE2
 
@@ -809,33 +809,33 @@
 
 
         _FC22
-        lda #(`dialogueShopUnknown8AD65E)<<8
+        lda #(`dialogueShopAuguryLoveInterested)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD65E
+        lda #<>dialogueShopAuguryLoveInterested
         sta lR18
         bra _FBE2
 
 
         _FC2E
-        lda #(`dialogueShopUnknown8AD678)<<8
+        lda #(`dialogueShopAuguryLoveLikes)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD678
+        lda #<>dialogueShopAuguryLoveLikes
         sta lR18
         bra _FBE2
 
 
         _FC3A
-        lda #(`dialogueShopUnknown8AD68E)<<8
+        lda #(`dialogueShopAuguryLoveInLove)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD68E
+        lda #<>dialogueShopAuguryLoveInLove
         sta lR18
         bra _FBE2
 
 
         _FC46
-        lda #(`dialogueShopUnknown8AD6A8)<<8
+        lda #(`dialogueShopAuguryLoveLovers)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD6A8
+        lda #<>dialogueShopAuguryLoveLovers
         sta lR18
         bra _FBE2
 
@@ -926,9 +926,9 @@
 
         lda #$FFFF
         sta wCastleRedrawIcons
-        lda #(`dialogueShopUnknown8AD648)<<8
+        lda #(`dialogueShopAuguryAnythingElse)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD648
+        lda #<>dialogueShopAuguryAnythingElse
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA

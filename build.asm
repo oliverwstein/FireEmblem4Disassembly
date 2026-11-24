@@ -4179,20 +4179,20 @@
       dialogueShop22 .include "text/dialogue/Shops/Shop22.dialogue.txt" ; 8AD101
       dialogueShop27 .include "text/dialogue/Shops/Shop27.dialogue.txt" ; 8AD110
       dialogueShop2C .include "text/dialogue/Shops/Shop2C.dialogue.txt" ; 8AD121
-      dialogueShopUnknown8AD131 .include "text/dialogue/Shops/ShopUnknown8AD131.dialogue.txt" ; 8AD131
+      dialogueShopItemShopSoldOut .include "text/dialogue/Shops/ShopItemShopSoldOut.dialogue.txt" ; 8AD131
       dialogueShop36 .include "text/dialogue/Shops/Shop36.dialogue.txt" ; 8AD154
       dialogueShop0C .include "text/dialogue/Shops/Shop0C.dialogue.txt" ; 8AD17B
       dialogueShop12 .include "text/dialogue/Shops/Shop12.dialogue.txt" ; 8AD18B
       dialogueShop01 .include "text/dialogue/Shops/Shop01.dialogue.txt" ; 8AD195
-      dialogueShopUnknown8AD1B5 .include "text/dialogue/Shops/ShopUnknown8AD1B5.dialogue.txt" ; 8AD1B5
+      dialogueShopUsedShopSellOnlyGreeting .include "text/dialogue/Shops/ShopUsedShopSellOnlyGreeting.dialogue.txt" ; 8AD1B5
       dialogueShop19 .include "text/dialogue/Shops/Shop19.dialogue.txt" ; 8AD1D2
       dialogueShop1E .include "text/dialogue/Shops/Shop1E.dialogue.txt" ; 8AD1E0
       dialogueShop23 .include "text/dialogue/Shops/Shop23.dialogue.txt" ; 8AD1F2
       dialogueShop37 .include "text/dialogue/Shops/Shop37.dialogue.txt" ; 8AD205
       dialogueShop3C .include "text/dialogue/Shops/Shop3C.dialogue.txt" ; 8AD217
       dialogueShop41 .include "text/dialogue/Shops/Shop41.dialogue.txt" ; 8AD224
-      dialogueShopUnknown8AD233 .include "text/dialogue/Shops/ShopUnknown8AD233.dialogue.txt" ; 8AD233
-      dialogueShopUnknown8AD257 .include "text/dialogue/Shops/ShopUnknown8AD257.dialogue.txt" ; 8AD257
+      dialogueShopUsedShopSoldOut .include "text/dialogue/Shops/ShopUsedShopSoldOut.dialogue.txt" ; 8AD233
+      dialogueShopUsedShopNothingToSell .include "text/dialogue/Shops/ShopUsedShopNothingToSell.dialogue.txt" ; 8AD257
       dialogueShop28 .include "text/dialogue/Shops/Shop28.dialogue.txt" ; 8AD27B
       dialogueShop2D .include "text/dialogue/Shops/Shop2D.dialogue.txt" ; 8AD28A
       dialogueShop31 .include "text/dialogue/Shops/Shop31.dialogue.txt" ; 8AD29F
@@ -4208,49 +4208,49 @@
       dialogueShop33 .include "text/dialogue/Shops/Shop33.dialogue.txt" ; 8AD373
       dialogueShop0E .include "text/dialogue/Shops/Shop0E.dialogue.txt" ; 8AD38F
       dialogueShop14 .include "text/dialogue/Shops/Shop14.dialogue.txt" ; 8AD39F
-      dialogueShopUnknown8AD3AA .include "text/dialogue/Shops/ShopUnknown8AD3AA.dialogue.txt" ; 8AD3AA
+      dialogueShopRepairShopNothingToRepair .include "text/dialogue/Shops/ShopRepairShopNothingToRepair.dialogue.txt" ; 8AD3AA
       dialogueShop03 .include "text/dialogue/Shops/Shop03.dialogue.txt" ; 8AD3D3
       dialogueShop39 .include "text/dialogue/Shops/Shop39.dialogue.txt" ; 8AD3EF
       dialogueShop20 .include "text/dialogue/Shops/Shop20.dialogue.txt" ; 8AD401
       dialogueShop43 .include "text/dialogue/Shops/Shop43.dialogue.txt" ; 8AD40B
-      dialogueShopUnknown8AD418 .include "text/dialogue/Shops/ShopUnknown8AD418.dialogue.txt" ; 8AD418
+      dialogueShopDepotNothingToDeposit .include "text/dialogue/Shops/ShopDepotNothingToDeposit.dialogue.txt" ; 8AD418
       dialogueShop2F .include "text/dialogue/Shops/Shop2F.dialogue.txt" ; 8AD43E
       dialogueShop1B .include "text/dialogue/Shops/Shop1B.dialogue.txt" ; 8AD44E
       dialogueShop25 .include "text/dialogue/Shops/Shop25.dialogue.txt" ; 8AD45D
-      dialogueShopUnknown8AD46F .include "text/dialogue/Shops/ShopUnknown8AD46F.dialogue.txt" ; 8AD46F
+      dialogueShopDepotNothingToWithdraw .include "text/dialogue/Shops/ShopDepotNothingToWithdraw.dialogue.txt" ; 8AD46F
       dialogueShop0F .include "text/dialogue/Shops/Shop0F.dialogue.txt" ; 8AD48F
       dialogueShop15 .include "text/dialogue/Shops/Shop15.dialogue.txt" ; 8AD4A0
       dialogueShop05 .include "text/dialogue/Shops/Shop05.dialogue.txt" ; 8AD4B0
-      dialogueShopUnknown8AD4BC .include "text/dialogue/Shops/ShopUnknown8AD4BC.dialogue.txt" ; 8AD4BC
-      dialogueShopUnknown8AD4D7 .include "text/dialogue/Shops/ShopUnknown8AD4D7.dialogue.txt" ; 8AD4D7
-      dialogueShopUnknown8AD4E9 .include "text/dialogue/Shops/ShopUnknown8AD4E9.dialogue.txt" ; 8AD4E9
-      dialogueShopUnknown8AD507 .include "text/dialogue/Shops/ShopUnknown8AD507.dialogue.txt" ; 8AD507
-      dialogueShopUnknown8AD53C .include "text/dialogue/Shops/ShopUnknown8AD53C.dialogue.txt" ; 8AD53C
-      dialogueShopUnknown8AD553 .include "text/dialogue/Shops/ShopUnknown8AD553.dialogue.txt" ; 8AD553
-      dialogueShopUnknown8AD574 .include "text/dialogue/Shops/ShopUnknown8AD574.dialogue.txt" ; 8AD574
-      dialogueShopUnknown8AD5A5 .include "text/dialogue/Shops/ShopUnknown8AD5A5.dialogue.txt" ; 8AD5A5
-      dialogueShopUnknown8AD5B7 .include "text/dialogue/Shops/ShopUnknown8AD5B7.dialogue.txt" ; 8AD5B7
-      dialogueShopUnknown8AD5C5 .include "text/dialogue/Shops/ShopUnknown8AD5C5.dialogue.txt" ; 8AD5C5
-      dialogueShopUnknown8AD5F0 .include "text/dialogue/Shops/ShopUnknown8AD5F0.dialogue.txt" ; 8AD5F0
+      dialogueShopArenaOpponentLevel .include "text/dialogue/Shops/ShopArenaOpponentLevel.dialogue.txt" ; 8AD4BC
+      dialogueShopArenaEquipWeaponFirst .include "text/dialogue/Shops/ShopArenaEquipWeaponFirst.dialogue.txt" ; 8AD4D7
+      dialogueShopArenaNoWeapon .include "text/dialogue/Shops/ShopArenaNoWeapon.dialogue.txt" ; 8AD4E9
+      dialogueShopArenaNoWeaponUnused .include "text/dialogue/Shops/ShopArenaNoWeaponUnused.dialogue.txt" ; 8AD507
+      dialogueShopArenaNoOpponentsLeft .include "text/dialogue/Shops/ShopArenaNoOpponentsLeft.dialogue.txt" ; 8AD53C
+      dialogueShopArenaLost .include "text/dialogue/Shops/ShopArenaLost.dialogue.txt" ; 8AD553
+      dialogueShopArenaWon .include "text/dialogue/Shops/ShopArenaWon.dialogue.txt" ; 8AD574
+      dialogueShopArenaAskYield .include "text/dialogue/Shops/ShopArenaAskYield.dialogue.txt" ; 8AD5A5
+      dialogueShopArenaQuit .include "text/dialogue/Shops/ShopArenaQuit.dialogue.txt" ; 8AD5B7
+      dialogueShopArenaChampion .include "text/dialogue/Shops/ShopArenaChampion.dialogue.txt" ; 8AD5C5
+      dialogueShopArenaComeAgainUnused .include "text/dialogue/Shops/ShopArenaComeAgainUnused.dialogue.txt" ; 8AD5F0
       dialogueShop17 .include "text/dialogue/Shops/Shop17.dialogue.txt" ; 8AD5F9
       dialogueShop06 .include "text/dialogue/Shops/Shop06.dialogue.txt" ; 8AD60D
-      dialogueShopUnknown8AD616 .include "text/dialogue/Shops/ShopUnknown8AD616.dialogue.txt" ; 8AD616
-      dialogueShopUnknown8AD648 .include "text/dialogue/Shops/ShopUnknown8AD648.dialogue.txt" ; 8AD648
-      dialogueShopUnknown8AD65E .include "text/dialogue/Shops/ShopUnknown8AD65E.dialogue.txt" ; 8AD65E
-      dialogueShopUnknown8AD678 .include "text/dialogue/Shops/ShopUnknown8AD678.dialogue.txt" ; 8AD678
-      dialogueShopUnknown8AD68E .include "text/dialogue/Shops/ShopUnknown8AD68E.dialogue.txt" ; 8AD68E
-      dialogueShopUnknown8AD6A8 .include "text/dialogue/Shops/ShopUnknown8AD6A8.dialogue.txt" ; 8AD6A8
-      dialogueShopUnknown8AD6BE .include "text/dialogue/Shops/ShopUnknown8AD6BE.dialogue.txt" ; 8AD6BE
-      dialogueShopUnknown8AD6DA .include "text/dialogue/Shops/ShopUnknown8AD6DA.dialogue.txt" ; 8AD6DA
-      dialogueShopUnknown8AD6E7 .include "text/dialogue/Shops/ShopUnknown8AD6E7.dialogue.txt" ; 8AD6E7
-      dialogueShopUnknown8AD70D .include "text/dialogue/Shops/ShopUnknown8AD70D.dialogue.txt" ; 8AD70D
+      dialogueShopAuguryGreeting .include "text/dialogue/Shops/ShopAuguryGreeting.dialogue.txt" ; 8AD616
+      dialogueShopAuguryAnythingElse .include "text/dialogue/Shops/ShopAuguryAnythingElse.dialogue.txt" ; 8AD648
+      dialogueShopAuguryLoveInterested .include "text/dialogue/Shops/ShopAuguryLoveInterested.dialogue.txt" ; 8AD65E
+      dialogueShopAuguryLoveLikes .include "text/dialogue/Shops/ShopAuguryLoveLikes.dialogue.txt" ; 8AD678
+      dialogueShopAuguryLoveInLove .include "text/dialogue/Shops/ShopAuguryLoveInLove.dialogue.txt" ; 8AD68E
+      dialogueShopAuguryLoveLovers .include "text/dialogue/Shops/ShopAuguryLoveLovers.dialogue.txt" ; 8AD6A8
+      dialogueShopAuguryLoveNone .include "text/dialogue/Shops/ShopAuguryLoveNone.dialogue.txt" ; 8AD6BE
+      dialogueShopAuguryFarewell .include "text/dialogue/Shops/ShopAuguryFarewell.dialogue.txt" ; 8AD6DA
+      dialogueShopAuguryRecord .include "text/dialogue/Shops/ShopAuguryRecord.dialogue.txt" ; 8AD6E7
+      dialogueShopAuguryParents .include "text/dialogue/Shops/ShopAuguryParents.dialogue.txt" ; 8AD70D
       dialogueShop04 .include "text/dialogue/Shops/Shop04.dialogue.txt" ; 8AD727
       dialogueShop4E .include "text/dialogue/Shops/Shop4E.dialogue.txt" ; 8AD728
-      dialogueShopUnknown8AD756 .include "text/dialogue/Shops/ShopUnknown8AD756.dialogue.txt" ; 8AD756
-      dialogueShopUnknown8AD785 .include "text/dialogue/Shops/ShopUnknown8AD785.dialogue.txt" ; 8AD785
-      dialogueShopUnknown8AD7A4 .include "text/dialogue/Shops/ShopUnknown8AD7A4.dialogue.txt" ; 8AD7A4
-      dialogueShopUnknown8AD7D0 .include "text/dialogue/Shops/ShopUnknown8AD7D0.dialogue.txt" ; 8AD7D0
-      dialogueShopUnknown8AD7FC .include "text/dialogue/Shops/ShopUnknown8AD7FC.dialogue.txt" ; 8AD7FC
+      dialogueShopClassChangeLevelTooLowGen1 .include "text/dialogue/Shops/ShopClassChangeLevelTooLowGen1.dialogue.txt" ; 8AD756
+      dialogueShopClassChangeCannotGen1 .include "text/dialogue/Shops/ShopClassChangeCannotGen1.dialogue.txt" ; 8AD785
+      dialogueShopClassChangeOfferGen2 .include "text/dialogue/Shops/ShopClassChangeOfferGen2.dialogue.txt" ; 8AD7A4
+      dialogueShopClassChangeLevelTooLowGen2 .include "text/dialogue/Shops/ShopClassChangeLevelTooLowGen2.dialogue.txt" ; 8AD7D0
+      dialogueShopClassChangeCannotGen2 .include "text/dialogue/Shops/ShopClassChangeCannotGen2.dialogue.txt" ; 8AD7FC
       dialogueShop10 .include "text/dialogue/Shops/Shop10.dialogue.txt" ; 8AD81A
 
       .dsection Unsorted8AD81BSection

@@ -470,17 +470,17 @@
 
 
         _F459
-        lda #(`dialogueShopUnknown8AD418)<<8
+        lda #(`dialogueShopDepotNothingToDeposit)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD418
+        lda #<>dialogueShopDepotNothingToDeposit
         sta lR18
         jml rsShopSayAndStay
 
 
         _F467
-        lda #(`dialogueShopUnknown8AD46F)<<8
+        lda #(`dialogueShopDepotNothingToWithdraw)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD46F
+        lda #<>dialogueShopDepotNothingToWithdraw
         sta lR18
         jml rsShopSayAndStay
 

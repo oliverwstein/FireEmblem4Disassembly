@@ -662,9 +662,9 @@
 
 
         _C10B
-        lda #(`dialogueShopUnknown8AD3AA)<<8
+        lda #(`dialogueShopRepairShopNothingToRepair)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD3AA
+        lda #<>dialogueShopRepairShopNothingToRepair
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -684,9 +684,9 @@
 
 
         _C137
-        lda #(`dialogueShopUnknown8AD1B5)<<8
+        lda #(`dialogueShopUsedShopSellOnlyGreeting)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD1B5
+        lda #<>dialogueShopUsedShopSellOnlyGreeting
         sta lR18
         bra _C14D
 
@@ -921,17 +921,17 @@
 
 
         _C2E2
-        lda #(`dialogueShopUnknown8AD131)<<8
+        lda #(`dialogueShopItemShopSoldOut)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD131
+        lda #<>dialogueShopItemShopSoldOut
         sta lR18
         jml rsShopSayAndStay
 
 
         _C2F0
-        lda #(`dialogueShopUnknown8AD257)<<8
+        lda #(`dialogueShopUsedShopNothingToSell)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD257
+        lda #<>dialogueShopUsedShopNothingToSell
         sta lR18
         jml rsShopSayAndStay
 
@@ -1089,17 +1089,17 @@
 
 
         _C42B
-        lda #(`dialogueShopUnknown8AD257)<<8
+        lda #(`dialogueShopUsedShopNothingToSell)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD257
+        lda #<>dialogueShopUsedShopNothingToSell
         sta lR18
         jml rsShopSayAndStay
 
 
         _C439
-        lda #(`dialogueShopUnknown8AD233)<<8
+        lda #(`dialogueShopUsedShopSoldOut)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD233
+        lda #<>dialogueShopUsedShopSoldOut
         sta lR18
         jml rsShopSayAndStay
 
@@ -1185,9 +1185,9 @@
 
 
         _C4FF
-        lda #(`dialogueShopUnknown8AD257)<<8
+        lda #(`dialogueShopUsedShopNothingToSell)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD257
+        lda #<>dialogueShopUsedShopNothingToSell
         sta lR18
         jml rsShopSayAndStay
 

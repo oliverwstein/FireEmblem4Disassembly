@@ -133,9 +133,9 @@
 
 
         _E56E
-        lda #(`dialogueShopUnknown8AD53C)<<8
+        lda #(`dialogueShopArenaNoOpponentsLeft)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD53C
+        lda #<>dialogueShopArenaNoOpponentsLeft
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -174,9 +174,9 @@
         jsl rlGetSelectedUnitArenaLevel
         cmp #$0007
         bcs _E617
-        lda #(`dialogueShopUnknown8AD574)<<8
+        lda #(`dialogueShopArenaWon)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD574
+        lda #<>dialogueShopArenaWon
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -203,9 +203,9 @@
         jsl rlHandleArenaExitEvent
         jsl rlGetSelectedUnitCharacterID
         sta aDialogue.wUnit1,b
-        lda #(`dialogueShopUnknown8AD553)<<8
+        lda #(`dialogueShopArenaLost)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD553
+        lda #<>dialogueShopArenaLost
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -219,9 +219,9 @@
 
 
         _E617
-        lda #(`dialogueShopUnknown8AD5C5)<<8
+        lda #(`dialogueShopArenaChampion)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD5C5
+        lda #<>dialogueShopArenaChampion
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -255,9 +255,9 @@
 
         ; Arena menu step 3 (aArenaMenuStepHandlers).
 
-        lda #(`dialogueShopUnknown8AD5A5)<<8
+        lda #(`dialogueShopArenaAskYield)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD5A5
+        lda #<>dialogueShopArenaAskYield
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -403,9 +403,9 @@
         clc
         adc #$0001
         sta aDialogue.wNumber1,b
-        lda #(`dialogueShopUnknown8AD4D7)<<8
+        lda #(`dialogueShopArenaEquipWeaponFirst)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4D7
+        lda #<>dialogueShopArenaEquipWeaponFirst
         sta lR18
         lda #$000C
         bra _E75D
@@ -425,9 +425,9 @@
 
 
         _E77B
-        lda #(`dialogueShopUnknown8AD4E9)<<8
+        lda #(`dialogueShopArenaNoWeapon)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4E9
+        lda #<>dialogueShopArenaNoWeapon
         sta lR18
         jml rsShopSayAndStay
 
@@ -581,9 +581,9 @@
         jsl rlGetSelectedUnitEquippedWeaponBitfield
         cmp #$0000
         beq _E8EC
-        lda #(`dialogueShopUnknown8AD4BC)<<8
+        lda #(`dialogueShopArenaOpponentLevel)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4BC
+        lda #<>dialogueShopArenaOpponentLevel
         sta lR18
         lda #$0009
         sta wNextMenuState,b
@@ -599,9 +599,9 @@
 
 
         _E8B3
-        lda #(`dialogueShopUnknown8AD5B7)<<8
+        lda #(`dialogueShopArenaQuit)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD5B7
+        lda #<>dialogueShopArenaQuit
         sta lR18
         lda #$000E
         sta wNextMenuState,b
@@ -617,17 +617,17 @@
 
 
         _E8DE
-        lda #(`dialogueShopUnknown8AD4E9)<<8
+        lda #(`dialogueShopArenaNoWeapon)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4E9
+        lda #<>dialogueShopArenaNoWeapon
         sta lR18
         jml rsShopSayAndStay
 
 
         _E8EC
-        lda #(`dialogueShopUnknown8AD4D7)<<8
+        lda #(`dialogueShopArenaEquipWeaponFirst)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4D7
+        lda #<>dialogueShopArenaEquipWeaponFirst
         sta lR18
         lda #$000C
         sta wNextMenuState,b
@@ -737,17 +737,17 @@
 
 
         _E9CD
-        lda #(`dialogueShopUnknown8AD4E9)<<8
+        lda #(`dialogueShopArenaNoWeapon)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4E9
+        lda #<>dialogueShopArenaNoWeapon
         sta lR18
         jml rsShopSayAndStay
 
 
         _E9DB
-        lda #(`dialogueShopUnknown8AD5B7)<<8
+        lda #(`dialogueShopArenaQuit)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD5B7
+        lda #<>dialogueShopArenaQuit
         sta lR18
         lda #$000E
         sta wNextMenuState,b
@@ -767,9 +767,9 @@
         beq _E9CD
         lda #$0002
         sta wCastleMenuOptionIndex,b
-        lda #(`dialogueShopUnknown8AD4D7)<<8
+        lda #(`dialogueShopArenaEquipWeaponFirst)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4D7
+        lda #<>dialogueShopArenaEquipWeaponFirst
         sta lR18
         lda #$000C
         sta wNextMenuState,b
@@ -904,9 +904,9 @@
 
 
         _EB2B
-        lda #(`dialogueShopUnknown8AD4D7)<<8
+        lda #(`dialogueShopArenaEquipWeaponFirst)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4D7
+        lda #<>dialogueShopArenaEquipWeaponFirst
         sta lR18
         lda #$000C
         sta wNextMenuState,b
@@ -1049,9 +1049,9 @@
         sta wCastleRedrawIcons
         lda #$000A
         jsl rlPlaySoundEffect
-        lda #(`dialogueShopUnknown8AD4BC)<<8
+        lda #(`dialogueShopArenaOpponentLevel)<<8
         sta lR18+1
-        lda #<>dialogueShopUnknown8AD4BC
+        lda #<>dialogueShopArenaOpponentLevel
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
