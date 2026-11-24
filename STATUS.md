@@ -2,15 +2,15 @@
 
 Current state and next steps. Read this first, then [PLAN.md](PLAN.md) (roadmap, per-wave checklist, engine guide). Past work and older technical notes are in [HISTORY.md](HISTORY.md); tool usage and 64tass pitfalls are in [tools/README.md](tools/README.md). **Rewrite this file at the end of every session** to keep it short and about the present.
 
-## Current state (2026-11-23, after wave 18: 0 `Unknown` across all 20 folders)
+## Current state (2026-11-24, after the Part I review)
 
 Numbers come from `python3 tools/counts.py --fast --breakdown`; quote nothing else.
 
 - `./build.sh` is byte-identical and checksums verify (`./build.sh mod` builds the identical ROM without `fe4.sfc`; GAPS.md is empty).
 - Routines: 6,505 in `engine/`, 6,505 named, 0 `Unknown` (100.0% named). 172 pinned blocks.
 - **Stage 1 and Stage 2 complete:** all 20 folders in `engine/` now have **0 `Unknown`** (`ai/`, `arena/`, `battle/`, `battle_scene/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` — 6,505 routines total).
-- Reference pages: `docs/reference/core.md`, `ai.md`, `arena.md`, `battle_scene.md`, `castle.md`, `demo.md`, `dialogue.md`, `epilogue.md`, `events.md`, `map_battle.md`, `map_menu.md`, `map.md`, `menus.md`, `save.md`, `title.md`, `worldmap.md` (`tools/reference.py` output is gitignored).
-- Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
+- Reference pages: `docs/reference/core.md`, `ai.md`, `arena.md`, `battle_scene.md`, `castle.md`, `demo.md`, `dialogue.md`, `epilogue.md`, `events.md`, `items.md`, `map_battle.md`, `map_menu.md`, `map.md`, `menus.md`, `save.md`, `title.md`, `units.md`, `worldmap.md` (`tools/reference.py` output is gitignored). Still missing: `battle/` (blocks Part III) and `rankings/`.
+- Engine guide: [00-introduction.md](docs/guide/00-introduction.md), [OUTLINE.md](docs/guide/OUTLINE.md) (31 chapters in 7 parts, data first), [STYLE.md](docs/guide/STYLE.md), and the Part I opener [part-1-the-pieces-on-the-board.md](docs/guide/part-1-the-pieces-on-the-board.md). No numbered chapter is written yet; a draft of Chapter 6 (The turn) waits in `wip/the-turn-draft.md`.
 
 ## Remaining Unknowns
 
@@ -35,7 +35,7 @@ What's left, easiest first:
 
 ## Who wrote what
 
-Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), Wave 16 (`495d670`..`80c1e1d`), Wave 17 (`d7054ee`..`4fa5320`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and Wave 18 (`ea75480`..`0e1f146`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`). Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
+Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), Wave 16 (`495d670`..`80c1e1d`), Wave 17 (`d7054ee`..`4fa5320`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and Wave 18 (`ea75480`..`0e1f146`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and the guide outline, style guide, Part I opener, items/units cleanup and their reference pages (`c377271`..`61d8290`, no trailer). Claude reviewed that last run on 2026-11-24: the code cleanup's comment fixes and the reference pages' sampled claims (jealousy bug, faction `$0080` guard, healing order and costs, inheritance formulas, staff effects, pricing) all matched the code; corrections are in `496621f` and `9da974d`. Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
 
 ## Active decisions
 
@@ -45,13 +45,12 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5e
 
 ## Next session
 
-1. **Engine guide outline:**
-   - Draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide"). Every major gameplay system is documented.
+1. **Engine guide, Part I:** write Chapter 1 (*A unit is made of parts*) from `units.md`, then Chapters 2–5. Open question for the user: the introduction's "The data model: what a unit is" section already covers most of Part I (unit parts, pools, the item table, deployment, factions, limits); either cut it to a short preview or let the chapters go deeper than it.
 2. **Loose ends:**
    - Pad-test banks `$88`, `$9B`, and `$9F` (`./build.sh pad SECTION N`).
    - Fix `tools/songs.py` (stops at stale `aUnknown8A9D79`) before regenerating `audio/SONGS.md`, and investigate why `tools/stream_catalog.py` deleted catalog previews.
    - Check whether `tools/dialogue.py` decodes the Jugdral history texts (`engine/save/jugdral_history.asm`).
-   - Keep `wip/` holding only `.gitkeep`.
+   - `wip/` holds `the-turn-draft.md` on purpose until Chapter 6 is written.
 
 ## Emulator questions (for one batched session)
 
