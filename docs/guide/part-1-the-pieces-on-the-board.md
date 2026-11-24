@@ -29,7 +29,7 @@ The [introduction](00-introduction.md) sketched the hardware and the main loop. 
 
 ## Chapters in Part I
 
-1. **[A unit is made of parts](01-a-unit-is-made-of-parts.md)** — The four unit types (`Static`, `Dynamic`, `Holy`, `Enemy`), how each pairs a ROM template with a subset of the five RAM pools, and the word-wide working buffers that let gameplay code read and write any unit without knowing where its fields live.
+1. **[A unit is made of parts](01-a-unit-is-made-of-parts.md)** — The four unit types (`Static`, `Dynamic`, `Holy`, `Enemy`), how each pairs a ROM template with a subset of the RAM pools, and the getters that let gameplay code ask any unit the same questions without knowing where its fields live.
 2. **Classes, stats, skills, and weapon ranks** — How class templates, rings, weapons, and Holy Blood compose behind shared queries, and why the same skill occupies different bit positions across character, class, and item tables.
 3. **Every sword is an individual** — The 256-slot `aItemRAMData` table, how `ItemState` partitions one array into inventories, storage, shops, and the pawn shop, and how broken weapons keep their kill counts intact.
 4. **Armies and allegiance** — The seven faction slots, pairwise hostility and alliance bitmasks, and how an army can be neutral to the player while fighting another faction.
