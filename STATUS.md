@@ -20,7 +20,8 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | IV | 11 [The game is watching](docs/guide/11-the-game-is-watching.md) | draft, reviewed |
 | IV | 12 [Screenplays](docs/guide/12-screenplays.md) | draft, not yet reviewed |
 | IV | 13 [Dialogue and text](docs/guide/13-dialogue-and-text.md) | draft, reviewed |
-| IV–VII | 14–31 | not started; OUTLINE.md marks which have a reference page |
+| IV | 14 [Armies with a mind](docs/guide/14-armies-with-a-mind.md) | draft, not yet reviewed |
+| V–VII | 15–31 | not started; OUTLINE.md marks which have a reference page |
 
 **Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (Chapters 6–7 were written from the source; the battle interlude needs it) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
 
@@ -64,6 +65,9 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `procEventWaitMapBattleEndAlt` labeled `82/8AD9` (it is at `$8B09`); the music-wait routines beside it are unreferenced | event_scripts.asm | `0e00942` |
 | `aDialogue.wUnknown0018D0` commented "1 = BG, 2 = no BG?"; it is the dialogue mode (0 none, 1 map boxes, 2 conversation screen with its background, 3 keeper box), now `wMode` with `DIALOGUE_MODE_*`. Scroll offset, slow-scroll rate and timer, mouth frames and timer, pending upload size and address named | include/WRAM.h, include/Dialogue.h, 11 users | `fe85132` |
 | `rlStartConversationDialogue` starts the `DIALOGUE` command's map boxes (mode 1), not castle conversations: now `rlStartMapDialogue`. The handler commented `DIALOGUE_ESCAPE` is the newline, and `$35`-`$39` ("escape commands") are newlines too | engine/dialogue/dialogue_procs.asm, dialogue.asm, include/Dialogue.h | `fe85132` |
+| AI RAM and commands unnamed: `bUnknown000E7B` (now `bAIEngineFlags`, every bit), `wAIUnknownBitfield7E2000` (`wAIGroupFlags`), `wAIUnknown7E2002` (`wAIGroupMode`, nine values), the waypoint, target, interaction action and queued action, 14 script commands `AI_00`-`AI_22`. `AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO` skips a leaderless group and sends the leader home to revive (`AI_LEADER_RETREAT_IF_GROUP_BELOW`); `AI_CHECK_GROUP_COMPLETE_BY_TURN_DIVISIBLE` revives the group's dead (`AI_REINFORCE_EVERY_N_TURNS`) | include/WRAM.h, include/AI.h, engine/ai/, events/ | `dab0abe` |
+| AI actions 3, 12 and 13 commented "unused"; objectives 9/12, 8 (with action 12, three chapters) and 10 choose them. `wAIGroupFlags` `$0040` called "leader fielded" (set when the leader is not fielded, or a member is picked to act first) | engine/ai/threat.asm, include/WRAM.h | `dab0abe` |
+| `rlGetSelectedUnitAttackThreatRange`'s mode-5 branch never runs (mode is 0 when the list is built) | engine/ai/threat.asm | `4c1875b` |
 | `wChapterFlags` `$0100` called unknown; it marks a chapter resumed from a map save (enter at map step 7) | include/WRAM.h | `2da731d` |
 | `rsMoveCursorToPhaseStart` comment had the auto cursor option backwards (on goes to the first unit, off to the saved tile); Ch. 8 draft copied it | engine/map/map_step.asm | `2da731d` |
 | `rlPhaseBannerCheckSkip` comment listed Select; the mask `$D0C0` is A, B, X, Y and Start; Ch. 8 draft copied it | engine/map/phase_banner.asm | `2da731d` |
@@ -86,6 +90,8 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | Ch. 11 draft (review): child/substitute mapping reversed (the table maps each child to its substitute); state-check opcode range included `EC_JUMP` and the counter mutators; `CHECK_TURN_PHASE_AI_ACTOR` given four signed bytes (three); Iucharba and Creidne called siblings; Chapter 1's list counted without the expanded `macroSetFactions*` (141, not 136); event-unit recording and the songless pre-combat dialogue omitted | docs/guide/11 | with review |
 | dialogue.md: `rlStartConversationDialogue` said to run castle conversations, and "two modes" where there are four | docs/reference/dialogue.md | `fe85132` |
 | dialogue.md: portrait tilemap called 4×6 (it is 6×8 tiles, 48×64 px); dialogue_box.asm called the mouth-patch routines unexplained | docs/reference/dialogue.md, engine/dialogue/dialogue_box.asm | with Ch. 13 review |
+| Ch. 5: the range search, the AI's maps and target selection said to use `rlBuild32x32MapUnitGrid`; the range search fills its own input grid, the AI fills 64 × 64 whole-map grids, and only the unit menu, staves and scripted crits use the 32 × 32 grid | docs/guide/05 | with Ch. 14 |
+| ai.md: the open questions (modes, objectives, `bUnknown000E7B` bits, whether actions 3/12/13 are chosen) | docs/reference/ai.md | with Ch. 14 |
 | events.md called `$FEFE` a yield (it is the skip point) and `$3B` an unnamed command | docs/reference/events.md | with Ch. 12 |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
@@ -113,6 +119,9 @@ Retail-ROM behavior, left as it is in the source and documented. Fix nothing her
 | Adept can loop forever | `rsActionStructGetNumberOfStrikes` (battle.asm) | With Adept, `AttackSpeed + 20 < 0` takes `bmi -` back to the Astra check, which falls through to the same test; probably unreachable (needs weight over speed + 20) | not yet |
 | Empty-slot test never matches | `rsMapStepNextFaction` (map_step.asm) | Skips a slot whose name ID is `$80`; no group uses `$80` and an empty slot reads `$FFFF`, so every loaded slot runs steps 1-8 | Ch. 8, map.md |
 | Status counted down twice | `rsMapStepStartTurn` and `rsGetTurnStartCuredEffect` / `rsGetTurnStartFreelancerEffect` | Cured and Freelancer units count down at the turn's start and again at their army's phase; a countdown that ends at the turn's start clears the status without its reward (full HP, 3,000 gold) | Ch. 8 |
+| Stale threat map | `rsAIUpdateThreatRangeMap` (threat.asm) | Groups in modes 4 and 5 skip building `aRangeMap` and read whatever it holds, usually the range input (1, `$FE`, `$FF`, centered on another unit) left by the previous computer unit's pick-up; their tile threat values are not threat counts | Ch. 14, source comment |
+| Wrong register; inverted test | `rsAICheckIfUnitCanEngageAnyTarget`, `rsAICheckTargetEngagementViability` (scripts.asm) | The defeated/hidden test reads the member's deployment offset (X) instead of the target's (Y); a member that can do no damage counts as able to engage | Ch. 14, source comment |
+| Gate try always fails | `rsAIObjectiveInteractWithUnit` (actions.asm) | The last tile tried beside a target guarding a castle is the gate, which `rsAICheckIfInteractionTileReachable` rejects | Ch. 14, source comment |
 | Stale movement map | `rlUndoUnitMove` (unit_movement.asm), mode 3 | B after the castle screen's guard command tests whether the unit can move with an `aMovementMap` nobody rebuilt; the castle screen cleared it and keeps its item lists there, so it is 0 (back inside) unless a list of 93+ items left a byte of 1-`$7F` next to the center, which puts the unit on the gate instead | Ch. 9 |
 
 Quirks that aren't bugs, recorded so they aren't rediscovered:
@@ -139,13 +148,17 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 - The dialogue insert stack holds six pointers; a seventh insert (name, number, piece) is skipped without notice. Dialogue command numbers `$41`-`$7F` hang in an endless loop. Sixteen dialogue commands appear in no text (Ch. 13).
 - The menu font has 15 kanji (剣庫回城兵大書杖国軍帝系特効部); menu strings are Shift-JIS and any other character draws blank (Ch. 13).
 - Map dialogue slots draw at VRAM `$8000`/`$9000` over the menu font and icons, so `procDialogue` decompresses them again after every map conversation (Ch. 13).
+- The AI's target scoring by class priority, effectiveness and triangle (`rsAIScoreTargetsNearLeader`, `aAIClassTargetPriorityTable`) sits after an unconditional branch and never runs; `aAIClassWeightTable` has no reader at all (Ch. 14).
+- Neither AI list checks its count: 24 group members, 48 targets; a 49th target would overwrite `aPermanentEventFlags` (Ch. 14).
+- Seven AI script commands are unused, among them `AI_TARGET_VILLAGE` and the three copies of the surround command `$1A`-`$1C` (Ch. 14).
 - No condition list uses a flag byte with bit 7 ("must be set, cleared on match"), opcodes `$22`-`$24`, or any `CHILD` condition other than `CHECK_CHILD_TALK` (Ch. 11).
 
 ## Next session
 
-1. **Review Chapters 9, 10 and 12.** Chapter 10's unit-menu rules come from the 24 checks; mode 1's contents at the home gate (enter, guard, equip, animation) were settled from the code, so that emulator question is closed.
+1. **Review Chapters 9, 10, 12 and 14.** Chapter 14 was checked against the code while writing (scripts, cycle, scoring, moves); a reviewer should recheck the mode table and the objective table against `aAIAttackTypeRoutines` and `aAIGroupObjectiveRoutines`, and the claim that a step can outlast a frame (the `$10` flag exists for it; no timing was measured).
 2. Before the battle interlude and Part II revision: write `docs/reference/battle.md`.
-3. Then Chapter 14 (armies with a mind), from `ai.md`. Chapter 13 leaves the conversation screen's own steps (background, portrait fades, exits) to Chapter 15 and the world map's dialogue commands (bit 7) to Chapter 19.
+3. Then the Part IV interlude (one enemy turn) and Chapter 15 (castles and towns), from `castle.md`. Chapter 13 leaves the conversation screen's own steps (background, portrait fades, exits) to Chapter 15 and the world map's dialogue commands (bit 7) to Chapter 19.
+4. Still unnamed in the AI: the event wait procs `procEventWaitFlag0E7B*` (they wait on `bAIEngineFlags` bit 0) and `lAITemp*`/`wAITemp*` scratch.
 
 ## Who wrote what
 

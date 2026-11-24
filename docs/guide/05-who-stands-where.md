@@ -41,7 +41,7 @@ fn unit_at(x: u8, y: u8) -> Option<UnitPtr> {        // rlGetUnitByCoordinates
 }
 ```
 
-That is 72 comparisons per lookup, fine for the cursor. Code that asks the question for many tiles at once, such as the range search, the AI's threat and movement maps, and target selection, first builds a grid from the table (`rlBuild32x32MapUnitGrid` fills a 32 × 32 window around a point with deployment offsets) and then reads the grid ([Chapter 9](OUTLINE.md), [Chapter 14](OUTLINE.md)).
+That is 72 comparisons per lookup, fine for the cursor. Code that asks the question for many tiles at once first builds a grid from the table and then reads the grid. The range search marks every unit into the input grid of its fill ([Chapter 9](09-moving-a-unit.md)), the AI writes deployment offsets into 64 × 64 maps of the whole chapter ([Chapter 14](14-armies-with-a-mind.md)), and the unit menu's target checks, the staves, and the scripted critical hits use `rlBuild32x32MapUnitGrid`, which fills a 32 × 32 window around a point.
 
 ### Shared sprites
 
