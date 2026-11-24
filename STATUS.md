@@ -21,6 +21,18 @@ From `python3 tools/counts.py --fast --breakdown` (top-level `rl`/`rs` routines 
 | All 20 folders (`ai/` .. `worldmap/`) | 0 | 6,505 | — | 0 `Unknown` |
 | **Total** | **0** | **6,505** | | **6,505 named (100.0%)** |
 
+## Data, table and text Unknowns (2026-11-23 pass)
+
+Routines are done; this pass named data. Distinct `*Unknown*` names in source went from 1,796 to 1,120 (`grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*'` over the tree minus `.git`, `build`, `wip`, `gfx`, `*.md`). Done: map magic procs, sprite infos, scripts, frames and palettes (4 raw scripts decoded with `tools/sprite_scripts.py`); 33 shop/arena/augury/class change texts (named from what they say); 83 tables named from their reader; menu texts, screen palettes, HDMA infos, UI tilemaps (files renamed too); debug menu labels. Findings: `UnitState0400` is `UnitStateAssault`; four Warp/Valflame routines tagged `Unused` are called from scripts that were raw bytes.
+
+What's left, easiest first:
+- **Labels used by one named routine** (~300: list each Unknown label with the labels that reference it). Name from the reader where its name and the data's shape say what the table is; skip the rest.
+- **`aBattleScenePaletteEffects` targets** (80): name by which spell scripts use each effect ID (trace the battle animation scripts' palette effect commands).
+- **`gcUnknown`** (261 compressed streams): asset work; name from the loading routine and confirm by rendering (`gfx/compressed/CATALOG.md`), per the asset rules.
+- **Labels with no references** (114): don't call them unused until raw `.byte`/`.word` data near them is decoded; hidden pointers in raw scripts were the reason four "Unused" routines were wrong.
+- `wUnknown` (51) WRAM variables, `aPortraitPaletteUnknown` (14), `aSoundUnknown` (12), the dialogueShopNN placeholders (named by table index; could take content names like the Unknown ones did).
+- The Lil' Nordion and Project Naga translation build repos (GitHub, links via their patch pages) may help with text tables.
+
 ## Who wrote what
 
 Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), Wave 16 (`495d670`..`80c1e1d`), Wave 17 (`d7054ee`..`4fa5320`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and Wave 18 (`ea75480`..`0e1f146`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`). Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
