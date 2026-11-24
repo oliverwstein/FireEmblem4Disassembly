@@ -246,42 +246,42 @@
         .long rlBattleSceneScriptStartMessage2 ; $21
         .long rlBattleSceneScriptLoadDialoguePortraitPal ; $22
         .long rlBattleSceneScriptContinueMessage ; $23
-        .long rlUnknown96F356 ; $24
-        .long rlUnknown96F41A ; $25
+        .long rlBattleSceneScriptInitPalFlash ; $24
+        .long rlBattleSceneScriptInitShake0 ; $25
         .long rlBattleSceneScriptHideDefender ; $26
-        .long rlUnknown96F431 ; $27
-        .long rlUnknown96F448 ; $28
-        .long rlUnknown96F45F ; $29
-        .long rlUnknown96F512 ; $2A
-        .long rlUnknown96F52C ; $2B
+        .long rlBattleSceneScriptInitShake1 ; $27
+        .long rlBattleSceneScriptInitShake2 ; $28
+        .long rlBattleSceneScriptInitShake3 ; $29
+        .long rlBattleSceneScriptHideLetterbox ; $2A
+        .long rlBattleSceneScriptShowLetterbox ; $2B
         .long rlBattleSceneScriptSetFullBrightness ; $2C
-        .long rlUnknown96F543 ; $2D
-        .long rlUnknown96F54F ; $2E
-        .long rlUnknown96F4A3 ; $2F
+        .long rlBattleSceneScriptFreeLetterboxHDMA ; $2D
+        .long rlBattleSceneScriptCreateLetterboxHDMA ; $2E
+        .long rlBattleSceneScriptInitAttackerBlink ; $2F
         .long rlBattleSceneScriptStartBrighten ; $30
         .long rlBattleSceneScriptStartUnbrighten ; $31
         .long rlBattleSceneScriptWhiteBackdrop ; $32
         .long rlBattleSceneScriptRestorePalettes ; $33
-        .long rlUnknown96F89B ; $34
-        .long rlUnknown96FADA ; $35
-        .long rlUnknown96FBF9 ; $36
+        .long rlBattleSceneScriptInitHitSpark ; $34
+        .long rlBattleSceneScriptInitBlueTintIn ; $35
+        .long rlBattleSceneResetAllEffects ; $36
         .long rlBattleSceneScriptShowAttacker ; $37
-        .long rlUnknown96FCDB ; $38
-        .long rlUnknown96FB39 ; $39
-        .long rlUnknown96FD54 ; $3A
-        .long rlUnknown97802C ; $3B
+        .long rlBattleSceneResetCombatant1Center ; $38
+        .long rlBattleSceneScriptInitBlueTintOut ; $39
+        .long rlBattleSceneRestoreHUDPalettes ; $3A
+        .long rlBattleSceneClearWindowBuffersRegs ; $3B
         .long rlBattleSceneScriptPlaySound0B ; $3C
         .long rlBattleSceneScriptSetVictoryMusic ; $3D
-        .long rlUnknown96FC49 ; $3E
-        .long rlUnknown96FB99 ; $3F
+        .long rlBattleSceneResetScrollAndHDMAEffects ; $3E
+        .long rlBattleSceneScriptInitBlueTintSlow ; $3F
         .long rlBattleSceneEnableOAMBufferCopy ; $40
         .long rlBattleSceneScriptSaveOAMExt ; $41
         .long rlBattleSceneFadeMusicForJulius ; $42
         .long rlBattleSceneScriptFadeOutMusic ; $43
         .long rlBattleSceneClearWindowBuffers ; $44
-        .long rlUnknown96FD13 ; $45
+        .long rlBattleSceneResetBothCombatantsCenter ; $45
         .long rlBattleSceneScriptInitBG1Dimmed ; $46
-        .long rlUnknown96FC81 ; $47
+        .long rlBattleSceneResetEffectsAndColorMath ; $47
 
         ; 97/BEAC
 
@@ -1826,7 +1826,7 @@
 
       aUnknown98B173 ; 98/B173
 
-        ; Read by rsUnknown96F915.
+        ; Read by rsBattleSceneStepHitEffectSprites.
 
         .word $0010, $FFE0, $0010, $0010, $000C, $FFF4, $000C, $000C
         .word $0008, $FFF8, $0008, $0008, $0005, $FFFB, $0005, $0005
@@ -1853,7 +1853,7 @@
 
       aUnknown98B231 ; 98/B231
 
-        ; Read by rsUnknown96F7EB.
+        ; Read by rsBattleSceneStepDodgeOrMissSprites.
 
         .word _B231_B24B - aUnknown98B231
         .word _B231_B257 - aUnknown98B231
@@ -2535,7 +2535,7 @@
 
       aUnknown99892A ; 99/892A
 
-        ; Read by rlUnknown96F38F.
+        ; Read by rlBattleSceneScriptStepPalFlash.
 
         .word $0380, $0380, $0280, $0280, $0180, $0180, $0080, $0080
         .word $0081, $0081, $0082, $0082, $FF85

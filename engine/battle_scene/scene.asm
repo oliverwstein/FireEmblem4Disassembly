@@ -483,7 +483,7 @@
         jsl rlBattleSceneRunRounds
 
         _8B36
-        jsl rlUnknown96F7D4
+        jsl rlBattleSceneUpdateEffectSprites
         jsr rsBattleSceneTurnCombatants
         ldx #$0000
         jsl rlBattleAnimationUpdateX

@@ -1038,9 +1038,9 @@
         .autsiz
         .databank ?
 
-        ; Control command $FFF9: rlUnknown96F9BF, then rlBattleSceneQueueDodge if bit 3 of $0AE4 is set.
+        ; Control command $FFF9: rlBattleSceneStartHitEffectSprites, then rlBattleSceneQueueDodge if bit 3 of $0AE4 is set.
 
-        jsl rlUnknown96F9BF
+        jsl rlBattleSceneStartHitEffectSprites
         lda bBattleSceneStrikeFlags,b
         bit #$0008
         beq _A3B8

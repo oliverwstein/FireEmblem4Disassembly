@@ -2223,9 +2223,9 @@
         .autsiz
         .databank ?
 
-        ; Sequence command $EE: rlUnknown96F9BF, then the other combatant dodges (rlBattleSceneQueueDodge) if the strike missed.
+        ; Sequence command $EE: rlBattleSceneStartHitEffectSprites, then the other combatant dodges (rlBattleSceneQueueDodge) if the strike missed.
 
-        jsl rlUnknown96F9BF
+        jsl rlBattleSceneStartHitEffectSprites
         lda bBattleSceneStrikeFlags,b
         bit #$0008
         beq _BEC3

@@ -12614,8 +12614,8 @@
         plp
         plb
         .databank $96
-        jsl rlUnknown96F28D
-        jsl rlUnknown96F275
+        jsl rlBattleSceneBuildMosaicWindowHDMA
+        jsl rlBattleSceneCreateMosaicWindowHDMA
 
         _EEBA
         ply
@@ -12638,9 +12638,9 @@
 
         ; Jump table of rlBattleSceneStepMosaic.
         .word <>rsBattleSceneMosaicMode0NoOp
-        .word <>rsUnknown96EEC6
-        .word <>rsUnknown96EFC3
-        .word <>rsUnknown96F0C4
+        .word <>rsBattleSceneCalcMosaicBoxBG3
+        .word <>rsBattleSceneCalcMosaicBoxBG3Center
+        .word <>rsBattleSceneCalcMosaicBoxBG1
 
     .endsection Table96EEBDSection
 
@@ -12671,7 +12671,7 @@
       .al
       .xl
 
-      rsUnknown96EEC6 ; 96/EEC6
+      rsBattleSceneCalcMosaicBoxBG3 ; 96/EEC6
 
         .al
         .xl
@@ -12819,7 +12819,7 @@
       .al
       .xl
 
-      rsUnknown96EFC3 ; 96/EFC3
+      rsBattleSceneCalcMosaicBoxBG3Center ; 96/EFC3
 
         .al
         .xl
@@ -12969,7 +12969,7 @@
       .al
       .xl
 
-      rsUnknown96F0C4 ; 96/F0C4
+      rsBattleSceneCalcMosaicBoxBG1 ; 96/F0C4
 
         .al
         .xl
@@ -13119,7 +13119,7 @@
       .al
       .xl
 
-      rlUnknown96F275 ; 96/F275
+      rlBattleSceneCreateMosaicWindowHDMA ; 96/F275
 
         .al
         .xl
@@ -13152,7 +13152,7 @@
       .al
       .xl
 
-      rlUnknown96F28D ; 96/F28D
+      rlBattleSceneBuildMosaicWindowHDMA ; 96/F28D
 
         .al
         .xl
@@ -13317,7 +13317,7 @@
 
         ; 96/F356
 
-      rlUnknown96F356 ; 96/F356
+      rlBattleSceneScriptInitPalFlash ; 96/F356
 
         ; Found through fe4.cdl.
         .al
@@ -13344,9 +13344,9 @@
         lda #$00
         sta bBufferCGADSUB
         rep #$20
-        lda #(`rlUnknown96F38F)<<8
+        lda #(`rlBattleSceneScriptStepPalFlash)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96F38F
+        lda #<>rlBattleSceneScriptStepPalFlash
         sta lBattleSceneScriptRoutine
         rtl
 
@@ -13354,7 +13354,7 @@
 
         ; 96/F38F
 
-      rlUnknown96F38F ; 96/F38F
+      rlBattleSceneScriptStepPalFlash ; 96/F38F
 
         ; Found through fe4.cdl.
         .al
@@ -13397,12 +13397,12 @@
         pla
         bit #$0080
         bne _F3DD
-        jsr rsUnknown96F3E2
+        jsr rsBattleSceneRestoreSpritePalettes
         bra _F3E0
 
 
         _F3DD
-        jsr rsUnknown96F3FE
+        jsr rsBattleSceneApplyTintedSpritePalettes
 
         _F3E0
         plx
@@ -13412,7 +13412,7 @@
 
         ; 96/F3E2
 
-      rsUnknown96F3E2 ; 96/F3E2
+      rsBattleSceneRestoreSpritePalettes ; 96/F3E2
 
         .al
         .xl
@@ -13440,7 +13440,7 @@
 
         ; 96/F3FE
 
-      rsUnknown96F3FE ; 96/F3FE
+      rsBattleSceneApplyTintedSpritePalettes ; 96/F3FE
 
         .al
         .xl
@@ -13476,7 +13476,7 @@
       .al
       .xl
 
-      rlUnknown96F41A ; 96/F41A
+      rlBattleSceneScriptInitShake0 ; 96/F41A
 
         ; Found by tools/sweep.py.
         .al
@@ -13487,9 +13487,9 @@
         phx
         lda #$0000
         sta aBattleSceneAfterimages.Owner,b
-        lda #(`rlUnknown96F476)<<8
+        lda #(`rlBattleSceneScriptStepDefenderShake)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96F476
+        lda #<>rlBattleSceneScriptStepDefenderShake
         sta lBattleSceneScriptRoutine
         plx
         rtl
@@ -13498,7 +13498,7 @@
 
         ; 96/F431
 
-      rlUnknown96F431 ; 96/F431
+      rlBattleSceneScriptInitShake1 ; 96/F431
 
         ; Found by tools/sweep.py.
         .al
@@ -13509,9 +13509,9 @@
         phx
         lda #$008E
         sta aBattleSceneAfterimages.Owner,b
-        lda #(`rlUnknown96F476)<<8
+        lda #(`rlBattleSceneScriptStepDefenderShake)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96F476
+        lda #<>rlBattleSceneScriptStepDefenderShake
         sta lBattleSceneScriptRoutine
         plx
         rtl
@@ -13520,7 +13520,7 @@
 
         ; 96/F448
 
-      rlUnknown96F448 ; 96/F448
+      rlBattleSceneScriptInitShake2 ; 96/F448
 
         ; Found by tools/sweep.py.
         .al
@@ -13531,9 +13531,9 @@
         phx
         lda #$0118
         sta aBattleSceneAfterimages.Owner,b
-        lda #(`rlUnknown96F476)<<8
+        lda #(`rlBattleSceneScriptStepDefenderShake)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96F476
+        lda #<>rlBattleSceneScriptStepDefenderShake
         sta lBattleSceneScriptRoutine
         plx
         rtl
@@ -13542,7 +13542,7 @@
 
         ; 96/F45F
 
-      rlUnknown96F45F ; 96/F45F
+      rlBattleSceneScriptInitShake3 ; 96/F45F
 
         ; Found by tools/sweep.py.
         .al
@@ -13553,9 +13553,9 @@
         phx
         lda #$0122
         sta aBattleSceneAfterimages.Owner,b
-        lda #(`rlUnknown96F476)<<8
+        lda #(`rlBattleSceneScriptStepDefenderShake)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96F476
+        lda #<>rlBattleSceneScriptStepDefenderShake
         sta lBattleSceneScriptRoutine
         plx
         rtl
@@ -13564,7 +13564,7 @@
 
         ; 96/F476
 
-      rlUnknown96F476 ; 96/F476
+      rlBattleSceneScriptStepDefenderShake ; 96/F476
 
         ; Found by tools/sweep.py.
         .al
@@ -13601,7 +13601,7 @@
 
         ; 96/F4A3
 
-      rlUnknown96F4A3 ; 96/F4A3
+      rlBattleSceneScriptInitAttackerBlink ; 96/F4A3
 
         ; Found by tools/sweep.py.
         .al
@@ -13612,9 +13612,9 @@
         phx
         lda #$0000
         sta aBattleSceneAfterimages.Owner,b
-        lda #(`rlUnknown96F4BA)<<8
+        lda #(`rlBattleSceneScriptStepAttackerBlink)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96F4BA
+        lda #<>rlBattleSceneScriptStepAttackerBlink
         sta lBattleSceneScriptRoutine
         plx
         rtl
@@ -13623,7 +13623,7 @@
 
         ; 96/F4BA
 
-      rlUnknown96F4BA ; 96/F4BA
+      rlBattleSceneScriptStepAttackerBlink ; 96/F4BA
 
         ; Found by tools/sweep.py.
         .al
@@ -13692,7 +13692,7 @@
         rtl
         rtl
 
-      rlUnknown96F512 ; 96/F512
+      rlBattleSceneScriptHideLetterbox ; 96/F512
 
         .al
         .xl
@@ -13715,7 +13715,7 @@
 
         ; 96/F52C
 
-      rlUnknown96F52C ; 96/F52C
+      rlBattleSceneScriptShowLetterbox ; 96/F52C
 
         .al
         .xl
@@ -13737,7 +13737,7 @@
 
         ; 96/F543
 
-      rlUnknown96F543 ; 96/F543
+      rlBattleSceneScriptFreeLetterboxHDMA ; 96/F543
 
         .al
         .xl
@@ -13755,7 +13755,7 @@
 
         ; 96/F54F
 
-      rlUnknown96F54F ; 96/F54F
+      rlBattleSceneScriptCreateLetterboxHDMA ; 96/F54F
 
         .al
         .xl
@@ -13778,7 +13778,7 @@
       .al
       .xl
 
-      rlUnknown96F7D4 ; 96/F7D4
+      rlBattleSceneUpdateEffectSprites ; 96/F7D4
 
         .al
         .xl
@@ -13790,12 +13790,12 @@
         beq _F7EA
         bit #$0002
         bne _F7E7
-        jsr rsUnknown96F7EB
+        jsr rsBattleSceneStepDodgeOrMissSprites
         bra _F7EA
 
 
         _F7E7
-        jsr rsUnknown96F915
+        jsr rsBattleSceneStepHitEffectSprites
 
         _F7EA
         rtl
@@ -13804,7 +13804,7 @@
 
         ; 96/F7EB
 
-      rsUnknown96F7EB ; 96/F7EB
+      rsBattleSceneStepDodgeOrMissSprites ; 96/F7EB
 
         .al
         .xl
@@ -13912,7 +13912,7 @@
       .al
       .xl
 
-      rlUnknown96F89B ; 96/F89B
+      rlBattleSceneScriptInitHitSpark ; 96/F89B
 
         ; Found by tools/sweep.py.
         .al
@@ -13974,7 +13974,7 @@
         adc #$0018
         sta $7FFC62
         pla
-        jsr rsUnknown96FA92
+        jsr rsBattleScenePlaySound05Panned
         lda #$9800
         sta $7FFC65
         lda #$B215
@@ -13994,7 +13994,7 @@
       .al
       .xl
 
-      rsUnknown96F915 ; 96/F915
+      rsBattleSceneStepHitEffectSprites ; 96/F915
 
         .al
         .xl
@@ -14094,7 +14094,7 @@
 
         ; 96/F9BF
 
-      rlUnknown96F9BF ; 96/F9BF
+      rlBattleSceneStartHitEffectSprites ; 96/F9BF
 
         .al
         .xl
@@ -14183,7 +14183,7 @@
         sta $7FFC65
         lda #$B363
         sta $7FFC67
-        jsr rsUnknown96FAB6
+        jsr rsBattleScenePlaySound6FPanned
         bra _FA90
 
 
@@ -14212,7 +14212,7 @@
       .al
       .xl
 
-      rsUnknown96FA92 ; 96/FA92
+      rsBattleScenePlaySound05Panned ; 96/FA92
 
         ; Found by tools/sweep.py.
         .al
@@ -14249,7 +14249,7 @@
       .al
       .xl
 
-      rsUnknown96FAB6 ; 96/FAB6
+      rsBattleScenePlaySound6FPanned ; 96/FAB6
 
         .al
         .xl
@@ -14287,7 +14287,7 @@
       .al
       .xl
 
-      rlUnknown96FADA ; 96/FADA
+      rlBattleSceneScriptInitBlueTintIn ; 96/FADA
 
         ; Found by tools/sweep.py.
         .al
@@ -14304,10 +14304,10 @@
         sta bBufferCOLDATA_1
         sta bBufferCOLDATA_2
         rep #$20
-        jsl rlUnknown96FB02
-        lda #(`rlUnknown96FB02)<<8
+        jsl rlBattleSceneScriptStepBlueTintIn
+        lda #(`rlBattleSceneScriptStepBlueTintIn)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96FB02
+        lda #<>rlBattleSceneScriptStepBlueTintIn
         sta lBattleSceneScriptRoutine
         rtl
 
@@ -14315,7 +14315,7 @@
 
         ; 96/FB02
 
-      rlUnknown96FB02 ; 96/FB02
+      rlBattleSceneScriptStepBlueTintIn ; 96/FB02
 
         ; Found by tools/sweep.py.
         .al
@@ -14358,7 +14358,7 @@
 
         ; 96/FB39
 
-      rlUnknown96FB39 ; 96/FB39
+      rlBattleSceneScriptInitBlueTintOut ; 96/FB39
 
         ; Found by tools/sweep.py.
         .al
@@ -14375,10 +14375,10 @@
         sta bBufferCOLDATA_1
         sta bBufferCOLDATA_2
         rep #$20
-        jsl rlUnknown96FB61
-        lda #(`rlUnknown96FB61)<<8
+        jsl rlBattleSceneScriptStepBlueTintOut
+        lda #(`rlBattleSceneScriptStepBlueTintOut)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96FB61
+        lda #<>rlBattleSceneScriptStepBlueTintOut
         sta lBattleSceneScriptRoutine
         rtl
 
@@ -14386,7 +14386,7 @@
 
         ; 96/FB61
 
-      rlUnknown96FB61 ; 96/FB61
+      rlBattleSceneScriptStepBlueTintOut ; 96/FB61
 
         ; Found by tools/sweep.py.
         .al
@@ -14430,7 +14430,7 @@
 
         ; 96/FB99
 
-      rlUnknown96FB99 ; 96/FB99
+      rlBattleSceneScriptInitBlueTintSlow ; 96/FB99
 
         ; Found by tools/sweep.py.
         .al
@@ -14447,10 +14447,10 @@
         sta bBufferCOLDATA_1
         sta bBufferCOLDATA_2
         rep #$20
-        jsl rlUnknown96FBC1
-        lda #(`rlUnknown96FBC1)<<8
+        jsl rlBattleSceneScriptStepBlueTintSlow
+        lda #(`rlBattleSceneScriptStepBlueTintSlow)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96FBC1
+        lda #<>rlBattleSceneScriptStepBlueTintSlow
         sta lBattleSceneScriptRoutine
         rtl
 
@@ -14458,7 +14458,7 @@
 
         ; 96/FBC1
 
-      rlUnknown96FBC1 ; 96/FBC1
+      rlBattleSceneScriptStepBlueTintSlow ; 96/FBC1
 
         ; Found by tools/sweep.py.
         .al
@@ -14508,7 +14508,7 @@
       .al
       .xl
 
-      rlUnknown96FBF9 ; 96/FBF9
+      rlBattleSceneResetAllEffects ; 96/FBF9
 
         ; Found through fe4.cdl.
         .al
@@ -14558,7 +14558,7 @@
       .al
       .xl
 
-      rlUnknown96FC49 ; 96/FC49
+      rlBattleSceneResetScrollAndHDMAEffects ; 96/FC49
 
         ; Found by tools/sweep.py.
         .al
@@ -14593,7 +14593,7 @@
 
         ; 96/FC81
 
-      rlUnknown96FC81 ; 96/FC81
+      rlBattleSceneResetEffectsAndColorMath ; 96/FC81
 
         ; Found by tools/sweep.py.
         .al
@@ -14641,7 +14641,7 @@
 
         ; 96/FCDB
 
-      rlUnknown96FCDB ; 96/FCDB
+      rlBattleSceneResetCombatant1Center ; 96/FCDB
 
         ; Found by tools/sweep.py.
         .al
@@ -14674,7 +14674,7 @@
 
         ; 96/FD13
 
-      rlUnknown96FD13 ; 96/FD13
+      rlBattleSceneResetBothCombatantsCenter ; 96/FD13
 
         ; Found by tools/sweep.py.
         .al
@@ -14716,7 +14716,7 @@
       .al
       .xl
 
-      rlUnknown96FD54 ; 96/FD54
+      rlBattleSceneRestoreHUDPalettes ; 96/FD54
 
         ; Found through fe4.cdl.
         .al
@@ -14751,7 +14751,7 @@
       .al
       .xl
 
-      rlUnknown97802C ; 97/802C
+      rlBattleSceneClearWindowBuffersRegs ; 97/802C
 
         ; Found through fe4.cdl.
         .al

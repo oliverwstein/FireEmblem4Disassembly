@@ -163,7 +163,7 @@
       .byte $EF, \Arg
     .endsegment
 
-    ; $EE: rlUnknown96F9BF, and rlBattleSceneQueueDodge for the other combatant if
+    ; $EE: rlBattleSceneStartHitEffectSprites, and rlBattleSceneQueueDodge for the other combatant if
     ; bit 3 of $0AE4 is set (rsBattleAnimationCmdDodgeIfMissed).
     ANIM_CMD_EE .segment Arg=0
       .byte $EE, \Arg
