@@ -7,7 +7,7 @@
     YIELD
 
     FILL_EVENT_UNIT_SLOT Dew, EventUnitSlot1
-    SET_CAMERA_TO_EVENT_UNIT_SLOT_1
+    SET_CURSOR_TO_EVENT_UNIT_SLOT_1
     DIALOGUE dialogueChapter03DewBragiTower1
     YIELD
 

@@ -41,7 +41,7 @@
       _Continue
       ; Default if: Eldigan died + Chagall alive + Papilio died (and Travant already left as a result)
       FILL_EVENT_UNIT_SLOT Sigurd, EventUnitSlot1
-      SET_CAMERA_TO_EVENT_UNIT_SLOT_1
+      SET_CURSOR_TO_EVENT_UNIT_SLOT_1
       PLAY_SFX_WORD $00E0
       PAUSE 35
       YIELD

@@ -465,11 +465,16 @@
       .byte $38
     .endsegment
 
-    SET_CAMERA_TO_EVENT_UNIT_SLOT_1 .segment
+    SET_CURSOR_TO_EVENT_UNIT_SLOT_1 .segment
+      ; Puts the map cursor on the unit in event unit slot 1 (wCursorXOffset/YOffset,
+      ; relative to the current camera); the camera doesn't move. Nothing if the slot is empty.
       .byte $39
     .endsegment
 
     SET_CAMERA_POSITION .segment Coordinates
+      ; Sets wMapXOffset/YOffset, the camera position the map is rebuilt from after it
+      ; has been left (RELOAD_MAP_SCREEN, a DIALOGUE_WITH_BG scene), to the tile, and puts
+      ; the cursor at the screen's center. MAP_SCROLL moves the visible camera.
       .byte $3A
       .byte \Coordinates[0]
       .byte \Coordinates[1]

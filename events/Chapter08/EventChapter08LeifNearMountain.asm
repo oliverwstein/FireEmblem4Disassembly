@@ -5,7 +5,7 @@
     MAP_SCROLL_TO_EVENT_UNIT_SLOT_1 4
     YIELD
 
-    SET_CAMERA_TO_EVENT_UNIT_SLOT_1
+    SET_CURSOR_TO_EVENT_UNIT_SLOT_1
 
     macroMapDialogue dialogueChapter08LeifNearMountain
     YIELD

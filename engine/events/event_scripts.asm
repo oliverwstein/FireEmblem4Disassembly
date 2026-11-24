@@ -314,7 +314,7 @@
         .word <>rsEventCommand36
         .word <>rsEventCommand37
         .word <>rsEventCommand38
-        .word <>rsEventCommandSetCameraToEventUnitSlot1
+        .word <>rsEventCommandSetCursorToEventUnitSlot1
         .word <>rsEventCommandSetCameraPosition
         .word <>rsEventCommand3B
         .word <>rsEventCommand3C
@@ -2837,13 +2837,13 @@
 
         .databank 0
 
-      rsEventCommandSetCameraToEventUnitSlot1 ; 91/C749
+      rsEventCommandSetCursorToEventUnitSlot1 ; 91/C749
 
         .al
         .autsiz
         .databank ?
 
-        ; SET_CAMERA_TO_EVENT_UNIT_SLOT_1
+        ; SET_CURSOR_TO_EVENT_UNIT_SLOT_1
 
         php
         lda wEventUnitSlot1XCoordinate

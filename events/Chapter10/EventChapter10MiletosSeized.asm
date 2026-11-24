@@ -52,7 +52,7 @@
     YIELD
 
     FILL_EVENT_UNIT_SLOT Seliph, EventUnitSlot1
-    SET_CAMERA_TO_EVENT_UNIT_SLOT_1
+    SET_CURSOR_TO_EVENT_UNIT_SLOT_1
 
     RUN_EVENT_CONDITION
       SET_CHILD_TALK_TARGET [Coirpre, Charlot], [Altena, Altena]
