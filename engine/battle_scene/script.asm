@@ -6455,7 +6455,7 @@
 
       aUnknown9AA30A ; 9A/A30A
 
-        ; Read by rlBattleSceneGetWindowShapePtr, rlBattleSceneGetWindowShapeWidth, rsUnknown9FEB4F, rsUnknown9FF376.
+        ; Read by rlBattleSceneGetWindowShapePtr, rlBattleSceneGetWindowShapeWidth, rsMapMagicLookupCircleHalfWidth, rsUnknown9FF376.
 
         .word _A30A_A3AA - aUnknown9AA30A
         .word _A30A_A3AA - aUnknown9AA30A

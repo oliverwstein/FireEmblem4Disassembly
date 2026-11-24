@@ -2706,7 +2706,7 @@
 
         .structSpriteArray aUnknown9FA087._Sprites
 
-      aUnknown9FA08E .dstruct structHDMAIndirectEntryInfo, rlMapMagicFenrirHDMAInit, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/A08E
+      aUnknown9FA08E .dstruct structHDMAIndirectEntryInfo, rlMapMagicFenrirHDMAInit, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/A08E
 
         ; Part of the Fenrir effect.
       rlMapMagicFenrirHDMAInit ; 9F/A09A
@@ -5896,7 +5896,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        jsl rlUnknown9FDE04
+        jsl rlHDMAMapMagicStepScrollY
         lda $7F50CD
         eor #$FFFF
         inc a
@@ -8403,7 +8403,7 @@
         sta lR18
         ldx #$0000
         lda #$00E0
-        jsl rlUnknown9FEA52
+        jsl rlMapMagicBuildCircleWindowHDMA
         ply
         plx
         rts
@@ -9008,7 +9008,7 @@
         sta lR18
         ldx #$0000
         lda #$00E0
-        jsl rlUnknown9FEA52
+        jsl rlMapMagicBuildCircleWindowHDMA
         ply
 
         _C79F
@@ -10531,10 +10531,10 @@
       procUnknown9FD0DC ; 9F/D0DC
 
         ; Part of the Jormungandr effect.
-        .structProcInfo "ON", rlUnknown9FD0E4, rlUnknown9FD0E8, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicJormungandrInit, rlMapMagicJormungandrDarkenAndSpawn, aProcMapMagicHaltCode
 
 
-      rlUnknown9FD0E4 ; 9F/D0E4
+      rlMapMagicJormungandrInit ; 9F/D0E4
 
         .al
         .xl
@@ -10547,7 +10547,7 @@
 
         .databank 0
 
-      rlUnknown9FD0E8 ; 9F/D0E8
+      rlMapMagicJormungandrDarkenAndSpawn ; 9F/D0E8
 
         .al
         .xl
@@ -10556,8 +10556,8 @@
         ; Part of the Jormungandr effect.
 
         jsr rsDarkenMapMagicColors
-        bcc rlUnknown9FD101
-        lda #<>rlUnknown9FD101
+        bcc rlMapMagicJormungandrDone
+        lda #<>rlMapMagicJormungandrDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #(`aUnknown9FD102)<<8
         sta lR44+1
@@ -10565,7 +10565,7 @@
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
 
-      rlUnknown9FD101 ; 9F/D101
+      rlMapMagicJormungandrDone ; 9F/D101
 
         .al
         .xl
@@ -10580,9 +10580,9 @@
       aUnknown9FD102 ; 9F/D102
 
         ; Part of the Jormungandr effect.
-        .word <>rlUnknown9FD108, <>rlUnknown9FD128, <>aUnknown9FD139
+        .word <>rlMapMagicJormungandrSpriteInit, <>rlMapMagicJormungandrSpriteNoOp, <>aUnknown9FD139
 
-      rlUnknown9FD108 ; 9F/D108
+      rlMapMagicJormungandrSpriteInit ; 9F/D108
 
         .al
         .xl
@@ -10605,7 +10605,7 @@
         .databank 0
 
         ; 9F/D128
-      rlUnknown9FD128 ; 9F/D128
+      rlMapMagicJormungandrSpriteNoOp ; 9F/D128
 
         .al
         .xl
@@ -10618,7 +10618,7 @@
         .databank 0
 
         ; 9F/D129
-      rlUnknown9FD129 ; 9F/D129
+      rlMapMagicJormungandrSpriteFadeBack ; 9F/D129
 
         .al
         .xl
@@ -10641,15 +10641,15 @@
       aUnknown9FD139 ; 9F/D139
 
         ; Part of the Jormungandr effect.
-        ACTIVE_SPRITE_CALL rlUnknown9FD21B
+        ACTIVE_SPRITE_CALL rlMapMagicJormungandrPlayCastSound
         ACTIVE_SPRITE_FRAME 5, aUnknown9FD254
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD265
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD276
         ACTIVE_SPRITE_FRAME 5, aUnknown9FD287
         ACTIVE_SPRITE_FRAME 6, aUnknown9FD298
-        ACTIVE_SPRITE_CALL rlUnknown9FD206
+        ACTIVE_SPRITE_CALL rlMapMagicJormungandrMoveToTarget
         ACTIVE_SPRITE_FRAME 4, aUnknown9FD22F
-        ACTIVE_SPRITE_CALL rlUnknown9FD225
+        ACTIVE_SPRITE_CALL rlMapMagicJormungandrPlayHitSound
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD231
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD238
@@ -10664,7 +10664,7 @@
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD23F
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_CALL rlUnknown9FD1F7
+        ACTIVE_SPRITE_CALL rlMapMagicJormungandrSignalStrike
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD29F
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD29F
@@ -10687,14 +10687,14 @@
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD24D
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_CALL rlUnknown9FD1FF
+        ACTIVE_SPRITE_CALL rlMapMagicJormungandrStartFadeBack
 
         _D1F0
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD22F
         ACTIVE_SPRITE_JUMP _D1F0
 
         ; 9F/D1F7
-      rlUnknown9FD1F7 ; 9F/D1F7
+      rlMapMagicJormungandrSignalStrike ; 9F/D1F7
 
         .al
         .xl
@@ -10709,7 +10709,7 @@
         .databank 0
 
         ; 9F/D1FF
-      rlUnknown9FD1FF ; 9F/D1FF
+      rlMapMagicJormungandrStartFadeBack ; 9F/D1FF
 
         .al
         .xl
@@ -10717,14 +10717,14 @@
         .databank ?
         ; Part of the Jormungandr effect.
 
-        lda #<>rlUnknown9FD129
+        lda #<>rlMapMagicJormungandrSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
 
         ; 9F/D206
-      rlUnknown9FD206 ; 9F/D206
+      rlMapMagicJormungandrMoveToTarget ; 9F/D206
 
         .al
         .xl
@@ -10743,7 +10743,7 @@
         .databank 0
 
         ; 9F/D21B
-      rlUnknown9FD21B ; 9F/D21B
+      rlMapMagicJormungandrPlayCastSound ; 9F/D21B
 
         .al
         .xl
@@ -10763,7 +10763,7 @@
         .databank 0
 
         ; 9F/D225
-      rlUnknown9FD225 ; 9F/D225
+      rlMapMagicJormungandrPlayHitSound ; 9F/D225
 
         .al
         .xl
@@ -10898,10 +10898,10 @@
       aUnknown9FD2D7 ; 9F/D2D7
 
         ; Part of the Thief effect.
-        .word <>rlUnknown9FD2DD, <>rlUnknown9FD2FF, <>aUnknown9FD399
+        .word <>rlMapMagicThiefSpriteInit, <>rlMapMagicThiefSpriteAim, <>aUnknown9FD399
 
 
-      rlUnknown9FD2DD ; 9F/D2DD
+      rlMapMagicThiefSpriteInit ; 9F/D2DD
 
         .al
         .xl
@@ -10923,7 +10923,7 @@
 
         .databank 0
 
-      rlUnknown9FD2FF ; 9F/D2FF
+      rlMapMagicThiefSpriteAim ; 9F/D2FF
 
         .al
         .xl
@@ -10956,7 +10956,7 @@
         lda #$0400
         sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
-        lda #<>rlUnknown9FD341
+        lda #<>rlMapMagicThiefSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _D340
@@ -10964,7 +10964,7 @@
 
         .databank 0
 
-      rlUnknown9FD341 ; 9F/D341
+      rlMapMagicThiefSpriteFlyToTarget ; 9F/D341
 
         .al
         .xl
@@ -10974,19 +10974,19 @@
 
         jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FD2FF._D340
+        bne rlMapMagicThiefSpriteAim._D340
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0020
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9FD361
+        lda #<>rlMapMagicThiefSpriteDissipate
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
 
-      rlUnknown9FD361 ; 9F/D361
+      rlMapMagicThiefSpriteDissipate ; 9F/D361
 
         .al
         .xl
@@ -11005,16 +11005,16 @@
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FD2FF._D340
+        bne rlMapMagicThiefSpriteAim._D340
         lda #$0010
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9FD389
+        lda #<>rlMapMagicThiefSpriteWaitEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
 
-      rlUnknown9FD389 ; 9F/D389
+      rlMapMagicThiefSpriteWaitEnd ; 9F/D389
 
         .al
         .xl
@@ -11023,7 +11023,7 @@
         ; Part of the Thief effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FD2FF._D340
+        bne rlMapMagicThiefSpriteAim._D340
         lda #$0001
         sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
@@ -11042,7 +11042,7 @@
         _D3A9
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD3F9
         ACTIVE_SPRITE_FRAME 3, aUnknown9FD400
-        ACTIVE_SPRITE_CALL rlUnknown9FD3D5
+        ACTIVE_SPRITE_CALL rlMapMagicThiefWaitSpritePhase
         .word <>_D3A9
         ACTIVE_SPRITE_FRAME 5, aUnknown9FD407
         ACTIVE_SPRITE_FRAME 32, aUnknown9FD40E
@@ -11057,7 +11057,7 @@
 
         ; 9F/D3D5
 
-      rlUnknown9FD3D5 ; 9F/D3D5
+      rlMapMagicThiefWaitSpritePhase ; 9F/D3D5
 
         .al
         .xl
@@ -11162,18 +11162,18 @@
       procUnknown9FD430 ; 9F/D430
 
         ; Part of the Valflame effect.
-        .structProcInfo "ON", rlUnknown9FD443, rlUnknown9FD463, aProcUnknown9FD438Code
+        .structProcInfo "ON", rlMapMagicValflameInit, rlMapMagicValflameTintRed, aProcUnknown9FD438Code
 
 
       aProcUnknown9FD438Code ; 9F/D438
 
         ; Part of the Valflame effect.
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FD4C6
+        PROC_CALL rlMapMagicValflameStepBGPaletteAnim
         PROC_JUMP aProcUnknown9FD438Code
 
 
-      rlUnknown9FD443 ; 9F/D443
+      rlMapMagicValflameInit ; 9F/D443
 
         .al
         .xl
@@ -11194,7 +11194,7 @@
 
         .databank 0
 
-      rlUnknown9FD463 ; 9F/D463
+      rlMapMagicValflameTintRed ; 9F/D463
 
         .al
         .xl
@@ -11204,7 +11204,7 @@
 
         jsr rsTintMapMagicColorsRed
         bcc _D474
-        lda #<>rlUnknown9FD475
+        lda #<>rlMapMagicValflameWaitAndSpawn
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -11214,7 +11214,7 @@
 
         .databank 0
 
-      rlUnknown9FD475 ; 9F/D475
+      rlMapMagicValflameWaitAndSpawn ; 9F/D475
 
         .al
         .xl
@@ -11224,8 +11224,8 @@
 
         dec aProcSystem.aBody0,b,x
         bpl _D489
-        jsr rsUnknown9FD497
-        lda #<>rlUnknown9FD48A
+        jsr rsMapMagicValflameSpawnEffects
+        lda #<>rlMapMagicValflameWaitHold
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
         sta aProcSystem.aBody0,b,x
@@ -11235,7 +11235,7 @@
 
         .databank 0
 
-      rlUnknown9FD48A ; 9F/D48A
+      rlMapMagicValflameWaitHold ; 9F/D48A
 
         .al
         .xl
@@ -11245,7 +11245,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _D495
-        lda #<>rlUnknown9FD496
+        lda #<>rlMapMagicValflameDone
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _D495
@@ -11253,7 +11253,7 @@
 
         .databank 0
 
-      rlUnknown9FD496 ; 9F/D496
+      rlMapMagicValflameDone ; 9F/D496
 
         .al
         .xl
@@ -11265,7 +11265,7 @@
 
         .databank 0
 
-      rsUnknown9FD497 ; 9F/D497
+      rsMapMagicValflameSpawnEffects ; 9F/D497
 
         .al
         .xl
@@ -11308,7 +11308,7 @@
 
         .databank 0
 
-      rlUnknown9FD4C6 ; 9F/D4C6
+      rlMapMagicValflameStepBGPaletteAnim ; 9F/D4C6
 
         .al
         .xl
@@ -11363,7 +11363,7 @@
         .word $03FF, $033F, $025F, $019F, $019F, $025F, $033F, $03FF
         .word $03FF
 
-      rlUnknown9FD545 ; 9F/D545
+      rlMapMagicValflameStepSpritePal ; 9F/D545
 
         .al
         .xl
@@ -11421,10 +11421,10 @@
       aUnknown9FD5D2 ; 9F/D5D2
 
         ; Part of the Valflame effect.
-        .word <>rlUnknown9FD5D8, <>rlUnknown9FD5F8, <>aUnknown9FD70E
+        .word <>rlMapMagicValflameSpriteInit, <>rlMapMagicValflameSpriteWaitEnd, <>aUnknown9FD70E
 
 
-      rlUnknown9FD5D8 ; 9F/D5D8
+      rlMapMagicValflameSpriteInit ; 9F/D5D8
 
         .al
         .xl
@@ -11446,7 +11446,7 @@
 
         .databank 0
 
-      rlUnknown9FD5F8 ; 9F/D5F8
+      rlMapMagicValflameSpriteWaitEnd ; 9F/D5F8
 
         .al
         .xl
@@ -11454,7 +11454,7 @@
         .databank ?
         ; Part of the Valflame effect.
 
-        jsl rlUnknown9FD545
+        jsl rlMapMagicValflameStepSpritePal
         lda $7ECC06
         beq _D60C
         lda #$0001
@@ -11469,16 +11469,16 @@
       aUnknown9FD60D ; 9F/D60D
 
         ; Part of the Valflame effect.
-        .word <>rlUnknown9FD620, <>rlUnknown9FD69D, <>aUnknown9FD6BA
+        .word <>rlMapMagicValflameOrbLeftInit, <>rlMapMagicValflameOrbConverge, <>aUnknown9FD6BA
 
 
       aUnknown9FD613 ; 9F/D613
 
         ; Part of the Valflame effect.
-        .word <>rlUnknown9FD619, <>rlUnknown9FD69D, <>aUnknown9FD6E4
+        .word <>rlMapMagicValflameOrbRightInit, <>rlMapMagicValflameOrbConverge, <>aUnknown9FD6E4
 
 
-      rlUnknown9FD619 ; 9F/D619
+      rlMapMagicValflameOrbRightInit ; 9F/D619
 
         .al
         .xl
@@ -11488,11 +11488,11 @@
 
         lda #$8000
         sta wR2
-        bra rlUnknown9FD620._D622
+        bra rlMapMagicValflameOrbLeftInit._D622
 
         .databank 0
 
-      rlUnknown9FD620 ; 9F/D620
+      rlMapMagicValflameOrbLeftInit ; 9F/D620
 
         .al
         .xl
@@ -11556,7 +11556,7 @@
         .byte $F0, $FF, $02, $00, $00, $00, $00, $00, $F8, $FF, $06, $00, $00, $00, $00, $00
         .byte $F0, $FF, $02, $00, $00, $00, $00, $00, $F8, $FF, $06, $00, $00, $00, $00, $00
 
-      rlUnknown9FD69D ; 9F/D69D
+      rlMapMagicValflameOrbConverge ; 9F/D69D
 
         .al
         .xl
@@ -11571,14 +11571,14 @@
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0020
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9FD6B9
+        lda #<>rlMapMagicValflameOrbDone
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _D6B8
         rtl
 
 
-      rlUnknown9FD6B9 ; 9F/D6B9
+      rlMapMagicValflameOrbDone ; 9F/D6B9
 
         .al
         .xl
@@ -11596,7 +11596,7 @@
         .byte $00, $01, $57, $D7, $17, $D4, $D6, $BA, $D6, $00, $04, $6A, $D7, $00, $04, $71
         .byte $D7, $00, $04, $78, $D7, $00, $01, $55, $D7, $01
 
-      rlUnknown9FD6D4 ; 9F/D6D4
+      rlMapMagicValflameWaitOrbUnused ; 9F/D6D4
 
         .al
         .xl
@@ -11622,7 +11622,7 @@
 
         ; Part of the Valflame effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD799
-        ACTIVE_SPRITE_CALL rlUnknown9FD6FE
+        ACTIVE_SPRITE_CALL rlMapMagicValflameWaitOrbPhase
         .word <>aUnknown9FD6E4
         ACTIVE_SPRITE_FRAME 4, aUnknown9FD76A
         ACTIVE_SPRITE_FRAME 4, aUnknown9FD771
@@ -11632,7 +11632,7 @@
 
         ; 9F/D6FE
 
-      rlUnknown9FD6FE ; 9F/D6FE
+      rlMapMagicValflameWaitOrbPhase ; 9F/D6FE
 
         .al
         .xl
@@ -11659,7 +11659,7 @@
 
         ; Part of the Valflame effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD755
-        ACTIVE_SPRITE_CALL rlUnknown9FD73F
+        ACTIVE_SPRITE_CALL rlMapMagicValflameWaitColumnOrRing
         .word <>aUnknown9FD70E
         ACTIVE_SPRITE_FRAME 6, aUnknown9FD77F
         ACTIVE_SPRITE_FRAME 5, aUnknown9FD786
@@ -11667,7 +11667,7 @@
 
         _D723
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD75E
-        ACTIVE_SPRITE_CALL rlUnknown9FD747
+        ACTIVE_SPRITE_CALL rlMapMagicValflameWaitRing
         .word <>_D723
         ACTIVE_SPRITE_FRAME 2, aUnknown9FD78D
         ACTIVE_SPRITE_FRAME 2, aUnknown9FD786
@@ -11677,7 +11677,7 @@
         ACTIVE_SPRITE_FRAME 1, aUnknown9FD755
         ACTIVE_SPRITE_JUMP _D738
 
-      rlUnknown9FD73F ; 9F/D73F
+      rlMapMagicValflameWaitColumnOrRing ; 9F/D73F
 
         .al
         .xl
@@ -11686,12 +11686,12 @@
         ; Part of the Valflame effect.
 
         lda $7ECC08
-        bne rlUnknown9FD747._D752
-        bra rlUnknown9FD747._D74D
+        bne rlMapMagicValflameWaitRing._D752
+        bra rlMapMagicValflameWaitRing._D74D
         .databank 0
 
         ; 9F/D747
-      rlUnknown9FD747 ; 9F/D747
+      rlMapMagicValflameWaitRing ; 9F/D747
 
         .al
         .xl
@@ -11781,10 +11781,10 @@
       procUnknown9FD7A0 ; 9F/D7A0
 
         ; Part of the Valflame effect.
-        .structProcInfo "ON", rlUnknown9FD7A8, rlUnknown9FD823, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicValflameBeamInit, rlMapMagicValflameBeamDescend, aProcMapMagicHaltCode
 
 
-      rlUnknown9FD7A8 ; 9F/D7A8
+      rlMapMagicValflameBeamInit ; 9F/D7A8
 
         .al
         .xl
@@ -11841,7 +11841,7 @@
 
         .databank 0
 
-      rlUnknown9FD823 ; 9F/D823
+      rlMapMagicValflameBeamDescend ; 9F/D823
 
         .al
         .xl
@@ -11864,7 +11864,7 @@
         sta aProcSystem.aBody1,b,x
         lda #$0006
         sta aProcSystem.aBody0,b,x
-        lda #<>rlUnknown9FD86A
+        lda #<>rlMapMagicValflameBeamImpact
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _D852
@@ -11876,12 +11876,12 @@
         lda aProcSystem.aBody4,b,x
         sta wR5
         lda aProcSystem.aBody2,b,x
-        jsr rsUnknown9FD9F3
+        jsr rsMapMagicValflameDrawWindowSlice
         rtl
 
         .databank 0
 
-      rlUnknown9FD86A ; 9F/D86A
+      rlMapMagicValflameBeamImpact ; 9F/D86A
 
         .al
         .xl
@@ -11889,10 +11889,10 @@
         .databank ?
         ; Part of the Valflame effect.
 
-        jsr rsUnknown9FD9DC
+        jsr rsMapMagicValflameLoadBeamRegs
         dec aProcSystem.aBody0,b,x
         bne _D898
-        lda #<>rlUnknown9FD8A9
+        lda #<>rlMapMagicValflameBeamExpand
         sta aProcSystem.aHeaderOnCycle,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
@@ -11921,7 +11921,7 @@
         ; Part of the Valflame effect.
         .byte $16, $12, $0E, $0C, $0A, $09, $08, $07, $07, $06, $05, $05, $05, $05, $05, $05
 
-      rlUnknown9FD8A9 ; 9F/D8A9
+      rlMapMagicValflameBeamExpand ; 9F/D8A9
 
         .al
         .xl
@@ -11951,7 +11951,7 @@
         sta aProcSystem.aBody2,b,x
         dec aProcSystem.aBody0,b,x
         bne _D8EF
-        lda #<>rlUnknown9FD8F6
+        lda #<>rlMapMagicValflameBeamWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
         sta aProcSystem.aBody0,b,x
@@ -11959,12 +11959,12 @@
 
         _D8EF
         lda aProcSystem.aBody2,b,x
-        jsr rsUnknown9FD9F3
+        jsr rsMapMagicValflameDrawWindowSlice
         rtl
 
         .databank 0
 
-      rlUnknown9FD8F6 ; 9F/D8F6
+      rlMapMagicValflameBeamWaitStrike ; 9F/D8F6
 
         .al
         .xl
@@ -11981,7 +11981,7 @@
         _D905
         lda aProcSystem.aBody0,b,x
         and #$001F
-        bne rlUnknown9FD915._D948
+        bne rlMapMagicValflameSpawnRingSprites._D948
         phx
         lda aProcSystem.aBody6,b,x
         asl a
@@ -11990,7 +11990,7 @@
 
         .databank 0
 
-      rlUnknown9FD915 ; 9F/D915
+      rlMapMagicValflameSpawnRingSprites ; 9F/D915
 
         .al
         .xl
@@ -12024,7 +12024,7 @@
         _D948
         dec aProcSystem.aBody0,b,x
         bne _D960
-        lda #<>rlUnknown9FD961
+        lda #<>rlMapMagicValflameBeamContract
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0006
         sta aProcSystem.aBody0,b,x
@@ -12036,7 +12036,7 @@
 
         .databank 0
 
-      rlUnknown9FD961 ; 9F/D961
+      rlMapMagicValflameBeamContract ; 9F/D961
 
         .al
         .xl
@@ -12082,7 +12082,7 @@
         sta wR2
         dec aProcSystem.aBody0,b,x
         bne _D9C2
-        lda #<>rlUnknown9FD9C9
+        lda #<>rlMapMagicValflameFadeBack
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0000
         sta aProcSystem.aBody2,b,x
@@ -12090,12 +12090,12 @@
 
         _D9C2
         lda aProcSystem.aBody2,b,x
-        jsr rsUnknown9FD9F3
+        jsr rsMapMagicValflameDrawWindowSlice
         rtl
 
         .databank 0
 
-      rlUnknown9FD9C9 ; 9F/D9C9
+      rlMapMagicValflameFadeBack ; 9F/D9C9
 
         .al
         .xl
@@ -12104,13 +12104,13 @@
         ; Part of the Valflame effect.
 
         jsr rsFadeBackMapMagicColors
-        bcc rlUnknown9FD9DB
-        lda #<>rlUnknown9FD9DB
+        bcc rlMapMagicValflameBeamDone
+        lda #<>rlMapMagicValflameBeamDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7ECC06
 
-      rlUnknown9FD9DB ; 9F/D9DB
+      rlMapMagicValflameBeamDone ; 9F/D9DB
 
         .al
         .xl
@@ -12122,7 +12122,7 @@
 
         .databank 0
 
-      rsUnknown9FD9DC ; 9F/D9DC
+      rsMapMagicValflameLoadBeamRegs ; 9F/D9DC
 
         .al
         .xl
@@ -12142,7 +12142,7 @@
 
         .databank 0
 
-      rsUnknown9FD9F3 ; 9F/D9F3
+      rsMapMagicValflameDrawWindowSlice ; 9F/D9F3
 
         .al
         .xl
@@ -12387,7 +12387,7 @@
       .al
       .xl
 
-      rlUnknown9FDB68 ; 9F/DB68
+      rlHDMAMapMagicNoOp1 ; 9F/DB68
 
         ; Found through fe4.cdl.
         .al
@@ -12401,7 +12401,7 @@
 
         ; 9F/DB69
 
-      rlUnknown9FDB69 ; 9F/DB69
+      rlHDMAMapMagicNoOp2 ; 9F/DB69
 
         ; Found through fe4.cdl.
         .al
@@ -12420,14 +12420,14 @@
 
         HDMA_HALT
 
-      aUnknown9FDB6C .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDB68, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDB78, PPU_REG_BASE + $28, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode1), $7F ; 9F/DB6C
+      aUnknown9FDB6C .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicNoOp1, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDB78, PPU_REG_BASE + $28, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode1), $7F ; 9F/DB6C
 
         ; Shared by 24 effects.
       aUnknown9FDB78 ; 9F/DB78
 
         .byte $FF, $EA, $50, $E0, $E8, $51, $00
 
-      aUnknown9FDB7F .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDB8B, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDBA1, PPU_REG_BASE + $08, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DB7F
+      aUnknown9FDB7F .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType1, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDBA1, PPU_REG_BASE + $08, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DB7F
 
         ; Shared by 24 effects.
     .endsection Unsorted9FDB68Section
@@ -12438,7 +12438,7 @@
       .al
       .xl
 
-      rlUnknown9FDB8B ; 9F/DB8B
+      rlHDMAMapMagicSetOffsetType1 ; 9F/DB8B
 
         ; Found through fe4.cdl.
         .al
@@ -12470,7 +12470,7 @@
         .byte $08, $5C, $21, $54, $7F, $5C, $37, $5C, $00, $7F, $5C, $30, $5C, $22, $54, $0E
         .byte $5C, $00, $70, $5C, $70, $5C, $00
 
-      aUnknown9FDBB8 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDBC4, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDBDA, PPU_REG_BASE + $23, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DBB8
+      aUnknown9FDBB8 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType2, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDBDA, PPU_REG_BASE + $23, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DBB8
 
         ; Shared by 24 effects.
     .endsection Unsorted9FDB8BSection
@@ -12481,7 +12481,7 @@
       .al
       .xl
 
-      rlUnknown9FDBC4 ; 9F/DBC4
+      rlHDMAMapMagicSetOffsetType2 ; 9F/DBC4
 
         ; Found through fe4.cdl.
         .al
@@ -12513,7 +12513,7 @@
         .byte $08, $C3, $21, $33, $7F, $C3, $37, $C3, $00, $7F, $C3, $30, $C3, $22, $33, $0E
         .byte $C3, $00, $70, $C3, $70, $C3, $00
 
-      aUnknown9FDBF1 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDBFD, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDC13, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DBF1
+      aUnknown9FDBF1 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType3, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDC13, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DBF1
 
         ; Shared by 9 effects.
     .endsection Unsorted9FDBC4Section
@@ -12524,7 +12524,7 @@
       .al
       .xl
 
-      rlUnknown9FDBFD ; 9F/DBFD
+      rlHDMAMapMagicSetOffsetType3 ; 9F/DBFD
 
         ; Found through fe4.cdl.
         .al
@@ -12557,7 +12557,7 @@
         .byte $30, $02, $02, $22, $00, $82, $0E, $02, $02, $00, $70, $02, $02, $70, $02, $02
         .byte $00
 
-      aUnknown9FDC34 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDC40, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDC56, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DC34
+      aUnknown9FDC34 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType4, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDC56, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DC34
 
         ; Shared by 15 effects.
     .endsection Unsorted9FDBFDSection
@@ -12568,7 +12568,7 @@
       .al
       .xl
 
-      rlUnknown9FDC40 ; 9F/DC40
+      rlHDMAMapMagicSetOffsetType4 ; 9F/DC40
 
         ; Found through fe4.cdl.
         .al
@@ -12601,7 +12601,7 @@
         .byte $30, $02, $42, $22, $00, $82, $0E, $02, $42, $00, $70, $02, $42, $70, $02, $42
         .byte $00
 
-      aUnknown9FDC77 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDC83, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDCD3, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DC77
+      aUnknown9FDC77 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicCenterOnTargetInit, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDCD3, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DC77
 
         ; Shared by 14 effects.
     .endsection Unsorted9FDC40Section
@@ -12612,7 +12612,7 @@
       .al
       .xl
 
-      rlUnknown9FDC83 ; 9F/DC83
+      rlHDMAMapMagicCenterOnTargetInit ; 9F/DC83
 
         ; Found through fe4.cdl.
         .al
@@ -12665,10 +12665,10 @@
         .byte $30, $CD, $50, $22, $D1, $50, $0E, $CD, $50, $00, $70, $CD, $50, $70, $CD, $50
         .byte $00
 
-      aUnknown9FDCF4 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDD00, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDDEA, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DCF4
+      aUnknown9FDCF4 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicMeteorInit, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDDEA, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DCF4
 
         ; Part of the Meteor effect.
-      rlUnknown9FDD00 ; 9F/DD00
+      rlHDMAMapMagicMeteorInit ; 9F/DD00
 
         .al
         .xl
@@ -12763,7 +12763,7 @@
         sta aHDMASystem.aOffset,b,x
 
         _DDE5
-        jsl rlUnknown9FDE04
+        jsl rlHDMAMapMagicStepScrollY
         rtl
 
         .databank 0
@@ -12793,7 +12793,7 @@
         .word $50CD
         .byte $00
 
-      rlUnknown9FDE04 ; 9F/DE04
+      rlHDMAMapMagicStepScrollY ; 9F/DE04
 
         .al
         .xl
@@ -12842,28 +12842,28 @@
 
         .databank 0
 
-      aUnknown9FDE4E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, rlUnknown9FE006, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE4E
+      aUnknown9FDE4E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed1, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE4E
         .word $FDC0, $0130
 
-      aUnknown9FDE5E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, rlUnknown9FE017, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE5E
+      aUnknown9FDE5E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed2, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE5E
         .word $FDC0, $01C0
 
-      aUnknown9FDE6E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, rlUnknown9FDFF5, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE6E
+      aUnknown9FDE6E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveSmall, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE6E
         .word $FDF0, $02C0
 
-      aUnknown9FDE7E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE7E
+      aUnknown9FDE7E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE7E
         .word $0240, $FCC0
 
-      aUnknown9FDE8E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEBE, rlUnknown9FE0AA, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE8E
+      aUnknown9FDE8E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicClearWaveBuffer, rlHDMAMapMagicBuildRippleWave, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE8E
         .word $0000, $0000
 
-      aUnknown9FDE9E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE9E
+      aUnknown9FDE9E .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE9E
         .word $0100, $FC80
 
-      aUnknown9FDEAE .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DEAE
+      aUnknown9FDEAE .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DEAE
         .word $0000, $0030
 
-      rlUnknown9FDEBE ; 9F/DEBE
+      rlHDMAMapMagicClearWaveBuffer ; 9F/DEBE
 
         .al
         .xl
@@ -12897,7 +12897,7 @@
       .al
       .xl
 
-      rlUnknown9FDEE3 ; 9F/DEE3
+      rlHDMAMapMagicWaveInit ; 9F/DEE3
 
         ; Found through fe4.cdl.
         .al
@@ -12989,7 +12989,7 @@
         ; Unreferenced.
         .byte $9B
 
-      rlUnknown9FDF73 ; 9F/DF73
+      rlHDMAMapMagicStepScrollYAltUnused ; 9F/DF73
 
         .al
         .xl
@@ -13077,7 +13077,7 @@
 
         .databank 0
 
-      rlUnknown9FDFF5 ; 9F/DFF5
+      rlHDMAMapMagicBuildWaveSmall ; 9F/DFF5
 
         .al
         .xl
@@ -13092,7 +13092,7 @@
         sta wR8
 
         .databank 0
-        bra rlUnknown9FE026
+        bra rlHDMAMapMagicBuildSineWave
 
     .endsection Unsorted9FDEE3Section
 
@@ -13102,7 +13102,7 @@
       .al
       .xl
 
-      rlUnknown9FE006 ; 9F/E006
+      rlHDMAMapMagicBuildWaveMed1 ; 9F/E006
 
         ; Found through fe4.cdl.
         .al
@@ -13116,11 +13116,11 @@
         sta wR7
         lda #$002C
         sta wR8
-        bra rlUnknown9FE026
+        bra rlHDMAMapMagicBuildSineWave
 
         .databank 0
 
-      rlUnknown9FE017 ; 9F/E017
+      rlHDMAMapMagicBuildWaveMed2 ; 9F/E017
 
         .al
         .xl
@@ -13136,7 +13136,7 @@
 
         .databank 0
 
-      rlUnknown9FE026 ; 9F/E026
+      rlHDMAMapMagicBuildSineWave ; 9F/E026
 
         .al
         .xl
@@ -13222,7 +13222,7 @@
 
         .databank 0
 
-      rlUnknown9FE0AA ; 9F/E0AA
+      rlHDMAMapMagicBuildRippleWave ; 9F/E0AA
 
         .al
         .xl
@@ -13324,13 +13324,13 @@
         .word $00D0, $00D2, $00D4, $00D6, $00D8, $00DA, $00DC, $00DE
         .word $00E0, $00E2, $00E4, $00E6, $00E8, $00EA, $00EC, $00EE
 
-      aUnknown9FE2D9 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FE2F6, rlUnknown9FE341, aHDMAUnknown9FDB6ACode, aUnknown9FE357, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2D9
+      aUnknown9FE2D9 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicScrollDownInit, rlHDMAMapMagicStepBG2VOFS, aHDMAUnknown9FDB6ACode, aUnknown9FE357, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2D9
 
         ; Shared by the Hel and Restore effects.
-      aUnknown9FE2E5 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FE2F1, rlUnknown9FE341, aHDMAUnknown9FDB6ACode, aUnknown9FE357, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2E5
+      aUnknown9FE2E5 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicScrollUpInit, rlHDMAMapMagicStepBG2VOFS, aHDMAUnknown9FDB6ACode, aUnknown9FE357, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2E5
 
         ; Part of the Sleep effect.
-      rlUnknown9FE2F1 ; 9F/E2F1
+      rlHDMAMapMagicScrollUpInit ; 9F/E2F1
 
         .al
         .xl
@@ -13338,11 +13338,11 @@
         .databank ?
 
         lda #$FFD0
-        bra rlUnknown9FE2F6._E2F9
+        bra rlHDMAMapMagicScrollDownInit._E2F9
 
         .databank 0
 
-      rlUnknown9FE2F6 ; 9F/E2F6
+      rlHDMAMapMagicScrollDownInit ; 9F/E2F6
 
         .al
         .xl
@@ -13384,7 +13384,7 @@
 
         .databank 0
 
-      rlUnknown9FE341 ; 9F/E341
+      rlHDMAMapMagicStepBG2VOFS ; 9F/E341
 
         .al
         .xl
@@ -13414,7 +13414,7 @@
 
         .byte $70, $CD, $50, $70, $CD, $50, $00
 
-      aUnknown9FE378 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDB68, rlUnknown9FDB69, aHDMAUnknown9FE384Code, aUnknown9FE393, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode2), $9F ; 9F/E378
+      aUnknown9FE378 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicNoOp1, rlHDMAMapMagicNoOp2, aHDMAUnknown9FE384Code, aUnknown9FE393, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode2), $9F ; 9F/E378
 
         ; Part of the Hel effect.
       aHDMAUnknown9FE384Code ; 9F/E384
@@ -13516,7 +13516,7 @@
       .al
       .xl
 
-      rlUnknown9FE824 ; 9F/E824
+      rlMapMagicBuildForsetiWindowHDMA ; 9F/E824
 
         ; Found by tools/sweep.py.
         .al
@@ -13543,7 +13543,7 @@
         sta wR3
         lda $7F50E5
         sta wR4
-        jsr rsUnknown9FEB4F
+        jsr rsMapMagicLookupCircleHalfWidth
         ldy #$0000
         lda wR3
         lsr a
@@ -13591,7 +13591,7 @@
         sep #$20
 
         _E89B
-        jsr rsUnknown9FEB2A
+        jsr rsMapMagicWriteWindowBoundsPair
         dec wR0
         beq _E8DA
         inc y
@@ -13610,7 +13610,7 @@
         dec y
         cpy #$0000
         bmi _E8CA
-        jsr rsUnknown9FEB2A
+        jsr rsMapMagicWriteWindowBoundsPair
         dec wR0
         beq _E8DA
         rep #$20
@@ -13640,7 +13640,7 @@
 
         ; 9F/E8DE
 
-      rlUnknown9FE8DE ; 9F/E8DE
+      rlMapMagicBuildStaffWindowHDMA ; 9F/E8DE
 
         ; Found by tools/sweep.py.
         .al
@@ -13683,7 +13683,7 @@
         lda $7F50E5,x
         sta wR4
         lda wR3
-        jsr rsUnknown9FEA0C
+        jsr rsMapMagicCalcStaffCircleRow
         pha
         sep #$20
         lda wR1
@@ -13712,7 +13712,7 @@
         rep #$20
         sta wR5
         pla
-        jsr rsUnknown9FEB4F
+        jsr rsMapMagicLookupCircleHalfWidth
         ldy #$0000
         sep #$20
         lda wR2
@@ -13781,7 +13781,7 @@
         dec y
         cpy #$0000
         bmi _E9F7
-        jsr rsUnknown9FEB2A
+        jsr rsMapMagicWriteWindowBoundsPair
         dec wR0
         beq _EA07
         rep #$20
@@ -13796,7 +13796,7 @@
         and #$00FF
         sta wR3
         tay
-        jsr rsUnknown9FEB4F
+        jsr rsMapMagicLookupCircleHalfWidth
         sep #$20
 
         _E9E6
@@ -13805,7 +13805,7 @@
         dec y
         cpy #$0000
         bmi _E9F7
-        jsr rsUnknown9FEB2A
+        jsr rsMapMagicWriteWindowBoundsPair
         dec wR0
         beq _EA07
         bra _E9E6
@@ -13839,7 +13839,7 @@
       .al
       .xl
 
-      rsUnknown9FEA0C ; 9F/EA0C
+      rsMapMagicCalcStaffCircleRow ; 9F/EA0C
 
         .al
         .xl
@@ -13907,7 +13907,7 @@
       .al
       .xl
 
-      rlUnknown9FEA52 ; 9F/EA52
+      rlMapMagicBuildCircleWindowHDMA ; 9F/EA52
 
         .al
         .xl
@@ -13931,7 +13931,7 @@
         sta wR3
         lda $7F50E5
         sta wR4
-        jsr rsUnknown9FEB4F
+        jsr rsMapMagicLookupCircleHalfWidth
         ldy #$0000
         sep #$20
         lda wR2
@@ -13986,7 +13986,7 @@
         sep #$20
 
         _EAD1
-        jsr rsUnknown9FEB2A
+        jsr rsMapMagicWriteWindowBoundsPair
         dec wR0
         beq _EB26
         inc y
@@ -14003,7 +14003,7 @@
         dec y
         cpy #$0000
         bmi _EB18
-        jsr rsUnknown9FEB2A
+        jsr rsMapMagicWriteWindowBoundsPair
         dec wR0
         beq _EB26
         rep #$20
@@ -14017,7 +14017,7 @@
         .al
         and #$85FF
         asl $A8
-        jsr rsUnknown9FEB4F
+        jsr rsMapMagicLookupCircleHalfWidth
         sep #$20
 
         _EB08
@@ -14025,7 +14025,7 @@
         dec y
         cpy #$0000
         bmi _EB18
-        jsr rsUnknown9FEB2A
+        jsr rsMapMagicWriteWindowBoundsPair
         dec wR0
         bne _EB08
         bra _EB26
@@ -14048,7 +14048,7 @@
 
         ; 9F/EB2A
 
-      rsUnknown9FEB2A ; 9F/EB2A
+      rsMapMagicWriteWindowBoundsPair ; 9F/EB2A
 
         .as
         .xl
@@ -14089,7 +14089,7 @@
 
         ; 9F/EB4F
 
-      rsUnknown9FEB4F ; 9F/EB4F
+      rsMapMagicLookupCircleHalfWidth ; 9F/EB4F
 
         .al
         .xl
@@ -14601,7 +14601,7 @@
         sta lR18
         ldx #$0000
         lda #$00E0
-        jsl rlUnknown9FEA52
+        jsl rlMapMagicBuildCircleWindowHDMA
         ply
 
         _EE44
@@ -14705,7 +14705,7 @@
         sta lR18
         ldx #$0000
         lda #$00E0
-        jsl rlUnknown9FEA52
+        jsl rlMapMagicBuildCircleWindowHDMA
         ply
         ldx aProcSystem.wOffset,b
         dec aProcSystem.aBody6,b,x
@@ -14849,7 +14849,7 @@
         sta lR18
         ldx #$0000
         lda #$00E0
-        jsl rlUnknown9FEA52
+        jsl rlMapMagicBuildCircleWindowHDMA
         ply
 
         _EFFF
@@ -14899,7 +14899,7 @@
         sta lR18
         ldx #$0000
         lda #$00E0
-        jsl rlUnknown9FEA52
+        jsl rlMapMagicBuildCircleWindowHDMA
         ply
         rtl
 
@@ -15131,7 +15131,7 @@
         sta lR18
         ldx #$0000
         lda #$00E0
-        jsl rlUnknown9FE8DE
+        jsl rlMapMagicBuildStaffWindowHDMA
         ply
         rtl
 
@@ -15245,7 +15245,7 @@
         lda #$50EA
         sta lR18
         ldx #$0000
-        jsl rlUnknown9FE824
+        jsl rlMapMagicBuildForsetiWindowHDMA
         ply
 
         _F24F
