@@ -278,7 +278,7 @@
         .long rlBattleSceneScriptSaveOAMExt ; $41
         .long rlBattleSceneFadeMusicForJulius ; $42
         .long rlBattleSceneScriptFadeOutMusic ; $43
-        .long rlUnknown96B08D ; $44
+        .long rlBattleSceneClearWindowBuffers ; $44
         .long rlUnknown96FD13 ; $45
         .long rlBattleSceneScriptInitBG1Dimmed ; $46
         .long rlUnknown96FC81 ; $47
@@ -1945,7 +1945,7 @@
 
       aUnknown98B3BA ; 98/B3BA
 
-        ; Read by rsUnknown959CF8.
+        ; Read by rsBattleSceneStepDamageFlash.
 
         .word $5574, $55E0, $564C, $56B8, $5724, $5790, $57FC, $5868
         .word $58D4, $5940, $59AC, $5A18, $5A84, $5AF0, $5B5C, $5BC8
@@ -1956,7 +1956,7 @@
 
       aUnknown98B3EC ; 98/B3EC
 
-        ; Read by rsUnknown959CF8.
+        ; Read by rsBattleSceneStepDamageFlash.
 
         .word $B574, $B5E0, $B64C, $B6B8, $B724, $B790, $B7FC, $B868
         .word $B8D4, $B940, $B9AC, $BA18, <>aBattleAnimationSequencesWarMageSword, $BAF0, $BB5C, $BBC8

@@ -1420,8 +1420,8 @@
         adc lR18
         sta aUnit2DataBuffer._ROM.DefenseGrowth,x
         sta $7FEC29,x
-        jsl rlUnknown96AD39
-        jsr rsUnknown96AD07
+        jsl rlBattleSceneBuildSpellWindowHDMA
+        jsr rsBattleSceneCreateSpellWindowHDMA
         ply
         plx
         rtl
@@ -6455,7 +6455,7 @@
 
       aUnknown9AA30A ; 9A/A30A
 
-        ; Read by rlUnknown96B517, rsUnknown96B56F, rsUnknown9FEB4F, rsUnknown9FF376.
+        ; Read by rlBattleSceneGetWindowShapePtr, rlBattleSceneGetWindowShapeWidth, rsUnknown9FEB4F, rsUnknown9FF376.
 
         .word _A30A_A3AA - aUnknown9AA30A
         .word _A30A_A3AA - aUnknown9AA30A

@@ -1443,7 +1443,7 @@
         jsl rlBattleSceneStepLargeUpload
         jsl rlBattleSceneRunPaletteEffects
         jsl rlUnknown96CB44
-        jsl rlUnknown96A532
+        jsl rlBattleSceneUpdateSpellWindowEffects
         jsl rlUpdateTitleSprites
         jsl rlSetTitleEdgeBrightness
         lda bTitleScreenDone
@@ -1480,7 +1480,7 @@
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlBattleSceneStepLargeUpload
         jsl rlBattleSceneRunPaletteEffects
-        jsl rlUnknown96A532
+        jsl rlBattleSceneUpdateSpellWindowEffects
         jsl rlUnknown96CB44
         jsl rlUpdateTitleSprites
         lda bTitleScreenDone

@@ -517,7 +517,7 @@
         jsr rsBattleSceneUpdateStageScroll
         jsr rsBattleSceneUpdateBG1Scroll
         jsl rlUnknown96DE6F
-        jsl rlUnknown96A532
+        jsl rlBattleSceneUpdateSpellWindowEffects
         jsl rlUnknown96DD6E
         jsl rlBattleSceneRunCameraPan
         jsl rlUnknown96BE28
@@ -531,7 +531,7 @@
         jsl rlBattleSceneCheckDecompressing
         jsl rlBattleSceneRunLargeUpload
         jsl rlUnknown96C8A1
-        jsr rsUnknown959CF8
+        jsr rsBattleSceneStepDamageFlash
         jsl rlBattleSceneRunHUDShake
         jsl rlBattleSceneQueueHPUpload
 
@@ -545,7 +545,7 @@
         jsl rlBattleSceneRunQueuedCopies
         jsl rlUnknown96EE95
         jsl rlBattleSceneReadArenaRetreat
-        jsr rsUnknown959C64
+        jsr rsBattleSceneStartKnockbackFromStrike
         jsr rsBattleSceneCheckRoundsOver
         jsl rlBattleSceneCheckArenaBout
         jsl rlBattleSceneRunEndStep

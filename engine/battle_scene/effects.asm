@@ -8,7 +8,7 @@
       .al
       .xl
 
-      rsUnknown959C64 ; 95/9C64
+      rsBattleSceneStartKnockbackFromStrike ; 95/9C64
 
         .al
         .xl
@@ -33,7 +33,7 @@
         sec
 
         _9C81
-        jsr rsUnknown959C92
+        jsr rsBattleSceneInitHitSparks
         sep #$20
         lda bBattleSceneRoundState,b
         ora #$20
@@ -48,7 +48,7 @@
 
         ; 95/9C92
 
-      rsUnknown959C92 ; 95/9C92
+      rsBattleSceneInitHitSparks ; 95/9C92
 
         .al
         .xl
@@ -138,7 +138,7 @@
 
         ; 95/9CF8
 
-      rsUnknown959CF8 ; 95/9CF8
+      rsBattleSceneStepDamageFlash ; 95/9CF8
 
         .al
         .xl
@@ -441,7 +441,7 @@
       .al
       .xl
 
-      rlUnknown959E71 ; 95/9E71
+      rlBattleSceneBrightenColorsToward ; 95/9E71
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -537,7 +537,7 @@
 
         ; 95/9EDD
 
-      rlUnknown959EDD ; 95/9EDD
+      rlBattleSceneDarkenColorsToward ; 95/9EDD
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -793,7 +793,7 @@
       .al
       .xl
 
-      rlUnknown959FEA ; 95/9FEA
+      rlBattleSceneStepColorsTowardExact ; 95/9FEA
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -941,7 +941,7 @@
       .al
       .xl
 
-      aUnknown95E69E .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FED7A, PPU_REG_BASE + $26, $41, $7F ; 95/E69E
+      aUnknown95E69E .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FED7A, PPU_REG_BASE + $26, $41, $7F ; 95/E69E
 
     .endsection Table95E69ESection
 
@@ -951,7 +951,7 @@
       .al
       .xl
 
-      rlUnknown95E6AA ; 95/E6AA
+      rlBattleSceneHDMAInitNoOp ; 95/E6AA
 
         .al
         .xl
@@ -964,7 +964,7 @@
 
         ; 95/E6AB
 
-      rlUnknown95E6AB ; 95/E6AB
+      rlBattleSceneHDMAOnCycleNoOp ; 95/E6AB
 
         .al
         .xl
@@ -988,49 +988,49 @@
       aUnknown95E6AC ; 95/E6AC
         HDMA_HALT
 
-      aUnknown95E6AE .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FED96, PPU_REG_BASE + $28, $41, $7F ; 95/E6AE
+      aUnknown95E6AE .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FED96, PPU_REG_BASE + $28, $41, $7F ; 95/E6AE
 
-      aUnknown95E6BA .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FE4EA, PPU_REG_BASE + $26, $41, $7F ; 95/E6BA
+      aUnknown95E6BA .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE4EA, PPU_REG_BASE + $26, $41, $7F ; 95/E6BA
 
-      aUnknown95E6C6 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FE506, PPU_REG_BASE + $28, $41, $7F ; 95/E6C6
+      aUnknown95E6C6 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE506, PPU_REG_BASE + $28, $41, $7F ; 95/E6C6
 
-      aUnknown95E6D2 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FE1F6, PPU_REG_BASE + $0F, $43, $7F ; 95/E6D2
+      aUnknown95E6D2 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE1F6, PPU_REG_BASE + $0F, $43, $7F ; 95/E6D2
 
-      aUnknown95E6DE .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FE39A, PPU_REG_BASE + $32, $42, $7F ; 95/E6DE
+      aUnknown95E6DE .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE39A, PPU_REG_BASE + $32, $42, $7F ; 95/E6DE
 
-      aUnknown95E6EA .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FE3CA, PPU_REG_BASE + $32, $40, $7F ; 95/E6EA
+      aUnknown95E6EA .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE3CA, PPU_REG_BASE + $32, $40, $7F ; 95/E6EA
 
-      aUnknown95E6F6 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0D, $43, $7F ; 95/E6F6
+      aUnknown95E6F6 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0D, $43, $7F ; 95/E6F6
 
-      aUnknown95E702 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FE506, PPU_REG_BASE + $28, $41, $7F ; 95/E702
+      aUnknown95E702 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE506, PPU_REG_BASE + $28, $41, $7F ; 95/E702
 
-      aUnknown95E70E .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0E, $42, $7F ; 95/E70E
+      aUnknown95E70E .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0E, $42, $7F ; 95/E70E
 
-      aUnknown95E71A .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0F, $43, $7F ; 95/E71A
+      aUnknown95E71A .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0F, $43, $7F ; 95/E71A
 
-      aUnknown95E726 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6D4, PPU_REG_BASE + $0D, $43, $7F ; 95/E726
+      aUnknown95E726 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6D4, PPU_REG_BASE + $0D, $43, $7F ; 95/E726
 
-      aUnknown95E732 .dstruct structHDMADirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneKnockbackShake+429, PPU_REG_BASE + $21, $00 ; 95/E732
+      aUnknown95E732 .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneKnockbackShake+429, PPU_REG_BASE + $21, $00 ; 95/E732
 
-      aUnknown95E73D .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $22, $42, $98 ; 95/E73D
+      aUnknown95E73D .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $22, $42, $98 ; 95/E73D
 
-      aUnknown95E749 .dstruct structHDMADirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $26, $01 ; 95/E749
+      aUnknown95E749 .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $26, $01 ; 95/E749
 
-      aUnknown95E754 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneHUDColors+448, PPU_REG_BASE + $21, $40, $99 ; 95/E754
+      aUnknown95E754 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneHUDColors+448, PPU_REG_BASE + $21, $40, $99 ; 95/E754
 
-      aUnknown95E760 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneHUDColors+438, PPU_REG_BASE + $22, $42, $99 ; 95/E760
+      aUnknown95E760 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneHUDColors+438, PPU_REG_BASE + $22, $42, $99 ; 95/E760
 
-      aUnknown95E76C .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneSeaColumns+64, PPU_REG_BASE + $32, $40, $7F ; 95/E76C
+      aUnknown95E76C .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneSeaColumns+64, PPU_REG_BASE + $32, $40, $7F ; 95/E76C
 
-      aUnknown95E778 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneHUDShakeOffsets+54, PPU_REG_BASE + $0F, $42, $7F ; 95/E778
+      aUnknown95E778 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneHUDShakeOffsets+54, PPU_REG_BASE + $0F, $42, $7F ; 95/E778
 
-      aUnknown95E784 .dstruct structHDMADirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FD06B, PPU_REG_BASE + $2C, $01 ; 95/E784
+      aUnknown95E784 .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FD06B, PPU_REG_BASE + $2C, $01 ; 95/E784
 
-      aUnknown95E78F .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FD633, PPU_REG_BASE + $0F, $42, $7F ; 95/E78F
+      aUnknown95E78F .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FD633, PPU_REG_BASE + $0F, $42, $7F ; 95/E78F
 
-      aUnknown95E79B .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FD64C, PPU_REG_BASE + $0D, $42, $7F ; 95/E79B
+      aUnknown95E79B .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FD64C, PPU_REG_BASE + $0D, $42, $7F ; 95/E79B
 
-      aUnknown95E7A7 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FD076, PPU_REG_BASE + $00, $40, $99 ; 95/E7A7
+      aUnknown95E7A7 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FD076, PPU_REG_BASE + $00, $40, $99 ; 95/E7A7
 
 
     .endsection Table95E6ACSection
@@ -1041,7 +1041,7 @@
       .al
       .xl
 
-      rlUnknown96A532 ; 96/A532
+      rlBattleSceneUpdateSpellWindowEffects ; 96/A532
 
         .al
         .xl
@@ -1049,16 +1049,16 @@
         .databank ?
 
         ldx #$0000
-        jsl rlUnknown96A541
+        jsl rlBattleSceneUpdateSpellWindowSlot
         ldx #$0024
-        jsl rlUnknown96A541
+        jsl rlBattleSceneUpdateSpellWindowSlot
         rtl
 
         .databank 0
 
         ; 96/A541
 
-      rlUnknown96A541 ; 96/A541
+      rlBattleSceneUpdateSpellWindowSlot ; 96/A541
 
         .al
         .xl
@@ -1077,8 +1077,8 @@
 
 
         _A559
-        jsr rsUnknown96A715
-        jsr rsUnknown96B719
+        jsr rsBattleSceneRunSpellWindowScript
+        jsr rsBattleSceneStepWindowHorizontal
 
         _A55F
         sep #$20
@@ -1183,9 +1183,9 @@
         and #$00FF
         asl a
         sta @l $7FE4E2,x
-        jsl rlUnknown96A6F7
+        jsl rlBattleSceneGetSpellWindowBuffer
         lda #$0078
-        jsl rlUnknown96ADE9
+        jsl rlBattleSceneDrawWindowCircle
         plx
         jml _A6F1
 
@@ -1193,10 +1193,10 @@
         _A631
         phx
         tyx
-        jsr rsUnknown96B5D2
-        jsl rlUnknown96A6F7
+        jsr rsBattleSceneCalcWindowHalfHeight
+        jsl rlBattleSceneGetSpellWindowBuffer
         lda #$0078
-        jsl rlUnknown96ADE9
+        jsl rlBattleSceneDrawWindowCircle
         plx
         jml _A6F1
 
@@ -1204,9 +1204,9 @@
         _A646
         phx
         tyx
-        jsr rsUnknown96B5D2
-        jsl rlUnknown96A6F7
-        jsl rlUnknown96B317
+        jsr rsBattleSceneCalcWindowHalfHeight
+        jsl rlBattleSceneGetSpellWindowBuffer
+        jsl rlBattleSceneDrawWindowDiamond
         plx
         jml _A6F1
 
@@ -1217,8 +1217,8 @@
         lda @l $7FE4E1,x
         and #$00FF
         sta @l $7FE4E2,x
-        jsl rlUnknown96A6F7
-        jsr rsUnknown96B0E1
+        jsl rlBattleSceneGetSpellWindowBuffer
+        jsr rsBattleSceneDrawWindowCone8
         plx
         jml _A6F1
 
@@ -1229,8 +1229,8 @@
         lda @l $7FE4E1,x
         and #$00FF
         sta @l $7FE4E2,x
-        jsl rlUnknown96A6F7
-        jsr rsUnknown96B1AE
+        jsl rlBattleSceneGetSpellWindowBuffer
+        jsr rsBattleSceneDrawWindowCone8Inverted
         plx
         bra _A6F1
 
@@ -1241,8 +1241,8 @@
         lda @l $7FE4E1,x
         and #$00FF
         sta @l $7FE4E2,x
-        jsl rlUnknown96A6F7
-        jsr rsUnknown96B254
+        jsl rlBattleSceneGetSpellWindowBuffer
+        jsr rsBattleSceneDrawWindowCone4
         plx
         bra _A6F1
 
@@ -1254,9 +1254,9 @@
         and #$00FF
         asl a
         sta @l $7FE4E2,x
-        jsl rlUnknown96A6F7
+        jsl rlBattleSceneGetSpellWindowBuffer
         lda #$00C0
-        jsl rlUnknown96ADE9
+        jsl rlBattleSceneDrawWindowCircle
         plx
         bra _A6F1
 
@@ -1264,10 +1264,10 @@
         _A6BB
         phx
         tyx
-        jsr rsUnknown96B623
-        jsl rlUnknown96A6F7
+        jsr rsBattleSceneCalcWindowHalfHeightA0
+        jsl rlBattleSceneGetSpellWindowBuffer
         lda #$00C0
-        jsl rlUnknown96AEDC
+        jsl rlBattleSceneDrawWindowCircleWide
         plx
         bra _A6F1
 
@@ -1275,10 +1275,10 @@
         _A6CE
         phx
         tyx
-        jsr rsUnknown96B623
-        jsl rlUnknown96A6F7
+        jsr rsBattleSceneCalcWindowHalfHeightA0
+        jsl rlBattleSceneGetSpellWindowBuffer
         lda #$0070
-        jsl rlUnknown96AFCF
+        jsl rlBattleSceneDrawWindowOval
         plx
         bra _A6F1
 
@@ -1286,14 +1286,14 @@
         _A6E1
         phx
         tyx
-        jsr rsUnknown96B623
-        jsl rlUnknown96A6F7
+        jsr rsBattleSceneCalcWindowHalfHeightA0
+        jsl rlBattleSceneGetSpellWindowBuffer
         lda #$0070
-        jsr rsUnknown96B43B
+        jsr rsBattleSceneDrawWindowCone2
         plx
 
         _A6F1
-        jsr rsUnknown96B6E3
+        jsr rsBattleSceneUpdateTrackedWindowPos
         ply
         plx
         rtl
@@ -1302,7 +1302,7 @@
 
         ; 96/A6F7
 
-      rlUnknown96A6F7 ; 96/A6F7
+      rlBattleSceneGetSpellWindowBuffer ; 96/A6F7
 
         .al
         .xl
@@ -1333,7 +1333,7 @@
 
         ; 96/A715
 
-      rsUnknown96A715 ; 96/A715
+      rsBattleSceneRunSpellWindowScript ; 96/A715
 
         .al
         .xl
@@ -1353,122 +1353,122 @@
         rep #$20
 
         _A729
-        jsr rsUnknown96ABE2
+        jsr rsBattleSceneReadSpellWindowWord
         xba
         and #$00FF
         cmp #$00FF
         bne _A73C
-        jsr rsUnknown96A7E3
+        jsr rsBattleSceneEndSpellWindowEffect
         jml _A7DF
 
 
         _A73C
         cmp #$00FD
         bne _A748
-        jsr rsUnknown96A81C
+        jsr rsBattleSceneStopSpellWindowSlot
         jml _A7DF
 
 
         _A748
         cmp #$00FE
         bne _A754
-        jsr rsUnknown96A843
+        jsr rsBattleSceneSpellWindowLoop
         jml _A7DB
 
 
         _A754
         cmp #$00FC
         bne _A75E
-        jsr rsUnknown96A87E
+        jsr rsBattleSceneSpellWindowSetAttackerPos
         bra _A7DB
 
 
         _A75E
         cmp #$00FB
         bne _A768
-        jsr rsUnknown96A8B2
+        jsr rsBattleSceneSpellWindowSetDefenderPos
         bra _A7DB
 
 
         _A768
         cmp #$00FA
         bne _A772
-        jsr rsUnknown96A913
+        jsr rsBattleSceneSpellWindowLaunchProjectile
         bra _A7DB
 
 
         _A772
         cmp #$00F9
         bne _A77C
-        jsr rsUnknown96A928
+        jsr rsBattleSceneSpellWindowWait1
         bra _A7DF
 
 
         _A77C
         cmp #$00F8
         bne _A786
-        jsr rsUnknown96A937
+        jsr rsBattleSceneSpellWindowSnapAttackerPos
         bra _A7DB
 
 
         _A786
         cmp #$00F7
         bne _A790
-        jsr rsUnknown96A969
+        jsr rsBattleSceneSpellWindowSnapDefenderPos
         bra _A7DB
 
 
         _A790
         cmp #$00F6
         bne _A79A
-        jsr rsUnknown96A99B
+        jsr rsBattleSceneSpellWindowAimDefenderHit
         bra _A7DB
 
 
         _A79A
         cmp #$00F5
         bne _A7A4
-        jsr rsUnknown96AA10
+        jsr rsBattleSceneSpellWindowCenterStage
         bra _A7DB
 
 
         _A7A4
         cmp #$00F4
         bne _A7AE
-        jsr rsUnknown96AA54
+        jsr rsBattleSceneSpellWindowTrackTarget
         bra _A7DB
 
 
         _A7AE
         cmp #$00F3
         bne _A7B8
-        jsr rsUnknown96AAA4
+        jsr rsBattleSceneSpellWindowAimDefenderLow
         bra _A7DB
 
 
         _A7B8
         cmp #$00F2
         bne _A7C2
-        jsr rsUnknown96AB0E
+        jsr rsBattleSceneSpellWindowSetFixed4A00
         bra _A7DB
 
 
         _A7C2
         cmp #$00F1
         bne _A7CC
-        jsr rsUnknown96AB4B
+        jsr rsBattleSceneSpellWindowSetFixed4A10
         bra _A7DB
 
 
         _A7CC
         cmp #$00F0
         bne _A7D6
-        jsr rsUnknown96AB88
+        jsr rsBattleSceneSpellWindowSetFixed3400
         bra _A7DB
 
 
         _A7D6
-        jsr rsUnknown96ABC5
+        jsr rsBattleSceneSpellWindowSetPoseAndDelay
         bra _A7DF
 
 
@@ -1486,7 +1486,7 @@
 
         ; 96/A7E3
 
-      rsUnknown96A7E3 ; 96/A7E3
+      rsBattleSceneEndSpellWindowEffect ; 96/A7E3
 
         .al
         .xl
@@ -1496,7 +1496,7 @@
         lda $7FEC1D,x
         bit #$0080
         beq _A81B
-        jsr rsUnknown96ACAB
+        jsr rsBattleSceneClearWindowRegs
         sep #$20
         lda $7FEC1D,x
         and #$7F
@@ -1522,7 +1522,7 @@
 
         ; 96/A81C
 
-      rsUnknown96A81C ; 96/A81C
+      rsBattleSceneStopSpellWindowSlot ; 96/A81C
 
         .al
         .xl
@@ -1553,7 +1553,7 @@
 
         ; 96/A843
 
-      rsUnknown96A843 ; 96/A843
+      rsBattleSceneSpellWindowLoop ; 96/A843
 
         .al
         .xl
@@ -1576,7 +1576,7 @@
 
 
         _A865
-        jsr rsUnknown96ABE2
+        jsr rsBattleSceneReadSpellWindowWord
         and #$00FF
         beq _A875
         sep #$20
@@ -1594,7 +1594,7 @@
 
         ; 96/A87E
 
-      rsUnknown96A87E ; 96/A87E
+      rsBattleSceneSpellWindowSetAttackerPos ; 96/A87E
 
         .al
         .xl
@@ -1626,7 +1626,7 @@
 
         ; 96/A8B2
 
-      rsUnknown96A8B2 ; 96/A8B2
+      rsBattleSceneSpellWindowSetDefenderPos ; 96/A8B2
 
         .al
         .xl
@@ -1684,7 +1684,7 @@
 
         ; 96/A913
 
-      rsUnknown96A913 ; 96/A913
+      rsBattleSceneSpellWindowLaunchProjectile ; 96/A913
 
         .al
         .xl
@@ -1693,7 +1693,7 @@
 
         pha
         phx
-        jsl rlUnknown96B672
+        jsl rlBattleSceneLaunchWindowProjectile
         lda $7FEC29,x
         clc
         adc #$0002
@@ -1706,7 +1706,7 @@
 
         ; 96/A928
 
-      rsUnknown96A928 ; 96/A928
+      rsBattleSceneSpellWindowWait1 ; 96/A928
 
         .al
         .xl
@@ -1727,7 +1727,7 @@
 
         ; 96/A937
 
-      rsUnknown96A937 ; 96/A937
+      rsBattleSceneSpellWindowSnapAttackerPos ; 96/A937
 
         .al
         .xl
@@ -1759,7 +1759,7 @@
 
         ; 96/A969
 
-      rsUnknown96A969 ; 96/A969
+      rsBattleSceneSpellWindowSnapDefenderPos ; 96/A969
 
         .al
         .xl
@@ -1791,7 +1791,7 @@
 
         ; 96/A99B
 
-      rsUnknown96A99B ; 96/A99B
+      rsBattleSceneSpellWindowAimDefenderHit ; 96/A99B
 
         .al
         .xl
@@ -1860,7 +1860,7 @@
 
         ; 96/AA10
 
-      rsUnknown96AA10 ; 96/AA10
+      rsBattleSceneSpellWindowCenterStage ; 96/AA10
 
         .al
         .xl
@@ -1901,7 +1901,7 @@
 
         ; 96/AA54
 
-      rsUnknown96AA54 ; 96/AA54
+      rsBattleSceneSpellWindowTrackTarget ; 96/AA54
 
         .al
         .xl
@@ -1944,7 +1944,7 @@
 
         ; 96/AAA4
 
-      rsUnknown96AAA4 ; 96/AAA4
+      rsBattleSceneSpellWindowAimDefenderLow ; 96/AAA4
 
         .al
         .xl
@@ -2007,7 +2007,7 @@
 
         ; 96/AB0E
 
-      rsUnknown96AB0E ; 96/AB0E
+      rsBattleSceneSpellWindowSetFixed4A00 ; 96/AB0E
 
         .al
         .xl
@@ -2042,7 +2042,7 @@
 
         ; 96/AB4B
 
-      rsUnknown96AB4B ; 96/AB4B
+      rsBattleSceneSpellWindowSetFixed4A10 ; 96/AB4B
 
         .al
         .xl
@@ -2077,7 +2077,7 @@
 
         ; 96/AB88
 
-      rsUnknown96AB88 ; 96/AB88
+      rsBattleSceneSpellWindowSetFixed3400 ; 96/AB88
 
         .al
         .xl
@@ -2112,14 +2112,14 @@
 
         ; 96/ABC5
 
-      rsUnknown96ABC5 ; 96/ABC5
+      rsBattleSceneSpellWindowSetPoseAndDelay ; 96/ABC5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown96ABE2
+        jsr rsBattleSceneReadSpellWindowWord
         sep #$20
         sta $7FEC25,x
         xba
@@ -2135,7 +2135,7 @@
 
         ; 96/ABE2
 
-      rsUnknown96ABE2 ; 96/ABE2
+      rsBattleSceneReadSpellWindowWord ; 96/ABE2
 
         .al
         .xl
@@ -2164,7 +2164,7 @@
       .al
       .xl
 
-      rsUnknown96ACAB ; 96/ACAB
+      rsBattleSceneClearWindowRegs ; 96/ACAB
 
         .al
         .xl
@@ -2196,7 +2196,7 @@
       .al
       .xl
 
-      rsUnknown96ACC5 ; 96/ACC5
+      rsBattleSceneClearWindow1Masks ; 96/ACC5
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2224,7 +2224,7 @@
 
         ; 96/ACE5
 
-      rsUnknown96ACE5 ; 96/ACE5
+      rsBattleSceneClearWindow2Masks ; 96/ACE5
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2261,7 +2261,7 @@
       .al
       .xl
 
-      rsUnknown96AD07 ; 96/AD07
+      rsBattleSceneCreateSpellWindowHDMA ; 96/AD07
 
         .al
         .xl
@@ -2309,7 +2309,7 @@
       .al
       .xl
 
-      rlUnknown96AD39 ; 96/AD39
+      rlBattleSceneBuildSpellWindowHDMA ; 96/AD39
 
         .al
         .xl
@@ -2427,7 +2427,7 @@
       .al
       .xl
 
-      rlUnknown96ADE9 ; 96/ADE9
+      rlBattleSceneDrawWindowCircle ; 96/ADE9
 
         .al
         .xl
@@ -2469,7 +2469,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         ldy #$0000
         sep #$20
         lda wR2
@@ -2515,7 +2515,7 @@
         sep #$20
 
         _AE7D
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _AED7
         inc y
@@ -2532,7 +2532,7 @@
         dec y
         cpy #$0000
         bmi _AEC7
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _AED7
         rep #$20
@@ -2546,7 +2546,7 @@
         .al
         and #$85FF
         asl $A8
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         sep #$20
 
         _AEB5
@@ -2556,7 +2556,7 @@
         dec y
         cpy #$0000
         bmi _AEC7
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _AED7
         bra _AEB5
@@ -2582,7 +2582,7 @@
 
         ; 96/AEDC
 
-      rlUnknown96AEDC ; 96/AEDC
+      rlBattleSceneDrawWindowCircleWide ; 96/AEDC
 
         .al
         .xl
@@ -2624,7 +2624,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         ldy #$0000
         sep #$20
         lda wR2
@@ -2670,7 +2670,7 @@
         sep #$20
 
         _AF70
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _AFCA
         inc y
@@ -2687,7 +2687,7 @@
         dec y
         cpy #$0000
         bmi _AFBA
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _AFCA
         rep #$20
@@ -2701,7 +2701,7 @@
         .al
         and #$85FF
         asl $A8
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         sep #$20
 
         _AFA8
@@ -2711,7 +2711,7 @@
         dec y
         cpy #$0000
         bmi _AFBA
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _AFCA
         bra _AFA8
@@ -2737,7 +2737,7 @@
 
         ; 96/AFCF
 
-      rlUnknown96AFCF ; 96/AFCF
+      rlBattleSceneDrawWindowOval ; 96/AFCF
 
         .al
         .xl
@@ -2775,7 +2775,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         ldy #$0000
         sep #$20
         lda wR2
@@ -2869,7 +2869,7 @@
       .al
       .xl
 
-      rlUnknown96B08D ; 96/B08D
+      rlBattleSceneClearWindowBuffers ; 96/B08D
 
         ; Found by tools/sweep.py.
         .al
@@ -2917,7 +2917,7 @@
       .al
       .xl
 
-      rsUnknown96B0E1 ; 96/B0E1
+      rsBattleSceneDrawWindowCone8 ; 96/B0E1
 
         .al
         .xl
@@ -2958,7 +2958,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         ldy #$0000
         sep #$20
         lda wR3
@@ -2990,7 +2990,7 @@
         bne _B147
 
         _B15C
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B1A9
         inc y
@@ -3021,7 +3021,7 @@
         dec y
         cpy #$0000
         bmi _B197
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B1A9
         rep #$20
@@ -3052,7 +3052,7 @@
 
         ; 96/B1AE
 
-      rsUnknown96B1AE ; 96/B1AE
+      rsBattleSceneDrawWindowCone8Inverted ; 96/B1AE
 
         .al
         .xl
@@ -3093,7 +3093,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         lda wR3
         tay
         sep #$20
@@ -3128,7 +3128,7 @@
         dec y
         cpy #$0000
         bmi _B23D
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B24F
         rep #$20
@@ -3159,7 +3159,7 @@
 
         ; 96/B254
 
-      rsUnknown96B254 ; 96/B254
+      rsBattleSceneDrawWindowCone4 ; 96/B254
 
         .al
         .xl
@@ -3200,7 +3200,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         ldy #$0000
         sep #$20
         lda wR3
@@ -3230,7 +3230,7 @@
         bne _B2B8
 
         _B2CD
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B312
         inc y
@@ -3253,7 +3253,7 @@
         dec y
         cpy #$0000
         bmi _B300
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B312
         rep #$20
@@ -3284,7 +3284,7 @@
 
         ; 96/B317
 
-      rlUnknown96B317 ; 96/B317
+      rlBattleSceneDrawWindowDiamond ; 96/B317
 
         .al
         .xl
@@ -3328,7 +3328,7 @@
         lda $7FE4E2,x
         sta wR4
         lda wR3
-        jsr rsUnknown96B56F
+        jsr rlBattleSceneGetWindowShapeWidth
         pha
         sep #$20
         lda wR1
@@ -3349,7 +3349,7 @@
         rep #$20
         sta wR5
         pla
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         ldy #$0000
         sep #$20
         lda wR2
@@ -3419,7 +3419,7 @@
         dec y
         cpy #$0000
         bmi _B426
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B436
         rep #$20
@@ -3433,7 +3433,7 @@
         .al
         and #$85FF
         asl $A8
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         sep #$20
 
         _B413
@@ -3444,7 +3444,7 @@
         dec y
         cpy #$0000
         bmi _B426
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B436
         bra _B413
@@ -3470,7 +3470,7 @@
 
         ; 96/B43B
 
-      rsUnknown96B43B ; 96/B43B
+      rsBattleSceneDrawWindowCone2 ; 96/B43B
 
         .al
         .xl
@@ -3511,7 +3511,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl rlUnknown96B517
+        jsl rlBattleSceneGetWindowShapePtr
         ldy #$0000
         sep #$20
         lda wR3
@@ -3563,7 +3563,7 @@
         pla
 
         _B4D1
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B512
         inc y
@@ -3582,7 +3582,7 @@
         dec y
         cpy #$0000
         bmi _B500
-        jsr rsUnknown96B5B5
+        jsr rsBattleSceneWriteWindowPair
         dec wR0
         beq _B512
         rep #$20
@@ -3613,7 +3613,7 @@
 
         ; 96/B517
 
-      rlUnknown96B517 ; 96/B517
+      rlBattleSceneGetWindowShapePtr ; 96/B517
 
         .al
         .xl
@@ -3681,7 +3681,7 @@
 
         ; 96/B56F
 
-      rsUnknown96B56F ; 96/B56F
+      rlBattleSceneGetWindowShapeWidth ; 96/B56F
 
         .al
         .xl
@@ -3740,7 +3740,7 @@
 
         ; 96/B5B5
 
-      rsUnknown96B5B5 ; 96/B5B5
+      rsBattleSceneWriteWindowPair ; 96/B5B5
 
         .as
         .xl
@@ -3772,7 +3772,7 @@
 
         ; 96/B5D2
 
-      rsUnknown96B5D2 ; 96/B5D2
+      rsBattleSceneCalcWindowHalfHeight ; 96/B5D2
 
         .al
         .xl
@@ -3825,7 +3825,7 @@
 
         ; 96/B623
 
-      rsUnknown96B623 ; 96/B623
+      rsBattleSceneCalcWindowHalfHeightA0 ; 96/B623
 
         .al
         .xl
@@ -3878,7 +3878,7 @@
 
         ; 96/B672
 
-      rlUnknown96B672 ; 96/B672
+      rlBattleSceneLaunchWindowProjectile ; 96/B672
 
         .al
         .xl
@@ -3899,7 +3899,7 @@
 
 
         _B685
-        jsr rsUnknown96B68A
+        jsr rsBattleSceneSetupWindowProjectile
         plx
         rtl
 
@@ -3907,7 +3907,7 @@
 
         ; 96/B68A
 
-      rsUnknown96B68A ; 96/B68A
+      rsBattleSceneSetupWindowProjectile ; 96/B68A
 
         .al
         .xl
@@ -3965,7 +3965,7 @@
 
         ; 96/B6E3
 
-      rsUnknown96B6E3 ; 96/B6E3
+      rsBattleSceneUpdateTrackedWindowPos ; 96/B6E3
 
         .al
         .xl
@@ -4000,7 +4000,7 @@
 
         ; 96/B719
 
-      rsUnknown96B719 ; 96/B719
+      rsBattleSceneStepWindowHorizontal ; 96/B719
 
         .al
         .xl
@@ -4020,9 +4020,9 @@
 
         _B72A
         sta wR0
-        jsr rsUnknown96B745
+        jsr rsBattleSceneStepWindowRight
         bcc _B734
-        jsr rsUnknown96A81C
+        jsr rsBattleSceneStopSpellWindowSlot
 
         _B734
         bra _B743
@@ -4031,9 +4031,9 @@
         _B736
         and #$7FFF
         sta wR0
-        jsr rsUnknown96B794
+        jsr rsBattleSceneStepWindowLeft
         bcc _B743
-        jsr rsUnknown96A81C
+        jsr rsBattleSceneStopSpellWindowSlot
 
         _B743
         plx
@@ -4043,7 +4043,7 @@
 
         ; 96/B745
 
-      rsUnknown96B745 ; 96/B745
+      rsBattleSceneStepWindowRight ; 96/B745
 
         .al
         .xl
@@ -4098,7 +4098,7 @@
 
         ; 96/B794
 
-      rsUnknown96B794 ; 96/B794
+      rsBattleSceneStepWindowLeft ; 96/B794
 
         .al
         .xl
@@ -4164,7 +4164,7 @@
       .al
       .xl
 
-      rsUnknown96B7E2 ; 96/B7E2
+      rsBattleSceneStepWindowGravity ; 96/B7E2
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -4207,7 +4207,7 @@
 
         ; 96/B81A
 
-      rsUnknown96B81A ; 96/B81A
+      rsBattleSceneStepWindowVertical ; 96/B81A
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -4227,7 +4227,7 @@
         sec
         sbc wR0
         bcs _B834
-        jsr rsUnknown96A7E3
+        jsr rsBattleSceneEndSpellWindowEffect
         bra _B838
 
 
@@ -4245,7 +4245,7 @@
         clc
         adc wR0
         bcc _B84D
-        jsr rsUnknown96A7E3
+        jsr rsBattleSceneEndSpellWindowEffect
         bra _B851
 
 
@@ -6482,7 +6482,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown96ACAB
+        jsr rsBattleSceneClearWindowRegs
         sep #$20
         phx
         cpx #$0000
@@ -6692,7 +6692,7 @@
 
         pha
         phx
-        jsl rlUnknown96B672
+        jsl rlBattleSceneLaunchWindowProjectile
         lda $7FEC29
         clc
         adc #$0002
