@@ -26,7 +26,7 @@ The build is byte-identical and checksums verify. Code changes made while writin
 
 - Start from the reference page, then check every claim the chapter makes against the code. Outlines and reviews have been wrong too: the outline promised "gates", and a review proposed a 24-sprite cap the code doesn't have.
 - A complete code path is the answer; don't contradict it from memory of how the game plays. Raise an emulator question only when the code leaves the outcome open.
-- Plain prose: no strawman contrasts with "most games", no "not X but Y" reframes, no closing flourishes. Open on a game moment, say what the system is and what it enables, end sections on a fact. Check each chapter for these before handing it over.
+- Plain prose: no strawman contrasts with "most games", no "not X but Y" reframes, no closing flourishes. Open each chapter and section on the system (its elements, rules, and how the engine organizes them), not an in-game vignette; ground it in concrete rules and data after that, and end sections on a fact (STYLE.md). Check each chapter for these before handing it over.
 - Fix wrong names, comments and doc claims found while writing (source changes byte-identical, separate commit), and log each in "Mistakes found in earlier work". Retail-ROM bugs go in their own table.
 
 ## Mistakes found in earlier work
