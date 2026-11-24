@@ -757,7 +757,7 @@
         .autsiz
         .databank ?
 
-        ; Decompresses and DMAs gcUnknownC00A2B ($1800 bytes) to VRAM $4000
+        ; Decompresses and DMAs gcHiraganaFont ($1800 bytes) to VRAM $4000
 
         lda #(`aDecompressionDMAEntry80B0CB)<<8
         sta lR19+1
@@ -785,12 +785,12 @@
         .autsiz
         .databank ?
 
-        ; Queues gcUnknownC00A2B decompression into aDecompressionBuffer via rlAppendDecompList
+        ; Queues gcHiraganaFont decompression into aDecompressionBuffer via rlAppendDecompList
 
         phx
-        lda #(`gcUnknownC00A2B)<<8
+        lda #(`gcHiraganaFont)<<8
         sta lR18+1
-        lda #<>gcUnknownC00A2B
+        lda #<>gcHiraganaFont
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -811,7 +811,7 @@
         .autsiz
         .databank ?
 
-        ; Decompresses and DMAs gcUnknownC0197B ($0800 bytes) to VRAM $4C00
+        ; Decompresses and DMAs gcMenuLabelsAndIcons ($0800 bytes) to VRAM $4C00
 
         lda #(`aDecompressionDMAEntry80B0FD)<<8
         sta lR19+1

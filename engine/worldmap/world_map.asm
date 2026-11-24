@@ -190,9 +190,9 @@
         jsl rlHandleMapMenuDecompressionDMA
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD10E19
+        ldx #<>gcWorldMapTilemap
         stx DecompressionVariables
-        lda #`gcUnknownD10E19
+        lda #`gcWorldMapTilemap
         sta $CA
         ldx #$2400
         stx $CB
@@ -202,9 +202,9 @@
         jsl rlDecompressor
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD1173E
+        ldx #<>gcWorldMapTileset
         stx DecompressionVariables
-        lda #`gcUnknownD1173E
+        lda #`gcWorldMapTileset
         sta $CA
         ldx #$0000
         stx $CB

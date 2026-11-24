@@ -5,7 +5,8 @@
 start $DD0000
 end $DD6655
 
-gcUnknownDD0000 gcUnknownDD0000 ; 9728 bytes decompressed
+# Genealogy wheel tiles (Project Naga GenealogyWheel.4bpp; loaded as $DD0000 in bank $89).
+gcGenealogyWheelTiles gcGenealogyWheelTiles ; 9728 bytes decompressed
 gcUnknownDD20A0 gcUnknownDD20A0 ; 4608 bytes decompressed
 gcUnknownDD2CEE gcUnknownDD2CEE ; 1792 bytes decompressed
 gcUnknownDD2D90 gcUnknownDD2D90 ; 2048 bytes decompressed

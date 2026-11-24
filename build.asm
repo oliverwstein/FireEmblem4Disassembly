@@ -474,12 +474,12 @@
       .dsection Unsorted80B0A3Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B0CB .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/B0CB
+      aDecompressionDMAEntry80B0CB .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/B0CB
 
       .dsection Unsorted80B0D3Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B0FD .structDecompressionDMAEntry gcUnknownC0197B, $0800, $4C00 ; 80/B0FD
+      aDecompressionDMAEntry80B0FD .structDecompressionDMAEntry gcMenuLabelsAndIcons, $0800, $4C00 ; 80/B0FD
 
       .dsection Unsorted80B105Section
 
@@ -509,7 +509,7 @@
     .logical $80B61E
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B61E .structDecompressionDMAEntry gcUnknownD05673, $6000, $0000 ; 80/B61E
+      aDecompressionDMAEntry80B61E .structDecompressionDMAEntry gcWorldMapTiles, $6000, $0000 ; 80/B61E
       aDecompressionDMAEntry80B626 .structDecompressionDMAEntry gcUnknownD13D09, $1000, $3000 ; 80/B626
       aDecompressionDMAEntry80B62E .structDecompressionDMAEntry gcUnknownD1432E, $0100, $4000 ; 80/B62E
       aDecompressionDMAEntry80B636 .structDecompressionDMAEntry gcUnknownD14375, $0800, $6000 ; 80/B636
@@ -546,7 +546,7 @@
     .logical $80B99D
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B99D .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/B99D
+      aDecompressionDMAEntry80B99D .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/B99D
       aDecompressionDMAEntry80B9A5 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 80/B9A5
 
       .dsection Unsorted80B9ADSection
@@ -565,7 +565,7 @@
     .logical $80BB45
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80BB45 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/BB45
+      aDecompressionDMAEntry80BB45 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/BB45
       aDecompressionDMAEntry80BB4D .structDecompressionDMAEntry gcUnknownD35B40, $0800, $5400 ; 80/BB4D
       aDecompressionDMAEntry80BB55 .structDecompressionDMAEntry gcUnknownD33EFA, $2000, $1000 ; 80/BB55
 
@@ -578,7 +578,7 @@
       .dsection Data80BEEFSection
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80BEF9 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/BEF9
+      aDecompressionDMAEntry80BEF9 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/BEF9
 
       .dsection Unsorted80BF01Section
 
@@ -627,7 +627,7 @@
       .dsection Unsorted80C3E6Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80C5BE .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/C5BE
+      aDecompressionDMAEntry80C5BE .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/C5BE
 
       .dsection Unsorted80C5C6Section
 
@@ -666,7 +666,7 @@
       .dsection Unsorted80CD2ESection
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80CE8E .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/CE8E
+      aDecompressionDMAEntry80CE8E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/CE8E
       aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $2800 ; 80/CE96
 
       .dsection Unsorted80CE9ESection
@@ -687,7 +687,7 @@
       .dsection Unsorted80D2C6Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/D41D
+      aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/D41D
       aDecompressionDMAEntry80D425 .structDecompressionDMAEntry gcUnknownDD3CE4, $0700, $1800 ; 80/D425
       aDecompressionDMAEntry80D42D .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $2000 ; 80/D42D
 
@@ -712,7 +712,7 @@
       .dsection Unsorted80E598Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80E72E .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/E72E
+      aDecompressionDMAEntry80E72E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/E72E
       aDecompressionDMAEntry80E736 .structDecompressionDMAEntry gcUnknownDD3932, $0800, $4200 ; 80/E736
       aDecompressionDMAEntry80E73E .structDecompressionDMAEntry gcUnknownDD3BDE, $0700, $2000 ; 80/E73E
 
@@ -3880,7 +3880,7 @@
     .logical $8A8F58
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8A8F58 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/8F58
+      aDecompressionDMAEntry8A8F58 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/8F58
       aDecompressionDMAEntry8A8F60 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 8A/8F60
 
       .dsection Unsorted8A8F68Section
@@ -4109,7 +4109,7 @@
     .logical $8ABE4B
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8ABE4B .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/BE4B
+      aDecompressionDMAEntry8ABE4B .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/BE4B
       aDecompressionDMAEntry8ABE53 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/BE53
       aDecompressionDMAEntry8ABE5B .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/BE5B
 
@@ -4261,7 +4261,7 @@
     .logical $8AD952
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8AD952 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/D952
+      aDecompressionDMAEntry8AD952 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/D952
 
       .dsection Unsorted8AD95ASection
 
@@ -4327,7 +4327,7 @@
       .dsection Unsorted8AECEFSection
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/EE89
+      aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/EE89
       aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry gcUnknownD240B0, $1000, $0000 ; 8A/EE91
       aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundUnknown17, $2000, $1000 ; 8A/EE99
       aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry gcUnknownD24914, $0800, $2800 ; 8A/EEA1
@@ -4349,7 +4349,7 @@
 
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8AF263 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/F263
+      aDecompressionDMAEntry8AF263 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/F263
       aDecompressionDMAEntry8AF26B .structDecompressionDMAEntry gcUnknownD30F54, $1000, $0000 ; 8A/F26B
       aDecompressionDMAEntry8AF273 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/F273
       aDecompressionDMAEntry8AF27B .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/F27B
@@ -4382,7 +4382,7 @@
     .logical $8AFA0C
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8AFA0C .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/FA0C
+      aDecompressionDMAEntry8AFA0C .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/FA0C
       aDecompressionDMAEntry8AFA14 .structDecompressionDMAEntry gcUnknownD269F9, $1000, $0000 ; 8A/FA14
       aDecompressionDMAEntry8AFA1C .structDecompressionDMAEntry gcUnknownD24CA4, $2000, $1000 ; 8A/FA1C
       aDecompressionDMAEntry8AFA24 .structDecompressionDMAEntry gcUnknownD272B9, $0800, $2800 ; 8A/FA24
@@ -5344,7 +5344,7 @@
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8DB056 .structDecompressionDMAEntry gcUnknownD429F6, $0800, $5800 ; 8D/B056
       aDecompressionDMAEntry8DB05E .structDecompressionDMAEntry gcUnknownD428B8, $0800, $6800 ; 8D/B05E
-      aDecompressionDMAEntry8DB066 .structDecompressionDMAEntry gcUnknownD42273, $1000, $4000 ; 8D/B066
+      aDecompressionDMAEntry8DB066 .structDecompressionDMAEntry gcRankingScreenTiles, $1000, $4000 ; 8D/B066
 
       .dsection Unsorted8DB06ESection
       .dsection Unsorted8DB150Section
@@ -7977,11 +7977,11 @@
 
       g4bppStatusScreenHolyBloodIcons .binary "gfx/ui/StatusScreenHolyBloodIcons.4bpp" ; DE0A00
 
-      gStatusScreenTilemap4 .binary "gfx/ui/tilemaps/StatusScreenTilemap4.bin" ; DE1600
+      gGenealogyWheelTilemap .binary "gfx/ui/tilemaps/GenealogyWheelTilemap.bin" ; DE1600
 
       gStatusScreenTilemap3 .binary "gfx/ui/tilemaps/StatusScreenTilemap3.bin" ; DE1A40
 
-      gStatusScreenTilemap4Loptous .binary "gfx/ui/tilemaps/StatusScreenTilemap4Loptous.bin" ; DE1E80
+      gGenealogyWheelLoptousTilemap .binary "gfx/ui/tilemaps/GenealogyWheelLoptousTilemap.bin" ; DE1E80
 
       gUnitWindowListTilemap .binary "gfx/ui/tilemaps/UnitWindowListTilemap.bin" ; DE22C0
 

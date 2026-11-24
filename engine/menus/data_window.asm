@@ -199,7 +199,7 @@
 
         ; For rlHandleMapMenuDecompressionDMA.
 
-        .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000
+        .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000
 
 
       rsDataWindowSetBGSettings ; 80/DA52

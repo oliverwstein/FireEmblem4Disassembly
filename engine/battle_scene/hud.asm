@@ -1212,9 +1212,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownE03539
+        ldx #<>gcBattleSceneStatLabels
         stx DecompressionVariables
-        lda #`gcUnknownE03539
+        lda #`gcBattleSceneStatLabels
         sta $CA
         ldx #$8B88
         stx $CB
@@ -1799,13 +1799,13 @@
         .autsiz
         .databank ?
 
-        ; Decompresses the font (gcUnknownC00A2B) to $7E8B88.
+        ; Decompresses the font (gcHiraganaFont) to $7E8B88.
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownC00A2B
+        ldx #<>gcHiraganaFont
         stx DecompressionVariables
-        lda #`gcUnknownC00A2B
+        lda #`gcHiraganaFont
         sta $CA
         ldx #$8B88
         stx $CB

@@ -299,7 +299,7 @@
         beq _BE30
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gStatusScreenTilemap4, $0440, $80, $4800
+          .structDMAToVRAM gGenealogyWheelTilemap, $0440, $80, $4800
 
         bra _BE3D
 
@@ -307,7 +307,7 @@
         _BE30
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gStatusScreenTilemap4Loptous, $0440, $80, $4800
+          .structDMAToVRAM gGenealogyWheelLoptousTilemap, $0440, $80, $4800
 
 
         _BE3D
@@ -856,9 +856,9 @@
         lda #STATUS_SCREEN_STEP_LOAD_HOLY_BLOOD
         sta wGameStateStep,b
         jsr rsStatusScreenDrawInventoryIcons
-        lda #(`gcUnknownDD0000)<<8
+        lda #(`gcGenealogyWheelTiles)<<8
         sta lR18+1
-        lda #<>gcUnknownDD0000
+        lda #<>gcGenealogyWheelTiles
         sta lR18
         lda #(`(aDecompressionBuffer+$1000))<<8
         sta lR19+1
@@ -1108,9 +1108,9 @@
         sta wStatusScreenHolyBloodLoaded
         lda #STATUS_SCREEN_STEP_LOAD_HOLY_BLOOD
         sta wGameStateStep,b
-        lda #(`gcUnknownDD0000)<<8
+        lda #(`gcGenealogyWheelTiles)<<8
         sta lR18+1
-        lda #<>gcUnknownDD0000
+        lda #<>gcGenealogyWheelTiles
         sta lR18
         lda #(`(aDecompressionBuffer+$1000))<<8
         sta lR19+1
@@ -1217,7 +1217,7 @@
         .autsiz
         .databank ?
 
-        ; Step $05, once per screen: waits for the decompression of gcUnknownDD0000 that A started, sends it to VRAM in five pieces over five frames (wStatusScreenHolyBloodDMAStep), then shows the holy blood page (step $02).
+        ; Step $05, once per screen: waits for the decompression of gcGenealogyWheelTiles that A started, sends it to VRAM in five pieces over five frames (wStatusScreenHolyBloodDMAStep), then shows the holy blood page (step $02).
 
         jsr rsStatusScreenDrawPortraitAndMapSprite
         jsr rsStatusScreenDrawEquippedWeaponIcon

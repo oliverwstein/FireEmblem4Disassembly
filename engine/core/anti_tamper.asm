@@ -32,9 +32,9 @@
 
           .structDMAToVRAM aDecompressionBuffer, $0800, $80, $6000
 
-        lda #(`gcUnknown9CC0B4)<<8
+        lda #(`gcAntiPiracyWarningTiles)<<8
         sta lR18+1
-        lda #<>gcUnknown9CC0B4
+        lda #<>gcAntiPiracyWarningTiles
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -101,9 +101,9 @@
 
           .structDMAToVRAM aDecompressionBuffer, $0800, $80, $6000
 
-        lda #(`gcUnknown9CCE12)<<8
+        lda #(`gcAbnormalityWarningTiles)<<8
         sta lR18+1
-        lda #<>gcUnknown9CCE12
+        lda #<>gcAbnormalityWarningTiles
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

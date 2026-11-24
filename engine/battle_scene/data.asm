@@ -513,10 +513,10 @@
         ; Read by rlRunTitleLoadList via rlStartTitleLoadList.
 
         .byte $00
-        .long gcUnknownDF005F, aDecompressionBuffer
+        .long gcTitleIntroCaption01, aDecompressionBuffer
         .word $7800, $0400
         .byte $00
-        .long gcUnknownF63A2C, aDecompressionBuffer
+        .long gcTitleIntroCaption01Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long gcUnknownF676FE, aDecompressionBuffer
@@ -525,16 +525,16 @@
         .long gcUnknownF524B7, aDecompressionBuffer
         .word $3800, $1000
         .byte $00
-        .long gcUnknownDF03A5, aDecompressionBuffer
+        .long gcTitleIntroCaption02, aDecompressionBuffer
         .word $7800, $04E0
         .byte $00
-        .long gcUnknownF63A58, aDecompressionBuffer
+        .long gcTitleIntroCaption02Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownDF075B, aDecompressionBuffer
+        .long gcTitleIntroCaption03, aDecompressionBuffer
         .word $7800, $0560
         .byte $00
-        .long gcUnknownF63A8D, aDecompressionBuffer
+        .long gcTitleIntroCaption03Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long g4bppcBattleBackgroundUnknown16, aDecompressionBuffer
@@ -552,10 +552,10 @@
         .long gcUnknownF50A88, aDecompressionBuffer
         .word $6000, $2000
         .byte $00
-        .long gcUnknownDF0B25, aDecompressionBuffer
+        .long gcTitleIntroCaption04, aDecompressionBuffer
         .word $7800, $04C0
         .byte $00
-        .long gcUnknownF63AC8, aDecompressionBuffer
+        .long gcTitleIntroCaption04Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long gcUnknownF03141, aDecompressionBuffer
@@ -564,16 +564,16 @@
         .long gcUnknownF5299B, aDecompressionBuffer
         .word $2C00, $0800
         .byte $00
-        .long gcUnknownDF0E44, aDecompressionBuffer
+        .long gcTitleIntroCaption05, aDecompressionBuffer
         .word $7800, $05C0
         .byte $00
-        .long gcUnknownF63AFB, aDecompressionBuffer
+        .long gcTitleIntroCaption05Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownDF123A, aDecompressionBuffer
+        .long gcTitleIntroCaption06, aDecompressionBuffer
         .word $7800, $0500
         .byte $00
-        .long gcUnknownF63B39, aDecompressionBuffer
+        .long gcTitleIntroCaption06Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long gcUnknownF02266, aDecompressionBuffer
@@ -582,10 +582,10 @@
         .long gcUnknownF019F4, aDecompressionBuffer
         .word $5000, $2000
         .byte $00
-        .long gcUnknownDF1542, aDecompressionBuffer
+        .long gcTitleIntroCaption07, aDecompressionBuffer
         .word $7800, $04E0
         .byte $00
-        .long gcUnknownB6FFCA, aDecompressionBuffer
+        .long gcTitleIntroCaption07Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long gcUnknownF02FC1, aDecompressionBuffer
@@ -606,10 +606,10 @@
         .long gcUnknownF06B78, aDecompressionBuffer
         .word $1C00, $0800
         .byte $00
-        .long gcUnknownDF18EA, aDecompressionBuffer
+        .long gcTitleIntroCaption08, aDecompressionBuffer
         .word $7800, $05C0
         .byte $00
-        .long gcUnknownF63B70, aDecompressionBuffer
+        .long gcTitleIntroCaption08Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long gcUnknownF30E6F, aDecompressionBuffer
@@ -630,10 +630,10 @@
         .long gcUnknown94FF6D, aDecompressionBuffer
         .word $0400, $0800
         .byte $00
-        .long gcUnknownDF1CA2, aDecompressionBuffer
+        .long gcTitleIntroCaption09, aDecompressionBuffer
         .word $7800, $03C0
         .byte $00
-        .long gcUnknown94FFD1, aDecompressionBuffer
+        .long gcTitleIntroCaption09Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long gcUnknown94E9EE, aDecompressionBuffer
@@ -642,10 +642,10 @@
         .long gcUnknownF5597A, aDecompressionBuffer
         .word $0800, $0800
         .byte $00
-        .long gcUnknownDF1F36, aDecompressionBuffer
+        .long gcTitleIntroCaption10, aDecompressionBuffer
         .word $7800, $05C0
         .byte $00
-        .long gcUnknownF63BAE, aDecompressionBuffer
+        .long gcTitleIntroCaption10Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long gcUnknownF52B03, aDecompressionBuffer
@@ -657,10 +657,10 @@
         .long gcUnknownF547D4, aDecompressionBuffer
         .word $2000, $1800
         .byte $00
-        .long gcUnknownDF232B, aDecompressionBuffer
+        .long gcTitleIntroCaption11, aDecompressionBuffer
         .word $7800, $0340
         .byte $00
-        .long gcUnknownF63BEC, aDecompressionBuffer
+        .long gcTitleIntroCaption11Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
         .long gcUnknownF55B0E, aDecompressionBuffer
@@ -672,16 +672,16 @@
         .long gcUnknownF57B55, aDecompressionBuffer
         .word $5800, $1000
         .byte $00
-        .long gcUnknownDF2480, aDecompressionBuffer
+        .long gcTitleIntroCaption12, aDecompressionBuffer
         .word $7800, $04E0
         .byte $00
-        .long gcUnknownDF0000, aDecompressionBuffer
+        .long gcTitleIntroCaption12Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownDF2850, aDecompressionBuffer
+        .long gcTitleIntroCaption13, aDecompressionBuffer
         .word $7800, $0400
         .byte $00
-        .long gcUnknownDF0033, aDecompressionBuffer
+        .long gcTitleIntroCaption13Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $02
         .long $7F7800

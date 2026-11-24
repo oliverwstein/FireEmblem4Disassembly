@@ -36,6 +36,6 @@ These are tilemaps, not tiles: each is copied into a layer's tilemap area in the
 | `$D9/7940` | `$1C0` | `$AD40` in `rlLoadWorldMapCursorTiles` (BG2 tilemap row 21 if the world map uses the usual layout; not read) and `$9D40` in `rlInitWorldMapGraphics` (BG3 tile area there, which the routine first clears as if it were a tilemap): not settled |
 | `$DA/6800`, `$DA/6A40`, `$DA/6D00` | `$240` each | `$E800` and `$ED00`, BG2 tilemap of `rlConversationSceneSetup`'s layout (`rsConversationDrawWindows`, `rlConversationCloseLeftWindow`, `rlConversationCloseRightWindow`) |
 | `$DD/6730`, `$DD/69F0` | `$2C0`, `$8C0` | `$4000` and `$5280`, BG1 and BG2 tilemaps in `rlLoadStatusScreenDisplay` |
-| `$DE/1600`, `$DE/1A40`, `$DE/1E80` | `$440` each | `$4800`, `$5B40`, `$4800`, the same tilemaps |
+| `$DE/1600`, `$DE/1A40`, `$DE/1E80` | `$440` each | `$4800`, `$5B40`, `$4800`, the same tilemaps; `$DE/1600` and `$DE/1E80` are the genealogy wheel (Project Naga's GenealogyWheel and GenealogyWheelLoptous) |
 | `$DE/22C0` | `$1C0` | `$5000`, the unit window's BG1 tilemap (`rsUnitWindowBuildList`) |
 | `$DE/2480`-`$DE/2980`, `$DE/60C0` | `$140` each | `$B040`, the unit window's BG3 tilemap: one per page (`rsUnitWindowDrawPage0`-`5`) |

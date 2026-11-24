@@ -6,8 +6,10 @@ start $C00000
 end $C03C05
 
 gcUnknownC00000 gcUnknownC00000 ; 17664 bytes decompressed
-gcUnknownC00A2B gcUnknownC00A2B ; 6144 bytes decompressed
-gcUnknownC0197B gcUnknownC0197B ; 2048 bytes decompressed
+# Hiragana font (seen in the preview); loaded by rsBattleSceneLoadNameFont and the map battle quotes.
+gcHiraganaFont gcHiraganaFont ; 6144 bytes decompressed
+# Menu labels and icons (seen in the preview); loaded by rlLoadMenuIconGraphics.
+gcMenuLabelsAndIcons gcMenuLabelsAndIcons ; 2048 bytes decompressed
 gcUnknownC01FBA gcUnknownC01FBA ; 1024 bytes decompressed
 gcUnknownC022B6 gcUnknownC022B6 ; 1440 bytes decompressed
 gcUnknownC02542 gcUnknownC02542 ; 1024 bytes decompressed

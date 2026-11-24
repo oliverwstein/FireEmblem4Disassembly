@@ -5,21 +5,36 @@
 start $DF0000
 end $DF7FF8
 
-gcUnknownDF0000 gcUnknownDF0000 ; 128 bytes decompressed
-gcUnknownDF0033 gcUnknownDF0033 ; 128 bytes decompressed
-gcUnknownDF005F gcUnknownDF005F ; 1024 bytes decompressed
-gcUnknownDF03A5 gcUnknownDF03A5 ; 1248 bytes decompressed
-gcUnknownDF075B gcUnknownDF075B ; 1376 bytes decompressed
-gcUnknownDF0B25 gcUnknownDF0B25 ; 1216 bytes decompressed
-gcUnknownDF0E44 gcUnknownDF0E44 ; 1472 bytes decompressed
-gcUnknownDF123A gcUnknownDF123A ; 1280 bytes decompressed
-gcUnknownDF1542 gcUnknownDF1542 ; 1248 bytes decompressed
-gcUnknownDF18EA gcUnknownDF18EA ; 1472 bytes decompressed
-gcUnknownDF1CA2 gcUnknownDF1CA2 ; 960 bytes decompressed
-gcUnknownDF1F36 gcUnknownDF1F36 ; 1472 bytes decompressed
-gcUnknownDF232B gcUnknownDF232B ; 832 bytes decompressed
-gcUnknownDF2480 gcUnknownDF2480 ; 1248 bytes decompressed
-gcUnknownDF2850 gcUnknownDF2850 ; 1024 bytes decompressed
+# Tilemap for title intro caption line 12; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption12Tilemap gcTitleIntroCaption12Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 13; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption13Tilemap gcTitleIntroCaption13Tilemap ; 128 bytes decompressed
+# Title intro caption line 1 (Project Naga's Intro_Line1); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption01 gcTitleIntroCaption01 ; 1024 bytes decompressed
+# Title intro caption line 2 (Project Naga's Intro_Line2); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption02 gcTitleIntroCaption02 ; 1248 bytes decompressed
+# Title intro caption line 3 (Project Naga's Intro_Line3); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption03 gcTitleIntroCaption03 ; 1376 bytes decompressed
+# Title intro caption line 4 (Project Naga's Intro_Line4); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption04 gcTitleIntroCaption04 ; 1216 bytes decompressed
+# Title intro caption line 5 (Project Naga's Intro_Line5); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption05 gcTitleIntroCaption05 ; 1472 bytes decompressed
+# Title intro caption line 6 (Project Naga's Intro_Line6); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption06 gcTitleIntroCaption06 ; 1280 bytes decompressed
+# Title intro caption line 7 (Project Naga's Intro_Line7); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption07 gcTitleIntroCaption07 ; 1248 bytes decompressed
+# Title intro caption line 8 (Project Naga's Intro_Line8); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption08 gcTitleIntroCaption08 ; 1472 bytes decompressed
+# Title intro caption line 9 (Project Naga's Intro_Line9); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption09 gcTitleIntroCaption09 ; 960 bytes decompressed
+# Title intro caption line 10 (Project Naga's Intro_Line10); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption10 gcTitleIntroCaption10 ; 1472 bytes decompressed
+# Title intro caption line 11 (Project Naga's Intro_Line11); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption11 gcTitleIntroCaption11 ; 832 bytes decompressed
+# Title intro caption line 12 (Project Naga's Intro_Line12); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption12 gcTitleIntroCaption12 ; 1248 bytes decompressed
+# Title intro caption line 13 (Project Naga's Intro_Line13); loaded by aTitleLoadList to VRAM $7800.
+gcTitleIntroCaption13 gcTitleIntroCaption13 ; 1024 bytes decompressed
 gcUnknownDF2AFE gcUnknownDF2AFE ; 2080 bytes decompressed
 gcUnknownDF30CC gcUnknownDF30CC ; 96 bytes decompressed
 gcUnknownDF30E9 gcUnknownDF30E9 ; 1792 bytes decompressed

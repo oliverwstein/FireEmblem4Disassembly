@@ -221,7 +221,7 @@
       aReviveScreenGraphics1 ; 80/E13E
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000
+        .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000
 
       aReviveScreenGraphics2 ; 80/E146
 

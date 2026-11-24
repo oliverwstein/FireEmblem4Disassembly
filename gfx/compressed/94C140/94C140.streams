@@ -23,4 +23,5 @@ acBattleForeground5Tilemap1 acBattleForeground5Tilemap1 ; 2048 bytes decompresse
 acBattleForeground5Tilemap2 acBattleForeground5Tilemap2 ; 2048 bytes decompressed
 gcUnknown94E9EE gcUnknown94E9EE ; 8192 bytes decompressed, after
 gcUnknown94FF6D gcUnknown94FF6D ; 2048 bytes decompressed, after
-gcUnknown94FFD1 gcUnknown94FFD1 ; 128 bytes decompressed, after
+# Tilemap for title intro caption line 9; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption09Tilemap gcTitleIntroCaption09Tilemap ; 128 bytes decompressed, after

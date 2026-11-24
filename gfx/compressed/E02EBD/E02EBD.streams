@@ -8,9 +8,11 @@ end $F77BC8
 gcUnknownE02EBD gcUnknownE02EBD ; 1024 bytes decompressed
 gcUnknownE03105 gcUnknownE03105 ; 2048 bytes decompressed
 gcUnknownE033A5 gcUnknownE033A5 ; 768 bytes decompressed
-gcUnknownE03539 gcUnknownE03539 ; 1024 bytes decompressed
+# Battle scene stat labels HIT ATK DEF LEV (Project Naga Battle_Stats.2bpp).
+gcBattleSceneStatLabels gcBattleSceneStatLabels ; 1024 bytes decompressed
 gcUnknownE03749 gcUnknownE03749 ; 1024 bytes decompressed
-gcUnknownE03982 gcUnknownE03982 ; 160 bytes decompressed
+# Battle scene level up banner (Project Naga Battle_LevelUp_LVUP).
+gcBattleSceneLevelUpBanner gcBattleSceneLevelUpBanner ; 160 bytes decompressed
 gcUnknownE03A1D gcUnknownE03A1D ; 960 bytes decompressed
 gcUnknownE03B09 gcUnknownE03B09 ; 1280 bytes decompressed
 gcUnknownE03C68 gcUnknownE03C68 ; 960 bytes decompressed
@@ -411,15 +413,24 @@ gcUnknownF6232E gcUnknownF6232E ; 160 bytes decompressed
 gcUnknownF6239C gcUnknownF6239C ; 96 bytes decompressed
 # Also used as: g4bppcDialogueBackgroundGateForeground, g4bppcDialogueBackgroundAlleyForeground, g4bppcBattleForeground3, g4bppcBattleForeground6.
 g4bppcDialogueBackgroundFountainForeground g4bppcDialogueBackgroundFountainForeground ; 7200 bytes decompressed
-gcUnknownF63A2C gcUnknownF63A2C ; 128 bytes decompressed
-gcUnknownF63A58 gcUnknownF63A58 ; 128 bytes decompressed
-gcUnknownF63A8D gcUnknownF63A8D ; 128 bytes decompressed
-gcUnknownF63AC8 gcUnknownF63AC8 ; 128 bytes decompressed
-gcUnknownF63AFB gcUnknownF63AFB ; 128 bytes decompressed
-gcUnknownF63B39 gcUnknownF63B39 ; 128 bytes decompressed
-gcUnknownF63B70 gcUnknownF63B70 ; 128 bytes decompressed
-gcUnknownF63BAE gcUnknownF63BAE ; 128 bytes decompressed
-gcUnknownF63BEC gcUnknownF63BEC ; 128 bytes decompressed
+# Tilemap for title intro caption line 1; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption01Tilemap gcTitleIntroCaption01Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 2; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption02Tilemap gcTitleIntroCaption02Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 3; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption03Tilemap gcTitleIntroCaption03Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 4; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption04Tilemap gcTitleIntroCaption04Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 5; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption05Tilemap gcTitleIntroCaption05Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 6; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption06Tilemap gcTitleIntroCaption06Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 8; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption08Tilemap gcTitleIntroCaption08Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 10; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption10Tilemap gcTitleIntroCaption10Tilemap ; 128 bytes decompressed
+# Tilemap for title intro caption line 11; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption11Tilemap gcTitleIntroCaption11Tilemap ; 128 bytes decompressed
 # Also used as: acBattleBackgroundRiverSnowTilemap.
 acBattleBackgroundRiverTilemap acBattleBackgroundRiverTilemap ; 4096 bytes decompressed
 # Also used as: acBattleBackgroundCastleSnowTilemap.

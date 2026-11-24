@@ -4542,7 +4542,7 @@
         .word $57B0, $00A0
         .long gcUnknownF6232E, aDecompressionBuffer
         .word $57B0, $00A0
-        .long gcUnknownE03982, aDecompressionBuffer
+        .long gcBattleSceneLevelUpBanner, aDecompressionBuffer
         .word $47B0, $00A0
         .long gcUnknownF6239C, aDecompressionBuffer
         .word $57B0, $0060
@@ -4565,7 +4565,7 @@
         .long gcUnknownE04000, $7E9588
         .long gcUnknownE040D3, $7E9588
         .long gcUnknownE02EBD, aDecompressionBuffer
-        .long gcUnknownE03539, $7E8F88
+        .long gcBattleSceneStatLabels, $7E8F88
         .long gcUnknownF3426A, aDecompressionBuffer
 
         ; 97/B60D

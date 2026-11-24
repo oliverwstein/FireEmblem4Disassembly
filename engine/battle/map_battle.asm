@@ -4934,9 +4934,9 @@
         ; The quote's box overwrote sprite VRAM $4000-$4BFF: decompresses its tiles again.
 
         phx
-        lda #(`gcUnknownC00A2B)<<8
+        lda #(`gcHiraganaFont)<<8
         sta lR18+1
-        lda #<>gcUnknownC00A2B
+        lda #<>gcHiraganaFont
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

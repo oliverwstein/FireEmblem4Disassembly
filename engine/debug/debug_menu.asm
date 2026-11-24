@@ -4349,7 +4349,7 @@
       aDebugMenuC00A2BDecompressionEntry ; 80/E53D
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000
+        .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000
 
       aDebugMenuDD3F20DecompressionEntry ; 80/E545
 

@@ -10,9 +10,11 @@ gcUnknown9CB90D gcUnknown9CB90D ; 2048 bytes decompressed
 gcUnknown9CBB20 gcUnknown9CBB20 ; 2048 bytes decompressed
 gcUnknown9CBBB7 gcUnknown9CBBB7 ; 2048 bytes decompressed
 gcUnknown9CBFA1 gcUnknown9CBFA1 ; 512 bytes decompressed
-gcUnknown9CC0B4 gcUnknown9CC0B4 ; 8192 bytes decompressed
+# Anti-piracy warning text (seen in the preview); rlLoadAntiTamperScreenAgain.
+gcAntiPiracyWarningTiles gcAntiPiracyWarningTiles ; 8192 bytes decompressed
 gcUnknown9CCB62 gcUnknown9CCB62 ; 2048 bytes decompressed
-gcUnknown9CCE12 gcUnknown9CCE12 ; 8192 bytes decompressed
+# 'Abnormality detected' text (seen in the preview); rlLoadAntiTamperScreen.
+gcAbnormalityWarningTiles gcAbnormalityWarningTiles ; 8192 bytes decompressed
 gcUnknown9CD719 gcUnknown9CD719 ; 2048 bytes decompressed
 gcUnknown9CD916 gcUnknown9CD916 ; 512 bytes decompressed
 g4bppcBattleBannerLeonster g4bppcBattleBannerLeonster ; 384 bytes decompressed

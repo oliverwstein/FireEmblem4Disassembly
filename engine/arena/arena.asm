@@ -25,7 +25,7 @@
       aArenaDecompressionEntry4000 ; 8A/E4BB
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
-        .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000
+        .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000
 
 
       aArenaDecompressionEntry0000 ; 8A/E4C3

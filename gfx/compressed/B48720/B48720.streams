@@ -30,4 +30,5 @@ acBattleBackgroundMountainTilemap acBattleBackgroundMountainTilemap ; 4096 bytes
 # Also used as: acBattleBackgroundSeaSnowTilemap.
 acBattleBackgroundSeaTilemap acBattleBackgroundSeaTilemap ; 4096 bytes decompressed
 acBattleBackgroundShrineTilemap acBattleBackgroundShrineTilemap ; 4096 bytes decompressed
-gcUnknownB6FFCA gcUnknownB6FFCA ; 128 bytes decompressed, after
+# Tilemap for title intro caption line 7; loaded by aTitleLoadList to $7F20.
+gcTitleIntroCaption07Tilemap gcTitleIntroCaption07Tilemap ; 128 bytes decompressed, after

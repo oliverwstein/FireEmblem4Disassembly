@@ -5,9 +5,12 @@
 start $D05673
 end $D46B27
 
-gcUnknownD05673 gcUnknownD05673 ; 24576 bytes decompressed
-gcUnknownD10E19 gcUnknownD10E19 ; 8192 bytes decompressed
-gcUnknownD1173E gcUnknownD1173E ; 9216 bytes decompressed
+# World map tiles (Project Naga WorldMap.4bpp; entry aDecompressionDMAEntry80B61E).
+gcWorldMapTiles gcWorldMapTiles ; 24576 bytes decompressed
+# World map tilemap (Project Naga WorldMap.tilemap).
+gcWorldMapTilemap gcWorldMapTilemap ; 8192 bytes decompressed
+# World map tileset (Project Naga WorldMapTileset).
+gcWorldMapTileset gcWorldMapTileset ; 9216 bytes decompressed
 aVerdaneMapHighlightTilemap aVerdaneMapHighlightTilemap ; 2048 bytes decompressed
 aAgustriaMapHighlightTilemap aAgustriaMapHighlightTilemap ; 2048 bytes decompressed
 aSilesseMapHighlightTilemap aSilesseMapHighlightTilemap ; 2048 bytes decompressed
@@ -55,7 +58,8 @@ gcUnknownD33EFA gcUnknownD33EFA ; 8192 bytes decompressed
 gcUnknownD35B40 gcUnknownD35B40 ; 2048 bytes decompressed
 gcUnknownD35EB4 gcUnknownD35EB4 ; 22528 bytes decompressed
 gcUnknownD421EE gcUnknownD421EE ; 2048 bytes decompressed
-gcUnknownD42273 gcUnknownD42273 ; 4096 bytes decompressed
+# Ranking screen lettering: PLAYER RANK, grades, category kanji (seen in the preview).
+gcRankingScreenTiles gcRankingScreenTiles ; 4096 bytes decompressed
 gcUnknownD428B8 gcUnknownD428B8 ; 2048 bytes decompressed
 gcUnknownD429F6 gcUnknownD429F6 ; 2048 bytes decompressed
 gcUnknownD42C50 gcUnknownD42C50 ; 4096 bytes decompressed
