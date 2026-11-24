@@ -169,10 +169,10 @@
       .al
       .xl
 
-      procUnknown87C70A ; 87/C70A
+      procMapMagicRipple ; 87/C70A
 
         ; BG2 HDMA ripple visual effect created by rlMapMagicCutsceneStartRipple in map_magic_effects.asm.
-        .structProcInfo "RP", rlProcMapMagicRippleInit, rlProcMapMagicRippleUploadTiles, aProcUnknown87C70ACode
+        .structProcInfo "RP", rlProcMapMagicRippleInit, rlProcMapMagicRippleUploadTiles, aProcMapMagicRippleCode
 
     .endsection Unsorted87C70ASection
 
@@ -377,7 +377,7 @@
       .al
       .xl
 
-      aProcUnknown87C70ACode ; 87/C81F
+      aProcMapMagicRippleCode ; 87/C81F
 
         PROC_HALT
 

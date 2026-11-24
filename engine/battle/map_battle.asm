@@ -10087,11 +10087,11 @@
 
         ; 9E/CEB9
 
-      procUnknown9ECEB9 ; 9E/CEB9
+      procCheckMapBattleHPWindowsUnused ; 9E/CEB9
 
         ; Unreferenced: nothing creates this proc.
 
-        .structProcInfo "ON", rlProcCheckMapBattleHPWindowsInit, rlProcCheckMapBattleHPWindowsCycle, aProcUnknown9ECEB9Code
+        .structProcInfo "ON", rlProcCheckMapBattleHPWindowsInit, rlProcCheckMapBattleHPWindowsCycle, aProcCheckMapBattleHPWindowsCode
 
       rlProcCheckMapBattleHPWindowsInit ; 9E/CEC1
 
@@ -10100,7 +10100,7 @@
         .autsiz
         .databank ?
 
-        ; Empty init for procUnknown9ECEB9.
+        ; Empty init for procCheckMapBattleHPWindowsUnused.
 
         rtl
 
@@ -10130,7 +10130,7 @@
 
         ; 9E/CEDB
 
-      aProcUnknown9ECEB9Code ; 9E/CEDB
+      aProcCheckMapBattleHPWindowsCode ; 9E/CEDB
 
         PROC_HALT
 

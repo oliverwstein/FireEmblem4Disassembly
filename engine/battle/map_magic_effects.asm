@@ -44,9 +44,9 @@
         lda #$FFFF
         sta aMapMagicProcList
         sta aMapMagicHDMAList
-        lda #(`procUnknown9F924B)<<8
+        lda #(`procMapMagicVillageFire)<<8
         sta lR44+1
-        lda #<>procUnknown9F924B
+        lda #<>procMapMagicVillageFire
         sta lR44
         jsl rlProcEngineCreateProc
         ply
@@ -66,7 +66,7 @@
       .al
       .xl
 
-      procUnknown9F924B ; 9F/924B
+      procMapMagicVillageFire ; 9F/924B
 
         .structProcInfo "ON", rlMapMagicFireProcInit, rlMapMagicVillageFireInit, aProcMapMagicHaltCode
 
@@ -170,15 +170,15 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9F936C)<<8
+        lda #(`aMapMagicFireSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9F936C
+        lda #<>aMapMagicFireSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F92C2
+          .word <>procMapMagicFire
 
         rtl
 
@@ -195,26 +195,26 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9F9372)<<8
+        lda #(`aMapMagicElfireSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9F9372
+        lda #<>aMapMagicElfireSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F92CA
+          .word <>procMapMagicElfire
 
         rtl
 
         .databank 0
 
-      procUnknown9F92C2 ; 9F/92C2
+      procMapMagicFire ; 9F/92C2
 
         ; Part of the Fire effect.
         .structProcInfo "ON", rlMapMagicFireProcInit, rlMapMagicFireWaitHit, aProcMapMagicHaltCode
 
-      procUnknown9F92CA ; 9F/92CA
+      procMapMagicElfire ; 9F/92CA
 
         ; Part of the Elfire effect.
         .structProcInfo "ON", rlMapMagicFireProcInit, rlMapMagicElfireWaitHit, aProcMapMagicHaltCode
@@ -389,7 +389,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEBAB
+          .word <>procMapMagicFireWindow
 
         jsr rsCreateMapMagicHDMA
 
@@ -411,7 +411,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEBBA
+          .word <>procMapMagicElfireWindow
 
         jsr rsCreateMapMagicHDMA
 
@@ -449,11 +449,11 @@
       .al
       .xl
 
-      aUnknown9F936C ; 9F/936C
-        .word <>rlMapMagicFireballSpriteInit, <>rlMapMagicFireSpriteDummyInit, <>aUnknown9F9527
+      aMapMagicFireSpriteInfo ; 9F/936C
+        .word <>rlMapMagicFireballSpriteInit, <>rlMapMagicFireSpriteDummyInit, <>aMapMagicFireSpriteScript
 
-      aUnknown9F9372 ; 9F/9372
-        .word <>rlMapMagicFireballSpriteInit, <>rlMapMagicFireSpriteDummyInit, <>aUnknown9F9584
+      aMapMagicElfireSpriteInfo ; 9F/9372
+        .word <>rlMapMagicFireballSpriteInit, <>rlMapMagicFireSpriteDummyInit, <>aMapMagicElfireSpriteScript
 
     .endsection Table9F936CSection
 
@@ -772,35 +772,35 @@
 
         .databank 0
 
-      aUnknown9F9527 ; 9F/9527
+      aMapMagicFireSpriteScript ; 9F/9527
 
         ; Part of the Fire effect.
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9601
+        ACTIVE_SPRITE_FRAME 5, aMapMagicFireFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicFirePlayLaunchSound
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame01
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame03
         ACTIVE_SPRITE_SET_ONCYCLE rlMapMagicFireballSpriteRise
 
         _953D
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame01
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame03
         ACTIVE_SPRITE_CALL rlMapMagicFireWaitSpritePhase1
         .word <>_953D
 
         _954E
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame01
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFireFrame03
         ACTIVE_SPRITE_CALL rlMapMagicFireWaitSpritePhase2
         .word <>_954E
         ACTIVE_SPRITE_CALL rlMapMagicFirePlayImpactSound
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9618
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F961F
+        ACTIVE_SPRITE_FRAME 2, aMapMagicFireFrame04
+        ACTIVE_SPRITE_FRAME 2, aMapMagicFireFrame05
 
         _956A
-        ACTIVE_SPRITE_FRAME 48, aUnknown9F9601
+        ACTIVE_SPRITE_FRAME 48, aMapMagicFireFrameEmpty
         ACTIVE_SPRITE_JUMP_RELATIVE _956A
 
         ; 9F/9570
@@ -844,35 +844,35 @@
         .databank 0
 
         ; 9F/9584
-      aUnknown9F9584 ; 9F/9584
+      aMapMagicElfireSpriteScript ; 9F/9584
 
         ; Part of the Elfire effect.
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9601
+        ACTIVE_SPRITE_FRAME 5, aMapMagicFireFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicElfirePlayLaunchSound
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9626
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F962D
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9634
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame01
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame03
         ACTIVE_SPRITE_SET_ONCYCLE rlMapMagicFireballSpriteRise
 
         _959A
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F963B
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9642
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9649
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame04
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame05
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame06
         ACTIVE_SPRITE_CALL rlMapMagicFireWaitSpritePhase1
         .word <>_959A
 
         _95AB
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9650
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9657
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F965E
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame07
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame08
+        ACTIVE_SPRITE_FRAME 1, aMapMagicElfireFrame09
         ACTIVE_SPRITE_CALL rlMapMagicFireWaitSpritePhase2
         .word <>_95AB
         ACTIVE_SPRITE_CALL rlMapMagicElfirePlayImpactSound
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9665
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F967B
+        ACTIVE_SPRITE_FRAME 2, aMapMagicElfireFrame10
+        ACTIVE_SPRITE_FRAME 2, aMapMagicElfireFrame11
 
         _95C7
-        ACTIVE_SPRITE_FRAME 48, aUnknown9F9601
+        ACTIVE_SPRITE_FRAME 48, aMapMagicFireFrameEmpty
         ACTIVE_SPRITE_JUMP_RELATIVE _95C7
 
         ; 9F/95CD
@@ -968,110 +968,110 @@
         ; 9F/9601
 
 
-      aUnknown9F9601 ; 9F/9601
+      aMapMagicFireFrameEmpty ; 9F/9601
 
         ; Shared by the Elfire and Fire effects.
         .word 0
 
-      aUnknown9F9603 ; 9F/9603
+      aMapMagicFireFrame01 ; 9F/9603
 
         ; Part of the Fire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9603._Sprites
+        .structSpriteArray aMapMagicFireFrame01._Sprites
 
-      aUnknown9F960A ; 9F/960A
+      aMapMagicFireFrame02 ; 9F/960A
 
         ; Part of the Fire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F960A._Sprites
+        .structSpriteArray aMapMagicFireFrame02._Sprites
 
-      aUnknown9F9611 ; 9F/9611
+      aMapMagicFireFrame03 ; 9F/9611
 
         ; Part of the Fire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9611._Sprites
+        .structSpriteArray aMapMagicFireFrame03._Sprites
 
-      aUnknown9F9618 ; 9F/9618
+      aMapMagicFireFrame04 ; 9F/9618
 
         ; Part of the Fire effect.
         _Sprites := [[(  -8,  -10), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9618._Sprites
+        .structSpriteArray aMapMagicFireFrame04._Sprites
 
-      aUnknown9F961F ; 9F/961F
+      aMapMagicFireFrame05 ; 9F/961F
 
         ; Part of the Fire effect.
         _Sprites := [[(  -8,   -9), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F961F._Sprites
+        .structSpriteArray aMapMagicFireFrame05._Sprites
 
-      aUnknown9F9626 ; 9F/9626
+      aMapMagicElfireFrame01 ; 9F/9626
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9626._Sprites
+        .structSpriteArray aMapMagicElfireFrame01._Sprites
 
-      aUnknown9F962D ; 9F/962D
+      aMapMagicElfireFrame02 ; 9F/962D
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F962D._Sprites
+        .structSpriteArray aMapMagicElfireFrame02._Sprites
 
-      aUnknown9F9634 ; 9F/9634
+      aMapMagicElfireFrame03 ; 9F/9634
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9634._Sprites
+        .structSpriteArray aMapMagicElfireFrame03._Sprites
 
-      aUnknown9F963B ; 9F/963B
+      aMapMagicElfireFrame04 ; 9F/963B
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F963B._Sprites
+        .structSpriteArray aMapMagicElfireFrame04._Sprites
 
-      aUnknown9F9642 ; 9F/9642
+      aMapMagicElfireFrame05 ; 9F/9642
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9642._Sprites
+        .structSpriteArray aMapMagicElfireFrame05._Sprites
 
-      aUnknown9F9649 ; 9F/9649
+      aMapMagicElfireFrame06 ; 9F/9649
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9649._Sprites
+        .structSpriteArray aMapMagicElfireFrame06._Sprites
 
-      aUnknown9F9650 ; 9F/9650
+      aMapMagicElfireFrame07 ; 9F/9650
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F9650._Sprites
+        .structSpriteArray aMapMagicElfireFrame07._Sprites
 
-      aUnknown9F9657 ; 9F/9657
+      aMapMagicElfireFrame08 ; 9F/9657
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F9657._Sprites
+        .structSpriteArray aMapMagicElfireFrame08._Sprites
 
-      aUnknown9F965E ; 9F/965E
+      aMapMagicElfireFrame09 ; 9F/965E
 
         ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F965E._Sprites
+        .structSpriteArray aMapMagicElfireFrame09._Sprites
 
-      aUnknown9F9665 ; 9F/9665
+      aMapMagicElfireFrame10 ; 9F/9665
 
         ; Part of the Elfire effect.
         _Sprites := [[(   0,    3), $00, SpriteSmall, $01C, 2, 6, true, false]]
@@ -1079,9 +1079,9 @@
         _Sprites ..= [[(  -8,    3), $00, SpriteSmall, $01C, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -5), $00, SpriteSmall, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9665._Sprites
+        .structSpriteArray aMapMagicElfireFrame10._Sprites
 
-      aUnknown9F967B ; 9F/967B
+      aMapMagicElfireFrame11 ; 9F/967B
 
         ; Part of the Elfire effect.
         _Sprites := [[(   0,    3), $00, SpriteSmall, $01D, 2, 6, false, false]]
@@ -1089,7 +1089,7 @@
         _Sprites ..= [[(  -8,    3), $00, SpriteSmall, $01D, 2, 6, true, false]]
         _Sprites ..= [[(  -8,   -5), $00, SpriteSmall, $00D, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F967B._Sprites
+        .structSpriteArray aMapMagicElfireFrame11._Sprites
 
     .endsection Unsorted9F94FESection
 
@@ -1108,7 +1108,7 @@
         ; Shared by the Elfire and Fire effects.
 
         ldy aProcSystem.aBody3,b,x
-        lda <>aUnknown9F96D5,b,y
+        lda <>aMapMagicFirePaletteAnim,b,y
         cmp #$FFFF
         beq _96D3
         phx
@@ -1117,19 +1117,19 @@
         adc #$000E
         sta aProcSystem.aBody3,b,x
         tyx
-        lda <>aUnknown9F96D5,b,x
+        lda <>aMapMagicFirePaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9F96D5+2),b,x
+        lda <>(aMapMagicFirePaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9F96D5+4),b,x
+        lda <>(aMapMagicFirePaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9F96D5+6),b,x
+        lda <>(aMapMagicFirePaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9F96D5+8),b,x
+        lda <>(aMapMagicFirePaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9F96D5+10),b,x
+        lda <>(aMapMagicFirePaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9F96D5+12),b,x
+        lda <>(aMapMagicFirePaletteAnim+12),b,x
         sta $01DE,b
         plx
         clc
@@ -1145,7 +1145,7 @@
         ; 9F/96D5
 
 
-      aUnknown9F96D5 ; 9F/96D5
+      aMapMagicFirePaletteAnim ; 9F/96D5
 
         ; Shared by the Elfire and Fire effects.
         .word $73FF, $2FFF, $03BF, $02DF, $023F, $017F, $007F
@@ -1175,13 +1175,13 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F97BD
+          .word <>procMapMagicAura
 
         rtl
 
         .databank 0
 
-      procUnknown9F97BD ; 9F/97BD
+      procMapMagicAura ; 9F/97BD
 
         ; Part of the Aura effect.
         .structProcInfo "ON", rlMapMagicAuraInit, rlMapMagicAuraTintGreen, aProcMapMagicHaltCode
@@ -1230,7 +1230,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEBC9
+          .word <>procMapMagicAuraWindow
 
         jsr rsCreateMapMagicHDMA
 
@@ -1353,28 +1353,28 @@
         lda #$0003
         sta aProcSystem.aBody2,b,x
         ldy aProcSystem.aBody3,b,x
-        lda <>(aUnknown9F98A8+2),b,y
+        lda <>(aMapMagicAuraPalettes+2),b,y
         cmp #$FFFF
-        beq aUnknown9F98A8
+        beq aMapMagicAuraPalettes
         phx
         tya
         clc
         adc #$000E
         sta aProcSystem.aBody3,b,x
         tyx
-        lda <>(aUnknown9F98A8+2),b,x
+        lda <>(aMapMagicAuraPalettes+2),b,x
         sta $01D2,b
-        lda <>(aUnknown9F98A8+4),b,x
+        lda <>(aMapMagicAuraPalettes+4),b,x
         sta $01D4,b
-        lda <>(aUnknown9F98A8+6),b,x
+        lda <>(aMapMagicAuraPalettes+6),b,x
         sta $01D6,b
-        lda <>(aUnknown9F98A8+8),b,x
+        lda <>(aMapMagicAuraPalettes+8),b,x
         sta $01D8,b
-        lda <>(aUnknown9F98A8+10),b,x
+        lda <>(aMapMagicAuraPalettes+10),b,x
         sta $01DA,b
-        lda <>(aUnknown9F98A8+12),b,x
+        lda <>(aMapMagicAuraPalettes+12),b,x
         sta $01DC,b
-        lda <>(aUnknown9F98A8+14),b,x
+        lda <>(aMapMagicAuraPalettes+14),b,x
         sta $01DE,b
         plx
         clc
@@ -1382,7 +1382,7 @@
 
         .databank 0
 
-      aUnknown9F98A8 ; 9F/98A8
+      aMapMagicAuraPalettes ; 9F/98A8
 
         ; Part of the Aura effect.
         .word $6B38, $02D6, $12D6, $1ED6, $2ED6, $3AD6, $46D6
@@ -1596,14 +1596,14 @@
 
       procMapMagicHealingStaff ; 9F/99BB
 
-        .structProcInfo "ON", rlMapMagicHealingInit, rlMapMagicHealingWaitStrike, aProcUnknown9F99C3Code
+        .structProcInfo "ON", rlMapMagicHealingInit, rlMapMagicHealingWaitStrike, aProcMapMagicHealingStaffCode
 
-      aProcUnknown9F99C3Code ; 9F/99C3
+      aProcMapMagicHealingStaffCode ; 9F/99C3
 
         ; Shared by the Heal, Mend, Physic and Recover effects.
         PROC_YIELD 1
         PROC_CALL rlMapMagicHealingStepPaletteAnim
-        PROC_JUMP aProcUnknown9F99C3Code
+        PROC_JUMP aProcMapMagicHealingStaffCode
 
     .endsection Unsorted9F999ESection
 
@@ -1624,7 +1624,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEBD8
+          .word <>procMapMagicCircleWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsMapMagicHealingInitBlendingAndHDMA
@@ -1734,7 +1734,7 @@
         jsr rsSaveMapMagicColors
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC0D
+          .word <>procMapMagicFortifyWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsMapMagicHealingInitBlendingAndHDMA
@@ -1813,7 +1813,7 @@
         _9A99
         rtl
 
-        ; Unreferenced; shaped like the palette fade arguments at aUnknown9FB496.
+        ; Unreferenced; shaped like the palette fade arguments at aMapMagicMeteorFlashBlackData.
         .byte $D6, $00, $05, $00, $FF, $FF
 
         .databank 0
@@ -1904,19 +1904,19 @@
         sta aProcSystem.aBody3,b,x
         asl a
         tax
-        lda <>aUnknown9F9B08,b,x
+        lda <>aMapMagicHealingPaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9F9B08+2),b,x
+        lda <>(aMapMagicHealingPaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9F9B08+4),b,x
+        lda <>(aMapMagicHealingPaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9F9B08+6),b,x
+        lda <>(aMapMagicHealingPaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9F9B08+8),b,x
+        lda <>(aMapMagicHealingPaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9F9B08+10),b,x
+        lda <>(aMapMagicHealingPaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9F9B08+12),b,x
+        lda <>(aMapMagicHealingPaletteAnim+12),b,x
         sta $01DE,b
         plx
         rtl
@@ -1926,7 +1926,7 @@
         ; 9F/9B08
 
 
-      aUnknown9F9B08 ; 9F/9B08
+      aMapMagicHealingPaletteAnim ; 9F/9B08
 
         ; Shared by the Heal, Mend, Physic and Recover effects.
         .word $7FFF, $7FBD, $7F9C, $7F5A, $7F38, $7EF7, $7ED5, $7E93
@@ -1960,22 +1960,22 @@
         sta aProcSystem.aBody3,b,x
         asl a
         tax
-        lda <>(aUnknown9F9B93+8),b,x
+        lda <>(aMapMagicFortifyPaletteAnim+8),b,x
         sta $01D6,b
-        lda <>(aUnknown9F9B93+6),b,x
+        lda <>(aMapMagicFortifyPaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9F9B93+4),b,x
+        lda <>(aMapMagicFortifyPaletteAnim+4),b,x
         sta $01DA,b
-        lda <>(aUnknown9F9B93+2),b,x
+        lda <>(aMapMagicFortifyPaletteAnim+2),b,x
         sta $01DC,b
-        lda <>aUnknown9F9B93,b,x
+        lda <>aMapMagicFortifyPaletteAnim,b,x
         sta $01DE,b
         plx
         rts
 
         .databank 0
 
-      aUnknown9F9B93 ; 9F/9B93
+      aMapMagicFortifyPaletteAnim ; 9F/9B93
 
         ; Part of the Fortify effect.
         .word $03FF, $02B9, $0278, $0216, $01D5, $0153, $00D0, $004E
@@ -1995,16 +1995,16 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F9C03
+          .word <>procMapMagicBerserk
 
         rtl
 
         .databank 0
 
-      procUnknown9F9C03 ; 9F/9C03
+      procMapMagicBerserk ; 9F/9C03
 
         ; Part of the Berserk effect.
-        .structProcInfo "ON", rlMapMagicBerserkInit, rlMapMagicBerserkWaitStrike, aProcUnknown9F9C8CCode
+        .structProcInfo "ON", rlMapMagicBerserkInit, rlMapMagicBerserkWaitStrike, aProcMapMagicBerserkCode
 
       rlMapMagicBerserkInit ; 9F/9C0B
 
@@ -2017,7 +2017,7 @@
         jsr rsSetMapMagicLayerBlending
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC2B
+          .word <>procMapMagicBerserkWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -2111,12 +2111,12 @@
 
         .databank 0
 
-      aProcUnknown9F9C8CCode ; 9F/9C8C
+      aProcMapMagicBerserkCode ; 9F/9C8C
 
         ; Part of the Berserk effect.
         PROC_YIELD 1
         PROC_CALL rlMapMagicBerserkStepPaletteAnim
-        PROC_JUMP aProcUnknown9F9C8CCode
+        PROC_JUMP aProcMapMagicBerserkCode
 
       rlMapMagicBerserkStepPaletteAnim ; 9F/9C97
 
@@ -2143,26 +2143,26 @@
         sta aProcSystem.aBody3,b,x
         asl a
         tax
-        lda <>aUnknown9F9CE0,b,x
+        lda <>aMapMagicBerserkPaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9F9CE0+2),b,x
+        lda <>(aMapMagicBerserkPaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9F9CE0+4),b,x
+        lda <>(aMapMagicBerserkPaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9F9CE0+6),b,x
+        lda <>(aMapMagicBerserkPaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9F9CE0+8),b,x
+        lda <>(aMapMagicBerserkPaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9F9CE0+10),b,x
+        lda <>(aMapMagicBerserkPaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9F9CE0+12),b,x
+        lda <>(aMapMagicBerserkPaletteAnim+12),b,x
         sta $01DE,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9F9CE0 ; 9F/9CE0
+      aMapMagicBerserkPaletteAnim ; 9F/9CE0
 
         ; Part of the Berserk effect.
         .word $00FF, $53FF, $3FFF, $033F, $02BF, $01BF, $00FF, $00FF
@@ -2178,16 +2178,16 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F9D16
+          .word <>procMapMagicFenrir
 
         rtl
 
         .databank 0
 
-      procUnknown9F9D16 ; 9F/9D16
+      procMapMagicFenrir ; 9F/9D16
 
         ; Part of the Fenrir effect.
-        .structProcInfo "ON", rlMapMagicFenrirInit, rlMapMagicFenrirDarken, aProcUnknown9F9DA4Code
+        .structProcInfo "ON", rlMapMagicFenrirInit, rlMapMagicFenrirDarken, aProcMapMagicFenrirCode
 
       rlMapMagicFenrirInit ; 9F/9D1E
 
@@ -2237,12 +2237,12 @@
         bne rlMapMagicFenrirDarken._9D49
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC1C
+          .word <>procMapMagicFenrirWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FA139
+          .word <>procMapMagicFenrirVortex
 
         jsr rsCreateMapMagicHDMA
 
@@ -2290,7 +2290,7 @@
         sta aProcSystem.aBody4,b,y
         lda #<>rlMapMagicFenrirDone
         sta aProcSystem.aHeaderOnCycle,b,x
-        lda #<>aProcUnknown9F9DA6Code
+        lda #<>aProcMapMagicFenrirPaletteStepsCode
         sta aProcSystem.aHeaderCodeOffset,b,x
 
         _9DA2
@@ -2309,12 +2309,12 @@
 
         .databank 0
 
-      aProcUnknown9F9DA4Code ; 9F/9DA4
+      aProcMapMagicFenrirCode ; 9F/9DA4
 
         ; Part of the Fenrir effect.
         PROC_HALT
 
-      aProcUnknown9F9DA6Code ; 9F/9DA6
+      aProcMapMagicFenrirPaletteStepsCode ; 9F/9DA6
 
         ; Part of the Fenrir effect.
         PROC_YIELD 1
@@ -2343,41 +2343,41 @@
         and #$00FF
         asl a
         tax
-        lda <>aUnknown9F9E29,b,x
+        lda <>aMapMagicFenrirPaletteSteps,b,x
         sta $01D2,b
-        lda <>(aUnknown9F9E29+2),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9F9E29+4),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9F9E29+6),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9F9E29+8),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9F9E29+10),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9F9E29+12),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+12),b,x
         sta $01DE,b
-        lda <>(aUnknown9F9E29+112),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+112),b,x
         sta $01F2,b
-        lda <>(aUnknown9F9E29+114),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+114),b,x
         sta $01F4,b
-        lda <>(aUnknown9F9E29+116),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+116),b,x
         sta $01F6,b
-        lda <>(aUnknown9F9E29+118),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+118),b,x
 
         _9E13
         sta $01F8,b
-        lda <>(aUnknown9F9E29+120),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+120),b,x
         sta $01FA,b
-        lda <>(aUnknown9F9E29+122),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+122),b,x
         sta $01FC,b
-        lda <>(aUnknown9F9E29+124),b,x
+        lda <>(aMapMagicFenrirPaletteSteps+124),b,x
         sta $01FE,b
         rtl
 
         .databank 0
 
-      aUnknown9F9E29 ; 9F/9E29
+      aMapMagicFenrirPaletteSteps ; 9F/9E29
 
         ; Part of the Fenrir effect.
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000
@@ -2397,10 +2397,10 @@
         .word $6920, $6100, $50C0, $4060, $3820, $2400, $0000
         .word $7D60, $7140, $60E0, $4C80, $4440, $2C00, $0000
 
-      aUnknown9F9F09 ; 9F/9F09
+      aMapMagicFenrirSpriteInfo ; 9F/9F09
 
         ; Part of the Fenrir effect.
-        .word <>rlMapMagicFenrirSpriteInit, <>rlMapMagicFenrirSpriteWaitCast, <>aUnknown9F9FDE
+        .word <>rlMapMagicFenrirSpriteInit, <>rlMapMagicFenrirSpriteWaitCast, <>aMapMagicFenrirSpriteScript
 
       rlMapMagicFenrirSpriteInit ; 9F/9F0F
 
@@ -2583,25 +2583,25 @@
 
         .databank 0
 
-      aUnknown9F9FDE ; 9F/9FDE
+      aMapMagicFenrirSpriteScript ; 9F/9FDE
 
         ; Part of the Fenrir effect.
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FA01D
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FA02E
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FA03F
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FA050
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FA061
+        ACTIVE_SPRITE_FRAME 4, aMapMagicFenrirFrame01
+        ACTIVE_SPRITE_FRAME 4, aMapMagicFenrirFrame02
+        ACTIVE_SPRITE_FRAME 4, aMapMagicFenrirFrame03
+        ACTIVE_SPRITE_FRAME 4, aMapMagicFenrirFrame04
+        ACTIVE_SPRITE_FRAME 4, aMapMagicFenrirFrame05
 
         _9FF2
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FA072
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FA079
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FA080
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FA087
+        ACTIVE_SPRITE_FRAME 3, aMapMagicFenrirFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicFenrirFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicFenrirFrame08
+        ACTIVE_SPRITE_FRAME 3, aMapMagicFenrirFrame09
         ACTIVE_SPRITE_CALL rlMapMagicFenrirWaitSpritePhase
         .word <>_9FF2
 
         _A007
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FA01B
+        ACTIVE_SPRITE_FRAME 1, aMapMagicFenrirFrameEmpty
         ACTIVE_SPRITE_JUMP _A007
 
         ; 9F/A00E
@@ -2629,83 +2629,83 @@
 
         ; 9F/A01B
 
-      aUnknown9FA01B ; 9F/A01B
+      aMapMagicFenrirFrameEmpty ; 9F/A01B
 
         ; Part of the Fenrir effect.
         .word 0
 
-      aUnknown9FA01D ; 9F/A01D
+      aMapMagicFenrirFrame01 ; 9F/A01D
 
         ; Part of the Fenrir effect.
         _Sprites := [[(  -4,   14), $00, SpriteSmall, $001, 3, 6, false, false]]
         _Sprites ..= [[(  20,  -11), $00, SpriteSmall, $001, 3, 6, false, false]]
         _Sprites ..= [[( -28,  -11), $00, SpriteSmall, $001, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA01D._Sprites
+        .structSpriteArray aMapMagicFenrirFrame01._Sprites
 
-      aUnknown9FA02E ; 9F/A02E
+      aMapMagicFenrirFrame02 ; 9F/A02E
 
         ; Part of the Fenrir effect.
         _Sprites := [[( -14,   11), $00, SpriteSmall, $002, 3, 6, false, false]]
         _Sprites ..= [[(  15,   -5), $00, SpriteSmall, $002, 3, 6, false, false]]
         _Sprites ..= [[( -25,  -16), $00, SpriteSmall, $002, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA02E._Sprites
+        .structSpriteArray aMapMagicFenrirFrame02._Sprites
 
-      aUnknown9FA03F ; 9F/A03F
+      aMapMagicFenrirFrame03 ; 9F/A03F
 
         ; Part of the Fenrir effect.
         _Sprites := [[(   9,    2), $00, SpriteSmall, $010, 3, 6, false, false]]
         _Sprites ..= [[( -19,    3), $00, SpriteSmall, $010, 3, 6, false, false]]
         _Sprites ..= [[(  -5,  -16), $00, SpriteSmall, $010, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA03F._Sprites
+        .structSpriteArray aMapMagicFenrirFrame03._Sprites
 
-      aUnknown9FA050 ; 9F/A050
+      aMapMagicFenrirFrame04 ; 9F/A050
 
         ; Part of the Fenrir effect.
         _Sprites := [[(  -3,   10), $00, SpriteSmall, $012, 3, 6, false, false]]
         _Sprites ..= [[( -20,   -2), $00, SpriteSmall, $012, 3, 6, false, false]]
         _Sprites ..= [[(   3,  -13), $00, SpriteSmall, $012, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA050._Sprites
+        .structSpriteArray aMapMagicFenrirFrame04._Sprites
 
-      aUnknown9FA061 ; 9F/A061
+      aMapMagicFenrirFrame05 ; 9F/A061
 
         ; Part of the Fenrir effect.
         _Sprites := [[( -11,    6), $00, SpriteSmall, $010, 3, 6, false, true]]
         _Sprites ..= [[(   3,   -3), $00, SpriteSmall, $010, 3, 6, false, true]]
         _Sprites ..= [[( -14,   -9), $00, SpriteSmall, $010, 3, 6, false, true]]
 
-        .structSpriteArray aUnknown9FA061._Sprites
+        .structSpriteArray aMapMagicFenrirFrame05._Sprites
 
-      aUnknown9FA072 ; 9F/A072
+      aMapMagicFenrirFrame06 ; 9F/A072
 
         ; Part of the Fenrir effect.
         _Sprites := [[(  -8,  -10), $21, SpriteLarge, $006, 3, 6, false, true]]
 
-        .structSpriteArray aUnknown9FA072._Sprites
+        .structSpriteArray aMapMagicFenrirFrame06._Sprites
 
-      aUnknown9FA079 ; 9F/A079
+      aMapMagicFenrirFrame07 ; 9F/A079
 
         ; Part of the Fenrir effect.
         _Sprites := [[( -10,   -8), $21, SpriteLarge, $004, 3, 6, true, false]]
 
-        .structSpriteArray aUnknown9FA079._Sprites
+        .structSpriteArray aMapMagicFenrirFrame07._Sprites
 
-      aUnknown9FA080 ; 9F/A080
+      aMapMagicFenrirFrame08 ; 9F/A080
 
         ; Part of the Fenrir effect.
         _Sprites := [[(  -8,   -6), $21, SpriteLarge, $006, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA080._Sprites
+        .structSpriteArray aMapMagicFenrirFrame08._Sprites
 
-      aUnknown9FA087 ; 9F/A087
+      aMapMagicFenrirFrame09 ; 9F/A087
 
         ; Part of the Fenrir effect.
         _Sprites := [[(  -6,   -8), $21, SpriteLarge, $004, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA087._Sprites
+        .structSpriteArray aMapMagicFenrirFrame09._Sprites
 
       aUnknown9FA08E .dstruct structHDMAIndirectEntryInfo, rlMapMagicFenrirHDMAInit, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/A08E
 
@@ -2780,7 +2780,7 @@
 
         .databank 0
 
-      procUnknown9FA139 ; 9F/A139
+      procMapMagicFenrirVortex ; 9F/A139
 
         ; Part of the Fenrir effect.
         .structProcInfo "ON", rlMapMagicFenrirVortexInit, rlMapMagicFenrirVortexCycle, aProcMapMagicHaltCode
@@ -2878,9 +2878,9 @@
         sbc #$0100
         bcs _A21D
         phx
-        lda #(`aUnknown9F9F09)<<8
+        lda #(`aMapMagicFenrirSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9F9F09
+        lda #<>aMapMagicFenrirSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
@@ -2909,7 +2909,7 @@
         phx
         lsr a
         tax
-        lda <>aUnknown9FA23F,b,x
+        lda <>aMapMagicFenrirVortexDMAList,b,x
         tax
         jsl rlQueueMapMagicDMAList
         plx
@@ -2920,7 +2920,7 @@
 
         .databank 0
 
-      aUnknown9FA23F ; 9F/A23F
+      aMapMagicFenrirVortexDMAList ; 9F/A23F
 
         ; Part of the Fenrir effect.
         .byte $47, $A2, $61, $A2, $7B, $A2, $95, $A2, $81, $AF, $A2, $9F, $04, $00, $EC, $5C
@@ -2939,20 +2939,20 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown9FA4FD)<<8
+        lda #(`aMapMagicBolganoneSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FA4FD
+        lda #<>aMapMagicBolganoneSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FA2D3
+          .word <>procMapMagicBolganone
 
         rtl
 
         .databank 0
 
-      procUnknown9FA2D3 ; 9F/A2D3
+      procMapMagicBolganone ; 9F/A2D3
 
         ; Part of the Bolganone effect.
         .structProcInfo "ON", rlMapMagicBolganoneInit, rlMapMagicBolganoneTintRed, aProcMapMagicHaltCode
@@ -3009,7 +3009,7 @@
         bne rlMapMagicBolganoneTintRed._A310
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC49
+          .word <>procMapMagicBolganoneWindow
 
         jsr rsCreateMapMagicHDMA
 
@@ -3120,21 +3120,21 @@
         asl a
         asl a
         tax
-        lda <>aUnknown9FA3DB,b,x
+        lda <>aMapMagicBolganonePaletteAnim,b,x
         cmp #$FFFF
         beq _A3CF
         sta $01D2,b
-        lda <>(aUnknown9FA3DB+2),b,x
+        lda <>(aMapMagicBolganonePaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FA3DB+4),b,x
+        lda <>(aMapMagicBolganonePaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FA3DB+6),b,x
+        lda <>(aMapMagicBolganonePaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FA3DB+8),b,x
+        lda <>(aMapMagicBolganonePaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FA3DB+10),b,x
+        lda <>(aMapMagicBolganonePaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FA3DB+12),b,x
+        lda <>(aMapMagicBolganonePaletteAnim+12),b,x
         sta $01DE,b
         plx
         rtl
@@ -3149,7 +3149,7 @@
 
         .databank 0
 
-      aUnknown9FA3DB ; 9F/A3DB
+      aMapMagicBolganonePaletteAnim ; 9F/A3DB
 
         ; Part of the Bolganone effect.
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $A4FB
@@ -3172,10 +3172,10 @@
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $A4FB
         .word $FFFF
 
-      aUnknown9FA4FD ; 9F/A4FD
+      aMapMagicBolganoneSpriteInfo ; 9F/A4FD
 
         ; Part of the Bolganone effect.
-        .word <>rlMapMagicBolganoneSpriteInit, <>rlMapMagicBolganoneSpriteWaitEnd, <>aUnknown9FA563
+        .word <>rlMapMagicBolganoneSpriteInit, <>rlMapMagicBolganoneSpriteWaitEnd, <>aMapMagicBolganoneSpriteScript
 
       rlMapMagicBolganoneSpriteInit ; 9F/A503
 
@@ -3239,51 +3239,51 @@
 
         .databank 0
 
-      aUnknown9FA547 ; 9F/A547
+      aMapMagicBolganoneFrameEmpty ; 9F/A547
 
         ; Part of the Bolganone effect.
         .word 0
 
-      aUnknown9FA549 ; 9F/A549
+      aMapMagicBolganoneFrame01 ; 9F/A549
 
         ; Part of the Bolganone effect.
         _Sprites := [[(  -4,    0), $00, SpriteSmall, $010, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA549._Sprites
+        .structSpriteArray aMapMagicBolganoneFrame01._Sprites
 
-      aUnknown9FA550 ; 9F/A550
+      aMapMagicBolganoneFrame02 ; 9F/A550
 
         ; Part of the Bolganone effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $001, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA550._Sprites
+        .structSpriteArray aMapMagicBolganoneFrame02._Sprites
 
-      aUnknown9FA557 ; 9F/A557
+      aMapMagicBolganoneFrame03 ; 9F/A557
 
         ; Part of the Bolganone effect.
         _Sprites := [[(   0,   -7), $21, SpriteLarge, $003, 2, 6, true, false]]
         _Sprites ..= [[( -16,   -7), $21, SpriteLarge, $003, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FA557._Sprites
+        .structSpriteArray aMapMagicBolganoneFrame03._Sprites
 
-      aUnknown9FA563 ; 9F/A563
+      aMapMagicBolganoneSpriteScript ; 9F/A563
 
         ; Part of the Bolganone effect.
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FA549
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FA550
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FA557
+        ACTIVE_SPRITE_FRAME 8, aMapMagicBolganoneFrame01
+        ACTIVE_SPRITE_FRAME 8, aMapMagicBolganoneFrame02
+        ACTIVE_SPRITE_FRAME 2, aMapMagicBolganoneFrame03
         ACTIVE_SPRITE_CALL rlMapMagicBolganoneSignalStart
 
         _A572
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FA557
+        ACTIVE_SPRITE_FRAME 1, aMapMagicBolganoneFrame03
         ACTIVE_SPRITE_CALL rlMapMagicBolganoneWaitSpritePhase
         .word <>_A572
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FA550
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FA549
+        ACTIVE_SPRITE_FRAME 8, aMapMagicBolganoneFrame02
+        ACTIVE_SPRITE_FRAME 8, aMapMagicBolganoneFrame01
         ACTIVE_SPRITE_CALL rlMapMagicBolganoneSignalEnd
 
         _A586
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FA547
+        ACTIVE_SPRITE_FRAME 1, aMapMagicBolganoneFrameEmpty
         ACTIVE_SPRITE_JUMP _A586
 
         ; 9F/A58D
@@ -3350,13 +3350,13 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FA5B1
+          .word <>procMapMagicHel
 
         rtl
 
         .databank 0
 
-      procUnknown9FA5B1 ; 9F/A5B1
+      procMapMagicHel ; 9F/A5B1
 
         ; Part of the Hel effect.
         .structProcInfo "ON", rlMapMagicHelInit, rlMapMagicHelDarkenAndSpawn, aProcMapMagicHaltCode
@@ -3389,7 +3389,7 @@
         sta aProcSystem.aBody0,b,x
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC3A
+          .word <>procMapMagicBlizzardHelWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -3542,7 +3542,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FA678
+          .word <>procMapMagicThunder
 
         rtl
 
@@ -3559,23 +3559,23 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FA682
+          .word <>procMapMagicElthunder
 
         rtl
 
         .databank 0
 
-      procUnknown9FA678 ; 9F/A678
+      procMapMagicThunder ; 9F/A678
 
         ; Part of the Thunder effect.
         .structProcInfo "ON", rlMapMagicThunderInit, rlMapMagicThunderDarkenAndSpawn, aProcMapMagicHaltCode
-        .word <>aUnknown9FA6CB
+        .word <>aMapMagicThunderSpriteInfo
 
-      procUnknown9FA682 ; 9F/A682
+      procMapMagicElthunder ; 9F/A682
 
         ; Part of the Elthunder effect.
         .structProcInfo "ON", rlMapMagicThunderInit, rlMapMagicThunderDarkenAndSpawn, aProcMapMagicHaltCode
-        .word <>aUnknown9FA6D1
+        .word <>aMapMagicElthunderSpriteInfo
 
       rlMapMagicThunderInit ; 9F/A68C
 
@@ -3633,23 +3633,23 @@
 
         .databank 0
 
-      aUnknown9FA6CB ; 9F/A6CB
-        .word <>rlMapMagicThunderSpriteInit, <>rlMapMagicThunderFallToTarget, <>aUnknown9FA972
+      aMapMagicThunderSpriteInfo ; 9F/A6CB
+        .word <>rlMapMagicThunderSpriteInit, <>rlMapMagicThunderFallToTarget, <>aMapMagicThunderSpriteScript
 
-      aUnknown9FA6D1 ; 9F/A6D1
-        .word <>rlMapMagicElthunderSpriteInit, <>rlMapMagicElthunderCasterBoltCycle, <>aUnknown9FA8BC
+      aMapMagicElthunderSpriteInfo ; 9F/A6D1
+        .word <>rlMapMagicElthunderSpriteInit, <>rlMapMagicElthunderCasterBoltCycle, <>aMapMagicElthunderSpriteScript
 
-      aUnknown9FA6D7 ; 9F/A6D7
-        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderCasterBoltCycle, <>aUnknown9FA8C8
+      aMapMagicElthunderCasterBoltSpriteInfo ; 9F/A6D7
+        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderCasterBoltCycle, <>aMapMagicElthunderCasterBoltSpriteScript
 
-      aUnknown9FA6DD ; 9F/A6DD
-        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderMidBoltCycle, <>aUnknown9FA8C8
+      aMapMagicElthunderMidBoltSpriteInfo ; 9F/A6DD
+        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderMidBoltCycle, <>aMapMagicElthunderCasterBoltSpriteScript
 
-      aUnknown9FA6E3 ; 9F/A6E3
-        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderLowBoltCycle, <>aUnknown9FA8D6
+      aMapMagicElthunderLowBoltSpriteInfo ; 9F/A6E3
+        .word <>rlMapMagicThunderBoltInit, <>rlMapMagicElthunderLowBoltCycle, <>aMapMagicElthunderLowBoltSpriteScript
 
-      aUnknown9FA6E9 ; 9F/A6E9
-        .word <>rlMapMagicElthunderTargetInit, <>rlMapMagicThunderWaitPaletteAnim, <>aUnknown9FA967
+      aMapMagicElthunderTargetSpriteInfo ; 9F/A6E9
+        .word <>rlMapMagicElthunderTargetInit, <>rlMapMagicThunderWaitPaletteAnim, <>aMapMagicElthunderTargetSpriteScript
 
 
       rlMapMagicElthunderSpriteInit ; 9F/A6EF
@@ -3949,9 +3949,9 @@
         lda aActiveSpriteSystem.aUnknown001200,b,x
         and #$00FF
         tax
-        lda #(`aUnknown9FA6D7)<<8
+        lda #(`aMapMagicElthunderCasterBoltSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FA6D7
+        lda #<>aMapMagicElthunderCasterBoltSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -3966,9 +3966,9 @@
         lda aActiveSpriteSystem.aUnknown001200,b,x
         and #$00FF
         tax
-        lda #(`aUnknown9FA6DD)<<8
+        lda #(`aMapMagicElthunderMidBoltSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FA6DD
+        lda #<>aMapMagicElthunderMidBoltSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -3995,9 +3995,9 @@
         lda wMapMagicTargetPixel
         and #$00FF
         tax
-        lda #(`aUnknown9FA6E3)<<8
+        lda #(`aMapMagicElthunderLowBoltSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FA6E3
+        lda #<>aMapMagicElthunderLowBoltSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -4031,9 +4031,9 @@
         lda wMapMagicTargetPixel
         and #$00FF
         tax
-        lda #(`aUnknown9FA6E3)<<8
+        lda #(`aMapMagicElthunderLowBoltSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FA6E3
+        lda #<>aMapMagicElthunderLowBoltSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -4049,9 +4049,9 @@
           .byte $57
 
         jsr rlMapMagicThunderSpawnEffects
-        lda #(`aUnknown9FA6E9)<<8
+        lda #(`aMapMagicElthunderTargetSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FA6E9
+        lda #<>aMapMagicElthunderTargetSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -4061,31 +4061,31 @@
 
         .databank 0
 
-      aUnknown9FA8BC ; 9F/A8BC
+      aMapMagicElthunderSpriteScript ; 9F/A8BC
 
         ; Part of the Elthunder effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA39
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA40
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA4C
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame01
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame03
 
         ; 9F/A8C8
-      aUnknown9FA8C8 ; 9F/A8C8
+      aMapMagicElthunderCasterBoltSpriteScript ; 9F/A8C8
 
         ACTIVE_SPRITE_CALL rlMapMagicElthunderSetSpriteReady
 
         _A8CB
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA5D
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA6E
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame04
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame05
         ACTIVE_SPRITE_JUMP _A8CB
 
         ; 9F/A8D6
-      aUnknown9FA8D6 ; 9F/A8D6
+      aMapMagicElthunderLowBoltSpriteScript ; 9F/A8D6
 
         ACTIVE_SPRITE_CALL rlMapMagicElthunderSetSpriteReady
 
         _A8D9
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAAA3
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAAB4
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame07
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame08
         ACTIVE_SPRITE_JUMP _A8D9
 
         ; 9F/A8E4
@@ -4224,52 +4224,52 @@
         .databank 0
 
         ; 9F/A967
-      aUnknown9FA967 ; 9F/A967
+      aMapMagicElthunderTargetSpriteScript ; 9F/A967
 
-        ACTIVE_SPRITE_FRAME 64, aUnknown9FAAC5
+        ACTIVE_SPRITE_FRAME 64, aMapMagicThunderFrame09
 
         _A96B
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA37
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrameEmpty
         ACTIVE_SPRITE_JUMP _A96B
 
         ; 9F/A972
-      aUnknown9FA972 ; 9F/A972
+      aMapMagicThunderSpriteScript ; 9F/A972
 
         ; Part of the Thunder effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA39
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA40
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA4C
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame01
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame03
 
         _A97E
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA5D
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame04
         ACTIVE_SPRITE_MOVE 0, -10
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA6E
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame05
         ACTIVE_SPRITE_MOVE 0, -10
         ACTIVE_SPRITE_CALL rlMapMagicThunderWaitPhase1
         .word <>_A97E
         ACTIVE_SPRITE_CALL rlMapMagicThunderClearPhase
-        ACTIVE_SPRITE_FRAME 29, aUnknown9FAA37
+        ACTIVE_SPRITE_FRAME 29, aMapMagicThunderFrameEmpty
 
         _A998
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA92
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame06
         ACTIVE_SPRITE_CALL rlMapMagicThunderBoltDescend
-        .word <>aUnknown9FA9B6
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAAA3
+        .word <>aMapMagicThunderSpriteScript2
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame07
         ACTIVE_SPRITE_CALL rlMapMagicThunderBoltDescend
-        .word <>aUnknown9FA9B6
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAAB4
+        .word <>aMapMagicThunderSpriteScript2
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrame08
         ACTIVE_SPRITE_CALL rlMapMagicThunderBoltDescend
-        .word <>aUnknown9FA9B6
+        .word <>aMapMagicThunderSpriteScript2
         ACTIVE_SPRITE_JUMP _A998
 
         ; 9F/A9B6
-      aUnknown9FA9B6 ; 9F/A9B6
+      aMapMagicThunderSpriteScript2 ; 9F/A9B6
 
         ; Part of the Thunder effect.
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FAAC5
+        ACTIVE_SPRITE_FRAME 4, aMapMagicThunderFrame09
 
         _A9BA
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA37
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThunderFrameEmpty
         ACTIVE_SPRITE_JUMP _A9BA
 
         ; 9F/A9C1
@@ -4377,7 +4377,7 @@
         phy
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEBE7
+          .word <>procMapMagicThunderWindow
 
         jsr rsCreateMapMagicHDMA
 
@@ -4406,99 +4406,99 @@
 
         ; 9F/AA37
 
-      aUnknown9FAA37 ; 9F/AA37
+      aMapMagicThunderFrameEmpty ; 9F/AA37
 
         ; Part of the Thunder effect.
         .word 0
 
-      aUnknown9FAA39 ; 9F/AA39
+      aMapMagicThunderFrame01 ; 9F/AA39
 
         ; Shared by the Elthunder and Thunder effects.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAA39._Sprites
+        .structSpriteArray aMapMagicThunderFrame01._Sprites
 
-      aUnknown9FAA40 ; 9F/AA40
+      aMapMagicThunderFrame02 ; 9F/AA40
 
         ; Shared by the Elthunder and Thunder effects.
         _Sprites := [[(  -8,  -24), $21, SpriteLarge, $006, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAA40._Sprites
+        .structSpriteArray aMapMagicThunderFrame02._Sprites
 
-      aUnknown9FAA4C ; 9F/AA4C
+      aMapMagicThunderFrame03 ; 9F/AA4C
 
         ; Shared by the Elthunder and Thunder effects.
         _Sprites := [[(  -8,  -40), $21, SpriteLarge, $002, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -24), $21, SpriteLarge, $004, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAA4C._Sprites
+        .structSpriteArray aMapMagicThunderFrame03._Sprites
 
-      aUnknown9FAA5D ; 9F/AA5D
+      aMapMagicThunderFrame04 ; 9F/AA5D
 
         ; Part of the Thunder effect.
         _Sprites := [[(  -8,  -40), $21, SpriteLarge, $000, 2, 6, true, false]]
         _Sprites ..= [[(  -8,  -24), $21, SpriteLarge, $006, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAA5D._Sprites
+        .structSpriteArray aMapMagicThunderFrame04._Sprites
 
-      aUnknown9FAA6E ; 9F/AA6E
+      aMapMagicThunderFrame05 ; 9F/AA6E
 
         ; Part of the Thunder effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -24), $21, SpriteLarge, $002, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -40), $21, SpriteLarge, $006, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FAA6E._Sprites
+        .structSpriteArray aMapMagicThunderFrame05._Sprites
 
-      aUnknown9FAA7F ; 9F/AA7F
+      aMapMagicThunderFrameUnused1 ; 9F/AA7F
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FAA7F._Sprites
+        .structSpriteArray aMapMagicThunderFrameUnused1._Sprites
 
-      aUnknown9FAA86 ; 9F/AA86
+      aMapMagicThunderFrameUnused2 ; 9F/AA86
 
         _Sprites := [[(  -8,    8), $21, SpriteLarge, $000, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FAA86._Sprites
+        .structSpriteArray aMapMagicThunderFrameUnused2._Sprites
 
-      aUnknown9FAA92 ; 9F/AA92
+      aMapMagicThunderFrame06 ; 9F/AA92
 
         ; Part of the Thunder effect.
         _Sprites := [[(  -8,   24), $21, SpriteLarge, $004, 2, 6, false, true]]
         _Sprites ..= [[(  -8,    8), $21, SpriteLarge, $002, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAA92._Sprites
+        .structSpriteArray aMapMagicThunderFrame06._Sprites
 
-      aUnknown9FAAA3 ; 9F/AAA3
+      aMapMagicThunderFrame07 ; 9F/AAA3
 
         ; Part of the Thunder effect.
         _Sprites := [[(  -8,   24), $21, SpriteLarge, $006, 2, 6, false, true]]
         _Sprites ..= [[(  -8,    8), $21, SpriteLarge, $002, 2, 6, true, true]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FAAA3._Sprites
+        .structSpriteArray aMapMagicThunderFrame07._Sprites
 
-      aUnknown9FAAB4 ; 9F/AAB4
+      aMapMagicThunderFrame08 ; 9F/AAB4
 
         ; Part of the Thunder effect.
         _Sprites := [[(  -8,   24), $21, SpriteLarge, $002, 2, 6, false, true]]
         _Sprites ..= [[(  -8,    8), $21, SpriteLarge, $006, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FAAB4._Sprites
+        .structSpriteArray aMapMagicThunderFrame08._Sprites
 
-      aUnknown9FAAC5 ; 9F/AAC5
+      aMapMagicThunderFrame09 ; 9F/AAC5
 
         ; Part of the Thunder effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAAC5._Sprites
+        .structSpriteArray aMapMagicThunderFrame09._Sprites
 
       rlMapMagicThunderStepPaletteAnim ; 9F/AACC
 
@@ -4530,27 +4530,27 @@
         asl a
         asl a
         tax
-        lda <>aUnknown9FAB29,b,x
+        lda <>aMapMagicThunderPaletteAnim,b,x
         cmp #$FFFF
         beq _AB26
         sta aActiveSpriteSystem.aUnknown001320,b,y
         inc x
         inc x
-        lda <>aUnknown9FAB29,b,x
+        lda <>aMapMagicThunderPaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9FAB29+2),b,x
+        lda <>(aMapMagicThunderPaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FAB29+4),b,x
+        lda <>(aMapMagicThunderPaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FAB29+6),b,x
+        lda <>(aMapMagicThunderPaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FAB29+8),b,x
+        lda <>(aMapMagicThunderPaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FAB29+10),b,x
+        lda <>(aMapMagicThunderPaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FAB29+12),b,x
+        lda <>(aMapMagicThunderPaletteAnim+12),b,x
         sta $01DE,b
-        lda <>(aUnknown9FAB29+14),b,x
+        lda <>(aMapMagicThunderPaletteAnim+14),b,x
         sta aBGPaletteBuffer.aPalette7,b
         plx
         clc
@@ -4564,7 +4564,7 @@
 
         .databank 0
 
-      aUnknown9FAB29 ; 9F/AB29
+      aMapMagicThunderPaletteAnim ; 9F/AB29
 
         ; Part of the Thunder effect.
         .word $0002, $0000, $0000, $0000, $0000, $0000, $0000, $0000
@@ -4597,23 +4597,23 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FAC61
+          .word <>procMapMagicLight
 
         rtl
 
         .databank 0
 
-      procUnknown9FAC61 ; 9F/AC61
+      procMapMagicLight ; 9F/AC61
 
         ; Part of the Light effect.
-        .structProcInfo "ON", rlMapMagicLightInit, rlMapMagicLightDarkenAndSpawn, aProcUnknown9FAC69Code
+        .structProcInfo "ON", rlMapMagicLightInit, rlMapMagicLightDarkenAndSpawn, aProcMapMagicLightCode
 
-      aProcUnknown9FAC69Code ; 9F/AC69
+      aProcMapMagicLightCode ; 9F/AC69
 
         ; Part of the Light effect.
         PROC_YIELD 1
         PROC_CALL rlMapMagicLightStepBGPaletteAnim
-        PROC_JUMP aProcUnknown9FAC69Code
+        PROC_JUMP aProcMapMagicLightCode
 
       rlMapMagicLightInit ; 9F/AC74
 
@@ -4641,7 +4641,7 @@
         bcc _ACC8
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEBD8
+          .word <>procMapMagicCircleWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -4673,9 +4673,9 @@
 
           .byte $59
 
-        lda #(`aUnknown9FAD72)<<8
+        lda #(`aMapMagicLightSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FAD72
+        lda #<>aMapMagicLightSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
 
@@ -4740,28 +4740,28 @@
         sta aProcSystem.aBody3,b,x
         asl a
         tax
-        lda <>aUnknown9FAD32,b,x
+        lda <>aMapMagicLightBGPaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9FAD32+2),b,x
+        lda <>(aMapMagicLightBGPaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FAD32+4),b,x
+        lda <>(aMapMagicLightBGPaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FAD32+6),b,x
+        lda <>(aMapMagicLightBGPaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FAD32+8),b,x
+        lda <>(aMapMagicLightBGPaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FAD32+10),b,x
+        lda <>(aMapMagicLightBGPaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FAD32+12),b,x
+        lda <>(aMapMagicLightBGPaletteAnim+12),b,x
         sta $01DE,b
-        lda <>(aUnknown9FAD32+14),b,x
+        lda <>(aMapMagicLightBGPaletteAnim+14),b,x
         sta aBGPaletteBuffer.aPalette7,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FAD32 ; 9F/AD32
+      aMapMagicLightBGPaletteAnim ; 9F/AD32
 
         ; Part of the Light effect.
         .word $015F, $02FF, $03FF, $7FFF, $7FFF, $03FA, $03E0, $0260
@@ -4769,10 +4769,10 @@
         .word $015F, $02FF, $03FF, $7FFF, $7FFF, $03FA, $03E0, $0260
         .word $015F, $02FF, $03FF, $7FFF, $7FFF, $03FA, $03E0, $0260
 
-      aUnknown9FAD72 ; 9F/AD72
+      aMapMagicLightSpriteInfo ; 9F/AD72
 
         ; Part of the Light effect.
-        .word <>rlMapMagicLightSpriteInit, <>rlMapMagicLightSpriteWaitAppear, <>aUnknown9FAE9C
+        .word <>rlMapMagicLightSpriteInit, <>rlMapMagicLightSpriteWaitAppear, <>aMapMagicLightSpriteScript
 
       rlMapMagicLightSpriteInit ; 9F/AD78
 
@@ -4928,17 +4928,17 @@
         sta aActiveSpriteSystem.aUnknown001380,b,x
         asl a
         tax
-        lda <>aUnknown9FAE5C,b,x
+        lda <>aMapMagicLightSpritePaletteAnim,b,x
         sta $02C4,b
-        lda <>(aUnknown9FAE5C+2),b,x
+        lda <>(aMapMagicLightSpritePaletteAnim+2),b,x
         sta $02C6,b
-        lda <>(aUnknown9FAE5C+4),b,x
+        lda <>(aMapMagicLightSpritePaletteAnim+4),b,x
         sta $02C8,b
-        lda <>(aUnknown9FAE5C+6),b,x
+        lda <>(aMapMagicLightSpritePaletteAnim+6),b,x
         sta $02CA,b
-        lda <>(aUnknown9FAE5C+8),b,x
+        lda <>(aMapMagicLightSpritePaletteAnim+8),b,x
         sta $02CC,b
-        lda <>(aUnknown9FAE5C+10),b,x
+        lda <>(aMapMagicLightSpritePaletteAnim+10),b,x
         sta $02CE,b
         plx
         rtl
@@ -4947,7 +4947,7 @@
 
         ; 9F/AE5C
 
-      aUnknown9FAE5C ; 9F/AE5C
+      aMapMagicLightSpritePaletteAnim ; 9F/AE5C
 
         ; Part of the Light effect.
         .word $65FC, $6A3C, $6E7D, $6EBD, $72FE, $773E, $7B7E, $7BBF
@@ -4955,28 +4955,28 @@
         .word $65FC, $6A3C, $6E7D, $6EBD, $72FE, $773E, $7B7E, $7BBF
         .word $7FFF, $7BBF, $7B7E, $773E, $72FE, $6EBD, $6E7D, $6A3C
 
-      aUnknown9FAE9C ; 9F/AE9C
+      aMapMagicLightSpriteScript ; 9F/AE9C
 
         ; Part of the Light effect.
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FAEEA
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FAEF1
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FAEF8
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FAEFF
+        ACTIVE_SPRITE_FRAME 8, aMapMagicLightFrame01
+        ACTIVE_SPRITE_FRAME 8, aMapMagicLightFrame02
+        ACTIVE_SPRITE_FRAME 8, aMapMagicLightFrame03
+        ACTIVE_SPRITE_FRAME 8, aMapMagicLightFrame04
 
         _AEAC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FAF06
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FAF0D
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FAF14
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FAF1B
+        ACTIVE_SPRITE_FRAME 3, aMapMagicLightFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicLightFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicLightFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicLightFrame08
         ACTIVE_SPRITE_CALL rlMapMagicLightWaitSpritePhase
         .word <>_AEAC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FAEFF
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FAEF8
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FAEF1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FAEEA
+        ACTIVE_SPRITE_FRAME 3, aMapMagicLightFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicLightFrame03
+        ACTIVE_SPRITE_FRAME 3, aMapMagicLightFrame02
+        ACTIVE_SPRITE_FRAME 3, aMapMagicLightFrame01
 
         _AED1
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FAEE8
+        ACTIVE_SPRITE_FRAME 1, aMapMagicLightFrameEmpty
         ACTIVE_SPRITE_JUMP _AED1
 
         ; 9F/AED8
@@ -5005,66 +5005,66 @@
 
         ; 9F/AEE8
 
-      aUnknown9FAEE8 ; 9F/AEE8
+      aMapMagicLightFrameEmpty ; 9F/AEE8
 
         ; Part of the Light effect.
         .word 0
 
-      aUnknown9FAEEA ; 9F/AEEA
+      aMapMagicLightFrame01 ; 9F/AEEA
 
         ; Part of the Light effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAEEA._Sprites
+        .structSpriteArray aMapMagicLightFrame01._Sprites
 
-      aUnknown9FAEF1 ; 9F/AEF1
+      aMapMagicLightFrame02 ; 9F/AEF1
 
         ; Part of the Light effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAEF1._Sprites
+        .structSpriteArray aMapMagicLightFrame02._Sprites
 
-      aUnknown9FAEF8 ; 9F/AEF8
+      aMapMagicLightFrame03 ; 9F/AEF8
 
         ; Part of the Light effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAEF8._Sprites
+        .structSpriteArray aMapMagicLightFrame03._Sprites
 
-      aUnknown9FAEFF ; 9F/AEFF
+      aMapMagicLightFrame04 ; 9F/AEFF
 
         ; Part of the Light effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAEFF._Sprites
+        .structSpriteArray aMapMagicLightFrame04._Sprites
 
-      aUnknown9FAF06 ; 9F/AF06
+      aMapMagicLightFrame05 ; 9F/AF06
 
         ; Part of the Light effect.
         _Sprites := [[(  -8,   -6), $21, SpriteLarge, $00A, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAF06._Sprites
+        .structSpriteArray aMapMagicLightFrame05._Sprites
 
-      aUnknown9FAF0D ; 9F/AF0D
+      aMapMagicLightFrame06 ; 9F/AF0D
 
         ; Part of the Light effect.
         _Sprites := [[( -10,   -8), $21, SpriteLarge, $008, 3, 6, true, false]]
 
-        .structSpriteArray aUnknown9FAF0D._Sprites
+        .structSpriteArray aMapMagicLightFrame06._Sprites
 
-      aUnknown9FAF14 ; 9F/AF14
+      aMapMagicLightFrame07 ; 9F/AF14
 
         ; Part of the Light effect.
         _Sprites := [[(  -8,  -10), $21, SpriteLarge, $00A, 3, 6, false, true]]
 
-        .structSpriteArray aUnknown9FAF14._Sprites
+        .structSpriteArray aMapMagicLightFrame07._Sprites
 
-      aUnknown9FAF1B ; 9F/AF1B
+      aMapMagicLightFrame08 ; 9F/AF1B
 
         ; Part of the Light effect.
         _Sprites := [[(  -6,   -8), $21, SpriteLarge, $008, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FAF1B._Sprites
+        .structSpriteArray aMapMagicLightFrame08._Sprites
 
       rlStartMapMagicThoron ; 9F/AF22
 
@@ -5075,13 +5075,13 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FAF28
+          .word <>procMapMagicThoron
 
         rtl
 
         .databank 0
 
-      procUnknown9FAF28 ; 9F/AF28
+      procMapMagicThoron ; 9F/AF28
 
         ; Part of the Thoron effect.
         .structProcInfo "ON", rlMapMagicThoronInit, rlMapMagicThoronDarkenAndSpawn, aProcMapMagicHaltCode
@@ -5112,9 +5112,9 @@
         sta aProcSystem.aHeaderOnCycle,b,x
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
-        lda #(`aUnknown9FAFD9)<<8
+        lda #(`aMapMagicThoronSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FAFD9
+        lda #<>aMapMagicThoronSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
 
@@ -5161,36 +5161,36 @@
         _AF7B
         asl a
         tax
-        lda <>aUnknown9FAFA9,b,x
+        lda <>aMapMagicThoronPaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9FAFA9+2),b,x
+        lda <>(aMapMagicThoronPaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FAFA9+4),b,x
+        lda <>(aMapMagicThoronPaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FAFA9+6),b,x
+        lda <>(aMapMagicThoronPaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FAFA9+8),b,x
+        lda <>(aMapMagicThoronPaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FAFA9+10),b,x
+        lda <>(aMapMagicThoronPaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FAFA9+12),b,x
+        lda <>(aMapMagicThoronPaletteAnim+12),b,x
         sta $01DE,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FAFA9 ; 9F/AFA9
+      aMapMagicThoronPaletteAnim ; 9F/AFA9
 
         ; Part of the Thoron effect.
         .word $0000, $18A0, $30E0, $3160, $4E00, $66C0, $0000, $18A0
         .word $3160, $4E00, $66C0, $7F60, $0000, $18A0, $30E0, $3160
         .word $4E00, $66C0, $0000, $18A0, $3160, $4E00, $66C0, $7F60
 
-      aUnknown9FAFD9 ; 9F/AFD9
+      aMapMagicThoronSpriteInfo ; 9F/AFD9
 
         ; Part of the Thoron effect.
-        .word <>rlMapMagicThoronSpriteInit, <>rlMapMagicThoronSpriteAim, <>aUnknown9FB111
+        .word <>rlMapMagicThoronSpriteInit, <>rlMapMagicThoronSpriteAim, <>aMapMagicThoronSpriteScript
 
       rlMapMagicThoronSpriteInit ; 9F/AFDF
 
@@ -5215,7 +5215,7 @@
         lda $7F50C9
         asl a
         tay
-        lda <>aUnknown9FB101,b,y
+        lda <>aMapMagicThoronSpriteScripts,b,y
         sta aActiveSpriteSystem.aCodeOffset,b,x
         rtl
 
@@ -5294,7 +5294,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC58
+          .word <>procMapMagicThoronWindow
 
         sta aActiveSpriteSystem.aUnknown001380,b,x
         jsr rsCreateMapMagicHDMA
@@ -5409,98 +5409,98 @@
 
         ; 9F/B101
 
-      aUnknown9FB101 ; 9F/B101
+      aMapMagicThoronSpriteScripts ; 9F/B101
 
         ; Part of the Thoron effect.
-        .word <>aUnknown9FB111, <>aUnknown9FB159, <>aUnknown9FB129, <>aUnknown9FB141
-        .word <>aUnknown9FB111, <>aUnknown9FB159, <>aUnknown9FB129, <>aUnknown9FB141
+        .word <>aMapMagicThoronSpriteScript, <>aMapMagicThoronSpriteScript4, <>aMapMagicThoronSpriteScript2, <>aMapMagicThoronSpriteScript3
+        .word <>aMapMagicThoronSpriteScript, <>aMapMagicThoronSpriteScript4, <>aMapMagicThoronSpriteScript2, <>aMapMagicThoronSpriteScript3
 
-      aUnknown9FB111 ; 9F/B111
+      aMapMagicThoronSpriteScript ; 9F/B111
 
         ; Part of the Thoron effect.
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FB1DE
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FB1EA
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThoronFrame01
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThoronFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB171
-        ACTIVE_SPRITE_JUMP aUnknown9FB111
+        .word <>aMapMagicThoronSpriteScript5
+        ACTIVE_SPRITE_JUMP aMapMagicThoronSpriteScript
 
         ; 9F/B129
-      aUnknown9FB129 ; 9F/B129
+      aMapMagicThoronSpriteScript2 ; 9F/B129
 
         ; Part of the Thoron effect.
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FB204
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FB210
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThoronFrame05
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThoronFrame06
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB171
-        ACTIVE_SPRITE_JUMP aUnknown9FB129
+        .word <>aMapMagicThoronSpriteScript5
+        ACTIVE_SPRITE_JUMP aMapMagicThoronSpriteScript2
 
         ; 9F/B141
-      aUnknown9FB141 ; 9F/B141
+      aMapMagicThoronSpriteScript3 ; 9F/B141
 
         ; Part of the Thoron effect.
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FB1F6
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FB1FD
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThoronFrame03
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThoronFrame04
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB171
-        ACTIVE_SPRITE_JUMP aUnknown9FB141
+        .word <>aMapMagicThoronSpriteScript5
+        ACTIVE_SPRITE_JUMP aMapMagicThoronSpriteScript3
 
         ; 9F/B159
-      aUnknown9FB159 ; 9F/B159
+      aMapMagicThoronSpriteScript4 ; 9F/B159
 
         ; Part of the Thoron effect.
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FB21C
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FB223
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThoronFrame07
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThoronFrame08
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB171
-        ACTIVE_SPRITE_JUMP aUnknown9FB159
+        .word <>aMapMagicThoronSpriteScript5
+        ACTIVE_SPRITE_JUMP aMapMagicThoronSpriteScript4
 
         ; 9F/B171
-      aUnknown9FB171 ; 9F/B171
+      aMapMagicThoronSpriteScript5 ; 9F/B171
 
         ; Part of the Thoron effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1FD
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrame04
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1FD
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrame04
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB240
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrame09
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB240
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrame09
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB256
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrame10
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB256
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrame10
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicThoronWaitSpritePhase
-        .word <>aUnknown9FB1C5
-        ACTIVE_SPRITE_JUMP aUnknown9FB171
+        .word <>aMapMagicThoronSpriteScript6
+        ACTIVE_SPRITE_JUMP aMapMagicThoronSpriteScript5
 
         ; 9F/B1C5
-      aUnknown9FB1C5 ; 9F/B1C5
+      aMapMagicThoronSpriteScript6 ; 9F/B1C5
 
         ; Part of the Thoron effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
-        ACTIVE_SPRITE_JUMP aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aMapMagicThoronFrameEmpty
+        ACTIVE_SPRITE_JUMP aMapMagicThoronSpriteScript6
 
         ; 9F/B1CC
       rlMapMagicThoronWaitSpritePhase ; 9F/B1CC
@@ -5528,81 +5528,81 @@
 
         ; 9F/B1DC
 
-      aUnknown9FB1DC ; 9F/B1DC
+      aMapMagicThoronFrameEmpty ; 9F/B1DC
 
         ; Part of the Thoron effect.
         .word 0
 
-      aUnknown9FB1DE ; 9F/B1DE
+      aMapMagicThoronFrame01 ; 9F/B1DE
 
         ; Part of the Thoron effect.
         _Sprites := [[(   0,   -4), $00, SpriteSmall, $010, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -4), $00, SpriteSmall, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FB1DE._Sprites
+        .structSpriteArray aMapMagicThoronFrame01._Sprites
 
-      aUnknown9FB1EA ; 9F/B1EA
+      aMapMagicThoronFrame02 ; 9F/B1EA
 
         ; Part of the Thoron effect.
         _Sprites := [[(   0,   -4), $00, SpriteSmall, $010, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -4), $00, SpriteSmall, $000, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FB1EA._Sprites
+        .structSpriteArray aMapMagicThoronFrame02._Sprites
 
-      aUnknown9FB1F6 ; 9F/B1F6
+      aMapMagicThoronFrame03 ; 9F/B1F6
 
         ; Part of the Thoron effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9FB1F6._Sprites
+        .structSpriteArray aMapMagicThoronFrame03._Sprites
 
-      aUnknown9FB1FD ; 9F/B1FD
+      aMapMagicThoronFrame04 ; 9F/B1FD
 
         ; Part of the Thoron effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FB1FD._Sprites
+        .structSpriteArray aMapMagicThoronFrame04._Sprites
 
-      aUnknown9FB204 ; 9F/B204
+      aMapMagicThoronFrame05 ; 9F/B204
 
         ; Part of the Thoron effect.
         _Sprites := [[(  -4,    0), $00, SpriteSmall, $011, 2, 6, false, false]]
         _Sprites ..= [[(  -4,   -8), $00, SpriteSmall, $001, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FB204._Sprites
+        .structSpriteArray aMapMagicThoronFrame05._Sprites
 
-      aUnknown9FB210 ; 9F/B210
+      aMapMagicThoronFrame06 ; 9F/B210
 
         ; Part of the Thoron effect.
         _Sprites := [[(  -4,   -8), $00, SpriteSmall, $011, 2, 6, false, true]]
         _Sprites ..= [[(  -4,    0), $00, SpriteSmall, $001, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FB210._Sprites
+        .structSpriteArray aMapMagicThoronFrame06._Sprites
 
-      aUnknown9FB21C ; 9F/B21C
+      aMapMagicThoronFrame07 ; 9F/B21C
 
         ; Part of the Thoron effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FB21C._Sprites
+        .structSpriteArray aMapMagicThoronFrame07._Sprites
 
-      aUnknown9FB223 ; 9F/B223
+      aMapMagicThoronFrame08 ; 9F/B223
 
         ; Part of the Thoron effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FB223._Sprites
+        .structSpriteArray aMapMagicThoronFrame08._Sprites
 
-      aUnknown9FB22A ; 9F/B22A
+      aMapMagicThoronFrameUnused ; 9F/B22A
 
         _Sprites := [[(   0,  -16), $21, SpriteLarge, $00A, 2, 6, false, true]]
         _Sprites ..= [[( -16,  -16), $21, SpriteLarge, $004, 2, 6, true, true]]
         _Sprites ..= [[( -16,    0), $21, SpriteLarge, $006, 2, 6, true, false]]
         _Sprites ..= [[(   0,    0), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FB22A._Sprites
+        .structSpriteArray aMapMagicThoronFrameUnused._Sprites
 
-      aUnknown9FB240 ; 9F/B240
+      aMapMagicThoronFrame09 ; 9F/B240
 
         ; Part of the Thoron effect.
         _Sprites := [[( -16,  -16), $21, SpriteLarge, $006, 2, 6, true, true]]
@@ -5610,9 +5610,9 @@
         _Sprites ..= [[( -16,    0), $21, SpriteLarge, $008, 2, 6, true, false]]
         _Sprites ..= [[(   0,    0), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FB240._Sprites
+        .structSpriteArray aMapMagicThoronFrame09._Sprites
 
-      aUnknown9FB256 ; 9F/B256
+      aMapMagicThoronFrame10 ; 9F/B256
 
         ; Part of the Thoron effect.
         _Sprites := [[(   0,    0), $21, SpriteLarge, $006, 2, 6, false, false]]
@@ -5620,7 +5620,7 @@
         _Sprites ..= [[(   0,  -16), $21, SpriteLarge, $006, 2, 6, false, true]]
         _Sprites ..= [[( -16,  -16), $21, SpriteLarge, $008, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9FB256._Sprites
+        .structSpriteArray aMapMagicThoronFrame10._Sprites
 
       rlStartMapMagicMeteor ; 9F/B26C
 
@@ -5633,7 +5633,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FB279
+          .word <>procMapMagicMeteor
 
         lda #$0080
         jsr rsPlayMapMagicSound
@@ -5644,17 +5644,17 @@
 
         .databank 0
 
-      procUnknown9FB279 ; 9F/B279
+      procMapMagicMeteor ; 9F/B279
 
         ; Part of the Meteor effect.
-        .structProcInfo "ON", rlMapMagicMeteorInit, rlMapMagicMeteorDarken, aProcUnknown9FB281Code
+        .structProcInfo "ON", rlMapMagicMeteorInit, rlMapMagicMeteorDarken, aProcMapMagicMeteorCode
 
-      aProcUnknown9FB281Code ; 9F/B281
+      aProcMapMagicMeteorCode ; 9F/B281
 
         ; Part of the Meteor effect.
         PROC_YIELD 1
         PROC_CALL rlMapMagicMeteorStepPaletteAnim
-        PROC_JUMP aProcUnknown9FB281Code
+        PROC_JUMP aProcMapMagicMeteorCode
 
       rlMapMagicMeteorInit ; 9F/B28C
 
@@ -5710,7 +5710,7 @@
         bpl _B2ED
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FECA3
+          .word <>procMapMagicMeteorWindow
 
         jsr rsCreateMapMagicHDMA
 
@@ -5749,17 +5749,17 @@
 
         lda #<>rlMapMagicMeteorWaitImpact
         sta aProcSystem.aHeaderOnCycle,b,x
-        lda #(`aUnknown9FB3DD)<<8
+        lda #(`aMapMagicMeteorSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FB3DD
+        lda #<>aMapMagicMeteorSpriteInfo
         sta lR44
         lda wMapMagicTargetPixel
         and #$00FF
         cmp #$00A0
         bmi _B314
-        lda #(`aUnknown9FB3E3)<<8
+        lda #(`aMapMagicMeteorSpriteInfo2)<<8
         sta lR44+1
-        lda #<>aUnknown9FB3E3
+        lda #<>aMapMagicMeteorSpriteInfo2
         sta lR44
 
         _B314
@@ -5825,26 +5825,26 @@
         _B34F
         asl a
         tax
-        lda <>aUnknown9FB37D,b,x
+        lda <>aMapMagicMeteorPaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9FB37D+2),b,x
+        lda <>(aMapMagicMeteorPaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FB37D+4),b,x
+        lda <>(aMapMagicMeteorPaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FB37D+6),b,x
+        lda <>(aMapMagicMeteorPaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FB37D+8),b,x
+        lda <>(aMapMagicMeteorPaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FB37D+10),b,x
+        lda <>(aMapMagicMeteorPaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FB37D+12),b,x
+        lda <>(aMapMagicMeteorPaletteAnim+12),b,x
         sta $01DE,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FB37D ; 9F/B37D
+      aMapMagicMeteorPaletteAnim ; 9F/B37D
 
         ; Part of the Meteor effect.
         .word $0012, $000D, $0012, $0017, $001F, $01FF
@@ -5856,15 +5856,15 @@
         .word $0012, $000D, $0012, $0017, $001F, $01FF
         .word $0008, $000D, $0012, $0017, $001F, $01FF
 
-      aUnknown9FB3DD ; 9F/B3DD
+      aMapMagicMeteorSpriteInfo ; 9F/B3DD
 
         ; Part of the Meteor effect.
-        .word <>rlMapMagicMeteorSpriteInit, <>rlMapMagicMeteorSpriteDescend, <>aUnknown9FB4C8
+        .word <>rlMapMagicMeteorSpriteInit, <>rlMapMagicMeteorSpriteDescend, <>aMapMagicMeteorSpriteScript
 
-      aUnknown9FB3E3 ; 9F/B3E3
+      aMapMagicMeteorSpriteInfo2 ; 9F/B3E3
 
         ; Part of the Meteor effect.
-        .word <>rlMapMagicMeteorSpriteInit, <>rlMapMagicMeteorSpriteDescend, <>aUnknown9FB4D8
+        .word <>rlMapMagicMeteorSpriteInit, <>rlMapMagicMeteorSpriteDescend, <>aMapMagicMeteorSpriteScript2
 
       rlMapMagicMeteorSpriteInit ; 9F/B3E9
 
@@ -5973,7 +5973,7 @@
         sta aPaletteFading,b
         jsl rlFadePaletteToBlack
 
-          .word <>aUnknown9FB496
+          .word <>aMapMagicMeteorFlashBlackData
 
         bcc _B495
         lda #<>rlMapMagicMeteorSpriteWaitFade
@@ -5988,7 +5988,7 @@
 
         ; 9F/B496
 
-      aUnknown9FB496 ; 9F/B496
+      aMapMagicMeteorFlashBlackData ; 9F/B496
 
         ; Part of the Meteor effect.
         .byte $D2, $00, $07, $00, $FF, $FF
@@ -6039,27 +6039,27 @@
         .databank 0
 
         ; 9F/B4C8
-      aUnknown9FB4C8 ; 9F/B4C8
+      aMapMagicMeteorSpriteScript ; 9F/B4C8
 
         ; Part of the Meteor effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB4FB
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMeteorFrame01
         ACTIVE_SPRITE_CALL rlMapMagicMeteorWaitSpritePhase
-        .word <>aUnknown9FB4C8
+        .word <>aMapMagicMeteorSpriteScript
 
         _B4D1
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB4F9
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMeteorFrameEmpty
         ACTIVE_SPRITE_JUMP _B4D1
 
         ; 9F/B4D8
-      aUnknown9FB4D8 ; 9F/B4D8
+      aMapMagicMeteorSpriteScript2 ; 9F/B4D8
 
         ; Part of the Meteor effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB511
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMeteorFrame02
         ACTIVE_SPRITE_CALL rlMapMagicMeteorWaitSpritePhase
-        .word <>aUnknown9FB4D8
+        .word <>aMapMagicMeteorSpriteScript2
 
         _B4E1
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FB4F9
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMeteorFrameEmpty
         ACTIVE_SPRITE_JUMP _B4E1
 
         ; 9F/B4E8
@@ -6088,12 +6088,12 @@
 
         ; 9F/B4F9
 
-      aUnknown9FB4F9 ; 9F/B4F9
+      aMapMagicMeteorFrameEmpty ; 9F/B4F9
 
         ; Part of the Meteor effect.
         .word 0
 
-      aUnknown9FB4FB ; 9F/B4FB
+      aMapMagicMeteorFrame01 ; 9F/B4FB
 
         ; Part of the Meteor effect.
         _Sprites := [[(   0,    0), $21, SpriteLarge, $006, 2, 6, false, false]]
@@ -6101,9 +6101,9 @@
         _Sprites ..= [[(   0,  -16), $21, SpriteLarge, $002, 2, 6, false, false]]
         _Sprites ..= [[( -16,  -16), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FB4FB._Sprites
+        .structSpriteArray aMapMagicMeteorFrame01._Sprites
 
-      aUnknown9FB511 ; 9F/B511
+      aMapMagicMeteorFrame02 ; 9F/B511
 
         ; Part of the Meteor effect.
         _Sprites := [[( -16,    0), $21, SpriteLarge, $006, 2, 6, true, false]]
@@ -6111,7 +6111,7 @@
         _Sprites ..= [[( -16,  -16), $21, SpriteLarge, $002, 2, 6, true, false]]
         _Sprites ..= [[(   0,  -16), $21, SpriteLarge, $000, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FB511._Sprites
+        .structSpriteArray aMapMagicMeteorFrame02._Sprites
 
       rlStartMapMagicBlizzard ; 9F/B527
 
@@ -6122,13 +6122,13 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FB52D
+          .word <>procMapMagicBlizzard
 
         rtl
 
         .databank 0
 
-      procUnknown9FB52D ; 9F/B52D
+      procMapMagicBlizzard ; 9F/B52D
 
         ; Part of the Blizzard effect.
         .structProcInfo "ON", rlMapMagicBlizzardInit, rlMapMagicBlizzardDarken, aProcMapMagicHaltCode
@@ -6324,7 +6324,7 @@
         ; Part of the Blizzard effect.
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC3A
+          .word <>procMapMagicBlizzardHelWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -6360,7 +6360,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FB6C4
+          .word <>procMapMagicReturn
 
         rtl
 
@@ -6375,7 +6375,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FB974
+          .word <>procMapMagicRestore
 
         rtl
 
@@ -6390,23 +6390,23 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FB620
+          .word <>procMapMagicSleep
 
         rtl
 
         .databank 0
 
-      procUnknown9FB620 ; 9F/B620
+      procMapMagicSleep ; 9F/B620
 
         ; Part of the Sleep effect.
-        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicSleepInit, aProcUnknown9FB628Code
+        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicSleepInit, aProcMapMagicSleepCode
 
-      aProcUnknown9FB628Code ; 9F/B628
+      aProcMapMagicSleepCode ; 9F/B628
 
         ; Part of the Sleep effect.
         PROC_YIELD 1
         PROC_CALL rlMapMagicSleepStepPaletteAnim
-        PROC_JUMP aProcUnknown9FB628Code
+        PROC_JUMP aProcMapMagicSleepCode
 
       rlMapMagicSleepInit ; 9F/B633
 
@@ -6418,7 +6418,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC67
+          .word <>procMapMagicStaffWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -6446,9 +6446,9 @@
         lda #$0020
         sta aProcSystem.aBody0,b,x
         phx
-        lda #(`aUnknown9FBA18)<<8
+        lda #(`aMapMagicStaffSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FBA18
+        lda #<>aMapMagicStaffSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
         plx
@@ -6524,10 +6524,10 @@
 
         .databank 0
 
-      procUnknown9FB6C4 ; 9F/B6C4
+      procMapMagicReturn ; 9F/B6C4
 
         ; Part of the Return effect.
-        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicReturnInit, aProcUnknown9FB6F7Code
+        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicReturnInit, aProcMapMagicReturnCode
 
       rlMapMagicStaffEffectInit ; 9F/B6CC
 
@@ -6554,7 +6554,7 @@
 
         .databank 0
 
-      aProcUnknown9FB6F7Code ; 9F/B6F7
+      aProcMapMagicReturnCode ; 9F/B6F7
 
         ; Part of the Return effect.
         PROC_YIELD 3
@@ -6653,7 +6653,7 @@
         PROC_YIELD 2
         PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $00
-        PROC_JUMP aProcUnknown9FB6F7Code
+        PROC_JUMP aProcMapMagicReturnCode
 
       rlMapMagicReturnInit ; 9F/B81B
 
@@ -6665,7 +6665,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC67
+          .word <>procMapMagicStaffWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -6693,9 +6693,9 @@
         lda #$0020
         sta aProcSystem.aBody0,b,x
         phx
-        lda #(`aUnknown9FBA18)<<8
+        lda #(`aMapMagicStaffSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FBA18
+        lda #<>aMapMagicStaffSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
         plx
@@ -6827,7 +6827,7 @@
         and #$001F
         lsr a
         tax
-        lda <>aUnknown9FB934,b,x
+        lda <>aMapMagicReturnWaitEndValues,b,x
         asl a
         and #$00FF
         eor #$FFFF
@@ -6858,7 +6858,7 @@
 
         .databank 0
 
-      aUnknown9FB934 ; 9F/B934
+      aMapMagicReturnWaitEndValues ; 9F/B934
 
         ; Part of the Return effect.
         .word $0100, $0200, $0300, $0400, $0500, $0600, $0700, $0800
@@ -6866,17 +6866,17 @@
         .word $1100, $1200, $1300, $1400, $1500, $1600, $1700, $1800
         .word $1900, $1A00, $1B00, $1C00, $1D00, $1E00, $1F00, $2000
 
-      procUnknown9FB974 ; 9F/B974
+      procMapMagicRestore ; 9F/B974
 
         ; Part of the Restore effect.
-        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicRestoreInit, aProcUnknown9FB97CCode
+        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicRestoreInit, aProcMapMagicRestoreCode
 
-      aProcUnknown9FB97CCode ; 9F/B97C
+      aProcMapMagicRestoreCode ; 9F/B97C
 
         ; Part of the Restore effect.
         PROC_YIELD 1
         PROC_CALL rlMapMagicRestoreStepPaletteAnim
-        PROC_JUMP aProcUnknown9FB97CCode
+        PROC_JUMP aProcMapMagicRestoreCode
 
       rlMapMagicRestoreInit ; 9F/B987
 
@@ -6888,7 +6888,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC67
+          .word <>procMapMagicStaffWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -6916,9 +6916,9 @@
         lda #$0020
         sta aProcSystem.aBody0,b,x
         phx
-        lda #(`aUnknown9FBA18)<<8
+        lda #(`aMapMagicStaffSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FBA18
+        lda #<>aMapMagicStaffSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
         plx
@@ -6994,10 +6994,10 @@
 
         .databank 0
 
-      aUnknown9FBA18 ; 9F/BA18
+      aMapMagicStaffSpriteInfo ; 9F/BA18
 
         ; Shared by the Restore, Return and Sleep effects.
-        .word <>rlMapMagicStaffSpriteInit, <>rlMapMagicStaffSpriteWaitEnd, <>aUnknown9FBA4F
+        .word <>rlMapMagicStaffSpriteInit, <>rlMapMagicStaffSpriteWaitEnd, <>aMapMagicStaffSpriteScript
 
       rlMapMagicStaffSpriteInit ; 9F/BA1E
 
@@ -7038,27 +7038,27 @@
 
         .databank 0
 
-      aUnknown9FBA4F ; 9F/BA4F
+      aMapMagicStaffSpriteScript ; 9F/BA4F
 
         ; Shared by the Restore, Return and Sleep effects.
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FBACE
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FBAA8
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FBAB6
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FBAAF
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FBABD
+        ACTIVE_SPRITE_FRAME 3, aMapMagicStaffFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicStaffFrame02
+        ACTIVE_SPRITE_FRAME 3, aMapMagicStaffFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicStaffFrame03
+        ACTIVE_SPRITE_FRAME 3, aMapMagicStaffFrame05
 
         _BA63
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FBA97
+        ACTIVE_SPRITE_FRAME 1, aMapMagicStaffFrame01
         ACTIVE_SPRITE_CALL rlMapMagicStaffWaitSpritePhase
         .word <>_BA63
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FBABD
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FBAAF
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FBAB6
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FBAA8
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FBACE
+        ACTIVE_SPRITE_FRAME 2, aMapMagicStaffFrame05
+        ACTIVE_SPRITE_FRAME 2, aMapMagicStaffFrame03
+        ACTIVE_SPRITE_FRAME 2, aMapMagicStaffFrame04
+        ACTIVE_SPRITE_FRAME 2, aMapMagicStaffFrame02
+        ACTIVE_SPRITE_FRAME 2, aMapMagicStaffFrame06
 
         _BA80
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FBA95
+        ACTIVE_SPRITE_FRAME 1, aMapMagicStaffFrameEmpty
         ACTIVE_SPRITE_JUMP _BA80
 
         ; 9F/BA87
@@ -7085,56 +7085,56 @@
 
         .databank 0
 
-      aUnknown9FBA95 ; 9F/BA95
+      aMapMagicStaffFrameEmpty ; 9F/BA95
 
         ; Shared by the Restore, Return and Sleep effects.
         .word 0
 
-      aUnknown9FBA97 ; 9F/BA97
+      aMapMagicStaffFrame01 ; 9F/BA97
 
         ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(   5,    8), $00, SpriteSmall, $012, 2, 6, false, false]]
         _Sprites ..= [[(   5,    0), $00, SpriteSmall, $002, 2, 6, false, false]]
         _Sprites ..= [[( -11,    0), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FBA97._Sprites
+        .structSpriteArray aMapMagicStaffFrame01._Sprites
 
-      aUnknown9FBAA8 ; 9F/BAA8
+      aMapMagicStaffFrame02 ; 9F/BAA8
 
         ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(  -3,    3), $00, SpriteSmall, $003, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FBAA8._Sprites
+        .structSpriteArray aMapMagicStaffFrame02._Sprites
 
-      aUnknown9FBAAF ; 9F/BAAF
+      aMapMagicStaffFrame03 ; 9F/BAAF
 
         ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(  -8,    0), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FBAAF._Sprites
+        .structSpriteArray aMapMagicStaffFrame03._Sprites
 
-      aUnknown9FBAB6 ; 9F/BAB6
+      aMapMagicStaffFrame04 ; 9F/BAB6
 
         ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(  -8,    0), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FBAB6._Sprites
+        .structSpriteArray aMapMagicStaffFrame04._Sprites
 
-      aUnknown9FBABD ; 9F/BABD
+      aMapMagicStaffFrame05 ; 9F/BABD
 
         ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(   5,    8), $00, SpriteSmall, $01A, 2, 6, false, false]]
         _Sprites ..= [[(   5,    0), $00, SpriteSmall, $00A, 2, 6, false, false]]
         _Sprites ..= [[( -11,    0), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FBABD._Sprites
+        .structSpriteArray aMapMagicStaffFrame05._Sprites
 
-      aUnknown9FBACE ; 9F/BACE
+      aMapMagicStaffFrame06 ; 9F/BACE
 
         ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(  -3,    4), $00, SpriteSmall, $013, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FBACE._Sprites
+        .structSpriteArray aMapMagicStaffFrame06._Sprites
 
       rlMapMagicSleepStepPaletteAnim ; 9F/BAD5
 
@@ -7164,22 +7164,22 @@
         _BAF4
         asl a
         tax
-        lda <>(aUnknown9FBB2E+12),b,x
+        lda <>(aMapMagicSleepPaletteAnim+12),b,x
         sta $01D2,b
         sta $02C2,b
-        lda <>(aUnknown9FBB2E+10),b,x
+        lda <>(aMapMagicSleepPaletteAnim+10),b,x
         sta $01D4,b
         sta $02C4,b
-        lda <>(aUnknown9FBB2E+8),b,x
+        lda <>(aMapMagicSleepPaletteAnim+8),b,x
         sta $01D6,b
         sta $02C6,b
-        lda <>(aUnknown9FBB2E+6),b,x
+        lda <>(aMapMagicSleepPaletteAnim+6),b,x
         sta $01D8,b
         sta $02C8,b
-        lda <>(aUnknown9FBB2E+4),b,x
+        lda <>(aMapMagicSleepPaletteAnim+4),b,x
         sta $01DA,b
         sta $02CA,b
-        lda <>(aUnknown9FBB2E+2),b,x
+        lda <>(aMapMagicSleepPaletteAnim+2),b,x
         sta $01DC,b
         sta $02CC,b
         plx
@@ -7187,7 +7187,7 @@
 
         .databank 0
 
-      aUnknown9FBB2E ; 9F/BB2E
+      aMapMagicSleepPaletteAnim ; 9F/BB2E
 
         ; Part of the Sleep effect.
         .word $7E0B, $7E0E, $7E11, $7E14, $7E16, $7E19, $7E1C, $7E1F
@@ -7225,22 +7225,22 @@
         sta aProcSystem.aBody3,b,x
         asl a
         tax
-        lda <>aUnknown9FBBE5,b,x
+        lda <>aMapMagicRestorePaletteAnim,b,x
         sta $01D2,b
         sta $02C2,b
-        lda <>(aUnknown9FBBE5+2),b,x
+        lda <>(aMapMagicRestorePaletteAnim+2),b,x
         sta $01D4,b
         sta $02C4,b
-        lda <>(aUnknown9FBBE5+4),b,x
+        lda <>(aMapMagicRestorePaletteAnim+4),b,x
         sta $01D6,b
         sta $02C6,b
-        lda <>(aUnknown9FBBE5+6),b,x
+        lda <>(aMapMagicRestorePaletteAnim+6),b,x
         sta $01D8,b
         sta $02C8,b
-        lda <>(aUnknown9FBBE5+8),b,x
+        lda <>(aMapMagicRestorePaletteAnim+8),b,x
         sta $01DA,b
         sta $02CA,b
-        lda <>(aUnknown9FBBE5+10),b,x
+        lda <>(aMapMagicRestorePaletteAnim+10),b,x
         sta $01DC,b
         sta $02CC,b
         plx
@@ -7248,7 +7248,7 @@
 
         .databank 0
 
-      aUnknown9FBBE5 ; 9F/BBE5
+      aMapMagicRestorePaletteAnim ; 9F/BBE5
 
         ; Part of the Restore effect.
         .word $7D40, $7520, $7120, $6900, $64E0, $5CE0, $58C0, $50A0
@@ -7271,25 +7271,25 @@
         and #$00FF
         asl a
         tax
-        lda <>aUnknown9FBC8F,b,x
+        lda <>aMapMagicReturnPaletteSteps,b,x
         sta $01D2,b
         sta $02C2,b
-        lda <>(aUnknown9FBC8F+2),b,x
+        lda <>(aMapMagicReturnPaletteSteps+2),b,x
         sta $01D4,b
         sta $02C4,b
-        lda <>(aUnknown9FBC8F+4),b,x
+        lda <>(aMapMagicReturnPaletteSteps+4),b,x
         sta $01D6,b
         sta $02C6,b
-        lda <>(aUnknown9FBC8F+6),b,x
+        lda <>(aMapMagicReturnPaletteSteps+6),b,x
         sta $01D8,b
         sta $02C8,b
-        lda <>(aUnknown9FBC8F+8),b,x
+        lda <>(aMapMagicReturnPaletteSteps+8),b,x
         sta $01DA,b
         sta $02CA,b
-        lda <>(aUnknown9FBC8F+10),b,x
+        lda <>(aMapMagicReturnPaletteSteps+10),b,x
         sta $01DC,b
         sta $02CC,b
-        lda <>(aUnknown9FBC8F+12),b,x
+        lda <>(aMapMagicReturnPaletteSteps+12),b,x
         sta $01DE,b
         sta $02CE,b
         plx
@@ -7297,7 +7297,7 @@
 
         .databank 0
 
-      aUnknown9FBC8F ; 9F/BC8F
+      aMapMagicReturnPaletteSteps ; 9F/BC8F
 
         ; Part of the Return effect.
         .word $43FF, $039F, $033D, $025A, $01DA, $0159, $00F0, $006E
@@ -7314,16 +7314,16 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FBCD5
+          .word <>procMapMagicMjolnir
 
         rtl
 
         .databank 0
 
-      procUnknown9FBCD5 ; 9F/BCD5
+      procMapMagicMjolnir ; 9F/BCD5
 
         ; Part of the Mjolnir effect.
-        .structProcInfo "ON", rlMapMagicMjolnirInit, rlMapMagicMjolnirDarkenAndSpawn, aProcUnknown9FBDC1Code
+        .structProcInfo "ON", rlMapMagicMjolnirInit, rlMapMagicMjolnirDarkenAndSpawn, aProcMapMagicMjolnirCode
 
       rlMapMagicMjolnirInit ; 9F/BCDD
 
@@ -7358,7 +7358,7 @@
         bcc rlMapMagicMjolnirInit._BCFC
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEBFE
+          .word <>procMapMagicMjolnirWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -7388,9 +7388,9 @@
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         jsl rlMapMagicMjolnirStepScroll
-        lda #(`aUnknown9FBF08)<<8
+        lda #(`aMapMagicMjolnirSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FBF08
+        lda #<>aMapMagicMjolnirSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         rtl
@@ -7506,7 +7506,7 @@
 
         .databank 0
 
-      aProcUnknown9FBDC1Code ; 9F/BDC1
+      aProcMapMagicMjolnirCode ; 9F/BDC1
 
         ; Part of the Mjolnir effect.
         PROC_YIELD 1
@@ -7545,7 +7545,7 @@
         PROC_YIELD 1
         PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $0B
-        PROC_JUMP aProcUnknown9FBDC1Code
+        PROC_JUMP aProcMapMagicMjolnirCode
 
 
       rlMapMagicMjolnirLoadPaletteStep ; 9F/BE31
@@ -7560,19 +7560,19 @@
         and #$00FF
         asl a
         tax
-        lda <>aUnknown9FBE52,b,x
+        lda <>aMapMagicMjolnirPaletteSteps,b,x
         sta $01D2,b
-        lda <>(aUnknown9FBE52+2),b,x
+        lda <>(aMapMagicMjolnirPaletteSteps+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FBE52+4),b,x
+        lda <>(aMapMagicMjolnirPaletteSteps+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FBE52+6),b,x
+        lda <>(aMapMagicMjolnirPaletteSteps+6),b,x
         sta $01D8,b
         rtl
 
         .databank 0
 
-      aUnknown9FBE52 ; 9F/BE52
+      aMapMagicMjolnirPaletteSteps ; 9F/BE52
 
         ; Part of the Mjolnir effect.
         .word $7400, $7C20, $7D40, $7DC0, $7E40, $7FC0
@@ -7613,27 +7613,27 @@
         asl a
         phx
         tax
-        lda <>aUnknown9FBEE8,b,x
+        lda <>aMapMagicMjolnirScrollSteps,b,x
         sta $01DA,b
-        lda <>(aUnknown9FBEE8+2),b,x
+        lda <>(aMapMagicMjolnirScrollSteps+2),b,x
         sta $01DC,b
-        lda <>(aUnknown9FBEE8+4),b,x
+        lda <>(aMapMagicMjolnirScrollSteps+4),b,x
         sta $01DE,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FBEE8 ; 9F/BEE8
+      aMapMagicMjolnirScrollSteps ; 9F/BEE8
 
         ; Part of the Mjolnir effect.
         .word $0000, $1800, $6000, $7D60, $7000, $3400, $1800, $0000
         .word $0000, $1800, $6000, $7D60, $7000, $3400, $1800, $0000
 
-      aUnknown9FBF08 ; 9F/BF08
+      aMapMagicMjolnirSpriteInfo ; 9F/BF08
 
         ; Part of the Mjolnir effect.
-        .word <>rlMapMagicMjolnirSpriteInit, <>rlMapMagicMjolnirSpriteWaitEnd, <>aUnknown9FBF47
+        .word <>rlMapMagicMjolnirSpriteInit, <>rlMapMagicMjolnirSpriteWaitEnd, <>aMapMagicMjolnirSpriteScript
 
 
       rlMapMagicMjolnirSpriteInit ; 9F/BF0E
@@ -7682,20 +7682,20 @@
 
         .databank 0
 
-      aUnknown9FBF47 ; 9F/BF47
+      aMapMagicMjolnirSpriteScript ; 9F/BF47
 
         ; Part of the Mjolnir effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMjolnirFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicMjolnirWaitSpritePhase
-        .word <>aUnknown9FBF47
+        .word <>aMapMagicMjolnirSpriteScript
 
         _BF50
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FBF7B
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FBFA5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FBFCF
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
+        ACTIVE_SPRITE_FRAME 3, aMapMagicMjolnirFrame01
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMjolnirFrameEmpty
+        ACTIVE_SPRITE_FRAME 3, aMapMagicMjolnirFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMjolnirFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMjolnirFrame03
+        ACTIVE_SPRITE_FRAME 1, aMapMagicMjolnirFrameEmpty
         ACTIVE_SPRITE_JUMP _BF50
 
         ; 9F/BF6B
@@ -7722,11 +7722,11 @@
 
         .databank 0
 
-      aUnknown9FBF79 ; 9F/BF79
+      aMapMagicMjolnirFrameEmpty ; 9F/BF79
 
         .word 0
 
-      aUnknown9FBF7B ; 9F/BF7B
+      aMapMagicMjolnirFrame01 ; 9F/BF7B
 
         _Sprites := [[( -40,   -9), $21, SpriteLarge, $006, 2, 6, false, true]]
         _Sprites ..= [[(  -6,  -38), $21, SpriteLarge, $00C, 2, 6, false, true]]
@@ -7737,9 +7737,9 @@
         _Sprites ..= [[( -32,   16), $21, SpriteLarge, $004, 2, 6, true, false]]
         _Sprites ..= [[( -13,   25), $21, SpriteLarge, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FBF7B._Sprites
+        .structSpriteArray aMapMagicMjolnirFrame01._Sprites
 
-      aUnknown9FBFA5 ; 9F/BFA5
+      aMapMagicMjolnirFrame02 ; 9F/BFA5
 
         _Sprites := [[( -14,   25), $21, SpriteLarge, $002, 2, 6, false, true]]
         _Sprites ..= [[(  22,  -11), $21, SpriteLarge, $006, 2, 6, false, true]]
@@ -7750,9 +7750,9 @@
         _Sprites ..= [[( -31,  -32), $21, SpriteLarge, $004, 2, 6, false, false]]
         _Sprites ..= [[(  -7,  -38), $21, SpriteLarge, $00A, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FBFA5._Sprites
+        .structSpriteArray aMapMagicMjolnirFrame02._Sprites
 
-      aUnknown9FBFCF ; 9F/BFCF
+      aMapMagicMjolnirFrame03 ; 9F/BFCF
 
         _Sprites := [[(  14,  -32), $21, SpriteLarge, $004, 2, 6, true, false]]
         _Sprites ..= [[(  22,   -8), $21, SpriteLarge, $008, 2, 6, true, false]]
@@ -7763,7 +7763,7 @@
         _Sprites ..= [[( -32,  -32), $21, SpriteLarge, $002, 2, 6, true, true]]
         _Sprites ..= [[(  -7,  -38), $21, SpriteLarge, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FBFCF._Sprites
+        .structSpriteArray aMapMagicMjolnirFrame03._Sprites
 
 
       rlStartMapMagicForseti ; 9F/BFF9
@@ -7775,13 +7775,13 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FBFFF
+          .word <>procMapMagicForseti
 
         rtl
 
         .databank 0
 
-      procUnknown9FBFFF ; 9F/BFFF
+      procMapMagicForseti ; 9F/BFFF
 
         ; Part of the Forseti effect.
         .structProcInfo "ON", rlMapMagicForsetiInit, rlMapMagicForsetiDarkenAndSpawn, aProcMapMagicHaltCode
@@ -7814,7 +7814,7 @@
         jsr rsSetMapMagicLayerBlending
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC76
+          .word <>procMapMagicForsetiWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -7971,7 +7971,7 @@
         lda #$0003
         sta aProcSystem.aBody2,b,x
         ldy aProcSystem.aBody3,b,x
-        lda <>aUnknown9FC0FD,b,y
+        lda <>aMapMagicForsetiPaletteSteps,b,y
         cmp #$FFFF
         beq _C0FB
         phx
@@ -7980,19 +7980,19 @@
         adc #$000E
         sta aProcSystem.aBody3,b,x
         tyx
-        lda <>aUnknown9FC0FD,b,x
+        lda <>aMapMagicForsetiPaletteSteps,b,x
         sta $01D2,b
-        lda <>(aUnknown9FC0FD+2),b,x
+        lda <>(aMapMagicForsetiPaletteSteps+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FC0FD+4),b,x
+        lda <>(aMapMagicForsetiPaletteSteps+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FC0FD+6),b,x
+        lda <>(aMapMagicForsetiPaletteSteps+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FC0FD+8),b,x
+        lda <>(aMapMagicForsetiPaletteSteps+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FC0FD+10),b,x
+        lda <>(aMapMagicForsetiPaletteSteps+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FC0FD+12),b,x
+        lda <>(aMapMagicForsetiPaletteSteps+12),b,x
         sta $01DE,b
         plx
         clc
@@ -8005,7 +8005,7 @@
 
         .databank 0
 
-      aUnknown9FC0FD ; 9F/C0FD
+      aMapMagicForsetiPaletteSteps ; 9F/C0FD
 
         ; Part of the Forseti effect.
         .word $4251, $360D, $21C7, $1984, $0942, $00C0, $0020
@@ -8029,16 +8029,16 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FC191
+          .word <>procMapMagicNosferatu
 
         rtl
 
         .databank 0
 
-      procUnknown9FC191 ; 9F/C191
+      procMapMagicNosferatu ; 9F/C191
 
         ; Part of the Nosferatu effect.
-        .structProcInfo "ON", rlMapMagicNosferatuInit, rlMapMagicNosferatuSpawnEffects, aProcUnknown9FC50CCode
+        .structProcInfo "ON", rlMapMagicNosferatuInit, rlMapMagicNosferatuSpawnEffects, aProcMapMagicNosferatuCode
 
 
       rlMapMagicNosferatuInit ; 9F/C199
@@ -8069,7 +8069,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEBF6
+          .word <>procMapMagicNosferatuOrb
 
         jsr rsCreateMapMagicHDMA
 
@@ -8101,9 +8101,9 @@
 
           .byte $67
 
-        lda #(`aUnknown9FC3A7)<<8
+        lda #(`aMapMagicNosferatuSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FC3A7
+        lda #<>aMapMagicNosferatuSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         rtl
@@ -8430,10 +8430,10 @@
 
         .databank 0
 
-      aUnknown9FC3A7 ; 9F/C3A7
+      aMapMagicNosferatuSpriteInfo ; 9F/C3A7
 
         ; Part of the Nosferatu effect.
-        .word <>rlMapMagicNosferatuSpriteInit, <>rlMapMagicNosferatuSpriteAtTarget, <>aUnknown9FC499
+        .word <>rlMapMagicNosferatuSpriteInit, <>rlMapMagicNosferatuSpriteAtTarget, <>aMapMagicNosferatuSpriteScript
 
 
       rlMapMagicNosferatuSpriteInit ; 9F/C3AD
@@ -8526,7 +8526,7 @@
         ldx #$0000
 
         _C429
-        lda <>aUnknown9FC439,b,y
+        lda <>aMapMagicNosferatuSpritePalettes,b,y
         sta $02C2,b,x
         inc y
         inc y
@@ -8539,7 +8539,7 @@
 
         .databank 0
 
-      aUnknown9FC439 ; 9F/C439
+      aMapMagicNosferatuSpritePalettes ; 9F/C439
 
         ; Part of the Nosferatu effect.
         .word $2550, $39F3, $4E97, $5F3B, $73DF, $01D8, $0619, $063A
@@ -8549,33 +8549,33 @@
         .word $2550, $39F3, $4E97, $5F3B, $73DF, $01D8, $0619, $063A
         .word $0A7B, $0EBC, $12FD, $131E, $175F, $00AC, $00EE, $052F
 
-      aUnknown9FC499 ; 9F/C499
+      aMapMagicNosferatuSpriteScript ; 9F/C499
 
         ; Part of the Nosferatu effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
+        ACTIVE_SPRITE_FRAME 1, aMapMagicNosferatuFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
-        .word <>aUnknown9FC499
+        .word <>aMapMagicNosferatuSpriteScript
 
         _C4A2
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4F6
+        ACTIVE_SPRITE_FRAME 1, aMapMagicNosferatuFrame02
         ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>_C4A2
 
         _C4AB
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
+        ACTIVE_SPRITE_FRAME 1, aMapMagicNosferatuFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>_C4AB
 
         _C4B4
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4E0
+        ACTIVE_SPRITE_FRAME 1, aMapMagicNosferatuFrame01
         ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>_C4B4
 
         _C4BD
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
+        ACTIVE_SPRITE_FRAME 1, aMapMagicNosferatuFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>_C4BD
-        ACTIVE_SPRITE_JUMP aUnknown9FC499
+        ACTIVE_SPRITE_JUMP aMapMagicNosferatuSpriteScript
 
         ; 9F/C4C9
 
@@ -8603,30 +8603,30 @@
 
         .databank 0
 
-      aUnknown9FC4DE ; 9F/C4DE
+      aMapMagicNosferatuFrameEmpty ; 9F/C4DE
 
         .word 0
 
-      aUnknown9FC4E0 ; 9F/C4E0
+      aMapMagicNosferatuFrame01 ; 9F/C4E0
 
         _Sprites := [[(   0,    2), $21, SpriteLarge, $000, 3, 6, true, true]]
         _Sprites ..= [[(   0,  -14), $21, SpriteLarge, $000, 3, 6, true, false]]
         _Sprites ..= [[( -16,    2), $21, SpriteLarge, $000, 3, 6, false, true]]
         _Sprites ..= [[( -16,  -14), $21, SpriteLarge, $000, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FC4E0._Sprites
+        .structSpriteArray aMapMagicNosferatuFrame01._Sprites
 
-      aUnknown9FC4F6 ; 9F/C4F6
+      aMapMagicNosferatuFrame02 ; 9F/C4F6
 
         _Sprites := [[(   0,    2), $21, SpriteLarge, $002, 3, 6, true, true]]
         _Sprites ..= [[( -16,    2), $21, SpriteLarge, $002, 3, 6, false, true]]
         _Sprites ..= [[(   0,  -14), $21, SpriteLarge, $002, 3, 6, true, false]]
         _Sprites ..= [[( -16,  -14), $21, SpriteLarge, $002, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9FC4F6._Sprites
+        .structSpriteArray aMapMagicNosferatuFrame02._Sprites
 
 
-      aProcUnknown9FC50CCode ; 9F/C50C
+      aProcMapMagicNosferatuCode ; 9F/C50C
 
         ; Part of the Nosferatu effect.
         PROC_YIELD 2
@@ -8665,7 +8665,7 @@
         PROC_YIELD 2
         PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $0B
-        PROC_JUMP aProcUnknown9FC50CCode
+        PROC_JUMP aProcMapMagicNosferatuCode
 
 
       rlMapMagicNosferatuLoadPaletteStep ; 9F/C57C
@@ -8680,25 +8680,25 @@
         and #$00FF
         asl a
         tax
-        lda <>aUnknown9FC5AF,b,x
+        lda <>aMapMagicNosferatuPaletteSteps,b,x
         sta $01D2,b
-        lda <>(aUnknown9FC5AF+2),b,x
+        lda <>(aMapMagicNosferatuPaletteSteps+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FC5AF+4),b,x
+        lda <>(aMapMagicNosferatuPaletteSteps+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FC5AF+6),b,x
+        lda <>(aMapMagicNosferatuPaletteSteps+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FC5AF+8),b,x
+        lda <>(aMapMagicNosferatuPaletteSteps+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FC5AF+10),b,x
+        lda <>(aMapMagicNosferatuPaletteSteps+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FC5AF+12),b,x
+        lda <>(aMapMagicNosferatuPaletteSteps+12),b,x
         sta $01DE,b
         rtl
 
         .databank 0
 
-      aUnknown9FC5AF ; 9F/C5AF
+      aMapMagicNosferatuPaletteSteps ; 9F/C5AF
 
         ; Part of the Nosferatu effect.
         .word $001D, $0016, $0013, $0012, $000D, $001D, $0016, $0013
@@ -8717,24 +8717,24 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FC615
+          .word <>procMapMagicSilence
 
         rtl
 
         .databank 0
 
-      procUnknown9FC615 ; 9F/C615
+      procMapMagicSilence ; 9F/C615
 
         ; Part of the Silence effect.
-        .structProcInfo "ON", rlMapMagicSilenceInit, rlMapMagicSilenceDarken, aProcUnknown9FC61DCode
+        .structProcInfo "ON", rlMapMagicSilenceInit, rlMapMagicSilenceDarken, aProcMapMagicSilenceCode
 
 
-      aProcUnknown9FC61DCode ; 9F/C61D
+      aProcMapMagicSilenceCode ; 9F/C61D
 
         ; Part of the Silence effect.
         PROC_YIELD 1
         PROC_CALL rlMapMagicSilenceStepPaletteAnim
-        PROC_JUMP aProcUnknown9FC61DCode
+        PROC_JUMP aProcMapMagicSilenceCode
 
 
       rlMapMagicSilenceInit ; 9F/C628
@@ -8789,7 +8789,7 @@
         bne _C67E
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FEC85
+          .word <>procMapMagicSilenceWindow
 
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
@@ -8966,7 +8966,7 @@
         lda wMapMagicTargetPixel
         and #$00FF
         sec
-        sbc <>aUnknown9FC7A0,b,y
+        sbc <>aMapMagicSilenceBeamHDMASteps,b,y
         eor #$FFFF
         inc a
         sta $7F50CD
@@ -9017,7 +9017,7 @@
 
         .databank 0
 
-      aUnknown9FC7A0 ; 9F/C7A0
+      aMapMagicSilenceBeamHDMASteps ; 9F/C7A0
 
         ; Part of the Silence effect.
         .word $0080, $00B0, $00E0, $0050
@@ -9036,26 +9036,26 @@
         and #$001F
         asl a
         tax
-        lda <>aUnknown9FC7E0,b,x
+        lda <>aMapMagicSilencePaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9FC7E0+2),b,x
+        lda <>(aMapMagicSilencePaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FC7E0+4),b,x
+        lda <>(aMapMagicSilencePaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FC7E0+6),b,x
+        lda <>(aMapMagicSilencePaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FC7E0+8),b,x
+        lda <>(aMapMagicSilencePaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FC7E0+10),b,x
+        lda <>(aMapMagicSilencePaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FC7E0+12),b,x
+        lda <>(aMapMagicSilencePaletteAnim+12),b,x
         sta $01DE,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FC7E0 ; 9F/C7E0
+      aMapMagicSilencePaletteAnim ; 9F/C7E0
 
         ; Part of the Silence effect.
         .word $7D40, $7520, $7120, $6900, $64E0, $5CE0, $58C0, $50A0
@@ -9074,13 +9074,13 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FC846
+          .word <>procMapMagicTornado
 
         rtl
 
         .databank 0
 
-      procUnknown9FC846 ; 9F/C846
+      procMapMagicTornado ; 9F/C846
 
         ; Part of the Tornado effect.
         .structProcInfo "ON", rlMapMagicTornadoInit, rlMapMagicTornadoFadeAndSpawn, aProcMapMagicHaltCode
@@ -9123,9 +9123,9 @@
         lda #<>rlMapMagicTornadoWaitImpact
         sta aProcSystem.aHeaderOnCycle,b,x
         phx
-        lda #(`aUnknown9FC8C1)<<8
+        lda #(`aMapMagicTornadoSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FC8C1
+        lda #<>aMapMagicTornadoSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
@@ -9200,10 +9200,10 @@
 
         .databank 0
 
-      aUnknown9FC8C1 ; 9F/C8C1
+      aMapMagicTornadoSpriteInfo ; 9F/C8C1
 
         ; Part of the Tornado effect.
-        .word <>rlMapMagicTornadoSpriteInit, <>rlMapMagicTornadoSpriteAim, <>aUnknown9FC969
+        .word <>rlMapMagicTornadoSpriteInit, <>rlMapMagicTornadoSpriteAim, <>aMapMagicTornadoSpriteScript
 
 
       rlMapMagicTornadoSpriteInit ; 9F/C8C7
@@ -9317,13 +9317,17 @@
 
         .databank 0
 
-      aUnknown9FC969 ; 9F/C969
+      aMapMagicTornadoSpriteScript ; 9F/C969
 
         ; Part of the Tornado effect.
-        .byte $00, $03, $7C, $C9, $00, $03, $B2, $C9, $00, $03, $97, $C9, $00, $03, $CD, $C9
-        .byte $15, $69, $C9
 
-      aUnknown9FC97C ; 9F/C97C
+        ACTIVE_SPRITE_FRAME 3, aMapMagicTornadoFrame01
+        ACTIVE_SPRITE_FRAME 3, aMapMagicTornadoFrame03
+        ACTIVE_SPRITE_FRAME 3, aMapMagicTornadoFrame02
+        ACTIVE_SPRITE_FRAME 3, aMapMagicTornadoFrame04
+        ACTIVE_SPRITE_JUMP aMapMagicTornadoSpriteScript
+
+      aMapMagicTornadoFrame01 ; 9F/C97C
 
         _Sprites := [[(  -1,  -72), $21, SpriteLarge, $00C, 2, 6, true, false]]
         _Sprites ..= [[(  -3,  -56), $21, SpriteLarge, $006, 2, 6, false, false]]
@@ -9331,9 +9335,9 @@
         _Sprites ..= [[(  -6,  -24), $21, SpriteLarge, $002, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FC97C._Sprites
+        .structSpriteArray aMapMagicTornadoFrame01._Sprites
 
-      aUnknown9FC997 ; 9F/C997
+      aMapMagicTornadoFrame02 ; 9F/C997
 
         _Sprites := [[(   1,  -72), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[(  -3,  -56), $21, SpriteLarge, $004, 2, 6, false, false]]
@@ -9341,9 +9345,9 @@
         _Sprites ..= [[(  -9,  -24), $21, SpriteLarge, $008, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FC997._Sprites
+        .structSpriteArray aMapMagicTornadoFrame02._Sprites
 
-      aUnknown9FC9B2 ; 9F/C9B2
+      aMapMagicTornadoFrame03 ; 9F/C9B2
 
         _Sprites := [[(  -6,  -72), $21, SpriteLarge, $00C, 2, 6, true, false]]
         _Sprites ..= [[(  -8,  -56), $21, SpriteLarge, $006, 2, 6, false, false]]
@@ -9351,9 +9355,9 @@
         _Sprites ..= [[(  -8,  -24), $21, SpriteLarge, $002, 2, 6, true, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FC9B2._Sprites
+        .structSpriteArray aMapMagicTornadoFrame03._Sprites
 
-      aUnknown9FC9CD ; 9F/C9CD
+      aMapMagicTornadoFrame04 ; 9F/C9CD
 
         _Sprites := [[(  -7,  -72), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[( -10,  -56), $21, SpriteLarge, $004, 2, 6, false, true]]
@@ -9361,7 +9365,7 @@
         _Sprites ..= [[(  -9,  -24), $21, SpriteLarge, $008, 2, 6, false, false]]
         _Sprites ..= [[(  -7,   -8), $21, SpriteLarge, $00A, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FC9CD._Sprites
+        .structSpriteArray aMapMagicTornadoFrame04._Sprites
 
 
       rlMapMagicTornadoStepSpritePal ; 9F/C9E8
@@ -9391,20 +9395,20 @@
         sta aActiveSpriteSystem.aUnknown001380,b,x
         asl a
         tax
-        lda <>aUnknown9FCA1F,b,x
+        lda <>aMapMagicTornadoSpritePalettes,b,x
         sta $02CE,b
-        lda <>(aUnknown9FCA1F+2),b,x
+        lda <>(aMapMagicTornadoSpritePalettes+2),b,x
         sta $02D0,b
-        lda <>(aUnknown9FCA1F+4),b,x
+        lda <>(aMapMagicTornadoSpritePalettes+4),b,x
         sta $02D2,b
-        lda <>(aUnknown9FCA1F+6),b,x
+        lda <>(aMapMagicTornadoSpritePalettes+6),b,x
         sta $02D4,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FCA1F ; 9F/CA1F
+      aMapMagicTornadoSpritePalettes ; 9F/CA1F
 
         ; Part of the Tornado effect.
         .word $7F9F, $62B8, $45D1, $24E9, $1445, $24E9, $45D1, $62B8
@@ -9421,9 +9425,9 @@
 
         ; Also Elwind.
 
-        lda #(`aUnknown9FCA89)<<8
+        lda #(`aMapMagicWindSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FCA89
+        lda #<>aMapMagicWindSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         rtl
@@ -9444,9 +9448,9 @@
         tay
         lda aActiveSpriteSystem.aUnknown001200,b,x
         tax
-        lda #(`aUnknown9FCA8F)<<8
+        lda #(`aMapMagicElwindSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FCA8F
+        lda #<>aMapMagicElwindSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -9455,19 +9459,19 @@
 
         .databank 0
 
-      aUnknown9FCA89 ; 9F/CA89
+      aMapMagicWindSpriteInfo ; 9F/CA89
 
         ; Part of the Wind effect.
-        .word <>rlMapMagicWindInit, <>rlMapMagicWindAim, <>aUnknown9FCA95
+        .word <>rlMapMagicWindInit, <>rlMapMagicWindAim, <>aMapMagicWindSpriteScript
 
 
-      aUnknown9FCA8F ; 9F/CA8F
+      aMapMagicElwindSpriteInfo ; 9F/CA8F
 
         ; Part of the Wind effect.
-        .word <>rlMapMagicElwindInit, <>rlMapMagicElwindEnd, <>aUnknown9FCA95
+        .word <>rlMapMagicElwindInit, <>rlMapMagicElwindEnd, <>aMapMagicWindSpriteScript
 
 
-      aUnknown9FCA95 ; 9F/CA95
+      aMapMagicWindSpriteScript ; 9F/CA95
 
         ; Part of the Wind effect.
         .word $0000
@@ -9493,7 +9497,7 @@
         lda $7F50C9
         asl a
         tay
-        lda <>aUnknown9FCBA6,b,y
+        lda <>aMapMagicWindSpriteScripts,b,y
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda wMapMagicEffect
         cmp #$000B
@@ -9531,7 +9535,7 @@
         lda $7F50C9
         asl a
         tay
-        lda <>(aUnknown9FCBA6+16),b,y
+        lda <>(aMapMagicWindSpriteScripts+16),b,y
         sta aActiveSpriteSystem.aCodeOffset,b,x
         rtl
 
@@ -9668,186 +9672,247 @@
 
         .databank 0
 
-      aUnknown9FCBA6 ; 9F/CBA6
+      aMapMagicWindSpriteScripts ; 9F/CBA6
 
         ; Part of the Wind effect.
-        .word $CC11, $CBD5, $CC2F, $CBF3, $CC02, $CBE4, $CC20, $CBC6
-        .word $CC19, $CBDD, $CC37, $CBFB, $CC0A, $CBEC, $CC28, $CBCE
+        .word <>aMapMagicWindSpriteScript7, <>aMapMagicWindSpriteScript3, <>aMapMagicWindSpriteScript9, <>aMapMagicWindSpriteScript5, <>aMapMagicWindSpriteScript6, <>aMapMagicWindSpriteScript4, <>aMapMagicWindSpriteScript8, <>aMapMagicWindSpriteScript2
+        .word <>aMapMagicWindSpriteScript7._CC19, <>aMapMagicWindSpriteScript3._CBDD, <>aMapMagicWindSpriteScript9._CC37, <>aMapMagicWindSpriteScript5._CBFB, <>aMapMagicWindSpriteScript6._CC0A, <>aMapMagicWindSpriteScript4._CBEC, <>aMapMagicWindSpriteScript8._CC28, <>aMapMagicWindSpriteScript2._CBCE
 
-      aUnknown9FCBC6 ; 9F/CBC6
+      aMapMagicWindSpriteScript2 ; 9F/CBC6
 
-        .byte $00, $02, $40, $CC, $00, $02, $47, $CC, $00, $01, $4E, $CC, $15, $CE, $CB, $00
-        .byte $02, $55, $CC, $00, $02, $5C, $CC, $00, $01, $63, $CC, $15, $DD, $CB, $00, $02
-        .byte $6A, $CC, $00, $02, $71, $CC, $00, $01, $78, $CC, $15, $EC, $CB, $00, $02, $7F
-        .byte $CC, $00, $02, $86, $CC, $00, $01, $8D, $CC, $15, $FB, $CB, $00, $02, $94, $CC
-        .byte $00, $02, $9B, $CC, $00, $01, $A2, $CC, $15, $0A, $CC, $00, $02, $AE, $CC, $00
-        .byte $02, $B5, $CC, $00, $01, $BC, $CC, $15, $19, $CC, $00, $02, $C8, $CC, $00, $02
-        .byte $DE, $CC, $00, $01, $F4, $CC, $15, $28, $CC, $00, $02, $00, $CD, $00, $02, $16
-        .byte $CD, $00, $01, $2C, $CD, $15, $37, $CC
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame01
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame02
 
-      aUnknown9FCC3E ; 9F/CC3E
+        _CBCE
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWindFrame03
+        ACTIVE_SPRITE_JUMP _CBCE
+
+      aMapMagicWindSpriteScript3 ; 9F/CBD5
+
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame04
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame05
+
+        _CBDD
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWindFrame06
+        ACTIVE_SPRITE_JUMP _CBDD
+
+      aMapMagicWindSpriteScript4 ; 9F/CBE4
+
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame07
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame08
+
+        _CBEC
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWindFrame09
+        ACTIVE_SPRITE_JUMP _CBEC
+
+      aMapMagicWindSpriteScript5 ; 9F/CBF3
+
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame10
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame11
+
+        _CBFB
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWindFrame12
+        ACTIVE_SPRITE_JUMP _CBFB
+
+      aMapMagicWindSpriteScript6 ; 9F/CC02
+
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame13
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame14
+
+        _CC0A
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWindFrame15
+        ACTIVE_SPRITE_JUMP _CC0A
+
+      aMapMagicWindSpriteScript7 ; 9F/CC11
+
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame16
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame17
+
+        _CC19
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWindFrame18
+        ACTIVE_SPRITE_JUMP _CC19
+
+      aMapMagicWindSpriteScript8 ; 9F/CC20
+
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame19
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame20
+
+        _CC28
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWindFrame21
+        ACTIVE_SPRITE_JUMP _CC28
+
+      aMapMagicWindSpriteScript9 ; 9F/CC2F
+
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame22
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWindFrame23
+
+        _CC37
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWindFrame24
+        ACTIVE_SPRITE_JUMP _CC37
+
+      aMapMagicWindFrameEmptyUnused ; 9F/CC3E
 
         .word 0
 
-      aUnknown9FCC40 ; 9F/CC40
+      aMapMagicWindFrame01 ; 9F/CC40
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FCC40._Sprites
+        .structSpriteArray aMapMagicWindFrame01._Sprites
 
-      aUnknown9FCC47 ; 9F/CC47
+      aMapMagicWindFrame02 ; 9F/CC47
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FCC47._Sprites
+        .structSpriteArray aMapMagicWindFrame02._Sprites
 
-      aUnknown9FCC4E ; 9F/CC4E
+      aMapMagicWindFrame03 ; 9F/CC4E
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FCC4E._Sprites
+        .structSpriteArray aMapMagicWindFrame03._Sprites
 
-      aUnknown9FCC55 ; 9F/CC55
+      aMapMagicWindFrame04 ; 9F/CC55
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FCC55._Sprites
+        .structSpriteArray aMapMagicWindFrame04._Sprites
 
-      aUnknown9FCC5C ; 9F/CC5C
+      aMapMagicWindFrame05 ; 9F/CC5C
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FCC5C._Sprites
+        .structSpriteArray aMapMagicWindFrame05._Sprites
 
-      aUnknown9FCC63 ; 9F/CC63
+      aMapMagicWindFrame06 ; 9F/CC63
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FCC63._Sprites
+        .structSpriteArray aMapMagicWindFrame06._Sprites
 
-      aUnknown9FCC6A ; 9F/CC6A
+      aMapMagicWindFrame07 ; 9F/CC6A
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FCC6A._Sprites
+        .structSpriteArray aMapMagicWindFrame07._Sprites
 
-      aUnknown9FCC71 ; 9F/CC71
+      aMapMagicWindFrame08 ; 9F/CC71
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FCC71._Sprites
+        .structSpriteArray aMapMagicWindFrame08._Sprites
 
-      aUnknown9FCC78 ; 9F/CC78
+      aMapMagicWindFrame09 ; 9F/CC78
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FCC78._Sprites
+        .structSpriteArray aMapMagicWindFrame09._Sprites
 
-      aUnknown9FCC7F ; 9F/CC7F
+      aMapMagicWindFrame10 ; 9F/CC7F
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9FCC7F._Sprites
+        .structSpriteArray aMapMagicWindFrame10._Sprites
 
-      aUnknown9FCC86 ; 9F/CC86
+      aMapMagicWindFrame11 ; 9F/CC86
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9FCC86._Sprites
+        .structSpriteArray aMapMagicWindFrame11._Sprites
 
-      aUnknown9FCC8D ; 9F/CC8D
+      aMapMagicWindFrame12 ; 9F/CC8D
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9FCC8D._Sprites
+        .structSpriteArray aMapMagicWindFrame12._Sprites
 
-      aUnknown9FCC94 ; 9F/CC94
+      aMapMagicWindFrame13 ; 9F/CC94
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FCC94._Sprites
+        .structSpriteArray aMapMagicWindFrame13._Sprites
 
-      aUnknown9FCC9B ; 9F/CC9B
+      aMapMagicWindFrame14 ; 9F/CC9B
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FCC9B._Sprites
+        .structSpriteArray aMapMagicWindFrame14._Sprites
 
-      aUnknown9FCCA2 ; 9F/CCA2
+      aMapMagicWindFrame15 ; 9F/CCA2
 
         _Sprites := [[(  -8,    0), $00, SpriteSmall, $013, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $012, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FCCA2._Sprites
+        .structSpriteArray aMapMagicWindFrame15._Sprites
 
-      aUnknown9FCCAE ; 9F/CCAE
+      aMapMagicWindFrame16 ; 9F/CCAE
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FCCAE._Sprites
+        .structSpriteArray aMapMagicWindFrame16._Sprites
 
-      aUnknown9FCCB5 ; 9F/CCB5
+      aMapMagicWindFrame17 ; 9F/CCB5
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FCCB5._Sprites
+        .structSpriteArray aMapMagicWindFrame17._Sprites
 
-      aUnknown9FCCBC ; 9F/CCBC
+      aMapMagicWindFrame18 ; 9F/CCBC
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $013, 2, 6, true, false]]
         _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $012, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FCCBC._Sprites
+        .structSpriteArray aMapMagicWindFrame18._Sprites
 
-      aUnknown9FCCC8 ; 9F/CCC8
+      aMapMagicWindFrame19 ; 9F/CCC8
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $016, 2, 6, true, false]]
         _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $006, 2, 6, true, false]]
         _Sprites ..= [[(  -8,    0), $00, SpriteSmall, $016, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FCCC8._Sprites
+        .structSpriteArray aMapMagicWindFrame19._Sprites
 
-      aUnknown9FCCDE ; 9F/CCDE
+      aMapMagicWindFrame20 ; 9F/CCDE
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $017, 2, 6, false, false]]
         _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $007, 2, 6, false, false]]
         _Sprites ..= [[(  -8,    0), $00, SpriteSmall, $017, 2, 6, true, false]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $007, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FCCDE._Sprites
+        .structSpriteArray aMapMagicWindFrame20._Sprites
 
-      aUnknown9FCCF4 ; 9F/CCF4
+      aMapMagicWindFrame21 ; 9F/CCF4
 
         _Sprites := [[(   0,   -7), $00, SpriteSmall, $003, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -7), $00, SpriteSmall, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FCCF4._Sprites
+        .structSpriteArray aMapMagicWindFrame21._Sprites
 
-      aUnknown9FCD00 ; 9F/CD00
+      aMapMagicWindFrame22 ; 9F/CD00
 
         _Sprites := [[(   0,   -8), $00, SpriteSmall, $016, 2, 6, true, true]]
         _Sprites ..= [[(   0,    0), $00, SpriteSmall, $006, 2, 6, true, true]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $016, 2, 6, false, true]]
         _Sprites ..= [[(  -8,    0), $00, SpriteSmall, $006, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FCD00._Sprites
+        .structSpriteArray aMapMagicWindFrame22._Sprites
 
-      aUnknown9FCD16 ; 9F/CD16
+      aMapMagicWindFrame23 ; 9F/CD16
 
         _Sprites := [[(  -8,    0), $00, SpriteSmall, $007, 2, 6, true, true]]
         _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $017, 2, 6, false, true]]
         _Sprites ..= [[(   0,    0), $00, SpriteSmall, $007, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $017, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9FCD16._Sprites
+        .structSpriteArray aMapMagicWindFrame23._Sprites
 
-      aUnknown9FCD2C ; 9F/CD2C
+      aMapMagicWindFrame24 ; 9F/CD2C
 
         _Sprites := [[(   0,   -1), $00, SpriteSmall, $003, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -1), $00, SpriteSmall, $002, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9FCD2C._Sprites
+        .structSpriteArray aMapMagicWindFrame24._Sprites
 
 
       rlStartMapMagicWarp ; 9F/CD38
@@ -9865,9 +9930,9 @@
 
           .byte $77
 
-        lda #(`aUnknown9FCD6C)<<8
+        lda #(`aMapMagicWarpSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FCD6C
+        lda #<>aMapMagicWarpSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         rtl
@@ -9887,25 +9952,25 @@
 
           .byte $77
 
-        lda #(`aUnknown9FCD72)<<8
+        lda #(`aMapMagicBrokenStaffSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FCD72
+        lda #<>aMapMagicBrokenStaffSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         rtl
 
         .databank 0
 
-      aUnknown9FCD6C ; 9F/CD6C
+      aMapMagicWarpSpriteInfo ; 9F/CD6C
 
         ; Part of the Warp effect.
-        .word <>rlMapMagicWarpSpriteInit, <>rlMapMagicWarpSpriteSignal, <>aUnknown9FCED1
+        .word <>rlMapMagicWarpSpriteInit, <>rlMapMagicWarpSpriteSignal, <>aMapMagicWarpSpriteScript
 
 
-      aUnknown9FCD72 ; 9F/CD72
+      aMapMagicBrokenStaffSpriteInfo ; 9F/CD72
 
         ; Part of the BrokenStaff effect.
-        .word <>rlMapMagicBrokenStaffSpriteInit, <>rlMapMagicBrokenStaffStartFall, <>aUnknown9FD004
+        .word <>rlMapMagicBrokenStaffSpriteInit, <>rlMapMagicBrokenStaffStartFall, <>aMapMagicBrokenStaffSpriteScript
 
 
       rlMapMagicWarpSpriteInit ; 9F/CD78
@@ -9983,7 +10048,7 @@
         _CDCD
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
-        lda #<>aUnknown9FCF73
+        lda #<>aMapMagicWarpSpriteScript2
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #<>rlMapMagicWarpSpriteWaitFall
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -10178,39 +10243,39 @@
 
         .databank 0
 
-      aUnknown9FCED1 ; 9F/CED1
+      aMapMagicWarpSpriteScript ; 9F/CED1
 
         ; Part of the Warp effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD097
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD09E
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FD0A5
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrame01
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWarpFrame02
+        ACTIVE_SPRITE_FRAME 8, aMapMagicWarpFrame03
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWarpFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
         ACTIVE_SPRITE_CALL rlMapMagicWarpHideDefender
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
         ACTIVE_SPRITE_MOVE 0, -10
-        ACTIVE_SPRITE_FRAME 5, aUnknown9FD0C8
+        ACTIVE_SPRITE_FRAME 5, aMapMagicWarpFrame08
         ACTIVE_SPRITE_MOVE 0, -18
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD0CF
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrame09
         ACTIVE_SPRITE_CALL rlMapMagicWarpLaunchUp
 
         _CF25
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD0CF
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrame09
         ACTIVE_SPRITE_CALL rlMapMagicWarpCheckOffscreen
         .word <>_CF25
 
         _CF2E
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD095
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrameEmpty
         ACTIVE_SPRITE_JUMP _CF2E
 
         ; 9F/CF35
@@ -10291,17 +10356,38 @@
 
         .databank 0
 
-      aUnknown9FCF73 ; 9F/CF73
+      aMapMagicWarpSpriteScript2 ; 9F/CF73
 
         ; Part of the Warp effect.
-        .byte $00, $01, $CF, $D0, $17, $F7, $CF, $73, $CF, $00, $03, $CF, $D0, $00, $03, $C8
-        .byte $D0, $00, $03, $B3, $D0, $00, $03, $C1, $D0, $00, $03, $BA, $D0, $00, $03, $B3
-        .byte $D0, $00, $03, $AC, $D0, $00, $03, $C1, $D0, $00, $03, $BA, $D0, $17, $CE, $CF
-        .byte $00, $03, $B3, $D0, $00, $03, $AC, $D0, $00, $03, $C1, $D0, $00, $02, $BA, $D0
-        .byte $00, $03, $B3, $D0, $00, $03, $AC, $D0, $00, $08, $A5, $D0, $00, $02, $9E, $D0
-        .byte $00, $01, $97, $D0, $00, $01, $95, $D0, $15, $C7, $CF
 
-      rlMapMagicWarpPlaceDefenderUnused ; 9F/CFCE
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrame09
+        ACTIVE_SPRITE_CALL rlMapMagicWarpWaitPhase
+        .word <>aMapMagicWarpSpriteScript2
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame09
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame08
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame06
+        ACTIVE_SPRITE_CALL rlMapMagicWarpPlaceDefender
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWarpFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 8, aMapMagicWarpFrame03
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWarpFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrame01
+
+        _CFC7
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrameEmpty
+        ACTIVE_SPRITE_JUMP _CFC7
+
+      rlMapMagicWarpPlaceDefender ; 9F/CFCE
 
         .al
         .xl
@@ -10311,14 +10397,14 @@
         lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp #$FFFF
         beq _CFDB
-        jsl rlMapMagicWarpPlaceSpriteSlotUnused
+        jsl rlMapMagicWarpPlaceSpriteSlot
 
         _CFDB
         lda aMapAction.wMapBattleDefenderSpriteSlot
 
         .databank 0
 
-      rlMapMagicWarpPlaceSpriteSlotUnused ; 9F/CFDF
+      rlMapMagicWarpPlaceSpriteSlot ; 9F/CFDF
 
         .al
         .xl
@@ -10338,7 +10424,7 @@
 
         .databank 0
 
-      rlMapMagicWarpWaitPhaseUnused ; 9F/CFF7
+      rlMapMagicWarpWaitPhase ; 9F/CFF7
 
         .al
         .xl
@@ -10359,34 +10445,34 @@
 
         .databank 0
 
-      aUnknown9FD004 ; 9F/D004
+      aMapMagicBrokenStaffSpriteScript ; 9F/D004
 
         ; Part of the BrokenStaff effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD0CF
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrame09
         ACTIVE_SPRITE_CALL rlMapMagicBrokenStaffWaitPhase
-        .word <>aUnknown9FD004
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0CF
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C8
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0BA
+        .word <>aMapMagicBrokenStaffSpriteScript
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame09
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame08
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame06
         ACTIVE_SPRITE_CALL rlMapMagicBrokenStaffPlaceDefender
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
-        ACTIVE_SPRITE_FRAME 8, aUnknown9FD0A5
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD09E
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD097
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame07
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWarpFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicWarpFrame04
+        ACTIVE_SPRITE_FRAME 8, aMapMagicWarpFrame03
+        ACTIVE_SPRITE_FRAME 2, aMapMagicWarpFrame02
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrame01
 
         _D058
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD095
+        ACTIVE_SPRITE_FRAME 1, aMapMagicWarpFrameEmpty
         ACTIVE_SPRITE_JUMP _D058
 
         ; 9F/D05F
@@ -10455,63 +10541,63 @@
 
         ; 9F/D095
 
-      aUnknown9FD095 ; 9F/D095
+      aMapMagicWarpFrameEmpty ; 9F/D095
 
         .word 0
 
-      aUnknown9FD097 ; 9F/D097
+      aMapMagicWarpFrame01 ; 9F/D097
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD097._Sprites
+        .structSpriteArray aMapMagicWarpFrame01._Sprites
 
-      aUnknown9FD09E ; 9F/D09E
+      aMapMagicWarpFrame02 ; 9F/D09E
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD09E._Sprites
+        .structSpriteArray aMapMagicWarpFrame02._Sprites
 
-      aUnknown9FD0A5 ; 9F/D0A5
+      aMapMagicWarpFrame03 ; 9F/D0A5
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD0A5._Sprites
+        .structSpriteArray aMapMagicWarpFrame03._Sprites
 
-      aUnknown9FD0AC ; 9F/D0AC
+      aMapMagicWarpFrame04 ; 9F/D0AC
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD0AC._Sprites
+        .structSpriteArray aMapMagicWarpFrame04._Sprites
 
-      aUnknown9FD0B3 ; 9F/D0B3
+      aMapMagicWarpFrame05 ; 9F/D0B3
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD0B3._Sprites
+        .structSpriteArray aMapMagicWarpFrame05._Sprites
 
-      aUnknown9FD0BA ; 9F/D0BA
+      aMapMagicWarpFrame06 ; 9F/D0BA
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD0BA._Sprites
+        .structSpriteArray aMapMagicWarpFrame06._Sprites
 
-      aUnknown9FD0C1 ; 9F/D0C1
+      aMapMagicWarpFrame07 ; 9F/D0C1
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD0C1._Sprites
+        .structSpriteArray aMapMagicWarpFrame07._Sprites
 
-      aUnknown9FD0C8 ; 9F/D0C8
+      aMapMagicWarpFrame08 ; 9F/D0C8
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD0C8._Sprites
+        .structSpriteArray aMapMagicWarpFrame08._Sprites
 
-      aUnknown9FD0CF ; 9F/D0CF
+      aMapMagicWarpFrame09 ; 9F/D0CF
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD0CF._Sprites
+        .structSpriteArray aMapMagicWarpFrame09._Sprites
 
 
       rlStartMapMagicJormungandr ; 9F/D0D6
@@ -10523,13 +10609,13 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FD0DC
+          .word <>procMapMagicJormungandr
 
         rtl
 
         .databank 0
 
-      procUnknown9FD0DC ; 9F/D0DC
+      procMapMagicJormungandr ; 9F/D0DC
 
         ; Part of the Jormungandr effect.
         .structProcInfo "ON", rlMapMagicJormungandrInit, rlMapMagicJormungandrDarkenAndSpawn, aProcMapMagicHaltCode
@@ -10560,9 +10646,9 @@
         bcc rlMapMagicJormungandrDone
         lda #<>rlMapMagicJormungandrDone
         sta aProcSystem.aHeaderOnCycle,b,x
-        lda #(`aUnknown9FD102)<<8
+        lda #(`aMapMagicJormungandrSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FD102
+        lda #<>aMapMagicJormungandrSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
 
@@ -10578,10 +10664,10 @@
 
         .databank 0
 
-      aUnknown9FD102 ; 9F/D102
+      aMapMagicJormungandrSpriteInfo ; 9F/D102
 
         ; Part of the Jormungandr effect.
-        .word <>rlMapMagicJormungandrSpriteInit, <>rlMapMagicJormungandrSpriteNoOp, <>aUnknown9FD139
+        .word <>rlMapMagicJormungandrSpriteInit, <>rlMapMagicJormungandrSpriteNoOp, <>aMapMagicJormungandrSpriteScript
 
       rlMapMagicJormungandrSpriteInit ; 9F/D108
 
@@ -10639,59 +10725,59 @@
         .databank 0
 
         ; 9F/D139
-      aUnknown9FD139 ; 9F/D139
+      aMapMagicJormungandrSpriteScript ; 9F/D139
 
         ; Part of the Jormungandr effect.
         ACTIVE_SPRITE_CALL rlMapMagicJormungandrPlayCastSound
-        ACTIVE_SPRITE_FRAME 5, aUnknown9FD254
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD265
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD276
-        ACTIVE_SPRITE_FRAME 5, aUnknown9FD287
-        ACTIVE_SPRITE_FRAME 6, aUnknown9FD298
+        ACTIVE_SPRITE_FRAME 5, aMapMagicJormungandrFrame06
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrame08
+        ACTIVE_SPRITE_FRAME 5, aMapMagicJormungandrFrame09
+        ACTIVE_SPRITE_FRAME 6, aMapMagicJormungandrFrame10
         ACTIVE_SPRITE_CALL rlMapMagicJormungandrMoveToTarget
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 4, aMapMagicJormungandrFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicJormungandrPlayHitSound
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD231
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD238
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD238
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD238
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD23F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD23F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD23F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame01
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame02
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame02
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame02
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame03
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame03
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame03
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicJormungandrSignalStrike
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD29F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD29F
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2AB
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2AB
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2AB
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2B7
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2B7
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD246
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD246
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD24D
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD24D
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame11
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame11
+        ACTIVE_SPRITE_FRAME 2, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame12
+        ACTIVE_SPRITE_FRAME 2, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame12
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame12
+        ACTIVE_SPRITE_FRAME 2, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame13
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame13
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrame05
+        ACTIVE_SPRITE_FRAME 3, aMapMagicJormungandrFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicJormungandrStartFadeBack
 
         _D1F0
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aMapMagicJormungandrFrameEmpty
         ACTIVE_SPRITE_JUMP _D1F0
 
         ; 9F/D1F7
@@ -10785,99 +10871,99 @@
 
         ; 9F/D22F
 
-      aUnknown9FD22F ; 9F/D22F
+      aMapMagicJormungandrFrameEmpty ; 9F/D22F
 
         .word 0
 
-      aUnknown9FD231 ; 9F/D231
+      aMapMagicJormungandrFrame01 ; 9F/D231
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD231._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame01._Sprites
 
-      aUnknown9FD238 ; 9F/D238
+      aMapMagicJormungandrFrame02 ; 9F/D238
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD238._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame02._Sprites
 
-      aUnknown9FD23F ; 9F/D23F
+      aMapMagicJormungandrFrame03 ; 9F/D23F
 
         _Sprites := [[(  -8,   -9), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD23F._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame03._Sprites
 
-      aUnknown9FD246 ; 9F/D246
+      aMapMagicJormungandrFrame04 ; 9F/D246
 
         _Sprites := [[(  -8,  -26), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD246._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame04._Sprites
 
-      aUnknown9FD24D ; 9F/D24D
+      aMapMagicJormungandrFrame05 ; 9F/D24D
 
         _Sprites := [[(  -8,  -33), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD24D._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame05._Sprites
 
-      aUnknown9FD254 ; 9F/D254
+      aMapMagicJormungandrFrame06 ; 9F/D254
 
         _Sprites := [[(  -2,    0), $00, SpriteSmall, $00B, 2, 6, false, false]]
         _Sprites ..= [[( -10,    0), $00, SpriteSmall, $01B, 2, 6, false, false]]
         _Sprites ..= [[(  -7,   -7), $00, SpriteSmall, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD254._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame06._Sprites
 
-      aUnknown9FD265 ; 9F/D265
+      aMapMagicJormungandrFrame07 ; 9F/D265
 
         _Sprites := [[(  -2,   -3), $00, SpriteSmall, $01B, 2, 6, false, false]]
         _Sprites ..= [[( -10,   -4), $00, SpriteSmall, $00B, 2, 6, false, false]]
         _Sprites ..= [[(  -7,  -13), $00, SpriteSmall, $01A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD265._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame07._Sprites
 
-      aUnknown9FD276 ; 9F/D276
+      aMapMagicJormungandrFrame08 ; 9F/D276
 
         _Sprites := [[(  -2,   -4), $00, SpriteSmall, $00B, 2, 6, false, false]]
         _Sprites ..= [[( -10,   -9), $00, SpriteSmall, $01B, 2, 6, false, false]]
         _Sprites ..= [[(  -7,  -22), $00, SpriteSmall, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD276._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame08._Sprites
 
-      aUnknown9FD287 ; 9F/D287
+      aMapMagicJormungandrFrame09 ; 9F/D287
 
         _Sprites := [[(  -2,   -7), $00, SpriteSmall, $01B, 2, 6, false, false]]
         _Sprites ..= [[( -10,  -15), $00, SpriteSmall, $00B, 2, 6, false, false]]
         _Sprites ..= [[(  -7,  -29), $00, SpriteSmall, $01A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD287._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame09._Sprites
 
-      aUnknown9FD298 ; 9F/D298
+      aMapMagicJormungandrFrame10 ; 9F/D298
 
         _Sprites := [[(  -6,  -39), $00, SpriteSmall, $00B, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD298._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame10._Sprites
 
-      aUnknown9FD29F ; 9F/D29F
+      aMapMagicJormungandrFrame11 ; 9F/D29F
 
         _Sprites := [[(  -8,    0), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -15), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD29F._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame11._Sprites
 
-      aUnknown9FD2AB ; 9F/D2AB
+      aMapMagicJormungandrFrame12 ; 9F/D2AB
 
         _Sprites := [[(  -8,   -4), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -19), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD2AB._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame12._Sprites
 
-      aUnknown9FD2B7 ; 9F/D2B7
+      aMapMagicJormungandrFrame13 ; 9F/D2B7
 
         _Sprites := [[(   0,   -9), $00, SpriteSmall, $017, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -9), $00, SpriteSmall, $016, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -22), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD2B7._Sprites
+        .structSpriteArray aMapMagicJormungandrFrame13._Sprites
 
 
       rlStartMapMagicThief ; 9F/D2C8
@@ -10887,19 +10973,19 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown9FD2D7)<<8
+        lda #(`aMapMagicThiefSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FD2D7
+        lda #<>aMapMagicThiefSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         rtl
 
         .databank 0
 
-      aUnknown9FD2D7 ; 9F/D2D7
+      aMapMagicThiefSpriteInfo ; 9F/D2D7
 
         ; Part of the Thief effect.
-        .word <>rlMapMagicThiefSpriteInit, <>rlMapMagicThiefSpriteAim, <>aUnknown9FD399
+        .word <>rlMapMagicThiefSpriteInit, <>rlMapMagicThiefSpriteAim, <>aMapMagicThiefSpriteScript
 
 
       rlMapMagicThiefSpriteInit ; 9F/D2DD
@@ -11032,28 +11118,28 @@
 
         .databank 0
 
-      aUnknown9FD399 ; 9F/D399
+      aMapMagicThiefSpriteScript ; 9F/D399
 
         ; Part of the Thief effect.
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FD3E4
-        ACTIVE_SPRITE_FRAME 5, aUnknown9FD3EB
-        ACTIVE_SPRITE_FRAME 6, aUnknown9FD3F2
-        ACTIVE_SPRITE_FRAME 9, aUnknown9FD3F9
+        ACTIVE_SPRITE_FRAME 4, aMapMagicThiefFrame01
+        ACTIVE_SPRITE_FRAME 5, aMapMagicThiefFrame02
+        ACTIVE_SPRITE_FRAME 6, aMapMagicThiefFrame03
+        ACTIVE_SPRITE_FRAME 9, aMapMagicThiefFrame04
 
         _D3A9
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD3F9
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD400
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThiefFrame04
+        ACTIVE_SPRITE_FRAME 3, aMapMagicThiefFrame05
         ACTIVE_SPRITE_CALL rlMapMagicThiefWaitSpritePhase
         .word <>_D3A9
-        ACTIVE_SPRITE_FRAME 5, aUnknown9FD407
-        ACTIVE_SPRITE_FRAME 32, aUnknown9FD40E
-        ACTIVE_SPRITE_FRAME 9, aUnknown9FD3F9
-        ACTIVE_SPRITE_FRAME 6, aUnknown9FD3F2
-        ACTIVE_SPRITE_FRAME 5, aUnknown9FD3EB
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FD3E4
+        ACTIVE_SPRITE_FRAME 5, aMapMagicThiefFrame06
+        ACTIVE_SPRITE_FRAME 32, aMapMagicThiefFrame07
+        ACTIVE_SPRITE_FRAME 9, aMapMagicThiefFrame04
+        ACTIVE_SPRITE_FRAME 6, aMapMagicThiefFrame03
+        ACTIVE_SPRITE_FRAME 5, aMapMagicThiefFrame02
+        ACTIVE_SPRITE_FRAME 4, aMapMagicThiefFrame01
 
         _D3CE
-        ACTIVE_SPRITE_FRAME 9, aUnknown9FD3E2
+        ACTIVE_SPRITE_FRAME 9, aMapMagicThiefFrameEmpty
         ACTIVE_SPRITE_JUMP _D3CE
 
         ; 9F/D3D5
@@ -11080,69 +11166,69 @@
 
         .databank 0
 
-      aUnknown9FD3E2 ; 9F/D3E2
+      aMapMagicThiefFrameEmpty ; 9F/D3E2
 
         .word 0
 
-      aUnknown9FD3E4 ; 9F/D3E4
+      aMapMagicThiefFrame01 ; 9F/D3E4
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD3E4._Sprites
+        .structSpriteArray aMapMagicThiefFrame01._Sprites
 
-      aUnknown9FD3EB ; 9F/D3EB
+      aMapMagicThiefFrame02 ; 9F/D3EB
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD3EB._Sprites
+        .structSpriteArray aMapMagicThiefFrame02._Sprites
 
-      aUnknown9FD3F2 ; 9F/D3F2
+      aMapMagicThiefFrame03 ; 9F/D3F2
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD3F2._Sprites
+        .structSpriteArray aMapMagicThiefFrame03._Sprites
 
-      aUnknown9FD3F9 ; 9F/D3F9
+      aMapMagicThiefFrame04 ; 9F/D3F9
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD3F9._Sprites
+        .structSpriteArray aMapMagicThiefFrame04._Sprites
 
-      aUnknown9FD400 ; 9F/D400
+      aMapMagicThiefFrame05 ; 9F/D400
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD400._Sprites
+        .structSpriteArray aMapMagicThiefFrame05._Sprites
 
-      aUnknown9FD407 ; 9F/D407
+      aMapMagicThiefFrame06 ; 9F/D407
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD407._Sprites
+        .structSpriteArray aMapMagicThiefFrame06._Sprites
 
-      aUnknown9FD40E ; 9F/D40E
+      aMapMagicThiefFrame07 ; 9F/D40E
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD40E._Sprites
+        .structSpriteArray aMapMagicThiefFrame07._Sprites
 
-      aUnknown9FD415 ; 9F/D415
+      aMapMagicThiefFrameUnused1 ; 9F/D415
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $01C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD415._Sprites
+        .structSpriteArray aMapMagicThiefFrameUnused1._Sprites
 
-      aUnknown9FD41C ; 9F/D41C
+      aMapMagicThiefFrameUnused2 ; 9F/D41C
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $00D, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD41C._Sprites
+        .structSpriteArray aMapMagicThiefFrameUnused2._Sprites
 
-      aUnknown9FD423 ; 9F/D423
+      aMapMagicThiefFrameUnused3 ; 9F/D423
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $01D, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD423._Sprites
+        .structSpriteArray aMapMagicThiefFrameUnused3._Sprites
 
 
       rlStartMapMagicValflame ; 9F/D42A
@@ -11154,24 +11240,24 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FD430
+          .word <>procMapMagicValflame
 
         rtl
 
         .databank 0
 
-      procUnknown9FD430 ; 9F/D430
+      procMapMagicValflame ; 9F/D430
 
         ; Part of the Valflame effect.
-        .structProcInfo "ON", rlMapMagicValflameInit, rlMapMagicValflameTintRed, aProcUnknown9FD438Code
+        .structProcInfo "ON", rlMapMagicValflameInit, rlMapMagicValflameTintRed, aProcMapMagicValflameCode
 
 
-      aProcUnknown9FD438Code ; 9F/D438
+      aProcMapMagicValflameCode ; 9F/D438
 
         ; Part of the Valflame effect.
         PROC_YIELD 1
         PROC_CALL rlMapMagicValflameStepBGPaletteAnim
-        PROC_JUMP aProcUnknown9FD438Code
+        PROC_JUMP aProcMapMagicValflameCode
 
 
       rlMapMagicValflameInit ; 9F/D443
@@ -11276,7 +11362,7 @@
 
         jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9FD7A0
+          .word <>procMapMagicValflameBeam
 
         jsr rsCreateMapMagicHDMA
 
@@ -11299,9 +11385,9 @@
           .word <>aUnknown9FDE7E
 
         phx
-        lda #(`aUnknown9FD5D2)<<8
+        lda #(`aMapMagicValflameSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FD5D2
+        lda #<>aMapMagicValflameSpriteInfo
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
         plx
@@ -11337,26 +11423,26 @@
         _D4E5
         asl a
         tax
-        lda <>aUnknown9FD513,b,x
+        lda <>aMapMagicValflameBGPaletteAnim,b,x
         sta $01D2,b
-        lda <>(aUnknown9FD513+2),b,x
+        lda <>(aMapMagicValflameBGPaletteAnim+2),b,x
         sta $01D4,b
-        lda <>(aUnknown9FD513+4),b,x
+        lda <>(aMapMagicValflameBGPaletteAnim+4),b,x
         sta $01D6,b
-        lda <>(aUnknown9FD513+6),b,x
+        lda <>(aMapMagicValflameBGPaletteAnim+6),b,x
         sta $01D8,b
-        lda <>(aUnknown9FD513+8),b,x
+        lda <>(aMapMagicValflameBGPaletteAnim+8),b,x
         sta $01DA,b
-        lda <>(aUnknown9FD513+10),b,x
+        lda <>(aMapMagicValflameBGPaletteAnim+10),b,x
         sta $01DC,b
-        lda <>(aUnknown9FD513+12),b,x
+        lda <>(aMapMagicValflameBGPaletteAnim+12),b,x
         sta $01DE,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FD513 ; 9F/D513
+      aMapMagicValflameBGPaletteAnim ; 9F/D513
 
         ; Part of the Valflame effect.
         .word $03FF, $033F, $025F, $019F, $019F, $025F, $033F, $03FF
@@ -11392,26 +11478,26 @@
         _D564
         asl a
         tax
-        lda <>aUnknown9FD592,b,x
+        lda <>aMapMagicValflameSpritePalettes,b,x
         sta $02D2,b
-        lda <>(aUnknown9FD592+2),b,x
+        lda <>(aMapMagicValflameSpritePalettes+2),b,x
         sta $02D4,b
-        lda <>(aUnknown9FD592+4),b,x
+        lda <>(aMapMagicValflameSpritePalettes+4),b,x
         sta $02D6,b
-        lda <>(aUnknown9FD592+6),b,x
+        lda <>(aMapMagicValflameSpritePalettes+6),b,x
         sta $02D8,b
-        lda <>(aUnknown9FD592+8),b,x
+        lda <>(aMapMagicValflameSpritePalettes+8),b,x
         sta $02DA,b
-        lda <>(aUnknown9FD592+10),b,x
+        lda <>(aMapMagicValflameSpritePalettes+10),b,x
         sta $02DC,b
-        lda <>(aUnknown9FD592+12),b,x
+        lda <>(aMapMagicValflameSpritePalettes+12),b,x
         sta $02DE,b
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FD592 ; 9F/D592
+      aMapMagicValflameSpritePalettes ; 9F/D592
 
         ; Part of the Valflame effect.
         .word $02FF, $025F, $01FC, $01B7, $00F5, $14B0, $00F5, $01B7
@@ -11419,10 +11505,10 @@
         .word $02FF, $025F, $01FC, $01B7, $00F5, $14B0, $00F5, $01B7
         .word $025F, $02FF, $025F, $01B7, $00F5, $14B0, $00F5, $01FC
 
-      aUnknown9FD5D2 ; 9F/D5D2
+      aMapMagicValflameSpriteInfo ; 9F/D5D2
 
         ; Part of the Valflame effect.
-        .word <>rlMapMagicValflameSpriteInit, <>rlMapMagicValflameSpriteWaitEnd, <>aUnknown9FD70E
+        .word <>rlMapMagicValflameSpriteInit, <>rlMapMagicValflameSpriteWaitEnd, <>aMapMagicValflameSpriteScript
 
 
       rlMapMagicValflameSpriteInit ; 9F/D5D8
@@ -11467,16 +11553,16 @@
 
         .databank 0
 
-      aUnknown9FD60D ; 9F/D60D
+      aMapMagicValflameOrbLeftSpriteInfo ; 9F/D60D
 
         ; Part of the Valflame effect.
-        .word <>rlMapMagicValflameOrbLeftInit, <>rlMapMagicValflameOrbConverge, <>aUnknown9FD6BA
+        .word <>rlMapMagicValflameOrbLeftInit, <>rlMapMagicValflameOrbConverge, <>aMapMagicValflameOrbLeftSpriteScript
 
 
-      aUnknown9FD613 ; 9F/D613
+      aMapMagicValflameOrbRightSpriteInfo ; 9F/D613
 
         ; Part of the Valflame effect.
-        .word <>rlMapMagicValflameOrbRightInit, <>rlMapMagicValflameOrbConverge, <>aUnknown9FD6E4
+        .word <>rlMapMagicValflameOrbRightInit, <>rlMapMagicValflameOrbConverge, <>aMapMagicValflameOrbRightSpriteScript
 
 
       rlMapMagicValflameOrbRightInit ; 9F/D619
@@ -11507,7 +11593,7 @@
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
         ldy wR0
-        lda <>aUnknown9FD67D,b,y
+        lda <>aMapMagicValflameOrbData,b,y
         bit wR2
         bpl _D636
         eor #$FFFF
@@ -11524,7 +11610,7 @@
         sta wR0
         lda wMapMagicTargetPixel+1
         clc
-        adc <>(aUnknown9FD67D+2),b,y
+        adc <>(aMapMagicValflameOrbData+2),b,y
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
@@ -11551,7 +11637,7 @@
 
         .databank 0
 
-      aUnknown9FD67D ; 9F/D67D
+      aMapMagicValflameOrbData ; 9F/D67D
 
         ; Part of the Valflame effect.
         .byte $F0, $FF, $02, $00, $00, $00, $00, $00, $F8, $FF, $06, $00, $00, $00, $00, $00
@@ -11591,13 +11677,20 @@
 
         .databank 0
 
-      aUnknown9FD6BA ; 9F/D6BA
+      aMapMagicValflameOrbLeftSpriteScript ; 9F/D6BA
 
         ; Part of the Valflame effect.
-        .byte $00, $01, $57, $D7, $17, $D4, $D6, $BA, $D6, $00, $04, $6A, $D7, $00, $04, $71
-        .byte $D7, $00, $04, $78, $D7, $00, $01, $55, $D7, $01
 
-      rlMapMagicValflameWaitOrbUnused ; 9F/D6D4
+        ACTIVE_SPRITE_FRAME 1, aMapMagicValflameFrame01
+        ACTIVE_SPRITE_CALL rlMapMagicValflameWaitLeftOrbPhase
+        .word <>aMapMagicValflameOrbLeftSpriteScript
+        ACTIVE_SPRITE_FRAME 4, aMapMagicValflameFrame03
+        ACTIVE_SPRITE_FRAME 4, aMapMagicValflameFrame04
+        ACTIVE_SPRITE_FRAME 4, aMapMagicValflameFrame05
+        ACTIVE_SPRITE_FRAME 1, aMapMagicValflameFrameEmpty
+        ACTIVE_SPRITE_END
+
+      rlMapMagicValflameWaitLeftOrbPhase ; 9F/D6D4
 
         .al
         .xl
@@ -11619,16 +11712,16 @@
 
         .databank 0
 
-      aUnknown9FD6E4 ; 9F/D6E4
+      aMapMagicValflameOrbRightSpriteScript ; 9F/D6E4
 
         ; Part of the Valflame effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD799
+        ACTIVE_SPRITE_FRAME 1, aMapMagicValflameFrame09
         ACTIVE_SPRITE_CALL rlMapMagicValflameWaitOrbPhase
-        .word <>aUnknown9FD6E4
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FD76A
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FD771
-        ACTIVE_SPRITE_FRAME 4, aUnknown9FD778
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD755
+        .word <>aMapMagicValflameOrbRightSpriteScript
+        ACTIVE_SPRITE_FRAME 4, aMapMagicValflameFrame03
+        ACTIVE_SPRITE_FRAME 4, aMapMagicValflameFrame04
+        ACTIVE_SPRITE_FRAME 4, aMapMagicValflameFrame05
+        ACTIVE_SPRITE_FRAME 1, aMapMagicValflameFrameEmpty
         ACTIVE_SPRITE_END
 
         ; 9F/D6FE
@@ -11656,26 +11749,26 @@
 
         .databank 0
 
-      aUnknown9FD70E ; 9F/D70E
+      aMapMagicValflameSpriteScript ; 9F/D70E
 
         ; Part of the Valflame effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD755
+        ACTIVE_SPRITE_FRAME 1, aMapMagicValflameFrameEmpty
         ACTIVE_SPRITE_CALL rlMapMagicValflameWaitColumnOrRing
-        .word <>aUnknown9FD70E
-        ACTIVE_SPRITE_FRAME 6, aUnknown9FD77F
-        ACTIVE_SPRITE_FRAME 5, aUnknown9FD786
-        ACTIVE_SPRITE_FRAME 3, aUnknown9FD78D
+        .word <>aMapMagicValflameSpriteScript
+        ACTIVE_SPRITE_FRAME 6, aMapMagicValflameFrame06
+        ACTIVE_SPRITE_FRAME 5, aMapMagicValflameFrame07
+        ACTIVE_SPRITE_FRAME 3, aMapMagicValflameFrame08
 
         _D723
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD75E
+        ACTIVE_SPRITE_FRAME 1, aMapMagicValflameFrame02
         ACTIVE_SPRITE_CALL rlMapMagicValflameWaitRing
         .word <>_D723
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD78D
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD786
-        ACTIVE_SPRITE_FRAME 2, aUnknown9FD77F
+        ACTIVE_SPRITE_FRAME 2, aMapMagicValflameFrame08
+        ACTIVE_SPRITE_FRAME 2, aMapMagicValflameFrame07
+        ACTIVE_SPRITE_FRAME 2, aMapMagicValflameFrame06
 
         _D738
-        ACTIVE_SPRITE_FRAME 1, aUnknown9FD755
+        ACTIVE_SPRITE_FRAME 1, aMapMagicValflameFrameEmpty
         ACTIVE_SPRITE_JUMP _D738
 
       rlMapMagicValflameWaitColumnOrRing ; 9F/D73F
@@ -11718,68 +11811,68 @@
 
         ; 9F/D755
 
-      aUnknown9FD755 ; 9F/D755
+      aMapMagicValflameFrameEmpty ; 9F/D755
 
         .word 0
 
-      aUnknown9FD757 ; 9F/D757
+      aMapMagicValflameFrame01 ; 9F/D757
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD757._Sprites
+        .structSpriteArray aMapMagicValflameFrame01._Sprites
 
-      aUnknown9FD75E ; 9F/D75E
+      aMapMagicValflameFrame02 ; 9F/D75E
 
         _Sprites := [[(   0,   -5), $21, SpriteLarge, $004, 2, 6, false, false]]
         _Sprites ..= [[( -16,   -5), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD75E._Sprites
+        .structSpriteArray aMapMagicValflameFrame02._Sprites
 
-      aUnknown9FD76A ; 9F/D76A
+      aMapMagicValflameFrame03 ; 9F/D76A
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $016, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD76A._Sprites
+        .structSpriteArray aMapMagicValflameFrame03._Sprites
 
-      aUnknown9FD771 ; 9F/D771
+      aMapMagicValflameFrame04 ; 9F/D771
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD771._Sprites
+        .structSpriteArray aMapMagicValflameFrame04._Sprites
 
-      aUnknown9FD778 ; 9F/D778
+      aMapMagicValflameFrame05 ; 9F/D778
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $017, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD778._Sprites
+        .structSpriteArray aMapMagicValflameFrame05._Sprites
 
-      aUnknown9FD77F ; 9F/D77F
+      aMapMagicValflameFrame06 ; 9F/D77F
 
         _Sprites := [[(  -4,   -1), $00, SpriteSmall, $007, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD77F._Sprites
+        .structSpriteArray aMapMagicValflameFrame06._Sprites
 
-      aUnknown9FD786 ; 9F/D786
+      aMapMagicValflameFrame07 ; 9F/D786
 
         _Sprites := [[(  -8,   -5), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD786._Sprites
+        .structSpriteArray aMapMagicValflameFrame07._Sprites
 
-      aUnknown9FD78D ; 9F/D78D
+      aMapMagicValflameFrame08 ; 9F/D78D
 
         _Sprites := [[(   5,   -5), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[( -11,   -5), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9FD78D._Sprites
+        .structSpriteArray aMapMagicValflameFrame08._Sprites
 
-      aUnknown9FD799 ; 9F/D799
+      aMapMagicValflameFrame09 ; 9F/D799
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9FD799._Sprites
+        .structSpriteArray aMapMagicValflameFrame09._Sprites
 
 
-      procUnknown9FD7A0 ; 9F/D7A0
+      procMapMagicValflameBeam ; 9F/D7A0
 
         ; Part of the Valflame effect.
         .structProcInfo "ON", rlMapMagicValflameBeamInit, rlMapMagicValflameBeamDescend, aProcMapMagicHaltCode
@@ -11902,7 +11995,7 @@
         lsr a
         lsr a
         tay
-        lda <>aUnknown9FD899,b,y
+        lda <>aMapMagicValflameBeamImpactSteps,b,y
         and #$00FF
         sta aProcSystem.aBody0,b,x
         lda wMapMagicTargetPixel
@@ -11917,7 +12010,7 @@
 
         .databank 0
 
-      aUnknown9FD899 ; 9F/D899
+      aMapMagicValflameBeamImpactSteps ; 9F/D899
 
         ; Part of the Valflame effect.
         .byte $16, $12, $0E, $0C, $0A, $09, $08, $07, $07, $06, $05, $05, $05, $05, $05, $05
@@ -12005,17 +12098,17 @@
         xba
         tax
         ldy #$0000
-        lda #(`aUnknown9FD60D)<<8
+        lda #(`aMapMagicValflameOrbLeftSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FD60D
+        lda #<>aMapMagicValflameOrbLeftSpriteInfo
         sta lR44
         lda wMapMagicTargetPixel
         and #$00FF
         cmp #$00C0
         bmi _D943
-        lda #(`aUnknown9FD613)<<8
+        lda #(`aMapMagicValflameOrbRightSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9FD613
+        lda #<>aMapMagicValflameOrbRightSpriteInfo
         sta lR44
 
         _D943
@@ -13050,7 +13143,7 @@
         ldy #$0000
 
         _DFC7
-        lda aUnknown9FE634,x
+        lda aHDMAMapMagicScrollYAltStepsUnused,x
         clc
         adc wR0
         clc
@@ -13252,7 +13345,7 @@
         ldx #$0000
 
         _E0D3
-        lda @l aUnknown9FE119,x
+        lda @l aHDMAMapMagicRippleWave,x
         asl a
         asl a
         asl a
@@ -13261,7 +13354,7 @@
         sta wR6
         lda $4C89,b,y
         clc
-        adc @l aUnknown9FE119,x
+        adc @l aHDMAMapMagicRippleWave,x
         cmp wR6
         bmi _E0EC
         lda wR6
@@ -13294,7 +13387,7 @@
 
         .databank 0
 
-      aUnknown9FE119 ; 9F/E119
+      aHDMAMapMagicRippleWave ; 9F/E119
 
         .word $00EE, $00EC, $00EA, $00E8, $00E6, $00E4, $00E2, $00E0
         .word $00DE, $00DC, $00DA, $00D8, $00D6, $00D4, $00D2, $00D0
@@ -13473,7 +13566,7 @@
         .byte $00, $01, $00, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00
         .byte $00
 
-      aUnknown9FE634 ; 9F/E634
+      aHDMAMapMagicScrollYAltStepsUnused ; 9F/E634
 
         .word $0000, $0000, $0001, $0001, $0002, $0002, $0003, $0003
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
@@ -14216,122 +14309,122 @@
         ; 9F/EBAB
 
 
-      procUnknown9FEBAB ; 9F/EBAB
+      procMapMagicFireWindow ; 9F/EBAB
 
         .structProcInfo "ON", rlMapMagicScrollWindowInit, rlMapMagicFireWindowCycle, aProcMapMagicHaltCode
 
         .byte $10, $00, $01, $00, $00, $00, $00
 
-      procUnknown9FEBBA ; 9F/EBBA
+      procMapMagicElfireWindow ; 9F/EBBA
 
         ; Part of the Elfire effect.
         .structProcInfo "ON", rlMapMagicScrollWindowInit, rlMapMagicElfireWindowCycle, aProcMapMagicHaltCode
 
         .byte $10, $00, $01, $00, $00, $00, $00
 
-      procUnknown9FEBC9 ; 9F/EBC9
+      procMapMagicAuraWindow ; 9F/EBC9
 
         ; Part of the Aura effect.
         .structProcInfo "ON", rlMapMagicAuraWindowInit, rlMapMagicAuraWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $00, $12, $00, $00, $00, $00
 
-      procUnknown9FEBD8 ; 9F/EBD8
+      procMapMagicCircleWindow ; 9F/EBD8
 
         ; Shared by the Heal, Light, Mend, Physic and Recover effects.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $12, $00, $01, $00, $00, $00, $00
 
-      procUnknown9FEBE7 ; 9F/EBE7
+      procMapMagicThunderWindow ; 9F/EBE7
 
         ; Part of the Thunder effect.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $01, $02, $00, $00, $00, $00
 
-      procUnknown9FEBF6 ; 9F/EBF6
+      procMapMagicNosferatuOrb ; 9F/EBF6
 
         ; Part of the Nosferatu effect.
         .structProcInfo "ON", rlMapMagicNosferatuOrbInit, rlMapMagicNosferatuOrbGrow, aProcMapMagicHaltCode
 
-      procUnknown9FEBFE ; 9F/EBFE
+      procMapMagicMjolnirWindow ; 9F/EBFE
 
         ; Part of the Mjolnir effect.
         .structProcInfo "ON", rlMapMagicMjolnirWindowSetDelay, rlMapMagicMjolnirWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $00, $01, $00, $00, $00, $00
 
-      procUnknown9FEC0D ; 9F/EC0D
+      procMapMagicFortifyWindow ; 9F/EC0D
 
         ; Part of the Fortify effect.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $80, $00, $10, $00, $00, $00, $00
 
-      procUnknown9FEC1C ; 9F/EC1C
+      procMapMagicFenrirWindow ; 9F/EC1C
 
         ; Part of the Fenrir effect.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $60, $00, $02, $00, $00, $D4, $00
 
-      procUnknown9FEC2B ; 9F/EC2B
+      procMapMagicBerserkWindow ; 9F/EC2B
 
         ; Part of the Berserk effect.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $20, $00, $01, $00, $00, $00, $00
 
-      procUnknown9FEC3A ; 9F/EC3A
+      procMapMagicBlizzardHelWindow ; 9F/EC3A
 
         ; Shared by the Blizzard and Hel effects.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $01, $01, $00, $00, $00, $00
 
-      procUnknown9FEC49 ; 9F/EC49
+      procMapMagicBolganoneWindow ; 9F/EC49
 
         ; Part of the Bolganone effect.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $30, $01, $10, $00, $00, $F0, $FF
 
-      procUnknown9FEC58 ; 9F/EC58
+      procMapMagicThoronWindow ; 9F/EC58
 
         ; Part of the Thoron effect.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $1E, $00, $01, $00, $00, $00, $00
 
-      procUnknown9FEC67 ; 9F/EC67
+      procMapMagicStaffWindow ; 9F/EC67
 
         ; Shared by the Restore, Return and Sleep effects.
         .structProcInfo "ON", rlMapMagicStaffWindowInit, rlMapMagicStaffWindowWaitGrow, aProcMapMagicHaltCode
 
         .byte $0C, $30, $00, $00, $00, $0E, $00
 
-      procUnknown9FEC76 ; 9F/EC76
+      procMapMagicForsetiWindow ; 9F/EC76
 
         ; Part of the Forseti effect.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicForsetiWindowCycle, aProcMapMagicHaltCode
 
         .byte $F0, $00, $02, $00, $00, $00, $00
 
-      procUnknown9FEC85 ; 9F/EC85
+      procMapMagicSilenceWindow ; 9F/EC85
 
         ; Part of the Silence effect.
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicSilenceStepBeamHDMA, aProcMapMagicHaltCode
 
         .byte $22, $00, $01, $00, $00, $00, $00
 
-      procUnknown9FEC94 ; 9F/EC94
+      procMapMagicCircleWindowUnused ; 9F/EC94
 
         .structProcInfo "ON", rlMapMagicCircleWindowInit, rlMapMagicCircleWindowCycle, aProcMapMagicHaltCode
 
         .byte $18, $01, $01, $00, $00, $00, $00
 
-      procUnknown9FECA3 ; 9F/ECA3
+      procMapMagicMeteorWindow ; 9F/ECA3
 
         ; Part of the Meteor effect.
         .structProcInfo "ON", rlMapMagicScrollWindowInit, rlMapMagicMeteorWindowInit, aProcMapMagicHaltCode
@@ -15627,13 +15720,13 @@
         nop
         nop
         rep #$20
-        jsr (aUnknown9FF427,x)
+        jsr (aMapMagicGetOctantAngleJumpTable,x)
         plx
         rtl
 
         .databank 0
 
-      aUnknown9FF427 ; 9F/F427
+      aMapMagicGetOctantAngleJumpTable ; 9F/F427
 
         ; Jump table of rlMapMagicGetOctantAngle.
         .word <>rsMapMagicAngleOctant0
@@ -15658,7 +15751,7 @@
         nop
         nop
         rep #$20
-        jsr (aUnknown9FF448,x)
+        jsr (aMapMagicDivideAngleOctantJumpTable,x)
         plx
         rtl
 
@@ -15674,7 +15767,7 @@
       .al
       .xl
 
-      aUnknown9FF448 ; 9F/F448
+      aMapMagicDivideAngleOctantJumpTable ; 9F/F448
 
         ; Jump table of rlMapMagicGetOctantAngle.
         .word <>rsMapMagicAngleOctant4
@@ -15899,9 +15992,9 @@
         .databank ?
 
         phx
-        lda #(`procUnknown9FF4D6)<<8
+        lda #(`procMapMagicCutsceneSeq)<<8
         sta lR44+1
-        lda #<>procUnknown9FF4D6
+        lda #<>procMapMagicCutsceneSeq
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -15919,9 +16012,9 @@
       .al
       .xl
 
-      procUnknown9FF4D6 ; 9F/F4D6
+      procMapMagicCutsceneSeq ; 9F/F4D6
 
-        .structProcInfo "ON", rlProcMapMagicCutsceneSeqInit, rlProcMapMagicCutsceneSeqIdle, aProcUnknown9FF4D6Code
+        .structProcInfo "ON", rlProcMapMagicCutsceneSeqInit, rlProcMapMagicCutsceneSeqIdle, aProcMapMagicCutsceneSeqCode
 
     .endsection Unsorted9FF4D6Section
 
@@ -16069,7 +16162,7 @@
       .al
       .xl
 
-      aProcUnknown9FF4D6Code ; 9F/F59D
+      aProcMapMagicCutsceneSeqCode ; 9F/F59D
 
         PROC_YIELD 1
         _F59F
@@ -16326,7 +16419,7 @@
         ldx #$001E
 
         _F71C
-        lda aUnknown9FF729,x
+        lda aMapMagicCutsceneGfxData,x
         sta aOAMPaletteBuffer.aPalette5,b,x
         dec x
         dec x
@@ -16346,7 +16439,7 @@
       .al
       .xl
 
-      aUnknown9FF729 ; 9F/F729
+      aMapMagicCutsceneGfxData ; 9F/F729
 
         ; Read by rlMapMagicCutsceneUploadGfx.
 
@@ -16723,9 +16816,9 @@
 
         lda #$0001
         sta aProcSystem.wInput0,b
-        lda #(`procUnknown87C70A)<<8
+        lda #(`procMapMagicRipple)<<8
         sta lR44+1
-        lda #<>procUnknown87C70A
+        lda #<>procMapMagicRipple
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -16801,7 +16894,7 @@
       .al
       .xl
 
-      aUnknown9FF98E ; 9F/F98E
+      aMapMagicColorRangesUnused ; 9F/F98E
 
         ; Unreferenced: a colour range list ending in $FFFF, like the ones
         ; the palette fades read (aMapMagicBackgroundPaletteRanges).
@@ -16824,9 +16917,9 @@
         .databank ?
 
         phx
-        lda #(`procUnknown9FF9B9)<<8
+        lda #(`procMapMagicCutsceneShake)<<8
         sta lR44+1
-        lda #<>procUnknown9FF9B9
+        lda #<>procMapMagicCutsceneShake
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -16844,9 +16937,9 @@
       .al
       .xl
 
-      procUnknown9FF9B9 ; 9F/F9B9
+      procMapMagicCutsceneShake ; 9F/F9B9
 
-        .structProcInfo "ON", rlProcMapMagicCutsceneShakeInit, rlProcMapMagicCutsceneShakeCycle, aProcUnknown9FF9B9Code
+        .structProcInfo "ON", rlProcMapMagicCutsceneShakeInit, rlProcMapMagicCutsceneShakeCycle, aProcMapMagicCutsceneShakeCode
 
     .endsection Unsorted9FF9B9Section
 
@@ -16900,15 +16993,15 @@
         asl a
         tax
         lda wMapScrollXPixels,b
-        eor aUnknown9FFA88,x
+        eor aMapMagicCutsceneShakeOffsets2,x
         sta wMapScrollXPixels,b
         lda wMapScrollYPixels,b
-        eor aUnknown9FFA88+2,x
+        eor aMapMagicCutsceneShakeOffsets2+2,x
         sta wMapScrollYPixels,b
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         tax
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        eor aUnknown9FFA88,x
+        eor aMapMagicCutsceneShakeOffsets2,x
         sta aActiveSpriteSystem.aUnknown001200,b,x
         bra _FA47
 
@@ -16920,15 +17013,15 @@
         asl a
         tax
         lda wMapScrollXPixels,b
-        eor aUnknown9FFA78,x
+        eor aMapMagicCutsceneShakeOffsets1,x
         sta wMapScrollXPixels,b
         lda wMapScrollYPixels,b
-        eor aUnknown9FFA78+2,x
+        eor aMapMagicCutsceneShakeOffsets1+2,x
         sta wMapScrollYPixels,b
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         tax
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        eor aUnknown9FFA78,x
+        eor aMapMagicCutsceneShakeOffsets1,x
         sta aActiveSpriteSystem.aUnknown001200,b,x
 
         _FA47
@@ -16969,7 +17062,7 @@
       .al
       .xl
 
-      aUnknown9FFA78 ; 9F/FA78
+      aMapMagicCutsceneShakeOffsets1 ; 9F/FA78
 
         ; Read by rlProcMapMagicCutsceneShakeCycle.
 
@@ -16977,7 +17070,7 @@
 
         ; 9F/FA88
 
-      aUnknown9FFA88 ; 9F/FA88
+      aMapMagicCutsceneShakeOffsets2 ; 9F/FA88
 
         ; Read by rlProcMapMagicCutsceneShakeCycle.
 
@@ -16993,7 +17086,7 @@
       .al
       .xl
 
-      aProcUnknown9FF9B9Code ; 9F/FA98
+      aProcMapMagicCutsceneShakeCode ; 9F/FA98
 
         PROC_HALT
 

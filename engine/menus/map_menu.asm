@@ -253,7 +253,7 @@
 
         .word 0, 1
 
-      procUnknown8583B3 ; 85/83B3
+      procUnitMenuUnused ; 85/83B3
 
         .structProcInfo "PM", rlListMenuProcInit, rlListMenuProcSetUp, aProcListMenuCode
         .long aUnitMenuData
