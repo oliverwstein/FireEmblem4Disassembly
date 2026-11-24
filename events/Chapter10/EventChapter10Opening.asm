@@ -55,7 +55,7 @@
     CASTLE_NAME dialogueCastleNameChronos, CASLTE_NAME_RED, 150
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter10Opening1, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter10Opening1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     SET_CAMERA_POSITION [31, 42]
     YIELD
 
@@ -95,7 +95,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter10Opening3, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter10Opening3, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _UnitList3 := [(aUNITGroupDataChapter10Opening2.ID_10, 25)]
@@ -155,7 +155,7 @@
     CASTLE_NAME dialogueCastleNamePeruluke, CASLTE_NAME_BLUE, 100
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter10Opening4, DIALOGUE_BG_ALLEY, 5, 3
+    DIALOGUE_WITH_BG dialogueChapter10Opening4, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_FADE_OUT, 3
     YIELD
 
     PAUSE 35
@@ -167,7 +167,7 @@
     PAUSE 25
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter10Opening5, DIALOGUE_BG_THRONE, 3, 3
+    DIALOGUE_WITH_BG dialogueChapter10Opening5, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 3
     YIELD
 
     RUN_EVENT_CONDITION

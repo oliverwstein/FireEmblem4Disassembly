@@ -252,7 +252,7 @@
         lda wChapterFlags,b
         bit #$0020
         beq rsCastleStaffTargetCheckFail
-        lda $7E4E77
+        lda aCastleUnitDeploymentOffsets+size(word) ; fewer than two units in the castle: no one else to target
         cmp #$FFFF
         beq rsCastleStaffTargetCheckFail
         jsl rlBuildCastleTargetList

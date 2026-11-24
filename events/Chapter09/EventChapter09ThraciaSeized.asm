@@ -11,14 +11,14 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter09, FlagChapter09_JuliaCaptureReturn
     JUMP_FALSE +
 
-      DIALOGUE_WITH_BG dialogueDeathQuoteGen1PlayerJuliaReturn, DIALOGUE_BG_HALLWAY, 5, 2
+      DIALOGUE_WITH_BG dialogueDeathQuoteGen1PlayerJuliaReturn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_FADE_OUT, 2
       YIELD
 
       PAUSE 25
       YIELD
 
     + ; B1/DC68
-    DIALOGUE_WITH_BG dialogueChapter09Ending, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter09Ending, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     SET_CAMERA_POSITION [45, 34]
     YIELD
 

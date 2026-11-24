@@ -552,7 +552,7 @@
 
       aChapterFinalEventData ; B1/A9A1
 
-        .structChapterEventData aChapterFinalLocationData, aChapterFinalMapChangeData, aUnknownB1AA9F, aChapterFinalTalkEvents, None
+        .structChapterEventData aChapterFinalLocationData, aChapterFinalMapChangeData, aChapterFinalArenaOpponents, aChapterFinalTalkEvents, None
 
       aChapterFinalLocationData ; B1/A9AB
 
@@ -562,27 +562,27 @@
 
       aChapterFinalChalphyCastle ; B1/A9BC
 
-        .structChapterCastleLocationEntry ChFinal_Chalphy, ChalphyName, [33, 57], $FC, None
+        .structChapterCastleLocationEntry ChFinal_Chalphy, ChalphyName, [33, 57], CastleFacilityAll, None
 
       aChapterFinalEddaCastle ; B1/A9C4
 
-        .structChapterCastleLocationEntry ChFinal_Edda, EddaName, [60, 43], $FC, None
+        .structChapterCastleLocationEntry ChFinal_Edda, EddaName, [60, 43], CastleFacilityAll, None
 
       aChapterFinalDozelCastle ; B1/A9CC
 
-        .structChapterCastleLocationEntry ChFinal_Dozel, DozelName, [31, 34], $FC, None
+        .structChapterCastleLocationEntry ChFinal_Dozel, DozelName, [31, 34], CastleFacilityAll, None
 
       aChapterFinalFriegeCastle ; B1/A9D4
 
-        .structChapterCastleLocationEntry ChFinal_Friege, FriegeName, [8, 20], $FC, None
+        .structChapterCastleLocationEntry ChFinal_Friege, FriegeName, [8, 20], CastleFacilityAll, None
 
       aChapterFinalVelthomerCastle ; B1/A9DC
 
-        .structChapterCastleLocationEntry ChFinal_Velthomer, VelthomerName, [61, 4], $FC, None
+        .structChapterCastleLocationEntry ChFinal_Velthomer, VelthomerName, [61, 4], CastleFacilityAll, None
 
       aChapterFinalBelhallaCastle ; B1/A9E4
 
-        .structChapterCastleLocationEntry ChFinal_Belhalla, BelhallaName, [42, 22], $00, None
+        .structChapterCastleLocationEntry ChFinal_Belhalla, BelhallaName, [42, 22], None, None
 
       aChapterFinalVillage1 ; B1/A9EC
 
@@ -666,31 +666,34 @@
         .word $01B6, $01B6, $0080, $008D
         .word $0061, $0119, $00A8, $008D
 
-      aUnknownB1AA9F ; B1/AA9F
+      aChapterFinalArenaOpponents ; B1/AA9F
 
-        .word <>aUnknownB1AAA3
-        .word <>aUnknownB1AAB3
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknownB1AAA3 ; B1/AAA3
+        .word <>aChapterFinalArenaOpponentsMelee
+        .word <>aChapterFinalArenaOpponentsRanged
 
-        .word $0230
-        .word $0231
-        .word $0233
-        .word $0235
-        .word $0237
-        .word $0238
-        .word $0239
+      aChapterFinalArenaOpponentsMelee ; B1/AAA3
+
+        .word DiceChFinal
+        .word KeimosChFinal
+        .word XenonChFinal
+        .word ThorntonChFinal
+        .word CanaanChFinal
+        .word AtlasChFinal
+        .word Zeus
         .word $FFFF
 
-      aUnknownB1AAB3 ; B1/AAB3
+      aChapterFinalArenaOpponentsRanged ; B1/AAB3
 
-        .word $0230
-        .word $0232
-        .word $0234
-        .word $0236
-        .word $0237
-        .word $0238
-        .word $0239
+        .word DiceChFinal
+        .word MarilynChFinal
+        .word JacksonChFinal
+        .word MarioChFinal
+        .word CanaanChFinal
+        .word AtlasChFinal
+        .word Zeus
         .word $FFFF
 
       aChapterFinalTalkEvents ; B1/AAC3

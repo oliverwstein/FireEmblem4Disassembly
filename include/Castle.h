@@ -66,6 +66,7 @@
   CastleFacilityRepairShop          = bits($0020)
   CastleFacilitySecondhandShop      = bits($0040)
   CastleFacilityItemShop            = bits($0080)
+  CastleFacilityAll                 = CastleFacilityItemShop | CastleFacilitySecondhandShop | CastleFacilityRepairShop | CastleFacilityDepot | CastleFacilityAugury | CastleFacilityArena
 
   ; $7F8082: the keeper, which picks the lines (aShopDialoguePointers), the
   ; portrait (aKeeperPortraits) and the option list (rsSetKeeperOptionList).

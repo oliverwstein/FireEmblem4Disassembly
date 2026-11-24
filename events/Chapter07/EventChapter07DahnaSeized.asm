@@ -8,7 +8,7 @@
     PLAY_SONG $86
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter07DahnaSeized1, DIALOGUE_BG_ALLEY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter07DahnaSeized1, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     TEST_FLAG_IN_CHAPTER_SET Chapter07, FlagChapter07_AresDied

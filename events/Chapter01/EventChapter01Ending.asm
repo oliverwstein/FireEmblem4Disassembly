@@ -11,14 +11,14 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter01, FlagChapter01_DeirdreCaptureReturn
     JUMP_FALSE _DeirdreWasntCaptured
 
-      DIALOGUE_WITH_BG dialogueDeathQuoteGen1PlayerDeirdreReturn, DIALOGUE_BG_HALLWAY, 5, 2
+      DIALOGUE_WITH_BG dialogueDeathQuoteGen1PlayerDeirdreReturn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_FADE_OUT, 2
       YIELD
 
       PAUSE 25
       YIELD
 
     _DeirdreWasntCaptured
-    DIALOGUE_WITH_BG dialogueChapter01Ending, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter01Ending, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     SET_CAMERA_POSITION [2, 17]
     YIELD
 

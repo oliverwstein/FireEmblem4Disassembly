@@ -11,7 +11,7 @@
     PLAY_SONG $73
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter02ChulainnRecruitment, DIALOGUE_BG_ALLEY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter02ChulainnRecruitment, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     LOAD_UNIT_DIRECT Chulainn, FS_Player, [12, 5], [12, 5], 4, MAP_SPRITE_BLUE

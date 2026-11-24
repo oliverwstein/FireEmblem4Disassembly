@@ -900,9 +900,9 @@
         .autsiz
         .databank ?
 
-        ; Grey text (tile base $2400) unless rlCheckItemObtainable.
+        ; Grey text (tile base $2400) unless rlCheckSelectedUnitCanUseItem.
 
-        jsl rlCheckItemObtainable
+        jsl rlCheckSelectedUnitCanUseItem
         bcs _B4F9
         lda #$2400
         sta aCurrentTilemapInfo,b

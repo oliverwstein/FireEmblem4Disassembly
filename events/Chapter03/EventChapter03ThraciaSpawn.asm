@@ -13,7 +13,7 @@
     PAUSE 20
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter03ThraciaSpawn1, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter03ThraciaSpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20

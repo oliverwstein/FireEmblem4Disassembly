@@ -32,7 +32,7 @@
     CASTLE_NAME dialogueCastleNameVelthomer, CASLTE_NAME_RED, 150
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapterFinalOpening1, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapterFinalOpening1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 15
@@ -80,7 +80,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapterFinalOpening2, DIALOGUE_BG_HALLWAY, 5, 2
+    DIALOGUE_WITH_BG dialogueChapterFinalOpening2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_FADE_OUT, 2
     YIELD
 
     RELOAD_MAP_SCREEN $80
@@ -140,7 +140,7 @@
     CASTLE_NAME dialogueCastleNameChalphy, CASLTE_NAME_BLUE, 120
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapterFinalOpening3, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapterFinalOpening3, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     JUMP _DF00

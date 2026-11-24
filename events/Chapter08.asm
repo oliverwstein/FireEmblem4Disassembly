@@ -428,7 +428,7 @@
 
       aChapter08EventData ; 86/F2E5
 
-        .structChapterEventData aChapter08LocationData, aChapter08MapChangeData, aUnknown86F370, aChapter08TalkEvents, None
+        .structChapterEventData aChapter08LocationData, aChapter08MapChangeData, aChapter08ArenaOpponents, aChapter08TalkEvents, None
 
       aChapter08LocationData ; 86/F2EF
 
@@ -438,23 +438,23 @@
 
       aChapter08UlsterCastle ; 86/F306
 
-        .structChapterCastleLocationEntry Ch08_Ulster, UlsterName, [3, 35], $FC, aChapter08ShopData
+        .structChapterCastleLocationEntry Ch08_Ulster, UlsterName, [3, 35], CastleFacilityAll, aChapter08ShopData
 
       aChapter08LeonsterCastle ; 86/F30E
 
-        .structChapterCastleLocationEntry Ch08_Leonster, LeonsterName, [8, 6], $FC, None
+        .structChapterCastleLocationEntry Ch08_Leonster, LeonsterName, [8, 6], CastleFacilityAll, None
 
       aChapter08ConnachtCastle ; 86/F316
 
-        .structChapterCastleLocationEntry Ch08_Connacht, ConnachtName, [49, 8], $FC, None
+        .structChapterCastleLocationEntry Ch08_Connacht, ConnachtName, [49, 8], CastleFacilityAll, None
 
       aChapter08MunsterCastle ; 86/F31E
 
-        .structChapterCastleLocationEntry Ch08_Munster, MunsterName, [44, 28], $FC, None
+        .structChapterCastleLocationEntry Ch08_Munster, MunsterName, [44, 28], CastleFacilityAll, None
 
       aChapter08MeathCastle ; 86/F326
 
-        .structChapterCastleLocationEntry Ch08_Meath, MeathName, [37, 57], $00, None
+        .structChapterCastleLocationEntry Ch08_Meath, MeathName, [37, 57], None, None
 
       aChapter08Village1 ; 86/F32E
 
@@ -518,31 +518,34 @@
 
         .word $00BE
 
-      aUnknown86F370 ; 86/F370
+      aChapter08ArenaOpponents ; 86/F370
 
-        .word <>aUnknown86F374
-        .word <>aUnknown86F384
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknown86F374 ; 86/F374
+        .word <>aChapter08ArenaOpponentsMelee
+        .word <>aChapter08ArenaOpponentsRanged
 
-        .word $0215
-        .word $0216
-        .word $0217
-        .word $0218
-        .word $021A
-        .word $021B
-        .word $021C
+      aChapter08ArenaOpponentsMelee ; 86/F374
+
+        .word Dewey
+        .word Fete
+        .word Marshach
+        .word Luis
+        .word Malder
+        .word Gismot
+        .word XenonCh08
         .word $FFFF
 
-      aUnknown86F384 ; 86/F384
+      aChapter08ArenaOpponentsRanged ; 86/F384
 
-        .word $0215
-        .word $0216
-        .word $0217
-        .word $0219
-        .word $021A
-        .word $021B
-        .word $021D
+        .word Dewey
+        .word Fete
+        .word Marshach
+        .word Hester
+        .word Malder
+        .word Gismot
+        .word JacksonCh08
         .word $FFFF
 
       aChapter08TalkEvents ; 86/F394

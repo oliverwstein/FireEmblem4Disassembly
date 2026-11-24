@@ -14,7 +14,7 @@
     CASTLE_NAME dialogueCastleNameDahna, CASLTE_NAME_YELLOW, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter07BramselWaiting1, DIALOGUE_BG_HALLWAY, 5, 2
+    DIALOGUE_WITH_BG dialogueChapter07BramselWaiting1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_FADE_OUT, 2
     YIELD
 
     PLAY_SFX_WORD $00E0
@@ -27,7 +27,7 @@
     PAUSE 15
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter07BramselWaiting2, DIALOGUE_BG_GATE, 3, 3
+    DIALOGUE_WITH_BG dialogueChapter07BramselWaiting2, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 3
     YIELD
 
     PLAY_SFX_WORD $00E0

@@ -755,7 +755,7 @@
         rep #$20
         plb
         .databank ?
-        lda structChapterLocationEntry.YPosition+1,b,x
+        lda structChapterCastleLocationEntry.Facilities,b,x
         and #$00FF
         plx
         plp

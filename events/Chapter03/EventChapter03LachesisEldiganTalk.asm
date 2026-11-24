@@ -48,7 +48,7 @@
       REMOVE_UNIT EldiganCh03
 
     SET_FLAG_IF_IN_CHAPTER Chapter03, FlagChapter03_EldiganGone
-    DIALOGUE_WITH_BG dialogueChapter03LachesisEldiganTalk2, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter03LachesisEldiganTalk2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 30

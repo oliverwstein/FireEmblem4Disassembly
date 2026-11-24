@@ -29,17 +29,17 @@
       TEST_FLAG_IN_CHAPTER_SET Chapter04, FlagChapter04_ErinysAlive
       JUMP_FALSE _ErinysDead
 
-        DIALOGUE_WITH_BG dialogueChapter04OpeningLewynErinysAlive, DIALOGUE_BG_THRONE, 3, 2
+        DIALOGUE_WITH_BG dialogueChapter04OpeningLewynErinysAlive, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
         YIELD
         JUMP +
 
       _ErinysDead ; 8E/906D
-      DIALOGUE_WITH_BG dialogueChapter04OpeningErinysDead, DIALOGUE_BG_THRONE, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter04OpeningErinysDead, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
       YIELD
       JUMP +
 
     _LewynDead ; 8E/9078
-    DIALOGUE_WITH_BG dialogueChapter04OpeningLewynDead, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter04OpeningLewynDead, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     + ; 8E/9080
@@ -101,7 +101,7 @@
     PAUSE 30
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04OpeningQuanEthlynFinnLeave, DIALOGUE_BG_THRONE, 3, 3
+    DIALOGUE_WITH_BG dialogueChapter04OpeningQuanEthlynFinnLeave, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 3
     YIELD
 
     PAUSE 20
@@ -148,7 +148,7 @@
     PAUSE 30
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04OpeningQuanEthlynLeave, DIALOGUE_BG_THRONE, 3, 3
+    DIALOGUE_WITH_BG dialogueChapter04OpeningQuanEthlynLeave, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 3
     YIELD
 
     PAUSE 20
@@ -183,7 +183,7 @@
     PAUSE 30
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04OpeningFinnLeave, DIALOGUE_BG_THRONE, 3, 3
+    DIALOGUE_WITH_BG dialogueChapter04OpeningFinnLeave, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 3
     YIELD
 
     PAUSE 20
@@ -272,7 +272,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter04Opening2, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter04Opening2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     LOAD_UNIT_BY_GROUP UNITGroupChapter04Start, aUNITGroupDataChapter04Start.ID_40, [59, 9], 4, MAP_SPRITE_RED

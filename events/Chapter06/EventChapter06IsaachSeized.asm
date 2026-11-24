@@ -11,12 +11,12 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter06, FlagChapter06_DanannDied
     JUMP_TRUE _DanannDead
 
-      DIALOGUE_WITH_BG dialogueChapter06IsaachSeizedDanannAlive, DIALOGUE_BG_GATE, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter06IsaachSeizedDanannAlive, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 2
       YIELD
       JUMP +
 
       _DanannDead ; 91/D456
-      DIALOGUE_WITH_BG dialogueChapter06IsaachSeizedDanannDead, DIALOGUE_BG_GATE, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter06IsaachSeizedDanannDead, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 2
       YIELD
 
     +

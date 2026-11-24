@@ -17,7 +17,7 @@
     PAUSE 20
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04DonovanSpawn, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter04DonovanSpawn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     _UnitList1 := [aUNITGroupDataChapter04Donovan.ID_07]

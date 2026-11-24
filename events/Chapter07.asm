@@ -461,7 +461,7 @@
 
       aChapter07EventData ; 86/EBD4
 
-        .structChapterEventData aChapter07LocationData, aChapter07MapChangeData, aUnknown86ED23, aChapter07TalkEvents, aUnknown86EDF0
+        .structChapterEventData aChapter07LocationData, aChapter07MapChangeData, aChapter07ArenaOpponents, aChapter07TalkEvents, aUnknown86EDF0
 
       aChapter07LocationData ; 86/EBDE
 
@@ -471,27 +471,27 @@
 
       aChapter07RibautCastle ; 86/EBF7
 
-        .structChapterCastleLocationEntry Ch07_Ribaut, RibautName, [58, 1], $FC, aChapter07ShopData
+        .structChapterCastleLocationEntry Ch07_Ribaut, RibautName, [58, 1], CastleFacilityAll, aChapter07ShopData
 
       aChapter07AedCastle ; 86/EBFF
 
-        .structChapterCastleLocationEntry Ch07_Aed, AedName, [20, 3], $FC, None
+        .structChapterCastleLocationEntry Ch07_Aed, AedName, [20, 3], CastleFacilityAll, None
 
       aChapter07DahnaCastle ; 86/EC07
 
-        .structChapterCastleLocationEntry Ch07_Dahna, DahnaName, [15, 22], $FC, None
+        .structChapterCastleLocationEntry Ch07_Dahna, DahnaName, [15, 22], CastleFacilityAll, None
 
       aChapter07MelgenCastle ; 86/EC0F
 
-        .structChapterCastleLocationEntry Ch07_Melgen, MelgenName, [17, 57], $FC, None
+        .structChapterCastleLocationEntry Ch07_Melgen, MelgenName, [17, 57], CastleFacilityAll, None
 
       aChapter07LeonsterCastle ; 86/EC17
 
-        .structChapterCastleLocationEntry Ch07_Leonster, LeonsterName, [56, 26], $20, None
+        .structChapterCastleLocationEntry Ch07_Leonster, LeonsterName, [56, 26], CastleFacilityRepairShop, None
 
       aChapter07UlsterCastle ; 86/EC1F
 
-        .structChapterCastleLocationEntry Ch07_Ulster, UlsterName, [51, 55], $00, None
+        .structChapterCastleLocationEntry Ch07_Ulster, UlsterName, [51, 55], None, None
 
       aChapter07VillageSpeedRing ; 86/EC27
 
@@ -619,31 +619,34 @@
         .word $133A
         .word $1332
 
-      aUnknown86ED23 ; 86/ED23
+      aChapter07ArenaOpponents ; 86/ED23
 
-        .word <>aUnknown86ED27
-        .word <>aUnknown86ED37
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknown86ED27 ; 86/ED27
+        .word <>aChapter07ArenaOpponentsMelee
+        .word <>aChapter07ArenaOpponentsRanged
 
-        .word $020D
-        .word $020E
-        .word $020F
-        .word $0210
-        .word $0212
-        .word $0213
-        .word $0214
+      aChapter07ArenaOpponentsMelee ; 86/ED27
+
+        .word Tolstoy
+        .word Bottsman
+        .word Kruger
+        .word Mannstein
+        .word Hoepner
+        .word Randoch
+        .word Wolfen
         .word $FFFF
 
-      aUnknown86ED37 ; 86/ED37
+      aChapter07ArenaOpponentsRanged ; 86/ED37
 
-        .word $020D
-        .word $020E
-        .word $020F
-        .word $0211
-        .word $0212
-        .word $0213
-        .word $0214
+        .word Tolstoy
+        .word Bottsman
+        .word Kruger
+        .word Castor
+        .word Hoepner
+        .word Randoch
+        .word Wolfen
         .word $FFFF
 
       aFactionGroupData28 ; 86/ED47

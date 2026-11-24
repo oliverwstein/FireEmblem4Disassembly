@@ -7,7 +7,7 @@
     CASTLE_NAME dialogueCastleNameMackily, 3, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter02MackilyWorried, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter02MackilyWorried, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     END_EVENT

@@ -10,7 +10,7 @@
     PAUSE 15
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04AnnandDeathLahnaResponse, DIALOGUE_BG_THRONE, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter04AnnandDeathLahnaResponse, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     TEST_FLAG_IN_CHAPTER_SET Chapter04, FlagChapter04_LewynAlive

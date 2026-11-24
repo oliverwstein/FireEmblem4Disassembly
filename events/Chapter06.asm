@@ -294,23 +294,23 @@
 
       aChapter06TirnanogCastle ; B2/831B
 
-        .structChapterCastleLocationEntry Ch06_Tirnanog, TirnanogName, [5, 3], $F8, aChapter06ShopData
+        .structChapterCastleLocationEntry Ch06_Tirnanog, TirnanogName, [5, 3], CastleFacilityItemShop | CastleFacilitySecondhandShop | CastleFacilityRepairShop | CastleFacilityDepot | CastleFacilityAugury, aChapter06ShopData
 
       aChapter06GaneishireCastle ; B2/8323
 
-        .structChapterCastleLocationEntry Ch06_Ganeishire, GaneishireName, [56, 14], $F8, None
+        .structChapterCastleLocationEntry Ch06_Ganeishire, GaneishireName, [56, 14], CastleFacilityItemShop | CastleFacilitySecondhandShop | CastleFacilityRepairShop | CastleFacilityDepot | CastleFacilityAugury, None
 
       aChapter06SofalaCastle ; B2/832B
 
-        .structChapterCastleLocationEntry Ch06_Sofala, SofalaName, [21, 34], $F8, None
+        .structChapterCastleLocationEntry Ch06_Sofala, SofalaName, [21, 34], CastleFacilityItemShop | CastleFacilitySecondhandShop | CastleFacilityRepairShop | CastleFacilityDepot | CastleFacilityAugury, None
 
       aChapter06IsaachCastle ; B2/8333
 
-        .structChapterCastleLocationEntry Ch06_Isaach, IsaachName, [53, 51], $F8, None
+        .structChapterCastleLocationEntry Ch06_Isaach, IsaachName, [53, 51], CastleFacilityItemShop | CastleFacilitySecondhandShop | CastleFacilityRepairShop | CastleFacilityDepot | CastleFacilityAugury, None
 
       aChapter06RibautCastle ; B2/833B
 
-        .structChapterCastleLocationEntry Ch06_Ribaut, RibautName, [26, 59], $00, None
+        .structChapterCastleLocationEntry Ch06_Ribaut, RibautName, [26, 59], None, None
 
       aChapter06Village1 ; B2/8343
 

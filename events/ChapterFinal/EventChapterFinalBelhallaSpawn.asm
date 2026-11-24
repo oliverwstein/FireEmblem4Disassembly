@@ -54,7 +54,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapterFinalBelhallaSpawn1, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapterFinalBelhallaSpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _UnitList2 := [(aUNITGroupDataChapterFinalBelhalla.ID_12, 8)]
@@ -102,7 +102,7 @@
     PAUSE 30
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapterFinalBelhallaSpawn2, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapterFinalBelhallaSpawn2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20

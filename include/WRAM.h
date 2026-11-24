@@ -747,6 +747,16 @@
 
   .endvirtual
 
+  .virtual $000AD7
+
+    wArenaFightsWithOpponent .word ? ; $000AD7 ; fights started against the opponent at $2100 (rsArenaMenuStepFadeAndStartBattle);
+      ; 0 when the arena opens and after a win. Nonzero after a yield: the opponent is still built,
+      ; so leaving runs rlHandleArenaExitEvent to free it, and the weapon list returns to the yield menu.
+    wArenaMoneyCounter .word ?       ; $000AD9 ; the money shown while the prize counts up: the unit's money
+      ; before the fight, raised 100 a frame to its money after it (rsArenaMenuStepCountUpGold)
+
+  .endvirtual
+
   .virtual $0008DE
 
     aOAMYBandCounters .block ; $0008DE (12 x .byte counters under sep #$20 in rlScanSpriteLineOverflow)
@@ -1350,7 +1360,7 @@
       ;       rlActionStructHandleUnitDeath)
       ; $1A = the help command rescued a civilian (rescuer, formation + 1)
       ; $1B = a seize freed a captured player unit (character; rsReviveCapturedPlayerCharacters)
-      ; $1C = a unit left the arena with winnings (character, location, opponent; rlHandleArenaExitEvent)
+      ; $1C = a unit won an arena fight, announced after every win (character, location, opponent; rlHandleArenaExitEvent)
       ; $1D = a lover, sibling or triangle crit (crit type, character; battle.asm)
       ; $20 = the end of a turn (the turn just ended; rsMapStepEndTurn)
       ; $21 = a phase starts (turn, army, 0, 0; rsMapStepPhaseStartEvents), or a computer unit
@@ -2905,7 +2915,8 @@
     aCastleListItemIDs .fill $200                     ; $7F7A72
     aCastleListItemROMPointers .fill $200             ; $7F7C72
     aCastleListItemUnavailable .fill $200             ; $7F7E72
-      ; $FFFF for a stock item that cannot be bought yet.
+      ; $FFFF for a stock item the unit can't use (rlCheckSelectedUnitCanUseItem: weapon rank and
+      ; women-only weapons); the shop won't sell it.
     aCastleListInventorySlots .fill $10               ; $7F8072
       ; The arena's weapon list: inventory slot of each weapon.
     wKeeper .word ?                                   ; $7F8082

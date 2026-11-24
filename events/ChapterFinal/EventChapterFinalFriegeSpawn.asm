@@ -45,7 +45,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapterFinalFriegeSpawn, DIALOGUE_BG_HALLWAY, 5, 1
+    DIALOGUE_WITH_BG dialogueChapterFinalFriegeSpawn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_FADE_OUT, 1
     YIELD
 
     RELOAD_MAP_SCREEN $80

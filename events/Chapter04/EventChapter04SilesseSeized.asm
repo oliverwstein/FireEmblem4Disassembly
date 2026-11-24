@@ -11,12 +11,12 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter04, FlagChapter04_DaccarDied
     JUMP_TRUE _DaccarDead
 
-      DIALOGUE_WITH_BG dialogueChapter04SilesseSeizedDaccarAlive, DIALOGUE_BG_THRONE, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter04SilesseSeizedDaccarAlive, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
       YIELD
       JUMP _Continue
 
     _DaccarDead ; 8E/992E
-    DIALOGUE_WITH_BG dialogueChapter04SilesseSeizedDaccarDead, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter04SilesseSeizedDaccarDead, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _Continue ; 8E/9936

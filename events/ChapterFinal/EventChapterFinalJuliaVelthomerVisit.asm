@@ -11,7 +11,7 @@
     RUN_EVENT_CONDITION
       GIVE_UNIT_PID_EQUIP Julia, PI_Naga
 
-    DIALOGUE_WITH_BG dialogueChapterFinalJuliaVelthomerVisit, DIALOGUE_BG_HALLWAY, 3, 3
+    DIALOGUE_WITH_BG dialogueChapterFinalJuliaVelthomerVisit, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 3
     YIELD
 
     PLAY_SFX_WORD $00E7

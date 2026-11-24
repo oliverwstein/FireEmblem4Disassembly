@@ -11,12 +11,12 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter10, FlagChapter10_ChronosSeizedCheck
     JUMP_TRUE _ChronosSeized
 
-      DIALOGUE_WITH_BG dialogueChapter10RadosSeized, DIALOGUE_BG_ALLEY, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter10RadosSeized, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_MAP, 2
       YIELD
       JUMP +
 
       _ChronosSeized ; 8D/88C1
-      DIALOGUE_WITH_BG dialogueChapter10RadosSeizedAfterChronos, DIALOGUE_BG_ALLEY, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter10RadosSeizedAfterChronos, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_MAP, 2
       YIELD
 
     +

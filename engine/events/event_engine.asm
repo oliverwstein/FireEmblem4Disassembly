@@ -7089,9 +7089,13 @@
         .autsiz
         .databank ?
 
-        ; Clears arena RAM/flags, heals survivor and runs event action $1C, or clears defeated state
-
-        ; entering castle menu
+        ; Ends an arena fight for the selected unit: clears wChapterFlags $10 (the next fight
+        ; builds a new opponent and rolls skills again), frees the opponent at $2100 and clears
+        ; the unit's Miracle. A loss (DeploymentStateDefeated, set with 1 HP by
+        ; rlActionStructHandleArenaDefeat) only clears the defeat; carry clear, A = 0.
+        ; A win (ObtainedArenaMoney set) heals the unit to its max HP and announces event
+        ; action $1C (character, location, opponent); carry set, A = the prize.
+        ; A yield: carry set, A = 0, HP left as it is.
 
         phb
         php

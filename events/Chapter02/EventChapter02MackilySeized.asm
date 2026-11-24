@@ -8,7 +8,7 @@
     PLAY_SONG SONG_CASTLE_SEIZED
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter02MackilySeized, 4, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter02MackilySeized, 4, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PLAY_SFX_WORD $00E0

@@ -305,7 +305,7 @@
 
       aChapter01EventData ; 86/CB59
 
-        .structChapterEventData aChapter01LocationData, aChapter01MapChangeData, aUnknown86CBC0, aChapter01TalkEvents, aUnknown86CC70
+        .structChapterEventData aChapter01LocationData, aChapter01MapChangeData, aChapter01ArenaOpponents, aChapter01TalkEvents, aUnknown86CC70
 
       aChapter01LocationData ; 86/CB63
 
@@ -315,23 +315,23 @@
 
       aChapter01EvansCastle ; 86/CB74
 
-        .structChapterCastleLocationEntry Ch01_Evans, EvansName, [46, 11], $FC, aChapter01ShopData
+        .structChapterCastleLocationEntry Ch01_Evans, EvansName, [46, 11], CastleFacilityAll, aChapter01ShopData
 
       aChapter01NordionCastle ; 86/CB7C
 
-        .structChapterCastleLocationEntry Ch01_Nordion, NordionName, [14, 3], $FC, None
+        .structChapterCastleLocationEntry Ch01_Nordion, NordionName, [14, 3], CastleFacilityAll, None
 
       aChapter01GenoaCastle ; 86/CB84
 
-        .structChapterCastleLocationEntry Ch01_Genoa, GenoaName, [57, 40], $FC, None
+        .structChapterCastleLocationEntry Ch01_Genoa, GenoaName, [57, 40], CastleFacilityAll, None
 
       aChapter01MarphaCastle ; 86/CB8C
 
-        .structChapterCastleLocationEntry Ch01_Marpha, MarphaName, [24, 49], $FC, None
+        .structChapterCastleLocationEntry Ch01_Marpha, MarphaName, [24, 49], CastleFacilityAll, None
 
       aChapter01VerdaneCastle ; 86/CB94
 
-        .structChapterCastleLocationEntry Ch01_Verdane, VerdaneName, [9, 24], $00, None
+        .structChapterCastleLocationEntry Ch01_Verdane, VerdaneName, [9, 24], None, None
 
       aChapter01Village1 ; 86/CB9C
 
@@ -366,31 +366,34 @@
         .word $0112
         .word $0112
 
-      aUnknown86CBC0 ; 86/CBC0
+      aChapter01ArenaOpponents ; 86/CBC0
 
-        .word <>aUnknown86CBC4
-        .word <>aUnknown86CBD4
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknown86CBC4 ; 86/CBC4
+        .word <>aChapter01ArenaOpponentsMelee
+        .word <>aChapter01ArenaOpponentsRanged
 
-        .word $01E0
-        .word $01E1
-        .word $01E2
-        .word $01E3
-        .word $01E5
-        .word $01E6
-        .word $01E7
+      aChapter01ArenaOpponentsMelee ; 86/CBC4
+
+        .word Gazack
+        .word Crotor
+        .word Wiseman
+        .word Shark
+        .word Bacchus
+        .word Emir
+        .word DiceCh01
         .word $FFFF
 
-      aUnknown86CBD4 ; 86/CBD4
+      aChapter01ArenaOpponentsRanged ; 86/CBD4
 
-        .word $01E0
-        .word $01E1
-        .word $01E2
-        .word $01E4
-        .word $01E5
-        .word $01E6
-        .word $01E7
+        .word Gazack
+        .word Crotor
+        .word Wiseman
+        .word Hood
+        .word Bacchus
+        .word Emir
+        .word DiceCh01
         .word $FFFF
 
       aFactionGroupData04 ; 86/CBE4

@@ -56,7 +56,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter10ChalphySpawn1, DIALOGUE_BG_HALLWAY, 5, 2
+    DIALOGUE_WITH_BG dialogueChapter10ChalphySpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_FADE_OUT, 2
     YIELD
 
     PAUSE 10

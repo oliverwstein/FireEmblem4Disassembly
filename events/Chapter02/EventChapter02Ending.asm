@@ -11,7 +11,7 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter02, FlagChapter02_DeirdreCaptureReturn
     JUMP_FALSE _DeirdreWasntCaptured
 
-      DIALOGUE_WITH_BG dialogueDeathQuoteGen1PlayerDeirdreReturn, DIALOGUE_BG_HALLWAY, 5, 2
+      DIALOGUE_WITH_BG dialogueDeathQuoteGen1PlayerDeirdreReturn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_FADE_OUT, 2
       YIELD
 
       PAUSE 25
@@ -43,7 +43,7 @@
       RUN_EVENT_CONDITION
         GIVE_UNIT_PID Lachesis, PI_KnightRing
 
-      DIALOGUE_WITH_BG dialogueChapter02EndingKnightRing, DIALOGUE_BG_HALLWAY, 3, 3
+      DIALOGUE_WITH_BG dialogueChapter02EndingKnightRing, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 3
       SET_CAMERA_POSITION [45, 1]
       YIELD
 
@@ -57,7 +57,7 @@
       YIELD
 
     _Continue ; 8E/868C
-    DIALOGUE_WITH_BG dialogueChapter02Ending, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter02Ending, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     SET_CAMERA_POSITION [45, 1]
     YIELD
 

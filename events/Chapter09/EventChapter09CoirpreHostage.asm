@@ -7,7 +7,7 @@
     MAP_SCROLL [3, 20], 4
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter09CoirpreHostage, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter09CoirpreHostage, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PLAY_SFX_WORD $00E0

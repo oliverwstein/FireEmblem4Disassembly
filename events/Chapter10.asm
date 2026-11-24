@@ -304,7 +304,7 @@
 
       aChapter10EventData ; B0/832F
 
-        .structChapterEventData aChapter10LocationData, aChapter10MapChangeData, aUnknownB083BF, aChapter10TalkEvents, aUnknownB0847A
+        .structChapterEventData aChapter10LocationData, aChapter10MapChangeData, aChapter10ArenaOpponents, aChapter10TalkEvents, aUnknownB0847A
 
       aChapter10LocationData ; B0/8339
 
@@ -314,23 +314,23 @@
 
       aChapter10PerulukeCastle ; B0/8350
 
-        .structChapterCastleLocationEntry Ch10_Peruluke, PerlucosName, [57, 34], $FC, aChapter10ShopData
+        .structChapterCastleLocationEntry Ch10_Peruluke, PerlucosName, [57, 34], CastleFacilityAll, aChapter10ShopData
 
       aChapter10ChronosCastle ; B0/8358
 
-        .structChapterCastleLocationEntry Ch10_Chronos, ChronosName, [36, 48], $FC, None
+        .structChapterCastleLocationEntry Ch10_Chronos, ChronosName, [36, 48], CastleFacilityAll, None
 
       aChapter10RadosCastle ; B0/8360
 
-        .structChapterCastleLocationEntry Ch10_Rados, RadosName, [5, 56], $FC, None
+        .structChapterCastleLocationEntry Ch10_Rados, RadosName, [5, 56], CastleFacilityAll, None
 
       aChapter10MiletosCastle ; B0/8368
 
-        .structChapterCastleLocationEntry Ch10_Miletos, MiletosName, [9, 26], $FC, None
+        .structChapterCastleLocationEntry Ch10_Miletos, MiletosName, [9, 26], CastleFacilityAll, None
 
       aChapter10ChalphyCastle ; B0/8370
 
-        .structChapterCastleLocationEntry Ch10_Chalphy, ChalphyName, [15, 4], $00, None
+        .structChapterCastleLocationEntry Ch10_Chalphy, ChalphyName, [15, 4], None, None
 
       aChapter10Village1 ; B0/8378
 
@@ -389,31 +389,34 @@
         .word $009C
         .word $00BB
 
-      aUnknownB083BF ; B0/83BF
+      aChapter10ArenaOpponents ; B0/83BF
 
-        .word <>aUnknownB083C3
-        .word <>aUnknownB083D3
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknownB083C3 ; B0/83C3
+        .word <>aChapter10ArenaOpponentsMelee
+        .word <>aChapter10ArenaOpponentsRanged
 
-        .word $0227
-        .word $0228
-        .word $022A
-        .word $022B
-        .word $022C
-        .word $022E
-        .word $022F
+      aChapter10ArenaOpponentsMelee ; B0/83C3
+
+        .word Hasmann
+        .word Grants
+        .word Roland
+        .word Massigli
+        .word Riva
+        .word Nothe
+        .word IndraCh10
         .word $FFFF
 
-      aUnknownB083D3 ; B0/83D3
+      aChapter10ArenaOpponentsRanged ; B0/83D3
 
-        .word $0227
-        .word $0229
-        .word $022A
-        .word $022B
-        .word $022D
-        .word $022E
-        .word $022F
+        .word Hasmann
+        .word Closroi
+        .word Roland
+        .word Massigli
+        .word Gloria
+        .word Nothe
+        .word IndraCh10
         .word $FFFF
 
       aChapter10TalkEvents ; B0/83E3

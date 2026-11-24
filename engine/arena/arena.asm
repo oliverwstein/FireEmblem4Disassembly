@@ -1,6 +1,6 @@
-; The arena menu: rlArenaMenuRunStep runs the step in $0592 from
-; aArenaMenuStepHandlers (fight or quit, the wager, continuing or leaving between
-; rounds, changing weapons), with the menu text and the decompression DMA entries
+; The arena menu: rlArenaMenuRunStep runs the step in wMenuState from
+; aArenaMenuStepHandlers (fight or quit, choosing a weapon, continuing or leaving
+; after a yield, the next opponent after a win), with the menu text and the decompression DMA entries
 ; used when the arena screen is set up (rlArenaScreenSetup), and the opponent
 ; window (rsDrawArenaOpponent); starting the fight (rlStartArenaBattle) and
 ; reading its result (rlGetArenaBattleResult). Banks $84, $87 and $8A. Its lines are in
@@ -48,8 +48,8 @@
 
       rlArenaMenuRunStep ; 8A/E4DB
 
-        ; Nothing in the build reaches this. Copies the BG3 tilemap to VRAM, runs
-        ; the arena menu step in $0592 from aArenaMenuStepHandlers, then redraws.
+        ; Castle step $04 (rsCastleStepArena), every frame: copies the BG3 tilemap to VRAM, runs
+        ; the arena menu step in wMenuState from aArenaMenuStepHandlers, then draws the keeper.
 
         .al
         .xl
@@ -105,7 +105,7 @@
 
         ; Arena menu step 0 (aArenaMenuStepHandlers).
 
-        stz $0AD7,b
+        stz wArenaFightsWithOpponent,b
         jsl rlGetSelectedUnitArenaLevel
         cmp #$0007
         bcs _E56E
@@ -168,7 +168,7 @@
         cmp #$0002
         beq _E5E3
         jsl rlHandleArenaExitEvent
-        stz $0AD7,b
+        stz wArenaFightsWithOpponent,b
         sta aDialogue.wNumber1,b
         jsr _E63C
         jsl rlGetSelectedUnitArenaLevel
@@ -235,7 +235,7 @@
 
 
         _E63C
-        lda $0AD9,b
+        lda wArenaMoneyCounter,b
         ldx #$0646
         jsl rlDrawCastleNumber
         rts
@@ -489,7 +489,7 @@
         .autsiz
         .databank ?
 
-        ; Arena menu step 6: animates prize gold count-up by 100G per frame
+        ; Arena menu step 6: counts the money shown up by 100 a frame to the unit's money after the prize
 
         ; Arena menu step 6 (aArenaMenuStepHandlers).
 
@@ -500,14 +500,14 @@
         lda #$0036
         sta wR1
         jsl rlDisplayDialogueAPressArrows
-        lda $0AD9,b
+        lda wArenaMoneyCounter,b
         clc
         adc #$0064
-        sta $0AD9,b
+        sta wArenaMoneyCounter,b
         jsl rlGetSelectedUnitMoney
-        cmp $0AD9,b
+        cmp wArenaMoneyCounter,b
         bcc _E810
-        lda $0AD9,b
+        lda wArenaMoneyCounter,b
         ldx #$0646
         jsl rlDrawCastleNumber
         rts
@@ -965,8 +965,8 @@
         .as
         rep #$20
         jsl rlGetSelectedUnitMoney
-        sta $0AD9,b
-        inc $0AD7,b
+        sta wArenaMoneyCounter,b
+        inc wArenaFightsWithOpponent,b
         jsl rlStartArenaBattle
         rts
 
@@ -1062,7 +1062,7 @@
         stz wCastleMenuOptionIndex,b
         lda #$0009
         sta wNextMenuState,b
-        lda $0AD7,b
+        lda wArenaFightsWithOpponent,b
         beq _EC68
         jsl rlGetArenaBattleResult
         cmp #$0002
@@ -1092,7 +1092,7 @@
         lda #$0000
         sta wCastleRedrawIcons
         stz wCastleMenuOptionIndex,b
-        lda $0AD7,b
+        lda wArenaFightsWithOpponent,b
         beq _EC68
         jsl rlGetArenaBattleResult
         cmp #$0002
@@ -1131,7 +1131,7 @@
         jsl rlGetArenaBattleResult
         cmp #$0002
         bne _ECDF
-        lda $0AD7,b
+        lda wArenaFightsWithOpponent,b
         beq _ECDF
         jsl rlHandleArenaExitEvent
 
@@ -1181,7 +1181,12 @@
         .autsiz
         .databank ?
 
-        ; Returns arena opponent character ID in A for current chapter, arena level, and weapon range (carry set if >= 7)
+        ; Returns the arena opponent's character ID in A (carry set at arena level 7: none left).
+        ; The chapter's table (rlGetChapterArenaOpponentsPointer) has a list for a weapon with
+        ; minimum range 1 and one for minimum range 2 or more (wR10 from rlGetSelectedItemRange),
+        ; indexed by arena level. If a unit with the listed character already exists, the next
+        ; entry is used instead: Chapter 2's melee list has Chulainn at level 6 and Keimos after
+        ; him, for when Chulainn has joined. The opponent itself, built at $2100, is in no list.
 
         phb
         php
@@ -1689,7 +1694,7 @@
         ora #$80
         sta bBufferCOLDATA_3
         rep #$20
-        lda $0AD7,b
+        lda wArenaFightsWithOpponent,b
         beq _E457
         jsl rlGetArenaBattleResult
         cmp #$0002

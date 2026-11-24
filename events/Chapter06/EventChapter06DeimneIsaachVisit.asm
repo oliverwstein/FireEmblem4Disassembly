@@ -8,7 +8,7 @@
     PLAY_SONG $5B
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter06DeimneIsaachVisit, DIALOGUE_BG_ALLEY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter06DeimneIsaachVisit, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     RUN_ASM rlClearBattleData

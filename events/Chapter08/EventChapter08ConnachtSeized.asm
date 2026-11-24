@@ -11,7 +11,7 @@
     SET_FLAG_IF_IN_CHAPTER Chapter08, FlagChapter08_FeeOnMountainCheck
     SET_FLAG_IF_IN_CHAPTER Chapter08, FlagChapter08_Unknown53
 
-    DIALOGUE_WITH_BG dialogueChapter08ConnachtSeized, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter08ConnachtSeized, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     RUN_EVENT_CONDITION

@@ -438,7 +438,7 @@
 
       aChapter04EventData ; 86/DC79
 
-        .structChapterEventData aChapter04LocationData, aChapter04MapChangeData, aUnknown86DD01, None, aUnknown86DDA3
+        .structChapterEventData aChapter04LocationData, aChapter04MapChangeData, aChapter04ArenaOpponents, None, aUnknown86DDA3
 
       aChapter04LocationData ; 86/DC83
 
@@ -448,19 +448,19 @@
 
       aChapter04SailaneCastle ; 86/DC9C
 
-        .structChapterCastleLocationEntry Ch04_Sailane, SailaneName, [5, 39], $FC, aChapter04ShopData
+        .structChapterCastleLocationEntry Ch04_Sailane, SailaneName, [5, 39], CastleFacilityAll, aChapter04ShopData
 
       aChapter04TofaCastle ; 86/DCA4
 
-        .structChapterCastleLocationEntry Ch04_Tofa, TofaName, [59, 7], $FC, None
+        .structChapterCastleLocationEntry Ch04_Tofa, TofaName, [59, 7], CastleFacilityAll, None
 
       aChapter04SilesseCastle ; 86/DCAC
 
-        .structChapterCastleLocationEntry Ch04_Silesse, SilesseName, [28, 58], $FC, None
+        .structChapterCastleLocationEntry Ch04_Silesse, SilesseName, [28, 58], CastleFacilityAll, None
 
       aChapter04ZaxonCastle ; 86/DCB4
 
-        .structChapterCastleLocationEntry Ch04_Zaxon, ZaxonName, [59, 43], $00, None
+        .structChapterCastleLocationEntry Ch04_Zaxon, ZaxonName, [59, 43], None, None
 
       aChapter04Village1 ; 86/DCBC
 
@@ -521,31 +521,34 @@
 
         .word $00BD
 
-      aUnknown86DD01 ; 86/DD01
+      aChapter04ArenaOpponents ; 86/DD01
 
-        .word <>aUnknown86DD05
-        .word <>aUnknown86DD15
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknown86DD05 ; 86/DD05
+        .word <>aChapter04ArenaOpponentsMelee
+        .word <>aChapter04ArenaOpponentsRanged
 
-        .word $01FB
-        .word $01FC
-        .word $01FE
-        .word $01FF
-        .word $0201
-        .word $0202
-        .word $0203
+      aChapter04ArenaOpponentsMelee ; 86/DD05
+
+        .word Kemal
+        .word Kaledin
+        .word Senghor
+        .word Nikita
+        .word Kraff
+        .word Niklas
+        .word AtlasCh04
         .word $FFFF
 
-      aUnknown86DD15 ; 86/DD15
+      aChapter04ArenaOpponentsRanged ; 86/DD15
 
-        .word $01FB
-        .word $01FD
-        .word $01FE
-        .word $0200
-        .word $0201
-        .word $0202
-        .word $0203
+        .word Kemal
+        .word Keith
+        .word Senghor
+        .word Nene
+        .word Kraff
+        .word Niklas
+        .word AtlasCh04
         .word $FFFF
 
       aFactionGroupData15 ; 86/DD25

@@ -171,22 +171,24 @@
       .byte $13
     .endsegment
 
-    DIALOGUE_WITH_BG .segment DialoguePointer, BackgroundID, DialogueType, FadeTimer
+    DIALOGUE_WITH_BG .segment DialoguePointer, BackgroundID, ExitMode, FadeTimer
+      ; Fades to the castle screen's conversation scene over background BackgroundID
+      ; (DIALOGUE_BG_*) and shows the dialogue. ExitMode (CONVERSATION_EXIT_*, include/Castle.h)
+      ; says where the scene goes when the text ends; $FF means CONVERSATION_EXIT_MAP.
       .byte $14
       .long \DialoguePointer
       .byte \BackgroundID
-      .byte \DialogueType
+      .byte \ExitMode
       .byte \FadeTimer
     .endsegment
 
-    EVENT_15 .segment DialoguePointer, BackgroundID, DialogueType, FadeTimer
-      ; Unused.
-      ; Essentially identical to DIALOGUE_WITH_BG. This one tries to set the DialogueType
-      ; to 1 instead of 0 before getting overwritten with the value specified in the segment.
+    EVENT_15 .segment DialoguePointer, BackgroundID, ExitMode, FadeTimer
+      ; Unused. The same as DIALOGUE_WITH_BG: its handler sets the exit mode to
+      ; CONVERSATION_EXIT_TOWN before procDialogueWithBG reads ExitMode over it.
       .byte $15
       .long \DialoguePointer
       .byte \BackgroundID
-      .byte \DialogueType
+      .byte \ExitMode
       .byte \FadeTimer
     .endsegment
 

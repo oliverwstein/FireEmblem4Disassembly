@@ -32,7 +32,7 @@
     RUN_EVENT_CONDITION
       REMOVE_UNIT ArvisChPrologue
 
-    DIALOGUE_WITH_BG dialogueChapterPrologueEnding1, DIALOGUE_BG_HALLWAY, 5, 2
+    DIALOGUE_WITH_BG dialogueChapterPrologueEnding1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_FADE_OUT, 2
     YIELD
 
     SET_CAMERA_POSITION [1, 7]
@@ -62,7 +62,7 @@
     PAUSE 20
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapterPrologueEnding2, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapterPrologueEnding2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
 
     SET_CAMERA_POSITION [0, 8]
     YIELD

@@ -17,7 +17,7 @@
     CASTLE_NAME dialogueCastleNameVelthomer, CASLTE_NAME_RED, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter05PhinoraSpawn1, DIALOGUE_BG_HALLWAY, 3, 3
+    DIALOGUE_WITH_BG dialogueChapter05PhinoraSpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 3
     YIELD
 
     PAUSE 20
@@ -29,7 +29,7 @@
     CASTLE_NAME dialogueCastleNamePhinora, CASLTE_NAME_RED, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter05PhinoraSpawn2, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter05PhinoraSpawn2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     LOAD_UNIT_BY_GROUP UNITGroupChapter05Phinora, aUNITGroupDataChapter05Phinora.ID_02, [42, 26], 4, MAP_SPRITE_RED

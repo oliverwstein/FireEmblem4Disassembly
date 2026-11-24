@@ -12,12 +12,12 @@
     JUMP_FALSE _Default
 
       ; At least one of Clauds children is alive
-      DIALOGUE_WITH_BG dialogueChapterFinalEddaSeizedClaudsChildren, DIALOGUE_BG_THRONE, 3, 2
+      DIALOGUE_WITH_BG dialogueChapterFinalEddaSeizedClaudsChildren, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
       YIELD
       JUMP +
 
       _Default
-      DIALOGUE_WITH_BG dialogueChapterFinalEddaSeizedNoInheritor, DIALOGUE_BG_THRONE, 3, 2
+      DIALOGUE_WITH_BG dialogueChapterFinalEddaSeizedNoInheritor, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
       YIELD
 
     +

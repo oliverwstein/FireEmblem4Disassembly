@@ -14,7 +14,7 @@
     CASTLE_NAME dialogueCastleNameZaxon, CASLTE_NAME_RED, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04DaccarAndreyPreparing, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter04DaccarAndreyPreparing, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PLAY_SFX_WORD $00E0

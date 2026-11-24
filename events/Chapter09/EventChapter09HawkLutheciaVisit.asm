@@ -8,7 +8,7 @@
     PLAY_SONG $6F
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter09HawkLutheciaVisit, DIALOGUE_BG_FOUNTAIN, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter09HawkLutheciaVisit, DIALOGUE_BG_FOUNTAIN, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     RUN_ASM rlClearBattleData

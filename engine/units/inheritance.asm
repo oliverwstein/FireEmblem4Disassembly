@@ -694,7 +694,7 @@
         .autsiz
         .databank ?
 
-        jsl rlCheckItemObtainable
+        jsl rlCheckSelectedUnitCanUseItem
         rts
 
         .databank 0

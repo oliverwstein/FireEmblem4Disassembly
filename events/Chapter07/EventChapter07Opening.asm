@@ -89,7 +89,7 @@
     CASTLE_NAME dialogueCastleNameLeonster, CASLTE_NAME_GREEN, 130
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter07Opening1, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter07Opening1, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 20
@@ -137,7 +137,7 @@
     CASTLE_NAME dialogueCastleNameUlster, CASLTE_NAME_RED, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter07Opening2, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter07Opening2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _UnitList1 := [(aUNITGroupDataChapter07Opening.ID_11, 25)]
@@ -272,7 +272,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter07Opening5, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter07Opening5, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 15
@@ -324,7 +324,7 @@
     CASTLE_NAME dialogueCastleNameRibaut, CASLTE_NAME_BLUE, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter07Opening6, DIALOGUE_BG_THRONE, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter07Opening6, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     RUN_EVENT_CONDITION

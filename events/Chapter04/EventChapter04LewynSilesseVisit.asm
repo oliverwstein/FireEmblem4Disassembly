@@ -11,7 +11,7 @@
     RUN_EVENT_CONDITION
       GIVE_UNIT_PID_EQUIP Lewyn, PI_Forseti
 
-    DIALOGUE_WITH_BG dialogueChapter04LewynSilesseVisit, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter04LewynSilesseVisit, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 10

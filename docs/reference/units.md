@@ -102,7 +102,7 @@ Unit pools, four-type ROM/RAM dispatch, classes, stats, skills, weapon ranks, Ho
 ## Dependencies
 
 - `core/`: RAM area/struct allocators (`rlBuildRAMAreaHeader`, `rlAppendNewRAMAreaEntry`, `rlRemoveRAMAreaEntry`, `rlUpdateOffsetTable`), math, random (`rlRollForChance`, `rlGetRandomNumber100`), and `rlStartGameOverEvent`.
-- `items/`: `aItemRAMData` state/owner/durability/kill updates, `rlGiveItemToUnit`, `rlRemoveItemInSpecifiedInventorySlot`, `rlCheckItemObtainable`, `rlRevertItemAcquirement`.
+- `items/`: `aItemRAMData` state/owner/durability/kill updates, `rlGiveItemToUnit`, `rlRemoveItemInSpecifiedInventorySlot`, `rlCheckSelectedUnitCanUseItem`, `rlRevertItemAcquirement`.
 - `map/`: `aDeploymentTable`, `rlAddDeployedMapSprite`, `rlClearUnitGrayedState`, terrain/castle lookups.
 - `battle/`: `aActionStructUnit1`, battle/arena state flags.
 - `events/`, `menus/`, `epilogue/`, `save/`: event conditions (`$11`, `$18`), permanent flags, death quotes, unit window sorting/display, and save serialization.

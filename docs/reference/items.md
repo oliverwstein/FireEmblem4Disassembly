@@ -43,7 +43,7 @@ Also in `data/item/`: [ItemIconOffsets.asm](../../data/item/ItemIconOffsets.asm)
 - **Equippability and obtainability:**
   - `rlCheckWeaponEquippable`: requires `EquipTypeWeapon`, matches `GenderFemale` if `WeaponTraitFemaleOnly`, requires non-zero max durability and not `StatusSilence` for magic weapons (`>= WeaponTypeStaff`), checks unit weapon rank against item rank, and for `WeaponRankHoly` scans `aHolyBloodGrowthBoostsOffsets` for `MajorHolyBlood` (broken holy weapons with max durability `0` pass immediately).
   - `rlCheckStaffEquippable`: rejects `StatusSilence`, requires `EquipTypeStaff` and non-zero max durability, checks `WeaponTypeStaff` rank, and shares `_HolyWeapon` for `WeaponRankHoly`.
-  - `rlCheckItemObtainable`: rings always pass; weapons/staves check `WeaponTraitFemaleOnly` and rank, while `WeaponRankHoly` items always pass.
+  - `rlCheckSelectedUnitCanUseItem`: rings always pass; weapons/staves check `WeaponTraitFemaleOnly` and rank, while `WeaponRankHoly` items always pass.
 - **Range and counterattacks:** `rlGetSelectedItemRange` returns `wR10` (min) and `wR11` (max, `+1` if `UnitStateAssault`). `rlGetInventoryWeaponsRangeFlags` scans slots `1..8` and returns bitflags (`aWeaponRangeFlags`) for equippable weapons in `A` and offensive staves (`StaffEffect >= $0C`, when not Silenced) in `Y`. `rlGetCounterableWeaponSlot` returns the first slot covering range `A`, or falls back to `rlGetFirstEquippableWeaponInInventory`.
 
 ## Staves (`staves.asm`)

@@ -23,13 +23,13 @@
       TEST_FLAG_IN_CHAPTER_SET Chapter09, FlagChapter09_SeliphAltenaTalk
       JUMP_FALSE _NoAltena
 
-        DIALOGUE_WITH_BG dialogueChapter09GrutiaSeizedAltenaRecruited, DIALOGUE_BG_HALLWAY, 3, 2
+        DIALOGUE_WITH_BG dialogueChapter09GrutiaSeizedAltenaRecruited, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
         YIELD
 
         JUMP +
 
       _NoAltena ; B1/D9AA
-      DIALOGUE_WITH_BG dialogueChapter09GrutiaSeized, DIALOGUE_BG_HALLWAY, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter09GrutiaSeized, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
       YIELD
 
     +

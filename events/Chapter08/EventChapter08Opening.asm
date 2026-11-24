@@ -37,7 +37,7 @@
     CASTLE_NAME dialogueCastleNameConnacht, CASLTE_NAME_RED, 180
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter08Opening1, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter08Opening1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 20
@@ -93,7 +93,7 @@
     CASTLE_NAME dialogueCastleNameMunster, CASLTE_NAME_RED, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter08Opening2, DIALOGUE_BG_FOUNTAIN, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter08Opening2, DIALOGUE_BG_FOUNTAIN, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 20
@@ -109,7 +109,7 @@
     CASTLE_NAME dialogueCastleNameMeath, CASLTE_NAME_RED, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter08Opening3, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter08Opening3, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20
@@ -125,7 +125,7 @@
     CASTLE_NAME dialogueCastleNameUlster, CASLTE_NAME_BLUE, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter08Opening4, DIALOGUE_BG_THRONE, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter08Opening4, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     TEST_FLAG_IN_CHAPTER_SET Chapter08, FlagChapter08_LeifAlive

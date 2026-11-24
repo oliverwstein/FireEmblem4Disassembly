@@ -32,7 +32,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter01VerdaneSpawn1, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter01VerdaneSpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     SET_CAMERA_POSITION [5, 23]
     YIELD
 
@@ -66,7 +66,7 @@
     PAUSE 10
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter01VerdaneSpawn2, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter01VerdaneSpawn2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _UnitList2 := [aUNITGroupDataChapter01Verdane.ID_23]

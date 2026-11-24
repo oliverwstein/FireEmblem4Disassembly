@@ -44,7 +44,7 @@
       CASTLE_NAME dialogueCastleNameEvans, CASLTE_NAME_BLUE, 120
 
       CONTINUE_FORM_MAP_SPRITE_HALT
-      DIALOGUE_WITH_BG dialogueChapter01Opening2, DIALOGUE_BG_THRONE, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter01Opening2, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
       YIELD
 
       PAUSE 25
@@ -69,7 +69,7 @@
       CASTLE_NAME dialogueCastleNameGenoa, CASLTE_NAME_RED, 90
       YIELD
 
-      DIALOGUE_WITH_BG dialogueChapter01Opening3, DIALOGUE_BG_HALLWAY, 3, 1
+      DIALOGUE_WITH_BG dialogueChapter01Opening3, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
       SET_CAMERA_POSITION [48, 34]
       YIELD
 

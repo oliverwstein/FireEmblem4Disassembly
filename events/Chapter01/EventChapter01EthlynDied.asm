@@ -20,7 +20,7 @@
     PAUSE 20
     YIELD
 
-    DIALOGUE_WITH_BG dialogueDeathQuoteGen1PlayerEthlynLeave, DIALOGUE_BG_GATE, 3, 2
+    DIALOGUE_WITH_BG dialogueDeathQuoteGen1PlayerEthlynLeave, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 2
     SET_CAMERA_POSITION [38, 5]
     YIELD
 

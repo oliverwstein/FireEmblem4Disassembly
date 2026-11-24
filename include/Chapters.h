@@ -49,10 +49,10 @@
   .endstruct
 
   ; Castle coordinates are the guarding spot
-  structChapterCastleLocationEntry .struct ID, NameID, Coordinates, Unknown, ShopDataPointer
+  structChapterCastleLocationEntry .struct ID, NameID, Coordinates, Facilities, ShopDataPointer
     .dstruct structChapterLocationEntry, \ID, \NameID, LocationTypeCastle, \Coordinates ; $00 - $04
-    Unknown           .byte \Unknown            ; $05
-    ShopDataPointer   .word <>\ShopDataPointer  ; $06
+    Facilities        .byte \Facilities         ; $05 ; the town's buttons: CastleFacility* bits (include/Castle.h)
+    ShopDataPointer   .word <>\ShopDataPointer  ; $06 ; player item indices ($FFFF ends) put on sale when the chapter's locations are set up
   .endstruct
 
   ; Village coordinates are the visitable tile

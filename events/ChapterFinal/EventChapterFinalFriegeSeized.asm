@@ -14,7 +14,7 @@
     PLAY_SONG $82
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapterFinalFriegeSeized, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapterFinalFriegeSeized, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PLAY_SFX_WORD $00E0

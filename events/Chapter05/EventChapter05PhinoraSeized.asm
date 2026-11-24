@@ -26,7 +26,7 @@
     RUN_EVENT_CONDITION
       DEPLOY_UNIT_GROUP UNITGroupChapter05Velthomer
 
-    DIALOGUE_WITH_BG dialogueChapter05PhinoraSeized1, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter05PhinoraSeized1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     RUN_ASM rlASMCShowQueuedSeizePopUp
@@ -103,7 +103,7 @@
     PAUSE 25
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter05PhinoraSeized3, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter05PhinoraSeized3, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 20

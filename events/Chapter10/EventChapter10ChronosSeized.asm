@@ -11,12 +11,12 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter10, FlagChapter10_RadosSeizedCheck
     JUMP_FALSE _RadosNotSeized
 
-      DIALOGUE_WITH_BG dialogueChapter10ChronosSeized, DIALOGUE_BG_HALLWAY, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter10ChronosSeized, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
       YIELD
       JUMP +
 
       _RadosNotSeized ; 8D/888F
-      DIALOGUE_WITH_BG dialogueChapter10ChronosSeizedBeforeRados, DIALOGUE_BG_HALLWAY, 3, 2
+      DIALOGUE_WITH_BG dialogueChapter10ChronosSeizedBeforeRados, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
       YIELD
 
     +

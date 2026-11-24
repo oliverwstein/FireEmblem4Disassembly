@@ -60,7 +60,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter06Opening1, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter06Opening1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 10
@@ -139,7 +139,7 @@
     WAIT_UNTIL_MAP_SPRITES_HALTING
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter06Opening2, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter06Opening2, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _UnitList6 := [(PermanentFlagSeliphExists,   Sigurd,  Seliph)]

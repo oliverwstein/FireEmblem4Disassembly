@@ -282,7 +282,7 @@
 
       aChapter03EventData ; 86/D668
 
-        .structChapterEventData aChapter03LocationData, aChapter03MapChangeData, aUnknown86D6E9, aChapter03TalkEvents, aUnknown86D795
+        .structChapterEventData aChapter03LocationData, aChapter03MapChangeData, aChapter03ArenaOpponents, aChapter03TalkEvents, aUnknown86D795
 
       aChapter03LocationData ; 86/D672
 
@@ -292,19 +292,19 @@
 
       aChapter03AgustiCastle ; 86/D68B
 
-        .structChapterCastleLocationEntry Ch03_Agusti, AgustiName, [36, 59], $FC, aChapter03ShopData
+        .structChapterCastleLocationEntry Ch03_Agusti, AgustiName, [36, 59], CastleFacilityAll, aChapter03ShopData
 
       aChapter03SylvaleCastle ; 86/D693
 
-        .structChapterCastleLocationEntry Ch03_Sylvale, SylvaleName, [7, 43], $FC, None
+        .structChapterCastleLocationEntry Ch03_Sylvale, SylvaleName, [7, 43], CastleFacilityAll, None
 
       aChapter03MadinoCastle ; 86/D69B
 
-        .structChapterCastleLocationEntry Ch03_Madino, MadinoName, [41, 30], $FC, None
+        .structChapterCastleLocationEntry Ch03_Madino, MadinoName, [41, 30], CastleFacilityAll, None
 
       aChapter03OrgahilCastle ; 86/D6A3
 
-        .structChapterCastleLocationEntry Ch03_Orgahil, OrgahilName, [52, 4], $00, None
+        .structChapterCastleLocationEntry Ch03_Orgahil, OrgahilName, [52, 4], None, None
 
       aChapter03Village1 ; 86/D6AB
 
@@ -360,31 +360,34 @@
         .word $009C
         .word $00BB
 
-      aUnknown86D6E9 ; 86/D6E9
+      aChapter03ArenaOpponents ; 86/D6E9
 
-        .word <>aUnknown86D6ED
-        .word <>aUnknown86D6FD
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknown86D6ED ; 86/D6ED
+        .word <>aChapter03ArenaOpponentsMelee
+        .word <>aChapter03ArenaOpponentsRanged
 
-        .word $01F1
-        .word $01F3
-        .word $01F4
-        .word $01F6
-        .word $01F7
-        .word $01F8
-        .word $01F9
+      aChapter03ArenaOpponentsMelee ; 86/D6ED
+
+        .word Tyler
+        .word Pelleo
+        .word Treville
+        .word Pazan
+        .word Doma
+        .word Keller
+        .word ThorntonCh03
         .word $FFFF
 
-      aUnknown86D6FD ; 86/D6FD
+      aChapter03ArenaOpponentsRanged ; 86/D6FD
 
-        .word $01F2
-        .word $01F3
-        .word $01F5
-        .word $01F6
-        .word $01F7
-        .word $01F8
-        .word $01FA
+        .word LippCh03
+        .word Pelleo
+        .word Geller
+        .word Pazan
+        .word Doma
+        .word Keller
+        .word MarioCh03
         .word $FFFF
 
       aFactionGroupData10 ; 86/D70D

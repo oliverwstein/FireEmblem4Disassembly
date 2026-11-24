@@ -40,7 +40,7 @@
     RUN_EVENT_CONDITION
       SET_UNIT_POSITION Sigurd, $FF, [12, 5]
 
-    DIALOGUE_WITH_BG dialogueChapter02InfiniSeized, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter02InfiniSeized, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     FILL_EVENT_UNIT_SLOT Sigurd, EventUnitSlot1

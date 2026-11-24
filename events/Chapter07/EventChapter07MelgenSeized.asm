@@ -8,7 +8,7 @@
     PLAY_SONG $77
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter07MelgenSeized, DIALOGUE_BG_GATE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter07MelgenSeized, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PLAY_SFX_WORD $00E0

@@ -16,7 +16,7 @@
     PAUSE 25
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter02LewynSilviaSpawn, DIALOGUE_BG_FOUNTAIN, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter02LewynSilviaSpawn, DIALOGUE_BG_FOUNTAIN, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20

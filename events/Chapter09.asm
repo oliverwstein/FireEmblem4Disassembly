@@ -365,7 +365,7 @@
 
       aChapter09EventData ; 86/F86F
 
-        .structChapterEventData aChapter09LocationData, aChapter09MapChangeData, aUnknown86F92D, aChapter09TalkEvents, None
+        .structChapterEventData aChapter09LocationData, aChapter09MapChangeData, aChapter09ArenaOpponents, aChapter09TalkEvents, None
 
       aChapter09LocationData ; 86/F879
 
@@ -375,23 +375,23 @@
 
       aChapter09MeathCastle ; 86/F890
 
-        .structChapterCastleLocationEntry Ch09_Meath, MeathName, [52, 2], $FC, aChapter09ShopData
+        .structChapterCastleLocationEntry Ch09_Meath, MeathName, [52, 2], CastleFacilityAll, aChapter09ShopData
 
       aChapter09KapathogiaCastle ; 86/F898
 
-        .structChapterCastleLocationEntry Ch09_Kapathogia, KapathogiaName, [32, 17], $FC, None
+        .structChapterCastleLocationEntry Ch09_Kapathogia, KapathogiaName, [32, 17], CastleFacilityAll, None
 
       aChapter09LutheciaCastle ; 86/F8A0
 
-        .structChapterCastleLocationEntry Ch09_Luthecia, LutheciaName, [10, 27], $FC, None
+        .structChapterCastleLocationEntry Ch09_Luthecia, LutheciaName, [10, 27], CastleFacilityAll, None
 
       aChapter09GrutiaCastle ; 86/F8A8
 
-        .structChapterCastleLocationEntry Ch09_Grutia, GrutiaName, [18, 54], $FC, None
+        .structChapterCastleLocationEntry Ch09_Grutia, GrutiaName, [18, 54], CastleFacilityAll, None
 
       aChapter09ThraciaCastle ; 86/F8B0
 
-        .structChapterCastleLocationEntry Ch09_Thracia, ThraciaName, [52, 41], $00, None
+        .structChapterCastleLocationEntry Ch09_Thracia, ThraciaName, [52, 41], None, None
 
       aChapter09Village1 ; 86/F8B8
 
@@ -479,31 +479,34 @@
         .word $04AD
         .word $08AD
 
-      aUnknown86F92D ; 86/F92D
+      aChapter09ArenaOpponents ; 86/F92D
 
-        .word <>aUnknown86F931
-        .word <>aUnknown86F941
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknown86F931 ; 86/F931
+        .word <>aChapter09ArenaOpponentsMelee
+        .word <>aChapter09ArenaOpponentsRanged
 
-        .word $021E
-        .word $0220
-        .word $0221
-        .word $0223
-        .word $0224
-        .word $0225
-        .word $0226
+      aChapter09ArenaOpponentsMelee ; 86/F931
+
+        .word IndraCh09
+        .word Apostole
+        .word Miller
+        .word Klain
+        .word Sleighton
+        .word Triesta
+        .word CanaanCh09
         .word $FFFF
 
-      aUnknown86F941 ; 86/F941
+      aChapter09ArenaOpponentsRanged ; 86/F941
 
-        .word $021F
-        .word $0220
-        .word $0222
-        .word $0223
-        .word $0224
-        .word $0225
-        .word $0226
+        .word Nietzche
+        .word Apostole
+        .word Cilon
+        .word Klain
+        .word Sleighton
+        .word Triesta
+        .word CanaanCh09
         .word $FFFF
 
       aChapter09TalkEvents ; 86/F951

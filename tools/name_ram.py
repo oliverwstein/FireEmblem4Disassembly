@@ -56,7 +56,7 @@ SCOPED = [
       'engine/arena/arena.asm')),
     # The unit menu's slot lists; the AI uses the area for its own variables.
     (0x7E2000, 0x7E202F, ('aUnitMenu',), ('engine/menus/unit_menu.asm', 'engine/menus/item_list.asm',
-     'engine/items/staves.asm')),
+     'engine/items/staves.asm', 'engine/castle/courtyard.asm')),
     # The title screen's variables; the battle scene reuses the area.
     (0x7FD000, 0x7FD8BA, ('bTitle', 'wTitle', 'lTitle', 'aTitle'),
      ('engine/title/title_screen.asm', 'engine/title/title_scenes.asm')),

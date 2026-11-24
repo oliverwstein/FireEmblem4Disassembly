@@ -7,7 +7,7 @@
     RUN_EVENT_CONDITION
       SET_UNIT_POSITION Chulainn, Ch02_Evans
 
-    DIALOGUE_WITH_BG dialogueChapter02ChulainnRecruitment, DIALOGUE_BG_ALLEY, 1, 2
+    DIALOGUE_WITH_BG dialogueChapter02ChulainnRecruitment, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_TOWN, 2
     YIELD
 
     PLAY_SFX_WORD $00E0

@@ -44,7 +44,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapterFinalDozelSpawn, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapterFinalDozelSpawn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     _UnitList2 := [(aUNITGroupDataChapterFinalDozel.ID_06, 25)]

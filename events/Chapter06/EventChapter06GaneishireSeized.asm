@@ -23,7 +23,7 @@
     RUN_EVENT_CONDITION
       SET_UNIT_IN_CASTLE Seliph, 0
 
-    DIALOGUE_WITH_BG dialogueChapter06GaneishireSeized1, DIALOGUE_BG_ALLEY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter06GaneishireSeized1, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_MAP, 2
     SET_CAMERA_POSITION [48, 8]
     YIELD
 
@@ -43,7 +43,7 @@
     RUN_EVENT_CONDITION
       SET_UNIT_POSITION Seliph, $FF, [56, 16]
 
-    DIALOGUE_WITH_BG dialogueChapter06GaneishireSeized2, DIALOGUE_BG_ALLEY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter06GaneishireSeized2, DIALOGUE_BG_ALLEY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     LOAD_UNIT_DIRECT Julia, FS_Player, [56, 16], [56, 16], 4, MAP_SPRITE_BLUE

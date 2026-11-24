@@ -17,7 +17,7 @@
     CASTLE_NAME dialogueCastleNameInfini, CASLTE_NAME_YELLOW, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter02InfiniBrigandsSpawn, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter02InfiniBrigandsSpawn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     LOAD_UNIT_BY_GROUP UNITGroupChapter02Yellows, aUNITGroupDataChapter02Yellows.ID_06, [12, 5], 4, MAP_SPRITE_YELLOW

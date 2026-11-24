@@ -20,7 +20,7 @@
     PAUSE 15
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter01MarphaSeized1, DIALOGUE_BG_GATE, 3, 4
+    DIALOGUE_WITH_BG dialogueChapter01MarphaSeized1, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 4
     SET_CAMERA_POSITION [13, 43]
     YIELD
 
@@ -52,7 +52,7 @@
     RUN_EVENT_CONDITION
       SET_UNIT_POSITION Sigurd, $FF, [24, 51]
 
-    DIALOGUE_WITH_BG dialogueChapter01MarphaSeized2, DIALOGUE_BG_GATE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter01MarphaSeized2, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     FILL_EVENT_UNIT_SLOT Sigurd, EventUnitSlot1

@@ -801,6 +801,10 @@
         .autsiz
         .databank ?
 
+        ; A fatal arena strike by the selected unit: below arena level 7, adds the prize for its
+        ; level (aArenaMoneyRewards, 1,000 + 500 per level) to its money, raises the level by one
+        ; and returns the prize; 0 at level 7. There is no entry fee.
+
         phb
         php
         phk

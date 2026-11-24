@@ -258,15 +258,15 @@
 
       aChapterPrologueChalphyCastle ; 90/81FA
 
-        .structChapterCastleLocationEntry ChP_Chalphy, ChalphyName, [60, 10], $78, None
+        .structChapterCastleLocationEntry ChP_Chalphy, ChalphyName, [60, 10], CastleFacilitySecondhandShop | CastleFacilityRepairShop | CastleFacilityDepot | CastleFacilityAugury, None
 
       aChapterPrologueYngviCastle ; 90/8202
 
-        .structChapterCastleLocationEntry ChP_Yngvi, YngviName, [33, 23], $78, None
+        .structChapterCastleLocationEntry ChP_Yngvi, YngviName, [33, 23], CastleFacilitySecondhandShop | CastleFacilityRepairShop | CastleFacilityDepot | CastleFacilityAugury, None
 
       aChapterPrologueEvansCastle ; 90/820A
 
-        .structChapterCastleLocationEntry ChP_Evans, EvansName, [5, 13], $00, None
+        .structChapterCastleLocationEntry ChP_Evans, EvansName, [5, 13], None, None
 
       aChapterPrologueVillage1 ; 90/8212
 

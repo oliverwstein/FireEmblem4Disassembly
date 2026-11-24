@@ -38,7 +38,7 @@
     LOAD_UNIT_BY_GROUP_SILENT UNITGroupChapter02Mackily, aUNITGroupDataChapter02Mackily.ID_15
     LOAD_UNIT_BY_GROUP_SILENT UNITGroupChapter02Mackily, aUNITGroupDataChapter02Mackily.ID_16
 
-    DIALOGUE_WITH_BG dialogueChapter02MackilySpawn1, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter02MackilySpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20
@@ -65,7 +65,7 @@
     PAUSE 20
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter02MackilySpawn2, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter02MackilySpawn2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 10
@@ -119,7 +119,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter02MackilySpawn3, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter02MackilySpawn3, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _UnitList4 := [(aUNITGroupDataChapter02Mackily.ID_19,25)]

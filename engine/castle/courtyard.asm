@@ -1168,7 +1168,7 @@
         lda wAIGroupLeaderFieldMovement
         and #$00FF
         bne _88C0
-        lda $7E2028
+        lda aUnitMenuCastleStaffSlots
         and #$00FF
         beq rsCastleUnitCommandNameBlank
 
@@ -1840,7 +1840,7 @@
         lda wAIGroupLeaderFieldMovement
         and #$00FF
         bne _8DC8
-        lda $7E2028
+        lda aUnitMenuCastleStaffSlots
         and #$00FF
         beq _8D94
         bra _8DC8
@@ -2311,10 +2311,10 @@
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
         jsl rlBuildCastleStaffSlotLists
-        lda wAIGroupLeaderFieldMovement
+        lda aUnitMenuStaffSlots ; staves with a target on the map
         and #$00FF
         bne _90E4
-        lda $7E2028
+        lda aUnitMenuCastleStaffSlots ; staves with a target in the castle
         and #$00FF
         beq _9150
 
@@ -2854,7 +2854,7 @@
         sta wGameStateStep,b
         lda #KEEPER_ARENA
         sta wKeeper
-        stz $0AD7,b
+        stz wArenaFightsWithOpponent,b
         bra _944E
 
         rts

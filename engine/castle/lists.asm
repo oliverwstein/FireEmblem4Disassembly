@@ -68,7 +68,10 @@
         .autsiz
         .databank ?
 
-        ; Lists every item in state wCastleListItemState (the shop's or secondhand stock): item index, ID, ROM and RAM pointers; items that cannot be had yet are marked $FFFF.
+        ; Lists every item in state wCastleListItemState (the shop's or secondhand stock): item index, ID, ROM and RAM pointers; items the unit can't use (rlCheckSelectedUnitCanUseItem) are marked $FFFF.
+        ; The owner is never compared, so every shop lists the items of every castle: all the shop
+        ; lists put on sale so far in the generation, and everything sold anywhere. The compare
+        ; with ItemStatePawnbroker below branches to the next instruction either way.
 
         stz wCastleListItemCount,b
         jsl rlGetItemRAMDataCount
@@ -95,7 +98,7 @@
         jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
         lda #$0000
         sta aCastleListItemUnavailable,x
-        jsl rlCheckItemObtainable
+        jsl rlCheckSelectedUnitCanUseItem
         bcs _9E3E
         lda #$FFFF
         sta aCastleListItemUnavailable,x
@@ -2402,7 +2405,7 @@
         lda wCurrentItemDataROMPointer,b
         beq _AB90
         inc wCastleListSubCount,b
-        jsl rlCheckItemObtainable
+        jsl rlCheckSelectedUnitCanUseItem
         bcc _AB76
         lda #$2000
         sta aCurrentTilemapInfo,b

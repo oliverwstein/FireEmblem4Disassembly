@@ -1151,7 +1151,7 @@
         lda wCurrentItemDataROMPointer,b
         beq _End
 
-          jsl rlCheckItemObtainable
+          jsl rlCheckSelectedUnitCanUseItem
           bcc _Next
 
             jsl rlGetItemEquipmentType
@@ -1489,11 +1489,16 @@
 
         .databank 0
 
-      rlCheckItemObtainable ; 84/F70A
+      rlCheckSelectedUnitCanUseItem ; 84/F70A
 
         .al
         .autsiz
         .databank ?
+
+        ; wCurrentItemDataROMPointer = an item: carry set if the selected unit could use it by weapon
+        ; rank and gender. Rings and other items always pass, and so do holy weapons (rank $FF):
+        ; the blood check is rlCheckWeaponEquippable's. Shops grey out and refuse what fails
+        ; (aCastleListItemUnavailable), and inheritance uses it to choose what a child takes.
 
         phb
         phk

@@ -31,7 +31,7 @@
     PAUSE 5
     YIELD
 
-    DIALOGUE_WITH_BG dialogueEpilogue_Belhalla, DIALOGUE_BG_CLOISTER, 3, 3
+    DIALOGUE_WITH_BG dialogueEpilogue_Belhalla, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
     SET_CAMERA_POSITION [35, 17]
     YIELD
 
@@ -57,7 +57,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Isaach, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Isaach, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueIsaachExit
@@ -84,7 +84,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_NewThracia, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_NewThracia, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueNewThraciaExit
@@ -111,7 +111,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Agustria, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Agustria, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueAgustriaExit
@@ -138,7 +138,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Verdane, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Verdane, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueVerdaneExit
@@ -165,7 +165,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Yngvi, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Yngvi, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueYngviExit
@@ -192,7 +192,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Friege, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Friege, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueFriegeExit
@@ -219,7 +219,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Dozel, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Dozel, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueDozelExit
@@ -246,7 +246,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Edda, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Edda, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueEddaExit
@@ -273,7 +273,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Velthomer, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Velthomer, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueVelthomerExit
@@ -300,7 +300,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Chalphy, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Chalphy, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueChalphyExit
@@ -327,7 +327,7 @@
       PAUSE 10
       YIELD
 
-      DIALOGUE_WITH_BG dialogueEpilogue_Silesse, DIALOGUE_BG_CLOISTER, 3, 3
+      DIALOGUE_WITH_BG dialogueEpilogue_Silesse, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       RUN_ASM rlASMCEpilogueSilesseExit
@@ -348,7 +348,7 @@
     PAUSE 10
     YIELD
 
-    DIALOGUE_WITH_BG dialogueEpilogue_Ending, DIALOGUE_BG_CLOISTER, 5, 4
+    DIALOGUE_WITH_BG dialogueEpilogue_Ending, DIALOGUE_BG_CLOISTER, CONVERSATION_EXIT_FADE_OUT, 4
     YIELD
 
     RUN_EVENT_CONDITION

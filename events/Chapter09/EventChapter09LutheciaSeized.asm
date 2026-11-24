@@ -27,7 +27,7 @@
             REGISTER_CHARACTER_MAP_SPRITE Coirpre
 
         +
-        DIALOGUE_WITH_BG dialogueChapter09LutheciaSeized, DIALOGUE_BG_HALLWAY, 3, 2
+        DIALOGUE_WITH_BG dialogueChapter09LutheciaSeized, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
         YIELD
 
         TEST_PERMANENT_FLAG_SET PermanentFlagCoirpreExists
@@ -54,7 +54,7 @@
         JUMP +
 
     _NoCoirpre ; B1/D851
-    DIALOGUE_WITH_BG dialogueChapter09LutheciaSeizedNoCoirpre, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter09LutheciaSeizedNoCoirpre, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     +

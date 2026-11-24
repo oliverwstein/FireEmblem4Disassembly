@@ -14,7 +14,7 @@
     CASTLE_NAME dialogueCastleNameBelhalla, CASLTE_NAME_YELLOW, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter05BelhallaConversation, DIALOGUE_BG_THRONE, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter05BelhallaConversation, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PLAY_SFX_WORD $00E0

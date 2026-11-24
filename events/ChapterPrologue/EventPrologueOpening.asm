@@ -56,7 +56,7 @@
     PAUSE 25
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapterPrologueOpening1, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapterPrologueOpening1, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 20
@@ -85,7 +85,7 @@
     CASTLE_NAME dialogueCastleNameChalphy, CASLTE_NAME_BLUE, 110
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapterPrologueOpening2, DIALOGUE_BG_THRONE, 3, 1
+    DIALOGUE_WITH_BG dialogueChapterPrologueOpening2, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20

@@ -60,7 +60,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter08MeathSpawn1, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter08MeathSpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 15
@@ -91,7 +91,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter08MeathSpawn2, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter08MeathSpawn2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20
@@ -168,7 +168,7 @@
     RUN_EVENT_CONDITION
       SET_FACTION_GROUP FS_Ch08Ced, FG_Ch08Munster2
 
-    DIALOGUE_WITH_BG dialogueChapter08MeathSpawn3, DIALOGUE_BG_GATE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter08MeathSpawn3, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _UnitList4 := [(aUNITGroupDataChapter08Meath.ID_02, 20)]

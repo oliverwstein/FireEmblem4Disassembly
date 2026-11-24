@@ -13,7 +13,7 @@
     PAUSE 20
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04ZaxonSpawn1, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter04ZaxonSpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     _UnitList1 := [(Donovan, 16)]
@@ -40,7 +40,7 @@
     PAUSE 20
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04ZaxonSpawn2, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter04ZaxonSpawn2, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     SET_CAMERA_POSITION [18, 50]
     YIELD
 
@@ -89,7 +89,7 @@
     WAIT_UNTIL_MAP_SPRITES_HALTING
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter04ZaxonSpawn3, DIALOGUE_BG_THRONE, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter04ZaxonSpawn3, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     _UnitList4 := [aUNITGroupDataChapter04Zaxon.ID_05]
@@ -129,7 +129,7 @@
     LOAD_UNIT_BY_GROUP_SILENT UNITGroupChapter04Zaxon, aUNITGroupDataChapter04Zaxon.ID_21
     LOAD_UNIT_BY_GROUP_SILENT UNITGroupChapter04Zaxon, aUNITGroupDataChapter04Zaxon.ID_20
 
-    DIALOGUE_WITH_BG dialogueChapter04ZaxonSpawn4, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter04ZaxonSpawn4, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     _UnitList5 := [aUNITGroupDataChapter04Zaxon.ID_23]

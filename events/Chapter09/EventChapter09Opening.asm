@@ -39,7 +39,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter09Opening1, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter09Opening1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20
@@ -61,7 +61,7 @@
     PLAY_SONG $85
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter09Opening2, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter09Opening2, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     SET_CAMERA_POSITION [45, 34]
     YIELD
 
@@ -109,7 +109,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter09Opening3, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter09Opening3, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 20
@@ -137,7 +137,7 @@
     CASTLE_NAME dialogueCastleNameLuthecia, CASLTE_NAME_RED, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter09Opening4, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter09Opening4, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     LOAD_UNIT_BY_GROUP UNITGroupChapter09Opening, aUNITGroupDataChapter09Opening.ID_20, [10, 27], 4, MAP_SPRITE_RED
@@ -162,7 +162,7 @@
     CASTLE_NAME dialogueCastleNameGrutia, CASLTE_NAME_RED, 90
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter09Opening5, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter09Opening5, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 1
     YIELD
 
     PAUSE 15
@@ -190,13 +190,13 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter09, FlagChapter09_OifeyAlive
     JUMP_FALSE _OifeyDead
 
-      DIALOGUE_WITH_BG dialogueChapter09Opening6OifeyAlive, DIALOGUE_BG_THRONE, 5, 2
+      DIALOGUE_WITH_BG dialogueChapter09Opening6OifeyAlive, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_FADE_OUT, 2
       YIELD
 
       JUMP +
 
       _OifeyDead
-      DIALOGUE_WITH_BG dialogueChapter09Opening6, DIALOGUE_BG_THRONE, 5, 2
+      DIALOGUE_WITH_BG dialogueChapter09Opening6, DIALOGUE_BG_THRONE, CONVERSATION_EXIT_FADE_OUT, 2
       YIELD
 
     +
@@ -213,7 +213,7 @@
       PAUSE 25
       YIELD
 
-      DIALOGUE_WITH_BG dialogueChapter09Opening7LeifFinn, DIALOGUE_BG_GATE, 3, 3
+      DIALOGUE_WITH_BG dialogueChapter09Opening7LeifFinn, DIALOGUE_BG_GATE, CONVERSATION_EXIT_MAP, 3
       YIELD
 
       JUMP +

@@ -40,7 +40,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter09ThraciaSpawn, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter09ThraciaSpawn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 20

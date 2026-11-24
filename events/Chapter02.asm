@@ -409,7 +409,7 @@
 
       aChapter02EventData ; 86/D14C
 
-        .structChapterEventData aChapter02LocationData, aChapter02MapChangeData, aUnknown86D20B, aChapter02TalkEvents, aUnknown86D2E1
+        .structChapterEventData aChapter02LocationData, aChapter02MapChangeData, aChapter02ArenaOpponents, aChapter02TalkEvents, aUnknown86D2E1
 
       aChapter02LocationData ; 86/D156
 
@@ -419,27 +419,27 @@
 
       aChapter02EvansCastle ; 86/D177
 
-        .structChapterCastleLocationEntry Ch02_Evans, EvansName, [57, 59], $FC, aChapter02ShopData
+        .structChapterCastleLocationEntry Ch02_Evans, EvansName, [57, 59], CastleFacilityAll, aChapter02ShopData
 
       aChapter02NordionCastle ; 86/D17F
 
-        .structChapterCastleLocationEntry Ch02_Nordion, NordionName, [25, 51], $FC, None
+        .structChapterCastleLocationEntry Ch02_Nordion, NordionName, [25, 51], CastleFacilityAll, None
 
       aChapter02HeirheinCastle ; 86/D187
 
-        .structChapterCastleLocationEntry Ch02_Heirhein, HeirheinName, [5, 32], $FC, None
+        .structChapterCastleLocationEntry Ch02_Heirhein, HeirheinName, [5, 32], CastleFacilityAll, None
 
       aChapter02InfiniCastle ; 86/D18F
 
-        .structChapterCastleLocationEntry Ch02_Infini, InfiniName, [12, 3], $FC, None
+        .structChapterCastleLocationEntry Ch02_Infini, InfiniName, [12, 3], CastleFacilityAll, None
 
       aChapter02MackilyCastle ; 86/D197
 
-        .structChapterCastleLocationEntry Ch02_Mackily, MackilyName, [43, 29], $FC, None
+        .structChapterCastleLocationEntry Ch02_Mackily, MackilyName, [43, 29], CastleFacilityAll, None
 
       aChapter02AgustiCastle ; 86/D19F
 
-        .structChapterCastleLocationEntry Ch02_Agusti, AgustiName, [53, 6], $00, None
+        .structChapterCastleLocationEntry Ch02_Agusti, AgustiName, [53, 6], None, None
 
       aChapter02VillageBargainBand ; 86/D1A7
 
@@ -513,32 +513,35 @@
         .word $00AF, $006A
         .word $033A, $033B
 
-      aUnknown86D20B ; 86/D20B
+      aChapter02ArenaOpponents ; 86/D20B
 
-        .word <>aUnknown86D20F
-        .word <>aUnknown86D221
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknown86D20F ; 86/D20F
+        .word <>aChapter02ArenaOpponentsMelee
+        .word <>aChapter02ArenaOpponentsRanged
 
-        .word $01E8
-        .word $01E9
-        .word $01EA
-        .word $01EB
-        .word $01ED
-        .word $01EE
-        .word $0009
-        .word $01EF
+      aChapter02ArenaOpponentsMelee ; 86/D20F
+
+        .word Zero
+        .word Mahatma
+        .word Rowan
+        .word Barcnin
+        .word Heltsok
+        .word Chacof
+        .word Chulainn
+        .word KeimosCh02    ; level 6 once Chulainn has joined: an opponent who already exists is skipped
         .word $FFFF
 
-      aUnknown86D221 ; 86/D221
+      aChapter02ArenaOpponentsRanged ; 86/D221
 
-        .word $01E8
-        .word $01E9
-        .word $01EA
-        .word $01EC
-        .word $01ED
-        .word $01EE
-        .word $01F0
+        .word Zero
+        .word Mahatma
+        .word Rowan
+        .word Millet
+        .word Heltsok
+        .word Chacof
+        .word MarilynCh02
         .word $FFFF
 
       aFactionGroupData0A ; 86/D231

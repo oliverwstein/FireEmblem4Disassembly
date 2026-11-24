@@ -52,7 +52,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG dialogueChapter03SylvaleSpawn1, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter03SylvaleSpawn1, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 15
@@ -99,7 +99,7 @@
     PLAY_SONG $22
     YIELD
 
-    DIALOGUE_WITH_BG dialogueChapter03SylvaleSpawn3, DIALOGUE_BG_HALLWAY, 3, 2
+    DIALOGUE_WITH_BG dialogueChapter03SylvaleSpawn3, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD
 
     PAUSE 15

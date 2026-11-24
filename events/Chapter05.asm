@@ -603,7 +603,7 @@
 
       aChapter05EventData ; 86/E510
 
-        .structChapterEventData aChapter05LocationData, aChapter05MapChangeData, aUnknown86E5AF, aChapter05TalkEvents, None
+        .structChapterEventData aChapter05LocationData, aChapter05MapChangeData, aChapter05ArenaOpponents, aChapter05TalkEvents, None
 
       aChapter05LocationData ; 86/E51A
 
@@ -613,23 +613,23 @@
 
       aChapter05ZaxonCastle ; 86/E533
 
-        .structChapterCastleLocationEntry Ch05_Zaxon, ZaxonName, [22, 11], $FC, None
+        .structChapterCastleLocationEntry Ch05_Zaxon, ZaxonName, [22, 11], CastleFacilityAll, None
 
       aChapter05LubeckCastle ; 86/E53B
 
-        .structChapterCastleLocationEntry Ch05_Lubeck, LubeckName, [55, 6], $FC, None
+        .structChapterCastleLocationEntry Ch05_Lubeck, LubeckName, [55, 6], CastleFacilityAll, None
 
       aChapter05PhinoraCastle ; 86/E543
 
-        .structChapterCastleLocationEntry Ch05_Phinora, PhinoraName, [42, 24], $FC, None
+        .structChapterCastleLocationEntry Ch05_Phinora, PhinoraName, [42, 24], CastleFacilityAll, None
 
       aChapter05VelthomerCastle ; 86/E54B
 
-        .structChapterCastleLocationEntry Ch05_Velthomer, VelthomerName, [22, 39], $00, None
+        .structChapterCastleLocationEntry Ch05_Velthomer, VelthomerName, [22, 39], None, None
 
       aChapter05BelhallaCastle ; 86/E553
 
-        .structChapterCastleLocationEntry Ch05_Belhalla, BelhallaName, [4, 57], $00, None
+        .structChapterCastleLocationEntry Ch05_Belhalla, BelhallaName, [4, 57], None, None
 
       aChapter05Village1 ; 86/E55B
 
@@ -692,31 +692,34 @@
         .word $08AE
         .word $0A5A
 
-      aUnknown86E5AF ; 86/E5AF
+      aChapter05ArenaOpponents ; 86/E5AF
 
-        .word <>aUnknown86E5B3
-        .word <>aUnknown86E5C3
+        ; The arena's opponents by arena level 0-6: one list for a weapon with minimum range 1,
+        ; one for 2 or more (rlGetArenaOpponentCharacterID).
 
-      aUnknown86E5B3 ; 86/E5B3
+        .word <>aChapter05ArenaOpponentsMelee
+        .word <>aChapter05ArenaOpponentsRanged
 
-        .word $0204
-        .word $0206
-        .word $0207
-        .word $0208
-        .word $0209
-        .word $020B
-        .word $020C
+      aChapter05ArenaOpponentsMelee ; 86/E5B3
+
+        .word Shackal
+        .word Greias
+        .word Geese
+        .word Lee
+        .word Shisal
+        .word Nazarl
+        .word Sif
         .word $FFFF
 
-      aUnknown86E5C3 ; 86/E5C3
+      aChapter05ArenaOpponentsRanged ; 86/E5C3
 
-        .word $0205
-        .word $0206
-        .word $0207
-        .word $0208
-        .word $020A
-        .word $020B
-        .word $020C
+        .word LippCh05
+        .word Greias
+        .word Geese
+        .word Lee
+        .word Hawks
+        .word Nazarl
+        .word Sif
         .word $FFFF
 
       aChapter05TalkEvents ; 86/E5D3
