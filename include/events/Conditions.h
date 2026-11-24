@@ -5,6 +5,8 @@
 
     ; Identifier : $20
     START_PLAYER_PHASE .segment Flag, Turn
+      ; Action $20 is announced at the end of a turn (map step 9, rsMapStepEndTurn),
+      ; with the turn that just ended; the next turn's player phase follows.
       .byte $01
       .byte \Flag
       .sint \Turn
@@ -20,7 +22,8 @@
 
     ; Identifier : $02
     CHECK_VILLAGE_DESTROYED .segment Flag, DestroyerFactionSlot, LocationID
-      ; Unused.
+      ; No chapter uses it. Action $02 is announced by rlUnitRaidVillage when a
+      ; computer unit takes a village's last gold and destroys it.
       .byte $03
       .byte \Flag
       .word \DestroyerFactionSlot
@@ -48,8 +51,7 @@
 
     ; Identifier : $05
     EC_06 .segment Flag, Unknown1, Unknown2
-      ; Unused.
-      ; No idea where the game sets the bEventActionIdentifier to $05, so idk what this checks.
+      ; Unused. Nothing announces action $05.
       .byte $06
       .byte \Flag
       .word \Unknown1
@@ -67,8 +69,7 @@
 
     ; Identifier : $07
     EC_08 .segment Flag, Unknown1, Unknown2
-      ; Unused.
-      ; No idea where the game sets the bEventActionIdentifier to $07, so idk what this checks.
+      ; Unused. Nothing announces action $07.
       .byte $08
       .byte \Flag
       .word \Unknown1
@@ -77,8 +78,8 @@
 
     ; Identifier : $08
     EC_09 .segment Flag, CharacterID, LocationID
-      ; Unused.
-      ; Only checked for in the unused "Visit Town" command?
+      ; Unused. Action $08 is announced only by the town command (rlUnitVisitTown),
+      ; which needs location type 1; no chapter has one.
       .byte $09
       .byte \Flag
       .word \CharacterID
@@ -306,9 +307,13 @@
     .endsegment
 
     CHECK_TURN_PHASE_AI_ACTOR .segment Turn, FactionSlot, AISetting=$00, CharacterID=$0000
-      ; Can run following events if the turn and the FactionSlot match the current state.
-      ; First does a cycle with AI and CharacterID ignored. Afterwards for factions other than player, 
-      ; can also check when that factions AI group is acting, or if a character is acting.
+      ; Matches action $21 (turn, army, AI setting, character); each parameter at -1 matches anything.
+      ; Map step 3 announces $21 at the start of a phase with AI setting 0 and character 0, so
+      ; the defaults match the phase start. During a computer phase the map step announces $21
+      ; again before each unit acts, with that unit's AI setting and character
+      ; (rsRunQueuedAIUnitEvent), which an AISetting or CharacterID parameter matches.
+      ; On a match every command up to the next BREAK_TURN_EVENT_CHECKS runs; on a miss
+      ; they are skipped.
       .byte $21
       .char \Turn
       .char \FactionSlot
@@ -876,8 +881,10 @@
       .byte \Index
     .endsegment
 
-    EC_73 .segment
-      ; Has something to do with battle animations
+    START_COMBAT_ANIMATION .segment
+      ; Starts the battle that announced action $14 (rlStartCombatAnimation). The battle
+      ; code skips that call when the announcement starts a script, so the pre-combat
+      ; dialogue script (aSongAndDialogueEventTemplate) ends with this command.
       .byte $73
     .endsegment
 

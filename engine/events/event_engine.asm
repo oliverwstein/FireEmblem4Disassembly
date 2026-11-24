@@ -707,6 +707,13 @@
         .autsiz
         .databank ?
 
+        ; Announces an action: the caller has written bEventActionIdentifier and
+        ; wEventEngineArgument1-4. Runs the map condition list of every entry in
+        ; aChapterEventRAMData (one during play). Does nothing while bEventStatus bit 0
+        ; (the opening list) or bit 1 (a list already running) is set, so announcements
+        ; made from inside a list are dropped. Returns carry set if a script was started
+        ; (wEventEngineFlags bit 3), which callers use to wait for it.
+
         phb
         php
         phk
@@ -970,6 +977,9 @@
         .autsiz
         .databank ?
 
+        ; Runs the condition list at Y until the word $FFFF. Each command's handler is
+        ; called in run mode (carry clear) and steps Y past its own bytes.
+
         -
         lda $0000,b,y
         cmp #$FFFF
@@ -1003,6 +1013,9 @@
         .al
         .autsiz
         .databank ?
+
+        ; Calls the handler of the command at Y in skip mode (carry set): it only steps Y
+        ; past its parameters, so the list needs no table of command lengths.
 
         inc y
         and #$00FF
@@ -1062,7 +1075,7 @@
         .word <>rsChapterEventConditionCommandCheckAllFlagsInListSet
         .word <>rsChapterEventConditionCommandCheckFlagInListSet
         .word <>rsChapterEventConditionCommandBreak ; $2E
-        .word <>rsChapterEventConditionCommand2F ; $2F
+        .word <>rsEventFindStateCheckBreak ; $2F: unused; scans to the next state break
         .word <>rsChapterEventConditionCommandEvent
         .word <>rsChapterEventConditionCommandSetBattleOrDeathQuote
         .word <>rsChapterEventConditionCommandSetPrecombatDialogue
@@ -1130,7 +1143,7 @@
         .word <>rsChapterEventConditionCommandAddUnitStat
         .word <>rsChapterEventConditionCommandRemoveAreaRestriction
         .word <>rsChapterEventConditionCommandSetAreaRestriction
-        .word <>rsChapterEventConditionCommand73
+        .word <>rsChapterEventConditionCommandStartCombatAnimation
         .word <>rsChapterEventConditionCommandCombatantsStayOnMap
         .word <>rsChapterEventConditionCommandSetUnitStatus
         .word <>rsChapterEventConditionCommandReplaceUnit
@@ -1155,7 +1168,15 @@
         .autsiz
         .databank ?
 
-        ; Evaluates action ID, event flag, and condition check (lEventPointer), then runs or skips command
+        ; The shared evaluator for action conditions (opcodes $01-$1F). Input: A = the action
+        ; number the condition waits for, Y = its flag byte, wEventCommandLength = the
+        ; condition's size, lEventPointer = its parameter test. Carry set = skip mode.
+        ; The flag byte: $FF always; bit 7 clear = once (skip if the flag is set, set it on a
+        ; match); bit 7 set = the flag (low 7 bits) must be set, and a match clears it (no
+        ; chapter uses this form). On a match the flag is updated before the body (the one
+        ; command after the condition) runs, then rsEventFindConditionBreak skips to the
+        ; next BREAK_ACTION_EVENT_CHECKS, so the first match before a break wins. On a miss
+        ; the body is skipped.
 
         bcs _AdjustScriptOffset
 
@@ -3047,7 +3068,7 @@
           lda $0000,b,y
           and #$00FF
           jsl rlCheckEventFlagSet
-          bcc rsChapterEventConditionCommand2F
+          bcc rsEventFindStateCheckBreak
 
         +
         inc y
@@ -3068,7 +3089,7 @@
           lda $0000,b,y
           and #$00FF  
           jsl rlCheckEventFlagSet
-          bcs rsChapterEventConditionCommand2F
+          bcs rsEventFindStateCheckBreak
 
         +
         inc y
@@ -3114,7 +3135,7 @@
           beq _End
 
             jsl rlCheckEventFlagSet
-            bcc rsChapterEventConditionCommand2F
+            bcc rsEventFindStateCheckBreak
 
               inc y
               bra -
@@ -3160,7 +3181,7 @@
               bra -
 
           +
-          bra rsChapterEventConditionCommand2F
+          bra rsEventFindStateCheckBreak
 
           _End
           inc y
@@ -3178,11 +3199,15 @@
         +
         bra _End
 
-      rsChapterEventConditionCommand2F ; 86/8D93
+      rsEventFindStateCheckBreak ; 86/8D93
 
         .al
         .autsiz
         .databank ?
+
+        ; Scans forward byte by byte to the next state break ($2E or $2F followed by $6666)
+        ; and continues after it. Every failed state check (flags, permanent flags, counters,
+        ; alive, married) jumps here; it is also opcode $2F's handler, which no list uses.
 
         -
         lda $0001,b,y
@@ -3498,7 +3523,7 @@
           jsl rlCheckPermanentEventFlagSet
           bcs +
 
-            jml rsChapterEventConditionCommand2F
+            jml rsEventFindStateCheckBreak
 
         +
         inc y
@@ -3521,7 +3546,7 @@
           jsl rlCheckPermanentEventFlagSet
           bcc +
 
-            jml rsChapterEventConditionCommand2F
+            jml rsEventFindStateCheckBreak
 
         +
         inc y
@@ -3548,7 +3573,7 @@
             jsl rlCheckPermanentEventFlagSet
             bcs +
 
-              jml rsChapterEventConditionCommand2F
+              jml rsEventFindStateCheckBreak
 
             +
             inc y
@@ -3688,7 +3713,7 @@
           rep #$20
           beq +
 
-            jml rsChapterEventConditionCommand2F
+            jml rsEventFindStateCheckBreak
 
         +
         inc y
@@ -3717,7 +3742,7 @@
           rep #$20
           bne +
 
-            jml rsChapterEventConditionCommand2F
+            jml rsEventFindStateCheckBreak
         
         +
         inc y
@@ -3738,7 +3763,7 @@
           jsl rlCheckCharacterWaitingInHomeCastle
           bcs +
 
-            jml rsChapterEventConditionCommand2F
+            jml rsEventFindStateCheckBreak
 
         +
         inc y
@@ -3772,7 +3797,7 @@
             sta wR1
             pla
             sta wR0
-            jml rsChapterEventConditionCommand2F
+            jml rsEventFindStateCheckBreak
 
         +
         pla
@@ -3825,7 +3850,7 @@
         _Destroyed
         pla
         sta wEventLocationEntry,b
-        jml rsChapterEventConditionCommand2F
+        jml rsEventFindStateCheckBreak
 
         .databank 0
 
@@ -3843,7 +3868,7 @@
           cmp #0
           beq +
 
-            jml rsChapterEventConditionCommand2F
+            jml rsEventFindStateCheckBreak
 
         +
         inc y
@@ -3894,7 +3919,7 @@
           sta wSelectedUnitDataRAMPointer,b
           pla
           sta wR0
-          jml rsChapterEventConditionCommand2F
+          jml rsEventFindStateCheckBreak
 
         _End
         pla
@@ -3931,7 +3956,7 @@
           +
           pla
           sta wSelectedUnitDataRAMPointer,b
-          jml rsChapterEventConditionCommand2F
+          jml rsEventFindStateCheckBreak
 
         _End
         pla
@@ -3992,7 +4017,7 @@
           _NoChildren
           pla
           sta wSelectedUnitDataRAMPointer,b
-          jml rsChapterEventConditionCommand2F
+          jml rsEventFindStateCheckBreak
 
         _End
         pla
@@ -5534,11 +5559,13 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand73 ; 86/98A6
+      rsChapterEventConditionCommandStartCombatAnimation ; 86/98A6
 
         .al
         .autsiz
         .databank ?
+
+        ; START_COMBAT_ANIMATION
 
         bcs +
 

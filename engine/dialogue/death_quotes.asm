@@ -307,7 +307,7 @@
         macroMapDialogue 0
 
         RUN_EVENT_CONDITION
-          EC_73
+          START_COMBAT_ANIMATION
 
         END_EVENT
 
@@ -337,7 +337,7 @@
 
         +
         RUN_EVENT_CONDITION
-          EC_73
+          START_COMBAT_ANIMATION
 
         END_EVENT
 

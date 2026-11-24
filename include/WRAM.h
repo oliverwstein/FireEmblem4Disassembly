@@ -1314,8 +1314,9 @@
       ; Item min+max range
 
     bEventStatus .byte ?                          ; $000EA6
-      ; $0001 = runs opening events?
-      ; $0002 = runs other events?
+      ; $0001 = a chapter's opening list is running (rlBeginChapterEvents)
+      ; $0002 = a map condition list is running (rlGetAndRunChapterMapEventConditions)
+      ; Either bit makes rlGetAndRunChapterMapEventConditions return at once.
     wEventUnit1Pointer .word ?                    ; $000EA7
     wEventUnit2Pointer .word ?                    ; $000EA9
     lEventPointer .long ?                         ; $000EAB
@@ -1327,17 +1328,30 @@
     wEventEngineGen2CharacterID1 .word ?          ; $000EB8
     wEventEngineGen2CharacterID2 .word ?          ; $000EBA
     bEventActionIdentifier .byte ?                ; $000EBC
-      ; Known values (from the original author's notes; "?" marks guesses):
-      ; $03 = after action
-      ; $04 = enter home castle?
-      ; $09 = visit village
-      ; $0A = talk
-      ; $11 = ?
-      ; $14 = attack
-      ; $17 = someone got killed?
-      ; $18 = ?
-      ; $20 = start player phase?
-      ; $21 = before enemy action?
+      ; The action being announced to the chapter's condition list, with
+      ; wEventEngineArgument1-4. Every value the code writes (arguments in parentheses):
+      ; $01 = a castle's takeover finished (new owner's army, location; rlRunCastleSeizeEventOrResumeMusic)
+      ; $02 = a computer unit destroyed a village (raider's army, location; rlUnitRaidVillage)
+      ; $03 = a unit's action ended (character, X, Y, army; rsRunActionEndedEvents)
+      ; $04 = a unit went into a castle from the map (character, its home castle; rsRelocateIntoCastle)
+      ; $06 = the castle screen opens its town (character, castle; rlResumeCastleTown, rlCastleOpenTown)
+      ; $08 = the town command (character, location; rlUnitVisitTown)
+      ; $09 = a village visit (character, location; rlUnitVisitVillage)
+      ; $0A = a talk (initiator, target, talk table money rule; map_actions.asm, rsAIActionTalk)
+      ; $11 = two units became lovers (woman, man; lovers.asm)
+      ; $14 = a battle's rounds are built, before it is shown; not staves (attacker army,
+      ;       attacker character, defender army, defender character; battle.asm)
+      ; $17 = a defeated unit is removed, or a unit escapes (character, army; map_step.asm)
+      ; $18 = a strike brought a unit to 0 HP, during round building (dead character, attacker;
+      ;       rlActionStructHandleUnitDeath)
+      ; $1A = the help command rescued a civilian (rescuer, formation + 1)
+      ; $1B = a seize freed a captured player unit (character; rsReviveCapturedPlayerCharacters)
+      ; $1C = a unit left the arena with winnings (character, location, opponent; rlHandleArenaExitEvent)
+      ; $1D = a lover, sibling or triangle crit (crit type, character; battle.asm)
+      ; $20 = the end of a turn (the turn just ended; rsMapStepEndTurn)
+      ; $21 = a phase starts (turn, army, 0, 0; rsMapStepPhaseStartEvents), or a computer unit
+      ;       is about to act (turn, army, AI setting, character; rsRunQueuedAIUnitEvent)
+      ; Nothing announces $05, $07, $25 or $26, though conditions for them exist.
     wEventEngineArgument1 .word ?                 ; $000EBD
     wEventEngineArgument2 .word ?                 ; $000EBF
     wEventEngineArgument3 .word ?                 ; $000EC1
@@ -1474,8 +1488,10 @@
     wEventEngineFlags .word ? ; $00171A
       ; Nonzero while an event script runs (rlStartEventScript sets 9). $0002 the
       ; event waits for its procs, $0004 the event has procs (rlEventEngineCreateProc),
-      ; $0008 cleared when a script starts, $8000 the event is fading out. The map
-      ; step and many map routines do nothing while it is nonzero.
+      ; $0008 a script was started and hasn't begun running (rlEventEngineBeginScript
+      ; clears it; rlGetAndRunChapterMapEventConditions and rlBeginChapterEvents return
+      ; carry set while it is set), $8000 the event is fading out. The map step and many
+      ; map routines do nothing while it is nonzero.
     wEventEngineState .word ? ; $00171C
       ; 0 begin the script, 1 run its commands, 2 end it (aEventEngineStateRoutines).
     wUnknown00171E .word ? ; $00171E
