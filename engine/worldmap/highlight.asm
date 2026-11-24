@@ -27,9 +27,9 @@
         lda #0
         sta wBufferBG2VOFS
 
-        lda #(`procUnknown8B901D)<<8
+        lda #(`procWorldMapFadeInHighlightColor)<<8
         sta lR44+1
-        lda #<>procUnknown8B901D
+        lda #<>procWorldMapFadeInHighlightColor
         sta lR44
         jsl rlProcEngineCreateProc
 
@@ -323,9 +323,9 @@
         lda #0
         sta wBufferBG2VOFS
 
-        lda #(`procUnknown8B90D9)<<8
+        lda #(`procWorldMapFadeOutHighlightColor)<<8
         sta lR44+1
-        lda #<>procUnknown8B90D9
+        lda #<>procWorldMapFadeOutHighlightColor
         sta lR44
         jsl rlProcEngineCreateProc
         rtl

@@ -55,9 +55,9 @@
       .al
       .xl
 
-      aUnknown8DADFA .dstruct structHDMADirectEntryInfo, rlUnknown8DAE05, rlUnknown8DAE05, aUnknown8DAE30, $7F56C9, PPU_REG_BASE + $00, $00 ; 8D/ADFA
+      aUnknown8DADFA .dstruct structHDMADirectEntryInfo, rlHDMAEpilogueRecordsBrightness, rlHDMAEpilogueRecordsBrightness, aUnknown8DAE30, $7F56C9, PPU_REG_BASE + $00, $00 ; 8D/ADFA
 
-      rlUnknown8DAE05 ; 8D/AE05
+      rlHDMAEpilogueRecordsBrightness ; 8D/AE05
 
         .al
         .xl

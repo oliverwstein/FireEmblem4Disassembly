@@ -663,7 +663,7 @@
       .al
       .xl
 
-      rlUnknown91BD42 ; 91/BD42
+      rlCreateProcEpilogueMoveTempToCoordsUnused ; 91/BD42
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -671,9 +671,9 @@
         .autsiz
         .databank ?
 
-        lda #(`procUnknown91BD51)<<8
+        lda #(`procEpilogueMoveTempToCoordsUnused)<<8
         sta lR44+1
-        lda #<>procUnknown91BD51
+        lda #<>procEpilogueMoveTempToCoordsUnused
         sta lR44
         jsl rlEventEngineCreateProc
         rtl
@@ -682,17 +682,17 @@
 
         ; 91/BD51
 
-      procUnknown91BD51 ; 91/BD51
+      procEpilogueMoveTempToCoordsUnused ; 91/BD51
 
-        ; Created only by the unreferenced rlUnknown91BD42. For 7 frames it
+        ; Created only by the unreferenced rlCreateProcEpilogueMoveTempToCoordsUnused. For 7 frames it
         ; runs MOVE_TEMPORARY_TO_COORDS (rlMoveTemporaryToCoords) with the arguments
         ; at aUnknown91BD8A, then ends.
 
-        .structProcInfo "ED", rlProcUnknown91BD51Init, rlProcUnknown91BD51Cycle, aProcUnknown91BD51Code
+        .structProcInfo "ED", rlProcEpilogueMoveTempToCoordsInit, rlProcEpilogueMoveTempToCoordsCycle, aProcEpilogueMoveTempToCoordsCode
 
         .word 0
 
-      rlProcUnknown91BD51Init ; 91/BD5B
+      rlProcEpilogueMoveTempToCoordsInit ; 91/BD5B
 
         .al
         .xl
@@ -707,7 +707,7 @@
 
         ; 91/BD62
 
-      rlProcUnknown91BD51Cycle ; 91/BD62
+      rlProcEpilogueMoveTempToCoordsCycle ; 91/BD62
 
         .al
         .xl
@@ -743,11 +743,11 @@
 
       aUnknown91BD8A ; 91/BD8A
 
-        ; The MOVE_TEMPORARY_TO_COORDS arguments of procUnknown91BD51.
+        ; The MOVE_TEMPORARY_TO_COORDS arguments of procEpilogueMoveTempToCoordsUnused.
 
         .byte $27, $00, $2A, $1B, $2A, $18, $04, $04
 
-      aProcUnknown91BD51Code ; 91/BD92
+      aProcEpilogueMoveTempToCoordsCode ; 91/BD92
 
         PROC_HALT
 

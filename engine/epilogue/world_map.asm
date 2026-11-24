@@ -2982,7 +2982,7 @@
 
         .databank 0
 
-      rlASMCUnknown8DC90E ; 8D/C90E
+      rlASMCEpilogueCheckQuickCredits ; 8D/C90E
 
         .al
         .autsiz
@@ -3032,7 +3032,7 @@
 
         .databank 0
 
-      rlASMCUnknown8DC955 ; 8D/C955
+      rlASMCEpilogueCheckCredits ; 8D/C955
 
         .al
         .autsiz
@@ -3070,7 +3070,7 @@
         .autsiz
         .databank ?
 
-        ; Moves the epilogue on to the credits (EPILOGUE_PART_CREDITS): queues sound command $E6 and fades out (timer $0C) into rsOpenEpilogueScreen. Ends the epilogue's world map (rsEventCommandWMFadeOut when wCurrentChapter is $FFFF, rlASMCUnknown8DC955).
+        ; Moves the epilogue on to the credits (EPILOGUE_PART_CREDITS): queues sound command $E6 and fades out (timer $0C) into rsOpenEpilogueScreen. Ends the epilogue's world map (rsEventCommandWMFadeOut when wCurrentChapter is $FFFF, rlASMCEpilogueCheckCredits).
 
         lda #EPILOGUE_PART_CREDITS
         sta wEpiloguePart,b

@@ -217,7 +217,7 @@
 
 
         _881A
-        jsl rlUnknown8B87A0
+        jsl rlWorldMapMarkersUnusedStub
         jsl rlResetDialogueEngine
         lda #$0002
         jsl rlDialogueStartTextAndHDMA

@@ -335,7 +335,7 @@
       .al
       .xl
 
-      rsUnknown8B83A7 ; 8B/83A7
+      rsFadeColorWarmUnused ; 8B/83A7
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -412,7 +412,7 @@
 
         ; 8B/8413
 
-      rsUnknown8B8413 ; 8B/8413
+      rsHalveColorBrightnessUnused ; 8B/8413
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -472,7 +472,7 @@
 
         ; 8B/845E
 
-      rsUnknown8B845E ; 8B/845E
+      rsDimDominantColorChannelUnused ; 8B/845E
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -911,11 +911,11 @@
         .word $4800
         .word $5000
 
-      procUnknown8B901D ; 8B/901D
+      procWorldMapFadeInHighlightColor ; 8B/901D
 
-        .structProcInfo "GC", rlProcUnknown8B901DInit, rlProcUnknown8B901DCycle, aProcUnknown8B901DCode
+        .structProcInfo "GC", rlProcWorldMapFadeInHighlightColorInit, rlProcWorldMapFadeInHighlightColorCycle, aProcWorldMapFadeInHighlightColorCode
 
-      rlProcUnknown8B901DInit ; 8B/9025
+      rlProcWorldMapFadeInHighlightColorInit ; 8B/9025
 
         .al
         .autsiz
@@ -927,7 +927,7 @@
 
         .databank 0
 
-      rlProcUnknown8B901DCycle ; 8B/902D
+      rlProcWorldMapFadeInHighlightColorCycle ; 8B/902D
 
         .al
         .autsiz
@@ -971,15 +971,15 @@
         .word $0010, $0011, $0012, $0013, $0014, $0015, $0416, $0417
         .word $0418, $0419, $041A, $041B, $041C, $041D, $041E, $041F
 
-      aProcUnknown8B901DCode ; 8B/90D7
+      aProcWorldMapFadeInHighlightColorCode ; 8B/90D7
 
         PROC_HALT
 
-      procUnknown8B90D9 ; 8B/90D9
+      procWorldMapFadeOutHighlightColor ; 8B/90D9
 
-        .structProcInfo "GL", rlProcUnknown8B90D9Init, rlProcUnknown8B90D9Cycle, aProcUnknown8B90D9Code
+        .structProcInfo "GL", rlProcWorldMapFadeOutHighlightColorInit, rlProcWorldMapFadeOutHighlightColorCycle, aProcWorldMapFadeOutHighlightColorCode
 
-      rlProcUnknown8B90D9Init ; 8B/90E1
+      rlProcWorldMapFadeOutHighlightColorInit ; 8B/90E1
 
         .al
         .autsiz
@@ -991,7 +991,7 @@
 
         .databank 0
 
-      rlProcUnknown8B90D9Cycle ; 8B/90E9
+      rlProcWorldMapFadeOutHighlightColorCycle ; 8B/90E9
 
         .al
         .autsiz
@@ -1028,7 +1028,7 @@
 
         .databank 0
 
-      aProcUnknown8B90D9Code ; 8B/911D
+      aProcWorldMapFadeOutHighlightColorCode ; 8B/911D
 
         PROC_HALT
 

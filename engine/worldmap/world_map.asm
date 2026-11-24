@@ -673,7 +673,7 @@
       .al
       .xl
 
-      rsUnknown8B812A ; 8B/812A
+      rsCycleWorldMapSpritePalettesUnused ; 8B/812A
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al

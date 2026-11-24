@@ -100,9 +100,9 @@
         jsr rsEvaluateEpiloguePriorities
         jsr rsEvaluateEpilogueDialogueIDs
 
-        jsr rsUnknown82FDC1
-        jsr rsUnknown82FE07
-        jsr rsUnknown82FE41
+        jsr rsCollectEpiloguePairingsForCode
+        jsr rsPackEpiloguePairingsChecksum
+        jsr rsEncodeEpiloguePassword
         ply
         plx
         plb
@@ -1122,7 +1122,7 @@
 
         .databank 0
 
-      rsUnknown82FDC1 ; 82/FDC1
+      rsCollectEpiloguePairingsForCode ; 82/FDC1
 
         .al
         .autsiz
@@ -1172,7 +1172,7 @@
 
         .databank 0
 
-      rsUnknown82FE07 ; 82/FE07
+      rsPackEpiloguePairingsChecksum ; 82/FE07
 
         .al
         .autsiz
@@ -1221,7 +1221,7 @@
         .byte $6C
         .byte $6D
 
-      rsUnknown82FE41 ; 82/FE41
+      rsEncodeEpiloguePassword ; 82/FE41
 
         .al
         .autsiz
@@ -1242,29 +1242,29 @@
         rep #$20
         ldx #0
         lda aUnknown7FC72A
-        jsr rsUnknown82FE41._FEAF
+        jsr rsEncodeEpiloguePassword._FEAF
 
         lda aUnknown7FC72A + 1
         lsr a
-        jsr rsUnknown82FE41._FEAF
+        jsr rsEncodeEpiloguePassword._FEAF
 
         lda aUnknown7FC72A + 2
         lsr a
         lsr a
-        jsr rsUnknown82FE41._FEAF
+        jsr rsEncodeEpiloguePassword._FEAF
 
         lda aUnknown7FC72A + 3
         lsr a
         lsr a
         lsr a
-        jsr rsUnknown82FE41._FEAF
+        jsr rsEncodeEpiloguePassword._FEAF
 
         lda aUnknown7FC72A + 4
         lsr a
         lsr a
         lsr a
         lsr a
-        jsr rsUnknown82FE41._FEAF
+        jsr rsEncodeEpiloguePassword._FEAF
 
         lda aUnknown7FC72A + 5
         lsr a
@@ -1272,7 +1272,7 @@
         lsr a
         lsr a
         lsr a
-        jsr rsUnknown82FE41._FEAF
+        jsr rsEncodeEpiloguePassword._FEAF
 
         lda aUnknown7FC72A + 6
         lsr a
@@ -1281,7 +1281,7 @@
         lsr a
         lsr a
         lsr a
-        jsr rsUnknown82FE41._FEAF
+        jsr rsEncodeEpiloguePassword._FEAF
 
         lda aUnknown7FC72A + 7
         lsr a

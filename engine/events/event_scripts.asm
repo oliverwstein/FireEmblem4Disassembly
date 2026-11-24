@@ -4266,7 +4266,7 @@
         phb
 
         phy
-        jsl rlUnknown8B87A0
+        jsl rlWorldMapMarkersUnusedStub
         ply
 
         plb
@@ -4289,7 +4289,7 @@
         phb
 
         phy
-        jsl rlUnknown8B87C5
+        jsl rlClearWorldMapHighlightLayer
         ply
 
         plb

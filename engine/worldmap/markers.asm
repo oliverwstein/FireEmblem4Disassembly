@@ -406,7 +406,7 @@
 
       aWorldMapMarkerSprites .include "../../data/system/WorldMapMarkerSprites.csv.asm" ; 8B/8740
 
-      rlUnknown8B87A0 ; 8B/87A0
+      rlWorldMapMarkersUnusedStub ; 8B/87A0
 
         .al
         .autsiz
@@ -416,7 +416,7 @@
 
         .databank 0
 
-      rlUnknown8B87A1 ; 8B/87A1
+      rlLoadWorldMapCursorTiles ; 8B/87A1
 
         .al
         .autsiz
@@ -440,7 +440,7 @@
 
         .databank 0
 
-      rlUnknown8B87C5 ; 8B/87C5
+      rlClearWorldMapHighlightLayer ; 8B/87C5
 
         .al
         .autsiz
