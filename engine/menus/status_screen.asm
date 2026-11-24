@@ -4213,7 +4213,7 @@
 
         ; The seven stats with their bonuses from items and blood (rlDrawStatBonus), luck as 0 for enemy units, and the inventory: names (grey if the unit cannot use the item), uses for weapons and staves, and the equipped mark on the first usable weapon. Counts the items into wCastleListSubCount.
 
-        jsl rlGetSelectedUnitTotalStrengthEffect
+        jsl rlGetSelectedUnitStrengthBaseAndBonus
         ldx #$3920
         stx wR5
         ldx #$0002
@@ -4224,7 +4224,7 @@
         ldx #$000C
         ldy #$000E
         jsl rlDrawStatBonus
-        jsl rlGetSelectedUnitTotalMagicEffect
+        jsl rlGetSelectedUnitMagicBaseAndBonus
         ldx #$3920
         stx wR5
         ldx #$0002
@@ -4235,7 +4235,7 @@
         ldx #$000C
         ldy #$0010
         jsl rlDrawStatBonus
-        jsl rlGetSelectedUnitTotalSkillEffect
+        jsl rlGetSelectedUnitSkillBaseAndBonus
         ldx #$3920
         stx wR5
         ldx #$0002
@@ -4246,7 +4246,7 @@
         ldx #$000C
         ldy #$0012
         jsl rlDrawStatBonus
-        jsl rlGetSelectedUnitTotalSpeedEffect
+        jsl rlGetSelectedUnitSpeedBaseAndBonus
         ldx #$3920
         stx wR5
         ldx #$0002
@@ -4274,7 +4274,7 @@
         stx wR6
         ldx #$0554
         jsl rlDrawMenuTextNumber
-        jsl rlGetSelectedUnitTotalDefenseEffect
+        jsl rlGetSelectedUnitDefenseBaseAndBonus
         ldx #$3920
         stx wR5
         ldx #$0002
@@ -4285,7 +4285,7 @@
         ldx #$000C
         ldy #$0018
         jsl rlDrawStatBonus
-        jsl rlGetSelectedUnitTotalResistanceEffect
+        jsl rlGetSelectedUnitResistanceBaseAndBonus
         ldx #$3920
         stx wR5
         ldx #$0002
@@ -4526,7 +4526,7 @@
         sta @l wSelectedUnitDataRAMPointer
 
         _9989
-        jsl rlGetSelectedUnitTotalMovementEffect
+        jsl rlGetSelectedUnitMovementBaseAndBonus
         ldx #$2120
         stx wR5
         ldx #$0001

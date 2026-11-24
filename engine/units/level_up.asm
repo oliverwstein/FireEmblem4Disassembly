@@ -155,22 +155,22 @@
         jsr rsApplyLevelUpHPGain
         sta structLevelUpStats.HPGain,b,y
 
-        jsl rlGetSelectedUnitTotalStrengthEffect
+        jsl rlGetSelectedUnitStrengthBaseAndBonus
         sta structLevelUpStats.Strength,b,y
         jsr rsApplyLevelUpStrengthGain
         sta structLevelUpStats.StrengthGain,b,y
 
-        jsl rlGetSelectedUnitTotalMagicEffect
+        jsl rlGetSelectedUnitMagicBaseAndBonus
         sta structLevelUpStats.Magic,b,y
         jsr rsApplyLevelUpMagicGain
         sta structLevelUpStats.MagicGain,b,y
 
-        jsl rlGetSelectedUnitTotalSkillEffect
+        jsl rlGetSelectedUnitSkillBaseAndBonus
         sta structLevelUpStats.Skill,b,y
         jsr rsApplyLevelUpSkillGain
         sta structLevelUpStats.SkillGain,b,y
 
-        jsl rlGetSelectedUnitTotalSpeedEffect
+        jsl rlGetSelectedUnitSpeedBaseAndBonus
         sta structLevelUpStats.Speed,b,y
         jsr rsApplyLevelUpSpeedGain
         sta structLevelUpStats.SpeedGain,b,y
@@ -180,12 +180,12 @@
         jsr rsApplyLevelUpLuckGain
         sta structLevelUpStats.LuckGain,b,y
 
-        jsl rlGetSelectedUnitTotalDefenseEffect
+        jsl rlGetSelectedUnitDefenseBaseAndBonus
         sta structLevelUpStats.Defense,b,y
         jsr rsApplyLevelUpDefenseGain
         sta structLevelUpStats.DefenseGain,b,y
 
-        jsl rlGetSelectedUnitTotalResistanceEffect
+        jsl rlGetSelectedUnitResistanceBaseAndBonus
         sta structLevelUpStats.Resistance,b,y
         jsr rsApplyLevelUpResistanceGain
         sta structLevelUpStats.ResistanceGain,b,y

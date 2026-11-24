@@ -45,7 +45,7 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5e
 
 ## Next session
 
-1. **Engine guide, Part I:** Chapters 1 and 2 are drafted (Chapter 2 awaiting the user's read). Next: Chapter 3 (*Every sword is an individual*) from `items.md`, then 4–5. The old limits list in `git show 9da974d:docs/guide/00-introduction.md` ("What the structures cost the design") is raw material for each chapter's closing limits. Naming candidate: `rlGetSelectedUnitTotal*Effect` returns the capped *base* stat and leaves the equipment bonus in `wR34`; a name like `rlGetSelectedUnit*BaseAndBonus` would say so.
+1. **Engine guide, Part I:** Chapters 1 and 2 are drafted (Chapter 2 awaiting the user's read). Next: Chapter 3 (*Every sword is an individual*) from `items.md`, then 4–5. The old limits list in `git show 9da974d:docs/guide/00-introduction.md` ("What the structures cost the design") is raw material for each chapter's closing limits.
 2. **Loose ends:**
    - Pad-test banks `$88`, `$9B`, and `$9F` (`./build.sh pad SECTION N`).
    - Fix `tools/songs.py` (stops at stale `aUnknown8A9D79`) before regenerating `audio/SONGS.md`, and investigate why `tools/stream_catalog.py` deleted catalog previews.

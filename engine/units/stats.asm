@@ -49,18 +49,22 @@
         .autsiz
         .databank ?
 
-        jsl rlGetSelectedUnitTotalStrengthEffect
+        jsl rlGetSelectedUnitStrengthBaseAndBonus
         clc
         adc wR34
         rtl
 
         .databank 0
 
-      rlGetSelectedUnitTotalStrengthEffect ; 84/9B1D
+      rlGetSelectedUnitStrengthBaseAndBonus ; 84/9B1D
 
         .al
         .autsiz
         .databank ?
+
+        ; Out: A = base strength (class + personal, capped at 30; derived from class and level
+        ; for generic enemies); wR34 = equipment bonus (holy weapon, the Power Ring).
+        ; rlGetSelectedUnitTotalStrength adds them; the status screen draws them apart.
 
         phb
         php
@@ -116,18 +120,22 @@
         .autsiz
         .databank ?
 
-        jsl rlGetSelectedUnitTotalMagicEffect
+        jsl rlGetSelectedUnitMagicBaseAndBonus
         clc
         adc wR34
         rtl
 
         .databank 0
 
-      rlGetSelectedUnitTotalMagicEffect ; 84/9B78
+      rlGetSelectedUnitMagicBaseAndBonus ; 84/9B78
 
         .al
         .autsiz
         .databank ?
+
+        ; Out: A = base magic (class + personal, capped at 30; derived from class and level
+        ; for generic enemies); wR34 = equipment bonus (holy weapon, the Magic Ring).
+        ; rlGetSelectedUnitTotalMagic adds them; the status screen draws them apart.
 
         phb
         php
@@ -183,18 +191,22 @@
         .autsiz
         .databank ?
 
-        jsl rlGetSelectedUnitTotalSkillEffect
+        jsl rlGetSelectedUnitSkillBaseAndBonus
         clc
         adc wR34
         rtl
 
         .databank 0
 
-      rlGetSelectedUnitTotalSkillEffect ; 84/9BD3
+      rlGetSelectedUnitSkillBaseAndBonus ; 84/9BD3
 
         .al
         .autsiz
         .databank ?
+
+        ; Out: A = base skill (class + personal, capped at 30; derived from class and level
+        ; for generic enemies); wR34 = equipment bonus (holy weapon, the Skill Ring).
+        ; rlGetSelectedUnitTotalSkill adds them; the status screen draws them apart.
 
         phb
         php
@@ -250,18 +262,22 @@
         .autsiz
         .databank ?
 
-        jsl rlGetSelectedUnitTotalSpeedEffect
+        jsl rlGetSelectedUnitSpeedBaseAndBonus
         clc
         adc wR34
         rtl
 
         .databank 0
 
-      rlGetSelectedUnitTotalSpeedEffect ; 84/9C2E
+      rlGetSelectedUnitSpeedBaseAndBonus ; 84/9C2E
 
         .al
         .autsiz
         .databank ?
+
+        ; Out: A = base speed (class + personal, capped at 30; derived from class and level
+        ; for generic enemies); wR34 = equipment bonus (holy weapon, the Speed Ring).
+        ; rlGetSelectedUnitTotalSpeed adds them; the status screen draws them apart.
 
         phb
         php
@@ -317,18 +333,22 @@
         .autsiz
         .databank ?
 
-        jsl rlGetSelectedUnitTotalDefenseEffect
+        jsl rlGetSelectedUnitDefenseBaseAndBonus
         clc
         adc wR34
         rtl
 
         .databank 0
 
-      rlGetSelectedUnitTotalDefenseEffect ; 84/9C89
+      rlGetSelectedUnitDefenseBaseAndBonus ; 84/9C89
 
         .al
         .autsiz
         .databank ?
+
+        ; Out: A = base defense (class + personal, capped at 30; derived from class and level
+        ; for generic enemies); wR34 = equipment bonus (holy weapon, the Shield Ring and the Safeguard).
+        ; rlGetSelectedUnitTotalDefense adds them; the status screen draws them apart.
 
         phb
         php
@@ -394,18 +414,22 @@
         .autsiz
         .databank ?
 
-        jsl rlGetSelectedUnitTotalResistanceEffect
+        jsl rlGetSelectedUnitResistanceBaseAndBonus
         clc
         adc wR34
         rtl
 
         .databank 0
 
-      rlGetSelectedUnitTotalResistanceEffect ; 84/9CF5
+      rlGetSelectedUnitResistanceBaseAndBonus ; 84/9CF5
 
         .al
         .autsiz
         .databank ?
+
+        ; Out: A = base resistance (class + personal, capped at 30; derived from class and level
+        ; for generic enemies); wR34 = equipment bonus (holy weapon, the Barrier Ring and the Barrier Blade).
+        ; rlGetSelectedUnitTotalResistance adds them; the status screen draws them apart.
 
         phb
         php
@@ -471,7 +495,7 @@
         .autsiz
         .databank ?
 
-        jsl rlGetSelectedUnitTotalMovementEffect
+        jsl rlGetSelectedUnitMovementBaseAndBonus
         clc
         adc wR34
         rtl
@@ -541,14 +565,14 @@
           .byte (11 * 10) +1
           .byte (12 * 10) +1
 
-      rlGetSelectedUnitTotalMovementEffect ; 84/9DA9
+      rlGetSelectedUnitMovementBaseAndBonus ; 84/9DA9
 
         .al
         .autsiz
         .databank ?
 
-        ; returns class movement + filled wR34 with possible leg ring
-        ; or canto movement as number
+        ; Out: A = class movement, or Canto movement left (stored x10) while Canto is active;
+        ; wR34 = bonus: 3 for the Leg Ring, 0 during Canto. rlGetSelectedUnitTotalMovement adds them.
 
         phb
         php

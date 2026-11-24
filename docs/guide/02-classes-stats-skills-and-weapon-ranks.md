@@ -9,7 +9,7 @@ No number on that screen is stored anywhere. Each one is assembled on demand fro
 A playable unit's strength has two layers. The *base* is its class's strength plus its own, capped at 30. The *bonus* is whatever its equipment adds, uncapped:
 
 ```rust
-// rlGetSelectedUnitTotalStrengthEffect: returns the base, leaves the bonus in wR34
+// rlGetSelectedUnitStrengthBaseAndBonus: returns the base, leaves the bonus in wR34
 fn strength_parts() -> (u8, u8) {
     let mut bonus = holy_weapon_boost(STR);          // rlGetWeaponStatBoostForSpecifiedStat
     if rings().contains(POWER_RING) { bonus += 5; }  // rlGetActiveRingStatBonusBitfield
@@ -31,7 +31,7 @@ Sigurd, a Knight Lord with a personal strength of 4, has a base of 10 + 4 = 14. 
 
 Two stats break the pattern. **Max HP** and **luck** have no class term: the class table has no luck column, and its HP column is used only for generic enemies. A player unit's max HP is simply its personal HP, capped at 80. Personal stats have their own caps, enforced when a level-up adds to them (`rlAddSelectedUnitStat`): 80 for HP, 30 for luck, and 15 for the other six.
 
-The routine names are slightly misleading. `rlGetSelectedUnitTotalStrengthEffect` returns the *base*, and passes the bonus back through the scratch variable `wR34`, a second return value in a language without tuples. The split exists for display. The status screen draws the base and then the bonus beside it (`rlDrawStatBonus`), and the level-up screen records the base before and after the gain.
+`rlGetSelectedUnitStrengthBaseAndBonus` returns the base in the accumulator and passes the bonus back through the scratch variable `wR34`, a second return value in a language without tuples. The split exists for display. The status screen draws the base and then the bonus beside it (`rlDrawStatBonus`), and the level-up screen records the base before and after the gain.
 
 ## Promotion changes one byte
 
