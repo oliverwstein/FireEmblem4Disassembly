@@ -12,15 +12,14 @@ The build is byte-identical and checksums verify. Code changes made while writin
 |---|---|---|
 | — | [Introduction](docs/guide/00-introduction.md) | revised; its data model is now a preview of Part I |
 | I | [Part I opener](docs/guide/part-1-the-pieces-on-the-board.md) | written |
-| I | 1 [A unit is made of parts](docs/guide/01-a-unit-is-made-of-parts.md) | draft, reviewed |
-| I | 2 [Classes, stats, skills, and weapon ranks](docs/guide/02-classes-stats-skills-and-weapon-ranks.md) | draft, reviewed |
-| I | 3 [Every sword is an individual](docs/guide/03-every-sword-is-an-individual.md) | draft, reviewed |
-| I | 4 [Armies and allegiance](docs/guide/04-armies-and-allegiance.md) | draft, reviewed |
-| I | 5 [Who stands where](docs/guide/05-who-stands-where.md) | draft, reviewed |
-| II | 6 The turn | old draft in `wip/the-turn-draft.md`, written before the style rules: rewrite, don't patch |
-| II–VII | 7–31 | not started; OUTLINE.md marks which have a reference page |
+| I | 1–5 (units, classes, items, armies, the board) | draft, reviewed |
+| II | 6 [Resolving a battle](docs/guide/06-resolving-a-battle.md), 7 [Growing stronger](docs/guide/07-growing-stronger.md) | draft |
+| III | 8 [The turn](docs/guide/08-the-turn.md) | draft, reviewed |
+| III | 9 [Moving a unit](docs/guide/09-moving-a-unit.md) | draft, not yet reviewed |
+| III | 10 Menus over the map | not started (map_menu.md) |
+| IV–VII | 11–31 | not started; OUTLINE.md marks which have a reference page |
 
-**Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (needed before Part III) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md) is generated and gitignored.
+**Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (Chapters 6–7 were written from the source; the battle interlude needs it) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md) is generated and gitignored.
 
 ## How chapters are written
 
@@ -45,6 +44,8 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | Round flags `$02` and `$10` called unknown; `$10` is `BattleRoundFlagFatal`, and `$02` is set by staff effects and Dance | include/Battle.h | `126e33b` |
 | The turn start healing list was written through raw `$7E2000`-`$7E2008` and two fields of `aDebugMenuSkillFlags` (`bWrath`, `bAdept`); now `aTurnStartHealingList` | include/WRAM.h, turn_start.asm, map_step.asm | `2da731d` |
 | `wMapStateFlags` `$0020` called an "AI/busy action lock"; it is the phase-over bit set by End Turn and the AI | include/WRAM.h | `2da731d` |
+| `range_maps.asm` header, `rlBuildSelectedUnitRangeMaps` and `aRangeMap`'s comment said `aRangeMap` holds what the picked-up unit can reach; for a pick-up it is the fill's input (units and the map's edge), and attack tiles are `$80` in `aMovementMap` | engine/map/range_maps.asm, include/WRAM.h | `389d791` |
+| `rlCheckAdjacentTilesEmptyInRangeMap` reads `aMovementMap`; renamed `rlCheckSelectedUnitCannotMove`. `aUnknown87BAD1` is `aMaxRangeDiamondRows` | engine/map/range_maps.asm, unit_movement.asm | `389d791` |
 | `wChapterFlags` `$0100` called unknown; it marks a chapter resumed from a map save (enter at map step 7) | include/WRAM.h | `2da731d` |
 | `rsMoveCursorToPhaseStart` comment had the auto cursor option backwards (on goes to the first unit, off to the saved tile); Ch. 8 draft copied it | engine/map/map_step.asm | `2da731d` |
 | `rlPhaseBannerCheckSkip` comment listed Select; the mask `$D0C0` is A, B, X, Y and Start; Ch. 8 draft copied it | engine/map/phase_banner.asm | `2da731d` |
@@ -61,6 +62,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | A soldier "under forty bytes" (65 with its inventory and block headers) | introduction | `fba2948` |
 | Locations listed as "castles, villages, and gates"; chapters have no gates. "All 256 individual items" (140 are used); "every mutable piece" of a chapter in one RAM block | Part I opener, OUTLINE.md | `8760225` |
 | The phase-flag table said to hold an army's phases back; it gates only the banner and music, and the army's events and AI still run | map.md, wip/the-turn-draft.md | `f111508` |
+| Only units that can't move were said to open the command menu at once; a unit that can wield a range-10 weapon (ballistae, Meteor, Bolting, Blizzard, Fenrir) gets a fixed range map and can't move either. Closed areas and road costs were missing | map.md | with Ch. 9 |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
 ## Retail bugs and quirks found
@@ -102,9 +104,9 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 
 ## Next session
 
-1. **Chapter 6, The turn**, from `map.md` (the map step, its thirteen steps, the chain of queued consequences). Rewrite from scratch; the `wip/` draft is only a source of facts to recheck. Chapter 5's "Arriving on a tile" already shows one link in the chain (`rsRunActionEndedEvents`); Chapter 6 should cover the whole chain.
-2. Then Chapters 7–8 (moving a unit, menus over the map), which complete Part II.
-3. Before Part III: write `docs/reference/battle.md`.
+1. **Review Chapter 9** (moving a unit). Worth checking against the screen only if the code leaves it open; the long-range rule (a unit holding Meteor can't move) is a complete code path.
+2. **Chapter 10, Menus over the map**, from `map_menu.md`; it completes Part III. Chapter 9 defers the action modes (depart, guard: what B does after leaving a castle) to it.
+3. Before more Part II revision or the battle interlude: write `docs/reference/battle.md`.
 
 ## Who wrote what
 
