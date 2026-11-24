@@ -164,7 +164,7 @@
       .al
       .xl
 
-      aUnknown96ED67 ; 96/ED67
+      aBattleSceneLumaRamp ; 96/ED67
 
         ; Read by rsBattleSceneConvertPaletteLuma.
 
@@ -183,7 +183,7 @@
       .al
       .xl
 
-      aUnknown96EDF2 ; 96/EDF2
+      aBattleSceneGrayRamp ; 96/EDF2
 
         ; Read by rlBattleSceneColorToLuma.
 
@@ -293,7 +293,7 @@
       .al
       .xl
 
-      aUnknown97E8FB ; 97/E8FB
+      aBattleAnimationBodyRecords ; 97/E8FB
 
         ; Read by rsBattleAnimationGetBodyIndex (class, weapon category, body record; $FF ends).
 
@@ -784,7 +784,7 @@
         .byte $0E, $0D, $0C, $0B, $0A, $09, $08, $07, $06, $05, $04, $03, $02, $01
         .byte $00, $80, $FF
 
-      aUnknown97F64E ; 97/F64E
+      aTitleIntroScene6WindowEffect1Data ; 97/F64E
 
         ; Read by rlTitleIntroScene6InitWindowEffect1.
 
@@ -982,7 +982,7 @@
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
         .byte $0B, $20, $35, $4B, $60, $75, $8B, $A0, $B5, $CB, $E0, $F5
 
-      aUnknown97FB12 ; 97/FB12
+      aTitleIntroScene1BG2WaveOffsets ; 97/FB12
 
         ; Read by rlStepTitleIntroScene1BG2WaveHDMA.
 
@@ -1570,7 +1570,7 @@
       .al
       .xl
 
-      aUnknown98AAA1 ; 98/AAA1
+      aBattleSceneNoForegroundList ; 98/AAA1
 
         ; Read by rsBattleSceneCheckNoForeground.
 
@@ -1614,7 +1614,7 @@
 
         ; 98/ABFC
 
-      aUnknown98ABFC ; 98/ABFC
+      aBattleSceneWindowScrollInitValues ; 98/ABFC
 
         ; Read by rlBattleSceneInitWindowScrollVars.
 
@@ -1626,7 +1626,7 @@
 
         ; 98/AC4C
 
-      aUnknown98AC4C ; 98/AC4C
+      aBattleSceneExpWindowScrollSteps ; 98/AC4C
 
         ; Read by rlBattleSceneUpdateExpWindowScroll.
 
@@ -1791,7 +1791,7 @@
 
         ; 98/B0B3
 
-      aUnknown98B0B3 ; 98/B0B3
+      aBattleSceneBrightenBlueSteps ; 98/B0B3
 
         ; Read by rsBattleSceneBrightenColorBy.
 
@@ -1802,7 +1802,7 @@
 
         ; 98/B0F3
 
-      aUnknown98B0F3 ; 98/B0F3
+      aBattleSceneBrightenGreenSteps ; 98/B0F3
 
         ; Read by rsBattleSceneBrightenColorBy.
 
@@ -1813,7 +1813,7 @@
 
         ; 98/B133
 
-      aUnknown98B133 ; 98/B133
+      aBattleSceneBrightenRedSteps ; 98/B133
 
         ; Read by rsBattleSceneBrightenColorBy.
 
@@ -1824,7 +1824,7 @@
 
         ; 98/B173
 
-      aUnknown98B173 ; 98/B173
+      aBattleSceneHitEffectSpriteMotion ; 98/B173
 
         ; Read by rsBattleSceneStepHitEffectSprites.
 
@@ -1851,23 +1851,23 @@
       .al
       .xl
 
-      aUnknown98B231 ; 98/B231
+      aBattleSceneDodgeMissSprites ; 98/B231
 
         ; Read by rsBattleSceneStepDodgeOrMissSprites.
 
-        .word _B231_B24B - aUnknown98B231
-        .word _B231_B257 - aUnknown98B231
-        .word _B231_B263 - aUnknown98B231
-        .word _B231_B26F - aUnknown98B231
-        .word _B231_B27B - aUnknown98B231
-        .word _B231_B28C - aUnknown98B231
-        .word _B231_B298 - aUnknown98B231
-        .word _B231_B2A9 - aUnknown98B231
-        .word _B231_B2B5 - aUnknown98B231
-        .word _B231_B2C6 - aUnknown98B231
-        .word _B231_B2D7 - aUnknown98B231
-        .word _B231_B2E8 - aUnknown98B231
-        .word _B231_B2F4 - aUnknown98B231
+        .word _B231_B24B - aBattleSceneDodgeMissSprites
+        .word _B231_B257 - aBattleSceneDodgeMissSprites
+        .word _B231_B263 - aBattleSceneDodgeMissSprites
+        .word _B231_B26F - aBattleSceneDodgeMissSprites
+        .word _B231_B27B - aBattleSceneDodgeMissSprites
+        .word _B231_B28C - aBattleSceneDodgeMissSprites
+        .word _B231_B298 - aBattleSceneDodgeMissSprites
+        .word _B231_B2A9 - aBattleSceneDodgeMissSprites
+        .word _B231_B2B5 - aBattleSceneDodgeMissSprites
+        .word _B231_B2C6 - aBattleSceneDodgeMissSprites
+        .word _B231_B2D7 - aBattleSceneDodgeMissSprites
+        .word _B231_B2E8 - aBattleSceneDodgeMissSprites
+        .word _B231_B2F4 - aBattleSceneDodgeMissSprites
 
       _B231_B24B ; 98/B24B
         .byte $02, $00, $00, $00, $F0, $7C, $36, $F8, $01, $F8, $7C, $36
@@ -2454,7 +2454,7 @@
 
         ; 99/8532
 
-      aUnknown998532 ; 99/8532
+      aBattleSceneStatGainMotion ; 99/8532
 
         ; Read by rlBattleSceneScriptStepStatGain.
 
@@ -2467,7 +2467,7 @@
 
         ; 99/8586
 
-      aUnknown998586 ; 99/8586
+      aBattleSceneLevelUpNumberMotion ; 99/8586
 
         ; Read by rlBattleSceneScriptStepLevelUpNumber.
 
@@ -2533,7 +2533,7 @@
       .al
       .xl
 
-      aUnknown99892A ; 99/892A
+      aBattleScenePalFlashSteps ; 99/892A
 
         ; Read by rlBattleSceneScriptStepPalFlash.
 
@@ -2859,7 +2859,7 @@
 
         ; 99/8F91
 
-      aUnknown998F91 ; 99/8F91
+      aBattleSceneBarehandedClasses ; 99/8F91
 
         ; Read by rlBattleSceneCheckBarehandedClass.
 
@@ -2875,7 +2875,7 @@
       .al
       .xl
 
-      aUnknownE00060 ; E0/0060
+      aBattleSceneHUDBaseColors ; E0/0060
 
         ; Read by rlBattleSceneSetHUDColors.
 
@@ -2896,7 +2896,7 @@
 
         ; E0/00C8
 
-      aUnknownE000C8 ; E0/00C8
+      aBattleSceneMessageColors ; E0/00C8
 
         ; Read by rlBattleSceneLoadMessageColors, rlBattleSceneHBlankMode2HUD.
 
@@ -2905,7 +2905,7 @@
 
         ; E0/00DA
 
-      aUnknownE000DA ; E0/00DA
+      aBattleSceneMessageWindowMode3Colors ; E0/00DA
 
         ; Read by rlBattleSceneScriptInitMessageWindowMode3.
 
@@ -2955,7 +2955,7 @@
 
         ; E0/26C3
 
-      aUnknownE026C3 ; E0/26C3
+      aTitleScreenPalette1 ; E0/26C3
 
         ; Read by rlLoadTitleGraphics.
 
@@ -2964,7 +2964,7 @@
 
         ; E0/26E1
 
-      aUnknownE026E1 ; E0/26E1
+      aTitleScreenPalette2 ; E0/26E1
 
         ; Read by rlLoadTitleGraphics.
 
@@ -2973,7 +2973,7 @@
 
         ; E0/26FF
 
-      aUnknownE026FF ; E0/26FF
+      aTitleScreenPalette3 ; E0/26FF
 
         ; Read by rlLoadTitleGraphics.
 
@@ -2982,7 +2982,7 @@
 
         ; E0/271D
 
-      aUnknownE0271D ; E0/271D
+      aTitleScreenPalette4 ; E0/271D
 
         ; Read by rlLoadTitleGraphics.
 
@@ -2991,7 +2991,7 @@
 
         ; E0/273B
 
-      aUnknownE0273B ; E0/273B
+      aTitleLogoGlintColors ; E0/273B
 
         ; Read by rlStartTitleLogoGlintScroll.
 
@@ -3004,7 +3004,7 @@
 
         ; E0/2759
 
-      aUnknownE02759 ; E0/2759
+      aTitleScreenPalette5 ; E0/2759
 
         ; Read by rlLoadTitleGraphics.
 
@@ -3012,7 +3012,7 @@
 
         ; E0/2769
 
-      aUnknownE02769 ; E0/2769
+      aTitleScreenPalette6 ; E0/2769
 
         ; Read by rlLoadTitleGraphics.
 
@@ -3021,7 +3021,7 @@
 
         ; E0/2787
 
-      aUnknownE02787 ; E0/2787
+      aTitleIntroPalette1 ; E0/2787
 
         ; Read by rlLoadTitleIntroGraphics.
 
@@ -3036,7 +3036,7 @@
 
         ; E0/27C3
 
-      aUnknownE027C3 ; E0/27C3
+      aBattleSceneAstraColors ; E0/27C3
 
         ; Read by rlBattleSceneShowAstra.
 
@@ -3044,7 +3044,7 @@
 
         ; E0/27CD
 
-      aUnknownE027CD ; E0/27CD
+      aBattleSceneLunaColors ; E0/27CD
 
         ; Read by rlBattleSceneShowLuna.
 
@@ -3052,7 +3052,7 @@
 
         ; E0/27D7
 
-      aUnknownE027D7 ; E0/27D7
+      aBattleSceneSolColors ; E0/27D7
 
         ; Read by rlBattleSceneShowSol.
 
@@ -3060,7 +3060,7 @@
 
         ; E0/27E1
 
-      aUnknownE027E1 ; E0/27E1
+      aBattleSceneHolyColors ; E0/27E1
 
         ; Read by rlBattleSceneShowHoly.
 
@@ -3068,7 +3068,7 @@
 
         ; E0/27EB
 
-      aUnknownE027EB ; E0/27EB
+      aBattleSceneDarknessColors ; E0/27EB
 
         ; Read by rlBattleSceneShowDarkness.
 
@@ -3076,7 +3076,7 @@
 
         ; E0/27F5
 
-      aUnknownE027F5 ; E0/27F5
+      aBattleScenePaviseColors ; E0/27F5
 
         ; Read by rlBattleSceneShowPavise.
 
@@ -4096,7 +4096,7 @@
 
         ; E0/2299
 
-      aUnknownE02299 ; E0/2299
+      aTitleIntroPalette2 ; E0/2299
 
         ; Read by rlLoadTitleIntroGraphics.
 
@@ -4166,7 +4166,7 @@
 
         ; E0/24E3
 
-      aUnknownE024E3 ; E0/24E3
+      aTitleIntroScene7Palette ; E0/24E3
 
         ; Read by rlBuildTitleIntroScene7PaletteTable.
 

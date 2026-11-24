@@ -724,7 +724,7 @@
         _A228
         phx
         phy
-        lda aUnknown8AA241,x
+        lda aCastleListItemIconTiles,x
         tax
         tya
         inc a
@@ -750,7 +750,7 @@
       .al
       .xl
 
-      aUnknown8AA241 ; 8A/A241
+      aCastleListItemIconTiles ; 8A/A241
 
         ; Read by rsCastleDrawListItemIcons.
 
@@ -1895,7 +1895,7 @@
         sta wR0
         lda #$0050
         sta wR1
-        lda @l aUnknown8AA917,x
+        lda @l aCastleStockItemTypeIconTiles,x
         and #$00FF
         sta wR4
         lda #$0000
@@ -1919,7 +1919,7 @@
       .al
       .xl
 
-      aUnknown8AA917 ; 8A/A917
+      aCastleStockItemTypeIconTiles ; 8A/A917
 
         ; Read by rsPushStockItemTypeIcon.
 
@@ -1969,7 +1969,7 @@
         sta wR0
         lda #$0050
         sta wR1
-        lda @l aUnknown8AA975,x
+        lda @l aCastleInventoryItemTypeIconTiles,x
         and #$00FF
         sta wR4
         lda #$0000
@@ -1993,7 +1993,7 @@
       .al
       .xl
 
-      aUnknown8AA975 ; 8A/A975
+      aCastleInventoryItemTypeIconTiles ; 8A/A975
 
         ; Read by rsPushInventoryItemTypeIcon.
 
@@ -3059,7 +3059,7 @@
         and #$001C
         lsr a
         tax
-        lda aUnknown8AB07C,x
+        lda aCastleHandCursorOffsets,x
         clc
         adc wR0
 
@@ -3095,7 +3095,7 @@
       .al
       .xl
 
-      aUnknown8AB07C ; 8A/B07C
+      aCastleHandCursorOffsets ; 8A/B07C
 
         ; Read by rlPushCastleHandCursor.
 

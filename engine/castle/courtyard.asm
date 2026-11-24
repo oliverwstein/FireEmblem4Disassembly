@@ -1764,7 +1764,7 @@
         .autsiz
         .databank ?
 
-        ; Copies the command icon tilemap from aUnknownDA6500 and greys out each command the unit cannot use.
+        ; Copies the command icon tilemap from aCastleUnitCommandIconTiles and greys out each command the unit cannot use.
 
         ldx #$001E
 
@@ -1777,7 +1777,7 @@
         ldx #$01FE
 
         _8CC8
-        lda aUnknownDA6500,x
+        lda aCastleUnitCommandIconTiles,x
         sta $7E8088,x
         dec x
         dec x
@@ -2676,7 +2676,7 @@
         jsl rlLoadCourtyardPortrait
         jsl rlDMAByStruct
 
-          .structDMAToVRAM aUnknownDA6500, $0200, $80, $AD00
+          .structDMAToVRAM aCastleUnitCommandIconTiles, $0200, $80, $AD00
 
         lda wCastleGridSavedSlot,b
         sta wCastleGridSlot,b
@@ -3719,7 +3719,7 @@
       .al
       .xl
 
-      aUnknownDA6500 ; DA/6500
+      aCastleUnitCommandIconTiles ; DA/6500
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3807,7 +3807,7 @@
 
       aUnknownDA65B2 ; DA/65B2
 
-        ; Read by rsCastleDrawUnitCommandIcons (continuation of $0200-byte aUnknownDA6500).
+        ; Read by rsCastleDrawUnitCommandIcons (continuation of $0200-byte aCastleUnitCommandIconTiles).
 
         .word $38FA, $38FB, $70CA, $70C9, $70C8, $0035, $0035, $0035
         .word $0035, $30D8, $30D9, $30DA, $30D9, $30DA, $30D9, $30DA

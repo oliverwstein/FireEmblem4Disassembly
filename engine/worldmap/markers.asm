@@ -138,7 +138,7 @@
         ldx #7 * size(word)
         
           -
-          lda aUnknown8CDCB0,x
+          lda aWorldMapMarkerShadowRedPalette,x
           sta aWorldMapMarkerPalette,x
           dec x
           dec x
@@ -172,7 +172,7 @@
         ; Blue palette
 
           -
-          lda aUnknown8CDC30,x
+          lda aWorldMapMarkerShadowBluePalette,x
           sta aWorldMapMarkerPalette,x
           dec x
           dec x
@@ -1010,7 +1010,7 @@
       .al
       .xl
 
-      aUnknown8CDC30 ; 8C/DC30
+      aWorldMapMarkerShadowBluePalette ; 8C/DC30
 
         ; Read by rsWorldMapMarkerShadowLoadBluePalette.
 
@@ -1025,7 +1025,7 @@
 
         ; 8C/DCB0
 
-      aUnknown8CDCB0 ; 8C/DCB0
+      aWorldMapMarkerShadowRedPalette ; 8C/DCB0
 
         ; Read by rsWorldMapMarkerShadowLoadRedPalette (and copied as part of aWorldMapPartialBGPalettes).
 

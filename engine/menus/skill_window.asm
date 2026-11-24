@@ -1290,7 +1290,7 @@
         lda wR0
         asl a
         tax
-        lda aUnknown8BDA9C,x
+        lda aSkillWindowHolderNamePositions,x
         tax
         lda @l lRoutineVariable
         sta lR18
@@ -1329,7 +1329,7 @@
       .al
       .xl
 
-      aUnknown8BDA9C ; 8B/DA9C
+      aSkillWindowHolderNamePositions ; 8B/DA9C
 
         ; Read by rlSkillWindowDrawHolderNames.
 
@@ -1960,7 +1960,7 @@
         lda wR15
         asl a
         tax
-        lda aUnknown8BDE9D,x
+        lda aSkillWindowAllHolderNameOffsets,x
         tax
         lda @l lRoutineVariable
         sta lR18
@@ -1988,7 +1988,7 @@
       .al
       .xl
 
-      aUnknown8BDE9D ; 8B/DE9D
+      aSkillWindowAllHolderNameOffsets ; 8B/DE9D
 
         ; Read by rsSkillWindowDrawAllHolderNames.
 

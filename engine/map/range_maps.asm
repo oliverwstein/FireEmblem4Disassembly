@@ -800,7 +800,7 @@
         bne _B8E6
         asl a
         tax
-        lda aUnknown87B8EE,x
+        lda aTileMovementCosts,x
 
         _B8E6
         ply
@@ -821,7 +821,7 @@
       .al
       .xl
 
-      aUnknown87B8EE ; 87/B8EE
+      aTileMovementCosts ; 87/B8EE
 
         ; Read by rsGetTileMovementCost.
 

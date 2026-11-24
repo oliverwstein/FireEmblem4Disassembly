@@ -666,7 +666,7 @@
         .autsiz
         .databank ?
 
-        ; A = the weapon, wR0 = the combatant's animation category << 4, wR1 its class; carry set for combatant 2. Decompresses the weapon's tiles (aBattleWeaponGraphics) and copies its 15 colors to BG palette 5 or 7; magic, no weapon, and classes listed at aUnknown998F91 get blank tiles.
+        ; A = the weapon, wR0 = the combatant's animation category << 4, wR1 its class; carry set for combatant 2. Decompresses the weapon's tiles (aBattleWeaponGraphics) and copies its 15 colors to BG palette 5 or 7; magic, no weapon, and classes listed at aBattleSceneBarehandedClasses get blank tiles.
 
         pha
         phx
@@ -769,7 +769,7 @@
         .autsiz
         .databank ?
 
-        ; Carry set when A is $80 (staff category) and wR1, the class, is listed at aUnknown998F91.
+        ; Carry set when A is $80 (staff category) and wR1, the class, is listed at aBattleSceneBarehandedClasses.
 
         phx
         cmp #$0080
@@ -777,7 +777,7 @@
         ldx #$0000
 
         _872A
-        lda aUnknown998F91,x
+        lda aBattleSceneBarehandedClasses,x
         cmp #$FFFF
         beq _873E
         cmp wR1
@@ -2016,7 +2016,7 @@
         .autsiz
         .databank ?
 
-        ; Carry set in battle type 2, or when either combatant's weapon is in aUnknown98AAA1 (bows and the tomes and staves).
+        ; Carry set in battle type 2, or when either combatant's weapon is in aBattleSceneNoForegroundList (bows and the tomes and staves).
 
         phx
         lda wBattleSceneFlags
@@ -2029,7 +2029,7 @@
         ldx #$0000
 
         _909A
-        lda aUnknown98AAA1,x
+        lda aBattleSceneNoForegroundList,x
         and #$00FF
         cmp #$00FF
         beq _90B1

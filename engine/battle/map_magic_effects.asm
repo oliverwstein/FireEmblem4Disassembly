@@ -12402,9 +12402,9 @@
         .databank ?
         plb
         .databank ?
-        lda aUnknown9AA30A,x
+        lda aBattleSceneWindowShapes,x
         clc
-        adc #<>aUnknown9AA30A
+        adc #<>aBattleSceneWindowShapes
         tax
         dec x
         lda wR2+1
@@ -13977,12 +13977,12 @@
 
         _EA3C
         tax
-        lda aUnknown9AA30A,x
+        lda aBattleSceneWindowShapes,x
         clc
         adc #1,s
         dec a
         tax
-        lda aUnknown9AA30A,x
+        lda aBattleSceneWindowShapes,x
         and #$00FF
         sta #1,s
         pla
@@ -14241,7 +14241,7 @@
 
         _EB9A
         tax
-        lda aUnknown9AA30A,x
+        lda aBattleSceneWindowShapes,x
         clc
         adc #$A30A
         sta lR19
@@ -15503,7 +15503,7 @@
         .databank ?
 
         phb
-        pea #(`aUnknown9AA30A)<<8
+        pea #(`aBattleSceneWindowShapes)<<8
         plb
         plb
         lda wR5
@@ -15511,9 +15511,9 @@
         adc #$0004
         asl a
         tax
-        lda @l aUnknown9AA30A,x
+        lda @l aBattleSceneWindowShapes,x
         clc
-        adc #<>aUnknown9AA30A
+        adc #<>aBattleSceneWindowShapes
         tax
         dex
         lda wR5
@@ -15605,7 +15605,7 @@
         adc #$0004
         asl a
         tax
-        lda aUnknown9AA30A,x
+        lda aBattleSceneWindowShapes,x
         clc
         adc #$A30A
         tax

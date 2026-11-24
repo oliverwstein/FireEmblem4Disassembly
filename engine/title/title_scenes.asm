@@ -792,13 +792,13 @@
         _EE1C
         lda #$0000
         sta $0162,b,x
-        lda aUnknownE026E1,x
+        lda aTitleScreenPalette2,x
         sta $0122,b,x
-        lda aUnknownE026FF,x
+        lda aTitleScreenPalette3,x
         sta $0142,b,x
-        lda aUnknownE0271D,x
+        lda aTitleScreenPalette4,x
         sta $0242,b,x
-        lda aUnknownE02769,x
+        lda aTitleScreenPalette6,x
         sta $0282,b,x
         inc x
         inc x
@@ -807,7 +807,7 @@
         ldx #$0000
 
         _EE48
-        lda aUnknownE02759,x
+        lda aTitleScreenPalette5,x
         sta $0182,b,x
         inc x
         inc x
@@ -1859,9 +1859,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97F64E)<<8
+        lda #(`aTitleIntroScene6WindowEffect1Data)<<8
         sta lR18+1
-        lda #<>aUnknown97F64E
+        lda #<>aTitleIntroScene6WindowEffect1Data
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect1
@@ -2217,7 +2217,7 @@
         ldx #$0000
 
         _FAE4
-        lda aUnknown97F64E+925,x
+        lda aTitleIntroScene6WindowEffect1Data+925,x
         sta $7FD612,x
         inc x
         inc x
@@ -2273,7 +2273,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown95FB4B,x)
+        jsr (aTitleIntroScene2SpriteRiseStates,x)
         plx
 
         _FB2F
@@ -2306,7 +2306,7 @@
       .al
       .xl
 
-      aUnknown95FB4B ; 95/FB4B
+      aTitleIntroScene2SpriteRiseStates ; 95/FB4B
 
         ; Jump table of rlStepTitleIntroScene2SpriteRise.
         .word <>rsTitleIntroScene2SpriteWait
@@ -3462,11 +3462,11 @@
         ldx #$0000
 
         _E286
-        lda aUnknownE02299,x
+        lda aTitleIntroPalette2,x
         sta $0162,b,x
         lda aUnknownE023B1,x
         sta $0142,b,x
-        lda aUnknownE02787,x
+        lda aTitleIntroPalette1,x
         sta $0102,b,x
         inc x
         inc x
@@ -3500,9 +3500,9 @@
         ldx #$0000
 
         _E2AC
-        lda aUnknown97F64E+1016,x
+        lda aTitleIntroScene6WindowEffect1Data+1016,x
         sta lR18
-        lda aUnknown97F64E+1017,x
+        lda aTitleIntroScene6WindowEffect1Data+1017,x
         sta lR18+1
         phx
         tyx
@@ -3770,13 +3770,13 @@
         lsr a
         lsr a
         tax
-        lda aUnknown97FB12+662,x
+        lda aTitleIntroScene1BG2WaveOffsets+662,x
         and #$00FF
         sta wR0
         lda $7FD631
         and #$0007
         tax
-        lda aUnknown97FB12+679,x
+        lda aTitleIntroScene1BG2WaveOffsets+679,x
         and #$00FF
         and wR0
         beq _E3DA
@@ -4125,7 +4125,7 @@
         _E604
         lda wBufferBG2HOFS
         clc
-        adc aUnknown97FB12,x
+        adc aTitleIntroScene1BG2WaveOffsets,x
         sta [lR18],y
         inc y
         inc y
@@ -5077,13 +5077,13 @@
         ldx #$0000
 
         _F405
-        lda aUnknownE024E3,x
+        lda aTitleIntroScene7Palette,x
         and #$001F
         sta $7E8B88,x
-        lda aUnknownE024E3,x
+        lda aTitleIntroScene7Palette,x
         and #$03E0
         sta $7E8D88,x
-        lda aUnknownE024E3,x
+        lda aTitleIntroScene7Palette,x
         and #$7C00
         xba
         sta $7E8F88,x
@@ -5526,7 +5526,7 @@
         ldx #$0000
 
         _F678
-        lda aUnknownE0273B,x
+        lda aTitleLogoGlintColors,x
         sta $0102,b,x
         inc x
         inc x

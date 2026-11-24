@@ -3670,7 +3670,7 @@
 
         _B562
         tax
-        lda aUnknown9AA30A,x
+        lda aBattleSceneWindowShapes,x
         clc
         adc #$A30A
         sta lR19
@@ -3724,12 +3724,12 @@
 
         _B59F
         tax
-        lda aUnknown9AA30A,x
+        lda aBattleSceneWindowShapes,x
         clc
         adc #1,s
         dec a
         tax
-        lda aUnknown9AA30A,x
+        lda aBattleSceneWindowShapes,x
         and #$00FF
         sta #1,s
         pla
@@ -4401,13 +4401,13 @@
         pha
 
         _BEDF
-        lda aUnknown97C2D4+12,x
+        lda aBattleSceneBG2ShakeOffsets+12,x
         sec
         sbc #3,s
         sta $7FF714,x
         inc x
         inc x
-        lda aUnknown97C2D4+12,x
+        lda aBattleSceneBG2ShakeOffsets+12,x
         sec
         sbc #1,s
         sta $7FF714,x
@@ -4502,7 +4502,7 @@
         pha
 
         _BFB7
-        lda aUnknown97C2D4+268,x
+        lda aBattleSceneBG2ShakeOffsets+268,x
         cmp #$8000
         bne _BFC5
         ldx #$0000
@@ -4517,7 +4517,7 @@
         inc x
         inc y
         inc y
-        lda aUnknown97C2D4+268,x
+        lda aBattleSceneBG2ShakeOffsets+268,x
         sec
         sbc #1,s
         sta [lR18],y
@@ -4594,7 +4594,7 @@
         _C01E
         lda $7FED0A,x
         tax
-        lda aUnknown97C462,x
+        lda aBattleSceneBG3WaveData,x
         cmp #$8001
         bne _C035
         lda #$0000
@@ -4728,35 +4728,35 @@
         pha
 
         _C0FA
-        lda aUnknown97C462+194,x
+        lda aBattleSceneBG3WaveData+194,x
         sec
         sbc #3,s
         sta $7FF8D4,x
-        lda aUnknown97C462+196,x
+        lda aBattleSceneBG3WaveData+196,x
         sec
         sbc #1,s
         sta $7FF8D6,x
-        lda aUnknown97C462+198,x
+        lda aBattleSceneBG3WaveData+198,x
         sec
         sbc #3,s
         sta $7FF8D8,x
-        lda aUnknown97C462+200,x
+        lda aBattleSceneBG3WaveData+200,x
         sec
         sbc #1,s
         sta $7FF8DA,x
-        lda aUnknown97C462+202,x
+        lda aBattleSceneBG3WaveData+202,x
         sec
         sbc #3,s
         sta $7FF8DC,x
-        lda aUnknown97C462+204,x
+        lda aBattleSceneBG3WaveData+204,x
         sec
         sbc #1,s
         sta $7FF8DE,x
-        lda aUnknown97C462+206,x
+        lda aBattleSceneBG3WaveData+206,x
         sec
         sbc #3,s
         sta $7FF8E0,x
-        lda aUnknown97C462+208,x
+        lda aBattleSceneBG3WaveData+208,x
         sec
         sbc #1,s
         sta $7FF8E2,x
@@ -4841,35 +4841,35 @@
         pha
 
         _C1D3
-        lda aUnknown97C462+450,x
+        lda aBattleSceneBG3WaveData+450,x
         sec
         sbc #3,s
         sta $7FF714,x
-        lda aUnknown97C462+452,x
+        lda aBattleSceneBG3WaveData+452,x
         sec
         sbc #1,s
         sta $7FF716,x
-        lda aUnknown97C462+454,x
+        lda aBattleSceneBG3WaveData+454,x
         sec
         sbc #3,s
         sta $7FF718,x
-        lda aUnknown97C462+456,x
+        lda aBattleSceneBG3WaveData+456,x
         sec
         sbc #1,s
         sta $7FF71A,x
-        lda aUnknown97C462+458,x
+        lda aBattleSceneBG3WaveData+458,x
         sec
         sbc #3,s
         sta $7FF71C,x
-        lda aUnknown97C462+460,x
+        lda aBattleSceneBG3WaveData+460,x
         sec
         sbc #1,s
         sta $7FF71E,x
-        lda aUnknown97C462+462,x
+        lda aBattleSceneBG3WaveData+462,x
         sec
         sbc #3,s
         sta $7FF720,x
-        lda aUnknown97C462+464,x
+        lda aBattleSceneBG3WaveData+464,x
         sec
         sbc #1,s
         sta $7FF722,x
@@ -4954,13 +4954,13 @@
         pha
 
         _C2AC
-        lda aUnknown97C462+450,x
+        lda aBattleSceneBG3WaveData+450,x
         sec
         sbc #3,s
         sta $7FF714,x
         inc x
         inc x
-        lda aUnknown97C462+450,x
+        lda aBattleSceneBG3WaveData+450,x
         sec
         sbc #1,s
         sta $7FF714,x
@@ -5253,7 +5253,7 @@
         pha
 
         _C4C6
-        lda aUnknown97C462+706,x
+        lda aBattleSceneBG3WaveData+706,x
         cmp #$8000
         bne _C4D4
         ldx #$0000
@@ -5268,7 +5268,7 @@
         inc x
         inc y
         inc y
-        lda aUnknown97C462+706,x
+        lda aBattleSceneBG3WaveData+706,x
         sec
         sbc #1,s
         sta [lR18],y
@@ -5635,7 +5635,7 @@
         pha
 
         _C7AD
-        lda aUnknown97C462+836,x
+        lda aBattleSceneBG3WaveData+836,x
         cmp #$8000
         bne _C7BB
         ldx #$0000
@@ -5650,7 +5650,7 @@
         inc x
         inc y
         inc y
-        lda aUnknown97C462+836,x
+        lda aBattleSceneBG3WaveData+836,x
         sec
         sbc #1,s
         sta [lR18],y
@@ -9250,7 +9250,7 @@
         .autsiz
         .databank ?
 
-        ; Returns color A with each channel raised by wBattleScenePaletteBrighten steps (aUnknown98B133, aUnknown98B0F3, aUnknown98B0B3 by channel), each at most 31.
+        ; Returns color A with each channel raised by wBattleScenePaletteBrighten steps (aBattleSceneBrightenRedSteps, aBattleSceneBrightenGreenSteps, aBattleSceneBrightenBlueSteps by channel), each at most 31.
 
         phx
         pha
@@ -9265,7 +9265,7 @@
         lda wBattleScenePaletteBrighten
         asl a
         tax
-        lda aUnknown98B133,x
+        lda aBattleSceneBrightenRedSteps,x
         clc
         adc #1,s
         cmp #$0020
@@ -9274,7 +9274,7 @@
 
         _DAF2
         sta #7,s
-        lda aUnknown98B0F3,x
+        lda aBattleSceneBrightenGreenSteps,x
         clc
         adc #3,s
         cmp #$0400
@@ -9284,7 +9284,7 @@
         _DB03
         ora #7,s
         sta #7,s
-        lda aUnknown98B0B3,x
+        lda aBattleSceneBrightenBlueSteps,x
         clc
         adc #5,s
         cmp #$8000
@@ -9729,7 +9729,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown96DEAA,x)
+        jsr (aBattleSceneBGAnimSlotHandlers,x)
         plp
         plb
         .databank $96
@@ -9759,7 +9759,7 @@
       .al
       .xl
 
-      aUnknown96DEAA ; 96/DEAA
+      aBattleSceneBGAnimSlotHandlers ; 96/DEAA
 
         ; Jump table of rlBattleSceneRunBGAnimSlots.
         .word <>rsBattleSceneStepBGSlotMove
@@ -12319,7 +12319,7 @@
         and #$FFFE
         phx
         tax
-        lda aUnknown96ED67,x
+        lda aBattleSceneLumaRamp,x
         plx
         sta $7FF636,x
         pla
@@ -12411,7 +12411,7 @@
         lsr a
         and #$FFFE
         tax
-        lda aUnknown96EDF2,x
+        lda aBattleSceneGrayRamp,x
         sta #3,s
         pla
         pla
@@ -12610,7 +12610,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown96EEBD,x)
+        jsr (aBattleSceneMosaicModeHandlers,x)
         plp
         plb
         .databank $96
@@ -12634,7 +12634,7 @@
       .al
       .xl
 
-      aUnknown96EEBD ; 96/EEBD
+      aBattleSceneMosaicModeHandlers ; 96/EEBD
 
         ; Jump table of rlBattleSceneStepMosaic.
         .word <>rsBattleSceneMosaicMode0NoOp
@@ -13377,7 +13377,7 @@
         lda $7FFC54
         and #$00FF
         tax
-        lda aUnknown99892A,x
+        lda aBattleScenePalFlashSteps,x
         and #$00FF
         cmp #$00FF
         bne _F3BE
@@ -13841,7 +13841,7 @@
         dec a
         asl a
         tax
-        lda aUnknown98B231,x
+        lda aBattleSceneDodgeMissSprites,x
         clc
         adc #$B231
         sta $7FFC64
@@ -14007,7 +14007,7 @@
         asl a
         asl a
         tax
-        lda aUnknown98B173,x
+        lda aBattleSceneHitEffectSpriteMotion,x
         cmp #$8080
         beq _F952
         pha
@@ -14025,7 +14025,7 @@
 
         _F93B
         sta wR8
-        lda aUnknown98B173+2,x
+        lda aBattleSceneHitEffectSpriteMotion+2,x
         sta wR9
         sep #$20
         lda $7FFC69

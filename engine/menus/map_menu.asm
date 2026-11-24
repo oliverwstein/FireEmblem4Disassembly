@@ -6168,7 +6168,7 @@
         cmp #$0006
         bpl _DA5C
         tax
-        lda aUnknown85DA77,x
+        lda aGaugeStartTiles,x
         and #$00FF
         ldx wR1
         jsl rlDrawMapMenuTile
@@ -6178,7 +6178,7 @@
 
         _DA5C
         ldx #$0006
-        lda aUnknown85DA77,x
+        lda aGaugeStartTiles,x
         and #$00FF
         ldx wR1
         jsl rlDrawMapMenuTile
@@ -6203,7 +6203,7 @@
       .al
       .xl
 
-      aUnknown85DA77 ; 85/DA77
+      aGaugeStartTiles ; 85/DA77
 
         ; Read by rsDrawGaugeStart.
 
@@ -6230,7 +6230,7 @@
         cmp #$0008
         bpl _DA97
         tax
-        lda aUnknown85DAB2,x
+        lda aGaugeTiles,x
         and #$00FF
         ldx wR1
         jsl rlDrawMapMenuTile
@@ -6240,7 +6240,7 @@
 
         _DA97
         ldx #$0008
-        lda aUnknown85DAB2,x
+        lda aGaugeTiles,x
         and #$00FF
         ldx wR1
         jsl rlDrawMapMenuTile
@@ -6265,7 +6265,7 @@
       .al
       .xl
 
-      aUnknown85DAB2 ; 85/DAB2
+      aGaugeTiles ; 85/DAB2
 
         ; Read by rsDrawGaugeTile.
 

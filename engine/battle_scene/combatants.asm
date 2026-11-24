@@ -886,7 +886,7 @@
         sep #$20
 
         _B856
-        lda aUnknown97E8FB,x
+        lda aBattleAnimationBodyRecords,x
         cmp #$FF
         beq _B873
         cmp wR0
@@ -894,7 +894,7 @@
         lda wR0+1
         cmp #$09
         beq _B87A
-        cmp aUnknown97E8FB+1,x
+        cmp aBattleAnimationBodyRecords+1,x
         beq _B87A
 
         _B86E
@@ -915,7 +915,7 @@
         rep #$20
         inc x
         inc x
-        lda aUnknown97E8FB,x
+        lda aBattleAnimationBodyRecords,x
 
         _B882
         plx

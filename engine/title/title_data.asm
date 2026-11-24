@@ -170,15 +170,15 @@
 
       aUnknown99FDC5 ; 99/FDC5
 
-        PALETTE_EFFECT_VALUE_DATA $00, $07, $31, $0F, $02, aUnknownE026C3
+        PALETTE_EFFECT_VALUE_DATA $00, $07, $31, $0F, $02, aTitleScreenPalette1
 
       aUnknown99FDCD ; 99/FDCD
 
-        PALETTE_EFFECT_VALUE_DATA $00, $07, $31, $0F, $01, aUnknownE026C3
+        PALETTE_EFFECT_VALUE_DATA $00, $07, $31, $0F, $01, aTitleScreenPalette1
 
       aUnknown99FDD5 ; 99/FDD5
 
-        PALETTE_EFFECT_VALUE_DATA $02, $07, $21, $0F, $03, aUnknownE026FF
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $21, $0F, $03, aTitleScreenPalette3
 
       aUnknown99FDDD ; 99/FDDD
         PALETTE_EFFECT_VALUE_DATA $03, $07, $71, $0F, $10, $7FF636

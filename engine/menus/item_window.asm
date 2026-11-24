@@ -458,7 +458,7 @@
         ldx #$0000
 
         _D08C
-        lda aUnknown80D09B,x
+        lda aMapMenuWindowCOLDATAHDMATable,x
         sta $7FB0B6,x
         beq _D09A
         inc x
@@ -481,7 +481,7 @@
       .al
       .xl
 
-      aUnknown80D09B ; 80/D09B
+      aMapMenuWindowCOLDATAHDMATable ; 80/D09B
 
         ; Read by rlMapMenuWindowCOLDATAHDMAInit.
 
@@ -623,7 +623,7 @@
         .autsiz
         .databank ?
 
-        ; For each listed item: its icon (from aUnknown80D1AE by item ID), its RAM data pointer and its ROM data pointer.
+        ; For each listed item: its icon (from aItemWindowIconIndices by item ID), its RAM data pointer and its ROM data pointer.
 
         lda #$0000
         ldx #$0200
@@ -652,7 +652,7 @@
         lda $7FB014
         asl a
         tax
-        lda aUnknown80D1AE,x
+        lda aItemWindowIconIndices,x
         tay
         pla
         asl a
@@ -681,7 +681,7 @@
       .al
       .xl
 
-      aUnknown80D1AE ; 80/D1AE
+      aItemWindowIconIndices ; 80/D1AE
 
         ; Read by rlItemWindowGetItemData (item ID -> icon index, zero-terminated).
 
@@ -1910,7 +1910,7 @@
         lda $7FB012
         asl a
         tax
-        lda @l aUnknown89BCE6,x
+        lda @l aItemWindowIconRowY,x
         sec
         sbc #$0006
         sta wR1
@@ -1958,7 +1958,7 @@
       .al
       .xl
 
-      aUnknown89BCE6 ; 89/BCE6
+      aItemWindowIconRowY ; 89/BCE6
 
         ; Read by rsItemWindowRenderItemIcons.
 
@@ -2608,7 +2608,7 @@
       .al
       .xl
 
-      aUnknown89C181 ; 89/C181
+      aItemWindowScrollArrowSprites ; 89/C181
 
         ; Read by rsItemWindowRenderScrollArrows.
 
@@ -2974,7 +2974,7 @@
         sta wCurrentItemDataRAMPointer,b
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
         tax
-        lda aUnknown89C5E4,x
+        lda aItemWindowNameSortScores,x
         and #$00FF
         eor #$FFFF
         inc a
@@ -3279,7 +3279,7 @@
         .autsiz
         .databank ?
 
-        ; A: weapon rank (4 for none), X, Y: tile position. Draws its 2x2 letter from aUnknown89C5C9.
+        ; A: weapon rank (4 for none), X, Y: tile position. Draws its 2x2 letter from aItemWindowWeaponRankTiles.
 
         pha
         tya
@@ -3296,13 +3296,13 @@
         asl a
         asl a
         tax
-        lda aUnknown89C5C9,x
+        lda aItemWindowWeaponRankTiles,x
         phx
         tyx
         sta aBG3TilemapBuffer,x
         txy
         plx
-        lda aUnknown89C5C9+2,x
+        lda aItemWindowWeaponRankTiles+2,x
         tyx
         sta $7E83C8,x
         rts
@@ -3319,7 +3319,7 @@
       .al
       .xl
 
-      aUnknown89C5C9 ; 89/C5C9
+      aItemWindowWeaponRankTiles ; 89/C5C9
 
         ; Read by rsItemWindowDrawWeaponRank.
 
@@ -3334,7 +3334,7 @@
 
         ; 89/C5E4
 
-      aUnknown89C5E4 ; 89/C5E4
+      aItemWindowNameSortScores ; 89/C5E4
 
         ; Read by rsItemWindowGetNameSortScores.
 

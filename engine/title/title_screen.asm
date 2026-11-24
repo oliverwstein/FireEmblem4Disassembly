@@ -435,15 +435,15 @@
         ldx #$0000
 
         _F081
-        lda aUnknownE026C3,x
+        lda aTitleScreenPalette1,x
         sta $0162,b,x
-        lda aUnknownE026E1,x
+        lda aTitleScreenPalette2,x
         sta $0122,b,x
-        lda aUnknownE026FF,x
+        lda aTitleScreenPalette3,x
         sta $0142,b,x
-        lda aUnknownE0271D,x
+        lda aTitleScreenPalette4,x
         sta $0242,b,x
-        lda aUnknownE02769,x
+        lda aTitleScreenPalette6,x
         sta $0282,b,x
         lda aUnknownE02667,x
         lsr a
@@ -456,7 +456,7 @@
         ldx #$0000
 
         _F0B9
-        lda aUnknownE02759,x
+        lda aTitleScreenPalette5,x
         sta $0182,b,x
         inc x
         inc x

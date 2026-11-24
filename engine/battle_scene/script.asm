@@ -267,7 +267,7 @@
         and #$01FF
         asl a
         tax
-        lda aUnknown98AD04,x
+        lda aBattleSceneSounds,x
         pha
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
@@ -490,7 +490,7 @@
       .al
       .xl
 
-      aUnknown96DF60 ; 96/DF60
+      aBattleSceneBGScrollEffectInits ; 96/DF60
 
         ; Jump table of rlBattleSceneStartBGScrollEffect.
         .word <>rsBattleSceneInitBGSlotAttacker
@@ -610,7 +610,7 @@
         phx
         asl a
         tax
-        lda aUnknown97C2D4,x
+        lda aBattleSceneBG2ShakeOffsets,x
         clc
         adc #$C2D4
         sta $7FF631
@@ -639,7 +639,7 @@
       .al
       .xl
 
-      aUnknown96ECCC ; 96/ECCC
+      aBattleScenePaletteOperations ; 96/ECCC
 
         ; Jump table of rlBattleSceneRunPaletteOperation.
         .word <>rsBattleSceneTintPaletteRed
@@ -685,7 +685,7 @@
         tax
         lda #$9700
         sta lR18+1
-        lda aUnknown97C828,x
+        lda aBattleSceneWindowEffect3Data,x
         clc
         adc #$C828
         sta lR18
@@ -1887,7 +1887,7 @@
         and #$01FF
         asl a
         tax
-        lda aUnknown98AD04,x
+        lda aBattleSceneSounds,x
         ldx wBattleAnimationAttackerOffset,b
         cpx #$0000
         bne _BC66
@@ -1923,7 +1923,7 @@
         and #$01FF
         asl a
         tax
-        lda aUnknown98AD04,x
+        lda aBattleSceneSounds,x
         pha
         ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
@@ -2363,7 +2363,7 @@
         tax
         lda #$9700
         sta lR18+1
-        lda aUnknown97BEAC,x
+        lda aBattleSceneBGScrollEffects,x
         clc
         adc #$BEAC
         sta lR18
@@ -2444,7 +2444,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown96DF60,x)
+        jsr (aBattleSceneBGScrollEffectInits,x)
         plp
         plb
         .databank $96
@@ -2541,7 +2541,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown96ECCC,x)
+        jsr (aBattleScenePaletteOperations,x)
         ply
         plx
         rtl
@@ -3923,7 +3923,7 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $31, $0F
 
       _A9A8_ADDE ; 97/ADDE
-        PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $0F, $03, aUnknownE02299
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $0F, $03, aTitleIntroPalette2
 
       _A9A8_ADE6 ; 97/ADE6
         PALETTE_EFFECT_VALUE $02, $05, $21, $1F, $03
@@ -5289,88 +5289,88 @@
       .al
       .xl
 
-      aUnknown97BEAC ; 97/BEAC
+      aBattleSceneBGScrollEffects ; 97/BEAC
 
         ; Read by rlBattleSceneCommandBGScrollEffect.
 
-        .word _BEAC_BF48 - aUnknown97BEAC
-        .word _BEAC_BF4A - aUnknown97BEAC
-        .word _BEAC_BF4C - aUnknown97BEAC
-        .word _BEAC_BF4E - aUnknown97BEAC
-        .word _BEAC_BF50 - aUnknown97BEAC
-        .word _BEAC_BF52 - aUnknown97BEAC
-        .word _BEAC_BF58 - aUnknown97BEAC
-        .word _BEAC_BF5E - aUnknown97BEAC
-        .word _BEAC_BF64 - aUnknown97BEAC
-        .word _BEAC_BF6A - aUnknown97BEAC
-        .word _BEAC_BF70 - aUnknown97BEAC
-        .word _BEAC_BF72 - aUnknown97BEAC
-        .word _BEAC_BF74 - aUnknown97BEAC
-        .word _BEAC_BF77 - aUnknown97BEAC
-        .word _BEAC_BF79 - aUnknown97BEAC
-        .word _BEAC_BF7F - aUnknown97BEAC
-        .word _BEAC_BF85 - aUnknown97BEAC
-        .word _BEAC_BF8B - aUnknown97BEAC
-        .word _BEAC_BF8D - aUnknown97BEAC
-        .word _BEAC_BF90 - aUnknown97BEAC
-        .word _BEAC_BF92 - aUnknown97BEAC
-        .word _BEAC_BF94 - aUnknown97BEAC
-        .word _BEAC_BF9A - aUnknown97BEAC
-        .word _BEAC_BF9F - aUnknown97BEAC
-        .word _BEAC_BFA1 - aUnknown97BEAC
-        .word _BEAC_BFA7 - aUnknown97BEAC
-        .word _BEAC_BFAC - aUnknown97BEAC
-        .word _BEAC_BFAE - aUnknown97BEAC
-        .word _BEAC_BFB3 - aUnknown97BEAC
-        .word _BEAC_BFB5 - aUnknown97BEAC
-        .word _BEAC_BFB8 - aUnknown97BEAC
-        .word _BEAC_BFBA - aUnknown97BEAC
-        .word _BEAC_BFBC - aUnknown97BEAC
-        .word _BEAC_BFC2 - aUnknown97BEAC
-        .word _BEAC_BFC5 - aUnknown97BEAC
-        .word _BEAC_BFC7 - aUnknown97BEAC
-        .word _BEAC_BFCC - aUnknown97BEAC
-        .word _BEAC_BFD2 - aUnknown97BEAC
-        .word _BEAC_BFD8 - aUnknown97BEAC
-        .word _BEAC_BFDE - aUnknown97BEAC
-        .word _BEAC_BFE4 - aUnknown97BEAC
-        .word _BEAC_BFEA - aUnknown97BEAC
-        .word _BEAC_BFF0 - aUnknown97BEAC
-        .word _BEAC_BFF6 - aUnknown97BEAC
-        .word _BEAC_BFFC - aUnknown97BEAC
-        .word _BEAC_C002 - aUnknown97BEAC
-        .word _BEAC_C002 - aUnknown97BEAC
-        .word _BEAC_C008 - aUnknown97BEAC
-        .word _BEAC_C00E - aUnknown97BEAC
-        .word _BEAC_C014 - aUnknown97BEAC
-        .word _BEAC_C01A - aUnknown97BEAC
-        .word _BEAC_C020 - aUnknown97BEAC
-        .word _BEAC_C026 - aUnknown97BEAC
-        .word _BEAC_C02C - aUnknown97BEAC
-        .word _BEAC_C032 - aUnknown97BEAC
-        .word _BEAC_C038 - aUnknown97BEAC
-        .word _BEAC_C03E - aUnknown97BEAC
-        .word _BEAC_C044 - aUnknown97BEAC
-        .word _BEAC_C04A - aUnknown97BEAC
-        .word _BEAC_C050 - aUnknown97BEAC
-        .word _BEAC_C056 - aUnknown97BEAC
-        .word _BEAC_C05C - aUnknown97BEAC
-        .word _BEAC_C061 - aUnknown97BEAC
-        .word _BEAC_C063 - aUnknown97BEAC
-        .word _BEAC_C066 - aUnknown97BEAC
-        .word _BEAC_C068 - aUnknown97BEAC
-        .word _BEAC_C06E - aUnknown97BEAC
-        .word _BEAC_C074 - aUnknown97BEAC
-        .word _BEAC_C079 - aUnknown97BEAC
-        .word _BEAC_C07E - aUnknown97BEAC
-        .word _BEAC_C080 - aUnknown97BEAC
-        .word _BEAC_C086 - aUnknown97BEAC
-        .word _BEAC_C08C - aUnknown97BEAC
-        .word _BEAC_C08E - aUnknown97BEAC
-        .word _BEAC_C090 - aUnknown97BEAC
-        .word _BEAC_C096 - aUnknown97BEAC
-        .word _BEAC_C09C - aUnknown97BEAC
-        .word _BEAC_C0A2 - aUnknown97BEAC
+        .word _BEAC_BF48 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF4A - aBattleSceneBGScrollEffects
+        .word _BEAC_BF4C - aBattleSceneBGScrollEffects
+        .word _BEAC_BF4E - aBattleSceneBGScrollEffects
+        .word _BEAC_BF50 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF52 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF58 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF5E - aBattleSceneBGScrollEffects
+        .word _BEAC_BF64 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF6A - aBattleSceneBGScrollEffects
+        .word _BEAC_BF70 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF72 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF74 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF77 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF79 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF7F - aBattleSceneBGScrollEffects
+        .word _BEAC_BF85 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF8B - aBattleSceneBGScrollEffects
+        .word _BEAC_BF8D - aBattleSceneBGScrollEffects
+        .word _BEAC_BF90 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF92 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF94 - aBattleSceneBGScrollEffects
+        .word _BEAC_BF9A - aBattleSceneBGScrollEffects
+        .word _BEAC_BF9F - aBattleSceneBGScrollEffects
+        .word _BEAC_BFA1 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFA7 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFAC - aBattleSceneBGScrollEffects
+        .word _BEAC_BFAE - aBattleSceneBGScrollEffects
+        .word _BEAC_BFB3 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFB5 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFB8 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFBA - aBattleSceneBGScrollEffects
+        .word _BEAC_BFBC - aBattleSceneBGScrollEffects
+        .word _BEAC_BFC2 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFC5 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFC7 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFCC - aBattleSceneBGScrollEffects
+        .word _BEAC_BFD2 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFD8 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFDE - aBattleSceneBGScrollEffects
+        .word _BEAC_BFE4 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFEA - aBattleSceneBGScrollEffects
+        .word _BEAC_BFF0 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFF6 - aBattleSceneBGScrollEffects
+        .word _BEAC_BFFC - aBattleSceneBGScrollEffects
+        .word _BEAC_C002 - aBattleSceneBGScrollEffects
+        .word _BEAC_C002 - aBattleSceneBGScrollEffects
+        .word _BEAC_C008 - aBattleSceneBGScrollEffects
+        .word _BEAC_C00E - aBattleSceneBGScrollEffects
+        .word _BEAC_C014 - aBattleSceneBGScrollEffects
+        .word _BEAC_C01A - aBattleSceneBGScrollEffects
+        .word _BEAC_C020 - aBattleSceneBGScrollEffects
+        .word _BEAC_C026 - aBattleSceneBGScrollEffects
+        .word _BEAC_C02C - aBattleSceneBGScrollEffects
+        .word _BEAC_C032 - aBattleSceneBGScrollEffects
+        .word _BEAC_C038 - aBattleSceneBGScrollEffects
+        .word _BEAC_C03E - aBattleSceneBGScrollEffects
+        .word _BEAC_C044 - aBattleSceneBGScrollEffects
+        .word _BEAC_C04A - aBattleSceneBGScrollEffects
+        .word _BEAC_C050 - aBattleSceneBGScrollEffects
+        .word _BEAC_C056 - aBattleSceneBGScrollEffects
+        .word _BEAC_C05C - aBattleSceneBGScrollEffects
+        .word _BEAC_C061 - aBattleSceneBGScrollEffects
+        .word _BEAC_C063 - aBattleSceneBGScrollEffects
+        .word _BEAC_C066 - aBattleSceneBGScrollEffects
+        .word _BEAC_C068 - aBattleSceneBGScrollEffects
+        .word _BEAC_C06E - aBattleSceneBGScrollEffects
+        .word _BEAC_C074 - aBattleSceneBGScrollEffects
+        .word _BEAC_C079 - aBattleSceneBGScrollEffects
+        .word _BEAC_C07E - aBattleSceneBGScrollEffects
+        .word _BEAC_C080 - aBattleSceneBGScrollEffects
+        .word _BEAC_C086 - aBattleSceneBGScrollEffects
+        .word _BEAC_C08C - aBattleSceneBGScrollEffects
+        .word _BEAC_C08E - aBattleSceneBGScrollEffects
+        .word _BEAC_C090 - aBattleSceneBGScrollEffects
+        .word _BEAC_C096 - aBattleSceneBGScrollEffects
+        .word _BEAC_C09C - aBattleSceneBGScrollEffects
+        .word _BEAC_C0A2 - aBattleSceneBGScrollEffects
 
       _BEAC_BF48 ; 97/BF48
         .byte $00, $03
@@ -5640,7 +5640,7 @@
 
         ; 97/C2D4
 
-      aUnknown97C2D4 ; 97/C2D4
+      aBattleSceneBG2ShakeOffsets ; 97/C2D4
 
         ; Read by rlBattleSceneStartBG2Shake.
 
@@ -5670,7 +5670,7 @@
         .byte $FC, $FF, $05, $00, $FC, $FF, $04, $00, $FD, $FF, $03, $00, $FD, $FF, $02, $00
         .byte $FE, $FF, $01, $00, $FE, $FF, $00, $00, $FE, $FF, $00, $00, $00, $80
 
-      aUnknown97C462 ; 97/C462
+      aBattleSceneBG3WaveData ; 97/C462
 
         ; Read by rlBattleSceneStepBG3WaveHDMA.
 
@@ -5746,7 +5746,7 @@
       .al
       .xl
 
-      aUnknown97C828 ; 97/C828
+      aBattleSceneWindowEffect3Data ; 97/C828
 
         ; Read by rlBattleSceneCommandWindowEffect3.
 
@@ -5765,7 +5765,7 @@
       .al
       .xl
 
-      aUnknown98AD04 ; 98/AD04
+      aBattleSceneSounds ; 98/AD04
 
         ; Read by rlBattleSceneCommandPlaySound, rlBattleSceneCommandPlaySoundAtCombatant, rlBattleSceneCommandPlaySoundAtOpponent.
 
@@ -5844,24 +5844,24 @@
       .al
       .xl
 
-      aUnknown9A8000 ; 9A/8000
+      aBattleSceneWindowEffect2Data ; 9A/8000
 
         ; Read by rlBattleSceneCommandWindowEffect2.
 
-        .word _8000_801C - aUnknown9A8000
-        .word _8000_801C - aUnknown9A8000
-        .word _8000_801C - aUnknown9A8000
-        .word _8000_801C - aUnknown9A8000
-        .word _8000_8035 - aUnknown9A8000
-        .word _8000_9A87 - aUnknown9A8000
-        .word _8000_9AA0 - aUnknown9A8000
-        .word _8000_9F08 - aUnknown9A8000
-        .word _8000_9F1B - aUnknown9A8000
-        .word _8000_9F1E - aUnknown9A8000
-        .word _8000_9F21 - aUnknown9A8000
-        .word _8000_9F3A - aUnknown9A8000
-        .word _8000_A2EE - aUnknown9A8000
-        .word _8000_A2F1 - aUnknown9A8000
+        .word _8000_801C - aBattleSceneWindowEffect2Data
+        .word _8000_801C - aBattleSceneWindowEffect2Data
+        .word _8000_801C - aBattleSceneWindowEffect2Data
+        .word _8000_801C - aBattleSceneWindowEffect2Data
+        .word _8000_8035 - aBattleSceneWindowEffect2Data
+        .word _8000_9A87 - aBattleSceneWindowEffect2Data
+        .word _8000_9AA0 - aBattleSceneWindowEffect2Data
+        .word _8000_9F08 - aBattleSceneWindowEffect2Data
+        .word _8000_9F1B - aBattleSceneWindowEffect2Data
+        .word _8000_9F1E - aBattleSceneWindowEffect2Data
+        .word _8000_9F21 - aBattleSceneWindowEffect2Data
+        .word _8000_9F3A - aBattleSceneWindowEffect2Data
+        .word _8000_A2EE - aBattleSceneWindowEffect2Data
+        .word _8000_A2F1 - aBattleSceneWindowEffect2Data
 
       _8000_801C ; 9A/801C
         .byte $03, $03, $00, $00, $00, $00, $00, $01, $00, $00, $45, $45, $80, $5A, $FF, $00
@@ -6453,90 +6453,90 @@
 
         ; 9A/A30A
 
-      aUnknown9AA30A ; 9A/A30A
+      aBattleSceneWindowShapes ; 9A/A30A
 
         ; Read by rlBattleSceneGetWindowShapePtr, rlBattleSceneGetWindowShapeWidth, rsMapMagicLookupCircleHalfWidth, rsMapMagicAuraDrawMaskRows.
 
-        .word _A30A_A3AA - aUnknown9AA30A
-        .word _A30A_A3AA - aUnknown9AA30A
-        .word _A30A_A3AB - aUnknown9AA30A
-        .word _A30A_A3AD - aUnknown9AA30A
-        .word _A30A_A3B0 - aUnknown9AA30A
-        .word _A30A_A3B4 - aUnknown9AA30A
-        .word _A30A_A3B9 - aUnknown9AA30A
-        .word _A30A_A3BF - aUnknown9AA30A
-        .word _A30A_A3C6 - aUnknown9AA30A
-        .word _A30A_A3CE - aUnknown9AA30A
-        .word _A30A_A3D7 - aUnknown9AA30A
-        .word _A30A_A3E1 - aUnknown9AA30A
-        .word _A30A_A3EC - aUnknown9AA30A
-        .word _A30A_A3F8 - aUnknown9AA30A
-        .word _A30A_A405 - aUnknown9AA30A
-        .word _A30A_A413 - aUnknown9AA30A
-        .word _A30A_A422 - aUnknown9AA30A
-        .word _A30A_A432 - aUnknown9AA30A
-        .word _A30A_A443 - aUnknown9AA30A
-        .word _A30A_A455 - aUnknown9AA30A
-        .word _A30A_A468 - aUnknown9AA30A
-        .word _A30A_A47C - aUnknown9AA30A
-        .word _A30A_A491 - aUnknown9AA30A
-        .word _A30A_A4A7 - aUnknown9AA30A
-        .word _A30A_A4BE - aUnknown9AA30A
-        .word _A30A_A4D6 - aUnknown9AA30A
-        .word _A30A_A4EF - aUnknown9AA30A
-        .word _A30A_A509 - aUnknown9AA30A
-        .word _A30A_A524 - aUnknown9AA30A
-        .word _A30A_A540 - aUnknown9AA30A
-        .word _A30A_A55D - aUnknown9AA30A
-        .word _A30A_A57B - aUnknown9AA30A
-        .word _A30A_A59A - aUnknown9AA30A
-        .word _A30A_A5BA - aUnknown9AA30A
-        .word _A30A_A5DC - aUnknown9AA30A
-        .word _A30A_A600 - aUnknown9AA30A
-        .word _A30A_A626 - aUnknown9AA30A
-        .word _A30A_A64E - aUnknown9AA30A
-        .word _A30A_A678 - aUnknown9AA30A
-        .word _A30A_A6A4 - aUnknown9AA30A
-        .word _A30A_A6D2 - aUnknown9AA30A
-        .word _A30A_A702 - aUnknown9AA30A
-        .word _A30A_A734 - aUnknown9AA30A
-        .word _A30A_A768 - aUnknown9AA30A
-        .word _A30A_A79E - aUnknown9AA30A
-        .word _A30A_A7D6 - aUnknown9AA30A
-        .word _A30A_A810 - aUnknown9AA30A
-        .word _A30A_A84C - aUnknown9AA30A
-        .word _A30A_A88A - aUnknown9AA30A
-        .word _A30A_A8CA - aUnknown9AA30A
-        .word _A30A_A90E - aUnknown9AA30A
-        .word _A30A_A956 - aUnknown9AA30A
-        .word _A30A_A9A2 - aUnknown9AA30A
-        .word _A30A_A9F2 - aUnknown9AA30A
-        .word _A30A_AA46 - aUnknown9AA30A
-        .word _A30A_AA9E - aUnknown9AA30A
-        .word _A30A_AAFA - aUnknown9AA30A
-        .word _A30A_AB5A - aUnknown9AA30A
-        .word _A30A_ABBE - aUnknown9AA30A
-        .word _A30A_AC26 - aUnknown9AA30A
-        .word _A30A_AC92 - aUnknown9AA30A
-        .word _A30A_AD02 - aUnknown9AA30A
-        .word _A30A_AD76 - aUnknown9AA30A
-        .word _A30A_ADEE - aUnknown9AA30A
-        .word _A30A_AE6A - aUnknown9AA30A
-        .word _A30A_AEEA - aUnknown9AA30A
-        .word _A30A_AF72 - aUnknown9AA30A
-        .word _A30A_B002 - aUnknown9AA30A
-        .word _A30A_B09A - aUnknown9AA30A
-        .word _A30A_B13A - aUnknown9AA30A
-        .word _A30A_B1E2 - aUnknown9AA30A
-        .word _A30A_B292 - aUnknown9AA30A
-        .word _A30A_B34A - aUnknown9AA30A
-        .word _A30A_B40A - aUnknown9AA30A
-        .word _A30A_B4D2 - aUnknown9AA30A
-        .word _A30A_B5A2 - aUnknown9AA30A
-        .word _A30A_B67A - aUnknown9AA30A
-        .word _A30A_B75A - aUnknown9AA30A
-        .word _A30A_B842 - aUnknown9AA30A
-        .word _A30A_B932 - aUnknown9AA30A
+        .word _A30A_A3AA - aBattleSceneWindowShapes
+        .word _A30A_A3AA - aBattleSceneWindowShapes
+        .word _A30A_A3AB - aBattleSceneWindowShapes
+        .word _A30A_A3AD - aBattleSceneWindowShapes
+        .word _A30A_A3B0 - aBattleSceneWindowShapes
+        .word _A30A_A3B4 - aBattleSceneWindowShapes
+        .word _A30A_A3B9 - aBattleSceneWindowShapes
+        .word _A30A_A3BF - aBattleSceneWindowShapes
+        .word _A30A_A3C6 - aBattleSceneWindowShapes
+        .word _A30A_A3CE - aBattleSceneWindowShapes
+        .word _A30A_A3D7 - aBattleSceneWindowShapes
+        .word _A30A_A3E1 - aBattleSceneWindowShapes
+        .word _A30A_A3EC - aBattleSceneWindowShapes
+        .word _A30A_A3F8 - aBattleSceneWindowShapes
+        .word _A30A_A405 - aBattleSceneWindowShapes
+        .word _A30A_A413 - aBattleSceneWindowShapes
+        .word _A30A_A422 - aBattleSceneWindowShapes
+        .word _A30A_A432 - aBattleSceneWindowShapes
+        .word _A30A_A443 - aBattleSceneWindowShapes
+        .word _A30A_A455 - aBattleSceneWindowShapes
+        .word _A30A_A468 - aBattleSceneWindowShapes
+        .word _A30A_A47C - aBattleSceneWindowShapes
+        .word _A30A_A491 - aBattleSceneWindowShapes
+        .word _A30A_A4A7 - aBattleSceneWindowShapes
+        .word _A30A_A4BE - aBattleSceneWindowShapes
+        .word _A30A_A4D6 - aBattleSceneWindowShapes
+        .word _A30A_A4EF - aBattleSceneWindowShapes
+        .word _A30A_A509 - aBattleSceneWindowShapes
+        .word _A30A_A524 - aBattleSceneWindowShapes
+        .word _A30A_A540 - aBattleSceneWindowShapes
+        .word _A30A_A55D - aBattleSceneWindowShapes
+        .word _A30A_A57B - aBattleSceneWindowShapes
+        .word _A30A_A59A - aBattleSceneWindowShapes
+        .word _A30A_A5BA - aBattleSceneWindowShapes
+        .word _A30A_A5DC - aBattleSceneWindowShapes
+        .word _A30A_A600 - aBattleSceneWindowShapes
+        .word _A30A_A626 - aBattleSceneWindowShapes
+        .word _A30A_A64E - aBattleSceneWindowShapes
+        .word _A30A_A678 - aBattleSceneWindowShapes
+        .word _A30A_A6A4 - aBattleSceneWindowShapes
+        .word _A30A_A6D2 - aBattleSceneWindowShapes
+        .word _A30A_A702 - aBattleSceneWindowShapes
+        .word _A30A_A734 - aBattleSceneWindowShapes
+        .word _A30A_A768 - aBattleSceneWindowShapes
+        .word _A30A_A79E - aBattleSceneWindowShapes
+        .word _A30A_A7D6 - aBattleSceneWindowShapes
+        .word _A30A_A810 - aBattleSceneWindowShapes
+        .word _A30A_A84C - aBattleSceneWindowShapes
+        .word _A30A_A88A - aBattleSceneWindowShapes
+        .word _A30A_A8CA - aBattleSceneWindowShapes
+        .word _A30A_A90E - aBattleSceneWindowShapes
+        .word _A30A_A956 - aBattleSceneWindowShapes
+        .word _A30A_A9A2 - aBattleSceneWindowShapes
+        .word _A30A_A9F2 - aBattleSceneWindowShapes
+        .word _A30A_AA46 - aBattleSceneWindowShapes
+        .word _A30A_AA9E - aBattleSceneWindowShapes
+        .word _A30A_AAFA - aBattleSceneWindowShapes
+        .word _A30A_AB5A - aBattleSceneWindowShapes
+        .word _A30A_ABBE - aBattleSceneWindowShapes
+        .word _A30A_AC26 - aBattleSceneWindowShapes
+        .word _A30A_AC92 - aBattleSceneWindowShapes
+        .word _A30A_AD02 - aBattleSceneWindowShapes
+        .word _A30A_AD76 - aBattleSceneWindowShapes
+        .word _A30A_ADEE - aBattleSceneWindowShapes
+        .word _A30A_AE6A - aBattleSceneWindowShapes
+        .word _A30A_AEEA - aBattleSceneWindowShapes
+        .word _A30A_AF72 - aBattleSceneWindowShapes
+        .word _A30A_B002 - aBattleSceneWindowShapes
+        .word _A30A_B09A - aBattleSceneWindowShapes
+        .word _A30A_B13A - aBattleSceneWindowShapes
+        .word _A30A_B1E2 - aBattleSceneWindowShapes
+        .word _A30A_B292 - aBattleSceneWindowShapes
+        .word _A30A_B34A - aBattleSceneWindowShapes
+        .word _A30A_B40A - aBattleSceneWindowShapes
+        .word _A30A_B4D2 - aBattleSceneWindowShapes
+        .word _A30A_B5A2 - aBattleSceneWindowShapes
+        .word _A30A_B67A - aBattleSceneWindowShapes
+        .word _A30A_B75A - aBattleSceneWindowShapes
+        .word _A30A_B842 - aBattleSceneWindowShapes
+        .word _A30A_B932 - aBattleSceneWindowShapes
 
       _A30A_A3AA ; 9A/A3AA
         .byte $00

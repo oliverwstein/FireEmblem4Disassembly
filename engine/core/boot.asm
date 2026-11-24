@@ -799,9 +799,9 @@
         ldx #$0000
 
         _FC76
-        lda aUnknownE0283F,x
+        lda aOpeningLogoPalette1,x
         sta $0122,b,x
-        lda aUnknownE0285D,x
+        lda aOpeningLogoPalette2,x
         sta $0222,b,x
         inc x
         inc x
@@ -822,7 +822,7 @@
       .al
       .xl
 
-      aUnknownE0283F ; E0/283F
+      aOpeningLogoPalette1 ; E0/283F
 
         ; Read by rlLoadOpeningLogoScreen.
 
@@ -839,7 +839,7 @@
       .al
       .xl
 
-      aUnknownE0285D ; E0/285D
+      aOpeningLogoPalette2 ; E0/285D
 
         ; Read by rlLoadOpeningLogoScreen.
 

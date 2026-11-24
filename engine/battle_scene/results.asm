@@ -475,13 +475,13 @@
         .autsiz
         .databank ?
 
-        ; Copies five colors of aUnknownE000C8 to OAM palette 3, colors 10-14.
+        ; Copies five colors of aBattleSceneMessageColors to OAM palette 3, colors 10-14.
 
         phx
         ldx #$0000
 
         _E9F3
-        lda aUnknownE000C8+8,x
+        lda aBattleSceneMessageColors+8,x
         sta $0274,b,x
         inc x
         inc x
@@ -674,7 +674,7 @@
         ldx #$0000
 
         _88CA
-        lda aUnknownE000DA,x
+        lda aBattleSceneMessageWindowMode3Colors,x
         sta $0102,b,x
         inc x
         inc x
@@ -706,7 +706,7 @@
         ldx #$0000
 
         -
-        lda @l aUnknownE000DA,x
+        lda @l aBattleSceneMessageWindowMode3Colors,x
         sta $0102,b,x
         inc x
         inc x
@@ -1198,13 +1198,13 @@
         .autsiz
         .databank ?
 
-        ; Copies the skill's colors (aUnknownE027C3) and starts battle scene script $36.
+        ; Copies the skill's colors (aBattleSceneAstraColors) and starts battle scene script $36.
 
         phx
         ldx #$0000
 
         _F6E4
-        lda aUnknownE027C3,x
+        lda aBattleSceneAstraColors,x
         sta $0274,b,x
         inc x
         inc x
@@ -1226,13 +1226,13 @@
         .autsiz
         .databank ?
 
-        ; Copies the skill's colors (aUnknownE027CD) and starts battle scene script $37.
+        ; Copies the skill's colors (aBattleSceneLunaColors) and starts battle scene script $37.
 
         phx
         ldx #$0000
 
         _F6FF
-        lda aUnknownE027CD,x
+        lda aBattleSceneLunaColors,x
         sta $0274,b,x
         inc x
         inc x
@@ -1254,13 +1254,13 @@
         .autsiz
         .databank ?
 
-        ; Copies the skill's colors (aUnknownE027D7), starts battle scene script $38 and sets bit 2 of $7FFC5D.
+        ; Copies the skill's colors (aBattleSceneSolColors), starts battle scene script $38 and sets bit 2 of $7FFC5D.
 
         phx
         ldx #$0000
 
         _F71A
-        lda aUnknownE027D7,x
+        lda aBattleSceneSolColors,x
         sta $0274,b,x
         inc x
         inc x
@@ -1287,7 +1287,7 @@
         .autsiz
         .databank ?
 
-        ; Copies the skill's colors (aUnknownE027E1) and starts battle scene script $39; A is kept in $7FFC5F.
+        ; Copies the skill's colors (aBattleSceneHolyColors) and starts battle scene script $39; A is kept in $7FFC5F.
 
         phx
         sep #$20
@@ -1296,7 +1296,7 @@
         ldx #$0000
 
         _F74B
-        lda aUnknownE027E1,x
+        lda aBattleSceneHolyColors,x
         sta $02F4,b,x
         inc x
         inc x
@@ -1318,7 +1318,7 @@
         .autsiz
         .databank ?
 
-        ; Copies the skill's colors (aUnknownE027EB) and starts battle scene script $3A; A is kept in $7FFC5F.
+        ; Copies the skill's colors (aBattleSceneDarknessColors) and starts battle scene script $3A; A is kept in $7FFC5F.
 
         phx
         sep #$20
@@ -1327,7 +1327,7 @@
         ldx #$0000
 
         _F76E
-        lda aUnknownE027EB,x
+        lda aBattleSceneDarknessColors,x
         sta $02F4,b,x
         inc x
         inc x
@@ -1349,7 +1349,7 @@
         .autsiz
         .databank ?
 
-        ; Copies the skill's colors (aUnknownE027F5) and starts battle scene script $3F; A is kept in $7FFC5F.
+        ; Copies the skill's colors (aBattleScenePaviseColors) and starts battle scene script $3F; A is kept in $7FFC5F.
 
         phx
         sep #$20
@@ -1358,7 +1358,7 @@
         ldx #$0000
 
         _F791
-        lda aUnknownE027F5,x
+        lda aBattleScenePaviseColors,x
         sta $02F4,b,x
         inc x
         inc x

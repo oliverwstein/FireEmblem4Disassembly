@@ -277,7 +277,7 @@
         lda wUnitWindowCurrentItemIconSlot
         asl a
         tax
-        lda aUnknown80C5F8,x
+        lda aUnitWindowWeaponIconTiles,x
         tax
         pla
         jsl rlCopyItemIcon
@@ -301,7 +301,7 @@
       .al
       .xl
 
-      aUnknown80C5F8 ; 80/C5F8
+      aUnitWindowWeaponIconTiles ; 80/C5F8
 
         ; Read by rlUnitWindowCopyAllEquippedWeaponIcons.
 
@@ -1135,7 +1135,7 @@
       .al
       .xl
 
-      aUnknown80CC05 ; 80/CC05
+      aUnitWindowUnitNamePositions ; 80/CC05
 
         ; Read by rlUnitWindowDrawUnitNames.
 
@@ -2332,7 +2332,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        lda @l aUnknown8BB4C7,x
+        lda @l aUnitWindowPageSprites1,x
         tay
         jsl rlPushToOAMBuffer
 
@@ -2382,7 +2382,7 @@
       .al
       .xl
 
-      aUnknown8BB4C7 ; 8B/B4C7
+      aUnitWindowPageSprites1 ; 8B/B4C7
 
         ; Read by rlUnitWindowRenderPageSprites.
 
@@ -2392,7 +2392,7 @@
 
         ; 8B/B4ED
 
-      aUnknown8BB4ED ; 8B/B4ED
+      aUnitWindowPageSprites2 ; 8B/B4ED
 
         ; Read by rlUnitWindowRenderPageSprites.
 
@@ -3053,7 +3053,7 @@
         sta $7FB063,x
         txy
         plx
-        lda @l aUnknown8BBA80,x
+        lda @l aUnitWindowLineHighlightColors2,x
         tyx
         sta $7FB062,x
         lda wR4
@@ -3171,9 +3171,9 @@
         ldx #$0000
 
         _B9D8
-        lda @l aUnknown8BBA80+1,x
+        lda @l aUnitWindowLineHighlightColors2+1,x
         sta $7FB063,x
-        lda @l aUnknown8BBA80,x
+        lda @l aUnitWindowLineHighlightColors2,x
         sta $7FB062,x
         inc x
         inc x
@@ -3197,7 +3197,7 @@
       .al
       .xl
 
-      aUnknown8BB9FC ; 8B/B9FC
+      aUnitWindowLineHighlightColors1 ; 8B/B9FC
 
         ; Read by rsUnitWindowCopyLineHighlightColors.
 
@@ -3213,7 +3213,7 @@
 
         ; 8B/BA80
 
-      aUnknown8BBA80 ; 8B/BA80
+      aUnitWindowLineHighlightColors2 ; 8B/BA80
 
         ; Read by rsUnitWindowCopyLineHighlightColors.
 
@@ -3975,7 +3975,7 @@
         and #$001F
         asl a
         tax
-        lda aUnknown8BC0B0,x
+        lda aUnitWindowWeaponRankIconOffsets,x
         clc
         adc wR0
         pha
@@ -4041,7 +4041,7 @@
       .al
       .xl
 
-      aUnknown8BC0B0 ; 8B/C0B0
+      aUnitWindowWeaponRankIconOffsets ; 8B/C0B0
 
         ; Read by rlUnitWindowCopyWeaponRankIcon.
 
@@ -4083,7 +4083,7 @@
         clc
         adc wR0
         tax
-        lda @l aUnknown8BC15F,x
+        lda @l aUnitWindowSortCursorXPositions,x
         sta wR0
         lda #$0011
         sta wR1
@@ -4096,7 +4096,7 @@
         and #$0003
         asl a
         tax
-        lda @l aUnknown8BC127,x
+        lda @l aUnitWindowSortCursorSprites,x
         tay
         jsl rlPushToOAMBuffer
         rts
@@ -4113,7 +4113,7 @@
       .al
       .xl
 
-      aUnknown8BC127 ; 8B/C127
+      aUnitWindowSortCursorSprites ; 8B/C127
 
         ; Read by rsUnitWindowRenderSortSelectorCursor.
 
@@ -4124,7 +4124,7 @@
 
         ; 8B/C15F
 
-      aUnknown8BC15F ; 8B/C15F
+      aUnitWindowSortCursorXPositions ; 8B/C15F
 
         ; Read by rsUnitWindowRenderSortSelectorCursor.
 

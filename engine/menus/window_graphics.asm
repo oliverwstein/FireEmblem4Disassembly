@@ -143,7 +143,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda aUnknownDE6200,x
+          lda aDialogueBoxPalette,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -165,7 +165,7 @@
       .al
       .xl
 
-      aUnknownDE6200 ; DE/6200
+      aDialogueBoxPalette ; DE/6200
 
         ; Read by rlGetDialogueBoxGraphicsAndPalette.
 

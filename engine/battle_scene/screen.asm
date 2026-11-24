@@ -1295,17 +1295,17 @@
         sta $420C,b
         lda #$81
         sta $2121,b
-        lda aUnknownE000C8
+        lda aBattleSceneMessageColors
         sta $2122,b
-        lda aUnknownE000C8+1
+        lda aBattleSceneMessageColors+1
         sta $2122,b
-        lda aUnknownE000C8+2
+        lda aBattleSceneMessageColors+2
         sta $2122,b
-        lda aUnknownE000C8+3
+        lda aBattleSceneMessageColors+3
         sta $2122,b
-        lda aUnknownE000C8+4
+        lda aBattleSceneMessageColors+4
         sta $2122,b
-        lda aUnknownE000C8+5
+        lda aBattleSceneMessageColors+5
         sta $2122,b
         stz $2123,b
         stz $2124,b
@@ -2069,7 +2069,7 @@
         _9039
         lda $7E5311
         tax
-        lda aUnknown998532,x
+        lda aBattleSceneStatGainMotion,x
         and #$00FF
         cmp #$0082
         bne _9072
@@ -2093,7 +2093,7 @@
 
 
         _9072
-        lda aUnknown998532,x
+        lda aBattleSceneStatGainMotion,x
         and #$00FF
         cmp #$0080
         bne _9090
@@ -2137,7 +2137,7 @@
         and #$01FF
         sta $7E52FC
         sep #$20
-        lda aUnknown998532+1,x
+        lda aBattleSceneStatGainMotion+1,x
         sta $7E52F4
         sta $7E52F9
         lda #$00
@@ -2287,7 +2287,7 @@
         phy
         lda $7E5311
         tax
-        lda aUnknown998586,x
+        lda aBattleSceneLevelUpNumberMotion,x
         and #$00FF
         cmp #$0080
         bne _91E3
@@ -2305,7 +2305,7 @@
         sta $7E5304
         sta $7E5309
         sep #$20
-        lda aUnknown998586+1,x
+        lda aBattleSceneLevelUpNumberMotion+1,x
         clc
         adc #$80
         sta $7E52F4
@@ -2330,14 +2330,14 @@
         lda #$067F
         sta $7E5309
         sep #$20
-        lda aUnknown998586+1,x
+        lda aBattleSceneLevelUpNumberMotion+1,x
         sta $7E52F4
         sta $7E52F9
         sta $7E52FE
         sta $7E5303
         sta $7E5308
         rep #$20
-        lda aUnknown998586,x
+        lda aBattleSceneLevelUpNumberMotion,x
 
         _9266
         and #$00FF
@@ -2349,7 +2349,7 @@
         sta $7E52F2
         phx
         pha
-        lda aUnknown998586+2,x
+        lda aBattleSceneLevelUpNumberMotion+2,x
         and #$00FF
         asl a
         asl a
@@ -2517,13 +2517,13 @@
         ldx #$0000
 
         _9581
-        lda aUnknown98ABFC,x
+        lda aBattleSceneWindowScrollInitValues,x
         sta $7FE3F1,x
-        lda aUnknown98ABFC+2,x
+        lda aBattleSceneWindowScrollInitValues+2,x
         sta $7FE3F3,x
-        lda aUnknown98ABFC+4,x
+        lda aBattleSceneWindowScrollInitValues+4,x
         sta $7FE3F5,x
-        lda aUnknown98ABFC+6,x
+        lda aBattleSceneWindowScrollInitValues+6,x
         sta $7FE3F7,x
         txa
         clc
@@ -2560,7 +2560,7 @@
         sep #$20
 
         _95C4
-        lda aUnknown98AC4C,x
+        lda aBattleSceneExpWindowScrollSteps,x
         sta $7FE3FD,x
         inc x
         cpx wR0

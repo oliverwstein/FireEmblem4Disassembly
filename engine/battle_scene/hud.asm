@@ -1299,7 +1299,7 @@
         .autsiz
         .databank ?
 
-        ; Redraws both HPs, copies the HUD's base colors (aUnknownE00060) to BG palette 0, then sets each combatant's HUD colors by its faction (rlGetFactionBattleHUDColorID; in battle type $FF the low byte of the unit pointer is the color ID).
+        ; Redraws both HPs, copies the HUD's base colors (aBattleSceneHUDBaseColors) to BG palette 0, then sets each combatant's HUD colors by its faction (rlGetFactionBattleHUDColorID; in battle type $FF the low byte of the unit pointer is the color ID).
 
         lda #$2940
         jsr rsBattleSceneDrawHP1
@@ -1310,7 +1310,7 @@
         ldx #2
         
           -
-          lda aUnknownE00060,x
+          lda aBattleSceneHUDBaseColors,x
           sta $0100,b,x
           inc x
           inc x
@@ -2806,7 +2806,7 @@
         .autsiz
         .databank ?
 
-        ; Every frame: takes the next word of the list at $7FE4D2 into $7FE4C5/$7FE4CB and copies its bytes of aUnknown98AC4C to $7FE3FD.. (rlBattleSceneUpdateExpWindowScroll); at $FFFF ends the routine.
+        ; Every frame: takes the next word of the list at $7FE4D2 into $7FE4C5/$7FE4CB and copies its bytes of aBattleSceneExpWindowScrollSteps to $7FE3FD.. (rlBattleSceneUpdateExpWindowScroll); at $FFFF ends the routine.
 
         phy
         lda $7FE4D2

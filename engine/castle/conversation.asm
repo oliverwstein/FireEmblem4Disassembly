@@ -1422,13 +1422,13 @@
         lda $7F80A7
         asl a
         tax
-        lda aUnknown8CCB00,x
+        lda aThroneBackgroundPaletteAnim1,x
         sta $0186,b
-        lda aUnknown8CCB40,x
+        lda aThroneBackgroundPaletteAnim2,x
         sta $0188,b
-        lda aUnknown8CCB80,x
+        lda aThroneBackgroundPaletteAnim3,x
         sta $018A,b
-        lda aUnknown8CCBC0,x
+        lda aThroneBackgroundPaletteAnim4,x
         sta $018C,b
         rts
 
@@ -1812,7 +1812,7 @@
       .al
       .xl
 
-      aUnknown8CCB00 ; 8C/CB00
+      aThroneBackgroundPaletteAnim1 ; 8C/CB00
 
         ; Read by rsAnimateThroneBackground.
 
@@ -1823,7 +1823,7 @@
 
         ; 8C/CB40
 
-      aUnknown8CCB40 ; 8C/CB40
+      aThroneBackgroundPaletteAnim2 ; 8C/CB40
 
         ; Read by rsAnimateThroneBackground.
 
@@ -1834,7 +1834,7 @@
 
         ; 8C/CB80
 
-      aUnknown8CCB80 ; 8C/CB80
+      aThroneBackgroundPaletteAnim3 ; 8C/CB80
 
         ; Read by rsAnimateThroneBackground.
 
@@ -1845,7 +1845,7 @@
 
         ; 8C/CBC0
 
-      aUnknown8CCBC0 ; 8C/CBC0
+      aThroneBackgroundPaletteAnim4 ; 8C/CBC0
 
         ; Read by rsAnimateThroneBackground.
 

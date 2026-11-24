@@ -1444,7 +1444,7 @@
         pla
         asl a
         tax
-        ldy <>aUnknown85BE87,b,x
+        ldy <>aExpandingWindowSprites,b,x
         stz wR4
         stz wR5
         sep #$20
@@ -1488,7 +1488,7 @@
       .al
       .xl
 
-      aUnknown85BE87 ; 85/BE87
+      aExpandingWindowSprites ; 85/BE87
 
         ; Read by rlDrawExpandingWindowSprites.
 
