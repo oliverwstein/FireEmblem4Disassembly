@@ -31,7 +31,9 @@
         .autsiz
         .databank ?
 
-        ; Carry set for an item in the slot that is not a staff and has targets.
+        ; Carry set for an item in the slot that is not a staff and has targets by its staff effect. Every
+        ; non-staff item in the retail data has StaffEffect None, which rlCheckStaffHasTargets fails, so this
+        ; is never set and the unit menu's もちもの never appears.
 
         phb
         phk

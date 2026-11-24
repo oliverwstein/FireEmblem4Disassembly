@@ -569,7 +569,8 @@
         .autsiz
         .databank ?
 
-        ; Finds the adjacent units of the army (target filter 2) and starts choosing one (rlRunMapAction).
+        ; No target to choose: marks every adjacent unit of the army (target filter 2) and runs the action at once
+        ; (rlRunMapAction, target $FFFF).
 
         stz wSelectedInventorySlot,b
         lda #MAP_ACTION_BATTLE
@@ -1665,7 +1666,7 @@
         .autsiz
         .databank ?
 
-        ; At a castle that is neither the enemy's (relation 2) nor relation 3.
+        ; At a castle of the unit's own army or an ally (relation not AllegianceEnemy or AllegianceNeutral).
 
         lda wEventLocationEntry,b
         bne _E395
@@ -1748,6 +1749,9 @@
 
       rsUnitMenuCheckSeize ; 85/E412
 
+        ; At an enemy castle that is neither destroyed nor guarded, and the unit is a Knight Lord or a
+        ; Junior Lord: only Sigurd and Seliph can seize.
+
         lda wEventLocationEntry,b
         bne _E41B
         jml rsUnitMenuCheckFail
@@ -1769,9 +1773,9 @@
         jsl rlCheckIfCastleGuarded
         bcs _E44C
         jsl rlGetSelectedUnitClassID
-        cmp #$0006
+        cmp #KnightLord
         beq _E44A
-        cmp #$002C
+        cmp #JuniorLord
         bne _E44C
 
         _E44A
@@ -1856,7 +1860,7 @@
         .autsiz
         .databank ?
 
-        ; Not mode 2 or $0008, and a weapon with a target in range ($7E2000).
+        ; Not in mode 1 or 2, and a weapon with a target in range ($7E2000).
 
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
@@ -1951,6 +1955,9 @@
 
       rsUnitMenuCheckItems ; 85/E524
 
+        ; Not in mode 1, and an item in aUnitMenuItemSlots. No retail item qualifies
+        ; (rlCheckInventorySlotItemUsable), so もちもの never appears.
+
         lda wMapStateFlags,b
         bit #$0008
         bne rsUnitMenuCheckFail
@@ -2026,7 +2033,8 @@
         .autsiz
         .databank ?
 
-        ; Not after acting ($0008) unless in canto; rlCheckCanTalk clear; someone to talk to in range 1 (target filter 3).
+        ; The lower はなす: not in mode 1 unless in a canto move; no talk event (rlCheckCanTalk clear), but a unit in
+        ; range 1 that has a talk event or is the unit's own TalkTarget (target filter 3).
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
@@ -2287,11 +2295,12 @@
         .autsiz
         .databank ?
 
-        ; Personal skill bit 3 of byte 1, the class has ClassSkillDismount, and the unit is mounted.
+        ; The unit has UnitSkill1Dismount (only Seliph: rsOverwriteSeliphUnitData), its class has ClassSkillDismount
+        ; (only KnightLord), and it is mounted.
 
         jsl rlGetSelectedUnitSkills
         lda lRoutineVariable,b
-        bit #$0008
+        bit #UnitSkill1Dismount
         bne _E6B5
         jml rsUnitMenuCheckFail
 
@@ -2299,7 +2308,7 @@
         _E6B5
         jsl rlGetSelectedUnitClassDataPointer
         jsl rlGetClassSkills
-        bit #$0400
+        bit #ClassSkillDismount
         bne _E6C6
         jml rsUnitMenuCheckFail
 
@@ -2365,7 +2374,7 @@
         .autsiz
         .databank ?
 
-        ; Not mode 2 or $0008, not at its own castle, not guarding a castle, and the unit or an item has Return.
+        ; Not in mode 1 or 2, not at its own castle, not guarding a castle, and the unit or an item has Return.
 
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
@@ -2427,7 +2436,7 @@
         .autsiz
         .databank ?
 
-        ; Not after acting, not in canto, the unit has Dance, and a unit that has moved is adjacent (target filter 7).
+        ; Not in mode 1 or a canto move, the unit has Dance, and a unit of its army that has moved is adjacent (target filter 7).
 
         lda wMapStateFlags,b
         bit #$0008
@@ -2485,7 +2494,7 @@
         .autsiz
         .databank ?
 
-        ; Not after acting, and a civilian or child adjacent (target filter 5).
+        ; Not in mode 1, and a civilian or child adjacent (target filter 5).
 
         lda wMapStateFlags,b
         bit #$0008
@@ -2634,7 +2643,8 @@
         .autsiz
         .databank ?
 
-        ; Not after acting ($0008) unless in canto; rlCheckCanTalk set.
+        ; The upper はなす: not in mode 1 unless in a canto move; a talk event in range 1, or across a castle between
+        ; a guarding unit and a unit on its gate (rlCheckCanTalk set).
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
@@ -2765,7 +2775,10 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 3 of wMapStateFlags and opens procUnitMenu in mode 1; aQueuedUnitMenuOpeners runs it after rlRequestUnitMenuMode1 (a player unit ending its action at its home castle).
+        ; Sets bit 3 of wMapStateFlags and opens procUnitMenu in mode 1; aQueuedUnitMenuOpeners runs it after rlRequestUnitMenuMode1
+        ; (a player unit ending its action on its home castle's gate, or a canto unit with nowhere to go).
+        ; At the home gate the checks leave enter, guard (if nobody guards), equip, animation and Seliph's mount
+        ; or dismount: wait is hidden at the army's own castle, and every check that tests bit 3 fails.
 
         phb
         php
