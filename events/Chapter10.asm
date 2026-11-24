@@ -511,27 +511,27 @@
       aFactionGroup38AI1 ; B0/8486
 
         AI_SET_FORMATION $02, $00
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup38AI2 ; B0/848B
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup38AI3 ; B0/848D
 
-        AI_07 Ch10_Chronos, $04
+        AI_DEFEND_CASTLE Ch10_Chronos, $04
         AI_END
 
       aFactionGroup37AI1 ; B0/8491
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup37AI2 ; B0/8493
 
-        AI_13
+        AI_STAND
         AI_END
 
       aFactionGroup39AI1 ; B0/8495
@@ -543,22 +543,22 @@
 
       aFactionGroup39AI2 ; B0/849C
 
-        AI_07 Ch10_Rados, $05
+        AI_DEFEND_CASTLE Ch10_Rados, $05
         AI_END
 
       aFactionGroup3AAI1 ; B0/84A0
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup3AAI2 ; B0/84A2
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup3AAI3 ; B0/84A4
 
-        AI_07 Ch10_Miletos, $04
+        AI_DEFEND_CASTLE Ch10_Miletos, $04
         AI_END
 
       aFactionGroup3AAI5 ; B0/84A8
@@ -569,25 +569,25 @@
 
       aFactionGroup3AAI6 ; B0/84AB
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup3BAI1 ; B0/84AD
 
         AI_SET_FORMATION $07, $02
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup3BAI2 ; B0/84B2
 
         AI_SET_FORMATION $07, $02
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup3BAI3 ; B0/84B7
 
         AI_SET_FORMATION $07, $02
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup3BAI4 ; B0/84BC
@@ -598,12 +598,12 @@
 
       aFactionGroup3BAI5 ; B0/84C1
 
-        AI_07 Ch10_Chalphy, $05
+        AI_DEFEND_CASTLE Ch10_Chalphy, $05
         AI_END
 
       aFactionGroup3BAI6 ; B0/84C5
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
     .endsection Chapter10EventDataSection

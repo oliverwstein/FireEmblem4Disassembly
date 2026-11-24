@@ -1715,9 +1715,9 @@
         .autsiz
         .databank ?
 
-        ; Halve wAITemp000EA2 if bit $0200 of wAIUnknownBitfield7E2000 set and not Canto
+        ; Halve wAITemp000EA2 if bit $0200 of wAIGroupFlags set and not Canto
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0200
         beq +
 
@@ -1911,6 +1911,12 @@
         .al
         .autsiz
         .databank ?
+
+        ; The threat map: clears aRangeMap, then for every foe in the target list within 16 tiles of
+        ; the group's leader (a 33 x 33 box) that holds a weapon reaching less than 3, adds 1 to every
+        ; tile it could attack after moving (rsFillAITargetsRangeMap, rsFillRangeMap). A foe's threat
+        ; uses its first weapon. The code after the branch to _End, which would score the targets
+        ; (rsAIScoreTargetsNearLeader) and map only the best three, is never reached.
 
         phb
         php
@@ -2212,9 +2218,9 @@
         sta aTargetMap,x
         rep #$20
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         ora #$0020
-        sta wAIUnknownBitfield7E2000
+        sta wAIGroupFlags
 
         plx
         plp
@@ -2514,7 +2520,7 @@
 
       rsAIScoreTargetsNearLeader ; 87/D65A
 
-        ; Found by tools/sweep.py.
+        ; Found by tools/sweep.py: only the unreachable tail of rlFillRangeMapOfAITargetsNearLeader calls it.
         .al
         .xl
         .autsiz

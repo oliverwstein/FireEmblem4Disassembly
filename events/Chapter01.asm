@@ -480,29 +480,29 @@
 
       aFactionGroup05AI1 ; 86/CC7C
 
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
         AI_SET_FORMATION $01, $00
-        AI_06 Ch01_Evans, $01
+        AI_ATTACK_CASTLE Ch01_Evans, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup05AI2 ; 86/CC8A
 
-        AI_22 +
+        AI_JUMP_IF_ENGAGEABLE +
 
-          AI_07 Ch01_Genoa, $04
+          AI_DEFEND_CASTLE Ch01_Genoa, $04
           AI_END
 
         +
         AI_SET_CHAPTER_EVENT_FLAG Chapter01, FlagChapter01_FoesNearGenoa
-        AI_07 Ch01_Genoa, $04
+        AI_DEFEND_CASTLE Ch01_Genoa, $04
         AI_END
 
       aFactionGroup06AI1 ; 86/CC99
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT floor(0.9 * 256)
-        AI_CHECK_GROUP_COMPLETE_BY_TURN_DIVISIBLE 3
+        AI_REINFORCE_EVERY_N_TURNS 3
         AI_ASMC_CHECK rsASMCCheckMunnirVanguardIncomplete, +
 
           AI_SET_CHAPTER_EVENT_FLAG Chapter01, FlagChapter01_MunnirVanguardIncomplete
@@ -518,7 +518,7 @@
         .autsiz
         .databank ?
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0080
         beq +
 
@@ -533,7 +533,7 @@
 
       aFactionGroup06AI2 ; 86/CCB9
 
-        AI_07 Ch01_Marpha, $04
+        AI_DEFEND_CASTLE Ch01_Marpha, $04
         AI_END
 
       aFactionGroup07AI1 ; 86/CCBD
@@ -552,7 +552,7 @@
 
       aFactionGroup07AI2 ; 86/CCCE
 
-        AI_07 Ch01_Verdane, $04
+        AI_DEFEND_CASTLE Ch01_Verdane, $04
         AI_END
 
       aFactionGroup07AI3 ; 86/CCD2
@@ -566,11 +566,11 @@
         AI_SET_IGNORED_GENERATION_ID GEN_ID_Sigurd
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter01, FlagChapter01_FoesNearGenoa, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
-        AI_06 Ch01_Genoa, $00
+        AI_ATTACK_CASTLE Ch01_Genoa, $00
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -579,8 +579,8 @@
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_UNSET Chapter01, FlagChapter01_HeirheinSpawned, +
 
           AI_SET_FORMATION $09, $01
-          AI_10
-          AI_19
+          AI_RETURN_HOME_IF_NO_TARGETS
+          AI_TARGET_FOES_NOT_GUARDING
 
         +
         AI_END
@@ -589,7 +589,7 @@
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT 0
         AI_SET_FORMATION $09, $02
-        AI_06 Ch01_Evans, $01
+        AI_ATTACK_CASTLE Ch01_Evans, $01
         AI_TARGET_ALL_FOES
         AI_END
 

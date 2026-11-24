@@ -701,7 +701,7 @@
         bit #DeploymentStateCanto
         bne +
 
-          lda bUnknown000E7B,b
+          lda bAIEngineFlags,b
           and #$00FF
           bit #$0041
           bne +
@@ -825,7 +825,7 @@
 
 
         _B7A9
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         and #$00FF
         bit #$0041
         bne _B794
@@ -1012,7 +1012,7 @@
         stz wMovementMapWindowTop,b
 
         _B8D9
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         and #$00FF
         bit #$0041
         bne _B8E8
@@ -1648,7 +1648,7 @@
 
 
         _C51C
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         and #$00FF
         bit #$0002
         bne _C52E

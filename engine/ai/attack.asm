@@ -64,7 +64,7 @@
         adc aAIAction.wTargetXPosition
         sta aAIAction.wAttackTileMapTileIndex
 
-        lda aAIAction.wUnknown7F4402
+        lda aAIAction.wTileEvaluationType
         asl a
         tax
         lda aAIAttackTileEvaluationRoutines,x
@@ -430,7 +430,7 @@
         jsr rsAICheckIfAttackTileIsValid
         bcc +
 
-          lda aAIAction.wUnknown7F4448
+          lda aAIAction.wAttackType
           asl a
           tax
           jsr (aAIAttackTypeRoutines,x)
@@ -488,12 +488,12 @@
             cmp aAIAction.wExpectedTakenDamage
             bcc _CLC
 
-              lda wAIUnknownBitfield7E2000
+              lda wAIGroupFlags
               bit #$0004
               beq _SEC
 
                 lda aAIAction.wMovementDistanceToTarget
-                cmp aAIAction.wUnknown7F445C
+                cmp aAIAction.wAttackTileDistanceToGroupTarget
                 bcc _CLC
 
               _SEC
@@ -1635,7 +1635,7 @@
         .autsiz
         .databank ?
 
-        ; Called by rsAIScoreTargetsNearLeader. Looks up the class-based AI target priority score for unit at deployment offset X
+        ; Called only by rsAIScoreTargetsNearLeader, which nothing reaches. Looks up the class-based AI target priority score for unit at deployment offset X
 
         phb
         php
@@ -1699,7 +1699,7 @@
         .autsiz
         .databank ?
 
-        ; Called by rsAIScoreTargetsNearLeader. Returns the weapon triangle bonus (0 or 20) for attacker vs defender offsets
+        ; Called only by rsAIScoreTargetsNearLeader, which nothing reaches. Returns the weapon triangle bonus (0 or 20) for attacker vs defender offsets
 
         phb
         php
@@ -1753,7 +1753,7 @@
         .autsiz
         .databank ?
 
-        ; Called by rsAIScoreTargetsNearLeader. Returns 50 if the attacker's weapon is effective against defender class
+        ; Called only by rsAIScoreTargetsNearLeader, which nothing reaches. Returns 50 if the attacker's weapon is effective against defender class
 
         phb
         php

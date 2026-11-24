@@ -44,7 +44,7 @@
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlIRQEngineSyncAndSort
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0010
         bne _AEC0
         jsl rlClearSpriteExtBuffer
@@ -54,7 +54,7 @@
         jsl rlRunVBlankHooks
         jsl rlRedrawDialogueBoxTilemaps
         jsl rlRunMapMenuUploadIfEnabled
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0010
         bne _AEE4
         jsl rlDrawMovingUnitSprite

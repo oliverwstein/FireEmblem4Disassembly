@@ -21,7 +21,7 @@
         jsl rlClearTargetMap
 
         lda #1
-        sta wAIUnknown7E2002
+        sta wAIGroupMode
         lda #0
         sta wAIFormationType
         sta wAIFormationDirection
@@ -31,7 +31,7 @@
         jsr rsSetAIGroupLeaderScaledFieldMovement
 
         lda #$FFFF
-        sta wAIUnknown7E2018
+        sta wAIGroupTargetValue
         lda #0
         sta wAIGroupObjective
 
@@ -40,13 +40,13 @@
 
         lda wAITemp000E96,b
         sta wAIGroupLeaderXPosition
-        sta wAIUnknown7E2014
+        sta wAIGroupTargetXPosition
 
         lda wAITemp000E98,b
         sta wAIGroupLeaderYPosition
-        sta wAIUnknown7E2016
+        sta wAIGroupTargetYPosition
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0008
         beq +
 
@@ -165,7 +165,7 @@
 
         lda $0000,b,y
         and #$00FF
-        sta wAIUnknown7E2002
+        sta wAIGroupMode
         inc y
         clc
         rts
@@ -247,9 +247,9 @@
         .autsiz
         .databank ?
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         ora #$0200
-        sta wAIUnknownBitfield7E2000
+        sta wAIGroupFlags
         rts
 
         .databank 0
@@ -290,7 +290,7 @@
 
           lda $0001,b,y
           and #$00FF
-          sta wAIUnknown7E2002
+          sta wAIGroupMode
 
           lda #1
           sta wAIGroupObjective
@@ -349,7 +349,7 @@
           sta wAIGroupObjective
           lda $0001,b,y
           and #$00FF
-          sta wAIUnknown7E2002
+          sta wAIGroupMode
 
           lda wAIFormationType
           bne +
@@ -478,7 +478,7 @@
           lda #7
           sta wAIGroupObjective
           lda #0
-          sta wAIUnknown7E2002
+          sta wAIGroupMode
 
           tya
           clc
@@ -509,7 +509,7 @@
           lda #4
           sta wAIGroupObjective
           lda #4
-          sta wAIUnknown7E2002
+          sta wAIGroupMode
           sec
           rts
 
@@ -525,7 +525,7 @@
         .autsiz
         .databank ?
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0004
         beq +
 
@@ -534,7 +534,7 @@
           lda #5
           sta wAIGroupObjective
           lda #5
-          sta wAIUnknown7E2002
+          sta wAIGroupMode
           sec
           rts
 
@@ -636,7 +636,7 @@
 
           lda $0002,b,y
           and #$00FF
-          sta wAIUnknown7E201C
+          sta wAIInteractionActionID
 
           lda #8
           sta wAIGroupObjective
@@ -665,13 +665,13 @@
         lda #9
         sta wAIGroupObjective
         lda #$FFFF
-        sta wAIUnknown7E2018
+        sta wAIGroupTargetValue
         lda #2
-        sta wAIUnknown7E2002
+        sta wAIGroupMode
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         ora #$0100
-        sta wAIUnknownBitfield7E2000
+        sta wAIGroupFlags
         sec
         rts
 
@@ -689,9 +689,9 @@
           lda #12
           sta wAIGroupObjective
           lda #$FFFF
-          sta wAIUnknown7E2018
+          sta wAIGroupTargetValue
           lda #2
-          sta wAIUnknown7E2002
+          sta wAIGroupMode
           sec
           rts
 
@@ -732,13 +732,13 @@
               lda #10
               sta wAIGroupObjective
               lda #$FFFF
-              sta wAIUnknown7E2018
+              sta wAIGroupTargetValue
               lda #1
-              sta wAIUnknown7E2002
+              sta wAIGroupMode
 
-              lda wAIUnknownBitfield7E2000
+              lda wAIGroupFlags
               ora #$0100
-              sta wAIUnknownBitfield7E2000
+              sta wAIGroupFlags
 
               inc y
               sec
@@ -762,13 +762,13 @@
         lda #11
         sta wAIGroupObjective
         lda #$FFFF
-        sta wAIUnknown7E2018
+        sta wAIGroupTargetValue
         lda #2
-        sta wAIUnknown7E2002
+        sta wAIGroupMode
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         ora #$0100
-        sta wAIUnknownBitfield7E2000
+        sta wAIGroupFlags
 
         sec
         rts
@@ -784,7 +784,7 @@
         lda #7
         sta wAIGroupObjective
         lda #5
-        sta wAIUnknown7E2002
+        sta wAIGroupMode
 
         sec
         rts
@@ -797,7 +797,7 @@
         .autsiz
         .databank ?
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0008
         bne +
 
@@ -822,9 +822,9 @@
               lda wAIActiveFaction,b
               jsl rlReviveFactionsUnitsOfAISetting
 
-              lda wAIUnknownBitfield7E2000
+              lda wAIGroupFlags
               ora #$0080
-              sta wAIUnknownBitfield7E2000
+              sta wAIGroupFlags
 
               lda wAICurrentAISetting,b
               jsl rlBuildAIUnitList
@@ -1009,7 +1009,7 @@
         jsr rsAIScriptCommand18
 
         lda #7
-        sta wAIUnknown7E2002
+        sta wAIGroupMode
         rts
 
         .databank 0
@@ -1077,11 +1077,11 @@
             jsl rlSetTargetMapTile
             inc $4432,b
             lda #1
-            sta wAIUnknown7E201C
+            sta wAIInteractionActionID
             lda #8
             sta wAIGroupObjective
             lda #0
-            sta wAIUnknown7E2002
+            sta wAIGroupMode
 
           _Next
           txa
@@ -1155,7 +1155,7 @@
         .autsiz
         .databank ?
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0008
         bne _CLC
 
@@ -1420,16 +1420,16 @@
         php
 
         sep #$20
-        lda #`wAIUnknownBitfield7E2000
+        lda #`wAIGroupFlags
         pha
         rep #$20
         plb
-        .databank `wAIUnknownBitfield7E2000
+        .databank `wAIGroupFlags
 
         phx
         phy
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0004
         beq _CLC
 
@@ -1450,7 +1450,7 @@
           bne -
 
           lda #$0004
-          trb wAIUnknownBitfield7E2000
+          trb wAIGroupFlags
         
         _CLC
         ply
@@ -1469,7 +1469,7 @@
         sta wAISelectedAIUnitOffset,b
 
         lda #$0040
-        tsb wAIUnknownBitfield7E2000
+        tsb wAIGroupFlags
 
         ply
         plx

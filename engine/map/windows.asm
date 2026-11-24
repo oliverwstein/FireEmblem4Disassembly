@@ -250,7 +250,7 @@
         .autsiz
         .databank ?
 
-        ; Carry set if the window is off (aBody3 bit 5), anything holds the map windows (the low byte of wMapSystemFlags), or bit 6 of bUnknown000E7B is set.
+        ; Carry set if the window is off (aBody3 bit 5), anything holds the map windows (the low byte of wMapSystemFlags), or bit 6 of bAIEngineFlags is set.
 
         lda aProcSystem.aBody3,b,x
         bit #$0020
@@ -258,7 +258,7 @@
         lda wMapSystemFlags,b
         bit #$00FF
         bne _C149
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0040
         bne _C149
         clc
@@ -1312,7 +1312,7 @@
 
         ; The unit under the cursor (aBody6); turns the window off if there is none.
 
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0040
         bne _C711
         lda aProcSystem.aBody3,b,x

@@ -189,7 +189,7 @@
         jsl rlProcEngineFindProc
         bcs -
 
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         and #$00FF
         bit #$0041
         beq ++
@@ -2225,7 +2225,7 @@
         ; Sends the cursor to unit A (state 4). In a computer phase also makes it the acting unit and uses state 1.
 
         sta wMapPanTargetDeploymentOffset,b
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         and #$00FF
         bit #$0041
         beq _B48D
@@ -2235,7 +2235,7 @@
         lda #$0001
         sta wMapActionActiveFlag,b
         lda #$0002
-        tsb bUnknown000E7B,b
+        tsb bAIEngineFlags,b
 
         _B48D
         lda wCursorXOffset,b
@@ -2265,7 +2265,7 @@
         sta wMapCursorYTile,b
         lda #MAP_CURSOR_TO_UNIT
         sta wMapCursorState,b
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         and #$00FF
         bit #$0041
         bne _B4D4

@@ -644,39 +644,39 @@
 
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter02, FlagChapter02_SigurdLachesisTalk, +
 
-          AI_07 Ch02_Nordion, $05
+          AI_DEFEND_CASTLE Ch02_Nordion, $05
           AI_END
 
         +
-        AI_22 +
+        AI_JUMP_IF_ENGAGEABLE +
 
-          AI_02 $07
+          AI_SET_MODE $07
           AI_INTERACT_WITH_UNIT Lachesis, $00
           AI_END
 
         +
-        AI_19
+        AI_TARGET_FOES_NOT_GUARDING
         AI_END
 
       aFactionGroup0CAI1 ; 86/D305
 
         AI_SET_FORMATION $06, $01
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch02_Nordion, $01
-        AI_06 Ch02_Evans, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch02_Nordion, $01
+        AI_ATTACK_CASTLE Ch02_Evans, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup0CAI2 ; 86/D316
 
         AI_SET_FORMATION $0A, $01
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup0CAI3 ; 86/D31B
 
-        AI_07 Ch02_Heirhein, $05
+        AI_DEFEND_CASTLE Ch02_Heirhein, $05
         AI_END
 
       aFactionGroup0DAI1 ; 86/D31F
@@ -685,7 +685,7 @@
 
           AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter02, FlagChapter02_InfiniSpawn, +
 
-            AI_00
+            AI_NO_OBJECTIVE
             AI_END
 
           +
@@ -702,7 +702,7 @@
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter02, FlagChapter02_InfiniEngaged, +
 
           AI_SET_FORMATION $05, $02
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
@@ -713,18 +713,18 @@
 
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter02, FlagChapter02_InfiniEngaged, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
-        AI_02 $00
+        AI_SET_MODE $00
         AI_INTERACT_WITH_UNIT Sigurd, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup0DAI3 ; 86/D356
 
-        AI_07 Ch02_Infini, $04
+        AI_DEFEND_CASTLE Ch02_Infini, $04
         AI_END
 
       aFactionGroup0DAI4 ; 86/D35A
@@ -735,22 +735,22 @@
 
       aFactionGroup0EAI1 ; 86/D35D
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup0EAI2 ; 86/D35F
 
-        AI_07 Ch02_Mackily, $04
+        AI_DEFEND_CASTLE Ch02_Mackily, $04
         AI_END
 
       aFactionGroup0EAI3 ; 86/D363
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup0FAI1 ; 86/D365
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup0FAI2 ; 86/D367
@@ -769,27 +769,27 @@
 
         AI_SET_IGNORED_GENERATION_ID GEN_ID_Lewyn
         AI_SET_FORMATION $03, $02
-        AI_06 Ch02_Evans, $00
+        AI_ATTACK_CASTLE Ch02_Evans, $00
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup0FAI5 ; 86/D37B
 
-        AI_07 Ch02_Agusti, $05
+        AI_DEFEND_CASTLE Ch02_Agusti, $05
         AI_END
 
       aFactionGroup0FAI6 ; 86/D37F
 
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter02, FlagChapter02_PlayerAboveNordion, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
-        AI_06 Ch02_Mackily, $00
-        AI_06 Ch02_Evans, $01
+        AI_ATTACK_CASTLE Ch02_Mackily, $00
+        AI_ATTACK_CASTLE Ch02_Evans, $01
         AI_TARGET_ALL_FOES
         AI_END
 

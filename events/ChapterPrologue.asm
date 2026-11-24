@@ -174,8 +174,8 @@
 
       aFactionGroup02AI1 ; 90/81A0
 
-        AI_06 ChP_Yngvi, $01
-        AI_06 ChP_Chalphy, $01
+        AI_ATTACK_CASTLE ChP_Yngvi, $01
+        AI_ATTACK_CASTLE ChP_Chalphy, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -183,12 +183,12 @@
 
         AI_JUMP_IF_TURN_REACHED 3, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
-        AI_06 ChP_Yngvi, $01
-        AI_06 ChP_Chalphy, $01
+        AI_ATTACK_CASTLE ChP_Yngvi, $01
+        AI_ATTACK_CASTLE ChP_Chalphy, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -196,7 +196,7 @@
 
         AI_JUMP_IF_TURN_REACHED 5, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
@@ -205,14 +205,14 @@
 
       aFactionGroup02AI4 ; 90/81BE
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup02AI5 ; 90/81C0
 
         AI_JUMP_IF_TURN_REACHED 8, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
@@ -221,7 +221,7 @@
 
       aFactionGroup02AI6 ; 90/81C8
 
-        AI_07 ChP_Yngvi, $05
+        AI_DEFEND_CASTLE ChP_Yngvi, $05
         AI_END
 
       aFactionGroup02AI7 ; 90/81CC
@@ -231,7 +231,7 @@
           AI_END
 
         +
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup02AI8 ; 90/81D5
@@ -242,7 +242,7 @@
 
       aFactionGroup03AI1 ; 90/81D8
 
-        AI_02 $07
+        AI_SET_MODE $07
         AI_INTERACT_WITH_UNIT Sigurd, $0C
         AI_END
 

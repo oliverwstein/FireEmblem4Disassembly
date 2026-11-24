@@ -625,29 +625,29 @@
 
       aFactionGroup16AI1 ; 86/DDAD
 
-        AI_07 Ch04_Tofa, $04
+        AI_DEFEND_CASTLE Ch04_Tofa, $04
         AI_END
 
       aFactionGroup16AI2 ; 86/DDB1
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup16AI3 ; 86/DDB3
 
         AI_SET_FORMATION $0C, $03
-        AI_06 Ch04_Sailane, $01
+        AI_ATTACK_CASTLE Ch04_Sailane, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup16AI4 ; 86/DDBB
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup16AI5 ; 86/DDBD
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup16AI6 ; 86/DDBF
@@ -660,21 +660,21 @@
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT floor(0.9 * 256)
         AI_SET_FORMATION $03, $02
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_06 Ch04_Sailane, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_ATTACK_CASTLE Ch04_Sailane, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup17AI1 ; 86/DDCE
 
-        AI_07 Ch04_Zaxon, $05
+        AI_DEFEND_CASTLE Ch04_Zaxon, $05
         AI_END
 
       aFactionGroup17AI2 ; 86/DDD2
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT 0
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.7 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.7 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
         AI_SET_FORMATION $02, $03
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter04, FlagChapter04_SilesseSeized, +
 
@@ -683,7 +683,7 @@
           AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter04, FlagChapter04_AnnandDied, ++
 
         +
-        AI_06 Ch04_Silesse, $01
+        AI_ATTACK_CASTLE Ch04_Silesse, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -691,8 +691,8 @@
         AI_FLAG_IF_LEADER_ON_COORDS Chapter04, FlagChapter04_PamelaOnMountainBelowSafeguard, [47, 24]
 
         +
-        AI_06 Ch04_Tofa, $00
-        AI_06 Ch04_Silesse, $01
+        AI_ATTACK_CASTLE Ch04_Tofa, $00
+        AI_ATTACK_CASTLE Ch04_Silesse, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -700,7 +700,7 @@
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT floor(0.9 * 256)
         AI_SET_FORMATION $09, $03
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
 
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter04, FlagChapter04_AnnandDied, +
 
@@ -708,12 +708,12 @@
           AI_END
 
         +
-        AI_06 Ch04_Silesse, $01
+        AI_ATTACK_CASTLE Ch04_Silesse, $01
         AI_END
 
       aFactionGroup17AI4 ; 86/DE15
 
-        AI_07 Ch04_Silesse, $04
+        AI_DEFEND_CASTLE Ch04_Silesse, $04
         AI_END
 
       aFactionGroup17AI5 ; 86/DE19
@@ -728,16 +728,16 @@
 
       aFactionGroup17AI7 ; 86/DE1D
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup17AI8 ; 86/DE1F
 
         AI_SET_FORMATION $02, $03
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter04, FlagChapter04_SilesseSeized, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
@@ -757,7 +757,7 @@
 
       aFactionGroup18AI3 ; 86/DE36
 
-        AI_07 Ch04_Silesse, $04
+        AI_DEFEND_CASTLE Ch04_Silesse, $04
         AI_END
 
       aFactionGroup19AI1 ; 86/DE3A

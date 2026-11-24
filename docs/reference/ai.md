@@ -15,11 +15,11 @@ The AI moves every faction the player does not control, during that faction's ph
 | [attack.asm](../../engine/ai/attack.asm) | choosing whom to attack and from where: attack tiles, attack types, expected damage |
 | [maps.asm](../../engine/ai/maps.asm) | the maps it reasons with: movement, range, target distance, friendly and unfriendly units |
 
-Data: [include/AI.h](../../include/AI.h); RAM `$0E7B`-`$0EA5` (`bUnknown000E7B`, `wAIEngineCycleType`, `wAICurrentAISetting`, `wAIActiveFaction`, …) and the AI's work area at `$7E2000`/`$7F4400` (`aAIAction`, the unit list, `aMovementMap`, `aTargetDistanceMap`, `aRangeMap`) in [include/WRAM.h](../../include/WRAM.h).
+Data: [include/AI.h](../../include/AI.h); RAM `$0E7B`-`$0EA5` (`bAIEngineFlags`, `wAIEngineCycleType`, `wAICurrentAISetting`, `wAIActiveFaction`, …) and the AI's work area at `$7E2000`/`$7F4400` (`aAIAction`, the unit list, `aMovementMap`, `aTargetDistanceMap`, `aRangeMap`) in [include/WRAM.h](../../include/WRAM.h).
 
 ## Control flow
 
-`rlRunAIEngineCycle` is called every frame from the map's main loop (`rsMapMainLoop`), not from the interrupt. It does nothing unless the chapter map is up (`wGameStateRoutine1` is `GAMESTATE_MAP_STEP`, step not 3 or 5), no event is running (`wEventEngineFlags` is 0), and the cycle is enabled (bit `$40` of `bUnknown000E7B`, set by `rlEnableAIEngineCycle` for a non-player phase). Then it runs one step of a small state machine, `wAIEngineCycleType`, from `aAIEngineCycleRoutines`:
+`rlRunAIEngineCycle` is called every frame from the map's main loop (`rsMapMainLoop`), not from the interrupt. It does nothing unless the chapter map is up (`wGameStateRoutine1` is `GAMESTATE_MAP_STEP`, step not 3 or 5), no event is running (`wEventEngineFlags` is 0), and the cycle is enabled (bit `$40` of `bAIEngineFlags`, set by `rlEnableAIEngineCycle` for a non-player phase). Then it runs one step of a small state machine, `wAIEngineCycleType`, from `aAIEngineCycleRoutines`:
 
 | Cycle | Routine | Does |
 |---|---|---|
@@ -44,6 +44,6 @@ The map's unit and terrain data (deployment table, `aMovementMap` filling in [en
 
 ## Open questions
 
-- The meaning of the group modes in `wAIUnknown7E2002`, and the full list of objectives (`wAIGroupObjective`: 2 village, 6 castle gate, 8 interact, 9-12 leader and castle objectives; 3-5 test whether a foe is in range).
-- Which flags `bUnknown000E7B` holds besides `$01` (an AI action is running) and `$40` (the cycle is enabled).
+- The meaning of the group modes in `wAIGroupMode`, and the full list of objectives (`wAIGroupObjective`: 2 village, 6 castle gate, 8 interact, 9-12 leader and castle objectives; 3-5 test whether a foe is in range).
+- Which flags `bAIEngineFlags` holds besides `$01` (an AI action is running) and `$40` (the cycle is enabled).
 - Whether actions 3, 12 and 13 (enter home castle, talk, revive) are ever chosen; `tools/sweep.py` found their routines unreferenced before the table was decoded.

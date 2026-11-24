@@ -5167,7 +5167,7 @@
         .autsiz
         .databank ?
 
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0001
         bne +
 

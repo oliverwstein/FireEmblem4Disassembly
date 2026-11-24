@@ -66,10 +66,10 @@
         sta wAITargetXPosition,b
         lda aAIAction.wDestinationYPosition
         sta wAITargetYPosition,b
-        lda aAIAction.wUnknown7F4440
-        sta wAIUnknown000E8E,b
+        lda aAIAction.wChosenActionID
+        sta wAIQueuedActionID,b
         lda aAIAction.wChosenTargetDeploymentOffset
-        sta wAIUnknown000E8C,b
+        sta wAIQueuedActionTarget,b
         plp
         plb
         rtl
@@ -94,7 +94,7 @@
         bit #$2000
         bne ++
 
-          lda wAIUnknownBitfield7E2000
+          lda wAIGroupFlags
           bit #$0004
           beq ++
 
@@ -106,9 +106,9 @@
             and #$00FF
             sta wAITemp000E98,b
 
-            lda wAIUnknown7E2014
+            lda wAIGroupTargetXPosition
             sta wAITemp000E9A,b
-            lda wAIUnknown7E2016
+            lda wAIGroupTargetYPosition
             sta wAITemp000E9C,b
             jsl rlBuildTargetDistanceMapToUnit
 
@@ -169,15 +169,15 @@
         +
         sta aAIAction.wLeadershipPower
 
-        lda wAIUnknown7E2002
-        sta aAIAction.wUnknown7F4448
+        lda wAIGroupMode
+        sta aAIAction.wAttackType
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateGuardingCastle
         beq +
 
           lda #5
-          sta aAIAction.wUnknown7F4448
+          sta aAIAction.wAttackType
 
         +
         lda #$FFFF
@@ -277,7 +277,7 @@
         beq +
 
         lda #2
-        sta aAIAction.wUnknown7F4402
+        sta aAIAction.wTileEvaluationType
         jsr rsAIScanHostileTargets
         bra ++
         
@@ -285,7 +285,7 @@
         lda #0
         sta aAIAction.wLeadershipPower
         lda #2
-        sta aAIAction.wUnknown7F4402
+        sta aAIAction.wTileEvaluationType
         jsr rsAIScanFriendlyTargets
 
         +
@@ -314,7 +314,7 @@
             beq _End
 
               lda #1
-              sta aAIAction.wUnknown7F4402
+              sta aAIAction.wTileEvaluationType
               jsr rsAIScanFriendlyTargets
               cpx #5
               bne _End
@@ -339,13 +339,13 @@
         beq +
 
         lda #0
-        sta aAIAction.wUnknown7F4402
+        sta aAIAction.wTileEvaluationType
         jsr rsAIScanHostileTargets
         bra ++
 
         +
         lda #0
-        sta aAIAction.wUnknown7F4402
+        sta aAIAction.wTileEvaluationType
         jsr rsAIScanFriendlyTargets
         
         +
@@ -384,7 +384,7 @@
                 bit #DeploymentStateAlive
                 beq _Next
 
-                  lda wAIUnknown7E2002
+                  lda wAIGroupMode
                   cmp #7
                   bne +
 
@@ -622,7 +622,7 @@
         .autsiz
         .databank ?
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0004
         beq +
 
@@ -651,7 +651,7 @@
         lda wSelectedUnitDataRAMPointer,b
         pha
 
-        lda wAIUnknown7E2002
+        lda wAIGroupMode
         cmp #7
         beq _CLC
 
@@ -978,7 +978,7 @@
         plb
         .databank $7F
 
-        lda wAIUnknown7E2018
+        lda wAIGroupTargetValue
         cmp #$FFFF
         bne +
 
@@ -1107,7 +1107,7 @@
                   lda aAIAction.wUnitInventorySlot
                   sta wSelectedInventorySlot,b
                   lda #2
-                  sta aAIAction.wUnknown7F4440
+                  sta aAIAction.wChosenActionID
                   lda aAIAction.wTargetDeploymentOffset
                   sta aAIAction.wChosenTargetDeploymentOffset
                   jsl rlAICommitAction
@@ -1125,7 +1125,7 @@
         .autsiz
         .databank ?
 
-        ; Objective handler 8: move adjacent to target unit and execute wAIUnknown7E201C
+        ; Objective handler 8: move adjacent to target unit and execute wAIInteractionActionID
 
         phb
         php
@@ -1165,7 +1165,7 @@
         bit #UnitStateGroupLeader
         bne +
 
-        lda wAIUnknown7E201C
+        lda wAIInteractionActionID
         cmp #12
         bne +
 
@@ -1179,7 +1179,7 @@
         plb
         .databank $7F
 
-        lda wAIUnknown7E2018
+        lda wAIGroupTargetValue
         asl a
         tax
         lda aDeploymentTable._State,x
@@ -1268,7 +1268,7 @@
           beq _End
           
             _BC3E
-            lda wAIUnknown7E201C
+            lda wAIInteractionActionID
             sta $4440,b
             bne +
 
@@ -1276,7 +1276,7 @@
             bra ++
             
             +
-            lda wAIUnknown7E2018
+            lda wAIGroupTargetValue
             asl a
 
             +
@@ -1326,7 +1326,7 @@
           bcs +
 
             lda #3
-            sta aAIAction.wUnknown7F4440
+            sta aAIAction.wChosenActionID
             jsl rlAICommitAction
         
         +
@@ -1392,7 +1392,7 @@
           bcs +
 
             lda #13
-            sta aAIAction.wUnknown7F4440
+            sta aAIAction.wChosenActionID
             jsl rlAICommitAction
 
         +
@@ -1428,7 +1428,7 @@
           lda #$FFFF
           sta aAIAction.wChosenTargetDeploymentOffset
           lda #0
-          sta aAIAction.wUnknown7F4440
+          sta aAIAction.wChosenActionID
           jsl rlAICommitAction
 
         +
@@ -1451,7 +1451,7 @@
         bcs +
 
           lda #3
-          sta aAIAction.wUnknown7F4440
+          sta aAIAction.wChosenActionID
           jsl rlAICommitAction
 
         +
@@ -1845,7 +1845,7 @@
         cmp #TerrainCastleGate
         bne +
 
-          lda wAIUnknown000E8E
+          lda wAIQueuedActionID
           bmi +
 
           cmp #2
@@ -2140,7 +2140,7 @@
         jsl rlGetSelectedUnitStates
         bit #UnitStateGroupLeader
         bne _BCC5
-        lda wAIUnknown7E201C
+        lda wAIInteractionActionID
         cmp #$000C
         bne _BCC5
         sec
@@ -2164,7 +2164,7 @@
 
         ; Return SEC if interaction type is attack ($01) and unit has no equippable weapon
 
-        lda wAIUnknown7E201C
+        lda wAIInteractionActionID
         cmp #$0001
         bne _BCE1
         jsl rlGetFirstEquippableWeaponInInventory

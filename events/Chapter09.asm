@@ -589,29 +589,29 @@
         AI_SET_IGNORED_GENERATION_ID GEN_ID_Charlot_Coirpre
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter09, FlagChapter09_HannibalCharge, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch09_Meath, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch09_Meath, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup32AI2 ; 86/FA0C
 
-        AI_07 Ch09_Kapathogia, $04
+        AI_DEFEND_CASTLE Ch09_Kapathogia, $04
         AI_END
 
       aFactionGroup33AI1 ; 86/FA10
 
-        AI_07 Ch09_Luthecia, $04
+        AI_DEFEND_CASTLE Ch09_Luthecia, $04
         AI_END
 
       aFactionGroup33AI2 ; 86/FA14
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup33AI3 ; 86/FA16
@@ -631,12 +631,12 @@
 
       aFactionGroup34AI3 ; 86/FA1C
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup34AI4 ; 86/FA1E
 
-        AI_07 Ch09_Grutia, $04
+        AI_DEFEND_CASTLE Ch09_Grutia, $04
         AI_END
 
       aFactionGroup35AI1 ; 86/FA22
@@ -647,16 +647,16 @@
 
           AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter09, FlagChapter09_LeifAltenaTalk, +
 
-            AI_06 Ch09_Meath, $01
+            AI_ATTACK_CASTLE Ch09_Meath, $01
             AI_TARGET_ALL_FOES
             AI_END
 
           +
-          AI_12
+          AI_LEADER_HOLD
           AI_END
 
         +
-        AI_02 $03
+        AI_SET_MODE $03
         AI_INTERACT_WITH_UNIT Seliph, $0C
         AI_END
 
@@ -671,11 +671,11 @@
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT 0
         AI_SET_FORMATION $03, $00
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch09_Luthecia, $01
-        AI_06 Ch09_Kapathogia, $01
-        AI_06 Ch09_Meath, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch09_Luthecia, $01
+        AI_ATTACK_CASTLE Ch09_Kapathogia, $01
+        AI_ATTACK_CASTLE Ch09_Meath, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -683,10 +683,10 @@
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT 0
         AI_SET_FORMATION $03, $00
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch09_Kapathogia, $01
-        AI_06 Ch09_Meath, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch09_Kapathogia, $01
+        AI_ATTACK_CASTLE Ch09_Meath, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -694,21 +694,21 @@
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT 0
         AI_SET_FORMATION $03, $00
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch09_Meath, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch09_Meath, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup35AI6 ; 86/FA81
 
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT 0
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
         AI_SET_FORMATION $03, $00
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter09, FlagChapter09_PlayerNearThracia, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
@@ -717,7 +717,7 @@
 
       aFactionGroup35AI7 ; 86/FA96
 
-        AI_07 Ch09_Thracia, $04
+        AI_DEFEND_CASTLE Ch09_Thracia, $04
         AI_END
 
     .endsection Chapter09EventDataSection

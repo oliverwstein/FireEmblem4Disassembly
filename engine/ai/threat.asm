@@ -12,23 +12,23 @@
         .autsiz
         .databank ?
 
-        ; If any foe is in group threat range ($04), update wAIUnknown7E2002 via jump table
+        ; If any foe is in group threat range ($04), update wAIGroupMode via jump table
 
         phb
         php
 
         sep #$20
-        lda #`wAIUnknownBitfield7E2000
+        lda #`wAIGroupFlags
         pha
         rep #$20
         plb
-        .databank `wAIUnknownBitfield7E2000
+        .databank `wAIGroupFlags
 
-        lda @l wAIUnknownBitfield7E2000
+        lda @l wAIGroupFlags
         bit #$0004
         beq +
 
-          lda wAIUnknown7E2002
+          lda wAIGroupMode
           asl a
           tax
           jsr (aAIThreatUpdateModeRoutines,x)
@@ -58,7 +58,7 @@
         .autsiz
         .databank ?
 
-        ; Leave wAIUnknown7E2002 unchanged
+        ; Leave wAIGroupMode unchanged
 
         rts
 
@@ -71,7 +71,7 @@
         .databank $7E
 
         lda #2
-        sta wAIUnknown7E2002
+        sta wAIGroupMode
         rts
 
         .databank 0
@@ -86,11 +86,11 @@
         php
 
         sep #$20
-        lda #`wAIUnknownBitfield7E2000
+        lda #`wAIGroupFlags
         pha
         rep #$20
         plb
-        .databank `wAIUnknownBitfield7E2000
+        .databank `wAIGroupFlags
 
         phx
         phy
@@ -196,7 +196,7 @@
 
         _SEC
         lda #$0004
-        tsb wAIUnknownBitfield7E2000
+        tsb wAIGroupFlags
 
         ply
         plx
@@ -221,14 +221,14 @@
         php
 
         sep #$20
-        lda #`wAIUnknownBitfield7E2000
+        lda #`wAIGroupFlags
         pha
         rep #$20
         plb
-        .databank `wAIUnknownBitfield7E2000
+        .databank `wAIGroupFlags
 
         phx
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0020
         bne +
 
@@ -244,11 +244,11 @@
         jsl rlTryGetAIFactionGroupLeader
 
         lda wAIGroupLeaderXPosition
-        sta wAIUnknown7E2010
+        sta wAIGroupWaypointXPosition
         sta wAITemp000E96,b
 
         lda wAIGroupLeaderYPosition
-        sta wAIUnknown7E2012
+        sta wAIGroupWaypointYPosition
         sta wAITemp000E98,b
 
         jsl rlFillMovementCostMapSpecial
@@ -259,26 +259,26 @@
           jml _End
 
         +
-        sta wAIUnknown7E2018
+        sta wAIGroupTargetValue
 
         ; Get the targets coords
         lda wAITemp000E9A,b
-        sta wAIUnknown7E2014
+        sta wAIGroupTargetXPosition
         lda wAITemp000E9C,b
-        sta wAIUnknown7E2016
+        sta wAIGroupTargetYPosition
 
         lda wAIGroupObjective
         cmp #6
         bne +
 
-          lda wAIUnknown7E2002
+          lda wAIGroupMode
           cmp #4
           beq _B0A6
 
             jml _End
 
         +
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         bit #$0008
         bne _B0B6
 
@@ -289,7 +289,7 @@
         lda wAIGroupLeaderDeploymentOffset
         bpl _B0B6
 
-        lda wAIUnknown7E2002
+        lda wAIGroupMode
         cmp #4
         bne +
 
@@ -303,10 +303,10 @@
 
         ; Write target coords to other ram values
         _B0A6
-        lda wAIUnknown7E2014
-        sta wAIUnknown7E2010
-        lda wAIUnknown7E2016
-        sta wAIUnknown7E2012
+        lda wAIGroupTargetXPosition
+        sta wAIGroupWaypointXPosition
+        lda wAIGroupTargetYPosition
+        sta wAIGroupWaypointYPosition
         jml +
 
           _B0B6
@@ -317,9 +317,9 @@
           jsl rlTraceTargetPathToReachableTile
 
           lda wAITemp000E96,b
-          sta wAIUnknown7E2010
+          sta wAIGroupWaypointXPosition
           lda wAITemp000E98,b
-          sta wAIUnknown7E2012
+          sta wAIGroupWaypointYPosition
 
         +
         jsl rlAIUpdateFormationDirectionTowardTarget
@@ -441,9 +441,9 @@
         sta wAITargetYPosition,b
 
         lda #0
-        sta wAIUnknown000E8E,b
+        sta wAIQueuedActionID,b
         lda #$FFFF
-        sta wAIUnknown000E8C,b
+        sta wAIQueuedActionTarget,b
 
         ; Fill movement map
         jsl rlFillSelectedUnitMovementMap
@@ -453,7 +453,7 @@
         tax
         sta aAIAction.wUntDeploymentOffset
         lda #$FFFF
-        sta aAIAction.wUnknown7F4440
+        sta aAIAction.wChosenActionID
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
@@ -487,7 +487,7 @@
             bcs _B1E0
 
             +
-            lda aAIAction.wUnknown7F4440
+            lda aAIAction.wChosenActionID
             cmp #$FFFF
             bne _B1E0
 
@@ -530,9 +530,12 @@
         .autsiz
         .databank ?
 
-        ; Build aRangeMap of nearby enemy threats unless wAIUnknown7E2002 is 4 or 5
+        ; Builds the threat map (aRangeMap: how many foes can attack each tile) unless wAIGroupMode
+        ; is 4 or 5. Those modes then read whatever aRangeMap last held: usually the range map
+        ; input (1, $FE, $FF, centered on that unit) built when the previous computer unit was picked
+        ; up to walk (rlBuildSelectedUnitRangeMaps), so their tile threat values are not threat counts.
 
-        lda wAIUnknown7E2002
+        lda wAIGroupMode
         cmp #4
         beq +
 
@@ -578,7 +581,7 @@
           cmp wAITargetYPosition,b
           bne _B270
 
-            lda wAIUnknown000E8E,b
+            lda wAIQueuedActionID,b
             bne _B270
             
               -
@@ -612,9 +615,9 @@
         jsl rlAIFindBestMoveTowardTarget
         bcc +
 
-          lda wAIUnknown7E2014
+          lda wAIGroupTargetXPosition
           sta wAITemp000E9A,b
-          lda wAIUnknown7E2016
+          lda wAIGroupTargetYPosition
           sta wAITemp000E9C,b
           jsl rlAIFindBestMoveTowardTarget
           bcs -
@@ -628,9 +631,9 @@
           cmp wAITemp000E9C,b
           bne +
 
-            lda wAIUnknown000E8E,b
+            lda wAIQueuedActionID,b
             sta wActiveActionID,b
-            lda wAIUnknown000E8C,b
+            lda wAIQueuedActionTarget,b
             bmi +
 
               sta wActiveActionUnit2DeploymentOffset,b
@@ -664,7 +667,7 @@
         sta wMapActionActiveFlag,b
 
         lda #$0001
-        tsb bUnknown000E7B,b
+        tsb bAIEngineFlags,b
 
         _End
         plp
@@ -738,7 +741,7 @@
         ldx wActiveActionUnit1DeploymentOffset,b
         jsl rlFinishUnitAction
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         rts
 
         .databank 0
@@ -801,10 +804,10 @@
         .autsiz
         .databank ?
 
-        ; Action 9: clear bit $01 of bUnknown000E7B and return
+        ; Action 9: clear bit $01 of bAIEngineFlags and return
 
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         rts
 
         .databank 0
@@ -827,7 +830,9 @@
         .autsiz
         .databank ?
 
-        ; Action 3 (unused): finish move and relocate unit into castle if on location
+        ; Action 3: finish the move and queue the unit's relocation into the castle it stands on
+        ; (wTargetEventLocationEntry). Chosen by objectives 9 and 12 (the leader, or everyone, goes
+        ; home). tools/sweep.py found it before aAIActionRoutines was decoded.
 
         ldx wActiveActionUnit1DeploymentOffset,b
         jsl rlFinishUnitAction
@@ -839,7 +844,7 @@
 
         _B388
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         rts
 
         .databank 0
@@ -866,7 +871,7 @@
         ldx wActiveActionUnit1DeploymentOffset,b
         jsl rlUnitRaidVillage
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         rts
 
         .databank 0
@@ -892,7 +897,7 @@
         ldx wActiveActionUnit1DeploymentOffset,b
         jsl rlUnitSeizeCastle
         lda #1
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         rts
 
         .databank 0
@@ -919,7 +924,7 @@
         ldx wActiveActionUnit1DeploymentOffset,b
         jsl rlUnitGuardCastle
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         rts
 
         .databank 0
@@ -938,7 +943,7 @@
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnitReturnIntoCastle
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         rts
 
         .databank 0
@@ -952,10 +957,10 @@
         .autsiz
         .databank ?
 
-        ; Action 10: clear bit $01 of bUnknown000E7B and return
+        ; Action 10: clear bit $01 of bAIEngineFlags and return
 
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         rts
 
         .databank 0
@@ -998,10 +1003,13 @@
         .autsiz
         .databank ?
 
-        ; Action 12 (unused): clear bit $01 of $0E7B and run talk event ($0A) for $0871/$0873
+        ; Action 12: announce event action $0A (a talk) between the acting unit and its target.
+        ; Chosen by objective 8 when AI_INTERACT_WITH_UNIT's action is 12: the Prologue, Chapter 5
+        ; and Chapter 9 scripts send a leader to talk to Sigurd or Seliph. tools/sweep.py found it
+        ; before aAIActionRoutines was decoded.
 
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
         lda #$000A
         sta bEventActionIdentifier,b
         ldx wActiveActionUnit2DeploymentOffset,b
@@ -1029,7 +1037,9 @@
         .autsiz
         .databank ?
 
-        ; Action 13 (unused): revive group units of wAICurrentAISetting and enter castle
+        ; Action 13: revive the group's dead into the home castle, then action 3 (enter it).
+        ; Chosen for the leader by objective 10 (AI_LEADER_RETREAT_IF_GROUP_BELOW). tools/sweep.py
+        ; found it before aAIActionRoutines was decoded.
 
         lda wAICurrentAISetting,b
         sta wRoutineVariable1,b

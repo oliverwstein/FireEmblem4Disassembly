@@ -631,27 +631,27 @@
       aFactionGroup2EAI1 ; 86/F443
 
         AI_SET_FORMATION $0C, $03
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch08_Ulster, $01
-        AI_06 Ch08_Leonster, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch08_Ulster, $01
+        AI_ATTACK_CASTLE Ch08_Leonster, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup2EAI2 ; 86/F454
 
         AI_SET_FORMATION $08, $03
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch08_Leonster, $01
-        AI_06 Ch08_Ulster, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch08_Leonster, $01
+        AI_ATTACK_CASTLE Ch08_Ulster, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup2EAI3 ; 86/F465
 
         AI_SET_FORMATION $05, $03
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup2EAI4 ; 86/F46A
@@ -662,17 +662,17 @@
 
       aFactionGroup2EAI5 ; 86/F46E
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup2EAI6 ; 86/F470
 
-        AI_07 Ch08_Connacht, $05
+        AI_DEFEND_CASTLE Ch08_Connacht, $05
         AI_END
 
       aFactionGroup2EAI7 ; 86/F474
 
-        AI_1D
+        AI_SURROUND_TARGETS
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -683,7 +683,7 @@
 
       aFactionGroup2FAI1 ; 86/F479
 
-        AI_07 Ch08_Munster, $05
+        AI_DEFEND_CASTLE Ch08_Munster, $05
         AI_END
 
       aFactionGroup2FAI2 ; 86/F47D
@@ -698,19 +698,19 @@
 
       aFactionGroup30AI1 ; 86/F485
 
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT 0
         AI_SET_FORMATION $03, $00
-        AI_06 Ch08_Leonster, $01
+        AI_ATTACK_CASTLE Ch08_Leonster, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup30AI2 ; 86/F495
 
-        AI_CHECK_GROUP_COMPLETE_BY_TURN_DIVISIBLE 1
+        AI_REINFORCE_EVERY_N_TURNS 1
         AI_SET_FORMATION $03, $00
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup30AI3 ; 86/F49C
@@ -719,23 +719,23 @@
         AI_SET_FORMATION $03, $00
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter08, FlagChapter08_AltenaOnMountainCheck, +
 
-          AI_02 $06
+          AI_SET_MODE $06
           AI_FLAG_IF_LEADER_ON_COORDS Chapter08, FlagChapter08_AltenaOnMountainCheck, [46, 40]
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
-        AI_12
+        AI_LEADER_HOLD
         AI_END
 
       aFactionGroup30AI4 ; 86/F4B3
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup30AI5 ; 86/F4B5
 
-        AI_07 Ch08_Meath, $04
+        AI_DEFEND_CASTLE Ch08_Meath, $04
         AI_END
 
       aFactionGroup30AI6 ; 86/F4B9
@@ -748,7 +748,7 @@
 
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter08, FlagChapter08_ConnachtSeizedCheck, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
@@ -758,7 +758,7 @@
 
       aFactionGroup30AI8 ; 86/F4C7
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
     .endsection Chapter08EventDataSection

@@ -328,7 +328,7 @@ The sprite starts on Elliot's tile (slot 1) and walks to the top edge of the map
 
 None of these has a counterpart in the script language. The game has one implementation of each state change, reachable from a condition list and from a script alike.
 
-`RUN_EVENT_CONDITION_AND_WAIT` runs a condition command and then waits until bit 0 of `bUnknown000E7B` is clear, and four frames more. The prologue uses it twice, with `SET_SCRIPTED_ACTION`, which starts a map action for a unit (the same machinery the AI drives its units with) and sets that bit; the battle scene clears it when the scripted fight ends.
+`RUN_EVENT_CONDITION_AND_WAIT` runs a condition command and then waits until bit 0 of `bAIEngineFlags` is clear, and four frames more. The prologue uses it twice, with `SET_SCRIPTED_ACTION`, which starts a map action for a unit (the same machinery the AI drives its units with) and sets that bit; the battle scene clears it when the scripted fight ends.
 
 ### Into assembly
 

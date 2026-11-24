@@ -3307,7 +3307,7 @@
         ; Selects the active unit at the cursor if idle flags allow.
 
         phx
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0040
         bne _9340
         ldx wActiveUnitDeploymentOffset,b

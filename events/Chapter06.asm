@@ -465,14 +465,14 @@
 
       aFactionGroup24AI1 ; B2/846B
 
-        AI_07 Ch06_Ganeishire, $05
+        AI_DEFEND_CASTLE Ch06_Ganeishire, $05
         AI_END
 
       aFactionGroup24AI2 ; B2/846F
 
         AI_JUMP_IF_TURN_REACHED 4, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
@@ -481,7 +481,7 @@
 
       aFactionGroup24AI3 ; B2/8477
 
-        AI_06 Ch06_Tirnanog, $01
+        AI_ATTACK_CASTLE Ch06_Tirnanog, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -496,18 +496,18 @@
             AI_END
 
           +
-          AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-          AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+          AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+          AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
           AI_TARGET_ALL_FOES
           AI_END
 
         +
-        AI_19
+        AI_TARGET_FOES_NOT_GUARDING
         AI_END
 
       aFactionGroup25AI2 ; B2/8498
 
-        AI_07 Ch06_Sofala, $04
+        AI_DEFEND_CASTLE Ch06_Sofala, $04
         AI_END
 
       aFactionGroup26AI1 ; B2/849C
@@ -521,18 +521,18 @@
             AI_END
 
           +
-          AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-          AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+          AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+          AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
           AI_TARGET_ALL_FOES
           AI_END
 
         +
-        AI_19
+        AI_TARGET_FOES_NOT_GUARDING
         AI_END
 
       aFactionGroup26AI2 ; B2/84B8
 
-        AI_07 Ch06_Isaach, $04
+        AI_DEFEND_CASTLE Ch06_Isaach, $04
         AI_END
 
       aFactionGroup27AI1 ; B2/84BC
@@ -540,36 +540,36 @@
         AI_SET_FORMATION $08, $01
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter06, FlagChapter06_BrotherRecruitedDanannResponse, ++
 
-          AI_22 +
+          AI_JUMP_IF_ENGAGEABLE +
 
-            AI_0A
+            AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
             AI_END
 
           ; tries to set Ch1 flag?
           +
           AI_SET_CHAPTER_EVENT_FLAG Chapter01, FlagChapter06_Unknown35
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO 0.5 * 256
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch06_Isaach, $01
-        AI_06 Ch06_Ganeishire, $01
-        AI_06 Ch06_Sofala, $01
-        AI_06 Ch06_Tirnanog, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW 0.5 * 256
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch06_Isaach, $01
+        AI_ATTACK_CASTLE Ch06_Ganeishire, $01
+        AI_ATTACK_CASTLE Ch06_Sofala, $01
+        AI_ATTACK_CASTLE Ch06_Tirnanog, $01
         AI_END
 
       aFactionGroup27AI2 ; B2/84E3
 
-        AI_07 Ch06_Ribaut, $04
+        AI_DEFEND_CASTLE Ch06_Ribaut, $04
         AI_END
 
       aFactionGroup27AI3 ; B2/84E7
 
         AI_JUMP_IF_TURN_REACHED 8, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
@@ -581,7 +581,7 @@
 
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter06, FlagChapter06_GaneishireSeizedCheck, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +

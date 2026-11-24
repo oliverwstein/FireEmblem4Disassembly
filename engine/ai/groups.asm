@@ -82,9 +82,9 @@
             inc wAITemp000E98,b
             inc wAITemp000E98,b
 
-            lda wAIUnknownBitfield7E2000
+            lda wAIGroupFlags
             ora #$0010
-            sta wAIUnknownBitfield7E2000
+            sta wAIGroupFlags
 
         _End
         plx
@@ -163,11 +163,11 @@
         .autsiz
         .databank ?
 
-        ; Set bit $0001 in wAIUnknownBitfield7E2000 (group target path ready)
+        ; Set bit $0001 in wAIGroupFlags (group target path ready)
 
-        lda wAIUnknownBitfield7E2000
+        lda wAIGroupFlags
         ora #$0001
-        sta wAIUnknownBitfield7E2000
+        sta wAIGroupFlags
         rtl
 
         .databank 0
@@ -320,12 +320,12 @@
         .databank $7E
 
         sep #$20
-        lda wAIUnknown7E2010
+        lda wAIGroupWaypointXPosition
         clc
         adc aFormationPatternOffsets,x
         sta structAIUnitEntry.XTargetPosition,b,y
 
-        lda wAIUnknown7E2012
+        lda wAIGroupWaypointYPosition
         clc
         adc aFormationPatternOffsets+1,x
         sta structAIUnitEntry.YTargetPosition,b,y
@@ -341,12 +341,12 @@
         .databank $7E
 
         sep #$20
-        lda wAIUnknown7E2010
+        lda wAIGroupWaypointXPosition
         sec
         sbc aFormationPatternOffsets+1,x
         sta structAIUnitEntry.XTargetPosition,b,y
 
-        lda wAIUnknown7E2012
+        lda wAIGroupWaypointYPosition
         clc
         adc aFormationPatternOffsets,x
         sta structAIUnitEntry.YTargetPosition,b,y
@@ -362,12 +362,12 @@
         .databank $7E
 
         sep #$20
-        lda wAIUnknown7E2010
+        lda wAIGroupWaypointXPosition
         sec
         sbc aFormationPatternOffsets,x
         sta structAIUnitEntry.XTargetPosition,b,y
 
-        lda wAIUnknown7E2012
+        lda wAIGroupWaypointYPosition
         sec
         sbc aFormationPatternOffsets+1,x
         sta structAIUnitEntry.YTargetPosition,b,y
@@ -383,12 +383,12 @@
         .databank $7E
 
         sep #$20
-        lda wAIUnknown7E2010
+        lda wAIGroupWaypointXPosition
         clc
         adc aFormationPatternOffsets+1,x
         sta structAIUnitEntry.XTargetPosition,b,y
 
-        lda wAIUnknown7E2012
+        lda wAIGroupWaypointYPosition
         sec
         sbc aFormationPatternOffsets,x
         sta structAIUnitEntry.YTargetPosition,b,y
@@ -493,7 +493,7 @@
           cmp #13
           beq _End
 
-            lda wAIUnknown7E2010
+            lda wAIGroupWaypointXPosition
             sec
             sbc wAIGroupLeaderXPosition
             bpl +
@@ -510,7 +510,7 @@
             sta wAITemp000E9A,b
             stx wAITemp000E9E,b
 
-            lda wAIUnknown7E2012
+            lda wAIGroupWaypointYPosition
             sec
             sbc wAIGroupLeaderYPosition
             bpl +
@@ -627,7 +627,7 @@
         beq _SEC
 
         lda #$0002
-        tsb wAIUnknownBitfield7E2000
+        tsb wAIGroupFlags
 
         lda wAITemp000E9C,b
         and #$00FF

@@ -242,9 +242,9 @@
                 bit #UnitStateGroupLeader
                 beq _Next
 
-                  lda wAIUnknownBitfield7E2000
+                  lda wAIGroupFlags
                   ora #$0008
-                  sta wAIUnknownBitfield7E2000
+                  sta wAIGroupFlags
                   bra _Next
 
               _Alive
@@ -268,9 +268,9 @@
                 bne +
 
                   stx wAISelectedAIUnitOffset,b
-                  lda wAIUnknownBitfield7E2000
+                  lda wAIGroupFlags
                   ora #$0040
-                  sta wAIUnknownBitfield7E2000
+                  sta wAIGroupFlags
 
                 +
                 lda aAIUnitList[0].DeploymentOffset,x

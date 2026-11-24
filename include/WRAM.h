@@ -1277,13 +1277,17 @@
 
   .virtual $000E7B
 
-    bUnknown000E7B .byte ?            ; $000E7B
-      ; $01 ?
-      ; $02 ?
-      ; $10 set at the beginning of AI cycles?
-      ; $20 set before evaluating if an AI cycle should happen?
-      ; $40 required for AI cycle?
-      ; $80 skips AI cycle?
+    bAIEngineFlags .byte ?            ; $000E7B
+      ; $01 = a map action started by the AI (or SET_SCRIPTED_ACTION) is running; the action's
+      ;       end clears it (aAIActionRoutines, the battle scene's exit)
+      ; $02 = the computer-phase cursor move is a pan to a unit (rlStartCursorToUnit), not an AI
+      ;       unit's move: no walk is started; cleared by cycle 4
+      ; $10 = an AI cycle step is in progress. The step runs in the main loop and can outlast a
+      ;       frame; the map's VBlank handler then leaves the sprite buffer alone, because the AI's
+      ;       maps share RAM with aMovingMapSpriteBuffers
+      ; $20 = inside rlRunAIEngineCycle; rsRunQueuedAIUnitEvent waits for it to clear
+      ; $40 = the AI cycle is enabled (rlEnableAIEngineCycle, a computer phase)
+      ; $80 = stops the cycle; nothing sets it
     wAIEngineCycleType .word ?        ; $000E7C
     wAIActiveFaction .word ?          ; $000E7E
     wAICurrentAISetting .word ?         ; $000E80
@@ -1292,8 +1296,8 @@
     wAICurrentAIUnitCounter .word ?   ; $000E86
     wAITargetXPosition .word ?        ; $000E88
     wAITargetYPosition .word ?        ; $000E8A
-    wAIUnknown000E8C .word ?          ; $000E8C
-    wAIUnknown000E8E .word ?          ; $000E8E
+    wAIQueuedActionTarget .word ?     ; $000E8C ; deployment offset of the queued action's other unit, or $FFFF
+    wAIQueuedActionID .word ?         ; $000E8E ; the action run after the move (rlAIExecuteQueuedAction), 0 to 15
     lAITemp000E90 .long ?             ; $000E90
     lAITemp000E93 .long ?             ; $000E93
     wAITemp000E96 .word ?             ; $000E96
@@ -1919,31 +1923,50 @@
 
   .virtual $7E2000
 
-    wAIUnknownBitfield7E2000 .word ?        ; $7E2000
-    ; $0001 = finished with targeting cycle?
-    ; $0004 = any foe in groups threat range
-    ; $0008 = group leader dead
-    ; $0010 = group leader is guarding castle
-    ; $0020 = group has a target tile?
-    ; $0040 = group leader fielded
-    ; $0080 = ?
-    ; $0100 = ?
-    ; $0200 = ?
-    wAIUnknown7E2002 .word ?                ; $7E2002
-      ; 4 and 5 skip filling targets range map
+    wAIGroupFlags .word ?             ; $7E2000 ; cleared before each group's script
+      ; $0001 = the group has a waypoint (rlAIUpdateGroupTargetAndWaypoint): members get formation spots
+      ; $0002 = the group isn't in formation (rlAICheckIfGroupInFormation)
+      ; $0004 = a foe is within some member's threat range (rlAICheckIfAnyFoeInAlliesThreatRange)
+      ; $0008 = the group's leader is dead
+      ; $0010 = the group's leader is guarding a castle
+      ; $0020 = the target map has at least one target (rlSetTargetMapTile)
+      ; $0040 = one member acts first (wAISelectedAIUnitOffset): an unfielded leader, or the member
+      ;         rlAICheckIfAnyGroupUnitCanEngageFoe found; after it the list restarts at its first unit
+      ; $0080 = the group's dead were revived this phase (AI_REINFORCE_EVERY_N_TURNS)
+      ; $0100 = the leader goes straight for the target, without a waypoint (objectives 9, 10, 11)
+      ; $0200 = members move with half their movement (AI_HALVE_MOVEMENT)
+    wAIGroupMode .word ?              ; $7E2002
+      ; Set by the group's script (1 if it sets none; cycle 3 raises 1 to 2 when a foe is within the
+      ; group's threat range). It picks the attack type (aAIAttackTypeRoutines) and a few other rules:
+      ; 0 = attack only when HP / 2 + turn / 2 covers the damage expected back, and, with a foe near,
+      ;     only from a tile no farther from the group's target than the unit stands
+      ; 1 = attack from any reachable tile (the default)
+      ; 2 = attack from a reachable tile where the expected damage is above 0
+      ; 3 = never attack; also no castle capture
+      ; 4 = cautious: HP - 5 + turn / 2 and damage dealt / 2 + turn / 2 must both cover the damage
+      ;     expected back, and 3 x HP the tile's threat; no threat map is built
+      ; 5 = attack only from the tile the unit stands on; threat range is weapon range alone; no threat
+      ;     map (units guarding a castle always use 5)
+      ; 6 = never attack
+      ; 7 = as 2, but leave alone foes guarding a castle; no castle capture
+      ; 8 = as 2 (no script sets it)
+      ; Modes 4 and 5 skip the threat map, so aRangeMap holds whatever was last written there.
     wAIFormationType .word ?                ; $7E2004
     wAIFormationDirection .word ?           ; $7E2006
     wAIGroupLeaderFieldMovement .word ?     ; $7E2008
     wAIGroupHighestItemRange .word ?        ; $7E200A
     wAIGroupLeaderXPosition .word ?         ; $7E200C
     wAIGroupLeaderYPosition .word ?         ; $7E200E
-    wAIUnknown7E2010 .word ?                ; $7E2010
-    wAIUnknown7E2012 .word ?                ; $7E2012
-    wAIUnknown7E2014 .word ?                ; $7E2014
-    wAIUnknown7E2016 .word ?                ; $7E2016
-    wAIUnknown7E2018 .word ?                ; $7E2018 ; Target value?
-    wAIGroupObjective .word ?                ; $7E201A ; some ID, action, for aAIGroupObjectiveRoutines
-    wAIUnknown7E201C .word ?                ; $7E201C
+    wAIGroupWaypointXPosition .word ?       ; $7E2010 ; this turn's anchor for the formation: the leader's reach toward the target
+    wAIGroupWaypointYPosition .word ?       ; $7E2012
+    wAIGroupTargetXPosition .word ?         ; $7E2014 ; the nearest target tile (starts at the leader's tile)
+    wAIGroupTargetYPosition .word ?         ; $7E2016
+    wAIGroupTargetValue .word ?             ; $7E2018 ; aTargetMap's value at that tile (location ID, deployment offset / 2, or 0/1), $FFFF if none
+    wAIGroupObjective .word ?               ; $7E201A ; what the script gave the group to do (aAIGroupObjectiveRoutines); 0 = nothing, the group sits out
+      ; 1 take an enemy castle, 2 raid villages, 3 attack units, 4 hold until a foe can be engaged,
+      ; 5 stand, 6 defend its own castle, 7 move the leader to a tile / stand, 8 go next to a unit and
+      ; act on it, 9 leader goes home, 10 leader goes home to revive the group, 11 leader holds, 12 all go home
+    wAIInteractionActionID .word ?          ; $7E201C ; objective 8's action on the unit: 0 wait beside it, 1 attack, 12 talk
     wAIIgnoredGenerationID .word ?          ; $7E201E
     wAIGroupLeaderDeploymentOffset .word ?  ; $7E2020
     wAIUnitCounter .word ?                  ; $7E2022
@@ -2437,7 +2460,7 @@
     .word ? ; $7F4400
 
     aAIAction .block ; 7F4402
-      wUnknown7F4402 .word ?                  ; $7F4402 ; index for 86A035: 0 = silence foe, 1 = attack injured, 2 = regular attack?
+      wTileEvaluationType .word ?             ; $7F4402 ; aAIAttackTileEvaluationRoutines: 0 = status staff on a foe, 1 = healing staff on a friend, 2 = weapon
       wTargetXPosition .word ?                ; $7F4404
       wTargetYPosition .word ?                ; $7F4406
       wAttackTileMapTileIndex .word ?         ; $7F4408
@@ -2450,7 +2473,7 @@
       .word ?                                 ; $7F4416
       wMapWidth .word ?                       ; $7F4418
       wMapHeight .word ?                      ; $7F441A
-      wAttackChance .word ?                   ; $7F441C
+      wAttackChance .word ?                   ; $7F441C ; the score of the tile being tested (signed; $C000 = none)
       .word ?                                 ; $7F441E
       wMinimumAttackRange .word ?             ; $7F4420
       wMaximumAttackRange .word ?             ; $7F4422
@@ -2462,17 +2485,17 @@
       wUnitFaction .word ?                    ; $7F442E
       wUnitMovementCostPointer .word ?        ; $7F4430
       wUnknown7F4432 .word ?                  ; $7F4432
-      wBestAttackChance .word ?               ; $7F4434
+      wBestAttackChance .word ?               ; $7F4434 ; the best score so far (rsAICheckIfNewBestTarget)
       wUnitToChosenTargetDistance .word ?     ; $7F4436
-      wLeadershipPower .word ?                ; $7F4438
+      wLeadershipPower .word ?                ; $7F4438 ; 50 + 10 x the leader's leadership stars; 100 in clever mode, 0 when berserk. A random number at or above it lets chance override the score
       wDestinationXPosition .word ?           ; $7F443A
       wDestinationYPosition .word ?           ; $7F443C
       wChosenTargetDeploymentOffset .word ?   ; $7F443E
-      wUnknown7F4440 .word ?                  ; $7F4440 ; interaction type id? 0 = attack, 8 = silence?
+      wChosenActionID .word ?                 ; $7F4440 ; the action for rlAIExecuteQueuedAction, $FFFF while none is chosen (1 weapon, 8 status staff, 14 healing staff, ...)
       wUnitInventorySlot .word ?              ; $7F4442
       wUnitItemMinimumRange .word ?           ; $7F4444
       wUnitItemMaximumRange .word ?           ; $7F4446
-      wUnknown7F4448 .word ?                  ; $7F4448 ; value of wAIUnknown7E2002 or 5 if guarding castle, index for aAIAttackTypeRoutines
+      wAttackType .word ?                     ; $7F4448 ; wAIGroupMode, or 5 for a unit guarding a castle; index for aAIAttackTypeRoutines
       wUntDeploymentOffset .word ?            ; $7F444A
       wTargetDeploymentOffset .word ?         ; $7F444C
       wAttackTileTerrainType .word ?          ; $7F444E
@@ -2481,14 +2504,15 @@
       wExpectedTakenDamage .word ?            ; $7F4454
       wTargetHPBonus .word ?                  ; $7F4456
       wUnitHPPenalty .word ?                  ; $7F4458
-      wMovementDistanceToTarget .word ?       ; $7F445A ; needs checking
-      wUnknown7F445C .word ?                  ; $7F445C ; some value based on attack range around target?
+      wMovementDistanceToTarget .word ?       ; $7F445A ; the unit's tile on the distance map to the group's target ($FF if unreached)
+      wAttackTileDistanceToGroupTarget .word ? ; $7F445C ; the attack tile on that map; attack type 0 compares the two
       wUnitToAttackTileDistance .word ?       ; $7F445E
       wTargetToAttackTileDistance .word ?     ; $7F4460
       .word ?                                 ; $7F4462
       wAttackTileThreatValue .word ?          ; $7F4464
       wTurnValue .word ?                      ; $7F4466
-        ; Can either be capped at 63 or halved
+        ; The turn / 2 in the attack types' tests (the boldness that grows with the turn count);
+        ; the turn rounded down to a multiple of 64 in rsAITryAttackCastleGuard
       wTempValue .word ?                      ; $7F4468
       wTargetsBattleMight .word ?             ; $7F446A
 

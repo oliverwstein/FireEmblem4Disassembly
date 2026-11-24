@@ -826,22 +826,22 @@
 
       aFactionGroup1BAI1 ; 86/E69D
 
-        AI_07 Ch05_Lubeck, $05
+        AI_DEFEND_CASTLE Ch05_Lubeck, $05
         AI_END
 
       aFactionGroup1BAI2 ; 86/E6A1
 
         AI_SET_FORMATION $08, $03
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch05_Zaxon, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch05_Zaxon, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup1BAI3 ; 86/E6AF
 
         AI_SET_FORMATION $01, $03
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup1BAI4 ; 86/E6B4
@@ -854,13 +854,13 @@
 
         AI_SET_FORMATION $01, $01
         MODIFY_GROUP_LEADER_FIELD_MOVEMENT 0
-        AI_06 Ch05_Zaxon, $00
+        AI_ATTACK_CASTLE Ch05_Zaxon, $00
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup1BAI6 ; 86/E6C1
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup1BAI7 ; 86/E6C3
@@ -868,7 +868,7 @@
         AI_SET_FORMATION $08, $03
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter05, FlagChapter05_SlayderDied, +
 
-          AI_0A
+          AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 
         +
@@ -877,33 +877,33 @@
 
       aFactionGroup1CAI1 ; 86/E6D0
 
-        AI_07 Ch05_Phinora, $05
+        AI_DEFEND_CASTLE Ch05_Phinora, $05
         AI_END
 
       aFactionGroup1DAI1 ; 86/E6D4
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup1DAI2 ; 86/E6D6
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup1DAI3 ; 86/E6D8
 
-        AI_07 Ch05_Velthomer, $05
+        AI_DEFEND_CASTLE Ch05_Velthomer, $05
         AI_END
 
       aFactionGroup20AI1 ; 86/E6DC
 
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET Chapter05, FlagChapter05_ReptorChargeTrigger, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
-        AI_02 $07
+        AI_SET_MODE $07
         AI_TARGET_SPECIFIED_UNIT Sigurd
         AI_TARGET_ALL_FOES
         AI_END
@@ -915,13 +915,13 @@
 
       aFactionGroup1FAI1 ; 86/E6ED
 
-        AI_02 $03
+        AI_SET_MODE $03
         AI_INTERACT_WITH_UNIT Sigurd, $0C
         AI_END
 
       aFactionGroup21AI1 ; 86/E6F4
 
-        AI_06 Ch05_Phinora, $06
+        AI_ATTACK_CASTLE Ch05_Phinora, $06
         AI_END
 
       aFactionGroup22AI1 ; 86/E6F8

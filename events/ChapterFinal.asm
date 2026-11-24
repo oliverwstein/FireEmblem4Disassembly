@@ -798,63 +798,63 @@
       aFactionGroup3DAI1 ; B1/AB81
 
         AI_SET_FORMATION $02, $03
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup3DAI2 ; B1/AB8C
 
         AI_SET_FORMATION $05, $03
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup3DAI3 ; B1/AB91
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup3DAI4 ; B1/AB93
 
-        AI_07 ChFinal_Edda, $04
+        AI_DEFEND_CASTLE ChFinal_Edda, $04
         AI_END
 
       aFactionGroup3FAI1 ; B1/AB97
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup3FAI2 ; B1/AB99
 
         AI_SET_FORMATION $08, $01
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 ChFinal_Edda, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE ChFinal_Edda, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup3FAI3 ; B1/ABA7
 
         AI_SET_FORMATION $0B, $02
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup3FAI4 ; B1/ABB2
 
-        AI_07 ChFinal_Dozel, $04
+        AI_DEFEND_CASTLE ChFinal_Dozel, $04
         AI_END
 
       aFactionGroup3EAI1 ; B1/ABB6
 
         AI_SET_FORMATION $01, $02
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup3EAI2 ; B1/ABBB
 
-        AI_07 ChFinal_Friege, $04
+        AI_DEFEND_CASTLE ChFinal_Friege, $04
         AI_END
 
       aFactionGroup42AI1 ; B1/ABBF
@@ -865,32 +865,32 @@
 
       aFactionGroup40AI1 ; B1/ABC4
 
-        AI_07 ChFinal_Velthomer, $04
+        AI_DEFEND_CASTLE ChFinal_Velthomer, $04
         AI_END
 
       aFactionGroup41AI1 ; B1/ABC8
 
         AI_SET_FORMATION $0B, $03
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup41AI2 ; B1/ABD3
 
-        AI_1D
+        AI_SURROUND_TARGETS
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup41AI3 ; B1/ABD6
 
         AI_SET_FORMATION $0E, $00
-        AI_07 ChFinal_Belhalla, $04
+        AI_DEFEND_CASTLE ChFinal_Belhalla, $04
         AI_END
 
       aFactionGroup41AI4 ; B1/ABDD
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup41AI5 ; B1/ABDF
@@ -905,19 +905,19 @@
         AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET ChapterFinal, FlagChapterFinal_AltenaArionTalkCheck, +
 
           AI_SET_IGNORED_GENERATION_ID GEN_ID_Altena
-          AI_06 ChFinal_Chalphy, $01
+          AI_ATTACK_CASTLE ChFinal_Chalphy, $01
           AI_TARGET_ALL_FOES
           AI_END
 
         +
-        AI_02 $07
-        AI_22 +
+        AI_SET_MODE $07
+        AI_JUMP_IF_ENGAGEABLE +
 
           AI_TARGET_SPECIFIED_UNIT Altena
           AI_END
 
         +
-        AI_05
+        AI_HALVE_MOVEMENT
         AI_TARGET_SPECIFIED_UNIT Altena
         AI_END
 

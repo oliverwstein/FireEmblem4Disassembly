@@ -4846,7 +4846,7 @@
             sta wMapActionActiveFlag,b
 
             lda #1
-            tsb bUnknown000E7B,b
+            tsb bAIEngineFlags,b
 
         _End
         tya

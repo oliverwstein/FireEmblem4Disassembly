@@ -610,7 +610,7 @@
 
     RUN_EVENT_CONDITION_AND_WAIT .segment
       ; Runs one condition-list command like RUN_EVENT_CONDITION, then waits until bit 0
-      ; of bUnknown000E7B is clear, and 4 frames more (procEventWaitFlag0E7B). The prologue
+      ; of bAIEngineFlags is clear, and 4 frames more (procEventWaitFlag0E7B). The prologue
       ; uses it for SET_SCRIPTED_ACTION, which sets that bit; the battle scene clears it
       ; when the scripted action's fight ends.
       .byte $4D

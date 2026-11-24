@@ -127,11 +127,11 @@
 
         _E68B
         jsl rlResetHDMAEngine
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0001
         beq _E69D
         lda #$0001
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
 
         _E69D
         rtl

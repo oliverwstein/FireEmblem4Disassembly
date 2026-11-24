@@ -12,7 +12,12 @@
         .autsiz
         .databank ?
 
-        ; Per-frame AI engine dispatcher; steps wAIEngineCycleType when active
+        ; Called once per frame from the map's main loop (rsMapMainLoop), outside the interrupt.
+        ; Runs one step of the cycle (wAIEngineCycleType) when the map step is running (not steps 3
+        ; or 5), no event is running, no queued AI unit event is waiting for the map step
+        ; (wChapterFlags $0080, rsRunQueuedAIUnitEvent), and the cycle is enabled (bAIEngineFlags
+        ; $40). Each step that works sets bAIEngineFlags $10, so that the map's VBlank handler leaves
+        ; the sprite buffer alone if the step outlasts the frame; $10 and $20 are cleared on return.
 
         phb
         php
@@ -20,7 +25,7 @@
         plb
 
         lda #$0020
-        tsb bUnknown000E7B,b
+        tsb bAIEngineFlags,b
 
         lda wGameStateRoutine1,b
         cmp #GAMESTATE_MAP_STEP
@@ -40,7 +45,7 @@
                 bit #$0080
                 bne +
 
-                  lda bUnknown000E7B,b
+                  lda bAIEngineFlags,b
                   bit #$0080
                   bne +
 
@@ -54,7 +59,7 @@
 
         +
         lda #($0010 | $0020)
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
 
         plp
         plb
@@ -96,7 +101,7 @@
         .databank ?
 
         lda #$0010
-        tsb bUnknown000E7B,b
+        tsb bAIEngineFlags,b
 
         jsl rlBuildAITargetList
 
@@ -117,7 +122,7 @@
         ; no group is left, sets bit $20 of wMapStateFlags and goes to 7 (done).
 
         lda #$0010
-        tsb bUnknown000E7B,b
+        tsb bAIEngineFlags,b
 
         jsl rlFillAllyUnitMap
         jsl rlFillUnfriendlyUnitMap
@@ -129,8 +134,8 @@
         lda #0
         sta wAICurrentAIUnitCounter,b
         sta wAISelectedAIUnitOffset,b
-        sta wAIUnknownBitfield7E2000
-        sta wAIUnknown7E2002
+        sta wAIGroupFlags
+        sta wAIGroupMode
 
         lda wAICurrentAISetting,b
         jsl rlBuildAIUnitList
@@ -183,10 +188,10 @@
         ; target tile and the leader's waypoint for this turn.
 
         lda #$0010
-        tsb bUnknown000E7B,b
+        tsb bAIEngineFlags,b
 
         ; If any target is within threat range:
-        ; Either update wAIUnknown7E2002 with 2 if its 1, or leave it be.
+        ; Either update wAIGroupMode with 2 if its 1, or leave it be.
 
         jsl rlAIUpdateModeIfFoeInThreatRange
 
@@ -204,19 +209,19 @@
         .databank ?
 
         ; Waits while a map action is running. Then sets each member's destination: its own position
-        ; if the group has no target path (bit 0 of wAIUnknownBitfield7E2000 clear), else around the target;
+        ; if the group has no target path (bit 0 of wAIGroupFlags clear), else around the target;
         ; with objective 6, a group already in formation is skipped (next group).
 
         lda #$0010
-        tsb bUnknown000E7B,b
+        tsb bAIEngineFlags,b
 
         lda wMapActionActiveFlag,b
         bne _End
 
           lda #$0002
-          trb bUnknown000E7B,b
+          trb bAIEngineFlags,b
 
-          lda wAIUnknownBitfield7E2000
+          lda wAIGroupFlags
           bit #$0001
           bne +
 
@@ -261,7 +266,7 @@
         php
 
         lda #$0010
-        tsb bUnknown000E7B,b
+        tsb bAIEngineFlags,b
 
         jsl rlCheckIfAIUnitCanAct
         bcs +
@@ -301,13 +306,13 @@
               bne _9EBD
 
             +
-            lda wAIUnknownBitfield7E2000
+            lda wAIGroupFlags
             bit #$0040
             beq +
 
               ; group leader is fielded
               and #~$40
-              sta wAIUnknownBitfield7E2000
+              sta wAIGroupFlags
               lda #0
               sta wAICurrentAIUnitCounter,b
               sta wAISelectedAIUnitOffset,b
@@ -349,9 +354,10 @@
         .autsiz
         .databank ?
 
-        ; After siege attack ($0E8E=2), seize castle (action 4) if guard was defeated
+        ; After a siege (queued action 2) whose guard fell, starts a seize of that castle (action 4)
+        ; as a new map action; SEC if it did.
 
-        lda wAIUnknown000E8E,b
+        lda wAIQueuedActionID,b
         cmp #2
         bne _CLC
 
@@ -383,15 +389,15 @@
               and #$00FF
               sta wActiveActionUnit1DeploymentOffset,b
               lda #4
-              sta wAIUnknown000E8E,b
+              sta wAIQueuedActionID,b
               sta wActiveActionID,b
               lda #$FFFF
-              sta wAIUnknown000E8C,b
+              sta wAIQueuedActionTarget,b
               sta wActiveActionUnit2DeploymentOffset,b
               lda #$FFFF
               sta wMapActionActiveFlag,b
               lda #$0001
-              tsb bUnknown000E7B,b
+              tsb bAIEngineFlags,b
               sec
               rts
         
@@ -490,7 +496,7 @@
         lda #$00
 
         _9CD8
-        sta bUnknown000E7B,b,x
+        sta bAIEngineFlags,b,x
         dec x
         bpl _9CD8
         rep #$20
@@ -529,7 +535,7 @@
         beq +
 
           lda #$0040
-          tsb bUnknown000E7B,b
+          tsb bAIEngineFlags,b
           stz wAIEngineCycleType,b
 
         +
@@ -545,18 +551,18 @@
         .autsiz
         .databank ?
 
-        ; Clear bit $01 (AI/scripted action active) of bUnknown000E7B
+        ; Clear bit $01 (AI/scripted action active) of bAIEngineFlags
 
         phb
         php
         phk
         plb
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0001
         beq +
 
           lda #$0001
-          trb bUnknown000E7B,b
+          trb bAIEngineFlags,b
 
         +
         plp
@@ -571,7 +577,7 @@
         .autsiz
         .databank ?
 
-        ; Disable AI cycle (clear bit $40 of bUnknown000E7B)
+        ; Disable AI cycle (clear bit $40 of bAIEngineFlags)
 
         phb
         php
@@ -579,7 +585,7 @@
         plb
 
         lda #$0040
-        trb bUnknown000E7B,b
+        trb bAIEngineFlags,b
 
         plp
         plb

@@ -465,7 +465,7 @@
 
       aFactionGroup11AI1 ; 86/D79F
 
-        AI_0B
+        AI_STAND_IF_FOE_IN_RANGE
         AI_END
 
       aFactionGroup11AI2 ; 86/D7A1
@@ -477,7 +477,7 @@
 
       aFactionGroup11AI3 ; 86/D7A8
 
-        AI_07 Ch03_Sylvale, $04
+        AI_DEFEND_CASTLE Ch03_Sylvale, $04
         AI_END
 
       aFactionGroup11AI4 ; 86/D7AC
@@ -489,7 +489,7 @@
 
       aFactionGroup12AI1 ; 86/D7B3
 
-        AI_07 Ch03_Madino, $04
+        AI_DEFEND_CASTLE Ch03_Madino, $04
         AI_END
 
       aFactionGroup12AI2 ; 86/D7B7
@@ -497,11 +497,11 @@
         AI_SET_FORMATION $05, $02
         AI_JUMP_IF_TURN_REACHED 2, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
-        AI_06 Ch03_Agusti, $01
+        AI_ATTACK_CASTLE Ch03_Agusti, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -510,17 +510,17 @@
         AI_SET_FORMATION $07, $02
         AI_JUMP_IF_TURN_REACHED 3, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
-        AI_06 Ch03_Agusti, $01
+        AI_ATTACK_CASTLE Ch03_Agusti, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup12AI4 ; 86/D7D3
 
-        AI_06 Ch03_Agusti, $01
+        AI_ATTACK_CASTLE Ch03_Agusti, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -529,11 +529,11 @@
         AI_SET_FORMATION $05, $02
         AI_JUMP_IF_TURN_REACHED 4, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
-        AI_06 Ch03_Agusti, $01
+        AI_ATTACK_CASTLE Ch03_Agusti, $01
         AI_TARGET_ALL_FOES
         AI_END
 
@@ -542,17 +542,17 @@
         AI_SET_FORMATION $07, $01
         AI_JUMP_IF_TURN_REACHED 3, +
 
-          AI_0B
+          AI_STAND_IF_FOE_IN_RANGE
           AI_END
 
         +
-        AI_06 Ch03_Agusti, $01
+        AI_ATTACK_CASTLE Ch03_Agusti, $01
         AI_TARGET_ALL_FOES
         AI_END
 
       aFactionGroup12AI7 ; 86/D7F4
 
-        AI_0A
+        AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
         AI_END
 
       aFactionGroup13AI1 ; 86/D7F6
@@ -569,15 +569,15 @@
 
       aFactionGroup13AI3 ; 86/D7FE
 
-        AI_07 Ch03_Orgahil, $05
+        AI_DEFEND_CASTLE Ch03_Orgahil, $05
         AI_END
 
       aFactionGroup13AI4 ; 86/D802
 
-        AI_CHARGE_IF_LEADERLESS_BELOW_UNIT_RATIO floor(0.3 * 256)
-        AI_CHARGE_IF_LEADER_BELOW_THRESHOLD floor(0.3 * 256), 1 * 256
-        AI_06 Ch03_Madino, $01
-        AI_06 Ch03_Agusti, $01
+        AI_LEADER_RETREAT_IF_GROUP_BELOW floor(0.3 * 256)
+        AI_LEADER_RETREAT_IF_HP_BELOW floor(0.3 * 256), 1 * 256
+        AI_ATTACK_CASTLE Ch03_Madino, $01
+        AI_ATTACK_CASTLE Ch03_Agusti, $01
         AI_TARGET_ALL_FOES
         AI_END
 

@@ -856,7 +856,7 @@
 
         ; Runs event action $21 for the AI unit that is about to act (turn, army, its AI and its character), when the AI has queued one (bit 7 of wChapterFlags).
 
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0040
         beq _End
 
@@ -1701,7 +1701,7 @@
         ; Whether the active unit moves again (canto): alive, not defeated, with DeploymentStateCanto. Builds its range maps; if it can move, sets bits 13 and 15 of wChapterFlags (rsResumeCantoMove), otherwise opens its unit menu in mode 1. SEC if it has canto.
 
         phx
-        lda bUnknown000E7B,b
+        lda bAIEngineFlags,b
         bit #$0040
         bne _CLC
 
