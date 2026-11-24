@@ -114,7 +114,9 @@
 
   ; Bits of bBattleRoundFlags, for the strike being resolved. Bit 0 is
   ; wBattleAttackerIndex (which side strikes). Crit and miss are from the
-  ; original notes (see bBattleRoundFlags in WRAM.h); $02 and $10 are not known.
+  ; original notes (see bBattleRoundFlags in WRAM.h). $02 has no name yet: the
+  ; staff effects, Rescue, Valkyrie, status staves and Dance set it, so it marks
+  ; a strike that is not an attack.
   BattleRoundFlagCrit   = bits($04)
   BattleRoundFlagMiss   = bits($08)
   BattleRoundFlagFatal  = bits($10) ; the strike defeats the defender (not set for a defender with CombatSkillFlagStayOnMap, outside the arena and JuliusChFinal); the battle scene reads no rounds after it
