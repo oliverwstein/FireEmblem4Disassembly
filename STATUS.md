@@ -31,7 +31,7 @@ What's left, easiest first:
 - **`gcUnknown`** (261 compressed streams): asset work; name from the loading routine and confirm by rendering (`gfx/compressed/CATALOG.md`), per the asset rules.
 - **Labels with no references** (114): don't call them unused until raw `.byte`/`.word` data near them is decoded; hidden pointers in raw scripts were the reason four "Unused" routines were wrong.
 - `wUnknown` (51) WRAM variables, `aPortraitPaletteUnknown` (14), `aSoundUnknown` (12), the dialogueShopNN placeholders (named by table index; could take content names like the Unknown ones did).
-- The Lil' Nordion and Project Naga translation build repos (GitHub, links via their patch pages) may help with text tables.
+- **Project Naga's build files** (github.com/Miacidae/Project-Naga-beta-v7) replace every graphic that carries text. Their `Graphics/_GraphicsInstaller.asm` repoints and comments map Naga files to vanilla streams; used for the intro captions, world map, genealogy wheel and battle labels (commit c0f5809). Its `MenuText/` is newly drawn English menu text in expanded ROM, so it maps only through its code patches. Darrman's FE4BinaryTranslation targets the FE Binary romhack; its text tables match ours where the layout is vanilla and add nothing new.
 
 ## Who wrote what
 
