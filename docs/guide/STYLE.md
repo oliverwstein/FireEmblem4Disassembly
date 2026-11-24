@@ -12,12 +12,14 @@
 
 - **Omit needless words.** Prefer active verbs and concrete nouns over filler or throat-clearing.
 - **Put statements in positive form.** Say what a routine does rather than what it avoids.
-- **Lead with the concrete.** Introduce a mechanism through a visible game moment or data structure before generalizing.
+- **Explain the system before the code.** Open each chapter and section with something useful—the elements of the system, its rules, and how the engine organizes them—rather than a snappy in-game vignette. Ground explanations in concrete game rules and data structures once the architecture is clear.
 - **Vary the cadence.** Keep paragraphs short and focused, and avoid ending every section with a neat two-beat aphorism. Let some sections end on an example or a concrete limit.
+- **Keep long symbols out of prose.** Avoid packing long routine or table names into every sentence. Put them in pseudocode comments, tables, or the closing source list unless the symbol itself is the subject.
 
 ## Chapter structure
 
 - **Problem → solution → trade-offs → source.** Open every chapter with the hardware or design constraint the developers faced, explain the data and control flow that solve it, note the costs and hard limits, and point to where the pieces live.
+- **Mechanics before implementation.** When a system has complex gameplay rules, explain the mechanics first—using tables where helpful—before introducing RAM layouts, data structures, and execution flow.
 - **Name patterns directly.** Use standard vocabulary (*Game Loop*, *State*, *Update Method*, *Bytecode*, *Flyweight*, *Structure of Arrays*) as plain technical terms. Do not cite *Game Programming Patterns* or Robert Nystrom inline.
 - **Ground plumbing in gameplay.** Even hardware-level chapters should anchor their examples in real FE4 moments (a screen fade, a castle banner, a dialogue box unfolding).
 - **Rust-flavored pseudocode.** Translate assembly logic into short, readable pseudocode annotated with the real routine and variable names (`// rlMapStep`). Readers should never need to read 65816 assembly to follow the explanation.

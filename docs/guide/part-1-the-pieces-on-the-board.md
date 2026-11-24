@@ -21,7 +21,7 @@ Work RAM (bank $7E)                                     Cartridge ROM (4 MB)
 └─────────────────────────────────────────────────┘
 ```
 
-The [introduction](00-introduction.md) sketched the hardware and the main loop. Part I examines the nouns of the game—its structured data—before Part II sets them in motion on the map. Three design choices govern the entire region:
+The [introduction](00-introduction.md) sketched the hardware and the main loop. Part I examines the nouns of the game—its structured data—before Part II pits them against one another in combat and Part III sets them in motion on the map. Three design choices govern the entire region:
 
 1. **ROM templates, RAM pools.** Static rules never leave the cartridge. Character bases, enemy growths, class tables, item stats, and Holy Blood bonuses stay in `data/character/` ([../../data/character/](../../data/character/)), `data/class/` ([../../data/class/](../../data/class/)), and `data/item/` ([../../data/item/](../../data/item/)). Work RAM holds only what changes during play, allocated from fixed-size pools sized to the game's exact cast and chapter budgets rather than a shared heap.
 2. **Composition over duplication.** Almost no gameplay number is stored in a single place. A unit's effective strength combines personal stats, class bases, equipped weapon bonuses, and ring flags; skills come from character, class, and item bitfields; weapon ranks blend class defaults with Holy Blood tiers. Shared getters assemble these layers on demand behind a uniform interface.

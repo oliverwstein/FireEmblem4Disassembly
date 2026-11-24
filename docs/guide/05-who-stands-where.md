@@ -1,8 +1,8 @@
 # Chapter 5: Who Stands Where
 
-At the start of Chapter 1, Sigurd's army waits inside Evans Castle. When the player sends a knight out, it appears on the castle's tile; when it rides to a village, the village closes and its gold goes to the knight; when a Verdane axe fighter reaches a village first, it carries off 500 gold, and after enough raids the village is destroyed. Every unit on the map has a tile, a sprite, and a handful of flags (alive, hidden, has acted, asleep), and every castle and village has an owner and a state.
+A unit's record in `aUnitRAMArea` ([Chapter 1](01-a-unit-is-made-of-parts.md)) holds who the unit is, not where it stands. Board state—whether a unit is waiting inside a castle or standing on a map tile, its per-frame sprite and turn flags (alive, hidden, has acted, asleep, guarding), and the castles and villages that change owners or suffer raids—lives in separate structures.
 
-This chapter covers the two tables that hold that information: the 72-row **deployment table**, which records where each unit is and how it is drawn, and the 16-byte **location table**, which records who owns each castle and what has happened to each village.
+This chapter covers the two tables that hold that state: the 72-row **deployment table**, which records where each unit is and how it is drawn, and the 16-entry **location table**, which records who owns each castle and what has happened to each village.
 
 ## The deployment table
 
@@ -41,7 +41,7 @@ fn unit_at(x: u8, y: u8) -> Option<UnitPtr> {        // rlGetUnitByCoordinates
 }
 ```
 
-That is 72 comparisons per lookup, fine for the cursor. Code that asks the question for many tiles at once, such as the range search, the AI's threat and movement maps, and target selection, first builds a grid from the table (`rlBuild32x32MapUnitGrid` fills a 32 × 32 window around a point with deployment offsets) and then reads the grid ([Chapter 7](OUTLINE.md), [Chapter 14](OUTLINE.md)).
+That is 72 comparisons per lookup, fine for the cursor. Code that asks the question for many tiles at once, such as the range search, the AI's threat and movement maps, and target selection, first builds a grid from the table (`rlBuild32x32MapUnitGrid` fills a 32 × 32 window around a point with deployment offsets) and then reads the grid ([Chapter 9](OUTLINE.md), [Chapter 14](OUTLINE.md)).
 
 ### Shared sprites
 
@@ -101,7 +101,7 @@ CHECK_UNIT_IN_AREA FlagChapter01_LexOnPeninsula, Lex, pack([28, 37]), pack([28, 
   EVENT FlagChapter01_LexBraveAxe, EventChapter01LexBraveAxe
 ```
 
-Nothing searches the map for Lex. Every way a unit's action can end (waiting, attacking, visiting, seizing) goes through `rlFinishUnitAction`, which grays the unit and leaves its deployment offset in `wActionEndedDeploymentOffset`. On a later frame, once any battle, popup, or Canto move has finished, the turn loop ([Chapter 6](OUTLINE.md)) reads that note and announces the unit's arrival to the event system:
+Nothing searches the map for Lex. Every way a unit's action can end (waiting, attacking, visiting, seizing) goes through `rlFinishUnitAction`, which grays the unit and leaves its deployment offset in `wActionEndedDeploymentOffset`. On a later frame, once any battle, popup, or Canto move has finished, the turn loop ([Chapter 8](OUTLINE.md)) reads that note and announces the unit's arrival to the event system:
 
 ```rust
 fn run_action_ended_events() {                       // rsRunActionEndedEvents

@@ -1,8 +1,8 @@
 # Chapter 2: Classes, Stats, Skills, and Weapon Ranks
 
-Sigurd's status screen shows his speed as `12`. Equip Tyrfing and it reads `12 +10`. Promote a Cavalier to Paladin and six of the seven numbers jump at once, though nothing about the unit itself was rewritten. Give a unit a Renewal Band and it heals at the start of each turn without equipping anything, but a Killer Bow grants its critical skill only while in hand.
+No number on a unit's status screen is stored in a single place. Every stat, skill, and weapon rank is assembled on demand from up to five sources—class, personal stats, holy blood, equipped weapon, and rings—each living in its own ROM table with its own encoding.
 
-No number on that screen is stored anywhere. Each one is assembled on demand from up to five places: the unit's class, its own stats, its holy blood, its equipped weapon, and its rings. Each source is a separate ROM table with its own layout, and the same idea (a skill, a stat bonus) is often encoded differently in each. This chapter covers how the getters introduced in [Chapter 1](01-a-unit-is-made-of-parts.md) combine those sources into the numbers the rest of the game uses.
+Because those terms stay separate, changing one updates the totals automatically: promoting a unit changes six class stats without rewriting personal stats, equipping a holy weapon adds live stat bonuses, and carrying a ring grants its bonus passively from inventory while weapon skills apply only while equipped. This chapter covers how the getters introduced in [Chapter 1](01-a-unit-is-made-of-parts.md) combine those sources into the numbers the rest of the game uses.
 
 ## A stat is a sum
 
@@ -45,7 +45,7 @@ Because the class is a live term in every sum, a unit doesn't store its class-ad
 | Paladin bases | 9 | 5 | 9 | 9 | 9 | 5 |
 | Gain on promotion | +2 | +5 | +3 | +3 | +3 | +5 |
 
-`rlSetSelectedUnitClass` writes a single byte, the class ID in the unit's extended part. No stat is rewritten. The class change screen ([engine/castle/class_change.asm](../../engine/castle/class_change.asm)) only learns what the unit gained by unpacking its totals into a buffer before the change and again after it, then showing the difference. One consequence follows directly: promotion never raises a player unit's max HP, since HP has no class term to change. When and how a unit promotes is [Chapter 10](OUTLINE.md)'s subject.
+`rlSetSelectedUnitClass` writes a single byte, the class ID in the unit's extended part. No stat is rewritten. The class change screen ([engine/castle/class_change.asm](../../engine/castle/class_change.asm)) only learns what the unit gained by unpacking its totals into a buffer before the change and again after it, then showing the difference. One consequence follows directly: promotion never raises a player unit's max HP, since HP has no class term to change. When and how a unit promotes is [Chapter 7](07-growing-stronger.md)'s subject.
 
 A class is a row of numbers ([data/class/ClassData.csv](../../data/class/ClassData.csv), 72 rows): a promotion level, seven stat bases, seven growth rates, ten weapon ranks, movement and terrain types, a skill word, and the gold a generic enemy of that class carries.
 
@@ -77,7 +77,7 @@ fn total_strength_growth() -> u8 {                   // rlGetSelectedUnitTotalSt
 }
 ```
 
-Sigurd's own strength growth is 30%; Major Baldr adds 2 × 10, for 50%. His HP growth goes from 70% to 110%. The bonus is a signed byte, so the table could also take growth away, which is why the total is floored at zero. Level-ups roll against these totals ([Chapter 10](OUTLINE.md)).
+Sigurd's own strength growth is 30%; Major Baldr adds 2 × 10, for 50%. His HP growth goes from 70% to 110%. The bonus is a signed byte, so the table could also take growth away, which is why the total is floored at zero. Level-ups roll against these totals ([Chapter 7](07-growing-stronger.md)).
 
 **Holy weapon boosts.** Tyrfing's `+10` speed is not stored with Tyrfing. Its item entry carries only a stat-bonus ID, `TyrfingStatBoost = $01`, and equipping it copies that ID into the unit's personal `WeaponStatBonus`. `rlGetWeaponStatBoostForSpecifiedStat` treats IDs `$01`–`$0D` as an index into the holy blood table and reads the boost from the matching blood's row. The two non-holy weapons with bonuses, the Safeguard (`$0E`) and the Barrier Blade (`$0F`), fall outside that range and are special-cased in the defense and resistance getters. The design ties each holy weapon's power to its bloodline in data, not just in the story.
 

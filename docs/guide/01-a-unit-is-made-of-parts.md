@@ -1,10 +1,8 @@
 # Chapter 1: A Unit Is Made of Parts
 
-In the first chapter of the second generation, Seliph rides out of Tirnanog toward an axe fighter of the Isaach occupation. On screen the two are the same kind of thing: a sprite on a tile, a name, a class, HP, seven stats, an inventory. Underneath they have almost nothing in common.
+Up to 72 units share a chapter map at once, and every system above them—combat, AI, menus, and saving—asks all of them the same questions: what is a unit's strength, class, level, skill set, or inventory? Yet those 72 slots span four different tiers of mutability: playable characters with growing stats in work RAM, generation-2 children whose growths are derived from their parents at the start of the generation, hand-tuned major bosses with fixed stat sheets in ROM, and generic enemies whose stats are computed from class and level on demand.
 
-Seliph's stats grow at every level-up, and his growth rates exist nowhere in the cartridge: the game worked them out from his parents at the start of the generation. The axe fighter will never level up, marry, or be saved to the battery; his stats follow entirely from his class and level. Between the two sit rulers and major bosses such as Arvis and Danann, whose stat sheets were set by hand and never change.
-
-The engine holds up to 72 of these at once, and every system above it (combat, AI, menus, saving) asks all of them the same questions: what is its strength, its class, its level? The answer is a small header of pointers, a set of *parts* that each kind of unit owns or borrows from ROM, and a layer of getters that hide which is which.
+To keep callers uniform without wasting work RAM on static enemies, the engine builds each unit from a small header of pointers, a set of *parts* owned in RAM or borrowed from ROM, and a layer of getters that hide which is which.
 
 ## Four kinds of unit
 

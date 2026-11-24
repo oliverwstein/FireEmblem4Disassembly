@@ -1,8 +1,8 @@
 # Chapter 4: Armies and Allegiance
 
-Chapter 1 opens with Sigurd's army marching on Verdane. Genoa, Marpha, and Verdane are his enemies and allies of one another. Nordion's army sits to the east, neutral: Sigurd can't attack it, and it can't attack him, but its units still block his path. Partway through, Heirhein's army appears, at war with Sigurd and allied with Nordion. A scene later, Heirhein and Nordion are at war, and Nordion has become Sigurd's ally.
+*Genealogy of the Holy War* fields multiple armies on the same map whose alliances can shift mid-chapter and whose neutral forces block movement without fighting. Rather than labeling each unit simply "player" or "enemy," the engine groups units into *factions* and stores relations—own, allied, neutral, or enemy—per pair of factions.
 
-Each army is a *faction*, and each pair of factions has its own relation: enemy, allied, or neutral. A unit's allegiance comes from its faction's relations, so two computer-controlled armies can fight each other, an army can be neutral to the player and at war with its neighbor, and a script can change any pair mid-chapter. This chapter covers the faction slots that hold the armies, the two bitmasks that store their relations, and the copy of the player's relation that each unit keeps.
+Because relations live at the faction-pair level, two computer-controlled armies can fight each other, an army can be neutral to the player while at war with its neighbor, and an event script can rewrite any pair mid-chapter. This chapter covers the seven faction slots that hold the armies, the two bitmasks that store their relations, and the copy of the player's relation that each unit keeps.
 
 ## Groups and slots
 
