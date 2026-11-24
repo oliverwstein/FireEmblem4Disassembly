@@ -21,7 +21,7 @@
         sta $2100,b
         rep #$20
         jsl rlBattleSceneRunUploads
-        jsl rlUnknown969FD7
+        jsl rlBattleSceneToggleOAMExtBuffer
         jsl rlUnknown96D5DB
         jsl rlBattleSceneRunQueuedCopies
         jsl rlUnknown96EB1E
@@ -35,7 +35,7 @@
         lda $7FFC77
         bit #$0001
         beq _BF89
-        jsl rlUnknown969FEB
+        jsl rlBattleSceneVBlankCopyOAMExt
         bra _BF8D
 
 
@@ -139,7 +139,7 @@
         sta $2100,b
         rep #$20
         plp
-        jsl rlUnknown96892C
+        jsl rlBattleSceneVBlankNoOp
         cli
         rts
 

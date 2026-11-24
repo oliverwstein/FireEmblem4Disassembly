@@ -2806,7 +2806,7 @@
         .autsiz
         .databank ?
 
-        ; Every frame: takes the next word of the list at $7FE4D2 into $7FE4C5/$7FE4CB and copies its bytes of aUnknown98AC4C to $7FE3FD.. (rlUnknown9695AE); at $FFFF ends the routine.
+        ; Every frame: takes the next word of the list at $7FE4D2 into $7FE4C5/$7FE4CB and copies its bytes of aUnknown98AC4C to $7FE3FD.. (rlBattleSceneUpdateExpWindowScroll); at $FFFF ends the routine.
 
         phy
         lda $7FE4D2
@@ -2829,7 +2829,7 @@
         sta $7FE4CB
         rep #$20
         pla
-        jsl rlUnknown9695AE
+        jsl rlBattleSceneUpdateExpWindowScroll
         lda $7FE4D2
         clc
         adc #$0002
@@ -3030,7 +3030,7 @@
         plx
         cpx #$006C
         bcc _8724
-        jsl rlUnknown96957D
+        jsl rlBattleSceneInitWindowScrollVars
         rtl
 
         .databank 0

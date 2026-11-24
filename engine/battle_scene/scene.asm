@@ -157,7 +157,7 @@
 
         ; Called once by rsOpenBattleScene: sets the PPU, copies the combatants from the action structs, loads background, combatants and weapons, places the combatants, and resets the scene's engines.
 
-        jsl rlUnknown9695F5
+        jsl rlBattleSceneStartBattleSong
         jsr rsBattleSceneSetPPURegisters
         jsl rlBattleSceneSetFlags
         jsr rsBattleSceneCopyCombatants
@@ -170,8 +170,8 @@
         jsr rsBattleScenePlaceCombatants
         jsl rlBattleAnimationRunMoveQueue
         jsl rlBattleAnimationRunMoveQueue
-        jsl rlUnknown968DBD
-        jsl rlUnknown968E7E
+        jsl rlBattleSceneBlankWindowDisplay
+        jsl rlBattleSceneResetBrightnessVars
         jsl rlBattleSceneClearScriptRoutine
         jsl rlFreeBattleScenePaletteSlots
         jsl rlBattleSceneLoadHUD
@@ -319,7 +319,7 @@
         stz aBattleSceneAfterimages.Flags,b
         stz Flags,b
         rep #$20
-        jsl rlUnknown95A43C
+        jsl rlBattleSceneClearFade
         jsl rlUnknown96DD39
         jsl rlUnknown96EB02
         jsl rlUnknown96EBC9
@@ -353,9 +353,9 @@
         jsl rlBattleSceneSetAnimStyles
         jsl rlBattleSceneLookUpAnimations
         jsl rlBattleAnimationSetBodyIndices
-        jsl rlUnknown96957D
-        jsl rlUnknown95A414
-        jsl rlUnknown95A428
+        jsl rlBattleSceneInitWindowScrollVars
+        jsl rlBattleSceneCreateHUDBannerHDMA
+        jsl rlBattleSceneCreateLetterboxHDMA
         rts
 
         .databank 0
@@ -507,7 +507,7 @@
 
         _8B85
         jsl rlBattleSceneTrackCombatantSides
-        jsl rlUnknown96A0E2
+        jsl rlBattleSceneRestoreOAMOffset
         jsl rlBattleAnimationRunSignals
         jsl rlRunBattleSceneScript
         jsl rlUnknown96CB44
@@ -522,7 +522,7 @@
         jsl rlBattleSceneRunCameraPan
         jsl rlUnknown96BE28
         jsl rlBattleAnimationUpdateAll
-        jsl rlUnknown96A05C
+        jsl rlBattleSceneScriptSaveOAMExt
         jsl rlBattleSceneDrawAfterimages
         jsr rsBattleSceneDrawShadows
         jsr rsBattleSceneUpdateHP1
@@ -539,9 +539,9 @@
         lda $7FE1CF
         and #$00FF
         beq _8BEF
-        jsr rsUnknown9590F2
-        jsr rsUnknown959210
-        jsr rsUnknown959197
+        jsr rsBattleSceneBuildBG2VOFSTable
+        jsr rsBattleSceneBuildBG2HOFSTable
+        jsr rsBattleSceneBuildBG2PerspectiveTable
         jsl rlBattleSceneRunQueuedCopies
         jsl rlUnknown96EE95
         jsl rlBattleSceneReadArenaRetreat

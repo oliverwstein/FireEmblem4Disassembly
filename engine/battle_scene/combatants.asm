@@ -353,7 +353,7 @@
         ldx wR12
         lda aUnknown97EA9A,x
         and #$00FF
-        jsl rlUnknown95A165
+        jsl rlBattleSceneNoOp2
         plx
         rtl
 
@@ -426,7 +426,7 @@
         ldx wR12
         lda aUnknown97EA9A+2,x
         and #$00FF
-        jsl rlUnknown95A165
+        jsl rlBattleSceneNoOp2
         ply
         plx
         rtl
@@ -563,7 +563,7 @@
         .autsiz
         .databank ?
 
-        ; X = 0 or $43: the distance the combatants start apart. $C8 for a magic sword (Fire Sword to Light Brand) at range; $E0 for the Physic, Restore, Silence, Sleep and Berserk Staves at distance 2; otherwise twice byte 6 of the body record (the other combatant's when a mage faces a non-mage up close and rlUnknown969F7D says so).
+        ; X = 0 or $43: the distance the combatants start apart. $C8 for a magic sword (Fire Sword to Light Brand) at range; $E0 for the Physic, Restore, Silence, Sleep and Berserk Staves at distance 2; otherwise twice byte 6 of the body record (the other combatant's when a mage faces a non-mage up close and rlBattleSceneCheckAlternatingRounds says so).
 
         phx
         lda wBattleDistance
@@ -599,7 +599,7 @@
         and #$000F
         cmp #$0005
         beq _B73C
-        jsl rlUnknown969F7D
+        jsl rlBattleSceneCheckAlternatingRounds
         bcs _B781
         bra _B73C
 
@@ -613,7 +613,7 @@
         and #$000F
         cmp #$0005
         beq _B73C
-        jsl rlUnknown969F7D
+        jsl rlBattleSceneCheckAlternatingRounds
         bcs _B781
 
         _B73C
@@ -679,7 +679,7 @@
         ldx wR12
         lda aUnknown97EA9A+6,x
         and #$00FF
-        jsl rlUnknown95A165
+        jsl rlBattleSceneNoOp2
         asl a
 
         _B7AC
@@ -2931,7 +2931,7 @@
         _C1E4
         clc
         adc wR0
-        jsl rlUnknown95A164
+        jsl rlBattleSceneNoOp1
         sta wR0
         lda wBattleAnimationYAnchor,b,x
         sec
@@ -6644,7 +6644,7 @@
         _D7EC
         clc
         adc wR0
-        jsl rlUnknown95A164
+        jsl rlBattleSceneNoOp1
         sta wR0
         lda wBattleAnimationYAnchor,b,x
         xba
@@ -6854,7 +6854,7 @@
         lda #3,s
         tax
         lda wR0
-        jsl rlUnknown95A164
+        jsl rlBattleSceneNoOp1
         sta wR0
         plx
         lda $0C49,b,x

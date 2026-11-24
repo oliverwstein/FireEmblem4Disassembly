@@ -682,7 +682,7 @@
         bcc _88CA
         lda #$0004
         jsl rlHDMAEngineFreeEntryByIndex
-        jsl rlUnknown9695E3
+        jsl rlBattleSceneTerminateTextBuffer
         rtl
 
         .databank 0
@@ -715,7 +715,7 @@
 
         lda #$0004
         jsl rlHDMAEngineFreeEntryByIndex
-        jsl rlUnknown9695E3
+        jsl rlBattleSceneTerminateTextBuffer
         rtl
 
         .databank 0

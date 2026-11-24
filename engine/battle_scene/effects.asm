@@ -9589,7 +9589,7 @@
         and #$03FF
         sec
         sbc #$0100
-        jsl rlUnknown95A164
+        jsl rlBattleSceneNoOp1
         eor #$FFFF
         inc a
         sec
@@ -9611,7 +9611,7 @@
         sbc wBattleSceneCameraX
         sec
         sbc #$0100
-        jsl rlUnknown95A164
+        jsl rlBattleSceneNoOp1
         eor #$FFFF
         inc a
         sec
@@ -13729,7 +13729,7 @@
         and #$FB
         sta $7FE1B3
         rep #$20
-        jsl rlUnknown95A428
+        jsl rlBattleSceneCreateLetterboxHDMA
         jsl rlBattleSceneEndScriptRoutine
         rtl
 
@@ -13764,7 +13764,7 @@
 
         ; Unreferenced.
 
-        jsl rlUnknown95A428
+        jsl rlBattleSceneCreateLetterboxHDMA
         jsl rlBattleSceneEndScriptRoutine
         rtl
 

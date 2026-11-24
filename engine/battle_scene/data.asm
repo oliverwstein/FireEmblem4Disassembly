@@ -213,31 +213,31 @@
         .long rlBattleSceneScriptInitExpBarSlide ; $00
         .long rlBattleSceneStartExperienceFill ; $01
         .long rlBattleSceneDrawLevelUpWindow ; $02
-        .long rlUnknown968DC8 ; $03
-        .long rlUnknown968E22 ; $04
+        .long rlBattleSceneScriptFadeOutWindow1 ; $03
+        .long rlBattleSceneScriptFadeInWindow1 ; $04
         .long rlUnknown96CAA7 ; $05
-        .long rlUnknown968E00 ; $06
-        .long rlUnknown968E4C ; $07
-        .long rlUnknown968DE1 ; $08
+        .long rlBattleSceneScriptFadeOutWindowSlow ; $06
+        .long rlBattleSceneScriptFadeInWindow3 ; $07
+        .long rlBattleSceneScriptFadeOutWindow3 ; $08
         .long 0 ; $09
         .long 0 ; $0A
         .long 0 ; $0B
         .long 0 ; $0C
         .long rlBattleSceneStartExperienceGauge ; $0D
-        .long rlUnknown968F50 ; $0E
+        .long rlBattleSceneScriptInitStatGains ; $0E
         .long rlUnknown96DCC8 ; $0F
-        .long rlUnknown969163 ; $10
+        .long rlBattleSceneScriptInitLevelUpNumber ; $10
         .long rlBattleSceneScriptHideAttacker ; $11
         .long rlBattleSceneScriptShowDefender ; $12
-        .long rlUnknown968E8F ; $13
-        .long rlUnknown968EE9 ; $14
-        .long rlUnknown968EC7 ; $15
-        .long rlUnknown968F13 ; $16
-        .long rlUnknown968EA8 ; $17
+        .long rlBattleSceneScriptFadeOutMain1 ; $13
+        .long rlBattleSceneScriptFadeInMain1 ; $14
+        .long rlBattleSceneScriptFadeOutMainSlow ; $15
+        .long rlBattleSceneScriptFadeInMain3 ; $16
+        .long rlBattleSceneScriptFadeOutMain3 ; $17
         .long rlBattleSceneScriptNextEffectPose ; $18
         .long rlBattleSceneScriptInitMessageWindowMode3 ; $19
         .long rlBattleSceneScriptInitMessageWindowMode4 ; $1A
-        .long rlUnknown96890E ; $1B
+        .long rlBattleSceneResetToNormalMode ; $1B
         .long rlBattleSceneScriptClearMessage ; $1C
         .long rlBattleSceneScriptRunMessage ; $1D
         .long rlBattleSceneScriptFreeMessageHDMA ; $1E
@@ -254,7 +254,7 @@
         .long rlUnknown96F45F ; $29
         .long rlUnknown96F512 ; $2A
         .long rlUnknown96F52C ; $2B
-        .long rlUnknown968F45 ; $2C
+        .long rlBattleSceneScriptSetFullBrightness ; $2C
         .long rlUnknown96F543 ; $2D
         .long rlUnknown96F54F ; $2E
         .long rlUnknown96F4A3 ; $2F
@@ -274,13 +274,13 @@
         .long rlBattleSceneScriptSetVictoryMusic ; $3D
         .long rlUnknown96FC49 ; $3E
         .long rlUnknown96FB99 ; $3F
-        .long rlUnknown969FC8 ; $40
-        .long rlUnknown96A05C ; $41
+        .long rlBattleSceneEnableOAMBufferCopy ; $40
+        .long rlBattleSceneScriptSaveOAMExt ; $41
         .long rlBattleSceneFadeMusicForJulius ; $42
-        .long rlUnknown969617 ; $43
+        .long rlBattleSceneScriptFadeOutMusic ; $43
         .long rlUnknown96B08D ; $44
         .long rlUnknown96FD13 ; $45
-        .long rlUnknown96A160 ; $46
+        .long rlBattleSceneScriptInitBG1Dimmed ; $46
         .long rlUnknown96FC81 ; $47
 
         ; 97/BEAC
@@ -1045,7 +1045,7 @@
 
       aUnknown988000 ; 98/8000
 
-        ; 256 x 41-byte records. Read by rsUnknown959197.
+        ; 256 x 41-byte records. Read by rsBattleSceneBuildBG2PerspectiveTable.
 
         .byte $5B, $59, $56, $54, $52, $50, $4D, $4B, $49, $46, $44, $42, $40, $3D, $3B, $39, $36, $34, $32, $30, $2D ; $00
         .byte $2B, $29, $26, $24, $22, $20, $1D, $1B, $19, $16, $14, $12, $10, $0D, $0B, $09, $06, $04, $02, $00
@@ -1616,7 +1616,7 @@
 
       aUnknown98ABFC ; 98/ABFC
 
-        ; Read by rlUnknown96957D.
+        ; Read by rlBattleSceneInitWindowScrollVars.
 
         .word $E0E0, $E0E0, $E0E0, $E1E1, $E1E1, $E1E1, $E2E2, $E2E2
         .word $E2E2, $E3E3, $E3E3, $E3E3, $E4E4, $E4E4, $E4E4, $E5E5
@@ -1628,7 +1628,7 @@
 
       aUnknown98AC4C ; 98/AC4C
 
-        ; Read by rlUnknown9695AE.
+        ; Read by rlBattleSceneUpdateExpWindowScroll.
 
         .byte $E0, $E0, $E0, $E0, $E1, $E1, $E1, $E2, $E2, $E2, $E2, $E3, $E3, $E3, $E4, $E4
         .byte $E4, $E4, $E5, $E5, $E5, $E6, $E6, $E6, $E6, $E7, $E7, $E7, $E8, $E8, $E8, $E8
@@ -2456,7 +2456,7 @@
 
       aUnknown998532 ; 99/8532
 
-        ; Read by rlUnknown969037.
+        ; Read by rlBattleSceneScriptStepStatGain.
 
         .byte $01, $F8, $02, $F4, $03, $F2, $04, $F1, $05, $F0, $07, $EF, $09, $EF, $0B, $F0
         .byte $0C, $F1, $0D, $F3, $0E, $F5, $0E, $F7, $0E, $F9, $0E, $FB, $0D, $FD, $0C, $FE
@@ -2469,7 +2469,7 @@
 
       aUnknown998586 ; 99/8586
 
-        ; Read by rlUnknown9691C8.
+        ; Read by rlBattleSceneScriptStepLevelUpNumber.
 
         .byte $FC, $FC, $00, $F8, $F9, $01, $F5, $F7, $02, $F2, $F5, $03, $F1, $F3, $04, $F1
         .byte $F1, $05, $F1, $F0, $06, $F1, $F0, $07, $F1, $F1, $08, $F0, $F2, $09, $EE, $F3
@@ -2487,7 +2487,7 @@
 
       aUnknown99862F ; 99/862F
 
-        ; Read by rlUnknown9691C8.
+        ; Read by rlBattleSceneScriptStepLevelUpNumber.
 
         .word $0000, $0000, $0201, $0403, $0402, $0806, $0603, $0C09
         .word $0804, $100C, $0A05, $140F, $0C06, $1812, $0E07, $1C15
@@ -2500,7 +2500,7 @@
 
       aUnknown998683 ; 99/8683
 
-        ; Read by rlUnknown968F71.
+        ; Read by rlBattleSceneScriptNextStatGain.
 
         .word $4F05, $F57E, $7E4E, $A890, $0B00, $7E4F, $4EFB, $E87E
         .word $01A8, $4F07, $F77E, $7E4E, $B090, $0D02, $7E4F, $4EFD
@@ -2889,7 +2889,7 @@
 
       aUnknownE000B0 ; E0/00B0
 
-        ; Read by rlBattleSceneDrawLevelUpWindow, rlUnknown968982, rlUnknown968A57, rlBattleSceneShowLevelUpBanner.
+        ; Read by rlBattleSceneDrawLevelUpWindow, rlBattleSceneHBlankNormalHUD, rlBattleSceneHBlankMode1MidHUD, rlBattleSceneShowLevelUpBanner.
 
         .byte $C4, $09, $85, $00, $F6, $7F, $1F, $00, $03, $00, $BF, $7F, $CE, $4A, $A4, $14
         .byte $FF, $7F, $00, $04, $D3, $57, $AA, $3E
@@ -2898,7 +2898,7 @@
 
       aUnknownE000C8 ; E0/00C8
 
-        ; Read by rlBattleSceneLoadMessageColors, rlUnknown968BC2.
+        ; Read by rlBattleSceneLoadMessageColors, rlBattleSceneHBlankMode2HUD.
 
         .byte $00, $00, $5F, $4B, $78, $32, $F3, $25, $00, $00, $27, $00, $9F, $57, $5F, $13
         .byte $8B, $2D

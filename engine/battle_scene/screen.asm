@@ -8,7 +8,7 @@
       .al
       .xl
 
-      rsUnknown9590F2 ; 95/90F2
+      rsBattleSceneBuildBG2VOFSTable ; 95/90F2
 
         .al
         .xl
@@ -100,7 +100,7 @@
 
         ; 95/9197
 
-      rsUnknown959197 ; 95/9197
+      rsBattleSceneBuildBG2PerspectiveTable ; 95/9197
 
         .al
         .xl
@@ -178,7 +178,7 @@
 
         ; 95/9210
 
-      rsUnknown959210 ; 95/9210
+      rsBattleSceneBuildBG2HOFSTable ; 95/9210
 
         .al
         .xl
@@ -478,7 +478,7 @@
 
         ; 95/A164
 
-      rlUnknown95A164 ; 95/A164
+      rlBattleSceneNoOp1 ; 95/A164
 
         .al
         .xl
@@ -491,7 +491,7 @@
 
         ; 95/A165
 
-      rlUnknown95A165 ; 95/A165
+      rlBattleSceneNoOp2 ; 95/A165
 
         .al
         .xl
@@ -515,7 +515,7 @@
       .al
       .xl
 
-      rlUnknown95A414 ; 95/A414
+      rlBattleSceneCreateHUDBannerHDMA ; 95/A414
 
         .al
         .xl
@@ -535,7 +535,7 @@
 
         ; 95/A428
 
-      rlUnknown95A428 ; 95/A428
+      rlBattleSceneCreateLetterboxHDMA ; 95/A428
 
         .al
         .xl
@@ -555,7 +555,7 @@
 
         ; 95/A43C
 
-      rlUnknown95A43C ; 95/A43C
+      rlBattleSceneClearFade ; 95/A43C
 
         .al
         .xl
@@ -630,7 +630,7 @@
       .xl
 
       aUnknown968000 ; 96/8000
-        .word $0060, $00CF, <>rlUnknown968008, <>aUnknown96800D
+        .word $0060, $00CF, <>rlBattleSceneIRQ5Handler, <>aUnknown96800D
 
     .endsection Table968000Section
 
@@ -640,7 +640,7 @@
       .al
       .xl
 
-      rlUnknown968008 ; 96/8008
+      rlBattleSceneIRQ5Handler ; 96/8008
 
         ; Found through fe4.cdl.
         .al
@@ -648,7 +648,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown96892D
+        jsl rlBattleSceneHBlankForceBlank
         rtl
 
         .databank 0
@@ -667,7 +667,7 @@
         .word <>rsIRQCodeHalt
 
       aUnknown96800F ; 96/800F
-        .word $0060, $007E, <>rlUnknown968017, <>aUnknown96804E
+        .word $0060, $007E, <>rlBattleSceneIRQ2Handler, <>aUnknown96804E
 
     .endsection Table96800DSection
 
@@ -677,7 +677,7 @@
       .al
       .xl
 
-      rlUnknown968017 ; 96/8017
+      rlBattleSceneIRQ2Handler ; 96/8017
 
         ; Found through fe4.cdl.
         .al
@@ -693,22 +693,22 @@
         bcs _8039
         cmp #$0002
         bcs _8033
-        jsl rlUnknown968982
+        jsl rlBattleSceneHBlankNormalHUD
         bra _8043
 
 
         _8033
-        jsl rlUnknown968BC2
+        jsl rlBattleSceneHBlankMode2HUD
         bra _8043
 
 
         _8039
-        jsl rlUnknown968C97
+        jsl rlBattleSceneHBlankMode3HUD
         bra _8043
 
 
         _803F
-        jsl rlUnknown968D22
+        jsl rlBattleSceneHBlankMode4HUD
 
         _8043
         sep #$20
@@ -733,7 +733,7 @@
         .word <>rsIRQCodeHalt
 
       aUnknown968050 ; 96/8050
-        .word $0060, $009C, <>rlUnknown968058, <>aUnknown968076
+        .word $0060, $009C, <>rlBattleSceneIRQ3Handler, <>aUnknown968076
 
     .endsection Table96804ESection
 
@@ -743,7 +743,7 @@
       .al
       .xl
 
-      rlUnknown968058 ; 96/8058
+      rlBattleSceneIRQ3Handler ; 96/8058
 
         ; Found through fe4.cdl.
         .al
@@ -757,12 +757,12 @@
         beq _806F
         cmp #$0001
         bne _8075
-        jsl rlUnknown968A57
+        jsl rlBattleSceneHBlankMode1MidHUD
         bra _8075
 
 
         _806F
-        jsl rlUnknown968DAA
+        jsl rlBattleSceneHBlankMode3MidHUD
         bra _8075
 
 
@@ -785,7 +785,7 @@
         .word <>rsIRQCodeHalt
 
       aUnknown968078 ; 96/8078
-        .word $0060, $00A1, <>rlUnknown968080, <>aUnknown968093
+        .word $0060, $00A1, <>rlBattleSceneIRQ4Handler, <>aUnknown968093
 
     .endsection Table968076Section
 
@@ -795,7 +795,7 @@
       .al
       .xl
 
-      rlUnknown968080 ; 96/8080
+      rlBattleSceneIRQ4Handler ; 96/8080
 
         ; Found through fe4.cdl.
         .al
@@ -807,7 +807,7 @@
         and #$00FF
         cmp #$0001
         bne _8092
-        jsl rlUnknown968B16
+        jsl rlBattleSceneHBlankMode1LowerHUD
         bra _8092
 
 
@@ -830,7 +830,7 @@
         .word <>rsIRQCodeHalt
 
       aUnknown968095 ; 96/8095
-        .word $0060, $000E, <>rlUnknown96809D, <>aUnknown9680A2
+        .word $0060, $000E, <>rlBattleSceneIRQ1Handler, <>aUnknown9680A2
 
     .endsection Table968093Section
 
@@ -840,7 +840,7 @@
       .al
       .xl
 
-      rlUnknown96809D ; 96/809D
+      rlBattleSceneIRQ1Handler ; 96/809D
 
         ; Found through fe4.cdl.
         .al
@@ -848,7 +848,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown968943
+        jsl rlBattleSceneHBlankApplyINIDISP
         rtl
 
         .databank 0
@@ -874,7 +874,7 @@
       .al
       .xl
 
-      rlUnknown96890E ; 96/890E
+      rlBattleSceneResetToNormalMode ; 96/890E
 
         ; Found through fe4.cdl.
         .al
@@ -888,8 +888,8 @@
         rep #$20
         stz aBGPaletteBuffer,b
         jsl rlBattleSceneSetHUDColors
-        jsl rlUnknown95A414
-        jsl rlUnknown96957D
+        jsl rlBattleSceneCreateHUDBannerHDMA
+        jsl rlBattleSceneInitWindowScrollVars
         jsl rlBattleSceneCreateSolo2HDMA
         rtl
 
@@ -897,7 +897,7 @@
 
         ; 96/892C
 
-      rlUnknown96892C ; 96/892C
+      rlBattleSceneVBlankNoOp ; 96/892C
 
         .al
         .xl
@@ -910,7 +910,7 @@
 
         ; 96/892D
 
-      rlUnknown96892D ; 96/892D
+      rlBattleSceneHBlankForceBlank ; 96/892D
 
         .al
         .xl
@@ -934,7 +934,7 @@
 
         ; 96/8943
 
-      rlUnknown968943 ; 96/8943
+      rlBattleSceneHBlankApplyINIDISP ; 96/8943
 
         .al
         .xl
@@ -985,7 +985,7 @@
 
         ; 96/8982
 
-      rlUnknown968982 ; 96/8982
+      rlBattleSceneHBlankNormalHUD ; 96/8982
 
         .al
         .xl
@@ -1029,7 +1029,7 @@
         stz $2124,b
         stz $420C,b
         rep #$20
-        jsl rlUnknown9695D5
+        jsl rlBattleSceneResetColorMath
         sep #$20
         lda #$00
         sta $2121,b
@@ -1077,7 +1077,7 @@
 
         ; 96/8A57
 
-      rlUnknown968A57 ; 96/8A57
+      rlBattleSceneHBlankMode1MidHUD ; 96/8A57
 
         .al
         .xl
@@ -1162,7 +1162,7 @@
 
         ; 96/8B16
 
-      rlUnknown968B16 ; 96/8B16
+      rlBattleSceneHBlankMode1LowerHUD ; 96/8B16
 
         .al
         .xl
@@ -1244,7 +1244,7 @@
 
         ; 96/8BC2
 
-      rlUnknown968BC2 ; 96/8BC2
+      rlBattleSceneHBlankMode2HUD ; 96/8BC2
 
         .al
         .xl
@@ -1310,7 +1310,7 @@
         stz $2123,b
         stz $2124,b
         rep #$20
-        jsl rlUnknown9695D5
+        jsl rlBattleSceneResetColorMath
         sep #$20
         lda $7FE4D5
         bit #$80
@@ -1340,7 +1340,7 @@
 
         ; 96/8C97
 
-      rlUnknown968C97 ; 96/8C97
+      rlBattleSceneHBlankMode3HUD ; 96/8C97
 
         .al
         .xl
@@ -1411,7 +1411,7 @@
 
         ; 96/8D22
 
-      rlUnknown968D22 ; 96/8D22
+      rlBattleSceneHBlankMode4HUD ; 96/8D22
 
         .al
         .xl
@@ -1481,7 +1481,7 @@
 
         ; 96/8DAA
 
-      rlUnknown968DAA ; 96/8DAA
+      rlBattleSceneHBlankMode3MidHUD ; 96/8DAA
 
         .al
         .xl
@@ -1515,7 +1515,7 @@
       .al
       .xl
 
-      rlUnknown968DBD ; 96/8DBD
+      rlBattleSceneBlankWindowDisplay ; 96/8DBD
 
         .al
         .xl
@@ -1532,7 +1532,7 @@
 
         ; 96/8DC8
 
-      rlUnknown968DC8 ; 96/8DC8
+      rlBattleSceneScriptFadeOutWindow1 ; 96/8DC8
 
         ; Found through fe4.cdl.
         .al
@@ -1568,7 +1568,7 @@
       .al
       .xl
 
-      rlUnknown968DE1 ; 96/8DE1
+      rlBattleSceneScriptFadeOutWindow3 ; 96/8DE1
 
         ; Found by tools/sweep.py.
         .al
@@ -1601,7 +1601,7 @@
 
         ; 96/8E00
 
-      rlUnknown968E00 ; 96/8E00
+      rlBattleSceneScriptFadeOutWindowSlow ; 96/8E00
 
         ; Found by tools/sweep.py.
         .al
@@ -1632,7 +1632,7 @@
 
         ; 96/8E22
 
-      rlUnknown968E22 ; 96/8E22
+      rlBattleSceneScriptFadeInWindow1 ; 96/8E22
 
         ; Found by tools/sweep.py.
         .al
@@ -1672,7 +1672,7 @@
       .al
       .xl
 
-      rlUnknown968E4C ; 96/8E4C
+      rlBattleSceneScriptFadeInWindow3 ; 96/8E4C
 
         ; Found through fe4.cdl.
         .al
@@ -1712,7 +1712,7 @@
 
         ; 96/8E7E
 
-      rlUnknown968E7E ; 96/8E7E
+      rlBattleSceneResetBrightnessVars ; 96/8E7E
 
         .al
         .xl
@@ -1739,7 +1739,7 @@
       .al
       .xl
 
-      rlUnknown968E8F ; 96/8E8F
+      rlBattleSceneScriptFadeOutMain1 ; 96/8E8F
 
         ; Found by tools/sweep.py.
         .al
@@ -1767,7 +1767,7 @@
 
         ; 96/8EA8
 
-      rlUnknown968EA8 ; 96/8EA8
+      rlBattleSceneScriptFadeOutMain3 ; 96/8EA8
 
         ; Found by tools/sweep.py.
         .al
@@ -1800,7 +1800,7 @@
 
         ; 96/8EC7
 
-      rlUnknown968EC7 ; 96/8EC7
+      rlBattleSceneScriptFadeOutMainSlow ; 96/8EC7
 
         ; Found by tools/sweep.py.
         .al
@@ -1831,7 +1831,7 @@
 
         ; 96/8EE9
 
-      rlUnknown968EE9 ; 96/8EE9
+      rlBattleSceneScriptFadeInMain1 ; 96/8EE9
 
         ; Found by tools/sweep.py.
         .al
@@ -1865,7 +1865,7 @@
 
         ; 96/8F13
 
-      rlUnknown968F13 ; 96/8F13
+      rlBattleSceneScriptFadeInMain3 ; 96/8F13
 
         ; Found by tools/sweep.py.
         .al
@@ -1905,7 +1905,7 @@
 
         ; 96/8F45
 
-      rlUnknown968F45 ; 96/8F45
+      rlBattleSceneScriptSetFullBrightness ; 96/8F45
 
         ; Found by tools/sweep.py.
         .al
@@ -1929,7 +1929,7 @@
       .al
       .xl
 
-      rlUnknown968F50 ; 96/8F50
+      rlBattleSceneScriptInitStatGains ; 96/8F50
 
         ; Found through fe4.cdl.
         .al
@@ -1943,9 +1943,9 @@
         sta aBuiltSpriteArray
         lda #$0000
         sta $7E5313
-        lda #(`rlUnknown968F71)<<8
+        lda #(`rlBattleSceneScriptNextStatGain)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown968F71
+        lda #<>rlBattleSceneScriptNextStatGain
         sta lBattleSceneScriptRoutine
         ply
         plx
@@ -1955,7 +1955,7 @@
 
         ; 96/8F71
 
-      rlUnknown968F71 ; 96/8F71
+      rlBattleSceneScriptNextStatGain ; 96/8F71
 
         ; Found through fe4.cdl.
         .al
@@ -2012,7 +2012,7 @@
         and #$00FF
 
         _8FCD
-        jsr rsUnknown969137
+        jsr rsBattleSceneFormatTwoDigitTiles
         sta $7E530F
         lda aUnknown998683+3,x
         sta lR18
@@ -2023,7 +2023,7 @@
         and #$00FF
         clc
         adc #1,s
-        jsr rsUnknown969137
+        jsr rsBattleSceneFormatTwoDigitTiles
         sta $7E5304
         lda lR18
         sta $7E52FF
@@ -2041,9 +2041,9 @@
         sta $7E5311
         lda #$0023
         jsl rlPlaySoundEffect
-        lda #(`rlUnknown969037)<<8
+        lda #(`rlBattleSceneScriptStepStatGain)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown969037
+        lda #<>rlBattleSceneScriptStepStatGain
         sta lBattleSceneScriptRoutine
 
         _9034
@@ -2055,7 +2055,7 @@
 
         ; 96/9037
 
-      rlUnknown969037 ; 96/9037
+      rlBattleSceneScriptStepStatGain ; 96/9037
 
         ; Found through fe4.cdl.
         .al
@@ -2097,9 +2097,9 @@
         and #$00FF
         cmp #$0080
         bne _9090
-        lda #(`rlUnknown968F71)<<8
+        lda #(`rlBattleSceneScriptNextStatGain)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown968F71
+        lda #<>rlBattleSceneScriptNextStatGain
         sta lBattleSceneScriptRoutine
         jml _9130
 
@@ -2181,7 +2181,7 @@
 
         ; 96/9137
 
-      rsUnknown969137 ; 96/9137
+      rsBattleSceneFormatTwoDigitTiles ; 96/9137
 
         .al
         .xl
@@ -2221,7 +2221,7 @@
 
         ; 96/9163
 
-      rlUnknown969163 ; 96/9163
+      rlBattleSceneScriptInitLevelUpNumber ; 96/9163
 
         ; Found through fe4.cdl.
         .al
@@ -2255,7 +2255,7 @@
         and #$01FF
         sec
         sbc wBattleSceneCameraX
-        jsl rlUnknown95A164
+        jsl rlBattleSceneNoOp1
         sec
         sbc #$0004
         sep #$20
@@ -2263,9 +2263,9 @@
         rep #$20
         lda #$0000
         sta $7E5311
-        lda #(`rlUnknown9691C8)<<8
+        lda #(`rlBattleSceneScriptStepLevelUpNumber)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown9691C8
+        lda #<>rlBattleSceneScriptStepLevelUpNumber
         sta lBattleSceneScriptRoutine
         ply
         plx
@@ -2275,7 +2275,7 @@
 
         ; 96/91C8
 
-      rlUnknown9691C8 ; 96/91C8
+      rlBattleSceneScriptStepLevelUpNumber ; 96/91C8
 
         ; Found through fe4.cdl.
         .al
@@ -2420,7 +2420,7 @@
       .al
       .xl
 
-      rlUnknown9692F8 ; 96/92F8
+      rlBattleSceneScriptNextStatGainSilent ; 96/92F8
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2459,7 +2459,7 @@
 
         _9334
         pha
-        jsr rsUnknown969137
+        jsr rsBattleSceneFormatTwoDigitTiles
         sta $7E530F
         lda aUnknown998683+3,x
         sta lR18
@@ -2470,7 +2470,7 @@
         and #$00FF
         clc
         adc #1,s
-        jsr rsUnknown969137
+        jsr rsBattleSceneFormatTwoDigitTiles
         sta $7E5304
         lda lR18
         sta $7E52FF
@@ -2486,9 +2486,9 @@
         sta $7E5313
         lda #$0000
         sta $7E5311
-        lda #(`rlUnknown969037)<<8
+        lda #(`rlBattleSceneScriptStepStatGain)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown969037
+        lda #<>rlBattleSceneScriptStepStatGain
         sta lBattleSceneScriptRoutine
 
         _9395
@@ -2506,7 +2506,7 @@
       .al
       .xl
 
-      rlUnknown96957D ; 96/957D
+      rlBattleSceneInitWindowScrollVars ; 96/957D
 
         .al
         .xl
@@ -2538,7 +2538,7 @@
 
         ; 96/95AE
 
-      rlUnknown9695AE ; 96/95AE
+      rlBattleSceneUpdateExpWindowScroll ; 96/95AE
 
         .al
         .xl
@@ -2573,7 +2573,7 @@
 
         ; 96/95D5
 
-      rlUnknown9695D5 ; 96/95D5
+      rlBattleSceneResetColorMath ; 96/95D5
 
         .al
         .xl
@@ -2591,7 +2591,7 @@
 
         ; 96/95E3
 
-      rlUnknown9695E3 ; 96/95E3
+      rlBattleSceneTerminateTextBuffer ; 96/95E3
 
         .al
         .xl
@@ -2612,7 +2612,7 @@
 
         ; 96/95F5
 
-      rlUnknown9695F5 ; 96/95F5
+      rlBattleSceneStartBattleSong ; 96/95F5
 
         .al
         .xl
@@ -2670,7 +2670,7 @@
       .al
       .xl
 
-      rlUnknown969617 ; 96/9617
+      rlBattleSceneScriptFadeOutMusic ; 96/9617
 
         ; Found through fe4.cdl.
         .al
@@ -2694,7 +2694,7 @@
       .al
       .xl
 
-      rlUnknown969F7D ; 96/9F7D
+      rlBattleSceneCheckAlternatingRounds ; 96/9F7D
 
         .al
         .xl
@@ -2755,7 +2755,7 @@
 
         ; 96/9FC8
 
-      rlUnknown969FC8 ; 96/9FC8
+      rlBattleSceneEnableOAMBufferCopy ; 96/9FC8
 
         ; Found through fe4.cdl.
         .al
@@ -2774,7 +2774,7 @@
 
         ; 96/9FD7
 
-      rlUnknown969FD7 ; 96/9FD7
+      rlBattleSceneToggleOAMExtBuffer ; 96/9FD7
 
         .al
         .xl
@@ -2796,7 +2796,7 @@
 
         ; 96/9FEB
 
-      rlUnknown969FEB ; 96/9FEB
+      rlBattleSceneVBlankCopyOAMExt ; 96/9FEB
 
         .al
         .xl
@@ -2849,7 +2849,7 @@
       .al
       .xl
 
-      rlUnknown96A05C ; 96/A05C
+      rlBattleSceneScriptSaveOAMExt ; 96/A05C
 
         .al
         .xl
@@ -2903,7 +2903,7 @@
 
         ; 96/A0E2
 
-      rlUnknown96A0E2 ; 96/A0E2
+      rlBattleSceneRestoreOAMOffset ; 96/A0E2
 
         .al
         .xl
@@ -2926,7 +2926,7 @@
       .al
       .xl
 
-      rlUnknown96A0EB ; 96/A0EB
+      rlBattleSceneDMAOAMAndCGRAM ; 96/A0EB
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2991,7 +2991,7 @@
 
         ; 96/A160
 
-      rlUnknown96A160 ; 96/A160
+      rlBattleSceneScriptInitBG1Dimmed ; 96/A160
 
         ; Found by tools/sweep.py.
         .al
