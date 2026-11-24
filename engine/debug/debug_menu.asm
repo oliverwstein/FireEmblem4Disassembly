@@ -730,7 +730,7 @@
         and #UnitStateCanto
         sta $7F8418
         txa
-        and #UnitState0400
+        and #UnitStateAssault
         sta $7F841A
         txa
         and #UnitStateDead
@@ -750,18 +750,18 @@
 
         lda #$3000
         sta aCurrentTilemapInfo.wBaseTile,b
-        lda #(`aUnknown89CD8A)<<8
+        lda #(`aDebugStateFlagsText)<<8
         sta lR18+1
-        lda #<>aUnknown89CD8A
+        lda #<>aDebugStateFlagsText
         sta lR18
         ldx #pack([2, 3])
         jsl rlDrawMenuTextLine
         
         lda #$3C00
         sta aCurrentTilemapInfo.wBaseTile,b
-        lda #(`aUnknown89CD96)<<8
+        lda #(`aDebugFieldedBit)<<8
         sta lR18+1
-        lda #<>aUnknown89CD96
+        lda #<>aDebugFieldedBit
         sta lR18
         ldx #pack([5, 5])
         jsl rlDrawMenuTextLine
@@ -792,9 +792,9 @@
         ldx #pack([10, 9])
         jsr rsDebugDrawBitOnOrOff
 
-        lda #(`aUnknown89CDB0)<<8
+        lda #(`aDebugDismountedBit)<<8
         sta lR18+1
-        lda #<>aUnknown89CDB0
+        lda #<>aDebugDismountedBit
         sta lR18
         ldx #pack([6, 11])
         jsl rlDrawMenuTextLine
@@ -803,9 +803,9 @@
         ldx #pack([10, 11])
         jsr rsDebugDrawBitOnOrOff
 
-        lda #(`aUnknown89CDB8)<<8
+        lda #(`aDebugCantoBit)<<8
         sta lR18+1
-        lda #<>aUnknown89CDB8
+        lda #<>aDebugCantoBit
         sta lR18
         ldx #pack([4, 13])
         jsl rlDrawMenuTextLine
@@ -814,9 +814,9 @@
         ldx #pack([10, 13])
         jsr rsDebugDrawBitOnOrOff
 
-        lda #(`aUnknown89CDC2)<<8
+        lda #(`aDebugAssaultBit)<<8
         sta lR18+1
-        lda #<>aUnknown89CDC2
+        lda #<>aDebugAssaultBit
         sta lR18
         ldx #pack([6, 15])
         jsl rlDrawMenuTextLine
@@ -858,9 +858,9 @@
         ldx #pack([10, 21])
         jsr rsDebugDrawBitOnOrOff
 
-        lda #(`aUnknown89CDEE)<<8
+        lda #(`aDebugGroupText)<<8
         sta lR18+1
-        lda #<>aUnknown89CDEE
+        lda #<>aDebugGroupText
         sta lR18
         ldx #pack([19, 21])
         jsl rlDrawMenuTextLine
@@ -899,12 +899,12 @@
 
         .databank 0
 
-      aUnknown89CD8A ; 89/CD8A
+      aDebugStateFlagsText ; 89/CD8A
         ; the page desc
 
         .text "じょうフラ\n"
 
-      aUnknown89CD96 ; 89/CD96
+      aDebugFieldedBit ; 89/CD96
         ; attacking/charge?
 
         .text "しんげき\n"
@@ -917,16 +917,16 @@
 
         .text "しゅび\n"
 
-      aUnknown89CDB0 ; 89/CDB0
+      aDebugDismountedBit ; 89/CDB0
 
         ; town?
         .text "こうば\n"
 
-      aUnknown89CDB8 ; 89/CDB8
+      aDebugCantoBit ; 89/CDB8
 
         .text "さいいど\n"
 
-      aUnknown89CDC2 ; 89/CDC2
+      aDebugAssaultBit ; 89/CDC2
 
         .text "とつげ\n"
 
@@ -946,7 +946,7 @@
 
         .text "タイプ\n"
 
-      aUnknown89CDEE ; 89/CDEE
+      aDebugGroupText ; 89/CDEE
 
         ; group ?
         .text "ぶたい\n"
@@ -985,9 +985,9 @@
         lda #$3000
         sta aCurrentTilemapInfo.wBaseTile,b
 
-        lda #(`aUnknown89CF0E)<<8
+        lda #(`aDebugRingFlagsText)<<8
         sta lR18+1
-        lda #<>aUnknown89CF0E
+        lda #<>aDebugRingFlagsText
         sta lR18
         ldx #pack([2, 3])
         jsl rlDrawMenuTextLine
@@ -1084,7 +1084,7 @@
 
         .databank 0
 
-      aUnknown89CF0E ; 89/CF0E
+      aDebugRingFlagsText ; 89/CF0E
 
         .text "こうフラ\n"
 
@@ -1124,9 +1124,9 @@
         lda #$3000
         sta aCurrentTilemapInfo.wBaseTile,b
 
-        lda #(`aUnknown89D133)<<8
+        lda #(`aDebugLoveText)<<8
         sta lR18+1
-        lda #<>aUnknown89D133
+        lda #<>aDebugLoveText
         sta lR18
         ldx #pack([2, 3])
         jsl rlDrawMenuTextLine
@@ -1162,16 +1162,16 @@
           jml _Man
 
         +
-        lda #(`aUnknown89D13D)<<8
+        lda #(`aDebugLoveAffectionText)<<8
         sta lR18+1
-        lda #<>aUnknown89D13D
+        lda #<>aDebugLoveAffectionText
         sta lR18
         ldx #pack([9, 5])
         jsl rlDrawMenuTextLine
 
-        lda #(`aUnknown89D149)<<8
+        lda #(`aDebugLoveCompatibilityText)<<8
         sta lR18+1
-        lda #<>aUnknown89D149
+        lda #<>aDebugLoveCompatibilityText
         sta lR18
         ldx #pack([19, 5])
         jsl rlDrawMenuTextLine
@@ -1365,9 +1365,9 @@
         rts
 
         _Man
-        lda #(`aUnknown89D155)<<8
+        lda #(`aDebugLoveManText)<<8
         sta lR18+1
-        lda #<>aUnknown89D155
+        lda #<>aDebugLoveManText
         sta lR18
         ldx #pack([10, 10])
         jsl rlDrawMenuTextLine
@@ -1375,22 +1375,22 @@
 
         .databank 0
 
-      aUnknown89D133 ; 89/D133
+      aDebugLoveText ; 89/D133
 
         ; marriage?
         .text "れんあい\n"
 
-      aUnknown89D13D ; 89/D13D
+      aDebugLoveAffectionText ; 89/D13D
 
         ; favorability?
         .text "こうかんど\n"
 
-      aUnknown89D149 ; 89/D149
+      aDebugLoveCompatibilityText ; 89/D149
 
         ; good marriage?
         .text "あいしょう\n"
 
-      aUnknown89D155 ; 89/D155
+      aDebugLoveManText ; 89/D155
 
         ; man?
         .text "おとこ\n"
@@ -1432,16 +1432,16 @@
           jml _End
 
         +
-        lda #(`aUnknown89D334)<<8
+        lda #(`aDebugLoversPart2AffectionText)<<8
         sta lR18+1
-        lda #<>aUnknown89D334
+        lda #<>aDebugLoversPart2AffectionText
         sta lR18
         ldx #pack([9, 5])
         jsl rlDrawMenuTextLine
 
-        lda #(`aUnknown89D340)<<8
+        lda #(`aDebugLoversPart2CompatibilityText)<<8
         sta lR18+1
-        lda #<>aUnknown89D340
+        lda #<>aDebugLoversPart2CompatibilityText
         sta lR18
         ldx #pack([19, 5])
         jsl rlDrawMenuTextLine
@@ -1647,12 +1647,12 @@
 
         .text "その２\n"
 
-      aUnknown89D334 ; 89/D334
+      aDebugLoversPart2AffectionText ; 89/D334
 
         ; favorability?
         .text "こうかんど\n"
 
-      aUnknown89D340 ; 89/D340
+      aDebugLoversPart2CompatibilityText ; 89/D340
 
         .text "あいしょう\n"
 
@@ -2047,161 +2047,161 @@
 
       aDebugTerrainNamePointers .block ; 89/D64A
 
-        .long aUnknown89D698
-        .long aUnknown89D6A0
-        .long aUnknown89D6A8
-        .long aUnknown89D6AE
-        .long aUnknown89D6B4
-        .long aUnknown89D6BA
-        .long aUnknown89D6C0
-        .long aUnknown89D6C6
-        .long aUnknown89D6CC
-        .long aUnknown89D6D4
-        .long aUnknown89D6DA
-        .long aUnknown89D6E2
-        .long aUnknown89D6E8
-        .long aUnknown89D6EE
-        .long aUnknown89D6F4
-        .long aUnknown89D6FC
-        .long aUnknown89D702
-        .long aUnknown89D708
-        .long aUnknown89D710
-        .long aUnknown89D716
-        .long aUnknown89D71E
-        .long aUnknown89D726
-        .long aUnknown89D72E
-        .long aUnknown89D736
-        .long aUnknown89D73E
-        .long aUnknown89D744
+        .long aDebugTerrainNamePeak
+        .long aDebugTerrainNameThicket
+        .long aDebugTerrainNameCliff
+        .long aDebugTerrainNamePlains
+        .long aDebugTerrainNameForest
+        .long aDebugTerrainNameSea
+        .long aDebugTerrainNameRiver
+        .long aDebugTerrainNameMountain
+        .long aDebugTerrainNameDesert
+        .long aDebugTerrainNameCastle
+        .long aDebugTerrainNameFort
+        .long aDebugTerrainNameHouse
+        .long aDebugTerrainNameCastleGate
+        .long aDebugTerrainNameRampart
+        .long aDebugTerrainNameSand
+        .long aDebugTerrainNameBridge
+        .long aDebugTerrainNameSwamp
+        .long aDebugTerrainNameCastleGate2
+        .long aDebugTerrainNameVillage
+        .long aDebugTerrainNameVillageRuins
+        .long aDebugTerrainNameStore
+        .long aDebugTerrainNameRuins2
+        .long aDebugTerrainNameChurch
+        .long aDebugTerrainNameShrine
+        .long aDebugTerrainNameBragiTower
+        .long aDebugTerrainNameRoad
 
       .bend
 
-      aUnknown89D698 ; 89/D698
+      aDebugTerrainNamePeak ; 89/D698
 
         ; peak?
         .text "たかい\n"
 
-      aUnknown89D6A0 ; 89/D6A0
+      aDebugTerrainNameThicket ; 89/D6A0
 
         ; road?
         .text "ふかい\n"
 
-      aUnknown89D6A8 ; 89/D6A8
+      aDebugTerrainNameCliff ; 89/D6A8
 
         ; cliff?
         .text "がけ\n"
 
-      aUnknown89D6AE ; 89/D6AE
+      aDebugTerrainNamePlains ; 89/D6AE
 
         ; wall?
         .text "へい\n"
 
-      aUnknown89D6B4 ; 89/D6B4
+      aDebugTerrainNameForest ; 89/D6B4
 
         ; forest ?
         .text "もり\n"
 
-      aUnknown89D6BA ; 89/D6BA
+      aDebugTerrainNameSea ; 89/D6BA
 
         ; sea?
         .text "うみ\n"
 
-      aUnknown89D6C0 ; 89/D6C0
+      aDebugTerrainNameRiver ; 89/D6C0
 
         ; river?
         .text "かわ\n"
 
-      aUnknown89D6C6 ; 89/D6C6
+      aDebugTerrainNameMountain ; 89/D6C6
 
         ; mountain?
         .text "やま\n"
 
-      aUnknown89D6CC ; 89/D6CC
+      aDebugTerrainNameDesert ; 89/D6CC
 
         ; ?
         .text "さばく\n"
 
-      aUnknown89D6D4 ; 89/D6D4
+      aDebugTerrainNameCastle ; 89/D6D4
 
         ; castle?
         .text "しろ\n"
 
-      aUnknown89D6DA ; 89/D6DA
+      aDebugTerrainNameFort ; 89/D6DA
 
         ; fortress?
         .text "とりで\n"
 
-      aUnknown89D6E2 ; 89/D6E2
+      aDebugTerrainNameHouse ; 89/D6E2
 
         ; town?
         .text "まち\n"
 
-      aUnknown89D6E8 ; 89/D6E8
+      aDebugTerrainNameCastleGate ; 89/D6E8
 
         ; gate?
         .text "もん\n"
 
-      aUnknown89D6EE ; 89/D6EE
+      aDebugTerrainNameRampart ; 89/D6EE
 
         ; different wall?
         .text "かべ\n"
 
-      aUnknown89D6F4 ; 89/D6F4
+      aDebugTerrainNameSand ; 89/D6F4
 
         ; barrens?
         .text "あれち\n"
 
-      aUnknown89D6FC ; 89/D6FC
+      aDebugTerrainNameBridge ; 89/D6FC
 
         ; bridge?
         .text "はし\n"
 
-      aUnknown89D702 ; 89/D702
+      aDebugTerrainNameSwamp ; 89/D702
 
         ; swamp?
         .text "ぬま\n"
 
-      aUnknown89D708 ; 89/D708
+      aDebugTerrainNameCastleGate2 ; 89/D708
 
         ; cave?
         .text "どうく\n"
 
-      aUnknown89D710 ; 89/D710
+      aDebugTerrainNameVillage ; 89/D710
 
         ; village?
         .text "むら\n"
 
-      aUnknown89D716 ; 89/D716
+      aDebugTerrainNameVillageRuins ; 89/D716
 
         ;  ?
         .text "はいき\n"
 
-      aUnknown89D71E ; 89/D71E
+      aDebugTerrainNameStore ; 89/D71E
 
         ; supply?
         .text "そうこ\n"
 
-      aUnknown89D726 ; 89/D726
+      aDebugTerrainNameRuins2 ; 89/D726
 
         ; ?
         .text "はいき\n"
 
-      aUnknown89D72E ; 89/D72E
+      aDebugTerrainNameChurch ; 89/D72E
 
         ; ?
         .text "きょう\n"
 
-      aUnknown89D736 ; 89/D736
+      aDebugTerrainNameShrine ; 89/D736
 
         ; ?
         .text "しんで\n"
 
-      aUnknown89D73E ; 89/D73E
+      aDebugTerrainNameBragiTower ; 89/D73E
 
         ; tower?
         .text "とう\n"
 
-      aUnknown89D744 ; 89/D744
+      aDebugTerrainNameRoad ; 89/D744
 
         ; road?
         .text "みち\n"
@@ -4124,7 +4124,7 @@
         dec a
         asl a
         tax
-        lda aUnknown899109,x
+        lda aUnitInventoryIconTiles,x
         tax
         pla
         jsl rlCopyItemIcon
@@ -4139,7 +4139,7 @@
 
         .databank 0
 
-      aUnknown899109 ; 89/9109
+      aUnitInventoryIconTiles ; 89/9109
 
         ; One word per inventory slot (1-8), read by rlLoadUnitInventoryIcons and passed in X
         ; to rlCopyItemIcon along with the slot's item.

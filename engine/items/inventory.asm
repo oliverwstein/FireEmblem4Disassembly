@@ -1095,7 +1095,7 @@
         .databank ?
 
         ; Output: wR10 = minimum and wR11 = maximum range of the item in
-        ; wSelectedInventorySlot. UnitState0400 adds 1 to the maximum.
+        ; wSelectedInventorySlot. UnitStateAssault adds 1 to the maximum.
 
         phb
         php
@@ -1112,7 +1112,7 @@
           jsl rlGetItemMaximumRange
           sta wR11
           jsl rlGetSelectedUnitStates
-          bit #UnitState0400
+          bit #UnitStateAssault
           beq +
 
             inc wR11

@@ -2027,7 +2027,7 @@
       ; 1 = arena
       ; 2 = ? (forced anims on?)
       ; 3 = ?
-    wBattleStatus   .byte ? ; $7E4EAA ; bit 1 the sides were swapped; bit 2 a combatant on a shared tile (UnitState0400) was moved a tile for the battle, bit 3 the guarding defender, moved down
+    wBattleStatus   .byte ? ; $7E4EAA ; bit 1 the sides were swapped; bit 2 a combatant on a shared tile (UnitStateAssault) was moved a tile for the battle, bit 3 the guarding defender, moved down
       ; $40 - battle anim off
       ; $20 - ?
       ; $10 - ?

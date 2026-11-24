@@ -644,7 +644,7 @@
         sta structActionStructEntry.YPosition,b,x
 
         jsl rlGetSelectedUnitStates
-        bit #UnitState0400
+        bit #UnitStateAssault
         beq _End
 
         bit #UnitStateGuardingCastle
@@ -1612,7 +1612,7 @@
           ldx wActiveUnitDeploymentOffset,b
           lda aDeploymentTable._UnitRAMPointer,x
           sta wSelectedUnitDataRAMPointer,b
-          lda #UnitState0400
+          lda #UnitStateAssault
           jsl rlUnsetSelectedUnitStates
           jsl rlTryStartUnitCanto
           bcs +

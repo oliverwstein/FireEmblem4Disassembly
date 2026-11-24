@@ -85,7 +85,7 @@
   UnitStateMiracleActive  = bits($0080)
   UnitStateGroupLeader    = bits($0100)
   UnitStateDead           = bits($0200)
-  UnitState0400           = bits($0400) ; siege?
+  UnitStateAssault        = bits($0400) ; set by the assault command (rlUnitMenuAssault) and the AI's siege attack; the debug menu labels it とつげ(き)
   UnitStateCanto          = bits($0800)
   UnitStateDismounted     = bits($1000) ; on foot: a unit whose class can dismount (ClassSkillDismount) has dismounted
   UnitStateGuardingCastle = bits($2000)

@@ -774,12 +774,12 @@
         .autsiz
         .databank ?
 
-        ; Action 2: set UnitState0400 (siege attack) via rlSetSelectedUnitState0400 and start battle
+        ; Action 2: set UnitStateAssault (siege attack) via rlSetSelectedUnitStateAssault and start battle
 
         ldx wActiveActionUnit1DeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlSetSelectedUnitState0400
+        jsl rlSetSelectedUnitStateAssault
         jml rsAIActionStartBattle
 
         .databank 0

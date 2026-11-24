@@ -15,7 +15,7 @@
         .autsiz
         .databank ?
 
-        ; X = deployment offset: the targets in range of the item in wSelectedInventorySlot (rlFindTargetsForItemRange): enemies, or with UnitState0400 set, enemies at a castle (target filter 4).
+        ; X = deployment offset: the targets in range of the item in wSelectedInventorySlot (rlFindTargetsForItemRange): enemies, or with UnitStateAssault set, enemies at a castle (target filter 4).
 
         phb
         php
@@ -29,7 +29,7 @@
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
-        bit #UnitState0400
+        bit #UnitStateAssault
         beq _B537
         lda #$0004
         bra _B53A

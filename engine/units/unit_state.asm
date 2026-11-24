@@ -713,13 +713,13 @@
 
         .databank 0
 
-      rlSetSelectedUnitState0400 ; 84/B474
+      rlSetSelectedUnitStateAssault ; 84/B474
 
         .al
         .autsiz
         .databank ?
 
-        lda #UnitState0400
+        lda #UnitStateAssault
         jsl rlSetSelectedUnitStates
         rtl
 

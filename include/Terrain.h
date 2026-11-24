@@ -16,7 +16,7 @@
   TerrainSand            = $0E
   TerrainBridge          = $0F
   TerrainSwamp           = $10 ; unused
-  TerrainCastleGate2     = $11 ; unsure
+  TerrainCastleGate2     = $11 ; unsure; the debug menu names it どうく(つ), cave
   TerrainVillage         = $12
   TerrainVillageRuins    = $13
   TerrainStore           = $14 ; unused
