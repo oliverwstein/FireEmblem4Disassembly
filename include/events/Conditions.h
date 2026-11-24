@@ -641,21 +641,21 @@
     .endsegment
 
     CHANGE_UNITS_FACTIONSLOT .segment Character, FactionSlot
-      ; Targets EventUnitSlot1 if Character isnt specified.
+      ; With -1 for the character, acts on wEventUnit1Pointer, the unit the matching condition recorded.
       .byte $53
       .word \Character
       .byte \FactionSlot
     .endsegment
 
     ADD_UNIT_MONEY .segment CharacterID, MoneyAmount
-      ; Targets EventUnitSlot1 if character isnt specified.
+      ; With -1 for the character, acts on wEventUnit1Pointer, the unit the matching condition recorded.
       .byte $54
       .word \CharacterID
       .word \MoneyAmount
     .endsegment
 
     SUBTRACT_UNIT_MONEY .segment CharacterID, MoneyAmount
-      ; Targets EventUnitSlot1 if character isnt specified.
+      ; With -1 for the character, acts on wEventUnit1Pointer, the unit the matching condition recorded.
       .byte $55
       .word \CharacterID
       .word \MoneyAmount
@@ -668,7 +668,7 @@
     .endsegment
 
     GIVE_UNIT_PID .segment CharacterID, PlayerItemID
-      ; Targets EventUnitSlot1 if CharacterID isnt specified.
+      ; With -1 for the character, acts on wEventUnit1Pointer, the unit the matching condition recorded.
       ; If inventory is full, item is not given.
       .byte $57
       .sint \CharacterID
@@ -676,7 +676,7 @@
     .endsegment
 
     GIVE_UNIT_PID_EQUIP .segment CharacterID, PlayerItemID
-      ; Targets EventUnitSlot1 if CharacterID isnt specified.
+      ; With -1 for the character, acts on wEventUnit1Pointer, the unit the matching condition recorded.
       ; If inventory is full, item is not given.
       ; Item is automatically equipped.
       .byte $58
@@ -692,13 +692,13 @@
     .endsegment
 
     SEND_INVENTORY_TO_SUPPLY .segment CharacterID
-      ; Targets EventUnitSlot1 if character isnt specified.
+      ; With -1 for the character, acts on wEventUnit1Pointer, the unit the matching condition recorded.
       .byte $5A
       .word \CharacterID
     .endsegment
 
     GIVE_UNIT_PID_FORCED .segment CharacterID, PlayerItemID
-      ; Targets EventUnitSlot1 if character isnt specified.
+      ; With -1 for the character, acts on wEventUnit1Pointer, the unit the matching condition recorded.
       ; If inventory is full, last item is sent to supply and this item is placed in the inventory.
       .byte $5B
       .word \CharacterID
@@ -862,7 +862,7 @@
     .endsegment
 
     ADD_UNIT_STAT .segment CharacterID, StatIndex, Value
-      ; Targets EventUnitSlot1 if character isnt specified.
+      ; With -1 for the character, acts on wEventUnit1Pointer, the unit the matching condition recorded.
       .byte $70
       .char \CharacterID
       .byte structExtendedCharacterDataRAM.\StatIndex
