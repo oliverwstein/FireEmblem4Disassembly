@@ -347,7 +347,7 @@
 
         .databank 0
 
-      rlUnknown87EB24 ; 87/EB24
+      rlFindLastChapterCastleLocation ; 87/EB24
 
         .al
         .autsiz
@@ -1046,7 +1046,7 @@
 
         .databank 0
 
-      rlUnknown87EE6C ; 87/EE6C
+      rlCheckLocationState40 ; 87/EE6C
 
         .al
         .autsiz
@@ -1076,7 +1076,7 @@
 
         .databank 0
 
-      rlUnknown87EE81 ; 87/EE81
+      rlSetLocationState40 ; 87/EE81
 
         .al
         .autsiz

@@ -148,7 +148,7 @@
         jsl rlGetSelectedUnitDeploymentOffset
         tax
         stz wTargetEventLocationEntry,b
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         lda wSelectedUnitDataRAMPointer,b
         sta wR0
         lda wRoutineVariable1,b

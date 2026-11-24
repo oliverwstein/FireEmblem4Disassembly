@@ -164,7 +164,7 @@
         xba
         ora $7ECCCE
         sta wRoutineVariable1,b
-        jsl rlUnknown84C9BF
+        jsl rlQueueRelocateUnitToCoords
 
         _EC56
         plx
@@ -281,7 +281,7 @@
         phx
         lda structActionStructEntry.DeploymentNumber,b,y
         tax
-        jsl rlUnknown84C9BF
+        jsl rlQueueRelocateUnitToCoords
         plx
         jsr rsUnknown84EDAE
 
@@ -596,7 +596,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown87EB24
+        jsl rlFindLastChapterCastleLocation
         jsl rlGetEventLocationEntryID
         sta wUnitRelocationLocationID,b
         lda $0000,b,y

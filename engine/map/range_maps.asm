@@ -87,7 +87,7 @@
         cmp #4
         bcc +
 
-          jsl rlUnknown87BA0B
+          jsl rlBuildFixedRangeMap
           sec
           bra _End
 
@@ -110,10 +110,10 @@
             bit #$0004
             beq +
 
-              jsl rlUnknown87BA82
+              jsl rlMarkMaxRangeDiamond
 
         +
-        jsl rlUnknown87BB27
+        jsl rlCheckAdjacentTilesEmptyInRangeMap
 
         _End
         ply
@@ -159,7 +159,7 @@
           beq +
 
           ldy $894C,b,x
-          jsr rsUnknown87B91C
+          jsr rsExpandAttackRangeNeighbors
 
           inc x
           inc x
@@ -286,7 +286,7 @@
         bmi _B692
         rep #$20
         lda #$FFC0
-        jsr rsUnknown87B8A7
+        jsr rsGetTileMovementCost
         sep #$20
         bmi _B692
         lda wR2
@@ -295,7 +295,7 @@
         bcc _B692
         beq _B692
         pha
-        jsr rsUnknown87B8FE
+        jsr rsCheckTileAreaRestriction
         pla
         bcc _B66A
         ora #$80
@@ -329,7 +329,7 @@
         bmi _B6E2
         rep #$20
         lda #$FFFF
-        jsr rsUnknown87B8A7
+        jsr rsGetTileMovementCost
         sep #$20
         bmi _B6E2
         lda wR2
@@ -338,7 +338,7 @@
         bcc _B6E2
         beq _B6E2
         pha
-        jsr rsUnknown87B8FE
+        jsr rsCheckTileAreaRestriction
         pla
         bcc _B6BA
         ora #$80
@@ -372,7 +372,7 @@
         bmi _B732
         rep #$20
         lda #$0001
-        jsr rsUnknown87B8A7
+        jsr rsGetTileMovementCost
         sep #$20
         bmi _B732
         lda wR2
@@ -381,7 +381,7 @@
         bcc _B732
         beq _B732
         pha
-        jsr rsUnknown87B8FE
+        jsr rsCheckTileAreaRestriction
         pla
         bcc _B70A
         ora #$80
@@ -415,7 +415,7 @@
         bmi _B782
         rep #$20
         lda #$0040
-        jsr rsUnknown87B8A7
+        jsr rsGetTileMovementCost
         sep #$20
         bmi _B782
         lda wR2
@@ -424,7 +424,7 @@
         bcc _B782
         beq _B782
         pha
-        jsr rsUnknown87B8FE
+        jsr rsCheckTileAreaRestriction
         pla
         bcc _B75A
         ora #$80
@@ -761,7 +761,7 @@
       .al
       .xl
 
-      rsUnknown87B8A7 ; 87/B8A7
+      rsGetTileMovementCost ; 87/B8A7
 
         .al
         .xl
@@ -823,7 +823,7 @@
 
       aUnknown87B8EE ; 87/B8EE
 
-        ; Read by rsUnknown87B8A7.
+        ; Read by rsGetTileMovementCost.
 
         .word $0007, $000A, $0014, $001E, $0028, $0032, $003C, $0046
 
@@ -837,7 +837,7 @@
       .al
       .xl
 
-      rsUnknown87B8FE ; 87/B8FE
+      rsCheckTileAreaRestriction ; 87/B8FE
 
         .as
         .xl
@@ -867,7 +867,7 @@
 
         ; 87/B91C
 
-      rsUnknown87B91C ; 87/B91C
+      rsExpandAttackRangeNeighbors ; 87/B91C
 
         .as
         .xl
@@ -1010,7 +1010,7 @@
 
         ; 87/BA0B
 
-      rlUnknown87BA0B ; 87/BA0B
+      rlBuildFixedRangeMap ; 87/BA0B
 
         .al
         .xl
@@ -1050,7 +1050,7 @@
         bmi _BA47
         tax
         ldy $894C,b,x
-        jsr rsUnknown87BA54
+        jsr rsMarkFixedRangeTile
         bra _BA39
 
 
@@ -1070,7 +1070,7 @@
 
         ; 87/BA54
 
-      rsUnknown87BA54 ; 87/BA54
+      rsMarkFixedRangeTile ; 87/BA54
 
         .al
         .xl
@@ -1120,7 +1120,7 @@
 
         ; 87/BA82
 
-      rlUnknown87BA82 ; 87/BA82
+      rlMarkMaxRangeDiamond ; 87/BA82
 
         .al
         .xl
@@ -1155,7 +1155,7 @@
         phy
 
         _BAA4
-        jsr rsUnknown87BABB
+        jsr rsMarkRangeTileIfEmpty
         inc x
         dec y
         bne _BAA4
@@ -1163,7 +1163,7 @@
         plx
 
         _BAAD
-        jsr rsUnknown87BABB
+        jsr rsMarkRangeTileIfEmpty
         dec x
         dec y
         bne _BAAD
@@ -1182,7 +1182,7 @@
 
         ; 87/BABB
 
-      rsUnknown87BABB ; 87/BABB
+      rsMarkRangeTileIfEmpty ; 87/BABB
 
         .al
         .xl
@@ -1216,7 +1216,7 @@
 
       aUnknown87BAD1 ; 87/BAD1
 
-        ; Read by rlUnknown87BA82.
+        ; Read by rlMarkMaxRangeDiamond.
 
         .word $0001, $05A0, $0002, $05E0, $0003, $0620, $0004, $0660
         .word $0005, $06A0, $0006, $06E0, $0007, $0720, $0008, $0760
@@ -1235,7 +1235,7 @@
       .al
       .xl
 
-      rlUnknown87BB27 ; 87/BB27
+      rlCheckAdjacentTilesEmptyInRangeMap ; 87/BB27
 
         .al
         .xl

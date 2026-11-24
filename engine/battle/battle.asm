@@ -1614,10 +1614,10 @@
           sta wSelectedUnitDataRAMPointer,b
           lda #UnitState0400
           jsl rlUnsetSelectedUnitStates
-          jsl rlUnknown84C9E3
+          jsl rlTryStartUnitCanto
           bcs +
 
-            jsl rlUnknown84CAA9
+            jsl rlFinishUnitAction
 
         +
         jsr rsSetBattleStatusAnimation
@@ -3785,7 +3785,7 @@
 
         phx
         tax
-        jsl rlUnknown84CA97
+        jsl rlClearUnitGrayedState
         lda @l aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         lda #UnitStateMoved
@@ -3819,7 +3819,7 @@
 
         phx
         tax
-        jsl rlUnknown84CA97
+        jsl rlClearUnitGrayedState
         lda @l aDeploymentTable._StateBuffer,x
         sta @l aDeploymentTable._State,x
         lda @l aDeploymentTable._UnitRAMPointer,x

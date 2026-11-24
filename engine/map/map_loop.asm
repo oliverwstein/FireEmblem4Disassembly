@@ -190,7 +190,7 @@
       .al
       .xl
 
-      rsUnknown80B316 ; 80/B316
+      rsPauseMapProcsAndHDMAUnused ; 80/B316
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al

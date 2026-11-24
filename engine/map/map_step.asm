@@ -1023,7 +1023,7 @@
 
         lda wUnitRelocationLocationID,b
         sta wRoutineVariable1,b
-        jsl rlUnknown84C996
+        jsl rlMoveDeploymentToCoords
 
         stz wTargetEventLocationEntry,b
 

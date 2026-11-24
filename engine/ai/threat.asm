@@ -593,7 +593,7 @@
               lda aAIUnitList[0].DeploymentOffset,x
               and #$00FF
               tax
-              jsl rlUnknown84CAA9
+              jsl rlFinishUnitAction
               plx
               jml _End
 
@@ -733,10 +733,10 @@
         .autsiz
         .databank ?
 
-        ; Action 0: finish unit move via rlUnknown84CAA9 and clear bit $01 of $0E7B
+        ; Action 0: finish unit move via rlFinishUnitAction and clear bit $01 of $0E7B
 
         ldx wActiveActionUnit1DeploymentOffset,b
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         lda #$0001
         trb bUnknown000E7B,b
         rts
@@ -830,7 +830,7 @@
         ; Action 3 (unused): finish move and relocate unit into castle if on location
 
         ldx wActiveActionUnit1DeploymentOffset,b
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         lda wTargetEventLocationEntry,b
         beq _B388
         sta wEventLocationEntry,b

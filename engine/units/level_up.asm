@@ -698,7 +698,7 @@
 
           jsl rlChangeFactionSlotOfFieldedSelectedUnit
           jsl rlDeployedUnitSetAliveUnsetHidden
-          jsl rlUnknown84C996
+          jsl rlMoveDeploymentToCoords
           stx wRoutineVariable1,b
           bra ++
 

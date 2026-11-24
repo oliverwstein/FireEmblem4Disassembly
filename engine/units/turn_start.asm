@@ -562,7 +562,7 @@
         .databank ?
 
         ; For each unit of faction slot A: clears UnitStateMoved (and calls
-        ; rlUnknown84CA97 for its deployment slot).
+        ; rlClearUnitGrayedState for its deployment slot).
 
         ; Unset grayed and moved status of all units in a faction?
 
@@ -590,7 +590,7 @@
             phx
             jsl rlGetSelectedUnitDeploymentOffset
             tax
-            jsl rlUnknown84CA97
+            jsl rlClearUnitGrayedState
             plx
 
             lda #UnitStateMoved

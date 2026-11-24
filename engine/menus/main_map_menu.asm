@@ -818,7 +818,7 @@
         sta wMapActionTargetType,b
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         plx
         rtl
 

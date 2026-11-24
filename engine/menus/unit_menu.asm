@@ -673,7 +673,7 @@
         jsl rlEnterTargetLocation
         pha
         bcs _DF33
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
 
         _DF33
         pla

@@ -117,7 +117,7 @@
 
         ldx #FS_Player
         lda wR10
-        jsl rlUnknown84C87A
+        jsl rlLoadAndDeployUnit
         tax
         jsl rlDeployedUnitUnsetHiddenIfAlive
         inc wR13

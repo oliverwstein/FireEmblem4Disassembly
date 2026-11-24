@@ -203,7 +203,7 @@
         _AAEF
         jsl rlRequestUnitMenuMode2
         bcc _AB00
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         stz wMapActionMode,b
         lda #$0000
         rts
@@ -404,7 +404,7 @@
       .al
       .xl
 
-      rsUnknown88A816 ; 88/A816
+      rsSetMapScrollSpeed2Unused ; 88/A816
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -483,7 +483,7 @@
         lda wMapStateFlags,b
         bit #$0008
         bne _AE76
-        jsl rlUnknown87BB27
+        jsl rlCheckAdjacentTilesEmptyInRangeMap
         bcc _AE76
         lda wMapActionMode,b
         cmp #$0002

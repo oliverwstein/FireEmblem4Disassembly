@@ -142,7 +142,7 @@
                 sta wRoutineVariable1,b
                 lda aMovingMapSprites.wCharacterID,b
                 ldx aMovingMapSprites.wUnknown001822,b
-                jsl rlUnknown84C87A
+                jsl rlLoadAndDeployUnit
                 bcc +
 
                   brk

@@ -406,7 +406,7 @@
             bcs +
 
               tax
-              jsl rlUnknown84C996
+              jsl rlMoveDeploymentToCoords
               jsl rlDeployedUnitSetAliveUnsetHidden
               bra ++
 
@@ -450,7 +450,7 @@
 
         .databank 0
 
-      rlUnknown84C87A ; 84/C87A
+      rlLoadAndDeployUnit ; 84/C87A
 
         .al
         .autsiz
@@ -575,7 +575,7 @@
 
         .databank 0
 
-      rlUnknown84C910 ; 84/C910
+      rlGetMapTileFlagsByDeploymentOffset ; 84/C910
 
         .al
         .autsiz
@@ -694,7 +694,7 @@
 
         .databank 0
 
-      rlUnknown84C996 ; 84/C996
+      rlMoveDeploymentToCoords ; 84/C996
 
         .al
         .autsiz
@@ -737,7 +737,7 @@
 
         .databank 0
 
-      rlUnknown84C9BF ; 84/C9BF
+      rlQueueRelocateUnitToCoords ; 84/C9BF
 
         .al
         .autsiz
@@ -773,7 +773,7 @@
 
         .databank 0
 
-      rlUnknown84C9E3 ; 84/C9E3
+      rlTryStartUnitCanto ; 84/C9E3
 
         .al
         .autsiz
@@ -804,7 +804,7 @@
         bcc ++
 
         +
-        jsr rsUnknown84CA22
+        jsr rsApplyUnitCantoState
         bcc +
 
         plp
@@ -822,7 +822,7 @@
 
         .databank 0
 
-      rsUnknown84CA22 ; 84/CA22
+      rsApplyUnitCantoState ; 84/CA22
 
         .al
         .autsiz
@@ -900,7 +900,7 @@
 
         .databank 0
 
-      rlUnknown84CA97 ; 84/CA97
+      rlClearUnitGrayedState ; 84/CA97
 
         .al
         .autsiz
@@ -916,7 +916,7 @@
 
         .databank 0
 
-      rlUnknown84CAA9 ; 84/CAA9
+      rlFinishUnitAction ; 84/CAA9
 
         .al
         .autsiz

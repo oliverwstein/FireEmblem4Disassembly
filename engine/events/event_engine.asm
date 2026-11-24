@@ -4235,7 +4235,7 @@
 
           ldx #FS_Player
           lda $0000,b,y
-          jsl rlUnknown84C87A
+          jsl rlLoadAndDeployUnit
           tax
           jsl rlDeployedUnitUnsetHiddenIfAlive
 
@@ -4273,7 +4273,7 @@
           and #$00FF
           tax
           lda $0000,b,y
-          jsl rlUnknown84C87A
+          jsl rlLoadAndDeployUnit
           tax
           jsl rlDeployedUnitUnsetHiddenIfAlive
 
@@ -4308,7 +4308,7 @@
 
         ldx #FS_Player
         lda $0000,b,y
-        jsl rlUnknown84C87A
+        jsl rlLoadAndDeployUnit
         tax
         jsl rlDeployedUnitUnsetHiddenIfAlive
         lda #0

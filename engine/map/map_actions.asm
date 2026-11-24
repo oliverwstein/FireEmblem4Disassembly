@@ -3,7 +3,7 @@
 ; routines here are the effects of the other commands: entering a location,
 ; Return, visiting a town or village, seizing or raiding, guarding, returning into
 ; or departing a castle, talking, mounting and dismounting, helping and giving
-; gold. Most end the unit's action with rlUnknown84CAA9 and then run the chapter's
+; gold. Most end the unit's action with rlFinishUnitAction and then run the chapter's
 ; event conditions with an event action number (8 town, 9 village, 2 raid, $0A
 ; talk, $1A help). Bank $84.
 
@@ -347,7 +347,7 @@
         jsl rlSaveDeploymentTile
 
         _CCA9
-        jsr rsUnknown84CA22
+        jsr rsApplyUnitCantoState
         lda wRoutineVariable1,b
         ldy #$0000
         bra _CC84
@@ -381,7 +381,7 @@
         .databank $84
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionSlotLocationID
         jsl rlQueueUnitRelocationToCastle
@@ -476,7 +476,7 @@
           sta wEventLocationEntry,b
           lda aDeploymentTable._UnitRAMPointer,x
           sta wSelectedUnitDataRAMPointer,b
-          jsl rlUnknown84CAA9
+          jsl rlFinishUnitAction
           lda #8
           sta bEventActionIdentifier,b
           jsl rlGetSelectedUnitCharacterID
@@ -526,7 +526,7 @@
         jsl rlGetEventLocationMoneyReward
         sta wRoutineVariable1,b
         jsl rlAddSelectedCharacterMoney
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         lda wRoutineVariable1,b
         sta wVillageGoldPopUpAmount,b
         lda #$0009
@@ -599,12 +599,12 @@
         +
         lda aDeploymentTable._FactionSlot,x
         jsl rlSetLocationFactionSlotOwner
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         jsr rsStartCastleTakenOverProc
         lda aDeploymentTable._FactionSlot,x
         bne +
 
-          jsl rlUnknown87EE81
+          jsl rlSetLocationState40
           jsr rsReviveCapturedPlayerCharacters
           bra _EC96
 
@@ -742,7 +742,7 @@
           jml _End
 
         +
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
 
         lda #500
         jsl rlSubtractEventLocationMoneyReward
@@ -884,7 +884,7 @@
         jsl rlSetCastleGuarded
         jsl rlGetEventLocationEntryCoordinates
         sta wRoutineVariable1,b
-        jsl rlUnknown84C996
+        jsl rlMoveDeploymentToCoords
         rts
 
         .databank 0
@@ -936,7 +936,7 @@
         beq _D0AE
         jsl rlGetEventLocationEntryCoordinates
         sta wRoutineVariable1,b
-        jsl rlUnknown84C996
+        jsl rlMoveDeploymentToCoords
         tya
         bne _D0A2
         lda wMapStateFlags,b
@@ -960,7 +960,7 @@
         _D0A2
         jsl rlRequestUnitMenuMode2
         bcc _D0AE
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         bra _D0AE
 
 
@@ -1048,7 +1048,7 @@
         jsl rlRefreshUnitWindow
         jsl rlGetEventLocationEntryID
         jsl rlSetUnitResidingInCastle
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
 
         _D10C
         plp
@@ -1145,7 +1145,7 @@
         ldx wR0
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         jsl rlCheckTalkEventEntryAvailable
         bcc +
 
@@ -1345,7 +1345,7 @@
         lda wR0
         sta aActionStructUnit1
         tax
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         lda aDeploymentTable._UnitRAMPointer,x
         sta aActionStructUnit1.UnitRAMPointer
         lda aDeploymentTable._XTilePosition,x
@@ -1407,7 +1407,7 @@
         jsl rlGetSelectedUnitMoney
         sta wRoutineVariable1,b
         jsl rlSubtractSelectedCharacterMoney
-        jsl rlUnknown84CAA9
+        jsl rlFinishUnitAction
         ldx wR1
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
