@@ -42,7 +42,7 @@ X moves a cursor onto the inventory (`STATUS_SCREEN_STEP_ITEM_DETAILS`: hit, mig
 `rsInitializeStatusScreenVariables` copies what the screen needs into its block before drawing:
 
 - the holy blood levels (`aStatusScreenHolyBloodLevels`, from `rlCheckForSpecifiedHolyBlood` for each of 13 bloods);
-- the commander (`rlUnknown849FC4`) or, without one, the leadership stars;
+- the commander (`rlGetSelectedUnitCommanderCharacterID`) or, without one, the leadership stars;
 - the faction slot: for a non-player unit the screen hides experience, uses, kills and the lover, and R/L do nothing;
 - the unit type: an enemy's luck shows as 0;
 - whether the unit is at its promotion level (`rlGetPromotedClassIfAvailable`): a marker blinks beside the portrait;
@@ -96,7 +96,7 @@ In `OPTIONS_MENU_STEP_CHOOSE`, Up and Down move between options. The cursor is d
 
 ## Depends on
 
-- **Units** ([units.md](routines/units.md)): every getter the status screen draws; holy blood, weapon ranks, promotion, the skill list (`rlUnknown87A415`), love and talk partners, generation IDs.
+- **Units** ([units.md](routines/units.md)): every getter the status screen draws; holy blood, weapon ranks, promotion, the skill list (`rlCollectSelectedUnitIconSkills`), love and talk partners, generation IDs.
 - **Items** ([items.md](routines/items.md)): item names, descriptions, stats, ranks, durability, equippability.
 - **Battle** ([battle.md](routines/battle.md)): battle might, hit and avoid; drop items; the action struct for the revive staff.
 - **Unit and item windows**: the revive screen's list variables; the windows open the status screen and come back.
@@ -105,9 +105,9 @@ In `OPTIONS_MENU_STEP_CHOOSE`, Up and Down move between options. The cursor is d
 
 ## Open questions
 
-- `rlUnknown8991D3` and options step `$02` (`rsOptionsMenuReturnToMap`): nothing found reaches them.
+- `rlStatusScreenBuildBG2SplitTableUnused` and options step `$02` (`rsOptionsMenuReturnToMap`): nothing found reaches them.
 - `$7F8426` (set to `$23` as the options menu opens) and the twelve bytes at `$89/8A61` and eight at `$89/F704`: nothing found reads them.
-- What `rlUnknown849FC4` counts as a commander for non-player units (it calls `rlUnknown84C461`).
+- What `rlGetSelectedUnitCommanderCharacterID` counts as a commander for non-player units (it calls `rlGetFactionGroupLeaderCharacterID`).
 - Which rank order `rlCalculateFinalRankingScore` uses; see [save.md](save.md).
 - The tilemap entries (`aReviveScreenMenuTilemapEntry`, `aUnknown89ACBC`...) hold long pointers to their RAM buffers as bytes; [include/Menus.h](../../include/Menus.h)'s `structMapMenuTilemapData` may describe them, but its field names do not fit these entries yet.
 - 80 `ldy #$xxxx` immediates elsewhere in `engine/` may be raw pointers, as bank `$89`'s sprite arrays were (the item, unit and skill windows pass sprite arrays this way); `tools/sprite_arrays.py` decodes the arrays.

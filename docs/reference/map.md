@@ -113,7 +113,7 @@ After a weapon, staff, talk, help or give-gold command, the targets are marked i
 
 ## Unit commands
 
-The command menu's handlers ([map_menu.md](map_menu.md)) call the effects in [map_actions.asm](../../engine/map/map_actions.asm). Most end the unit's action (`rlUnknown84CAA9`) and then run the chapter's event conditions with an event action number, so a chapter can react:
+The command menu's handlers ([map_menu.md](map_menu.md)) call the effects in [map_actions.asm](../../engine/map/map_actions.asm). Most end the unit's action (`rlFinishUnitAction`) and then run the chapter's event conditions with an event action number, so a chapter can react:
 
 | Command | Routine | Effect |
 |---|---|---|
@@ -172,6 +172,6 @@ At the end of chapter 5, after Arvis attacks Sigurd, `procFirstGenerationEnding`
 - `wUnitSelectedFlag` takes the values 1 and 2 in an unused routine (`rlMoveFreeMapCursorUnused`, a different cursor frame for 2); only 1 is used.
 - The help command's relocation (type 7 with `wR0` and `wR1`) and why the helper gets 100 experience.
 - What the chapter 5 flags `$14`-`$2C` record (the ending only reads them).
-- `rlUnknown88DD0F` and its two sprite arrays: nothing reaches it.
+- `rlDrawActiveUnitOverlaySpriteUnused` and its two sprite arrays: nothing reaches it.
 - `wChapterFlags` bit `$0100` (set by the map menu and bank `$91`), and what `$70` means to `rsOpenQueuedInventoryFullMenu`.
 - The `CharacterID` of `MOVE_TEMPORARY_TO_COORDS_CLASS` and the help command's relocation (type 7: the target leaves the map with a scene).

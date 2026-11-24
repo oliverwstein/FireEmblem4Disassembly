@@ -2,15 +2,13 @@
 
 Current state and next steps. Read this first, then [PLAN.md](PLAN.md) (roadmap, per-wave checklist, engine guide). Past work and older technical notes are in [HISTORY.md](HISTORY.md); tool usage and 64tass pitfalls are in [tools/README.md](tools/README.md). **Rewrite this file at the end of every session** to keep it short and about the present.
 
-## Current state (2026-11-23, after waves 11–13: events, arena, and dialogue finished)
+## Current state (2026-11-23, after waves 14–15: all 189 non-visual `Unknown`s cleared)
 
 Numbers come from `python3 tools/counts.py --fast --breakdown`; quote nothing else.
 
 - `./build.sh` is byte-identical and checksums verify (`./build.sh mod` builds the identical ROM without `fe4.sfc`; GAPS.md is empty).
-- Routines: 6,505 in `engine/`, 5,415 named, 1,090 `Unknown` (83.2% named). 172 pinned blocks.
-- **Events** ([docs/reference/events.md](docs/reference/events.md)): done (0 `Unknown` / 593 total; `Table809703Section` and `Unsorted809654Section` moved to `engine/sound/driver.asm`).
-- **Arena** ([docs/reference/arena.md](docs/reference/arena.md)): done (0 `Unknown` / 25 total).
-- **Dialogue** ([docs/reference/dialogue.md](docs/reference/dialogue.md)): done (0 `Unknown` / 301 total).
+- Routines: 6,505 in `engine/`, 5,604 named, 901 `Unknown` (86.1% named). 172 pinned blocks.
+- **Stage 1 complete:** 17 of 20 folders in `engine/` now have **0 `Unknown`** (`ai/`, `arena/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `units/`, `worldmap/` — 4,397 routines total).
 - Reference pages: `docs/reference/core.md`, `ai.md`, `arena.md`, `battle_scene.md`, `castle.md`, `demo.md`, `dialogue.md`, `epilogue.md`, `events.md`, `map_battle.md`, `map_menu.md`, `map.md`, `menus.md`, `save.md`, `title.md`, `worldmap.md` (`tools/reference.py` output is gitignored).
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
@@ -23,23 +21,12 @@ From `python3 tools/counts.py --fast --breakdown` (top-level `rl`/`rs` routines 
 | `battle/` | 460 | 1,073 | `map_magic_effects.asm` 434, `map_battle_magic.asm` 13, `effects.asm` 5, `battle.asm` 3, `map_battle.asm` 3, others 2 | Spell visuals and bank `$87` ripple (`procUnknown87C70A`) intentionally left `Unknown`; mechanics done |
 | `battle_scene/` | 301 | 790 | `effects.asm` 224, `screen.asm` 58, `hud.asm` 5, `script.asm` 5, others 9 | Visual/HDMA/effect helpers intentionally left `Unknown`; mechanics done |
 | `title/` | 140 | 245 | `title_scenes.asm` 130, `title_screen.asm` 10 | Intro scene timelines/visuals |
-| `map/` | 87 | 624 | `map_sprites.asm` 36, `map_cursor.asm` 11, `deployment.asm` 8, `popups.asm` 8, `range_maps.asm` 8, `minimap.asm` 7, others 9 | Mostly sprite/render helpers + remaining map mechanics |
-| `core/` | 23 | 376 | `ram_structs.asm` 12, `boot.asm` 2, `fade.asm` 2, `game_states.asm` 2, `tilemaps.asm` 2, others 3 | Low-level helpers |
-| `castle/` | 15 | 294 | `lists.asm` 11, `conversation.asm` 2, `unit_commands.asm` 2 | Castle lists and helpers |
-| `units/` | 15 | 341 | `unit_info.asm` 3, `units.asm` 3, `stats.asm` 2, `unit_state.asm` 2, others 5 | Small remaining helpers |
-| `worldmap/` | 11 | 109 | `portraits.asm` 7, `markers.asm` 3, `world_map.asm` 1 | World map helpers |
-| `menus/` | 10 | 740 | `map_menu.asm` 7, `menu_text.asm` 1, `skill_window.asm` 1, `status_screen.asm` 1 | Small leftovers |
-| `epilogue/` | 9 | 282 | `dialogue.asm` 3, `endings.asm` 3, `world_map.asm` 2, `records.asm` 1 | Epilogue helpers |
-| `save/` | 9 | 227 | `save_menu.asm` 8, `jugdral_history.asm` 1 | Save menu and history |
-| `items/` | 5 | 126 | `items.asm` 3, `inventory.asm` 1, `staves.asm` 1 | Item/staff helpers |
-| `debug/` | 4 | 49 | `debug_menu.asm` 3, `world_map_test.asm` 1 | Debug menu |
-| `sound/` | 1 | 52 | `driver.asm` 1 | `rsUnknown809727` (moved from `events/` in Wave 11) |
-| `ai/`, `arena/`, `demo/`, `dialogue/`, `events/`, `rankings/` | 0 | 1,177 | — | 0 `Unknown` (`208`, `25`, `44`, `301`, `593`, `6`) |
-| **Total** | **1,090** | **6,505** | | **5,415 named (83.2%)** |
+| `ai/`, `arena/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `units/`, `worldmap/` | 0 | 4,397 | — | 0 `Unknown` |
+| **Total** | **901** | **6,505** | | **5,604 named (86.1%)** |
 
 ## Who wrote what
 
-Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), and Waves 11–13 (`cfef06b`..`9ebe9bb`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`). Its mechanical work passes the build; its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
+Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), and Waves 14–15 (`1fb5962`..`ac2e45b`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`). Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
 
 ## Active decisions
 
@@ -47,18 +34,15 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5e
 - **Sound is lowest priority:** no SPC700 driver work unless the user asks.
 - **Batch emulator checks:** `fe4.cdl` covers the prologue; answer what the code can settle first, and collect remaining screen questions below.
 
-## Next session — Path to 0 `Unknown`
+## Next session
 
-1. **Stage 1 — Clear all 189 remaining non-visual `Unknown`s (recommended next session):**
-   - **Wave 14 — Small systems sweep (102 `Unknown` across 10 folders):** `core/` (23), `castle/` (15), `units/` (15), `worldmap/` (11), `menus/` (10), `epilogue/` (9), `save/` (9), `items/` (5), `debug/` (4), `sound/` (1 — `rsUnknown809727`).
-   - **Wave 15 — Map engine (87 `Unknown`):** `map_sprites.asm` (36), `map_cursor.asm` (11), `deployment.asm` (8), `popups.asm` (8), `range_maps.asm` (8), `minimap.asm` (7), `scroll.asm` (4), `locations.asm` (3), `map_loop.asm` (1), `unit_movement.asm` (1).
-2. **Stage 2 — Literal 0 `Unknown` (901 visual/effect/intro-timeline routines, if overriding "Mechanics over visuals"):**
+1. **Stage 2 — Literal 0 `Unknown` (901 visual/effect/intro-timeline routines, if overriding "Mechanics over visuals"):**
    - **Wave 16 — Title screen (140 `Unknown`):** `title_scenes.asm` (130), `title_screen.asm` (10).
    - **Wave 17 — Battle scene visuals (301 `Unknown`):** `effects.asm` (224), `screen.asm` (58), `hud.asm` (5), `script.asm` (5), `results.asm` (4), `rounds.asm` (3), `animation_moves.asm` (1), `combatants.asm` (1).
    - **Wave 18 — Map magic & battle visuals (460 `Unknown`):** `map_magic_effects.asm` (434), `map_battle_magic.asm` (13), `effects.asm` (5), `battle.asm` (3), `map_battle.asm` (3), `battle_stats.asm` (1), `scripted_crits.asm` (1).
-3. **Engine guide outline:**
-   - Draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide"). Now that `events/`, `arena/`, and `dialogue/` reference pages exist, every major gameplay system is documented.
-4. **Loose ends:**
+2. **Engine guide outline:**
+   - Draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide"). Every major gameplay system is documented.
+3. **Loose ends:**
    - Pad-test banks `$88`, `$9B`, and `$9F` (`./build.sh pad SECTION N`).
    - Fix `tools/songs.py` (stops at stale `aUnknown8A9D79`) before regenerating `audio/SONGS.md`, and investigate why `tools/stream_catalog.py` deleted catalog previews.
    - Check whether `tools/dialogue.py` decodes the Jugdral history texts (`engine/save/jugdral_history.asm`).

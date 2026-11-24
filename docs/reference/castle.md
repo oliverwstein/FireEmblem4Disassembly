@@ -122,4 +122,4 @@ The text is put together for each couple (`rlBuildLoverHomeCastleConversation`, 
 - `$7F80A3`-`$7F80A7` hold both the fountain animation and the town's HDMA table, and are unnamed for now. `$7F8183` holds the augury topics; as the status screen's `wStatusScreenCaller` it is named only in the status screen's files (see [menus.md](menus.md)).
 - `rlUnknown84D334` and `rlUnknown9EDAE7` (giving money) and `rlUnknown8DB52C` (the conversation callback) are still `Unknown`.
 - Why class change is refused in chapter 6. In that chapter the command's label is drawn blank, its button gets another palette, and pressing it only plays the error sound (`rsCastleUnitCommandNameClassChange`, `rsCastleUnitCommandClassChange`); the code gives no reason.
-- The window HDMA routines (`rlUnknown8AB23B` and the three after it) are unnamed.
+- The window HDMA routines (`rlHDMACastleColorMath1`, `rlHDMACastleColorMath2`, `rlHDMACastleColorData`, `rlHDMACastleSubscreenMask`) are named.
