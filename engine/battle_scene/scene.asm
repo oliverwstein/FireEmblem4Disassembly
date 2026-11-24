@@ -321,8 +321,8 @@
         rep #$20
         jsl rlBattleSceneClearFade
         jsl rlBattleSceneResetBGScrolls
-        jsl rlUnknown96EB02
-        jsl rlUnknown96EBC9
+        jsl rlBattleSceneClearSpellTileSlots
+        jsl rlBattleSceneClearBG2Shake
         jsl rlBattleSceneResetArenaBreak
         jsl rlBattleSceneClearMagicSwordFlags
         jsl rlBattleSceneResetSkillState
@@ -346,7 +346,7 @@
         jsl rlBattleAnimationClearMoveQueues
         jsl rlBattleSceneInitEffectBuffers
         jsl rlBattleSceneResetPolygonWindows
-        jsl rlUnknown96EE8A
+        jsl rlBattleSceneResetMosaic
         jsl rlResetBattleSceneScript
         jsl rlBattleSceneScriptClearLoading
         jsl rlBattleSceneClearHDMAEffects
@@ -513,10 +513,10 @@
         jsl rlBattleSceneUpdatePolygonWindows
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlBattleSceneBuildColorHDMATable
-        jsl rlUnknown96EBE3
+        jsl rlBattleSceneStepBG2Shake
         jsr rsBattleSceneUpdateStageScroll
         jsr rsBattleSceneUpdateBG1Scroll
-        jsl rlUnknown96DE6F
+        jsl rlBattleSceneRunBGAnimSlots
         jsl rlBattleSceneUpdateSpellWindowEffects
         jsl rlBattleSceneUpdateBGScrolls
         jsl rlBattleSceneRunCameraPan
@@ -543,7 +543,7 @@
         jsr rsBattleSceneBuildBG2HOFSTable
         jsr rsBattleSceneBuildBG2PerspectiveTable
         jsl rlBattleSceneRunQueuedCopies
-        jsl rlUnknown96EE95
+        jsl rlBattleSceneStepMosaic
         jsl rlBattleSceneReadArenaRetreat
         jsr rsBattleSceneStartKnockbackFromStrike
         jsr rsBattleSceneCheckRoundsOver

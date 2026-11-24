@@ -493,34 +493,34 @@
       aUnknown96DF60 ; 96/DF60
 
         ; Jump table of rlBattleSceneStartBGScrollEffect.
-        .word <>rsUnknown96DFC7
-        .word <>rsUnknown96E01F
-        .word <>rsUnknown96E077
-        .word <>rsUnknown96E0CF
-        .word <>rsUnknown96E127
-        .word <>rsUnknown96E17B
-        .word <>rsUnknown96E1D3
-        .word <>rsUnknown96E20A
-        .word <>rsUnknown96E245
-        .word <>rsUnknown96E275
-        .word <>rsUnknown96E2CE
-        .word <>rsUnknown96E312
-        .word <>rsUnknown96E3CA
-        .word <>rsUnknown96E3E5
-        .word <>rsUnknown96E42D
-        .word <>rsUnknown96E356
-        .word <>rsUnknown96E38D
-        .word <>rsUnknown96E463
-        .word <>rsUnknown96E49C
-        .word <>rsUnknown96E49D
-        .word <>rsUnknown96E50E
-        .word <>rsUnknown96E50F
-        .word <>rsUnknown96E558
-        .word <>rsUnknown96E58E
-        .word <>rsUnknown96E4D8
-        .word <>rsUnknown96E5DA
-        .word <>rsUnknown96E5F6
-        .word <>rsUnknown96E612
+        .word <>rsBattleSceneInitBGSlotAttacker
+        .word <>rsBattleSceneInitBGSlotAttackerAlt
+        .word <>rsBattleSceneInitBGSlotAttackerLow
+        .word <>rsBattleSceneInitBGSlotAttackerLowFar
+        .word <>rsBattleSceneInitBGSlotDefender
+        .word <>rsBattleSceneInitBGSlotDefenderOffset
+        .word <>rsBattleSceneInitBGSlotFixedCenter
+        .word <>rsBattleSceneInitBGSlotFixedRight
+        .word <>rsBattleSceneInitBGSlotFixedOrigin
+        .word <>rsBattleSceneInitBGSlotDefenderScreen
+        .word <>rsBattleSceneInitBGSlotDefenderGround
+        .word <>rsBattleSceneInitBGSlotAttackerGround
+        .word <>rsBattleSceneStopBGSlot
+        .word <>rsBattleSceneInitBGSlotDefenderLow
+        .word <>rsBattleSceneInitBGSlotFromArgs
+        .word <>rsBattleSceneInitBGSlotFixedLow
+        .word <>rsBattleSceneInitBGSlotCamera
+        .word <>rsBattleSceneAimBGSlotAtAttacker
+        .word <>rsBattleSceneBGSlotNoOp1
+        .word <>rsBattleSceneAimBGSlotAtDefenderHit
+        .word <>rsBattleSceneBGSlotNoOp2
+        .word <>rsBattleSceneAimBGSlotWithPath
+        .word <>rsBattleSceneStartBGScrollScript
+        .word <>rsBattleSceneSetBGSlotVelocity
+        .word <>rsBattleSceneAimBGSlotAtDefenderTop
+        .word <>rsBattleSceneSetBGSlotVelocityOffset1
+        .word <>rsBattleSceneSetBGSlotVelocityOffset2
+        .word <>rsBattleSceneAimBGSlotAtDefenderFlat
 
     .endsection Table96DF60Section
 
@@ -604,7 +604,7 @@
         .databank ?
 
         ; A = shake: starts that sequence from the offset table at $97/C2D4, which
-        ; rlUnknown96EBE3 plays (pairs of signed X and Y offsets added to BG2's scroll;
+        ; rlBattleSceneStepBG2Shake plays (pairs of signed X and Y offsets added to BG2's scroll;
         ; $8080 loops, $8081 stops).
 
         phx
@@ -642,14 +642,14 @@
       aUnknown96ECCC ; 96/ECCC
 
         ; Jump table of rlBattleSceneRunPaletteOperation.
-        .word <>rsUnknown96ECDC
-        .word <>rsUnknown96ED0B
-        .word <>rsUnknown96ED23
-        .word <>rsUnknown96EDA7
-        .word <>rsUnknown96EE32
-        .word <>rsUnknown96EE4A
-        .word <>rsUnknown96EE5E
-        .word <>rsUnknown96EE71
+        .word <>rsBattleSceneTintPaletteRed
+        .word <>rsBattleSceneDimPaletteHalf
+        .word <>rsBattleSceneConvertPaletteLuma
+        .word <>rsBattleSceneConvertPaletteLuma2
+        .word <>rsBattleSceneDimSpritePaletteHalf
+        .word <>rsBattleSceneFillPaletteBlue1
+        .word <>rsBattleSceneFillPaletteBlue2
+        .word <>rsBattleSceneDimPaletteQuarter
 
     .endsection Table96ECCCSection
 

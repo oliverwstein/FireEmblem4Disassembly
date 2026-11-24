@@ -3524,7 +3524,7 @@
 
         _9A81
         lda $01E2,b,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         lsr a
         and #$3DEF
         sta $01E2,b,x
@@ -3536,7 +3536,7 @@
 
         _9A99
         lda $0122,b,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         lsr a
         and #$3DEF
         sta $0122,b,x
@@ -3550,7 +3550,7 @@
 
         _9AB6
         lda $0132,b,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         lsr a
         and #$3DEF
         jsl rlBattleSceneDarkenColor
@@ -3565,7 +3565,7 @@
 
         _9AD7
         lda $013A,b,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         lsr a
         and #$3DEF
         jsl rlBattleSceneDarkenColor
@@ -3578,7 +3578,7 @@
 
         _9AF3
         lda $01C2,b,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         lsr a
         and #$3DEF
         sta $7FFEC2,x
@@ -3590,7 +3590,7 @@
 
         _9B0C
         lda $0102,b,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         lsr a
         and #$3DEF
         sta $7FFE02,x
@@ -3604,7 +3604,7 @@
 
         _9B2A
         lda $0112,b,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         lsr a
         and #$3DEF
         jsl rlBattleSceneDarkenColor
@@ -3619,7 +3619,7 @@
 
         _9B4C
         lda $011A,b,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         lsr a
         and #$3DEF
         jsl rlBattleSceneDarkenColor

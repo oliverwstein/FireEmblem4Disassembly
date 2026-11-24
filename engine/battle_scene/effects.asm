@@ -9699,7 +9699,7 @@
 
         ; 96/DE6F
 
-      rlUnknown96DE6F ; 96/DE6F
+      rlBattleSceneRunBGAnimSlots ; 96/DE6F
 
         .al
         .xl
@@ -9742,7 +9742,7 @@
         tax
         cpx #$003F
         bcc _DE74
-        jsl rlUnknown96E803
+        jsl rlBattleSceneStepBGScrollScript
         ply
         plx
         rtl
@@ -9761,18 +9761,18 @@
 
       aUnknown96DEAA ; 96/DEAA
 
-        ; Jump table of rlUnknown96DE6F.
-        .word <>rsUnknown96E6D7
-        .word <>rsUnknown96E712
-        .word <>rsUnknown96E716
-        .word <>rsUnknown96E751
-        .word <>rsUnknown96E798
-        .word <>rlUnknown96E803
-        .word <>rsUnknown96E8E1
-        .word <>rsUnknown96E716
-        .word <>rsUnknown96E91C
-        .word <>rsUnknown96E92F
-        .word <>rsUnknown96E716
+        ; Jump table of rlBattleSceneRunBGAnimSlots.
+        .word <>rsBattleSceneStepBGSlotMove
+        .word <>rsBattleSceneStepBGSlotIdle
+        .word <>rsBattleSceneStepBGSlotMove2
+        .word <>rsBattleSceneStepBGSlotUntilOffscreen
+        .word <>rsBattleSceneStepBGSlotPathY
+        .word <>rlBattleSceneStepBGScrollScript
+        .word <>rsBattleSceneStepBGSlotMove3
+        .word <>rsBattleSceneStepBGSlotMove2
+        .word <>rsBattleSceneStepBGSlotGravity
+        .word <>rsBattleSceneStepBGSlotBounce
+        .word <>rsBattleSceneStepBGSlotMove2
 
     .endsection Table96DEAASection
 
@@ -9782,7 +9782,7 @@
       .al
       .xl
 
-      rsUnknown96DFBB ; 96/DFBB
+      rsBattleSceneClearBGSlotOffset ; 96/DFBB
 
         .al
         .xl
@@ -9806,7 +9806,7 @@
       .al
       .xl
 
-      rsUnknown96DFC7 ; 96/DFC7
+      rsBattleSceneInitBGSlotAttacker ; 96/DFC7
 
         .al
         .xl
@@ -9815,7 +9815,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -9865,7 +9865,7 @@
       .al
       .xl
 
-      rsUnknown96E01F ; 96/E01F
+      rsBattleSceneInitBGSlotAttackerAlt ; 96/E01F
 
         .al
         .xl
@@ -9874,7 +9874,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -9924,7 +9924,7 @@
       .al
       .xl
 
-      rsUnknown96E077 ; 96/E077
+      rsBattleSceneInitBGSlotAttackerLow ; 96/E077
 
         .al
         .xl
@@ -9933,7 +9933,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -9983,7 +9983,7 @@
       .al
       .xl
 
-      rsUnknown96E0CF ; 96/E0CF
+      rsBattleSceneInitBGSlotAttackerLowFar ; 96/E0CF
 
         .al
         .xl
@@ -9992,7 +9992,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10042,7 +10042,7 @@
       .al
       .xl
 
-      rsUnknown96E127 ; 96/E127
+      rsBattleSceneInitBGSlotDefender ; 96/E127
 
         .al
         .xl
@@ -10051,7 +10051,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10099,7 +10099,7 @@
       .al
       .xl
 
-      rsUnknown96E17B ; 96/E17B
+      rsBattleSceneInitBGSlotDefenderOffset ; 96/E17B
 
         .al
         .xl
@@ -10108,7 +10108,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10158,7 +10158,7 @@
       .al
       .xl
 
-      rsUnknown96E1D3 ; 96/E1D3
+      rsBattleSceneInitBGSlotFixedCenter ; 96/E1D3
 
         .al
         .xl
@@ -10167,7 +10167,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10199,7 +10199,7 @@
       .al
       .xl
 
-      rsUnknown96E20A ; 96/E20A
+      rsBattleSceneInitBGSlotFixedRight ; 96/E20A
 
         .al
         .xl
@@ -10208,7 +10208,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10242,7 +10242,7 @@
       .al
       .xl
 
-      rsUnknown96E245 ; 96/E245
+      rsBattleSceneInitBGSlotFixedOrigin ; 96/E245
 
         .al
         .xl
@@ -10251,7 +10251,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10280,7 +10280,7 @@
       .al
       .xl
 
-      rsUnknown96E275 ; 96/E275
+      rsBattleSceneInitBGSlotDefenderScreen ; 96/E275
 
         .al
         .xl
@@ -10289,8 +10289,8 @@
 
         phx
         tyx
-        jsl rlUnknown96EA7A
-        jsr rsUnknown96DFBB
+        jsl rlBattleSceneClearBGScrollScript
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10339,7 +10339,7 @@
       .al
       .xl
 
-      rsUnknown96E2CE ; 96/E2CE
+      rsBattleSceneInitBGSlotDefenderGround ; 96/E2CE
 
         .al
         .xl
@@ -10348,7 +10348,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10387,7 +10387,7 @@
       .al
       .xl
 
-      rsUnknown96E312 ; 96/E312
+      rsBattleSceneInitBGSlotAttackerGround ; 96/E312
 
         .al
         .xl
@@ -10396,7 +10396,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10435,7 +10435,7 @@
       .al
       .xl
 
-      rsUnknown96E356 ; 96/E356
+      rsBattleSceneInitBGSlotFixedLow ; 96/E356
 
         .al
         .xl
@@ -10444,7 +10444,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10476,7 +10476,7 @@
       .al
       .xl
 
-      rsUnknown96E38D ; 96/E38D
+      rsBattleSceneInitBGSlotCamera ; 96/E38D
 
         .al
         .xl
@@ -10485,7 +10485,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10518,7 +10518,7 @@
       .al
       .xl
 
-      rsUnknown96E3CA ; 96/E3CA
+      rsBattleSceneStopBGSlot ; 96/E3CA
 
         .al
         .xl
@@ -10551,7 +10551,7 @@
       .al
       .xl
 
-      rsUnknown96E3E5 ; 96/E3E5
+      rsBattleSceneInitBGSlotDefenderLow ; 96/E3E5
 
         .al
         .xl
@@ -10560,7 +10560,7 @@
 
         phx
         tyx
-        jsr rsUnknown96DFBB
+        jsr rsBattleSceneClearBGSlotOffset
         sep #$20
         lda $7FE475,x
         and #$7F
@@ -10601,7 +10601,7 @@
       .al
       .xl
 
-      rsUnknown96E42D ; 96/E42D
+      rsBattleSceneInitBGSlotFromArgs ; 96/E42D
 
         .al
         .xl
@@ -10643,7 +10643,7 @@
       .al
       .xl
 
-      rsUnknown96E463 ; 96/E463
+      rsBattleSceneAimBGSlotAtAttacker ; 96/E463
 
         .al
         .xl
@@ -10669,7 +10669,7 @@
         ldy #$0002
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown96E654
+        jsl rlBattleSceneCalcBGSlotVelocity
         lda #$0000
         sta $7FE47E,x
         ply
@@ -10688,7 +10688,7 @@
       .al
       .xl
 
-      rsUnknown96E49C ; 96/E49C
+      rsBattleSceneBGSlotNoOp1 ; 96/E49C
 
         .al
         .xl
@@ -10709,7 +10709,7 @@
       .al
       .xl
 
-      rsUnknown96E49D ; 96/E49D
+      rsBattleSceneAimBGSlotAtDefenderHit ; 96/E49D
 
         .al
         .xl
@@ -10739,7 +10739,7 @@
         ldy #$0002
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown96E654
+        jsl rlBattleSceneCalcBGSlotVelocity
         ply
         plx
         rts
@@ -10756,7 +10756,7 @@
       .al
       .xl
 
-      rsUnknown96E4D8 ; 96/E4D8
+      rsBattleSceneAimBGSlotAtDefenderTop ; 96/E4D8
 
         .al
         .xl
@@ -10784,7 +10784,7 @@
         ldy #$0002
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown96E654
+        jsl rlBattleSceneCalcBGSlotVelocity
         ply
         plx
         rts
@@ -10801,7 +10801,7 @@
       .al
       .xl
 
-      rsUnknown96E50E ; 96/E50E
+      rsBattleSceneBGSlotNoOp2 ; 96/E50E
 
         .al
         .xl
@@ -10822,7 +10822,7 @@
       .al
       .xl
 
-      rsUnknown96E50F ; 96/E50F
+      rsBattleSceneAimBGSlotWithPath ; 96/E50F
 
         .al
         .xl
@@ -10852,7 +10852,7 @@
         ldy #$0002
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown96E654
+        jsl rlBattleSceneCalcBGSlotVelocity
         inc y
         lda [lR18],y
         sta $7FE483,x
@@ -10875,7 +10875,7 @@
       .al
       .xl
 
-      rsUnknown96E558 ; 96/E558
+      rsBattleSceneStartBGScrollScript ; 96/E558
 
         .al
         .xl
@@ -10918,7 +10918,7 @@
       .al
       .xl
 
-      rsUnknown96E58E ; 96/E58E
+      rsBattleSceneSetBGSlotVelocity ; 96/E58E
 
         ; TRACE: stack-args
         .al
@@ -10978,7 +10978,7 @@
       .al
       .xl
 
-      rsUnknown96E5DA ; 96/E5DA
+      rsBattleSceneSetBGSlotVelocityOffset1 ; 96/E5DA
 
         .al
         .xl
@@ -10987,7 +10987,7 @@
 
         phx
         phy
-        jsr rsUnknown96E58E
+        jsr rsBattleSceneSetBGSlotVelocity
         lda $7FE476
         sta $7FE4B4
         lda $7FE477
@@ -11010,7 +11010,7 @@
       .al
       .xl
 
-      rsUnknown96E5F6 ; 96/E5F6
+      rsBattleSceneSetBGSlotVelocityOffset2 ; 96/E5F6
 
         .al
         .xl
@@ -11019,7 +11019,7 @@
 
         phx
         phy
-        jsr rsUnknown96E58E
+        jsr rsBattleSceneSetBGSlotVelocity
         lda $7FE476
         sta $7FE4B4
         lda $7FE477
@@ -11042,7 +11042,7 @@
       .al
       .xl
 
-      rsUnknown96E612 ; 96/E612
+      rsBattleSceneAimBGSlotAtDefenderFlat ; 96/E612
 
         .al
         .xl
@@ -11072,7 +11072,7 @@
         ldy #$0002
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown96E654
+        jsl rlBattleSceneCalcBGSlotVelocity
         lda #$0000
         sta $7FE47E,x
         ply
@@ -11083,7 +11083,7 @@
 
         ; 96/E654
 
-      rlUnknown96E654 ; 96/E654
+      rlBattleSceneCalcBGSlotVelocity ; 96/E654
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -11178,7 +11178,7 @@
       .al
       .xl
 
-      rsUnknown96E6D7 ; 96/E6D7
+      rsBattleSceneStepBGSlotMove ; 96/E6D7
 
         .al
         .xl
@@ -11187,7 +11187,7 @@
 
         phx
         tyx
-        jsl rlUnknown96E9B8
+        jsl rlBattleSceneApplyBGSlotVelocity
         lda $7FE480,x
         bne _E70B
         sep #$20
@@ -11231,7 +11231,7 @@
       .al
       .xl
 
-      rsUnknown96E712 ; 96/E712
+      rsBattleSceneStepBGSlotIdle ; 96/E712
 
         .al
         .xl
@@ -11255,7 +11255,7 @@
       .al
       .xl
 
-      rsUnknown96E716 ; 96/E716
+      rsBattleSceneStepBGSlotMove2 ; 96/E716
 
         .al
         .xl
@@ -11264,7 +11264,7 @@
 
         phx
         tyx
-        jsl rlUnknown96E9B8
+        jsl rlBattleSceneApplyBGSlotVelocity
         lda $7FE480,x
         bne _E74A
         sep #$20
@@ -11300,7 +11300,7 @@
 
         ; 96/E751
 
-      rsUnknown96E751 ; 96/E751
+      rsBattleSceneStepBGSlotUntilOffscreen ; 96/E751
 
         .al
         .xl
@@ -11309,7 +11309,7 @@
 
         phx
         tyx
-        jsl rlUnknown96E9B8
+        jsl rlBattleSceneApplyBGSlotVelocity
         lda $7FE477,x
         sec
         sbc wBattleSceneCameraX
@@ -11358,7 +11358,7 @@
       .al
       .xl
 
-      rsUnknown96E798 ; 96/E798
+      rsBattleSceneStepBGSlotPathY ; 96/E798
 
         .al
         .xl
@@ -11368,7 +11368,7 @@
         phx
         phy
         tyx
-        jsl rlUnknown96E9B8
+        jsl rlBattleSceneApplyBGSlotVelocity
         lda $7FE483,x
         sta lR18
         lda $7FE484,x
@@ -11433,7 +11433,7 @@
       .al
       .xl
 
-      rlUnknown96E803 ; 96/E803
+      rlBattleSceneStepBGScrollScript ; 96/E803
 
         .al
         .xl
@@ -11574,7 +11574,7 @@
       .al
       .xl
 
-      rsUnknown96E8E1 ; 96/E8E1
+      rsBattleSceneStepBGSlotMove3 ; 96/E8E1
 
         .al
         .xl
@@ -11583,7 +11583,7 @@
 
         phx
         tyx
-        jsl rlUnknown96E9B8
+        jsl rlBattleSceneApplyBGSlotVelocity
         lda $7FE480,x
         bne _E915
         sep #$20
@@ -11627,7 +11627,7 @@
       .al
       .xl
 
-      rsUnknown96E91C ; 96/E91C
+      rsBattleSceneStepBGSlotGravity ; 96/E91C
 
         .al
         .xl
@@ -11636,7 +11636,7 @@
 
         phx
         tyx
-        jsr rsUnknown96E936
+        jsr rsBattleSceneStepBGSlotMirror
         lda $7FE47E
         clc
         adc #$0010
@@ -11656,7 +11656,7 @@
       .al
       .xl
 
-      rsUnknown96E92F ; 96/E92F
+      rsBattleSceneStepBGSlotBounce ; 96/E92F
 
         .al
         .xl
@@ -11665,7 +11665,7 @@
 
         phx
         tyx
-        jsr rsUnknown96E936
+        jsr rsBattleSceneStepBGSlotMirror
         plx
         rts
 
@@ -11681,7 +11681,7 @@
       .al
       .xl
 
-      rsUnknown96E936 ; 96/E936
+      rsBattleSceneStepBGSlotMirror ; 96/E936
 
         .al
         .xl
@@ -11718,7 +11718,7 @@
         eor #$08
         sta bBufferW12SEL
         rep #$20
-        jsl rlUnknown96E9B8
+        jsl rlBattleSceneApplyBGSlotVelocity
         lda $7FE480,x
         bne _E9B1
         sep #$20
@@ -11762,7 +11762,7 @@
       .al
       .xl
 
-      rlUnknown96E9B8 ; 96/E9B8
+      rlBattleSceneApplyBGSlotVelocity ; 96/E9B8
 
         .al
         .xl
@@ -11872,7 +11872,7 @@
       .al
       .xl
 
-      rlUnknown96EA7A ; 96/EA7A
+      rlBattleSceneClearBGScrollScript ; 96/EA7A
 
         .al
         .xl
@@ -11978,7 +11978,7 @@
 
         ; 96/EB02
 
-      rlUnknown96EB02 ; 96/EB02
+      rlBattleSceneClearSpellTileSlots ; 96/EB02
 
         .al
         .xl
@@ -11998,7 +11998,7 @@
 
         ; 96/EB1E
 
-      rlUnknown96EB1E ; 96/EB1E
+      rlBattleSceneUpdateSpellTileSlots ; 96/EB1E
 
         .al
         .xl
@@ -12096,7 +12096,7 @@
 
         ; 96/EBC9
 
-      rlUnknown96EBC9 ; 96/EBC9
+      rlBattleSceneClearBG2Shake ; 96/EBC9
 
         .al
         .xl
@@ -12125,7 +12125,7 @@
       .al
       .xl
 
-      rlUnknown96EBE3 ; 96/EBE3
+      rlBattleSceneStepBG2Shake ; 96/EBE3
 
         .al
         .xl
@@ -12198,7 +12198,7 @@
       .al
       .xl
 
-      rsUnknown96ECDC ; 96/ECDC
+      rsBattleSceneTintPaletteRed ; 96/ECDC
 
         .al
         .xl
@@ -12246,7 +12246,7 @@
       .al
       .xl
 
-      rsUnknown96ED0B ; 96/ED0B
+      rsBattleSceneDimPaletteHalf ; 96/ED0B
 
         .al
         .xl
@@ -12280,7 +12280,7 @@
       .al
       .xl
 
-      rsUnknown96ED23 ; 96/ED23
+      rsBattleSceneConvertPaletteLuma ; 96/ED23
 
         ; TRACE: stack-args
         .al
@@ -12343,7 +12343,7 @@
       .al
       .xl
 
-      rsUnknown96EDA7 ; 96/EDA7
+      rsBattleSceneConvertPaletteLuma2 ; 96/EDA7
 
         .al
         .xl
@@ -12355,7 +12355,7 @@
 
         _EDAB
         lda $7FFE62,x
-        jsl rlUnknown96EDC0
+        jsl rlBattleSceneColorToLuma
         sta $7FF636,x
         inc x
         inc x
@@ -12376,7 +12376,7 @@
       .al
       .xl
 
-      rlUnknown96EDC0 ; 96/EDC0
+      rlBattleSceneColorToLuma ; 96/EDC0
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -12430,7 +12430,7 @@
       .al
       .xl
 
-      rsUnknown96EE32 ; 96/EE32
+      rsBattleSceneDimSpritePaletteHalf ; 96/EE32
 
         .al
         .xl
@@ -12464,7 +12464,7 @@
       .al
       .xl
 
-      rsUnknown96EE4A ; 96/EE4A
+      rsBattleSceneFillPaletteBlue1 ; 96/EE4A
 
         .al
         .xl
@@ -12496,7 +12496,7 @@
       .al
       .xl
 
-      rsUnknown96EE5E ; 96/EE5E
+      rsBattleSceneFillPaletteBlue2 ; 96/EE5E
 
         .al
         .xl
@@ -12528,7 +12528,7 @@
       .al
       .xl
 
-      rsUnknown96EE71 ; 96/EE71
+      rsBattleSceneDimPaletteQuarter ; 96/EE71
 
         .al
         .xl
@@ -12563,7 +12563,7 @@
       .al
       .xl
 
-      rlUnknown96EE8A ; 96/EE8A
+      rlBattleSceneResetMosaic ; 96/EE8A
 
         .al
         .xl
@@ -12588,7 +12588,7 @@
       .al
       .xl
 
-      rlUnknown96EE95 ; 96/EE95
+      rlBattleSceneStepMosaic ; 96/EE95
 
         .al
         .xl
@@ -12636,8 +12636,8 @@
 
       aUnknown96EEBD ; 96/EEBD
 
-        ; Jump table of rlUnknown96EE95.
-        .word <>rsUnknown96EEC5
+        ; Jump table of rlBattleSceneStepMosaic.
+        .word <>rsBattleSceneMosaicMode0NoOp
         .word <>rsUnknown96EEC6
         .word <>rsUnknown96EFC3
         .word <>rsUnknown96F0C4
@@ -12650,7 +12650,7 @@
       .al
       .xl
 
-      rsUnknown96EEC5 ; 96/EEC5
+      rsBattleSceneMosaicMode0NoOp ; 96/EEC5
 
         .al
         .xl
@@ -14520,8 +14520,8 @@
         jsl rlBattleSceneClearHDMAEffects
         jsl rlBattleSceneResetPolygonWindows
         jsl rlBattleSceneResetBGScrolls
-        jsl rlUnknown96EE8A
-        jsl rlUnknown96EBC9
+        jsl rlBattleSceneResetMosaic
+        jsl rlBattleSceneClearBG2Shake
         jsl rlBattleSceneClearScriptRoutine
         lda #$0003
         jsl rlHDMAEngineFreeEntryByIndex
@@ -14570,8 +14570,8 @@
         jsl rlBattleSceneClearHDMAEffects
         jsl rlBattleSceneResetPolygonWindows
         jsl rlBattleSceneResetBGScrolls
-        jsl rlUnknown96EE8A
-        jsl rlUnknown96EBC9
+        jsl rlBattleSceneResetMosaic
+        jsl rlBattleSceneClearBG2Shake
         lda #$0005
         jsl rlHDMAEngineFreeEntryByIndex
         ldx #$0014
@@ -14604,8 +14604,8 @@
         jsl rlBattleSceneInitEffectBuffers
         jsl rlBattleSceneClearHDMAEffects
         jsl rlBattleSceneResetPolygonWindows
-        jsl rlUnknown96EE8A
-        jsl rlUnknown96EBC9
+        jsl rlBattleSceneResetMosaic
+        jsl rlBattleSceneClearBG2Shake
         jsl rlBattleSceneClearScriptRoutine
         lda #$0003
         jsl rlHDMAEngineFreeEntryByIndex

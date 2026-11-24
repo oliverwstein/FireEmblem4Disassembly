@@ -166,7 +166,7 @@
 
       aUnknown96ED67 ; 96/ED67
 
-        ; Read by rsUnknown96ED23.
+        ; Read by rsBattleSceneConvertPaletteLuma.
 
         .word $0000, $0401, $0802, $0C03, $1004, $1405, $1806, $1C07
         .word $2008, $2409, $280A, $2C0B, $300C, $340D, $380E, $3C0F
@@ -185,7 +185,7 @@
 
       aUnknown96EDF2 ; 96/EDF2
 
-        ; Read by rlUnknown96EDC0.
+        ; Read by rlBattleSceneColorToLuma.
 
         .word $0000, $0421, $0842, $0C63, $1084, $14A5, $18C6, $1CE7
         .word $2108, $2529, $294A, $2D6B, $318C, $35AD, $39CE, $3DEF

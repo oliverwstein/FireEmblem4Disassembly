@@ -24,7 +24,7 @@
         jsl rlBattleSceneToggleOAMExtBuffer
         jsl rlBattleSceneBuildGradientWindowHDMA
         jsl rlBattleSceneRunQueuedCopies
-        jsl rlUnknown96EB1E
+        jsl rlBattleSceneUpdateSpellTileSlots
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
