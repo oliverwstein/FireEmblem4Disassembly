@@ -4098,7 +4098,7 @@
         .autsiz
         .databank ?
 
-        ; With BattleSceneFlagSolo2: sets bits $48 of $7FFC6F and creates HDMA entries 3 and 6 (aUnknown95E754, aUnknown95E760).
+        ; With BattleSceneFlagSolo2: sets bits $48 of $7FFC6F and creates HDMA entries 3 and 6 (aBattleSceneSolo2HDMAInfo1, aBattleSceneSolo2HDMAInfo2).
 
         lda wBattleSceneFlags
         bit #BattleSceneFlagSolo2
@@ -4108,16 +4108,16 @@
         ora #$48
         sta $7FFC6F
         rep #$20
-        lda #(`aUnknown95E754)<<8
+        lda #(`aBattleSceneSolo2HDMAInfo1)<<8
         sta lR44+1
-        lda #<>aUnknown95E754
+        lda #<>aBattleSceneSolo2HDMAInfo1
         sta lR44
         lda #$0003
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`aUnknown95E760)<<8
+        lda #(`aBattleSceneSolo2HDMAInfo2)<<8
         sta lR44+1
-        lda #<>aUnknown95E760
+        lda #<>aBattleSceneSolo2HDMAInfo2
         sta lR44
         lda #$0006
         sta wR40

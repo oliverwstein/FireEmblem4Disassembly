@@ -409,21 +409,21 @@
         sta wSelectedUnitDataRAMPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown859080)<<8
+        lda #(`aBattleForecastBlankText)<<8
         sta lR18+1
-        lda #<>aUnknown859080
+        lda #<>aBattleForecastBlankText
         sta lR18
         ldx #$0101
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown859080)<<8
+        lda #(`aBattleForecastBlankText)<<8
         sta lR18+1
-        lda #<>aUnknown859080
+        lda #<>aBattleForecastBlankText
         sta lR18
         ldx #$0301
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown859080)<<8
+        lda #(`aBattleForecastBlankText)<<8
         sta lR18+1
-        lda #<>aUnknown859080
+        lda #<>aBattleForecastBlankText
         sta lR18
         ldx #$0501
         jsl rlDrawMapMenuTextLine
@@ -451,9 +451,9 @@
         jsl rlDrawMapMenuNumber
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown859078)<<8
+        lda #(`aBattleForecastSlashText)<<8
         sta lR18+1
-        lda #<>aUnknown859078
+        lda #<>aBattleForecastSlashText
         sta lR18
         ldx #$0906
         jsl rlDrawMapMenuTextLine
@@ -475,9 +475,9 @@
         _9032
         lda #$2400
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown859092)<<8
+        lda #(`aBattleForecastDoubleDashText)<<8
         sta lR18+1
-        lda #<>aUnknown859092
+        lda #<>aBattleForecastDoubleDashText
         sta lR18
         ldx #$0B06
         jsl rlDrawMapMenuTextLine
@@ -521,28 +521,28 @@
       .al
       .xl
 
-      aUnknown859078 ; 85/9078
+      aBattleForecastSlashText ; 85/9078
 
         .enc "SJIS"
         .text "／"
         .word $0000
         .enc "none"
 
-      aUnknown85907C ; 85/907C
+      aBattleForecastDashText ; 85/907C
 
         .enc "SJIS"
         .text "−"
         .word $0000
         .enc "none"
 
-      aUnknown859080 ; 85/9080
+      aBattleForecastBlankText ; 85/9080
 
         .enc "SJIS"
         .text "　　　　　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown859092 ; 85/9092
+      aBattleForecastDoubleDashText ; 85/9092
 
         .enc "SJIS"
         .text "−−"

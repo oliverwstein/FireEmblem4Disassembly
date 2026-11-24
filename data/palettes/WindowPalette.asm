@@ -40,7 +40,7 @@
 
     .section WindowPaletteDE2AC0Section
 
-      aUnknownDE2AC0 ; DE/2AC0
+      aStatusScreenBGPalettes ; DE/2AC0
         .word $0000, $39CD, $7FFF, $1484, $420F, $2D8D, $0086, $3E11
         .word $0000, $02FC, $5AF7, $52D6, $52B5, $4695, $3E75, $0CE9
         .word $3000, $296E, $56D6, $0C84, $7EF8, $25AD, $633B, $0D08

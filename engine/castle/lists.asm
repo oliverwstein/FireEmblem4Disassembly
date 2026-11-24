@@ -528,9 +528,9 @@
         inc x
         cpx #$0010
         bne _A0F9
-        lda #(`aUnknown8AA12E)<<8
+        lda #(`aItemDescriptionBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA12E
+        lda #<>aItemDescriptionBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -552,7 +552,7 @@
       .al
       .xl
 
-      aUnknown8AA12E ; 8A/A12E
+      aItemDescriptionBlankText ; 8A/A12E
 
         .enc "SJIS"
         .text "　　　　　　　　　"
@@ -1483,9 +1483,9 @@
         beq _A68F
         cmp #$0000
         beq _A6B2
-        lda #(`aUnknown8AA6B6)<<8
+        lda #(`aStockItemDetailsBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA6B6
+        lda #<>aStockItemDetailsBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1518,7 +1518,7 @@
 
         .databank 0
 
-      aUnknown8AA6B6 ; 8A/A6B6
+      aStockItemDetailsBlankText ; 8A/A6B6
 
         ; Nine full-width spaces: blanks the line.
         .enc "SJIS"
@@ -1592,9 +1592,9 @@
         stx aCurrentTilemapInfo,b
         ldx #$1206
         jsl rlDrawTallTwoDigitNumberToTilemapEntry
-        lda #(`aUnknown8AA7DD)<<8
+        lda #(`aWeaponStatsBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA7DD
+        lda #<>aWeaponStatsBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1602,9 +1602,9 @@
         sta lR18+1
         ldx #$1400
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown8AA7DD)<<8
+        lda #(`aWeaponStatsBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA7DD
+        lda #<>aWeaponStatsBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1627,9 +1627,9 @@
         jsl rlDrawMenuTextLine
         lda #$2400
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8AA7F1)<<8
+        lda #(`aWeaponStatsDashText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA7F1
+        lda #<>aWeaponStatsDashText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1651,14 +1651,14 @@
       .al
       .xl
 
-      aUnknown8AA7DD ; 8A/A7DD
+      aWeaponStatsBlankText ; 8A/A7DD
 
         .enc "SJIS"
         .text "　　　　　　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown8AA7F1 ; 8A/A7F1
+      aWeaponStatsDashText ; 8A/A7F1
 
         .enc "SJIS"
         .text "ー"
@@ -1676,9 +1676,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AA824)<<8
+        lda #(`aCastleRankAText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA824
+        lda #<>aCastleRankAText
         sta lRoutineVariable,b
         rts
 
@@ -1693,9 +1693,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AA828)<<8
+        lda #(`aCastleRankBText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA828
+        lda #<>aCastleRankBText
         sta lRoutineVariable,b
         rts
 
@@ -1710,9 +1710,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AA82C)<<8
+        lda #(`aCastleRankCText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA82C
+        lda #<>aCastleRankCText
         sta lRoutineVariable,b
         rts
 
@@ -1720,21 +1720,21 @@
 
         ; 8A/A824
 
-      aUnknown8AA824 ; 8A/A824
+      aCastleRankAText ; 8A/A824
 
         .enc "SJIS"
         .text "Ａ"
         .word $0000
         .enc "none"
 
-      aUnknown8AA828 ; 8A/A828
+      aCastleRankBText ; 8A/A828
 
         .enc "SJIS"
         .text "Ｂ"
         .word $0000
         .enc "none"
 
-      aUnknown8AA82C ; 8A/A82C
+      aCastleRankCText ; 8A/A82C
 
         .enc "SJIS"
         .text "Ｃ"
@@ -1800,9 +1800,9 @@
         beq _A88E
         cmp #$0000
         beq _A8B1
-        lda #(`aUnknown8AA8B5)<<8
+        lda #(`aInventoryItemDetailsBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA8B5
+        lda #<>aInventoryItemDetailsBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1845,7 +1845,7 @@
       .al
       .xl
 
-      aUnknown8AA8B5 ; 8A/A8B5
+      aInventoryItemDetailsBlankText ; 8A/A8B5
 
         .enc "SJIS"
         .text "　　　　　　　　　"
@@ -2185,9 +2185,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AAA78)<<8
+        lda #(`aStockListRowNameBlankText)<<8
         sta lR18+1
-        lda #<>aUnknown8AAA78
+        lda #<>aStockListRowNameBlankText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -2226,7 +2226,7 @@
       .al
       .xl
 
-      aUnknown8AAA78 ; 8A/AA78
+      aStockListRowNameBlankText ; 8A/AA78
 
         .enc "SJIS"
         .text "　　　　　　　　"
@@ -2338,9 +2338,9 @@
         _AB20
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8AAB40)<<8
+        lda #(`aStockListRowDurabilityBlankText)<<8
         sta lR18+1
-        lda #<>aUnknown8AAB40
+        lda #<>aStockListRowDurabilityBlankText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -2364,7 +2364,7 @@
       .al
       .xl
 
-      aUnknown8AAB40 ; 8A/AB40
+      aStockListRowDurabilityBlankText ; 8A/AB40
 
         .enc "SJIS"
         .text "　　　"
@@ -2463,9 +2463,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AABEA)<<8
+        lda #(`aInventoryRowNameBlankText)<<8
         sta lR18+1
-        lda #<>aUnknown8AABEA
+        lda #<>aInventoryRowNameBlankText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -2507,7 +2507,7 @@
       .al
       .xl
 
-      aUnknown8AABEA ; 8A/ABEA
+      aInventoryRowNameBlankText ; 8A/ABEA
 
         .enc "SJIS"
         .text "　　　　　　　　"
@@ -2620,9 +2620,9 @@
         _AC80
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8AACA0)<<8
+        lda #(`aInventoryRowDurabilityBlankText)<<8
         sta lR18+1
-        lda #<>aUnknown8AACA0
+        lda #<>aInventoryRowDurabilityBlankText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -2646,7 +2646,7 @@
       .al
       .xl
 
-      aUnknown8AACA0 ; 8A/ACA0
+      aInventoryRowDurabilityBlankText ; 8A/ACA0
 
         .enc "SJIS"
         .text "　　　"

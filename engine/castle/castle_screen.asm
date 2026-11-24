@@ -805,7 +805,7 @@
         ldx #$01FE
 
         _BAF6
-        lda aUnknown8C9A00,x
+        lda aCastleTownBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x

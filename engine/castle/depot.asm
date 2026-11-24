@@ -88,7 +88,7 @@
         ldx #$01FE
 
         _F1AB
-        lda aUnknown8CD800,x
+        lda aCastleDepotBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x

@@ -453,9 +453,9 @@
         phx
         cpx #$0000
         bne _CEB7
-        lda #(`aUnknown95E69E)<<8
+        lda #(`aBattleSceneWindowEffect2HDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E69E
+        lda #<>aBattleSceneWindowEffect2HDMAInfo
         sta lR44
         lda #$0003
         sta wR40
@@ -464,9 +464,9 @@
 
 
         _CEB7
-        lda #(`aUnknown95E70E)<<8
+        lda #(`aBattleSceneBG2VScrollHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E70E
+        lda #<>aBattleSceneBG2VScrollHDMAInfo
         sta lR44
         lda #$0006
         sta wR40

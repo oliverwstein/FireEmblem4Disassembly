@@ -36,7 +36,7 @@
         .word $3800, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
         .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
 
-      aUnknown8C9A00 ; 8C/9A00
+      aCastleTownBGPalettes ; 8C/9A00
         .word $5F90, $2611, $00C7, $773D, $7F7F, $08C9, $4696, $0C83
         .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
         .word $3000, $3985, $7FBB, $0020, $02BB, $7F7F, $7F7F, $73FF
@@ -92,7 +92,7 @@
 
     .section Unknown8CPalettes8CA000Section
 
-      aUnknown8CA000 ; 8C/A000
+      aFountainBackgroundPaletteAnim ; 8C/A000
         .word $5580, $5600, $5660, $5580, $5600, $5660, $5580, $5600
         .word $5660, $5580, $5600, $5660, $5580, $5600, $5660, $5580
         .word $5600, $5660, $5580, $5600, $5660, $5580, $5600, $5660
@@ -198,7 +198,7 @@
         .word $0000, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
         .word $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
 
-      aUnknown8CA620 ; 8C/A620
+      aFirstGenerationEndingBGPalettes ; 8C/A620
         .word $2021, $1064, $298D, $3A10, $256B, $14E7, $298C, $0C84
         .word $0442, $4EB6, $31AD, $18E7, $6B5A, $21AD, $0821, $6F1A
         .word $2021, $1064, $298D, $52F7, $4273, $35F0, $298D, $1909
@@ -234,7 +234,7 @@
 
     .section Unknown8CPalettes8CD000Section
 
-      aUnknown8CD000 ; 8C/D000
+      aCastleClassChangeBGPalettes ; 8C/D000
         .word $420F, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
         .word $7F7F, $00A9, $03FC, $0441, $7F7F, $2949, $564F, $0400
         .word $3000, $2D8C, $7FFF, $0C41, $7F7F, $420F, $420F, $420F
@@ -268,7 +268,7 @@
         .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-      aUnknown8CD200 ; 8C/D200
+      aCastleRepairShopBGPalettes ; 8C/D200
         .word $420F, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
         .word $7F7F, $00A9, $03FC, $0441, $7F7F, $2949, $564F, $0400
         .word $3000, $2D8C, $7FFF, $0C41, $7F7F, $420F, $420F, $420F
@@ -302,7 +302,7 @@
         .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-      aUnknown8CD400 ; 8C/D400
+      aCastleSecondhandShopBGPalettes ; 8C/D400
         .word $420F, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
         .word $7F7F, $00A9, $03FC, $0441, $7F7F, $2949, $564F, $0400
         .word $3000, $2D8C, $7FFF, $0C41, $7F7F, $420F, $420F, $420F
@@ -336,7 +336,7 @@
         .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-      aUnknown8CD600 ; 8C/D600
+      aCastleArenaBGPalettes ; 8C/D600
         .word $420F, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
         .word $7F7F, $00A9, $03FC, $0441, $7F7F, $2949, $564F, $0400
         .word $3000, $2D8C, $7FFF, $0C41, $7F7F, $420F, $420F, $420F
@@ -370,7 +370,7 @@
         .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-      aUnknown8CD800 ; 8C/D800
+      aCastleDepotBGPalettes ; 8C/D800
         .word $420F, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
         .word $7F7F, $00A9, $03FC, $0441, $7F7F, $2949, $564F, $0400
         .word $3000, $2D8C, $7FFF, $0C41, $7F7F, $420F, $420F, $420F
@@ -404,7 +404,7 @@
         .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-      aUnknown8CDA00 ; 8C/DA00
+      aCastleAuguryBGPalettes ; 8C/DA00
         .word $0000, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
         .word $7F7F, $00A9, $03FC, $0441, $7F7F, $2949, $564F, $0400
         .word $3000, $2D8C, $7FFF, $0C41, $7F7F, $420F, $420F, $420F

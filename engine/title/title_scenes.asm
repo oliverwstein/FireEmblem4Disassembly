@@ -4078,9 +4078,9 @@
         sta lTitleVBlankRoutine1+1
         lda #<>rlVBlankTitleIntroScene1BG2WaveHDMA
         sta lTitleVBlankRoutine1
-        lda #(`aUnknown95E78F)<<8
+        lda #(`aTitleIntroBG2WaveHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E78F
+        lda #<>aTitleIntroBG2WaveHDMAInfo
         sta lR44
         lda #$0004
         sta wR40
@@ -4242,9 +4242,9 @@
         sta lTitleVBlankRoutine1+1
         lda #<>rlVBlankTitleIntroScene7BG2WaveHDMA
         sta lTitleVBlankRoutine1
-        lda #(`aUnknown95E78F)<<8
+        lda #(`aTitleIntroBG2WaveHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E78F
+        lda #<>aTitleIntroBG2WaveHDMAInfo
         sta lR44
         lda #$0004
         sta wR40
@@ -4420,9 +4420,9 @@
         sta lTitleVBlankRoutine2+1
         lda #<>rlVBlankTitleIntroScene7BG1WaveHDMA
         sta lTitleVBlankRoutine2
-        lda #(`aUnknown95E79B)<<8
+        lda #(`aTitleIntroBG1WaveHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E79B
+        lda #<>aTitleIntroBG1WaveHDMAInfo
         sta lR44
         lda #$0005
         sta wR40
@@ -4610,9 +4610,9 @@
         sta lTitleVBlankRoutine2+1
         lda #<>rlVBlankTitleBG1TableWaveHDMAUnused
         sta lTitleVBlankRoutine2
-        lda #(`aUnknown95E79B)<<8
+        lda #(`aTitleIntroBG1WaveHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E79B
+        lda #<>aTitleIntroBG1WaveHDMAInfo
         sta lR44
         lda #$0005
         sta wR40
@@ -4763,9 +4763,9 @@
         sta lTitleVBlankRoutine2+1
         lda #<>rlVBlankTitleIntroScene7CurtainHDMA
         sta lTitleVBlankRoutine2
-        lda #(`aUnknown95E7A7)<<8
+        lda #(`aTitleIntroScene7CurtainHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E7A7
+        lda #<>aTitleIntroScene7CurtainHDMAInfo
         sta lR44
         lda #$0002
         sta wR40

@@ -249,7 +249,7 @@
         ldx #$01FE
 
         _BEBA
-        lda aUnknown8CD400,x
+        lda aCastleSecondhandShopBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -277,7 +277,7 @@
         ldx #$01FE
 
         _BEED
-        lda aUnknown8CD200,x
+        lda aCastleRepairShopBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -684,9 +684,9 @@
 
 
         _C137
-        lda #(`dialogueShopUsedShopSellOnlyGreeting)<<8
+        lda #(`dialogueShopSecondhandShopSellOnlyGreeting)<<8
         sta lR18+1
-        lda #<>dialogueShopUsedShopSellOnlyGreeting
+        lda #<>dialogueShopSecondhandShopSellOnlyGreeting
         sta lR18
         bra _C14D
 
@@ -929,9 +929,9 @@
 
 
         _C2F0
-        lda #(`dialogueShopUsedShopNothingToSell)<<8
+        lda #(`dialogueShopSecondhandShopNothingToSell)<<8
         sta lR18+1
-        lda #<>dialogueShopUsedShopNothingToSell
+        lda #<>dialogueShopSecondhandShopNothingToSell
         sta lR18
         jml rsShopSayAndStay
 
@@ -1089,17 +1089,17 @@
 
 
         _C42B
-        lda #(`dialogueShopUsedShopNothingToSell)<<8
+        lda #(`dialogueShopSecondhandShopNothingToSell)<<8
         sta lR18+1
-        lda #<>dialogueShopUsedShopNothingToSell
+        lda #<>dialogueShopSecondhandShopNothingToSell
         sta lR18
         jml rsShopSayAndStay
 
 
         _C439
-        lda #(`dialogueShopUsedShopSoldOut)<<8
+        lda #(`dialogueShopSecondhandShopSoldOut)<<8
         sta lR18+1
-        lda #<>dialogueShopUsedShopSoldOut
+        lda #<>dialogueShopSecondhandShopSoldOut
         sta lR18
         jml rsShopSayAndStay
 
@@ -1185,9 +1185,9 @@
 
 
         _C4FF
-        lda #(`dialogueShopUsedShopNothingToSell)<<8
+        lda #(`dialogueShopSecondhandShopNothingToSell)<<8
         sta lR18+1
-        lda #<>dialogueShopUsedShopNothingToSell
+        lda #<>dialogueShopSecondhandShopNothingToSell
         sta lR18
         jml rsShopSayAndStay
 

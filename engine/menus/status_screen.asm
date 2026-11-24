@@ -277,7 +277,7 @@
         ldx #$0200
 
         _BDF9
-        lda aUnknownDE2AC0-2,x
+        lda aStatusScreenBGPalettes-2,x
         sta wJoy2RepeatTimer,x
         dec x
         dec x

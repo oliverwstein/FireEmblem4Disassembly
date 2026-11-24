@@ -386,7 +386,7 @@
         ldx #$01FE
 
         _F94E
-        lda aUnknown8CDA00,x
+        lda aCastleAuguryBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x

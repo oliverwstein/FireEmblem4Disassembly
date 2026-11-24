@@ -295,7 +295,7 @@
         ldx #$01FE
 
         _EDEE
-        lda aUnknown8CD000,x
+        lda aCastleClassChangeBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x

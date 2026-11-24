@@ -4184,15 +4184,15 @@
       dialogueShop0C .include "text/dialogue/Shops/Shop0C.dialogue.txt" ; 8AD17B
       dialogueShop12 .include "text/dialogue/Shops/Shop12.dialogue.txt" ; 8AD18B
       dialogueShop01 .include "text/dialogue/Shops/Shop01.dialogue.txt" ; 8AD195
-      dialogueShopUsedShopSellOnlyGreeting .include "text/dialogue/Shops/ShopUsedShopSellOnlyGreeting.dialogue.txt" ; 8AD1B5
+      dialogueShopSecondhandShopSellOnlyGreeting .include "text/dialogue/Shops/ShopSecondhandShopSellOnlyGreeting.dialogue.txt" ; 8AD1B5
       dialogueShop19 .include "text/dialogue/Shops/Shop19.dialogue.txt" ; 8AD1D2
       dialogueShop1E .include "text/dialogue/Shops/Shop1E.dialogue.txt" ; 8AD1E0
       dialogueShop23 .include "text/dialogue/Shops/Shop23.dialogue.txt" ; 8AD1F2
       dialogueShop37 .include "text/dialogue/Shops/Shop37.dialogue.txt" ; 8AD205
       dialogueShop3C .include "text/dialogue/Shops/Shop3C.dialogue.txt" ; 8AD217
       dialogueShop41 .include "text/dialogue/Shops/Shop41.dialogue.txt" ; 8AD224
-      dialogueShopUsedShopSoldOut .include "text/dialogue/Shops/ShopUsedShopSoldOut.dialogue.txt" ; 8AD233
-      dialogueShopUsedShopNothingToSell .include "text/dialogue/Shops/ShopUsedShopNothingToSell.dialogue.txt" ; 8AD257
+      dialogueShopSecondhandShopSoldOut .include "text/dialogue/Shops/ShopSecondhandShopSoldOut.dialogue.txt" ; 8AD233
+      dialogueShopSecondhandShopNothingToSell .include "text/dialogue/Shops/ShopSecondhandShopNothingToSell.dialogue.txt" ; 8AD257
       dialogueShop28 .include "text/dialogue/Shops/Shop28.dialogue.txt" ; 8AD27B
       dialogueShop2D .include "text/dialogue/Shops/Shop2D.dialogue.txt" ; 8AD28A
       dialogueShop31 .include "text/dialogue/Shops/Shop31.dialogue.txt" ; 8AD29F

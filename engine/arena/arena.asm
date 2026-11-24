@@ -1660,7 +1660,7 @@
         ldx #$01FE
 
         _E407
-        lda aUnknown8CD600,x
+        lda aCastleArenaBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x

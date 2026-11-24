@@ -281,15 +281,15 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown80D046)<<8
+        lda #(`aItemWindowNoItemsText)<<8
         sta lR18+1
-        lda #<>aUnknown80D046
+        lda #<>aItemWindowNoItemsText
         sta lR18
         ldx #$0A02
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D064)<<8
+        lda #(`aItemWindowPressBText)<<8
         sta lR18+1
-        lda #<>aUnknown80D064
+        lda #<>aItemWindowPressBText
         sta lR18
         ldx #$0D03
         jsl rlDrawMenuTextLine
@@ -421,14 +421,14 @@
       .al
       .xl
 
-      aUnknown80D046 ; 80/D046
+      aItemWindowNoItemsText ; 80/D046
 
         .enc "SJIS"
         .text "わが軍のアイテムはありません"
         .word $0000
         .enc "none"
 
-      aUnknown80D064 ; 80/D064
+      aItemWindowPressBText ; 80/D064
 
         .enc "SJIS"
         .text "Ｂボタンをおしてください"
@@ -1492,27 +1492,27 @@
         _B9A6
         lda #$2400
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown89BAC1)<<8
+        lda #(`aItemWindowHitLabelText)<<8
         sta lR18+1
-        lda #<>aUnknown89BAC1
+        lda #<>aItemWindowHitLabelText
         sta lR18
         ldx #$0B14
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown89BACD)<<8
+        lda #(`aItemWindowMightLabelText)<<8
         sta lR18+1
-        lda #<>aUnknown89BACD
+        lda #<>aItemWindowMightLabelText
         sta lR18
         ldx #$0D15
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown89BAD7)<<8
+        lda #(`aItemWindowRangeLabelText)<<8
         sta lR18+1
-        lda #<>aUnknown89BAD7
+        lda #<>aItemWindowRangeLabelText
         sta lR18
         ldx #$0F15
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown89BAE1)<<8
+        lda #(`aItemWindowWeightLabelText)<<8
         sta lR18+1
-        lda #<>aUnknown89BAE1
+        lda #<>aItemWindowWeightLabelText
         sta lR18
         ldx #$1116
         jsl rlDrawMenuTextLine
@@ -1604,35 +1604,35 @@
       .al
       .xl
 
-      aUnknown89BAC1 ; 89/BAC1
+      aItemWindowHitLabelText ; 89/BAC1
 
         .enc "SJIS"
         .text "めいちゅう"
         .word $0000
         .enc "none"
 
-      aUnknown89BACD ; 89/BACD
+      aItemWindowMightLabelText ; 89/BACD
 
         .enc "SJIS"
         .text "いりょく"
         .word $0000
         .enc "none"
 
-      aUnknown89BAD7 ; 89/BAD7
+      aItemWindowRangeLabelText ; 89/BAD7
 
         .enc "SJIS"
         .text "しゃてい"
         .word $0000
         .enc "none"
 
-      aUnknown89BAE1 ; 89/BAE1
+      aItemWindowWeightLabelText ; 89/BAE1
 
         .enc "SJIS"
         .text "おもさ"
         .word $0000
         .enc "none"
 
-      aUnknown89BAE9 ; 89/BAE9
+      aItemWindowItemLabelText ; 89/BAE9
 
         .enc "SJIS"
         .text "アイテム"

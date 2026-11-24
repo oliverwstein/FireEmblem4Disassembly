@@ -522,9 +522,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95E6EA)<<8
+        lda #(`aBattleSceneHUDBannerHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E6EA
+        lda #<>aBattleSceneHUDBannerHDMAInfo
         sta lR44
         lda #$0004
         sta wR40
@@ -542,9 +542,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95E6D2)<<8
+        lda #(`aBattleSceneLetterboxHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown95E6D2
+        lda #<>aBattleSceneLetterboxHDMAInfo
         sta lR44
         lda #$0007
         sta wR40

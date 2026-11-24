@@ -36,7 +36,7 @@
         ldx #$01DE
 
         _E036
-        lda aUnknown8CA620,x
+        lda aFirstGenerationEndingBGPalettes,x
         sta $7E9B88,x
         dec x
         dec x

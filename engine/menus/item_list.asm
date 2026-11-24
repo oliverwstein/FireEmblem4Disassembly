@@ -1319,27 +1319,27 @@
         bmi _9A87
 
         _9A77
-        lda #(`aUnknown859AAC)<<8
+        lda #(`aItemListDownArrowText)<<8
         sta lR18+1
-        lda #<>aUnknown859AAC
+        lda #<>aItemListDownArrowText
         sta lR18
         jsl rlDrawMapMenuTextLine
         bra _9AA5
 
 
         _9A87
-        lda #(`aUnknown859AA8)<<8
+        lda #(`aItemListUpArrowText)<<8
         sta lR18+1
-        lda #<>aUnknown859AA8
+        lda #<>aItemListUpArrowText
         sta lR18
         jsl rlDrawMapMenuTextLine
         bra _9AA5
 
 
         _9A97
-        lda #(`aUnknown859AB0)<<8
+        lda #(`aItemListBlankArrowText)<<8
         sta lR18+1
-        lda #<>aUnknown859AB0
+        lda #<>aItemListBlankArrowText
         sta lR18
         jsl rlDrawMapMenuTextLine
 
@@ -1359,21 +1359,21 @@
       .al
       .xl
 
-      aUnknown859AA8 ; 85/9AA8
+      aItemListUpArrowText ; 85/9AA8
 
         .enc "SJIS"
         .text "↑"
         .word $0000
         .enc "none"
 
-      aUnknown859AAC ; 85/9AAC
+      aItemListDownArrowText ; 85/9AAC
 
         .enc "SJIS"
         .text "↓"
         .word $0000
         .enc "none"
 
-      aUnknown859AB0 ; 85/9AB0
+      aItemListBlankArrowText ; 85/9AB0
 
         .enc "SJIS"
         .text "　"

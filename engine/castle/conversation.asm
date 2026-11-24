@@ -1362,11 +1362,11 @@
         lda $7F80A7
         asl a
         tax
-        lda aUnknown8CA000,x
+        lda aFountainBackgroundPaletteAnim,x
         sta $0170,b
-        lda aUnknown8CA000+2,x
+        lda aFountainBackgroundPaletteAnim+2,x
         sta $0172,b
-        lda aUnknown8CA000+4,x
+        lda aFountainBackgroundPaletteAnim+4,x
         sta $0174,b
         rts
 

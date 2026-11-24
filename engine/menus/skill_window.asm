@@ -331,111 +331,111 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown80D662)<<8
+        lda #(`aSkillWindowPaviseRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D662
+        lda #<>aSkillWindowPaviseRowText
         sta lR18
         ldx #$0000
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D67A)<<8
+        lda #(`aSkillWindowWrathRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D67A
+        lda #<>aSkillWindowWrathRowText
         sta lR18
         ldx #$0200
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D692)<<8
+        lda #(`aSkillWindowPursuitRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D692
+        lda #<>aSkillWindowPursuitRowText
         sta lR18
         ldx #$0400
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D6AA)<<8
+        lda #(`aSkillWindowAdeptRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D6AA
+        lda #<>aSkillWindowAdeptRowText
         sta lR18
         ldx #$0600
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D6C2)<<8
+        lda #(`aSkillWindowStealRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D6C2
+        lda #<>aSkillWindowStealRowText
         sta lR18
         ldx #$0800
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D6DA)<<8
+        lda #(`aSkillWindowDanceRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D6DA
+        lda #<>aSkillWindowDanceRowText
         sta lR18
         ldx #$0A00
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D6F2)<<8
+        lda #(`aSkillWindowCharmRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D6F2
+        lda #<>aSkillWindowCharmRowText
         sta lR18
         ldx #$0C00
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D70A)<<8
+        lda #(`aSkillWindowNihilRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D70A
+        lda #<>aSkillWindowNihilRowText
         sta lR18
         ldx #$0E00
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D722)<<8
+        lda #(`aSkillWindowMiracleRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D722
+        lda #<>aSkillWindowMiracleRowText
         sta lR18
         ldx #$1000
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D73A)<<8
+        lda #(`aSkillWindowCriticalRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D73A
+        lda #<>aSkillWindowCriticalRowText
         sta lR18
         ldx #$1200
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D752)<<8
+        lda #(`aSkillWindowVantageRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D752
+        lda #<>aSkillWindowVantageRowText
         sta lR18
         ldx #$1400
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D76A)<<8
+        lda #(`aSkillWindowAccostRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D76A
+        lda #<>aSkillWindowAccostRowText
         sta lR18
         ldx #$1600
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D782)<<8
+        lda #(`aSkillWindowAstraRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D782
+        lda #<>aSkillWindowAstraRowText
         sta lR18
         ldx #$1800
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D79C)<<8
+        lda #(`aSkillWindowLunaRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D79C
+        lda #<>aSkillWindowLunaRowText
         sta lR18
         ldx #$1A00
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D7B6)<<8
+        lda #(`aSkillWindowSolRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D7B6
+        lda #<>aSkillWindowSolRowText
         sta lR18
         ldx #$1C00
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D7D0)<<8
+        lda #(`aSkillWindowRenewalRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D7D0
+        lda #<>aSkillWindowRenewalRowText
         sta lR18
         ldx #$1E00
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D7E8)<<8
+        lda #(`aSkillWindowParagonRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D7E8
+        lda #<>aSkillWindowParagonRowText
         sta lR18
         ldx #$2000
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D800)<<8
+        lda #(`aSkillWindowBargainRowText)<<8
         sta lR18+1
-        lda #<>aUnknown80D800
+        lda #<>aSkillWindowBargainRowText
         sta lR18
         ldx #$2200
         jsl rlDrawMenuTextLine
@@ -457,126 +457,126 @@
       .al
       .xl
 
-      aUnknown80D662 ; 80/D662
+      aSkillWindowPaviseRowText ; 80/D662
 
         .enc "SJIS"
         .text "おおたて　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D67A ; 80/D67A
+      aSkillWindowWrathRowText ; 80/D67A
 
         .enc "SJIS"
         .text "いかり　　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D692 ; 80/D692
+      aSkillWindowPursuitRowText ; 80/D692
 
         .enc "SJIS"
         .text "ついげき　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D6AA ; 80/D6AA
+      aSkillWindowAdeptRowText ; 80/D6AA
 
         .enc "SJIS"
         .text "れんぞく　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D6C2 ; 80/D6C2
+      aSkillWindowStealRowText ; 80/D6C2
 
         .enc "SJIS"
         .text "ぬすむ　　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D6DA ; 80/D6DA
+      aSkillWindowDanceRowText ; 80/D6DA
 
         .enc "SJIS"
         .text "おどる　　　　いっぱん"
         .word $0000
         .enc "none"
 
-      aUnknown80D6F2 ; 80/D6F2
+      aSkillWindowCharmRowText ; 80/D6F2
 
         .enc "SJIS"
         .text "カリスマ　　　いっぱん"
         .word $0000
         .enc "none"
 
-      aUnknown80D70A ; 80/D70A
+      aSkillWindowNihilRowText ; 80/D70A
 
         .enc "SJIS"
         .text "みきり　　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D722 ; 80/D722
+      aSkillWindowMiracleRowText ; 80/D722
 
         .enc "SJIS"
         .text "いのり　　　　いっぱん"
         .word $0000
         .enc "none"
 
-      aUnknown80D73A ; 80/D73A
+      aSkillWindowCriticalRowText ; 80/D73A
 
         .enc "SJIS"
         .text "ひっさつ　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D752 ; 80/D752
+      aSkillWindowVantageRowText ; 80/D752
 
         .enc "SJIS"
         .text "まちぶせ　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D76A ; 80/D76A
+      aSkillWindowAccostRowText ; 80/D76A
 
         .enc "SJIS"
         .text "とつげき　　　せんとう"
         .word $0000
         .enc "none"
 
-      aUnknown80D782 ; 80/D782
+      aSkillWindowAstraRowText ; 80/D782
 
         .enc "SJIS"
         .text "りゅうせい剣　とくしゅ剣"
         .word $0000
         .enc "none"
 
-      aUnknown80D79C ; 80/D79C
+      aSkillWindowLunaRowText ; 80/D79C
 
         .enc "SJIS"
         .text "げっこう剣　　とくしゅ剣"
         .word $0000
         .enc "none"
 
-      aUnknown80D7B6 ; 80/D7B6
+      aSkillWindowSolRowText ; 80/D7B6
 
         .enc "SJIS"
         .text "たいよう剣　　とくしゅ剣"
         .word $0000
         .enc "none"
 
-      aUnknown80D7D0 ; 80/D7D0
+      aSkillWindowRenewalRowText ; 80/D7D0
 
         .enc "SJIS"
         .text "ライブ　　　　いっぱん"
         .word $0000
         .enc "none"
 
-      aUnknown80D7E8 ; 80/D7E8
+      aSkillWindowParagonRowText ; 80/D7E8
 
         .enc "SJIS"
         .text "エリート　　　いっぱん"
         .word $0000
         .enc "none"
 
-      aUnknown80D800 ; 80/D800
+      aSkillWindowBargainRowText ; 80/D800
 
         .enc "SJIS"
         .text "ねぎり　　　　いっぱん"
@@ -2134,7 +2134,7 @@
         ; 8B/DFA9
 
 
-      aUnknown8BDFA9 ; 8B/DFAA?
+      aSkillWindowNoHoldersText ; 8B/DFAA?
 
         .enc "SJIS"
         .text "だれももっていません\n"
