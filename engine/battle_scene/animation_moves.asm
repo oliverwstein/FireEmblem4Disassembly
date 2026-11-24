@@ -932,13 +932,15 @@
       .al
       .xl
 
-      rsUnknown95D280 ; 95/D280
+      rsBattleAnimationMoveArcJump ; 95/D280
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets up an arc jump using $0B06,x and body byte 5, storing Y velocity and gravity.
 
         lda $0B06,b,x
         and #$00FF

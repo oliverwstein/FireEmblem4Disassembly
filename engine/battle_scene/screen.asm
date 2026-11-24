@@ -890,7 +890,7 @@
         jsl rlBattleSceneSetHUDColors
         jsl rlUnknown95A414
         jsl rlUnknown96957D
-        jsl rlUnknown969EBB
+        jsl rlBattleSceneCreateSolo2HDMA
         rtl
 
         .databank 0

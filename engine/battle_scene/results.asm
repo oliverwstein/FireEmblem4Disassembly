@@ -215,7 +215,7 @@
         jsl rlRunDialogueCycle
         jsl rlBattleSceneUploadMessageTilemap
         jsl rlBattleSceneDrawMessageArrow
-        jsl rlUnknown96A21F
+        jsl rlBattleSceneDrawMessageSpeedTiles
         lda $7FE4D9
         beq _E8A5
         dec a
@@ -656,13 +656,15 @@
 
         ; 96/88BA
 
-      rlUnknown9688BA ; 96/88BA
+      rlBattleSceneScriptInitMessageWindowMode3 ; 96/88BA
 
         ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine $19: sets message window mode 3, loads palette, frees HDMA entry 4, and updates window.
 
         sep #$20
         lda #$03
@@ -685,12 +687,14 @@
 
         .databank 0
 
-      rlUnknown9688E4 ; 96/88E4
+      rlBattleSceneScriptInitMessageWindowMode4 ; 96/88E4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine $1A: sets message window mode 4, loads palette, frees HDMA entry 4, and updates window.
 
         sep #$20
         .as
@@ -746,12 +750,14 @@
 
         ; 96/A21F
 
-      rlUnknown96A21F ; 96/A21F
+      rlBattleSceneDrawMessageSpeedTiles ; 96/A21F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws message text-speed indicator tiles when $7FE4C2 == 3.
 
         phx
         lda $7FE4C2
@@ -1375,12 +1381,14 @@
       .al
       .xl
 
-      rsUnknown96F7A8 ; 96/F7A8
+      rsBattleSceneFindDialoguePortrait ; 96/F7A8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Finds portrait ID in dialogue text (raw ID if wBattleType == $FF).
 
         lda wBattleType
         and #$00FF

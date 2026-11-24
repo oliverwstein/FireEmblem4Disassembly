@@ -3917,7 +3917,7 @@
         pha
         pha
         jsl rlBattleSceneGetCombatantGap
-        jsr rsUnknown96B894
+        jsr rsBattleSceneInitEffectHorizontalMove
         lda wR0
         sta wR1
         clc
@@ -3948,7 +3948,7 @@
         lda wR0
         pha
         lda wR1
-        jsr rsUnknown96B852
+        jsr rsBattleSceneInitEffectVerticalArc
         pla
         sta wR0
         pla
@@ -6281,7 +6281,7 @@
         sta lR18
         lda lBattleSceneDialoguePointer+1
         sta lR18+1
-        jsr rsUnknown96F7A8
+        jsr rsBattleSceneFindDialoguePortrait
         jsl rlGetCharacterPortraitData
         ldy #$0000
         ldx #$0000
@@ -14516,8 +14516,8 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown96A4FC
-        jsl rlUnknown96BD74
+        jsl rlBattleSceneInitEffectBuffers
+        jsl rlBattleSceneClearHDMAEffects
         jsl rlUnknown96CB0A
         jsl rlUnknown96DD39
         jsl rlUnknown96EE8A
@@ -14566,8 +14566,8 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown96A4FC
-        jsl rlUnknown96BD74
+        jsl rlBattleSceneInitEffectBuffers
+        jsl rlBattleSceneClearHDMAEffects
         jsl rlUnknown96CB0A
         jsl rlUnknown96DD39
         jsl rlUnknown96EE8A
@@ -14601,8 +14601,8 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown96A4FC
-        jsl rlUnknown96BD74
+        jsl rlBattleSceneInitEffectBuffers
+        jsl rlBattleSceneClearHDMAEffects
         jsl rlUnknown96CB0A
         jsl rlUnknown96EE8A
         jsl rlUnknown96EBC9

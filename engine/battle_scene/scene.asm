@@ -178,7 +178,7 @@
         jsl rlUnknown96D67B
         jsl rlBattleSceneDimPalettesForType2
         jsl rlBattleSceneBuildWhiteFadePalettes
-        jsl rlUnknown969EBB
+        jsl rlBattleSceneCreateSolo2HDMA
         rtl
 
         .databank 0
@@ -344,12 +344,12 @@
         sta lBattleSceneRoundPointer,b
         jsl rlBattleSceneClearKnockback
         jsl rlBattleAnimationClearMoveQueues
-        jsl rlUnknown96A4FC
+        jsl rlBattleSceneInitEffectBuffers
         jsl rlUnknown96CB0A
         jsl rlUnknown96EE8A
         jsl rlResetBattleSceneScript
         jsl rlBattleSceneScriptClearLoading
-        jsl rlUnknown96BD74
+        jsl rlBattleSceneClearHDMAEffects
         jsl rlBattleSceneSetAnimStyles
         jsl rlBattleSceneLookUpAnimations
         jsl rlBattleAnimationSetBodyIndices
@@ -528,7 +528,7 @@
         jsr rsBattleSceneUpdateHP1
         jsr rsBattleSceneUpdateHP2
         jsl rlBattleSceneRunPaletteEffects
-        jsl rlUnknown95C508
+        jsl rlBattleSceneCheckDecompressing
         jsl rlBattleSceneRunLargeUpload
         jsl rlUnknown96C8A1
         jsr rsUnknown959CF8

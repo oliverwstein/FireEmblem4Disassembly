@@ -1697,7 +1697,7 @@
       .al
       .xl
 
-      rsUnknown959BFE ; 95/9BFE
+      rsBattleSceneHoldRoundState ; 95/9BFE
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -2760,7 +2760,7 @@
 
         ; 96/85D9
 
-      rlUnknown9685D9 ; 96/85D9
+      rlBattleSceneScriptInitExpBarSlide ; 96/85D9
 
         ; Found through fe4.cdl.
         .al
@@ -2768,7 +2768,7 @@
         .autsiz
         .databank ?
 
-        ; Script routine 0: sets bytes of the effect variables at $7FE4C2.. and points $7FE4D2 at the word list at $98/AD7E, then sets rlUnknown96861E as the routine run every frame.
+        ; Script routine 0: sets bytes of the effect variables at $7FE4C2.. and points $7FE4D2 at the word list at $98/AD7E, then sets rlBattleSceneStepExpBarSlide as the routine run every frame.
 
         sep #$20
         lda #$9C
@@ -2788,9 +2788,9 @@
         sta $7FE4D3
         lda #$AD7E
         sta $7FE4D2
-        lda #(`rlUnknown96861E)<<8
+        lda #(`rlBattleSceneStepExpBarSlide)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96861E
+        lda #<>rlBattleSceneStepExpBarSlide
         sta lBattleSceneScriptRoutine
         rtl
 
@@ -2798,7 +2798,7 @@
 
         ; 96/861E
 
-      rlUnknown96861E ; 96/861E
+      rlBattleSceneStepExpBarSlide ; 96/861E
 
         ; Found through fe4.cdl.
         .al
@@ -3037,7 +3037,7 @@
 
         ; 96/878D
 
-      rlUnknown96878D ; 96/878D
+      rlBattleSceneScriptSetVictoryMusic ; 96/878D
 
         ; Found through fe4.cdl.
         .al
@@ -4091,7 +4091,7 @@
 
         ; 96/9EBB
 
-      rlUnknown969EBB ; 96/9EBB
+      rlBattleSceneCreateSolo2HDMA ; 96/9EBB
 
         .al
         .xl

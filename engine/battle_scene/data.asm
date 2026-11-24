@@ -210,7 +210,7 @@
         ; (rlBattleSceneCommandCallRoutine, rlBattleSceneCommandCallRoutineUntilDone,
         ; rlBattleSceneCommandSetRoutine). Entries 9-12 are empty.
 
-        .long rlUnknown9685D9 ; $00
+        .long rlBattleSceneScriptInitExpBarSlide ; $00
         .long rlBattleSceneStartExperienceFill ; $01
         .long rlBattleSceneDrawLevelUpWindow ; $02
         .long rlUnknown968DC8 ; $03
@@ -235,8 +235,8 @@
         .long rlUnknown968F13 ; $16
         .long rlUnknown968EA8 ; $17
         .long rlBattleSceneScriptNextEffectPose ; $18
-        .long rlUnknown9688BA ; $19
-        .long rlUnknown9688E4 ; $1A
+        .long rlBattleSceneScriptInitMessageWindowMode3 ; $19
+        .long rlBattleSceneScriptInitMessageWindowMode4 ; $1A
         .long rlUnknown96890E ; $1B
         .long rlBattleSceneScriptClearMessage ; $1C
         .long rlBattleSceneScriptRunMessage ; $1D
@@ -271,7 +271,7 @@
         .long rlUnknown96FD54 ; $3A
         .long rlUnknown97802C ; $3B
         .long rlBattleSceneScriptPlaySound0B ; $3C
-        .long rlUnknown96878D ; $3D
+        .long rlBattleSceneScriptSetVictoryMusic ; $3D
         .long rlUnknown96FC49 ; $3E
         .long rlUnknown96FB99 ; $3F
         .long rlUnknown969FC8 ; $40
@@ -2907,7 +2907,7 @@
 
       aUnknownE000DA ; E0/00DA
 
-        ; Read by rlUnknown9688BA.
+        ; Read by rlBattleSceneScriptInitMessageWindowMode3.
 
         .word $2D8C, $7FFF, $0C41, $7FFF, $4651, $7FFF, $2129, $4E69
         .word $28C4, $1042, $10E4, $14E6, $2504, $1CE4, $14C4, $03FF

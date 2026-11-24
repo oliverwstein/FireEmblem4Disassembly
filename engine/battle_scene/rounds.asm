@@ -765,12 +765,14 @@
 
         .byte $01, $01, $01, $01, $01, $01, $01
 
-      rlUnknown95AB87 ; 95/AB87
+      rlBattleSceneQueueVariant1Action ; 95/AB87
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Queues action from aUnknown95ABB4 by attack style plus variant and sets variant bits to 1.
 
         phx
         jsr rsBattleSceneGetAttackStyle
@@ -1138,12 +1140,14 @@
 
         .byte $1B, $1B, $3A, $1F, $10
 
-      rlUnknown95AD91 ; 95/AD91
+      rlBattleSceneQueueVariant2Action ; 95/AD91
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Queues action from aUnknown95ADD2 by attack style (offset +$14 if defender Y fixed) and sets variant bits to 2.
 
         phx
         jsr rsBattleSceneGetAttackStyle
@@ -1898,13 +1902,15 @@
 
         ; 95/B14F
 
-      rsUnknown95B14F ; 95/B14F
+      rsBattleSceneCheckEffectCloseToDefender ; 95/B14F
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit $20 of bBattleSceneStrikeFlags if effect X ($7FEC1F) is within 10 px of defender.
 
         phx
         lda $7FEC1D

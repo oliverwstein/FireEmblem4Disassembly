@@ -3560,12 +3560,14 @@
 
         ; 95/C508
 
-      rlUnknown95C508 ; 95/C508
+      rlBattleSceneCheckDecompressing ; 95/C508
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns $FF in A if bDecompressionArrayFlag is nonzero, else $00.
 
         lda bDecompressionArrayFlag,b
         and #$00FF

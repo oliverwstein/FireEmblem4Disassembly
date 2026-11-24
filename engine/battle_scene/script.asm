@@ -530,13 +530,15 @@
       .al
       .xl
 
-      rlUnknown96DF98 ; 96/DF98
+      rlBattleSceneClearScriptFlagBit7 ; 96/DF98
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears bit 7 of $7FE475 + (A & 3) * $15 when (A & 3) < 3.
 
         phx
         and #$0003
@@ -1615,7 +1617,7 @@
         sta lR18
         lda lBattleSceneDialoguePointer+1
         sta lR18+1
-        jsr rsUnknown96F7A8
+        jsr rsBattleSceneFindDialoguePortrait
         bra _BA44
 
 
@@ -7096,12 +7098,14 @@
       .al
       .xl
 
-      rlUnknown96A4FC ; 96/A4FC
+      rlBattleSceneInitEffectBuffers ; 96/A4FC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Initializes effect/unit2 buffers at $7FEC1D-$7FEC66.
 
         sep #$20
         lda #$00
@@ -7133,12 +7137,14 @@
       .al
       .xl
 
-      rsUnknown96B852 ; 96/B852
+      rsBattleSceneInitEffectVerticalArc ; 96/B852
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Computes vertical arc distance and speed for effect slot into $7FEC3F.
 
         phx
         pha
@@ -7180,12 +7186,14 @@
 
         ; 96/B894
 
-      rsUnknown96B894 ; 96/B894
+      rsBattleSceneInitEffectHorizontalMove ; 96/B894
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Computes horizontal travel frames and speed for effect slot into aUnit2DataBuffer.
 
         phx
         sep #$20
@@ -7333,12 +7341,14 @@
       .al
       .xl
 
-      rlUnknown96BD74 ; 96/BD74
+      rlBattleSceneClearHDMAEffects ; 96/BD74
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears $7FED02 and all eight 9-byte HDMA effect slots at $7FED03.
 
         phx
         lda #$0000
