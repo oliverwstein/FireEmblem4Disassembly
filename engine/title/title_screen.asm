@@ -541,7 +541,7 @@
       .al
       .xl
 
-      rlUnknown95F12A ; 95/F12A
+      rlTitleScreenNoOp ; 95/F12A
 
         .al
         .xl
@@ -606,7 +606,7 @@
 
         ; 95/F14D
 
-      rlUnknown95F14D ; 95/F14D
+      rlBattleSceneStepLargeUpload ; 95/F14D
 
         .al
         .xl
@@ -906,7 +906,7 @@
       .al
       .xl
 
-      rlUnknown95F741 ; 95/F741
+      rlBattleSceneResetWindowEffect1 ; 95/F741
 
         .al
         .xl
@@ -943,7 +943,7 @@
       .al
       .xl
 
-      rlUnknown95F7F7 ; 95/F7F7
+      rlBattleSceneResetWindowEffect2 ; 95/F7F7
 
         .al
         .xl
@@ -1285,8 +1285,8 @@
         jsl rlSetUpTitleIntro
         jsl rlUnknown9BF3F3
         jsl rlFreeBattleScenePaletteSlots
-        jsl rlUnknown95F741
-        jsl rlUnknown95F7F7
+        jsl rlBattleSceneResetWindowEffect1
+        jsl rlBattleSceneResetWindowEffect2
         jsl rlClearTitleSprites
         jsl rlClearTitleVBlankRoutines
         lda #$0000
@@ -1440,7 +1440,7 @@
         jsr rsRunTitleTimelineSlots
         jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
-        jsl rlUnknown95F14D
+        jsl rlBattleSceneStepLargeUpload
         jsl rlBattleSceneRunPaletteEffects
         jsl rlUnknown96CB44
         jsl rlUnknown96A532
@@ -1478,7 +1478,7 @@
         jsr rsRunTitleTimelineSlots
         jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
-        jsl rlUnknown95F14D
+        jsl rlBattleSceneStepLargeUpload
         jsl rlBattleSceneRunPaletteEffects
         jsl rlUnknown96A532
         jsl rlUnknown96CB44
@@ -1509,7 +1509,7 @@
         jsr rsRunTitleTimelineSlots
         jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
-        jsl rlUnknown95F14D
+        jsl rlBattleSceneStepLargeUpload
         jsl rlBattleSceneRunPaletteEffects
         jsl rlUpdateTitleSprites
         lda bTitleScreenDone
@@ -1578,7 +1578,7 @@
         sta bTitleScreenPhase
         rep #$20
         jsl rlLoadTitleGraphics
-        jsl rlUnknown95F12A
+        jsl rlTitleScreenNoOp
         ldx #$0000
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
@@ -1783,8 +1783,8 @@
         jsl rlPlaySoundEffect
         jsl rlResetHDMAEngine
         jsl rlFreeBattleScenePaletteSlots
-        jsl rlUnknown95F741
-        jsl rlUnknown95F7F7
+        jsl rlBattleSceneResetWindowEffect1
+        jsl rlBattleSceneResetWindowEffect2
         lda #$0000
         sta wBattleSceneLargeUploadSize
         sep #$20
@@ -3275,7 +3275,7 @@
 
         ; 9B/F2C8
 
-      rlUnknown9BF2C8 ; 9B/F2C8
+      rlTitleIntroScene7DimPalette ; 9B/F2C8
 
         .al
         .xl
@@ -3308,7 +3308,7 @@
 
         ; 9B/F2F3
 
-      rlUnknown9BF2F3 ; 9B/F2F3
+      rlTitleIntroScene2FadePalette ; 9B/F2F3
 
         .al
         .xl
@@ -3330,7 +3330,7 @@
 
         ; 9B/F309
 
-      rlUnknown9BF309 ; 9B/F309
+      rlTitleIntroScene7StartSpritePalettes ; 9B/F309
 
         .al
         .xl
@@ -3359,7 +3359,7 @@
 
         ; 9B/F332
 
-      rlUnknown9BF332 ; 9B/F332
+      rlStartTitleIntroScene8Sprite ; 9B/F332
 
         .al
         .xl
@@ -3383,9 +3383,9 @@
         sta $7FD05D
         lda #1,s
         tax
-        lda #(`rlUnknown9BF36F)<<8
+        lda #(`rlTitleIntroScene8SpriteInitTrail)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF36F
+        lda #<>rlTitleIntroScene8SpriteInitTrail
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -3394,7 +3394,7 @@
 
         ; 9B/F36F
 
-      rlUnknown9BF36F ; 9B/F36F
+      rlTitleIntroScene8SpriteInitTrail ; 9B/F36F
 
         .al
         .xl
@@ -3414,10 +3414,10 @@
         rep #$20
         lda #1,s
         tax
-        jsl rlUnknown9BF3A5
-        lda #(`rlUnknown9BF3A5)<<8
+        jsl rlStepTitleIntroScene8Sprite
+        lda #(`rlStepTitleIntroScene8Sprite)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF3A5
+        lda #<>rlStepTitleIntroScene8Sprite
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -3426,7 +3426,7 @@
 
         ; 9B/F3A5
 
-      rlUnknown9BF3A5 ; 9B/F3A5
+      rlStepTitleIntroScene8Sprite ; 9B/F3A5
 
         .al
         .xl

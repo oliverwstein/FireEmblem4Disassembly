@@ -247,7 +247,7 @@
 
       aTitleSprite0Motion ; 99/FF48
 
-        ; X and Y steps for sprite 0 (rlUnknown9BF3A5), ended by $80.
+        ; X and Y steps for sprite 0 (rlStepTitleIntroScene8Sprite), ended by $80.
 
         .byte $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06
         .byte $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0A, $04, $0A, $04
