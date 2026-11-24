@@ -1,9 +1,8 @@
 ; What the title screen's timelines call (title_timelines.asm): the intro's
 ; eight scenes (their registers, graphics, scrolling, palette effects, HDMA
 ; effects and sprites), the brightness fades, the title logo's sprites, the
-; music, and the fade out's steps. Most visual effect routines are Unknown,
-; with the scene that uses them visible in the timeline. Routines noted
-; "nothing in the build reaches this" are steps no timeline names.
+; music, and the fade out's steps. Routines noted "nothing in the build
+; reaches this" are steps no timeline names.
 
 
     .section Unsorted95EA47Section

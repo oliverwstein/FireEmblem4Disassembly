@@ -69,13 +69,13 @@ These are the frames at which `aTitleIntroTimeline` sets up each scene.
 
 | Frame | Scene setup | Notes |
 |---|---|---|
-| `$0001` | (`rlSetUpTitleIntro` and `rlSetUpTitleIntroScene1`, at setup) | Fade in. Slot 4 runs an HDMA wave (`rlUnknown9BE5B2`). |
-| `$05FA` | `rlSetUpTitleIntroScene2` | Sprites from `$082A`: six pairs started by `rlUnknown95F9CE`... with palette fades. |
+| `$0001` | (`rlSetUpTitleIntro` and `rlSetUpTitleIntroScene1`, at setup) | Fade in. Slot 4 runs an HDMA wave (`rlStartTitleIntroScene1BG2WaveHDMA`). |
+| `$05FA` | `rlSetUpTitleIntroScene2` | Sprites from `$082A`: six pairs started by `rlTitleIntroScene2SpawnSpritePair1`... with palette fades. |
 | `$0C26` | `rlSetUpTitleIntroScene3`, `$0C46` `rlSetUpTitleIntroScene3b` | |
 | `$0C62` | `rlSetUpTitleIntroScene4` | |
 | `$0D6E` | `rlSetUpTitleIntroScene5` | |
 | `$0EFE` | `rlSetUpTitleIntroScene6` | Song 2 at `$10F2` (`rlPlayTitleIntroSong2`). |
-| `$11FB` | `rlSetUpTitleIntroScene7` | From `$1237`: rotating sprites (`rlUnknown9BE2A4`, `rlUnknown9BE435`). Slot 6 (`rlUnknown9BF49E` at `$1302`, `rlUnknown9BF57A` at `$14B9`) steps through 33 palettes that `rlUnknown9BF3F3` interpolated into `$7F8000` at setup. |
+| `$11FB` | `rlSetUpTitleIntroScene7` | From `$1237`: rotating sprites (`rlTitleIntroScene7SpawnOrbitSprites`, `rlUpdateTitleIntroScene7OrbitSprites`). Slot 6 (`rlStartTitleIntroScene7PaletteFadeIn` at `$1302`, `rlStartTitleIntroScene7PaletteFadeOut` at `$14B9`) steps through 33 palettes that `rlBuildTitleIntroScene7PaletteTable` interpolated into `$7F8000` at setup. |
 | `$1719` | `rlSetUpTitleIntroScene8` | A sprite moving along `aTitleSprite0Motion` with an afterimage, from `$1859`. |
 | `$1873`-`$1889` | `rlStartTitleLogoSprite1`...`11` | The title logo, one sprite every frame or two. `rlAllowStartOnTitle` follows, then the BG3 effects and song 3. |
 
@@ -91,16 +91,16 @@ These are the frames at which `aTitleIntroTimeline` sets up each scene.
 
 ## Not reached
 
-These routines are built, but nothing in the build reaches them. Most are slot installers and steps no timeline names, each noted "nothing in the build reaches this": `rlRestartTitleIntro`, `rlUnknown95F35D`, `rlUnknown95F37D`, `rlUnknown95F5D9`, `rlUnknown95F68B`, `rlUnknown95FC51`, `rlUnknown95FDE4`, `rlUnknown95FFAC`, `rlUnknown9BE2E3`, `rlUnknown9BE331`, `rlUnknown9BE8D7`, `rlUnknown9BF1F4`, `rlStopTitleSprite`. The sprite data at `$9B/FE13` (`aUnknown9BFE13`) is also unreferenced.
+These routines are built, but nothing in the build reaches them. Most are slot installers and steps no timeline names, each noted "nothing in the build reaches this": `rlRestartTitleIntro`, `rlTitleFillPalettesWhiteUnused`, `rlTitleStartFlashPaletteEffectsUnused`, `rlStartTitleFadeBGPal1ToBlackUnused`, `rlStartTitleFlashFadeAllPalettesUnused`, `rlStartTitleFadeBrightnessUnused`, `rlStartTitleBG2DiagonalScrollUnused`, `rlPlayTitleSound2Unused`, `rlTitleIntroScene7EnableAllTrailsUnused`, `rlStepTitleIntroScene7FadeTrailsUnused`, `rlStartTitleBG1TableWaveHDMAUnused`, `rlTitleStartPaletteEffectAndFillBG1Unused`, `rlStopTitleSprite`. The sprite data at `$9B/FE13` (`aUnknown9BFE13`) is also unreferenced.
 
 ## Depends on
 
-- **The battle scene's engines** (banks `$95`/`$96`, `engine/battle_scene/`): `rlBattleSceneWriteRAM` sets screen registers from `WRITE_RAM_*` lists. `rlBattleSceneStartPaletteEffect` runs palette effect entries (`PALETTE_EFFECT_*` macros, [include/BattleScene.h](../../include/BattleScene.h)), and `rlBattleSceneStartWindowEffect1`/`2` runs window effects. Also used: `rlBattleSceneScriptClearLoading`/`UpdateLoading`, and `rlBattleSceneRunUploads` and `rlBattleSceneRunPaletteEffects`, and helpers still `Unknown` (`rlUnknown96D5DB`, `rlUnknown96D659`, `rlUnknown96CB44`, `rlUnknown96A532`, `rlUnknown95F14D`, `rlUnknown95F741`, `rlUnknown95F7F7`). These belong to the battle scene wave.
+- **The battle scene's engines** (banks `$95`/`$96`, `engine/battle_scene/`): `rlBattleSceneWriteRAM` sets screen registers from `WRITE_RAM_*` lists. `rlBattleSceneStartPaletteEffect` runs palette effect entries (`PALETTE_EFFECT_*` macros, [include/BattleScene.h](../../include/BattleScene.h)), and `rlBattleSceneStartWindowEffect1`/`2` runs window effects. Also used: `rlBattleSceneScriptClearLoading`/`UpdateLoading`, `rlBattleSceneRunUploads`, `rlBattleSceneStepLargeUpload`, `rlBattleSceneResetWindowEffect1`/`2`, and `rlBattleSceneRunPaletteEffects`, and helpers still `Unknown` (`rlUnknown96D5DB`, `rlUnknown96D659`, `rlUnknown96CB44`, `rlUnknown96A532`). These belong to the battle scene wave.
 - **The core:** the HDMA engine (`rlHDMAEngineCreateEntryByIndex`), the IRQ engine (`rlUnknown82E0C6`), the decompressor and decompression list (`rlAppendDecompList`), the fades (`rlFadePaletteToBlack`, `rlFadePaletteToColors`), sound (`wMusicID`, `rlPlaySoundEffect`).
 - **The attract mode:** `rlStartOpeningEvent` and the event engine's hook into `rlFlashToTitleScreen`.
 
 ## Open questions
 
 - What each intro scene shows, and what the captions say (one emulator session; the captions are graphics).
-- `$7FD8B6`: set to 1 by scenes 3 and 3b, cleared by `rlUnknown95F9CE`. While it is 0, the scene 2 sprites follow BG1's scroll (`rsUnknown95FC23`).
+- `$7FD8B6`: set to 1 by scenes 3 and 3b, cleared by `rlTitleIntroScene2SpawnSpritePair1`. While it is 0, the scene 2 sprites follow BG1's scroll (`rsTitleIntroScene2SyncSpriteY`).
 - `wBattleSceneFrame` (`$7FE09E`) is counted by the title step as well as by `rsBattleSceneRunFrame`; what reads it during the title.
