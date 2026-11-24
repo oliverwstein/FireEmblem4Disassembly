@@ -10,7 +10,7 @@ Numbers come from `python3 tools/counts.py --fast --breakdown`; quote nothing el
 - Routines: 6,505 in `engine/`, 6,505 named, 0 `Unknown` (100.0% named). 172 pinned blocks.
 - **Stage 1 and Stage 2 complete:** all 20 folders in `engine/` now have **0 `Unknown`** (`ai/`, `arena/`, `battle/`, `battle_scene/`, `castle/`, `core/`, `debug/`, `demo/`, `dialogue/`, `epilogue/`, `events/`, `items/`, `map/`, `menus/`, `rankings/`, `save/`, `sound/`, `title/`, `units/`, `worldmap/` — 6,505 routines total).
 - Reference pages: `docs/reference/core.md`, `ai.md`, `arena.md`, `battle_scene.md`, `castle.md`, `demo.md`, `dialogue.md`, `epilogue.md`, `events.md`, `items.md`, `map_battle.md`, `map_menu.md`, `map.md`, `menus.md`, `save.md`, `title.md`, `units.md`, `worldmap.md` (`tools/reference.py` output is gitignored). Still missing: `battle/` (blocks Part III) and `rankings/`.
-- Engine guide: [00-introduction.md](docs/guide/00-introduction.md), [OUTLINE.md](docs/guide/OUTLINE.md) (31 chapters in 7 parts, data first), [STYLE.md](docs/guide/STYLE.md), and the Part I opener [part-1-the-pieces-on-the-board.md](docs/guide/part-1-the-pieces-on-the-board.md), and Chapter 1 [01-a-unit-is-made-of-parts.md](docs/guide/01-a-unit-is-made-of-parts.md) (draft); a draft of Chapter 6 (The turn) waits in `wip/the-turn-draft.md`.
+- Engine guide: [00-introduction.md](docs/guide/00-introduction.md), [OUTLINE.md](docs/guide/OUTLINE.md) (31 chapters in 7 parts, data first), [STYLE.md](docs/guide/STYLE.md), and the Part I opener [part-1-the-pieces-on-the-board.md](docs/guide/part-1-the-pieces-on-the-board.md), Chapter 1 [01-a-unit-is-made-of-parts.md](docs/guide/01-a-unit-is-made-of-parts.md), and Chapter 2 [02-classes-stats-skills-and-weapon-ranks.md](docs/guide/02-classes-stats-skills-and-weapon-ranks.md) (drafts); a draft of Chapter 6 (The turn) waits in `wip/the-turn-draft.md`.
 
 ## Remaining Unknowns
 
@@ -45,7 +45,7 @@ Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5e
 
 ## Next session
 
-1. **Engine guide, Part I:** Chapter 1 (*A unit is made of parts*) is drafted, awaiting the user's read. Next: Chapter 2 (classes, stats, skills, weapon ranks) from `units.md`, then 3–5. The old limits list in `git show 9da974d:docs/guide/00-introduction.md` ("What the structures cost the design") is raw material for each chapter's closing limits.
+1. **Engine guide, Part I:** Chapters 1 and 2 are drafted (Chapter 2 awaiting the user's read). Next: Chapter 3 (*Every sword is an individual*) from `items.md`, then 4–5. The old limits list in `git show 9da974d:docs/guide/00-introduction.md` ("What the structures cost the design") is raw material for each chapter's closing limits. Naming candidate: `rlGetSelectedUnitTotal*Effect` returns the capped *base* stat and leaves the equipment bonus in `wR34`; a name like `rlGetSelectedUnit*BaseAndBonus` would say so.
 2. **Loose ends:**
    - Pad-test banks `$88`, `$9B`, and `$9F` (`./build.sh pad SECTION N`).
    - Fix `tools/songs.py` (stops at stale `aUnknown8A9D79`) before regenerating `audio/SONGS.md`, and investigate why `tools/stream_catalog.py` deleted catalog previews.
