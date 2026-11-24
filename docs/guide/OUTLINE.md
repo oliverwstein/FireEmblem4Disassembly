@@ -1,38 +1,45 @@
 # Engine guide: outline
 
-Draft table of contents for the guide (see [PLAN.md](../../PLAN.md), "The engine guide"). The guide moves top-down—from a turn on the map down to the SNES hardware beneath it—using the [introduction](00-introduction.md) for the high-level model of frames, game states, and procs until Part VI opens the lid on them.
+Draft table of contents for the guide (see [PLAN.md](../../PLAN.md), "The engine guide"). The guide moves from the game's structured data—its units, items, armies, and board—through the turn, combat, stories, and long-term systems, down to screen rendering and the SNES hardware beneath it. The [introduction](00-introduction.md) supplies the high-level model of frames, game states, and procs until Part VII opens the lid on them.
 
 Each chapter opens with a problem the developers faced, then walks through the solution, its trade-offs, and where it lives in the source. Short **Interludes** trace a single action across multiple systems from start to finish.
 
 **Ready** means the system has a reference page in `docs/reference/` to write from. **Needs reference** means its page has to be written first, from the named source files.
 
-## Part I: A turn on the map
+## Part I: The pieces on the board
 
-How the player commands a chapter, starting straight on the battlefield.
-
-| # | Chapter | Opening problem | Patterns | Source | Status |
-|---|---|---|---|---|---|
-| 1 | **The turn** | Player phase, each army's phase, start-of-turn effects, and consequences that must happen after a battle has finished drawing. | A thirteen-step state machine; consequences left as notes and handled on the next frame (an event queue) | `map/map_step`, `units/turn_start`, `map/phase_banner` | Ready (map.md) |
-| 2 | **Who stands where** | The unit record says who someone is; something has to say where they are. | The deployment table (structure of arrays); locations: castles, villages, gates | `map/deployment`, `locations`, `map_sprites` | Ready (map.md) |
-| 3 | **Moving a unit** | Where can this unit go, given terrain, foes, and its class? | Flood fill over a cost grid; paths; the range overlay | `map/range_maps`, `unit_movement`, `map_cursor`, `input` | Ready (map.md) |
-| 4 | **Menus over the map** | A turn is a chain of choices, each with a way back. | A stack of option lists; windows as procs; which commands appear, and why; battle forecast and popups | `menus/map_menu`, `main_map_menu`, `unit_menu`, `item_list`, `inventory_full`, `battle_forecast`, `map/windows`, `map/popups`, `map/map_actions` | Ready (map_menu.md) |
-
-## Part II: Units, gear, and combat
-
-What the soldiers carry into battle, and how a fight is settled in memory.
+The structured game data—the nouns of *Genealogy of the Holy War*—and how they fit into 128 KB of RAM and 4 MB of ROM.
 
 | # | Chapter | Opening problem | Patterns | Source | Status |
 |---|---|---|---|---|---|
-| 5 | **A unit is made of parts** | A playable lord needs a hundred bytes; a bandit needs almost none. | Flyweight; getters that hide where a field lives; fixed pools | `units/unit_data`, `unit_info`, `units`, `unit_creation`, `include/Characters.h` | Needs reference (units) |
-| 6 | **Classes, stats, skills, and weapon ranks** | A skill can come from a character, a class, or an item; a stat from a base, a class, a ring, and a weapon; a weapon rank from class and Holy Blood. | Data-driven tables; one query over several sources | `units/classes`, `stats`, `skills`, `data/class/`, `data/character/` | Needs reference (units) |
-| 7 | **Every sword is an individual** | Weapons that remember their kills and pass from parent to child. | A global object table with indices as handles | `items/items`, `inventory`, `staves`, `include/Items.h` | Needs reference (items) |
-| 8 | **Armies and allegiance** | An army can be neutral to the player and at war with its neighbor. | Relations per pair of factions instead of per unit | `units/factions`, `unit_state` | Needs reference (units) |
+| 1 | **A unit is made of parts** | A playable lord needs a hundred bytes; a bandit needs almost none. | Flyweight; getters that hide where a field lives; fixed pools | `units/unit_data`, `unit_info`, `units`, `unit_creation`, `include/Characters.h` | Needs reference (units) |
+| 2 | **Classes, stats, skills, and weapon ranks** | A skill can come from a character, a class, or an item; a stat from a base, a class, a ring, and a weapon; a weapon rank from class and Holy Blood. | Data-driven tables; one query over several sources | `units/classes`, `stats`, `skills`, `data/class/`, `data/character/` | Needs reference (units) |
+| 3 | **Every sword is an individual** | Weapons that remember their kills and pass from parent to child. | A global object table with indices as handles | `items/items`, `inventory`, `staves`, `include/Items.h` | Needs reference (items) |
+| 4 | **Armies and allegiance** | An army can be neutral to the player and at war with its neighbor. | Relations per pair of factions instead of per unit | `units/factions`, `unit_state` | Needs reference (units) |
+| 5 | **Who stands where** | The unit record says who someone is; something has to say where they are. | The deployment table (structure of arrays); locations: castles, villages, gates | `map/deployment`, `locations`, `map_sprites` | Ready (map.md) |
+
+## Part II: The map and the turn
+
+How the player commands a chapter once the pieces are on the board.
+
+| # | Chapter | Opening problem | Patterns | Source | Status |
+|---|---|---|---|---|---|
+| 6 | **The turn** | A turn is where almost every system in the game converges: phases, music fades, healing, love points, and multi-step battle fallout that cannot collide on the same frame. | A thirteen-step state machine; consequences left as notes and handled on the next frame (an event queue) | `map/map_step`, `units/turn_start`, `map/phase_banner` | Ready (map.md) |
+| 7 | **Moving a unit** | Where can this unit go, given terrain, foes, and its class? | Flood fill over a cost grid; paths; the range overlay | `map/range_maps`, `unit_movement`, `map_cursor`, `input` | Ready (map.md) |
+| 8 | **Menus over the map** | A turn is a chain of choices, each with a way back. | A stack of option lists; windows as procs; which commands appear, and why; battle forecast and popups | `menus/map_menu`, `main_map_menu`, `unit_menu`, `item_list`, `inventory_full`, `battle_forecast`, `map/windows`, `map/popups`, `map/map_actions` | Ready (map_menu.md) |
+
+## Part III: Combat
+
+How a fight is settled in memory and how units grow from it.
+
+| # | Chapter | Opening problem | Patterns | Source | Status |
+|---|---|---|---|---|---|
 | 9 | **Resolving a battle** | Weapon triangle, leadership, skills that fire on chance, doubling, durability, and a linear RNG that the boot checksums can quietly sabotage—all settled before anything is drawn. | Compute first, show later: battle rounds as a recorded result; linear RNG and anti-tamper hook | `battle/battle`, `battle_stats`, `effects`, `scripted_crits`, `core/random` | Needs reference (battle); RNG in core.md |
 | 10 | **Growing stronger** | Experience, level-ups, and class promotion. | Growth rolls against tables; promotion rules and class changes | `units/level_up`, `battle_scene/results`, class-change mechanics | Needs reference (units) |
 
 - **Interlude: One attack, cursor press to HP loss** — A vertical slice tracing a single player attack from target selection through the battle forecast, combat resolution, presentation, experience gain, and deferred turn consequences.
 
-## Part III: Stories and minds
+## Part IV: Stories and minds
 
 The parts of the game written as content rather than code.
 
@@ -45,7 +52,7 @@ The parts of the game written as content rather than code.
 
 - **Interlude: One enemy turn** — A vertical slice tracing how the main loop time-slices AI group scripts, threat maps, movement, and combat without dropping a frame.
 
-## Part IV: The long game
+## Part V: The long game
 
 What carries across castles, chapters, and generations, along with the bookends of a playthrough.
 
@@ -63,7 +70,7 @@ What carries across castles, chapters, and generations, along with the bookends 
 > *"One generation passes away, and another generation comes;
 > But the earth abides forever."* — Ecclesiastes 1:4
 
-## Part V: Putting it on screen
+## Part VI: Putting it on screen
 
 How the game renders maps, fights, and full-screen menus onto the SNES display.
 
@@ -74,7 +81,7 @@ How the game renders maps, fights, and full-screen menus onto the SNES display.
 | 24 | **The battle scene** | Backgrounds, two animated combatants, spell effects, quotes, and HP bars, in one screen. | A third bytecode (the scene script); animation frame programs; palette effects | `battle_scene/` | Ready (battle_scene.md) |
 | 25 | **Full-screen windows and the status screen** | Full-screen unit sheets, sortable overview tables, options, and the Valkyrie revive screen that take over the display and return to whatever opened them. | Shared menu VBlank (`rsRunMenuScreenVBlank`); scoped RAM reuse; caller-return pointers (`wStatusScreenCaller`); HDMA split scrolling; tile-run text drawing | `menus/status_screen`, `unit_window`, `item_window`, `skill_window`, `data_window`, `options_menu`, `revive_screen`, `game_over`, `window_graphics`, `menu_text` | Ready (menus.md) |
 
-## Part VI: Under the hood
+## Part VII: Under the hood
 
 How a program with no operating system keeps sixty frames a second, schedules concurrent effects, and talks to the sound chip.
 
@@ -100,6 +107,6 @@ How a program with no operating system keeps sixty frames a second, schedules co
 
 The order of reading is not the order of writing. Chapters marked Ready can be written now, in any order. A chapter that leans on a later one can link ahead until that one exists.
 
-Proposed first: **Chapter 1, The turn**. It is both the opening chapter of the guide and the center of the game, `map.md` has the material, and it shows the patterns the other chapters build on (state machine, deferred consequences, events, and the AI hooked into the loop).
+Proposed first: **Part I**—starting with the reference pages for `units/` and `items/` alongside Chapters 1–4, while Chapter 5 (**Who stands where**) is already Ready from `map.md`. A draft of **The turn** (now Chapter 6) is archived in `wip/the-turn-draft.md` until Part I is in place.
 
-Before Part II can be written, the reference needs pages for `units/`, `items/`, and `battle/`.
+Before Part III can be written, the reference needs a page for `battle/`.
