@@ -7322,9 +7322,9 @@
       procUnknown9FBCD5 ; 9F/BCD5
 
         ; Part of the Mjolnir effect.
-        .structProcInfo "ON", rlUnknown9FBCDD, rlUnknown9FBCFD, aProcUnknown9FBDC1Code
+        .structProcInfo "ON", rlMapMagicMjolnirInit, rlMapMagicMjolnirDarkenAndSpawn, aProcUnknown9FBDC1Code
 
-      rlUnknown9FBCDD ; 9F/BCDD
+      rlMapMagicMjolnirInit ; 9F/BCDD
 
         .al
         .xl
@@ -7346,7 +7346,7 @@
         rtl
 
 
-      rlUnknown9FBCFD ; 9F/BCFD
+      rlMapMagicMjolnirDarkenAndSpawn ; 9F/BCFD
 
         .al
         .xl
@@ -7354,7 +7354,7 @@
         .databank ?
         ; Part of the Mjolnir effect.
         jsr rsDarkenMapMagicColors
-        bcc rlUnknown9FBCDD._BCFC
+        bcc rlMapMagicMjolnirInit._BCFC
         jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBFE
@@ -7380,13 +7380,13 @@
 
           .word <>aUnknown9FDC77
 
-        lda #<>rlUnknown9FBD48
+        lda #<>rlMapMagicMjolnirWaitCast
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
-        jsl rlUnknown9FBEB2
+        jsl rlMapMagicMjolnirStepScroll
         lda #(`aUnknown9FBF08)<<8
         sta lR44+1
         lda #<>aUnknown9FBF08
@@ -7395,7 +7395,7 @@
         rtl
 
 
-      rlUnknown9FBD48 ; 9F/BD48
+      rlMapMagicMjolnirWaitCast ; 9F/BD48
 
         .al
         .xl
@@ -7403,10 +7403,10 @@
         .databank ?
         ; Part of the Mjolnir effect.
 
-        jsl rlUnknown9FBEB2
+        jsl rlMapMagicMjolnirStepScroll
         dec aProcSystem.aBody0,b,x
         bne _BD5D
-        lda #<>rlUnknown9FBD5E
+        lda #<>rlMapMagicMjolnirWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0030
         sta aProcSystem.aBody0,b,x
@@ -7415,7 +7415,7 @@
         rtl
 
 
-      rlUnknown9FBD5E ; 9F/BD5E
+      rlMapMagicMjolnirWaitStrike ; 9F/BD5E
 
         .al
         .xl
@@ -7423,19 +7423,19 @@
         .databank ?
         ; Part of the Mjolnir effect.
 
-        jsl rlUnknown9FBEB2
+        jsl rlMapMagicMjolnirStepScroll
         dec aProcSystem.aBody0,b,x
-        bne rlUnknown9FBD7B._BD9E
+        bne rlMapMagicMjolnirWaitImpact._BD9E
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FBD7B
+        lda #<>rlMapMagicMjolnirWaitImpact
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0050
         sta aProcSystem.aBody0,b,x
         rtl
 
 
-      rlUnknown9FBD7B ; 9F/BD7B
+      rlMapMagicMjolnirWaitImpact ; 9F/BD7B
 
         .al
         .xl
@@ -7443,7 +7443,7 @@
         .databank ?
         ; Part of the Mjolnir effect.
 
-        jsl rlUnknown9FBEB2
+        jsl rlMapMagicMjolnirStepScroll
         lda $7ECC06
         beq _BD9E
         ldy aProcSystem.aBody7,b,x
@@ -7451,7 +7451,7 @@
         eor #$FFFF
         inc a
         sta aProcSystem.aBody4,b,y
-        lda #<>rlUnknown9FBD9F
+        lda #<>rlMapMagicMjolnirWaitFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000C
         sta aProcSystem.aBody0,b,x
@@ -7460,7 +7460,7 @@
         rtl
 
 
-      rlUnknown9FBD9F ; 9F/BD9F
+      rlMapMagicMjolnirWaitFade ; 9F/BD9F
 
         .al
         .xl
@@ -7470,7 +7470,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _BDAD
-        lda #<>rlUnknown9FBDAE
+        lda #<>rlMapMagicMjolnirFadeBack
         sta aProcSystem.aHeaderOnCycle,b,x
         jsr rsFreeMapMagicHDMA
 
@@ -7478,7 +7478,7 @@
         rtl
 
 
-      rlUnknown9FBDAE ; 9F/BDAE
+      rlMapMagicMjolnirFadeBack ; 9F/BDAE
 
         .al
         .xl
@@ -7487,13 +7487,13 @@
         ; Part of the Mjolnir effect.
 
         jsr rsFadeBackMapMagicColors
-        bcc rlUnknown9FBDC0
-        lda #<>rlUnknown9FBDC0
+        bcc rlMapMagicMjolnirDone
+        lda #<>rlMapMagicMjolnirDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta wMapMagicDone
 
-      rlUnknown9FBDC0 ; 9F/BDC0
+      rlMapMagicMjolnirDone ; 9F/BDC0
 
         .al
         .xl
@@ -7509,45 +7509,45 @@
 
         ; Part of the Mjolnir effect.
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $00
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $01
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $02
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $03
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $04
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $05
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $06
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $07
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $08
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $09
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $0A
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9FBE31, 1
+        PROC_CALL_ARGS rlMapMagicMjolnirLoadPaletteStep, 1
         .byte $0B
         PROC_JUMP aProcUnknown9FBDC1Code
 
 
-      rlUnknown9FBE31 ; 9F/BE31
+      rlMapMagicMjolnirLoadPaletteStep ; 9F/BE31
 
         .al
         .xl
@@ -7583,7 +7583,7 @@
         .word $7400, $7C20, $7D40, $7DC0, $7E40, $7FC0
         .word $2C02, $4007, $5C0B, $6810, $7C17, $7C9F
 
-      rlUnknown9FBEB2 ; 9F/BEB2
+      rlMapMagicMjolnirStepScroll ; 9F/BEB2
 
         .al
         .xl
@@ -7632,10 +7632,10 @@
       aUnknown9FBF08 ; 9F/BF08
 
         ; Part of the Mjolnir effect.
-        .word <>rlUnknown9FBF0E, <>rlUnknown9FBF37, <>aUnknown9FBF47
+        .word <>rlMapMagicMjolnirSpriteInit, <>rlMapMagicMjolnirSpriteWaitEnd, <>aUnknown9FBF47
 
 
-      rlUnknown9FBF0E ; 9F/BF0E
+      rlMapMagicMjolnirSpriteInit ; 9F/BF0E
 
         .al
         .xl
@@ -7662,7 +7662,7 @@
 
         .databank 0
 
-      rlUnknown9FBF37 ; 9F/BF37
+      rlMapMagicMjolnirSpriteWaitEnd ; 9F/BF37
 
         .al
         .xl
@@ -7685,7 +7685,7 @@
 
         ; Part of the Mjolnir effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
-        ACTIVE_SPRITE_CALL rlUnknown9FBF6B
+        ACTIVE_SPRITE_CALL rlMapMagicMjolnirWaitSpritePhase
         .word <>aUnknown9FBF47
 
         _BF50
@@ -7699,7 +7699,7 @@
 
         ; 9F/BF6B
 
-      rlUnknown9FBF6B ; 9F/BF6B
+      rlMapMagicMjolnirWaitSpritePhase ; 9F/BF6B
 
         .al
         .xl
@@ -7783,10 +7783,10 @@
       procUnknown9FBFFF ; 9F/BFFF
 
         ; Part of the Forseti effect.
-        .structProcInfo "ON", rlUnknown9FC007, rlUnknown9FC00F, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicForsetiInit, rlMapMagicForsetiDarkenAndSpawn, aProcMapMagicHaltCode
 
 
-      rlUnknown9FC007 ; 9F/C007
+      rlMapMagicForsetiInit ; 9F/C007
 
         .al
         .xl
@@ -7795,12 +7795,12 @@
         ; Part of the Forseti effect.
 
         jsr rsSaveMapMagicColors
-        jsl rlUnknown9FC0B3
+        jsl rlMapMagicForsetiAdvancePaletteStep
         rtl
 
         .databank 0
 
-      rlUnknown9FC00F ; 9F/C00F
+      rlMapMagicForsetiDarkenAndSpawn ; 9F/C00F
 
         .al
         .xl
@@ -7842,7 +7842,7 @@
 
           .byte $65
 
-        lda #<>rlUnknown9FC050
+        lda #<>rlMapMagicForsetiWaitCast
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
         sta aProcSystem.aBody0,b,x
@@ -7852,7 +7852,7 @@
 
         .databank 0
 
-      rlUnknown9FC050 ; 9F/C050
+      rlMapMagicForsetiWaitCast ; 9F/C050
 
         .al
         .xl
@@ -7862,7 +7862,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _C061
-        lda #<>rlUnknown9FC062
+        lda #<>rlMapMagicForsetiWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
         sta aProcSystem.aBody0,b,x
@@ -7872,7 +7872,7 @@
 
         .databank 0
 
-      rlUnknown9FC062 ; 9F/C062
+      rlMapMagicForsetiWaitStrike ; 9F/C062
 
         .al
         .xl
@@ -7881,10 +7881,10 @@
         ; Part of the Forseti effect.
 
         dec aProcSystem.aBody0,b,x
-        bne rlUnknown9FC07B._C092
+        bne rlMapMagicForsetiWaitHold._C092
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FC07B
+        lda #<>rlMapMagicForsetiWaitHold
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
         sta aProcSystem.aBody0,b,x
@@ -7892,7 +7892,7 @@
 
         .databank 0
 
-      rlUnknown9FC07B ; 9F/C07B
+      rlMapMagicForsetiWaitHold ; 9F/C07B
 
         .al
         .xl
@@ -7902,7 +7902,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _C092
-        lda #<>rlUnknown9FC093
+        lda #<>rlMapMagicForsetiStepPaletteAnim
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
         sta aProcSystem.aBody0,b,x
@@ -7914,7 +7914,7 @@
 
         .databank 0
 
-      rlUnknown9FC093 ; 9F/C093
+      rlMapMagicForsetiStepPaletteAnim ; 9F/C093
 
         .al
         .xl
@@ -7922,9 +7922,9 @@
         .databank ?
         ; Part of the Forseti effect.
 
-        jsl rlUnknown9FC0B3
+        jsl rlMapMagicForsetiAdvancePaletteStep
         bcc _C09F
-        lda #<>rlUnknown9FC0A0
+        lda #<>rlMapMagicForsetiFadeBack
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C09F
@@ -7932,7 +7932,7 @@
 
         .databank 0
 
-      rlUnknown9FC0A0 ; 9F/C0A0
+      rlMapMagicForsetiFadeBack ; 9F/C0A0
 
         .al
         .xl
@@ -7941,13 +7941,13 @@
         ; Part of the Forseti effect.
 
         jsr rsFadeBackMapMagicColors
-        bcc rlUnknown9FC0B2
-        lda #<>rlUnknown9FC0B2
+        bcc rlMapMagicForsetiDone
+        lda #<>rlMapMagicForsetiDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta wMapMagicDone
 
-      rlUnknown9FC0B2 ; 9F/C0B2
+      rlMapMagicForsetiDone ; 9F/C0B2
 
         .al
         .xl
@@ -7959,7 +7959,7 @@
 
         .databank 0
 
-      rlUnknown9FC0B3 ; 9F/C0B3
+      rlMapMagicForsetiAdvancePaletteStep ; 9F/C0B3
 
         .al
         .xl
@@ -8037,10 +8037,10 @@
       procUnknown9FC191 ; 9F/C191
 
         ; Part of the Nosferatu effect.
-        .structProcInfo "ON", rlUnknown9FC199, rlUnknown9FC1B0, aProcUnknown9FC50CCode
+        .structProcInfo "ON", rlMapMagicNosferatuInit, rlMapMagicNosferatuSpawnEffects, aProcUnknown9FC50CCode
 
 
-      rlUnknown9FC199 ; 9F/C199
+      rlMapMagicNosferatuInit ; 9F/C199
 
         .al
         .xl
@@ -8058,7 +8058,7 @@
 
         .databank 0
 
-      rlUnknown9FC1B0 ; 9F/C1B0
+      rlMapMagicNosferatuSpawnEffects ; 9F/C1B0
 
         .al
         .xl
@@ -8090,7 +8090,7 @@
 
           .word <>aUnknown9FDC77
 
-        lda #<>rlUnknown9FC1F4
+        lda #<>rlMapMagicNosferatuWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0060
         sta aProcSystem.aBody0,b,x
@@ -8109,7 +8109,7 @@
 
         .databank 0
 
-      rlUnknown9FC1F4 ; 9F/C1F4
+      rlMapMagicNosferatuWaitStrike ; 9F/C1F4
 
         .al
         .xl
@@ -8121,7 +8121,7 @@
         bne _C20C
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FC20D
+        lda #<>rlMapMagicNosferatuWaitEnd
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$00A0
         sta aProcSystem.aBody0,b,x
@@ -8131,7 +8131,7 @@
 
         .databank 0
 
-      rlUnknown9FC20D ; 9F/C20D
+      rlMapMagicNosferatuWaitEnd ; 9F/C20D
 
         .al
         .xl
@@ -8149,7 +8149,7 @@
 
         .databank 0
 
-      rlUnknown9FC21A ; 9F/C21A
+      rlMapMagicNosferatuOrbInit ; 9F/C21A
 
         .al
         .xl
@@ -8195,7 +8195,7 @@
 
         .databank 0
 
-      rlUnknown9FC27E ; 9F/C27E
+      rlMapMagicNosferatuOrbGrow ; 9F/C27E
 
         .al
         .xl
@@ -8208,7 +8208,7 @@
         adc #$0001
         cmp #$0012
         bcc _C2A0
-        lda #<>rlUnknown9FC2A7
+        lda #<>rlMapMagicNosferatuOrbHoldTarget
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0040
         sta aProcSystem.aBody0,b,x
@@ -8218,12 +8218,12 @@
 
         _C2A0
         sta aProcSystem.aBody2,b,x
-        jsr rsUnknown9FC33F
+        jsr rsMapMagicNosferatuUpdateOrbHDMA
         rtl
 
         .databank 0
 
-      rlUnknown9FC2A7 ; 9F/C2A7
+      rlMapMagicNosferatuOrbHoldTarget ; 9F/C2A7
 
         .al
         .xl
@@ -8233,7 +8233,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _C2BF
-        lda #<>rlUnknown9FC2C0
+        lda #<>rlMapMagicNosferatuOrbPauseMove
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
         sta aProcSystem.aBody0,b,x
@@ -8245,7 +8245,7 @@
 
         .databank 0
 
-      rlUnknown9FC2C0 ; 9F/C2C0
+      rlMapMagicNosferatuOrbPauseMove ; 9F/C2C0
 
         .al
         .xl
@@ -8255,7 +8255,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _C2D1
-        lda #<>rlUnknown9FC2D2
+        lda #<>rlMapMagicNosferatuOrbMoveToCaster
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aBody1,b,x
         sta aProcSystem.aBody0,b,x
@@ -8265,7 +8265,7 @@
 
         .databank 0
 
-      rlUnknown9FC2D2 ; 9F/C2D2
+      rlMapMagicNosferatuOrbMoveToCaster ; 9F/C2D2
 
         .al
         .xl
@@ -8273,12 +8273,12 @@
         .databank ?
         ; Part of the Nosferatu effect.
 
-        jsr rsUnknown9FC393
+        jsr rsMapMagicNosferatuStepOrbCoords
         lda aProcSystem.aBody2,b,x
-        jsr rsUnknown9FC33F
+        jsr rsMapMagicNosferatuUpdateOrbHDMA
         dec aProcSystem.aBody0,b,x
         bne _C2F3
-        lda #<>rlUnknown9FC2F4
+        lda #<>rlMapMagicNosferatuOrbPauseCaster
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
         sta aProcSystem.aBody0,b,x
@@ -8290,7 +8290,7 @@
 
         .databank 0
 
-      rlUnknown9FC2F4 ; 9F/C2F4
+      rlMapMagicNosferatuOrbPauseCaster ; 9F/C2F4
 
         .al
         .xl
@@ -8300,7 +8300,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _C30C
-        lda #<>rlUnknown9FC30D
+        lda #<>rlMapMagicNosferatuOrbHoldCaster
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0040
         sta aProcSystem.aBody0,b,x
@@ -8312,7 +8312,7 @@
 
         .databank 0
 
-      rlUnknown9FC30D ; 9F/C30D
+      rlMapMagicNosferatuOrbHoldCaster ; 9F/C30D
 
         .al
         .xl
@@ -8322,7 +8322,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _C31F
-        lda #<>rlUnknown9FC320
+        lda #<>rlMapMagicNosferatuOrbShrink
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7ECC0A
@@ -8332,7 +8332,7 @@
 
         .databank 0
 
-      rlUnknown9FC320 ; 9F/C320
+      rlMapMagicNosferatuOrbShrink ; 9F/C320
 
         .al
         .xl
@@ -8346,15 +8346,15 @@
         cmp #$0001
         bpl _C338
         jsr rsFreeMapMagicHDMA
-        lda #<>rlUnknown9FC33E
+        lda #<>rlMapMagicNosferatuOrbDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
 
         _C338
         sta aProcSystem.aBody2,b,x
-        jsr rsUnknown9FC33F
+        jsr rsMapMagicNosferatuUpdateOrbHDMA
 
-      rlUnknown9FC33E ; 9F/C33E
+      rlMapMagicNosferatuOrbDone ; 9F/C33E
 
         .al
         .xl
@@ -8366,7 +8366,7 @@
 
         .databank 0
 
-      rsUnknown9FC33F ; 9F/C33F
+      rsMapMagicNosferatuUpdateOrbHDMA ; 9F/C33F
 
         .al
         .xl
@@ -8410,7 +8410,7 @@
 
         .databank 0
 
-      rsUnknown9FC393 ; 9F/C393
+      rsMapMagicNosferatuStepOrbCoords ; 9F/C393
 
         .al
         .xl
@@ -8432,10 +8432,10 @@
       aUnknown9FC3A7 ; 9F/C3A7
 
         ; Part of the Nosferatu effect.
-        .word <>rlUnknown9FC3AD, <>rlUnknown9FC3C9, <>aUnknown9FC499
+        .word <>rlMapMagicNosferatuSpriteInit, <>rlMapMagicNosferatuSpriteAtTarget, <>aUnknown9FC499
 
 
-      rlUnknown9FC3AD ; 9F/C3AD
+      rlMapMagicNosferatuSpriteInit ; 9F/C3AD
 
         .al
         .xl
@@ -8455,7 +8455,7 @@
 
         .databank 0
 
-      rlUnknown9FC3C9 ; 9F/C3C9
+      rlMapMagicNosferatuSpriteAtTarget ; 9F/C3C9
 
         .al
         .xl
@@ -8463,7 +8463,7 @@
         .databank ?
         ; Part of the Nosferatu effect.
 
-        jsr rsUnknown9FC415
+        jsr rsMapMagicNosferatuCycleSpritePal
         lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
@@ -8472,7 +8472,7 @@
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7ECC06
         beq _C3EC
-        lda #<>rlUnknown9FC3ED
+        lda #<>rlMapMagicNosferatuSpriteAtCaster
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _C3EC
@@ -8480,7 +8480,7 @@
 
         .databank 0
 
-      rlUnknown9FC3ED ; 9F/C3ED
+      rlMapMagicNosferatuSpriteAtCaster ; 9F/C3ED
 
         .al
         .xl
@@ -8488,7 +8488,7 @@
         .databank ?
         ; Part of the Nosferatu effect.
 
-        jsr rsUnknown9FC415
+        jsr rsMapMagicNosferatuCycleSpritePal
         lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
@@ -8506,7 +8506,7 @@
 
         .databank 0
 
-      rsUnknown9FC415 ; 9F/C415
+      rsMapMagicNosferatuCycleSpritePal ; 9F/C415
 
         .al
         .xl
@@ -8552,33 +8552,33 @@
 
         ; Part of the Nosferatu effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
-        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>aUnknown9FC499
 
         _C4A2
         ACTIVE_SPRITE_FRAME 1, aUnknown9FC4F6
-        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>_C4A2
 
         _C4AB
         ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
-        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>_C4AB
 
         _C4B4
         ACTIVE_SPRITE_FRAME 1, aUnknown9FC4E0
-        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>_C4B4
 
         _C4BD
         ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
-        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        ACTIVE_SPRITE_CALL rlMapMagicNosferatuWaitSpritePhase
         .word <>_C4BD
         ACTIVE_SPRITE_JUMP aUnknown9FC499
 
         ; 9F/C4C9
 
-      rlUnknown9FC4C9 ; 9F/C4C9
+      rlMapMagicNosferatuWaitSpritePhase ; 9F/C4C9
 
         .al
         .xl
@@ -8629,45 +8629,45 @@
 
         ; Part of the Nosferatu effect.
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $00
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $01
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $02
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $03
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $04
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $05
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $06
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $07
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $08
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $09
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $0A
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FC57C, 1
+        PROC_CALL_ARGS rlMapMagicNosferatuLoadPaletteStep, 1
         .byte $0B
         PROC_JUMP aProcUnknown9FC50CCode
 
 
-      rlUnknown9FC57C ; 9F/C57C
+      rlMapMagicNosferatuLoadPaletteStep ; 9F/C57C
 
         .al
         .xl
@@ -14252,7 +14252,7 @@
       procUnknown9FEBF6 ; 9F/EBF6
 
         ; Part of the Nosferatu effect.
-        .structProcInfo "ON", rlUnknown9FC21A, rlUnknown9FC27E, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicNosferatuOrbInit, rlMapMagicNosferatuOrbGrow, aProcMapMagicHaltCode
 
       procUnknown9FEBFE ; 9F/EBFE
 
