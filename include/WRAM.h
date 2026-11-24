@@ -2958,7 +2958,7 @@
     wStatusScreenCaller .word ?                     ; $7F8183
       ; The low word of the bank $80 routine that opened the status screen and
       ; that closing it returns to: rsUnitWindowOpen, rsReviveScreenOpen or
-      ; rsOpenCastleScreen; anything else (rsUnknown80B122) returns to the map.
+      ; rsOpenCastleScreen; anything else (rsReturnToMapMainLoop) returns to the map.
     wStatusScreenItemSlot .word ?                   ; $7F8185
       ; The inventory slot (1-8) under the item cursor.
     wStatusScreenScroll .word ?                     ; $7F8187
@@ -3038,7 +3038,7 @@
     wUnitWindowCaller .word ?                       ; $7F82C5
       ; The low word of the main loop routine that opened the unit window:
       ; rsOpenStatusScreen when coming back from the status screen, which keeps
-      ; the list where it was; rsUnknown80B122 from the map menu.
+      ; the list where it was; rsReturnToMapMainLoop from the map menu.
 
   .endvirtual
 

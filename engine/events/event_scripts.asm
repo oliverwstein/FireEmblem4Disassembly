@@ -9,9 +9,9 @@
       .al
       .xl
 
-      aUnknown86C69A ; 86/C69A
+      aMapChangeBitmasks ; 86/C69A
 
-        ; Read by rsUnknown86C677.
+        ; Read by rsCheckMapChangeActive.
 
         .word $0201, $0804, $2010, $8040
 
@@ -1117,9 +1117,9 @@
         php
         phy
 
-        lda #(`procUnknown828B61)<<8
+        lda #(`procEventBerserkCast)<<8
         sta lR44+1
-        lda #<>procUnknown828B61
+        lda #<>procEventBerserkCast
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2758,7 +2758,7 @@
         php
         phy
 
-        jsl rlUnknown80C32C
+        jsl rlSetMapBGModeAndLayerPositions
 
         stz wBufferBG1HOFS
         stz wBufferBG1VOFS
@@ -2795,7 +2795,7 @@
         php
         phy
 
-        jsl rlUnknown80C35D
+        jsl rlSetMode3LayerPositions
 
         stz wBufferBG1HOFS
         stz wBufferBG1VOFS
@@ -2931,7 +2931,7 @@
         +
         stx wMainGameMode,b
 
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFadeByTimer)<<8
@@ -4225,13 +4225,13 @@
         lda #0
         jsl rlDialogueStartTextAndHDMA
 
-        lda #(`rlUnknown8B9275)<<8
+        lda #(`rlWorldMapDialogueHDMA)<<8
         sta aDialogue.lHDMARoutine+1,b
-        lda #<>rlUnknown8B9275
+        lda #<>rlWorldMapDialogueHDMA
         sta aDialogue.lHDMARoutine,b
 
         ldx #0
-        jsl rlUnknown8B91F6
+        jsl rlInitWorldMapDialogueSlot
 
         phy
         lda #(`procUnknown828AC3)<<8
@@ -4475,11 +4475,13 @@
       .al
       .xl
 
-      rsUnknown80AF9B ; 80/AF9B
+      rsResetMapGraphicsAndSystems ; 80/AF9B
 
         .al
         .autsiz
         .databank ?
+
+        ; Resets screen registers, BG2/BG3 tilemaps, map window buffers, OAM, sprites, HDMA, IRQ, and map menus
 
         jsl rlHardwareResetScreenPosMathHDMA
         jsl rlHardwareResetScreenRegisters
@@ -4550,12 +4552,14 @@
       .as
       .xl
 
-      rsUnknown80B041 ; 80/B041
+      rsSetMapMainLoopAndVBlank ; 80/B041
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets wGameStateRoutine2 to GAMESTATE_MAP_UPKEEP and installs rsMapVBlank and rsMapMainLoop
 
         lda #GAMESTATE_MAP_UPKEEP
         sta wGameStateRoutine2,b
@@ -4569,12 +4573,14 @@
 
         ; 80/B052
 
-      rsUnknown80B052 ; 80/B052
+      rsSetupMapRowUploadIRQ ; 80/B052
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Installs aMapRowUploadIRQ
 
         lda #(`aMapRowUploadIRQ)<<8
         sta lR44+1
@@ -4588,14 +4594,16 @@
 
         ; 80/B065
 
-      rsUnknown80B065 ; 80/B065
+      rsLoadMapMenuAndFontGraphics ; 80/B065
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown80B08C
+        ; Decompresses map menu graphics and loads menu font, icons, and default border palette
+
+        jsl rlLoadMapMenuDecompression80B09B
         lda #(`aDecompressionDMAEntry80B084)<<8
         sta lR19+1
         lda #<>aDecompressionDMAEntry80B084
@@ -4618,12 +4626,14 @@
       .al
       .xl
 
-      rlUnknown80B08C ; 80/B08C
+      rlLoadMapMenuDecompression80B09B ; 80/B08C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs rlHandleMapMenuDecompressionDMA for aDecompressionDMAEntry80B09B
 
         lda #(`aDecompressionDMAEntry80B09B)<<8
         sta lR19+1
@@ -4644,12 +4654,14 @@
       .al
       .xl
 
-      rsUnknown80B105 ; 80/B105
+      rsInitMapWindowRegisters ; 80/B105
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Initializes map windowing registers (TMW, WH0, WH1, W12SEL, W34SEL, TM)
 
         sep #$20
         lda #$17
@@ -4679,11 +4691,13 @@
       .al
       .xl
 
-      rsUnknown80B122 ; 80/B122
+      rsReturnToMapMainLoop ; 80/B122
 
         .al
         .autsiz
         .databank ?
+
+        ; Main loop routine that resets map graphics/systems, reloads map display, and resumes GAMESTATE_MAP_STEP
 
         ; a MainLoop routine
 
@@ -4696,19 +4710,19 @@
         rep #$20
 
         jsl rlDisableVBlank
-        jsr rsUnknown80AF9B
-        jsr rsUnknown80B16A
+        jsr rsResetMapGraphicsAndSystems
+        jsr rsSetupMapDisplayByGameMode
         jsl rlLoadWindowGraphics
-        jsr rsUnknown80B065
-        jsr rsUnknown80B105
-        jsr rsUnknown80B052
-        jsr rsUnknown80B041
+        jsr rsLoadMapMenuAndFontGraphics
+        jsr rsInitMapWindowRegisters
+        jsr rsSetupMapRowUploadIRQ
+        jsr rsSetMapMainLoopAndVBlank
 
         lda #GAMESTATE_MAP_STEP
         sta wGameStateRoutine1,b
         lda wSavedMapStep,b
         sta wGameStateStep,b
-        jsr rsUnknown80B195
+        jsr rsResumeMapAfterMenu
 
         sep #$20
         lda #INIDISP_Setting(false, 0)
@@ -4723,11 +4737,13 @@
 
         .databank 0
 
-      rsUnknown80B16A ; 80/B16A
+      rsSetupMapDisplayByGameMode ; 80/B16A
 
         .al
         .autsiz
         .databank ?
+
+        ; Dispatches chapter map display setup by wMainGameMode (0-3)
 
         lda wMainGameMode,b
         asl a
@@ -4735,54 +4751,62 @@
         jmp (+,x)
 
         +
-        .addr rsUnknown80B17A
-        .addr rsUnknown80B17F
-        .addr rsUnknown80B184
-        .addr rsUnknown80B184
+        .addr rsSetupChapterMapDisplayMode0
+        .addr rsSetupChapterMapDisplayMode1
+        .addr rsReloadChapterMapDisplay
+        .addr rsReloadChapterMapDisplay
 
         .databank 0
 
-      rsUnknown80B17A ; 80/B17A
+      rsSetupChapterMapDisplayMode0 ; 80/B17A
 
         .al
         .autsiz
         .databank ?
+
+        ; Calls rlSetUpChapterMapDisplay
 
         jsl rlSetUpChapterMapDisplay
         rts
 
         .databank 0
 
-      rsUnknown80B17F ; 80/B17F
+      rsSetupChapterMapDisplayMode1 ; 80/B17F
 
         .al
         .autsiz
         .databank ?
+
+        ; Calls rlSetUpChapterMapDisplayAllFrames
 
         jsl rlSetUpChapterMapDisplayAllFrames
         rts
 
         .databank 0
 
-      rsUnknown80B184 ; 80/B184
+      rsReloadChapterMapDisplay ; 80/B184
 
         .al
         .autsiz
         .databank ?
 
+        ; Loads chapter map layout, updates location events, applies active map changes, and sets up map display
+
         jsl rlLoadChapterMapLayout
         jsl rlUpdateAllLocationEvents
-        jsl rlUnknown86C629
+        jsl rlApplyAllActiveMapChanges
         jsl rlSetUpChapterMapDisplay
         rts
 
         .databank 0
 
-      rsUnknown80B195 ; 80/B195
+      rsResumeMapAfterMenu ; 80/B195
 
         .al
         .autsiz
         .databank ?
+
+        ; Rebuilds map menu RAM area, runs upload, and handles defeated-unit/victory/phase music on return to map
 
         lda #$0020
         trb wChapterFlags,b
@@ -4798,7 +4822,7 @@
 
         lda #11
         sta wGameStateStep,b
-        jsl rlUnknown858728
+        jsl rlRunMapMenuUploadIfEnabled
 
         lda wMainGameMode,b
         cmp #2
@@ -4834,12 +4858,14 @@
       .al
       .xl
 
-      rlUnknown80B63F ; 80/B63F
+      rlEventNoOp80B63F ; 80/B63F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; No-op stub (rtl) called from event proc
 
         rtl
 
@@ -4847,7 +4873,7 @@
 
         ; 80/B640
 
-      rsUnknown80B640 ; 80/B640
+      rsEventUnusedStub80B640 ; 80/B640
 
         ; Unreferenced: a lone rts.
 
@@ -4861,11 +4887,13 @@
       .al
       .xl
 
-      rlUnknown80C32C ; 80/C32C
+      rlSetMapBGModeAndLayerPositions ; 80/C32C
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets BGMODE $09 and calls rlSetLayerPositionsAndSizes
 
         php
         sep #$20
@@ -4901,11 +4929,13 @@
       .al
       .xl
 
-      rlUnknown80C35D ; 80/C35D
+      rlSetMode3LayerPositions ; 80/C35D
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets BGMODE $03, BG1SC/BG2SC 0, and calls rlSetLayerPositionsAndSizes
 
         php
         sep #$20
@@ -5302,9 +5332,9 @@
       .al
       .xl
 
-      procUnknown828B61 ; 82/8B61
+      procEventBerserkCast ; 82/8B61
 
-        .structProcInfo "ME", rlProcUnknown828B61Init, rlProcUnknown828B61Cycle, aProcUnknown828B61Code
+        .structProcInfo "ME", rlProcEventBerserkCastInit, rlProcEventBerserkCastCycle, aProcEventBerserkCastCode
 
         ; Unused: 2 zero bytes.
         .fill 2, $00
@@ -5317,7 +5347,7 @@
       .al
       .xl
 
-      rlProcUnknown828B61Init ; 82/8B6B
+      rlProcEventBerserkCastInit ; 82/8B6B
 
         .al
         .xl
@@ -5336,23 +5366,23 @@
         lda [lR22],y
         and #$00FF
         sta aProcSystem.wInput1,b
-        jsl rlUnknown9EEC95
+        jsl rlStartEventBerserkMagicEffect
         rtl
 
         .databank 0
 
         ; 82/8B92
 
-      rlProcUnknown828B61Cycle ; 82/8B92
+      rlProcEventBerserkCastCycle ; 82/8B92
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`procUnknown9EECA4)<<8
+        lda #(`procEventBerserkMagicEffect)<<8
         sta lR44+1
-        lda #<>procUnknown9EECA4
+        lda #<>procEventBerserkMagicEffect
         sta lR44
         jsl rlProcEngineFindProc
         bcs _8BA6
@@ -5373,7 +5403,7 @@
       .al
       .xl
 
-      aProcUnknown828B61Code ; 82/8BA7
+      aProcEventBerserkCastCode ; 82/8BA7
 
         PROC_HALT
 
@@ -6091,7 +6121,7 @@
           bra _8F23
 
         _8F1F
-        jsl rlUnknown80B63F
+        jsl rlEventNoOp80B63F
 
         _8F23
         ldx aProcSystem.wOffset,b
@@ -7036,11 +7066,13 @@
       .al
       .xl
 
-      rlUnknown858728 ; 85/8728
+      rlRunMapMenuUploadIfEnabled ; 85/8728
 
         .al
         .autsiz
         .databank ?
+
+        ; Uploads dirty map menu rows if needed and runs rlMapMenuVBlankUpload when bMapMenuFlags allows
 
         phb
         php
@@ -7057,7 +7089,7 @@
             bit #$0001
             beq +
 
-              jsr rsUnknown858D18
+              jsr rsUploadDirtyMapMenuRows
               lda #$0001
               trb wChapterFlags,b
 
@@ -7081,12 +7113,14 @@
       .al
       .xl
 
-      rsUnknown858D18 ; 85/8D18
+      rsUploadDirtyMapMenuRows ; 85/8D18
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; DMAs dirty map menu tilemap rows (wMapMenuDirtyTop..Bottom) to VRAM $5400
 
         phb
         php
@@ -7145,12 +7179,14 @@
       .al
       .xl
 
-      rlUnknown86C629 ; 86/C629
+      rlApplyAllActiveMapChanges ; 86/C629
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Re-applies all active map tile changes for the current chapter
 
         phb
         php
@@ -7176,7 +7212,7 @@
         cmp #$FFFF
         beq _C672
         txa
-        jsr rsUnknown86C677
+        jsr rsCheckMapChangeActive
         bcc _C669
         lda $0003,b,y
         and #$00FF
@@ -7208,12 +7244,14 @@
 
         ; 86/C677
 
-      rsUnknown86C677 ; 86/C677
+      rsCheckMapChangeActive ; 86/C677
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns carry set if map change index A is active in aChapterActiveMapChanges
 
         phb
         phk
@@ -7259,11 +7297,13 @@
       .al
       .xl
 
-      rlUnknown8B91F6 ; 8B/91F6
+      rlInitWorldMapDialogueSlot ; 8B/91F6
 
         .al
         .autsiz
         .databank ?
+
+        ; Initializes aDialogue slot for BG3 overlay / world-map dialogue at VRAM $9000
 
         lda #DialogueStatusPreventASpeedUp
         tsb aDialogue.wStatus,b
@@ -7329,11 +7369,13 @@
 
         .databank 0
 
-      rlUnknown8B9275 ; 8B/9275
+      rlWorldMapDialogueHDMA ; 8B/9275
 
         .al
         .autsiz
         .databank ?
+
+        ; Builds HDMA table for BG3 overlay / world-map dialogue
 
         php
         lda #$7E00
@@ -7479,7 +7521,7 @@
         bit #$1000
         bne +
 
-        jml rlUnknown8B9275._942F
+        jml rlWorldMapDialogueHDMA._942F
         
         +
         lda $18ED,b
@@ -7802,16 +7844,18 @@
       .al
       .xl
 
-      rlUnknown9EEC95 ; 9E/EC95
+      rlStartEventBerserkMagicEffect ; 9E/EC95
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`procUnknown9EECA4)<<8
+        ; Creates procEventBerserkMagicEffect
+
+        lda #(`procEventBerserkMagicEffect)<<8
         sta lR44+1
-        lda #<>procUnknown9EECA4
+        lda #<>procEventBerserkMagicEffect
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -7828,9 +7872,9 @@
       .al
       .xl
 
-      procUnknown9EECA4 ; 9E/ECA4
+      procEventBerserkMagicEffect ; 9E/ECA4
 
-        .structProcInfo "ON", rlProcUnknown9EECA4Init, rlProcUnknown9EECA4Cycle1, aProcUnknown9EECA4Code
+        .structProcInfo "ON", rlProcEventBerserkMagicEffectInit, rlProcEventBerserkMagicEffectCycle1, aProcEventBerserkMagicEffectCode
 
     .endsection ProcScript9EECA4Section
 
@@ -7840,7 +7884,7 @@
       .al
       .xl
 
-      rlProcUnknown9EECA4Init ; 9E/ECAC
+      rlProcEventBerserkMagicEffectInit ; 9E/ECAC
 
         .al
         .xl
@@ -7901,7 +7945,7 @@
 
         ; 9E/ED30
 
-      rlProcUnknown9EECA4Cycle1 ; 9E/ED30
+      rlProcEventBerserkMagicEffectCycle1 ; 9E/ED30
 
         .al
         .xl
@@ -7922,7 +7966,7 @@
       .al
       .xl
 
-      aProcUnknown9EECA4Code ; 9E/ED31
+      aProcEventBerserkMagicEffectCode ; 9E/ED31
 
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlQueueMapMagicBackgroundAll
@@ -7935,15 +7979,15 @@
         PROC_YIELD 2
         PROC_CALL rlStartMapMagicEffect
         PROC_YIELD 16
-        PROC_CALL rlUnknown9EED7C
+        PROC_CALL rlSetEventBerserkMagicStart
         _ED5A
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EED84
+        PROC_CALL rlWaitEventBerserkMagicDone
         PROC_JUMP_IF_BITS_UNSET _ED5A, $0004
         PROC_CALL rlEndMapMagicEffect
         PROC_CALL rlRestoreMapMagicScreenRegisters
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EED9A
+        PROC_CALL rlRestoreEventBerserkScreenRegisters
         PROC_YIELD 1
         PROC_END
 
@@ -7958,12 +8002,14 @@
       .al
       .xl
 
-      rlUnknown9EED7C ; 9E/ED7C
+      rlSetEventBerserkMagicStart ; 9E/ED7C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets wMapMagicStart = 1
 
         lda #$0001
         sta wMapMagicStart
@@ -7973,16 +8019,18 @@
 
         ; 9E/ED84
 
-      rlUnknown9EED84 ; 9E/ED84
+      rlWaitEventBerserkMagicDone ; 9E/ED84
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Waits for wMapMagicDone != 0, then restores cycle and sets proc bit $0004
+
         lda wMapMagicDone
         beq _ED99
-        lda #<>rlProcUnknown9EECA4Cycle1
+        lda #<>rlProcEventBerserkMagicEffectCycle1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -7995,12 +8043,14 @@
 
         ; 9E/ED9A
 
-      rlUnknown9EED9A ; 9E/ED9A
+      rlRestoreEventBerserkScreenRegisters ; 9E/ED9A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Restores bBufferBG2SC, bBufferTM, and wGameStateRoutine1 after event Berserk effect
 
         sep #$20
         lda $7F57EA

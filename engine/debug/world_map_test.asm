@@ -182,7 +182,7 @@
         .autsiz
         .databank ?
 
-        ; Called only by the unreferenced rlUnusedWorldMapTestFrame, with the buttons pressed this frame. A: loads the next four world map portraits (counting with aWorldMapMarker.wID[0]). B: clears marker 0's timer. X: highlights a region (rlHighlightWorldMapPart, by the frame count). R: opens a dialogue box. L: uploads gUnknownD96C00 to VRAM. Select: returns to the chapter map (rsUnknown80B122).
+        ; Called only by the unreferenced rlUnusedWorldMapTestFrame, with the buttons pressed this frame. A: loads the next four world map portraits (counting with aWorldMapMarker.wID[0]). B: clears marker 0's timer. X: highlights a region (rlHighlightWorldMapPart, by the frame count). R: opens a dialogue box. L: uploads gUnknownD96C00 to VRAM. Select: returns to the chapter map (rsReturnToMapMainLoop).
 
         bit #$0080
         bne _8804
@@ -221,12 +221,12 @@
         jsl rlResetDialogueEngine
         lda #$0002
         jsl rlDialogueStartTextAndHDMA
-        lda #(`rlUnknown8B9275)<<8
+        lda #(`rlWorldMapDialogueHDMA)<<8
         sta aDialogue.lHDMARoutine+1,b
-        lda #<>rlUnknown8B9275
+        lda #<>rlWorldMapDialogueHDMA
         sta aDialogue.lHDMARoutine,b
         ldx #$0000
-        jsl rlUnknown8B91F6
+        jsl rlInitWorldMapDialogueSlot
         rts
 
 
@@ -244,7 +244,7 @@
         jsl rlPlaySoundEffect
         lda #$0000
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

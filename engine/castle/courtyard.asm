@@ -1933,7 +1933,7 @@
         lda #$5800
         sta wR8
         jsl rlSetLayerPositionsAndSizes
-        jsl rlUnknown80B08C
+        jsl rlLoadMapMenuDecompression80B09B
         jsl rlDMAByStruct
 
           .structDMAToVRAM g4bppShopScreen, $4000, $80, $0000

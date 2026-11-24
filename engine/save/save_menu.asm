@@ -1615,7 +1615,7 @@
         lda #$0002
         sta wMainGameMode,b
         stz wGameStateRoutine1,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

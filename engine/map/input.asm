@@ -393,7 +393,7 @@
         lda #$0008
         jsl rlPlaySoundEffect
         jsl rlSaveMapCameraAndLockCursor
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wStatusScreenCaller
         lda #$0000
         sta wStatusScreenReopenMode

@@ -845,7 +845,7 @@
         .autsiz
         .databank ?
 
-        ; Step 0. Finishes cursor moves and scrolling; B closes (fading into rsUnknown80B122, or through rlFadeToCastleScreen when bit 5 of wChapterFlags is set), up and down move between skills, right and left show more of a skill's holders when it has over 12.
+        ; Step 0. Finishes cursor moves and scrolling; B closes (fading into rsReturnToMapMainLoop, or through rlFadeToCastleScreen when bit 5 of wChapterFlags is set), up and down move between skills, right and left show more of a skill's holders when it has over 12.
 
         lda bBufferINIDISP
         and #$000F
@@ -923,7 +923,7 @@
         bne _D851
         lda #$0000
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

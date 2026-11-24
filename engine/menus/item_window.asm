@@ -1279,7 +1279,7 @@
 
         lda #$0001
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wMainLoopPointer
         lda #$00E8
         jsl rlQueueSoundCommand

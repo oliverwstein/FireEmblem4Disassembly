@@ -3583,7 +3583,7 @@
         sta wGameStateStep,b
         lda #1
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wMainLoopPointer
         rtl
 

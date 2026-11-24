@@ -338,10 +338,10 @@
         .autsiz
         .databank ?
 
-        ; Map menu option ユニット (Unit): installs rsUnitWindowOpen as the main loop routine, with $7F82C5 set to return through rsUnknown80B122.
+        ; Map menu option ユニット (Unit): installs rsUnitWindowOpen as the main loop routine, with $7F82C5 set to return through rsReturnToMapMainLoop.
 
         stz wGameStateRoutine1,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wUnitWindowCaller
         lda #<>rsUnitWindowOpen
         sta wMainLoopPointer
@@ -434,7 +434,7 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 5 of wMapStateFlags and saves the cursor's tile; in the castle mode (bit 5 of wChapterFlags) fades to rsUnknown80B122.
+        ; Sets bit 5 of wMapStateFlags and saves the cursor's tile; in the castle mode (bit 5 of wChapterFlags) fades to rsReturnToMapMainLoop.
 
         lda #$0020
         tsb wMapStateFlags,b
@@ -465,7 +465,7 @@
         lda #$0000
         sta wMainGameMode,b
         stz wGameStateRoutine1,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

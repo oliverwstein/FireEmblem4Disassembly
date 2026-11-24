@@ -53,7 +53,7 @@
         jsl rlRunGameStateRoutines
         jsl rlRunVBlankHooks
         jsl rlRedrawDialogueBoxTilemaps
-        jsl rlUnknown858728
+        jsl rlRunMapMenuUploadIfEnabled
         lda bUnknown000E7B,b
         bit #$0010
         bne _AEE4
@@ -88,7 +88,7 @@
         sta $2100,b
         rep #$20
         jsl rlDisableVBlank
-        jsr rsUnknown80AF9B
+        jsr rsResetMapGraphicsAndSystems
         jsl rlProcEngineResetProcEngine
         jsl rlCheckCodeChecksumsCopy88._806A
         lda wCurrentChapter,b
@@ -115,17 +115,17 @@
         sta wSavedMapStep,b
         jsl rlStartPhaseMusic
         jsl rlStepMusicScript
-        jsl rlUnknown86C629
+        jsl rlApplyAllActiveMapChanges
 
         _AF4C
         jsl rlUploadAllStandingMapSprites
         jsl rlUpdateAllLocationEvents
         jsl rlSetUpChapterMapDisplay
         jsl rlLoadWindowGraphics
-        jsr rsUnknown80B065
-        jsr rsUnknown80B105
-        jsr rsUnknown80B052
-        jsr rsUnknown80B041
+        jsr rsLoadMapMenuAndFontGraphics
+        jsr rsInitMapWindowRegisters
+        jsr rsSetupMapRowUploadIRQ
+        jsr rsSetMapMainLoopAndVBlank
         lda #GAMESTATE_MAP_SETUP
         sta wGameStateRoutine1,b
         stz wGameStateStep,b

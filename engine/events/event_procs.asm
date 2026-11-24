@@ -1169,7 +1169,7 @@
       .al
       .xl
 
-      rlUnknown8294B1 ; 82/94B1
+      rlCreateProcEventBerserkCast ; 82/94B1
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -1177,9 +1177,11 @@
         .autsiz
         .databank ?
 
-        lda #(`procUnknown828B61)<<8
+        ; Unreferenced; creates blocking procEventBerserkCast
+
+        lda #(`procEventBerserkCast)<<8
         sta lR44+1
-        lda #<>procUnknown828B61
+        lda #<>procEventBerserkCast
         sta lR44
         jsl rlEventEngineCreateProc
         rtl

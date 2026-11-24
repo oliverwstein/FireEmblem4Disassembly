@@ -990,7 +990,7 @@
         .databank ?
 
         ; Step 0, once the fade in is done. Finishes cursor moves (each takes two frames
-        ; of 8 pixels); B closes (fading into rsUnknown80B122, or through rlFadeToCastleScreen
+        ; of 8 pixels); B closes (fading into rsReturnToMapMainLoop, or through rlFadeToCastleScreen
         ; when bit 5 of wChapterFlags is set); X shows the selected army's details (step
         ; 1); up and down move between armies.
 
@@ -1037,7 +1037,7 @@
         bne _CF9E
         lda #$0000
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

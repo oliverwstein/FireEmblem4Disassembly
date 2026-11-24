@@ -1002,7 +1002,7 @@
         bne _ECAF
         lda #$0000
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -1035,13 +1035,13 @@
         .autsiz
         .databank ?
 
-        ; Step $02: no code sets it. Goes straight back to the map (rsUnknown80B122).
+        ; Step $02: no code sets it. Goes straight back to the map (rsReturnToMapMainLoop).
 
         lda #OPTIONS_MENU_STEP_WAIT
         sta wGameStateStep,b
         lda #$0001
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wMainLoopPointer
         rts
 

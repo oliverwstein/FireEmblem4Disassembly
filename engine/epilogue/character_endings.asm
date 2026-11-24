@@ -39,7 +39,7 @@
         .autsiz
         .databank ?
 
-        ; While the character endings play, holding B goes back to the title (rsUnknown80B122, chapter 0, sound $21).
+        ; While the character endings play, holding B goes back to the title (rsReturnToMapMainLoop, chapter 0, sound $21).
 
         lda wJoy1Input
         bit #$8000
@@ -56,7 +56,7 @@
         jsl rlPlaySoundEffect
         lda #$0002
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

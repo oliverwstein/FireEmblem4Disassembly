@@ -7314,7 +7314,7 @@
         .autsiz
         .databank ?
 
-        ; Installs rsUnknown80B122, which restarts game state $12 at the step saved in $0D7B. B uses it, and A on a unit that is on the map after making it the active unit.
+        ; Installs rsReturnToMapMainLoop, which restarts game state $12 at the step saved in $0D7B. B uses it, and A on a unit that is on the map after making it the active unit.
 
         jsl rlRestoreDeploymentMapSprites
         lda #$0000
@@ -7322,7 +7322,7 @@
         sta wStatusScreenCaller
         lda #$0001
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wMainLoopPointer
         lda #$00E8
         jsl rlQueueSoundCommand

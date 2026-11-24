@@ -62,7 +62,7 @@
         jsl rlBattleSceneForceBlank
         lda #$0003
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wMainLoopPointer
         bra _E68B
 
@@ -75,7 +75,7 @@
         jsl rlBattleSceneForceBlank
         lda #$0002
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wMainLoopPointer
         bra _E68B
 
@@ -122,7 +122,7 @@
         jsl rlBattleSceneForceBlank
         lda #$0002
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wMainLoopPointer
 
         _E68B

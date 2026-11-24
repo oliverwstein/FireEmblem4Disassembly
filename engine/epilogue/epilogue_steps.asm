@@ -623,7 +623,7 @@
         .autsiz
         .databank ?
 
-        ; Nothing reaches this. Select goes to the credits (wEpiloguePart 1), B back to the title (rsUnknown80B122), X to the play record, Y fades out to the ranking screen.
+        ; Nothing reaches this. Select goes to the credits (wEpiloguePart 1), B back to the title (rsReturnToMapMainLoop), X to the play record, Y fades out to the ranking screen.
 
         lda wJoy1New
         bit #$2000
@@ -657,7 +657,7 @@
         jsl rlPlaySoundEffect
         lda #$0002
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -699,7 +699,7 @@
         .autsiz
         .databank ?
 
-        ; Nothing reaches this. B back to the title (rsUnknown80B122), Select restarts the credits text, X the character endings.
+        ; Nothing reaches this. B back to the title (rsReturnToMapMainLoop), Select restarts the credits text, X the character endings.
 
         lda wJoy1New
         bit #$8000
@@ -718,7 +718,7 @@
         jsl rlPlaySoundEffect
         lda #$0002
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

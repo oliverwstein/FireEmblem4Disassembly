@@ -149,7 +149,7 @@
         jsl rlDisableVBlank
         jsl rlHardwareResetScreenPosMathHDMA
         jsr rsResetPPUAndBuffersMode09
-        jsl rlUnknown80C32C
+        jsl rlSetMapBGModeAndLayerPositions
         jsl rlResetRAMStructAndAreaVariables
         jsl rlInitMapMenus
         lda #GAMESTATE_UNUSED_SCREEN_SETUP

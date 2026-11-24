@@ -1556,11 +1556,11 @@
         .autsiz
         .databank ?
 
-        ; Step $06: back to the map (rsUnknown80B122) and its music.
+        ; Step $06: back to the map (rsReturnToMapMainLoop) and its music.
 
         lda #$0001
         sta wMainGameMode,b
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta wMainLoopPointer
         lda #$00E8
         jsl rlQueueSoundCommand

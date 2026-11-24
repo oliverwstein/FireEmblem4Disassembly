@@ -60,7 +60,7 @@
         _B69C
         jsl rlHideSprites
         jsl rlRunDialogueCycle
-        jsl rlUnknown858728
+        jsl rlRunMapMenuUploadIfEnabled
         jsl rlUpdateSound
         rts
 
@@ -345,7 +345,7 @@
         lda wEventLocationEntry,b
         pha
         jsl rlUpdateAllLocationEvents
-        jsl rlUnknown86C629
+        jsl rlApplyAllActiveMapChanges
         pla
         sta wEventLocationEntry,b
         lda #CASTLE_SCREEN_COURTYARD
@@ -403,7 +403,7 @@
 
         rep #$20
         jsl rlClearVRAM6000
-        jsl rlUnknown80B08C
+        jsl rlLoadMapMenuDecompression80B09B
         jsl rlDMAByStruct
 
           .structDMAToVRAM g4bppShopScreen, $4000, $80, $0000
@@ -1520,7 +1520,7 @@
         sta lR44
         jsl rlProcEngineFindProc
         bcs _81C3
-        lda #<>rsUnknown80B122
+        lda #<>rsReturnToMapMainLoop
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

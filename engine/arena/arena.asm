@@ -1557,7 +1557,7 @@
         lda wEventLocationEntry,b
         pha
         jsl rlUpdateAllLocationEvents
-        jsl rlUnknown86C629
+        jsl rlApplyAllActiveMapChanges
         pla
         sta wEventLocationEntry,b
         lda #$0000
