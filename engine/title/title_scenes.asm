@@ -3883,7 +3883,7 @@
         jsl rlUnsignedMultiply16By16
         plx
         lda wR12
-        jsl rlUnknown9F8B7A._8B84
+        jsl rlMultiplyByNegSin._8B84
         lsr a
         lsr a
         lsr a
@@ -3901,7 +3901,7 @@
         pla
         sta wR0
         lda $7FD62D
-        jsl rlUnknown9F8B7A
+        jsl rlMultiplyByNegSin
         lsr a
         lsr a
         lsr a
@@ -4485,7 +4485,7 @@
         sta wR0
         lda $7FD059
         phy
-        jsl rlUnknown9F8B7A
+        jsl rlMultiplyByNegSin
         ply
         sta [lR18],y
         eor #$FFFF

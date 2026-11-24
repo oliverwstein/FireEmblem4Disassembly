@@ -1037,7 +1037,7 @@
         lda $0004,b,y
         tay
         pla
-        jsl rlUnknown9F8EC0
+        jsl rlDarkenBGPaletteRange
         ply
         inc y
         inc y

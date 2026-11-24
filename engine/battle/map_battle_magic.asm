@@ -171,6 +171,7 @@
 
       procUnknown87C70A ; 87/C70A
 
+        ; BG2 HDMA ripple visual effect created by rlUnknown9FF947 in map_magic_effects.asm.
         .structProcInfo "RP", rlUnknown87C712, rlUnknown87C7B4, aProcUnknown87C70ACode
 
     .endsection Unsorted87C70ASection
@@ -1128,13 +1129,14 @@
 
         .databank 0
 
-      rsUnknown9F827A ; 9F/827A
+      rsShakeMapMagicBackground ; 9F/827A
 
         .al
         .xl
         .autsiz
         .databank ?
         ; Shared by the Bolganone and Meteor effects.
+        ; Applies a 4-frame screen-shake offset from aMapMagicShakeOffsets to BG2/BG3 scroll.
 
         phx
         lda aProcSystem.aBody7,b,x
@@ -1144,11 +1146,11 @@
         tax
         sep #$20
         lda $7F57FD
-        adc <>aUnknown9F829F,b,x
+        adc <>aMapMagicShakeOffsets,b,x
         sta $7F
         lda $7F57FE
         clc
-        adc <>(aUnknown9F829F+1),b,x
+        adc <>(aMapMagicShakeOffsets+1),b,x
         sta $81
         rep #$20
         plx
@@ -1156,7 +1158,7 @@
 
         .databank 0
 
-      aUnknown9F829F ; 9F/829F
+      aMapMagicShakeOffsets ; 9F/829F
 
         ; Shared by the Bolganone and Meteor effects.
         .byte $02, $02, $00, $02, $00, $FE, $FE, $FE
@@ -1434,7 +1436,7 @@
       .al
       .xl
 
-      rsUnknown9F8398 ; 9F/8398
+      rsCreateMapMagicActiveSpriteInline ; 9F/8398
 
         .al
         .xl
@@ -2205,7 +2207,7 @@
       .al
       .xl
 
-      rlUnknown9F8943 ; 9F/8943
+      rlQueueMapMagicDMAList ; 9F/8943
 
         ; Found by tools/sweep.py.
         .al
@@ -2213,6 +2215,7 @@
         .autsiz
         .databank ?
         ; Part of the Fenrir effect.
+        ; Queues a list of $FFFF-terminated 8-byte DMA entries starting at X.
 
         php
 
@@ -2346,13 +2349,14 @@
 
         .databank 0
 
-      rlUnknown9F89F8 ; 9F/89F8
+      rlGetVectorLength ; 9F/89F8
 
         .al
         .xl
         .autsiz
         .databank ?
         ; Shared by 7 effects.
+        ; Returns the approximate Euclidean length of (wR0, wR1) in A (|x|*cos + |y|*sin).
 
         phx
         lda wR0
@@ -2366,7 +2370,7 @@
 
         _8A0B
         xba
-        jsl rlUnknown9F8B7A._8B84
+        jsl rlMultiplyByNegSin._8B84
         bpl _8A16
         eor #$FFFF
         inc a
@@ -2380,7 +2384,7 @@
 
         _8A20
         xba
-        jsl rlUnknown9F8B7A
+        jsl rlMultiplyByNegSin
         bpl _8A2B
         eor #$FFFF
         inc a
@@ -2451,10 +2455,10 @@
         rtl
 
         _8A6E
-        .word <>rsUnknown9F8A97
-        .word <>rsUnknown9F8AA8
-        .word <>rsUnknown9F8AB5
-        .word <>rsUnknown9F8AC6
+        .word <>rsVectorAngleOctant0
+        .word <>rsVectorAngleOctant1
+        .word <>rsVectorAngleOctant2
+        .word <>rsVectorAngleOctant3
 
         _8A76
         sep #$20
@@ -2472,10 +2476,10 @@
         rtl
 
         _8A8F
-        .word <>rsUnknown9F8ADA
-        .word <>rsUnknown9F8AEB
-        .word <>rsUnknown9F8AFF
-        .word <>rsUnknown9F8B13
+        .word <>rsVectorAngleOctant4
+        .word <>rsVectorAngleOctant5
+        .word <>rsVectorAngleOctant6
+        .word <>rsVectorAngleOctant7
 
         .databank 0
 
@@ -2489,7 +2493,7 @@
       .al
       .xl
 
-      rsUnknown9F8A97 ; 9F/8A97
+      rsVectorAngleOctant0 ; 9F/8A97
 
         .al
         .xl
@@ -2504,13 +2508,13 @@
         eor #$FFFF
         inc a
         and #$00FF
-        jml rsUnknown9F8B24
+        jml rsApplyVectorAngleCorrection
 
         .databank 0
 
         ; 9F/8AA8
 
-      rsUnknown9F8AA8 ; 9F/8AA8
+      rsVectorAngleOctant1 ; 9F/8AA8
 
         .al
         .xl
@@ -2523,13 +2527,13 @@
         lsr a
         lsr a
         and #$00FF
-        jml rsUnknown9F8B24
+        jml rsApplyVectorAngleCorrection
 
         .databank 0
 
         ; 9F/8AB5
 
-      rsUnknown9F8AB5 ; 9F/8AB5
+      rsVectorAngleOctant2 ; 9F/8AB5
 
         .al
         .xl
@@ -2544,13 +2548,13 @@
         clc
         adc #$0080
         and #$00FF
-        jml rsUnknown9F8B24
+        jml rsApplyVectorAngleCorrection
 
         .databank 0
 
         ; 9F/8AC6
 
-      rsUnknown9F8AC6 ; 9F/8AC6
+      rsVectorAngleOctant3 ; 9F/8AC6
 
         .al
         .xl
@@ -2566,13 +2570,13 @@
         sec
         adc #$0080
         and #$00FF
-        jml rsUnknown9F8B24
+        jml rsApplyVectorAngleCorrection
 
         .databank 0
 
         ; 9F/8ADA
 
-      rsUnknown9F8ADA ; 9F/8ADA
+      rsVectorAngleOctant4 ; 9F/8ADA
 
         .al
         .xl
@@ -2587,13 +2591,13 @@
         clc
         adc #$00C0
         and #$00FF
-        jml rsUnknown9F8B24
+        jml rsApplyVectorAngleCorrection
 
         .databank 0
 
         ; 9F/8AEB
 
-      rsUnknown9F8AEB ; 9F/8AEB
+      rsVectorAngleOctant5 ; 9F/8AEB
 
         .al
         .xl
@@ -2609,13 +2613,13 @@
         sec
         adc #$0040
         and #$00FF
-        jml rsUnknown9F8B24
+        jml rsApplyVectorAngleCorrection
 
         .databank 0
 
         ; 9F/8AFF
 
-      rsUnknown9F8AFF ; 9F/8AFF
+      rsVectorAngleOctant6 ; 9F/8AFF
 
         .al
         .xl
@@ -2631,13 +2635,13 @@
         sec
         adc #$00C0
         and #$00FF
-        jml rsUnknown9F8B24
+        jml rsApplyVectorAngleCorrection
 
         .databank 0
 
         ; 9F/8B13
 
-      rsUnknown9F8B13 ; 9F/8B13
+      rsVectorAngleOctant7 ; 9F/8B13
 
         .al
         .xl
@@ -2652,13 +2656,13 @@
         clc
         adc #$0040
         and #$00FF
-        jml rsUnknown9F8B24
+        jml rsApplyVectorAngleCorrection
 
         .databank 0
 
         ; 9F/8B24
 
-      rsUnknown9F8B24 ; 9F/8B24
+      rsApplyVectorAngleCorrection ; 9F/8B24
 
         .al
         .xl
@@ -2669,7 +2673,7 @@
         pha
         and #$003F
         tax
-        lda <>aUnknown9F8B3A,b,x
+        lda <>aVectorAngleCorrectionTable,b,x
         and #$00FF
         eor #$FFFF
         inc a
@@ -2684,7 +2688,7 @@
         ; 9F/8B3A
 
 
-      aUnknown9F8B3A ; 9F/8B3A
+      aVectorAngleCorrectionTable ; 9F/8B3A
 
         ; Shared by 9 effects.
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF, $FF, $FF
@@ -2700,13 +2704,14 @@
       .al
       .xl
 
-      rlUnknown9F8B7A ; 9F/8B7A
+      rlMultiplyByNegSin ; 9F/8B7A
 
         .al
         .xl
         .autsiz
         .databank ?
         ; Shared by 9 effects.
+        ; Returns A * -sin(wR0) (or A * cos(wR0) at ._8B84) using aMapMagicSineTable.
 
         sta wR10
         lda wR0
@@ -2724,7 +2729,7 @@
         asl a
         and #$01FE
         tax
-        lda aUnknown9F8C3A,x
+        lda aMapMagicSineTable,x
         sta wR14
         bpl _8B9D
         eor #$FFFF
@@ -2732,7 +2737,7 @@
 
         _8B9D
         sta wR11
-        jsr rsUnknown9F8BAD
+        jsr rsMultiply16By16MapMagic
         lda wR12+1
         bit wR14
         bpl _8BAC
@@ -2746,7 +2751,7 @@
 
         ; 9F/8BAD
 
-      rsUnknown9F8BAD ; 9F/8BAD
+      rsMultiply16By16MapMagic ; 9F/8BAD
 
         .al
         .xl
@@ -2805,13 +2810,14 @@
 
         ; 9F/8C05
 
-      rlUnknown9F8C05 ; 9F/8C05
+      rlMultiplyByNegSinMode7 ; 9F/8C05
 
         .al
         .xl
         .autsiz
         .databank ?
         ; Part of the Fenrir effect.
+        ; Returns A * -sin(wR0) (or A * cos(wR0) at the second entry) via the Mode 7 multiplier.
 
         sta wR1
         lda wR0
@@ -2819,7 +2825,10 @@
         adc #$0080
         bra _8C17
 
-        .byte $85, $02, $A5, $00, $18, $69, $40, $00
+        sta wR1
+        lda wR0
+        clc
+        adc #$0040
 
 
         _8C17
@@ -2827,7 +2836,7 @@
         asl a
         and #$01FE
         tax
-        lda aUnknown9F8C3A,x
+        lda aMapMagicSineTable,x
         sep #$20
         sta @l M7A
         xba
@@ -2851,10 +2860,10 @@
       .al
       .xl
 
-      aUnknown9F8C3A ; 9F/8C3A
+      aMapMagicSineTable ; 9F/8C3A
 
         ; Shared by 9 effects.
-        ; Read by rlUnknown9F8B7A and rlUnknown9F8C05 (256-entry signed trig table).
+        ; Read by rlMultiplyByNegSin and rlMultiplyByNegSinMode7 (256-entry signed trig table).
 
         .sint $0000, $0006, $000C, $0012, $0019, $001F, $0025, $002B
         .sint $0031, $0038, $003E, $0044, $004A, $0050, $0056, $005C
@@ -2952,13 +2961,15 @@
       .al
       .xl
 
-      rlUnknown9F8EC0 ; 9F/8EC0
+      rlDarkenBGPaletteRange ; 9F/8EC0
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Darkens A colours in aBGPaletteBuffer starting at X toward aPaletteFading.wDesiredColor.
 
         sta wR2
 
@@ -2970,7 +2981,7 @@
         lda aBGPaletteBuffer,b,x
         tax
         lda aPaletteFading.wCurrentStep,b
-        jsl rlUnknown9F9090
+        jsl rlDarkenSNESColor
         plx
         sta aBGPaletteBuffer,b,x
 
@@ -2993,13 +3004,15 @@
       .as
       .xl
 
-      rlUnknown9F9090 ; 9F/9090
+      rlDarkenSNESColor ; 9F/9090
 
         ; TRACE: stack-args
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Subtracts A from each RGB channel of SNES colour X, clamping each channel at 0.
 
         pha
         pha
@@ -3011,7 +3024,7 @@
         lda #3,s
         and #$001F
         tax
-        jsr rsUnknown9F90E6
+        jsr rsDarkenColorChannel
         sta #7,s
         lda #1,s
         asl a
@@ -3027,7 +3040,7 @@
         xba
         and #$001F
         tax
-        jsr rsUnknown9F90E6
+        jsr rsDarkenColorChannel
         asl a
         asl a
         asl a
@@ -3047,7 +3060,7 @@
         xba
         and #$001F
         tax
-        jsr rsUnknown9F90E6
+        jsr rsDarkenColorChannel
         asl a
         asl a
         xba
@@ -3063,7 +3076,7 @@
 
         ; 9F/90E6
 
-      rsUnknown9F90E6 ; 9F/90E6
+      rsDarkenColorChannel ; 9F/90E6
 
         .al
         .xl
@@ -3093,26 +3106,30 @@
       .al
       .xl
 
-      rlUnknown9F90F2 ; 9F/90F2
+      rlDarkenMapMagicColors ; 9F/90F2
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116
+        ; Long wrapper for rsDarkenMapMagicColors.
+
+        jsr rsDarkenMapMagicColors
         rtl
 
         .databank 0
 
         ; 9F/90F6
 
-      rlUnknown9F90F6 ; 9F/90F6
+      rlFadeBackMapMagicColors ; 9F/90F6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Long wrapper for rsFadeBackMapMagicColors.
 
         jsr rsFadeBackMapMagicColors
         rtl
@@ -3121,12 +3138,14 @@
 
         ; 9F/90FA
 
-      rlUnknown9F90FA ; 9F/90FA
+      rlSaveMapMagicColors ; 9F/90FA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Long wrapper for rsSaveMapMagicColors.
 
         jsr rsSaveMapMagicColors
         rtl
@@ -3143,7 +3162,7 @@
       .al
       .xl
 
-      rsUnknown9F90FE ; 9F/90FE
+      rsRestoreMapMagicColors ; 9F/90FE
 
         .al
         .xl
@@ -3189,21 +3208,22 @@
 
         ; 9F/9116
 
-      rsUnknown9F9116 ; 9F/9116
+      rsDarkenMapMagicColors ; 9F/9116
 
         .al
         .xl
         .autsiz
         .databank ?
         ; Shared by 12 effects.
+        ; Fades aMapMagicBackgroundPaletteRanges to black over 16 steps.
 
         lda #$0000
         ldy #$0010
-        bra rsUnknown9F912A
+        bra rsFadeMapMagicColorsToColor
 
         .databank 0
 
-      rsUnknown9F911E ; 9F/911E
+      rsFadeMapMagicColorsAllChannels ; 9F/911E
 
         .al
         .xl
@@ -3214,11 +3234,11 @@
         tya
         sta aPaletteFading,b
         clc
-        jml rsUnknown9F91FB
+        jml rsFadeMapMagicColorRangesRGB
 
         .databank 0
 
-      rsUnknown9F912A ; 9F/912A
+      rsFadeMapMagicColorsToColor ; 9F/912A
 
         .al
         .xl
@@ -3230,11 +3250,11 @@
         tya
         sta aPaletteFading,b
         sec
-        jml rsUnknown9F91B1
+        jml rsFadeMapMagicBackgroundPalettes
 
         .databank 0
 
-      rsUnknown9F9136 ; 9F/9136
+      rsTintMapMagicColorsRed ; 9F/9136
 
         .al
         .xl
@@ -3248,11 +3268,11 @@
         tya
         sta aPaletteFading,b
         clc
-        jml rsUnknown9F91CE
+        jml rsFadeMapMagicColorRangesGB
 
         .databank 0
 
-      rsUnknown9F9148 ; 9F/9148
+      rsTintMapMagicColorsBlue ; 9F/9148
 
         .al
         .xl
@@ -3265,11 +3285,11 @@
         tya
         sta aPaletteFading,b
         clc
-        jml rsUnknown9F91DD
+        jml rsFadeMapMagicColorRangesRG
 
         .databank 0
 
-      rsUnknown9F915A ; 9F/915A
+      rsTintMapMagicColorsGreen ; 9F/915A
 
         .al
         .xl
@@ -3283,7 +3303,7 @@
         tya
         sta aPaletteFading,b
         clc
-        jml rsUnknown9F91EC
+        jml rsFadeMapMagicColorRangesRB
 
         .databank 0
 
@@ -3294,18 +3314,18 @@
         .autsiz
         .databank ?
 
-        ; Fades the colour ranges in aUnknown9F91B8 to white over 16 steps; carry set when done.
+        ; Fades the colour ranges in aMapMagicBackgroundPaletteRanges to white over 16 steps; carry set when done.
 
         lda #$7FFF
         sta aPaletteFading.wDesiredColor,b
         lda #$0010
         sta aPaletteFading,b
         clc
-        jml rsUnknown9F91B1
+        jml rsFadeMapMagicBackgroundPalettes
 
         .databank 0
 
-      rsUnknown9F917D ; 9F/917D
+      rsFadeMapMagicPalette14ToWhite ; 9F/917D
 
         .al
         .xl
@@ -3317,11 +3337,11 @@
         lda #$0010
         sta aPaletteFading,b
         clc
-        jml rsUnknown9F920A
+        jml rsFadeMapMagicPalette14
 
         .databank 0
 
-      rsUnknown9F918E ; 9F/918E
+      rsFadeMapMagicPalette14ToBlack ; 9F/918E
 
         .al
         .xl
@@ -3333,7 +3353,7 @@
         lda #$0010
         sta aPaletteFading,b
         clc
-        jml rsUnknown9F920A
+        jml rsFadeMapMagicPalette14
 
         .databank 0
 
@@ -3357,7 +3377,7 @@
 
         .databank 0
 
-      rsUnknown9F91B1 ; 9F/91B1
+      rsFadeMapMagicBackgroundPalettes ; 9F/91B1
 
         .al
         .xl
@@ -3367,18 +3387,18 @@
 
         jsl rlFadePaletteToBlack
 
-          .word <>aUnknown9F91B8
+          .word <>aMapMagicBackgroundPaletteRanges
 
         rts
 
         .databank 0
 
-      aUnknown9F91B8 ; 9F/91B8
+      aMapMagicBackgroundPaletteRanges ; 9F/91B8
 
         ; Shared by 13 effects.
         .word $0022, $000F, $0042, $000F, $0062, $000F, $0082, $000F, $00A2, $000F, $FFFF
 
-      rsUnknown9F91CE ; 9F/91CE
+      rsFadeMapMagicColorRangesGB ; 9F/91CE
 
         .al
         .xl
@@ -3387,17 +3407,17 @@
         ; Shared by the Bolganone and Valflame effects.
 
         jsl rlFadeBGPaletteColorRanges
-        .word <>aUnknown9F91D5
+        .word <>aMapMagicColorRangeGB
         rts
 
         .databank 0
 
-      aUnknown9F91D5 ; 9F/91D5
+      aMapMagicColorRangeGB ; 9F/91D5
 
         ; Shared by the Bolganone and Valflame effects.
         .word $0022, $004F, $0420, $FFFF
 
-      rsUnknown9F91DD ; 9F/91DD
+      rsFadeMapMagicColorRangesRG ; 9F/91DD
 
         .al
         .xl
@@ -3406,17 +3426,17 @@
         ; Part of the Tornado effect.
 
         jsl rlFadeBGPaletteColorRanges
-        .word <>aUnknown9F91E4
+        .word <>aMapMagicColorRangeRG
         rts
 
         .databank 0
 
-      aUnknown9F91E4 ; 9F/91E4
+      aMapMagicColorRangeRG ; 9F/91E4
 
         ; Part of the Tornado effect.
         .word $0022, $004F, $0021, $FFFF
 
-      rsUnknown9F91EC ; 9F/91EC
+      rsFadeMapMagicColorRangesRB ; 9F/91EC
 
         .al
         .xl
@@ -3425,17 +3445,17 @@
         ; Part of the Aura effect.
 
         jsl rlFadeBGPaletteColorRanges
-        .word <>aUnknown9F91F3
+        .word <>aMapMagicColorRangeRB
         rts
 
         .databank 0
 
-      aUnknown9F91F3 ; 9F/91F3
+      aMapMagicColorRangeRB ; 9F/91F3
 
         ; Part of the Aura effect.
         .word $0022, $004F, $0401, $FFFF
 
-      rsUnknown9F91FB ; 9F/91FB
+      rsFadeMapMagicColorRangesRGB ; 9F/91FB
 
         .al
         .xl
@@ -3443,16 +3463,16 @@
         .databank ?
 
         jsl rlFadeBGPaletteColorRanges
-        .word <>aUnknown9F9202
+        .word <>aMapMagicColorRangeRGB
         rts
 
         .databank 0
 
-      aUnknown9F9202 ; 9F/9202
+      aMapMagicColorRangeRGB ; 9F/9202
 
         .word $0022, $004F, $0421, $FFFF
 
-      rsUnknown9F920A ; 9F/920A
+      rsFadeMapMagicPalette14 ; 9F/920A
 
         .al
         .xl
@@ -3460,12 +3480,12 @@
         .databank ?
 
         jsl rlFadePaletteToBlack
-        .word <>aUnknown9F9211
+        .word <>aMapMagicPalette14Range
         rts
 
         .databank 0
 
-      aUnknown9F9211 ; 9F/9211
+      aMapMagicPalette14Range ; 9F/9211
 
         .word $01C2, $000F, $FFFF
 

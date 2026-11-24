@@ -485,13 +485,13 @@
         lda aActiveSpriteSystem.aUnknown0012E0,b,x
         sta wR0
         lda aActiveSpriteSystem.aUnknown001300,b,x
-        jsl rlUnknown9F8B7A._8B84
+        jsl rlMultiplyByNegSin._8B84
         ldx aActiveSpriteSystem.wOffset,b
         sta aActiveSpriteSystem.aUnknown0013C0,b,x
         lda aActiveSpriteSystem.aUnknown0012E0,b,x
         sta wR0
         lda aActiveSpriteSystem.aUnknown001300,b,x
-        jsl rlUnknown9F8B7A
+        jsl rlMultiplyByNegSin
         ldx aActiveSpriteSystem.wOffset,b
         sta aActiveSpriteSystem.aUnknown0013E0,b,x
         rts
@@ -1208,7 +1208,7 @@
         .databank ?
         ; Part of the Aura effect.
 
-        jsr rsUnknown9F915A
+        jsr rsTintMapMagicColorsGreen
         bcc _97E1
         lda #<>rlUnknown9F97E2
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -2211,7 +2211,7 @@
         .autsiz
         .databank ?
         ; Part of the Fenrir effect.
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc _9D49
         lda #<>rlUnknown9F9D4A
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -2448,7 +2448,7 @@
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
-        jsl rlUnknown9F89F8
+        jsl rlGetVectorLength
         lsr a
         lsr a
         bne _9F68
@@ -2839,7 +2839,7 @@
 
         _A1A5
         lda wR3
-        jsl rlUnknown9F8C05
+        jsl rlMultiplyByNegSinMode7
         clc
         adc wR4
         sep #$20
@@ -2908,7 +2908,7 @@
         tax
         lda <>aUnknown9FA23F,b,x
         tax
-        jsl rlUnknown9F8943
+        jsl rlQueueMapMagicDMAList
         plx
 
         _A23B
@@ -2984,7 +2984,7 @@
         .autsiz
         .databank ?
         ; Part of the Bolganone effect.
-        jsr rsUnknown9F9136
+        jsr rsTintMapMagicColorsRed
         bcc _A310
         lda #<>rlUnknown9FA311
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -3043,7 +3043,7 @@
         .databank ?
         ; Part of the Bolganone effect.
 
-        jsr rsUnknown9F827A
+        jsr rsShakeMapMagicBackground
         jsl rlUnknown9FA380
         dec aProcSystem.aBody0,b,x
         bne _A35D
@@ -3064,7 +3064,7 @@
         .databank ?
         ; Part of the Bolganone effect.
 
-        jsr rsUnknown9F827A
+        jsr rsShakeMapMagicBackground
         jsl rlUnknown9FA380
         dec aProcSystem.aBody0,b,x
         bne _A377
@@ -3085,7 +3085,7 @@
         .databank ?
         ; Part of the Bolganone effect.
 
-        jsr rsUnknown9F827A
+        jsr rsShakeMapMagicBackground
         jsl rlUnknown9FA380
         rtl
 
@@ -3378,7 +3378,7 @@
         .autsiz
         .databank ?
         ; Part of the Hel effect.
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc _A602
         lda #<>rlUnknown9FA603
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -3594,7 +3594,7 @@
         .autsiz
         .databank ?
         ; Shared by the Elthunder and Thunder effects.
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc rlUnknown9FA6CA
         lda $0EF6,b,x
         sta lR44+1
@@ -4634,7 +4634,7 @@
         .autsiz
         .databank ?
         ; Part of the Light effect.
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc _ACC8
         jsr rsCreateMapMagicProc
 
@@ -5103,7 +5103,7 @@
         .autsiz
         .databank ?
         ; Part of the Thoron effect.
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc _AF56
         lda #<>rlUnknown9FAF57
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -5241,7 +5241,7 @@
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
-        jsl rlUnknown9F89F8
+        jsl rlGetVectorLength
         lsr a
         lsr a
         bne _B041
@@ -5682,7 +5682,7 @@
         ; Part of the Meteor effect.
         lda $7F50CB
         bne _B2B7
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc _B2C3
 
         _B2B7
@@ -5791,7 +5791,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        jsr rsUnknown9F827A
+        jsr rsShakeMapMagicBackground
         rtl
 
 
@@ -6152,7 +6152,7 @@
         .autsiz
         .databank ?
         ; Part of the Blizzard effect.
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc rlUnknown9FB535._B53B
         lda #<>rlUnknown9FB559
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -7351,7 +7351,7 @@
         .autsiz
         .databank ?
         ; Part of the Mjolnir effect.
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc rlUnknown9FBCDD._BCFC
         jsr rsCreateMapMagicProc
 
@@ -7806,7 +7806,7 @@
         .databank ?
         ; Part of the Forseti effect.
 
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc _C04F
         jsr rsSetMapMagicLayerBlending
         jsr rsCreateMapMagicProc
@@ -8179,14 +8179,14 @@
         sec
         sbc wR1
         sta wR1
-        jsl rlUnknown9F89F8
+        jsl rlGetVectorLength
         sta aProcSystem.aBody1,b,x
         lda #$0100
-        jsl rlUnknown9F8B7A._8B84
+        jsl rlMultiplyByNegSin._8B84
         ldx aProcSystem.wOffset,b
         sta aProcSystem.aBody5,b,x
         lda #$0100
-        jsl rlUnknown9F8B7A
+        jsl rlMultiplyByNegSin
         ldx aProcSystem.wOffset,b
         sta aProcSystem.aBody6,b,x
         rtl
@@ -8756,7 +8756,7 @@
         .databank ?
         ; Part of the Silence effect.
 
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc _C64B
         lda #<>rlUnknown9FC64C
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -9115,7 +9115,7 @@
         tya
         sta aPaletteFading,b
         sec
-        jsr rsUnknown9F91DD
+        jsr rsFadeMapMagicColorRangesRG
         bcc _C88E
         lda #<>rlUnknown9FC88F
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -9251,7 +9251,7 @@
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
-        jsl rlUnknown9F89F8
+        jsl rlGetVectorLength
         bne _C91C
         lda #$0008
 
@@ -9571,7 +9571,7 @@
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
-        jsl rlUnknown9F89F8
+        jsl rlGetVectorLength
         lsr a
         lsr a
         bne _CB2A
@@ -10553,7 +10553,7 @@
         .databank ?
         ; Part of the Jormungandr effect.
 
-        jsr rsUnknown9F9116
+        jsr rsDarkenMapMagicColors
         bcc rlUnknown9FD101
         lda #<>rlUnknown9FD101
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -10941,7 +10941,7 @@
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
-        jsl rlUnknown9F89F8
+        jsl rlGetVectorLength
         lsr a
         lsr a
         bne _D329
@@ -11200,7 +11200,7 @@
         .databank ?
         ; Part of the Valflame effect.
 
-        jsr rsUnknown9F9136
+        jsr rsTintMapMagicColorsRed
         bcc _D474
         lda #<>rlUnknown9FD475
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -11526,7 +11526,7 @@
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
-        jsl rlUnknown9F89F8
+        jsl rlGetVectorLength
         lsr a
         lsr a
         bne _D664
@@ -12171,7 +12171,7 @@
         and #$00FF
         sta wR0
         lda #$0100
-        jsl rlUnknown9F8B7A._8B84
+        jsl rlMultiplyByNegSin._8B84
         sta wR8
         bpl _DA23
         eor #$FFFF
@@ -12184,7 +12184,7 @@
         and #$00FF
         sta wR0
         lda #$0100
-        jsl rlUnknown9F8B7A
+        jsl rlMultiplyByNegSin
         sep #$20
         sta $4206,b
         nop
@@ -12208,7 +12208,7 @@
         and #$00FF
         sta wR0
         lda #$0100
-        jsl rlUnknown9F8B7A._8B84
+        jsl rlMultiplyByNegSin._8B84
         sta wR8
         bpl _DA65
         eor #$FFFF
@@ -12221,7 +12221,7 @@
         and #$00FF
         sta wR0
         lda #$0100
-        jsl rlUnknown9F8B7A
+        jsl rlMultiplyByNegSin
         sep #$20
         sta $4206,b
         nop
@@ -12746,7 +12746,7 @@
         lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR1
-        jsl rlUnknown9F89F8
+        jsl rlGetVectorLength
         sta $7ECC0A
         lda $7F57FF
         sta $7F50D1
@@ -13191,7 +13191,7 @@
 
         _E076
         lda wR6
-        jsl rlUnknown9F8C05
+        jsl rlMultiplyByNegSinMode7
         clc
         adc wR2
         clc
@@ -16567,7 +16567,7 @@
         .databank ?
         plb
         .databank ?
-        jsl rlUnknown9F90F2
+        jsl rlDarkenMapMagicColors
         bcc _F8B2
         lda #1,s
         tax
@@ -16801,7 +16801,7 @@
       aUnknown9FF98E ; 9F/F98E
 
         ; Unreferenced: a colour range list ending in $FFFF, like the ones
-        ; the palette fades read (aUnknown9F91B8).
+        ; the palette fades read (aMapMagicBackgroundPaletteRanges).
         .word $0002, $000F, $0022, $000F, $0042, $000F, $0062, $000F
         .word $0082, $000F, $00A2, $000F, $FFFF
 

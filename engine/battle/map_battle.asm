@@ -11225,7 +11225,7 @@
         .databank ?
         plb
         .databank ?
-        jsl rlUnknown9F90FA
+        jsl rlSaveMapMagicColors
         plb
         .databank ?
         rtl
@@ -11247,7 +11247,7 @@
         .databank ?
         plb
         .databank ?
-        jsl rlUnknown9F90F2
+        jsl rlDarkenMapMagicColors
         bcc _E252
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -11303,7 +11303,7 @@
         .databank ?
         plb
         .databank ?
-        jsl rlUnknown9F90F6
+        jsl rlFadeBackMapMagicColors
         bcc _E28E
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
