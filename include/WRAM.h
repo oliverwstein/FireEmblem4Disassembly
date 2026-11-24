@@ -1208,7 +1208,7 @@
       ; $0020 = AI/busy action lock blocking normal map menus
       ; $8000 = pending post-action handler dispatch
     wInventoryFullDeploymentOffset .word ?           ; $000D89 ; inventory-full & turn setup scratch
-    wActionEndedDeploymentOffset .word ?           ; $000D8B ; faction/castle deployment helper
+    wActionEndedDeploymentOffset .word ?           ; $000D8B ; the unit whose action just ended (rlFinishUnitAction), announced as event action 3 by rsRunActionEndedEvents; $FFFF none
     wVillageGoldPopUpAmount .word ?           ; $000D8D ; phase state word
 
   .endvirtual

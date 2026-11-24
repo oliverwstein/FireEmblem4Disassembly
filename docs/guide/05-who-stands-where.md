@@ -92,6 +92,35 @@ The map actions ([engine/map/map_actions.asm](../../engine/map/map_actions.asm))
 
 Ownership feeds back into the factions: an army's home castle is a location ID, castle income counts the castles held by the player and its allies (Chapter 4), and the save file stores all 16 location bytes.
 
+## Arriving on a tile
+
+Some events fire when a unit reaches a place. In Chapter 1, if Lex ends a move on one tile of a peninsula, (28, 37), a fairy trades his Iron Axe for a Brave Axe. The chapter's event list ([events/Chapter01.asm](../../events/Chapter01.asm)) states the condition as a rectangle one tile wide:
+
+```
+CHECK_UNIT_IN_AREA FlagChapter01_LexOnPeninsula, Lex, pack([28, 37]), pack([28, 37])
+  EVENT FlagChapter01_LexBraveAxe, EventChapter01LexBraveAxe
+```
+
+Nothing searches the map for Lex. Every way a unit's action can end (waiting, attacking, visiting, seizing) goes through `rlFinishUnitAction`, which grays the unit and leaves its deployment offset in `wActionEndedDeploymentOffset`. On a later frame, once any battle, popup, or Canto move has finished, the turn loop ([Chapter 6](OUTLINE.md)) reads that note and announces the unit's arrival to the event system:
+
+```rust
+fn run_action_ended_events() {                       // rsRunActionEndedEvents
+    let row = wActionEndedDeploymentOffset;
+    if row == NONE { return; }
+    bEventActionIdentifier = 3;                      // "a unit ended its action on a tile"
+    wEventEngineArgument1 = character_id(row);
+    wEventEngineArgument2 = aDeploymentTable.x_tile[row];
+    wEventEngineArgument3 = aDeploymentTable.y_tile[row];
+    wEventEngineArgument4 = aDeploymentTable.faction_slot[row];
+    run_chapter_map_event_conditions();              // rlGetAndRunChapterMapEventConditions
+    wActionEndedDeploymentOffset = NONE;
+}
+```
+
+Each condition in the chapter's list first compares its own action number with the announced one, so only conditions about units ending their action look further. It then skips itself if its flag is already set, and `CHECK_UNIT_IN_AREA` compares the four arguments with its parameters: the character (or any), the army (or any), and whether the tile lies inside the rectangle. On a match it sets its flag and runs the event ([Chapter 11](OUTLINE.md)).
+
+The test happens once, at the end of the action, on the unit's final tile, so walking across (28, 37) without stopping there does nothing. The flag keeps the event from running twice. Lex's event uses that: if he has no Iron Axe to trade, the script clears both of its flags (`UNSET_FLAG_IF_IN_CHAPTER`), and the condition can match again the next time he stops on the tile.
+
 ## Trade-offs and hard limits
 
 Splitting *where* from *who* keeps the per-frame work small: drawing and cursor lookups read only the deployment table, with the column layout letting one index reach every field. The cost is a third copy of some facts (a unit's army is in its personal data, its faction slot's list, and its deployment row) and lookups by tile that scan all 72 rows unless a grid is built first.
