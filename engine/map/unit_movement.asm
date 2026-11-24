@@ -21,7 +21,9 @@
         .autsiz
         .databank ?
 
-        ; Cursor state 1: one tile at a time towards the unit's start; there, sets state 2 to walk the unit along its path.
+        ; Cursor states 1 and 8: one tile at a time towards the unit; there, sets state 2 to walk the unit along its path
+        ; and sets wMapCursorXTile/YTile to the move's origin, which rlUndoUnitMove returns to. After the guard command the
+        ; path is empty, so the walk ends at once.
 
         lda wMapCursorXTile,b
         beq _A9CB
@@ -91,6 +93,7 @@
         .databank ?
 
         ; Cursor state 2: takes the next direction from the path at $0794 (1 down, 2 up, 3 right, 4 left) and turns the moving sprite; at the end moves the unit to the cursor's tile and opens the unit menu (for a player move).
+        ; In the guard modes (4, 5, 9) it requests unit menu mode 2 instead (another army's unit finishes its action); mode 4 is cleared.
 
         lda wMapScrollScriptOffset,b
         bmi _AA8A
@@ -183,11 +186,11 @@
         ldx wActiveUnitDeploymentOffset,b
         jsl rlMoveDeploymentToTile
         lda wMapActionMode,b
-        cmp #PATH_LEFT
+        cmp #MAP_ACTION_MODE_GUARD
         beq _AAEF
-        cmp #$0005
+        cmp #MAP_ACTION_MODE_GUARD_SORTIE
         beq _AAEF
-        cmp #$0009
+        cmp #MAP_ACTION_MODE_GUARD_MENU_1
         beq _AAEF
         lda wMapActionActiveFlag,b
         bne _AAEB
@@ -211,7 +214,7 @@
 
         _AB00
         lda wMapActionMode,b
-        cmp #PATH_LEFT
+        cmp #MAP_ACTION_MODE_GUARD
         beq _AB0C
         lda #$0000
         rts
@@ -433,7 +436,15 @@
         .autsiz
         .databank ?
 
-        ; B in the unit menu: puts the active unit back on its start tile (wMapCursorXTile/YTile) and sends the cursor to it, by wMapActionMode.
+        ; B in the unit menu (modes 0 and 2). By wMapActionMode:
+        ;   0: back to the move's origin (wMapCursorXTile/YTile), unit put down; with canto, picked up again.
+        ;   5: becomes 1; back to the origin and the cursor goes there (state 7), which picks the unit up again
+        ;      or, with unit menu mode 1 open, reopens that menu.
+        ;   Others: the same if unit menu mode 1 is open or the unit can still move (rlCheckSelectedUnitCannotMove).
+        ;   If it cannot move: 1 goes back into the castle, 2 guards again, 3 goes back into the castle at the cursor,
+        ;   4 is cleared and handled as 0, 9 stays on the cursor's tile, which becomes the origin.
+        ;   (The walk's end already clears 4 for a player unit.)
+        ; The move test reads aMovementMap, which is not rebuilt for a menu opened by rsOpenQueuedUnitMenu.
 
         lda wMapActionMode,b
         bne _AE41
@@ -478,7 +489,7 @@
 
         _AE41
         lda wMapActionMode,b
-        cmp #$0005
+        cmp #MAP_ACTION_MODE_GUARD_SORTIE
         beq _AE70
         lda wMapStateFlags,b
         bit #$0008
@@ -486,19 +497,19 @@
         jsl rlCheckSelectedUnitCannotMove
         bcc _AE76
         lda wMapActionMode,b
-        cmp #$0002
+        cmp #MAP_ACTION_MODE_DEPARTED
         beq _AEB3
-        cmp #$0003
+        cmp #MAP_ACTION_MODE_CASTLE_GUARD
         beq _AEC8
-        cmp #$0004
+        cmp #MAP_ACTION_MODE_GUARD
         beq _AE1A
-        cmp #$0009
+        cmp #MAP_ACTION_MODE_GUARD_MENU_1
         beq _AEB1
         bra _AE9C
 
 
         _AE70
-        lda #$0001
+        lda #MAP_ACTION_MODE_SORTIE
         sta wMapActionMode,b
 
         _AE76

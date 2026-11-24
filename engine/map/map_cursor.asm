@@ -2058,13 +2058,13 @@
         sta wMapCursorState,b
         lda wMapActionMode,b
         beq _ADE2
-        lda #$0005
+        lda #MAP_ACTION_MODE_GUARD_SORTIE
         sta wMapActionMode,b
         rtl
 
 
         _ADE2
-        lda #$0009
+        lda #MAP_ACTION_MODE_GUARD_MENU_1
         sta wMapActionMode,b
         rtl
 
@@ -2170,31 +2170,31 @@
         lda #MAP_CURSOR_TO_UNIT_SELECT
         sta wMapCursorState,b
         lda wMapActionMode,b
-        cmp #$8002
+        cmp #MAP_ACTION_MODE_PENDING | MAP_ACTION_MODE_DEPARTED
         beq _B44F
-        cmp #$8003
+        cmp #MAP_ACTION_MODE_PENDING | MAP_ACTION_MODE_CASTLE_GUARD
         beq _B456
-        cmp #$8004
+        cmp #MAP_ACTION_MODE_PENDING | MAP_ACTION_MODE_GUARD
         beq _B45D
-        lda #$0001
+        lda #MAP_ACTION_MODE_SORTIE
         sta wMapActionMode,b
         rtl
 
 
         _B44F
-        lda #$0002
+        lda #MAP_ACTION_MODE_DEPARTED
         sta wMapActionMode,b
         rtl
 
 
         _B456
-        lda #$0003
+        lda #MAP_ACTION_MODE_CASTLE_GUARD
         sta wMapActionMode,b
         rtl
 
 
         _B45D
-        lda #$0004
+        lda #MAP_ACTION_MODE_GUARD
         sta wMapActionMode,b
         lda #MAP_CURSOR_TO_UNIT_ACTION
         sta wMapCursorState,b

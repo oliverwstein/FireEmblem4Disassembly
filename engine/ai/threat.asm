@@ -705,8 +705,8 @@
         .word <>rsAIActionEnterHomeCastle
         .word <>rsAIActionSeizeCastle
         .word <>rsAIActionRaidVillage
-        .word <>rsAIActionEnterLocation
         .word <>rsAIActionGuardCastle
+        .word <>rsAIActionEnterGuardedCastle
         .word <>rsAIActionStartBattle
         .word <>rsAIActionNoOp9
         .word <>rsAIActionNoOp10
@@ -907,14 +907,14 @@
       .al
       .xl
 
-      rsAIActionEnterLocation ; 86/B3AB
+      rsAIActionGuardCastle ; 86/B3AB
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Action 6: run castle entry/seize handler ($84/D03E) and clear bit $01 of $0E7B
+        ; Action 6: guard a castle (rlUnitGuardCastle, with A = 12, so the action is finished at once) and clear bit $01 of $0E7B
 
         ldx wActiveActionUnit1DeploymentOffset,b
         jsl rlUnitGuardCastle
@@ -926,14 +926,14 @@
 
         ; 86/B3B9
 
-      rsAIActionGuardCastle ; 86/B3B9
+      rsAIActionEnterGuardedCastle ; 86/B3B9
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Action 7: enter/guard occupied friendly castle ($84/D0B9) and clear bit $01 of $0E7B
+        ; Action 7: a unit guarding a castle stops guarding and goes inside (rlUnitReturnIntoCastle), and clear bit $01 of $0E7B
 
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnitReturnIntoCastle

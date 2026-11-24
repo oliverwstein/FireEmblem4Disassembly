@@ -2147,7 +2147,7 @@
         jsl rlPlaySoundEffect
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
-        lda #$FFFF
+        lda #$FFFF ; pending, becomes MAP_ACTION_MODE_SORTIE
         sta wMapActionMode,b
         lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
@@ -2279,7 +2279,7 @@
         sec
         sbc #$0020
         sta wCursorYOffset,b
-        lda #$0003
+        lda #MAP_ACTION_MODE_CASTLE_GUARD
         sta wMapActionMode,b
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b

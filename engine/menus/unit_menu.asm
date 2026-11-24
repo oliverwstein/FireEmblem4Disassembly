@@ -815,8 +815,8 @@
 
       rlUnitMenuGuard ; 85/DF7D
 
-        ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
-        ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
+        ; The guard command (reached through aUnitMenuOptionGuard). A = 0 for rlUnitGuardCastle:
+        ; a player move, which goes on to the unit menu in mode 2.
 
         .al
         .xl
@@ -890,8 +890,8 @@
 
       rlUnitMenuDismount ; 85/DFA6
 
-        ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
-        ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
+        ; Reached through its unit menu option (aUnitMenuOption*). One of the small wrappers at
+        ; $85/DF20-E070 that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
 
         .al
         .xl
@@ -911,8 +911,8 @@
 
       rlUnitMenuMount ; 85/DFB4
 
-        ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
-        ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
+        ; Reached through its unit menu option (aUnitMenuOption*). One of the small wrappers at
+        ; $85/DF20-E070 that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
 
         .al
         .xl
@@ -1018,8 +1018,8 @@
 
       rlUnitMenuReturnSkill ; 85/E004
 
-        ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
-        ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
+        ; Reached through its unit menu option (aUnitMenuOption*). One of the small wrappers at
+        ; $85/DF20-E070 that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
 
         .al
         .xl
@@ -2079,7 +2079,7 @@
         beq rsUnitMenuCheckFail
         lda wMapActionMode,b
         and #$00FF
-        cmp #$0002
+        cmp #MAP_ACTION_MODE_DEPARTED
         beq rsUnitMenuCheckFail
         jsl rlCheckIfCastleGuarded
         bcs rsUnitMenuCheckFail

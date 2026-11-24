@@ -294,7 +294,7 @@
         .autsiz
         .databank ?
 
-        ; B with a unit selected: puts it down and sends the cursor back to it (by wMapActionMode, with canto the cursor goes to it in state 7); in warp mode goes back to the unit menu.
+        ; B with a unit selected: puts it down and sends the cursor back to it; after a sortie (mode 1) the unit goes back into the castle, after depart (mode 2) it guards again. With canto the cursor goes to it in state 7 (unit menu); in warp mode goes back to the unit menu.
 
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable,x
@@ -311,9 +311,9 @@
         jsl rlDeployedUnitUnsetHiddenIfAlive
         jsr rsHideRangeOverlay
         lda wMapActionMode,b
-        cmp #$0001
+        cmp #MAP_ACTION_MODE_SORTIE
         beq _B16D
-        cmp #$0002
+        cmp #MAP_ACTION_MODE_DEPARTED
         beq _B178
         rts
 

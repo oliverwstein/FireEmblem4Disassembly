@@ -925,6 +925,10 @@
         .autsiz
         .databank ?
 
+        ; Ends the action of the unit at X. On a castle's guarding spot it starts guarding. At its army's home castle
+        ; (wTargetEventLocationEntry), a player unit instead gets the unit menu in mode 1 and the action goes on;
+        ; another army's unit goes inside. Then grays the unit, clears canto, and records it for event action 3.
+
         lda wSelectedUnitDataRAMPointer,b
         pha
         lda wRoutineVariable1,b

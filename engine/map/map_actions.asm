@@ -907,7 +907,12 @@
         .autsiz
         .databank ?
 
-        ; The guard command (from the map, the castle or the AI): moves the unit onto the castle and, for a player move, sends the cursor to it.
+        ; The guard command. X = unit, A = 0 from the unit menu, 1 from the castle screen, 12 from the AI (action 6).
+        ; At an unguarded castle of its own army or an ally, moves the unit onto the guarding spot (the location's tile).
+        ; A nonzero: a player unit gets the unit menu in mode 2, another army's unit finishes its action.
+        ; A = 0: with unit menu mode 1 open, or after a sortie (mode 1), the cursor goes to the unit (state 8, mode 5 or 9);
+        ; otherwise mode $8004 (the cursor goes there next frame, mode 4). The walk's end then requests unit menu mode 2.
+        ; Guarding itself starts when the action is finished on that tile (rlFinishUnitAction).
 
         phb
         php
@@ -943,7 +948,7 @@
         bit #$0008
         bne _D098
         lda wMapActionMode,b
-        cmp #$0001
+        cmp #MAP_ACTION_MODE_SORTIE
         beq _D09C
         jsr rsSetMapActionModeGuard
         bra _D0AE
@@ -992,7 +997,7 @@
 
         ; wMapActionMode = $8004.
 
-        lda #$8004
+        lda #MAP_ACTION_MODE_PENDING | MAP_ACTION_MODE_GUARD
         sta wMapActionMode,b
         rts
 
@@ -1068,7 +1073,7 @@
         .autsiz
         .databank ?
 
-        ; Depart command: the unit stops guarding and steps onto the castle's map tile (wMapActionMode $8002).
+        ; Depart command: the unit stops guarding and steps onto the castle's gate (its interaction tile, two below), mode $8002: picked up there next frame (mode 2).
 
         phb
         php
@@ -1102,7 +1107,7 @@
         jsl rlGetEventLocationEntryEffectiveYCoordinate
         sta wR1
         jsl rlMoveDeploymentToTile
-        lda #$8002
+        lda #MAP_ACTION_MODE_PENDING | MAP_ACTION_MODE_DEPARTED
         sta wMapActionMode,b
 
         _D168

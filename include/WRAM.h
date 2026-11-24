@@ -638,7 +638,7 @@
     wMovingUnitSpriteState .word ?      ; $0007DA ; 0 idle, 1 selected, 2 moving/acting
     wMovingUnitSpriteFrame .word ?      ; $0007DC ; moving map sprite frame index
     wMovingUnitSpriteTimer .word ?      ; $0007DE ; countdown timer reloaded from aMapSpriteWalkFrameDelays
-    wMapActionMode .word ?              ; $0007E0 ; active map action / menu selection mode
+    wMapActionMode .word ?              ; $0007E0 ; MAP_ACTION_MODE_* (include/Map.h): how the active unit's move began, for undoing it
 
   .endvirtual
 
@@ -1203,8 +1203,8 @@
     wMapStateFlags .word ?                ; $000D87 ; bitfield:
       ; $0003 = post-action dispatch index into aQueuedUnitMenuOpeners
       ; $0004 = cursor hovering selectable unit/tile in rlGetMapMenuPosition
-      ; $0008 = unit/action map menu open
-      ; $0010 = secondary sub-menu open
+      ; $0008 = the unit menu was opened in mode 1 (rlOpenUnitMenuMode1); cleared when the action ends
+      ; $0010 = the unit menu was opened in mode 2 (rlOpenUnitMenuMode2); cleared by B or when the action ends
       ; $0020 = the phase is over (End Turn, or the AI has no group left); rsMapStepPhase clears it and moves on
       ; $8000 = pending post-action handler dispatch
     wInventoryFullDeploymentOffset .word ?           ; $000D89 ; inventory-full & turn setup scratch

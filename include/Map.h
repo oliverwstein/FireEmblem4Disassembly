@@ -10,7 +10,7 @@
   MAP_CURSOR_TO_UNIT_SELECT    = $0005 ; then picks up the unit there
   MAP_CURSOR_TO_TARGET         = $0006 ; then goes on choosing a target
   MAP_CURSOR_TO_UNIT_MENU      = $0007 ; then picks up the unit or opens its command menu
-  MAP_CURSOR_TO_UNIT_ACTION    = $0008 ; like 4, for wMapActionMode 4 and 5
+  MAP_CURSOR_TO_UNIT_ACTION    = $0008 ; like 1: to the unit, then ends its walk (for the guard modes 4, 5 and 9)
   MAP_CURSOR_LOCKED            = $FFFF ; only drawn, while the map is left for another screen
 
   ; In a computer phase rlMapAIMoveStep gives the states its own meanings.
@@ -31,6 +31,18 @@
   MAP_ACTION_HELP              = $0002
   MAP_ACTION_GIVE_GOLD         = $0003
   MAP_ACTION_TALK              = $0004
+
+  ; wMapActionMode: how a unit's move began, which decides what undoing it does
+  ; (rlUndoUnitMove, rsMapPressBWithUnitSelected) and what ends it (rsWalkUnitAlongPath).
+  ; Cleared when the action ends (rlEndUnitAction).
+  MAP_ACTION_MODE_NONE         = 0 ; an ordinary move
+  MAP_ACTION_MODE_SORTIE       = 1 ; came out of a castle (castle screen sortie); undone, goes back inside
+  MAP_ACTION_MODE_DEPARTED     = 2 ; left its guarding spot (depart); undone, guards again; no guard command
+  MAP_ACTION_MODE_CASTLE_GUARD = 3 ; guard chosen on the castle screen; undone, goes back inside
+  MAP_ACTION_MODE_GUARD        = 4 ; guard chosen in the unit menu
+  MAP_ACTION_MODE_GUARD_SORTIE = 5 ; guard with a mode already set (after a sortie, or from unit menu mode 1); undone, mode 1
+  MAP_ACTION_MODE_GUARD_MENU_1 = 9 ; guard from unit menu mode 1 with no mode set
+  MAP_ACTION_MODE_PENDING      = $8000 ; with 2 or 4, or $FFFF for 1: rlStartCursorToUnitAfterMove applies it next frame ($8003 is tested but never set)
 
   ; aMovementPath: the step directions.
   PATH_DOWN                    = 1
