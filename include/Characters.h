@@ -251,7 +251,7 @@
     MajorInfluence    .byte \MajorInfluence     ; $0B
   .endstruct
 
-  structEnemyCharacterROMEntry .struct Type, CharacterID, CharacterName, Class, Gender, Level, LeadershipStars, GenerationID, Equipment1, Equipment2, Drops
+  structEnemyCharacterROMEntry .struct Type, CharacterID, CharacterName, Class, Gender, Level, LeadershipStars, FactionMemberID, Equipment1, Equipment2, Drops
     .dstruct structCharacterROMEntry, \Type     ; $00
     CharacterID       .word \CharacterID        ; $01
     CharacterName     .word \CharacterName      ; $03
@@ -259,7 +259,7 @@
     Gender            .byte \Gender             ; $06
     Level             .byte \Level              ; $07
     LeadershipStars   .byte \LeadershipStars    ; $08
-    GenerationID      .byte \GenerationID       ; $09
+    FactionMemberID   .byte \FactionMemberID    ; $09
     .dstruct structCharacterEquipmentROMEntry, \Equipment1, \Equipment2 ; $0A - $0B
     Drops             .byte \Drops              ; $0C
   .endstruct

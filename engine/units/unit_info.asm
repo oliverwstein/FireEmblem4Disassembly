@@ -1705,6 +1705,10 @@
         .autsiz
         .databank ?
 
+        ; An enemy's stand-in for a GenerationID: its FactionMemberID,
+        ; the unit's number within its faction (1 = leader, $FF = none).
+        ; rlFindGenerationIDInFactionSlotData searches by it.
+
         phb
         php
 
@@ -1713,7 +1717,7 @@
 
         phx
         jsl rlGetEnemyUnitConstantDataPointer
-        lda structEnemyCharacterROMEntry.GenerationID - structEnemyCharacterROMEntry.CharacterID,b,x 
+        lda structEnemyCharacterROMEntry.FactionMemberID - structEnemyCharacterROMEntry.CharacterID,b,x 
         and #$00FF
         plx
 
