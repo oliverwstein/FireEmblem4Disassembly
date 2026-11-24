@@ -5646,16 +5646,16 @@
       procUnknown9FB279 ; 9F/B279
 
         ; Part of the Meteor effect.
-        .structProcInfo "ON", rlUnknown9FB28C, rlUnknown9FB2AC, aProcUnknown9FB281Code
+        .structProcInfo "ON", rlMapMagicMeteorInit, rlMapMagicMeteorDarken, aProcUnknown9FB281Code
 
       aProcUnknown9FB281Code ; 9F/B281
 
         ; Part of the Meteor effect.
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FB330
+        PROC_CALL rlMapMagicMeteorStepPaletteAnim
         PROC_JUMP aProcUnknown9FB281Code
 
-      rlUnknown9FB28C ; 9F/B28C
+      rlMapMagicMeteorInit ; 9F/B28C
 
         .al
         .xl
@@ -5675,7 +5675,7 @@
         rtl
 
 
-      rlUnknown9FB2AC ; 9F/B2AC
+      rlMapMagicMeteorDarken ; 9F/B2AC
 
         .al
         .xl
@@ -5688,7 +5688,7 @@
         bcc _B2C3
 
         _B2B7
-        lda #<>rlUnknown9FB2C4
+        lda #<>rlMapMagicMeteorWaitAndSpawn
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0018
         sta aProcSystem.aBody0,b,x
@@ -5697,7 +5697,7 @@
         rtl
 
 
-      rlUnknown9FB2C4 ; 9F/B2C4
+      rlMapMagicMeteorWaitAndSpawn ; 9F/B2C4
 
         .al
         .xl
@@ -5731,14 +5731,14 @@
 
           .word <>aUnknown9FDCF4
 
-        lda #<>rlUnknown9FB2EE
+        lda #<>rlMapMagicMeteorCreateSprite
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _B2ED
         rtl
 
 
-      rlUnknown9FB2EE ; 9F/B2EE
+      rlMapMagicMeteorCreateSprite ; 9F/B2EE
 
         .al
         .xl
@@ -5746,7 +5746,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        lda #<>rlUnknown9FB319
+        lda #<>rlMapMagicMeteorWaitImpact
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #(`aUnknown9FB3DD)<<8
         sta lR44+1
@@ -5766,7 +5766,7 @@
         rtl
 
 
-      rlUnknown9FB319 ; 9F/B319
+      rlMapMagicMeteorWaitImpact ; 9F/B319
 
         .al
         .xl
@@ -5776,7 +5776,7 @@
 
         lda $7ECC0C
         beq _B32B
-        lda #<>rlUnknown9FB32C
+        lda #<>rlMapMagicMeteorShakeLoop
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #<>aProcMapMagicHaltCode
         sta aProcSystem.aHeaderCodeOffset,b,x
@@ -5785,7 +5785,7 @@
         rtl
 
 
-      rlUnknown9FB32C ; 9F/B32C
+      rlMapMagicMeteorShakeLoop ; 9F/B32C
 
         .al
         .xl
@@ -5797,7 +5797,7 @@
         rtl
 
 
-      rlUnknown9FB330 ; 9F/B330
+      rlMapMagicMeteorStepPaletteAnim ; 9F/B330
 
         .al
         .xl
@@ -5858,14 +5858,14 @@
       aUnknown9FB3DD ; 9F/B3DD
 
         ; Part of the Meteor effect.
-        .word <>rlUnknown9FB3E9, <>rlUnknown9FB40A, <>aUnknown9FB4C8
+        .word <>rlMapMagicMeteorSpriteInit, <>rlMapMagicMeteorSpriteDescend, <>aUnknown9FB4C8
 
       aUnknown9FB3E3 ; 9F/B3E3
 
         ; Part of the Meteor effect.
-        .word <>rlUnknown9FB3E9, <>rlUnknown9FB40A, <>aUnknown9FB4D8
+        .word <>rlMapMagicMeteorSpriteInit, <>rlMapMagicMeteorSpriteDescend, <>aUnknown9FB4D8
 
-      rlUnknown9FB3E9 ; 9F/B3E9
+      rlMapMagicMeteorSpriteInit ; 9F/B3E9
 
         .al
         .xl
@@ -5888,7 +5888,7 @@
         .databank 0
 
         ; 9F/B40A
-      rlUnknown9FB40A ; 9F/B40A
+      rlMapMagicMeteorSpriteDescend ; 9F/B40A
 
         .al
         .xl
@@ -5926,7 +5926,7 @@
 
         lda #$000C
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #<>rlUnknown9FB462
+        lda #<>rlMapMagicMeteorSpriteWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
         sta $7ECC0C
@@ -5937,7 +5937,7 @@
         .databank 0
 
         ; 9F/B462
-      rlUnknown9FB462 ; 9F/B462
+      rlMapMagicMeteorSpriteWaitStrike ; 9F/B462
 
         .al
         .xl
@@ -5949,7 +5949,7 @@
         bne _B474
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FB475
+        lda #<>rlMapMagicMeteorSpriteFlashBlack
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _B474
@@ -5958,7 +5958,7 @@
         .databank 0
 
         ; 9F/B475
-      rlUnknown9FB475 ; 9F/B475
+      rlMapMagicMeteorSpriteFlashBlack ; 9F/B475
 
         .al
         .xl
@@ -5975,7 +5975,7 @@
           .word <>aUnknown9FB496
 
         bcc _B495
-        lda #<>rlUnknown9FB49C
+        lda #<>rlMapMagicMeteorSpriteWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$000E
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -5992,7 +5992,7 @@
         ; Part of the Meteor effect.
         .byte $D2, $00, $07, $00, $FF, $FF
 
-      rlUnknown9FB49C ; 9F/B49C
+      rlMapMagicMeteorSpriteWaitFade ; 9F/B49C
 
         .al
         .xl
@@ -6004,7 +6004,7 @@
         bne _B4AE
         lda #$0002
         sta $7ECC0C
-        lda #<>rlUnknown9FB4AF
+        lda #<>rlMapMagicMeteorSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _B4AE
@@ -6013,7 +6013,7 @@
         .databank 0
 
         ; 9F/B4AF
-      rlUnknown9FB4AF ; 9F/B4AF
+      rlMapMagicMeteorSpriteFadeBack ; 9F/B4AF
 
         .al
         .xl
@@ -6042,7 +6042,7 @@
 
         ; Part of the Meteor effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB4FB
-        ACTIVE_SPRITE_CALL rlUnknown9FB4E8
+        ACTIVE_SPRITE_CALL rlMapMagicMeteorWaitSpritePhase
         .word <>aUnknown9FB4C8
 
         _B4D1
@@ -6054,7 +6054,7 @@
 
         ; Part of the Meteor effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB511
-        ACTIVE_SPRITE_CALL rlUnknown9FB4E8
+        ACTIVE_SPRITE_CALL rlMapMagicMeteorWaitSpritePhase
         .word <>aUnknown9FB4D8
 
         _B4E1
@@ -6062,7 +6062,7 @@
         ACTIVE_SPRITE_JUMP _B4E1
 
         ; 9F/B4E8
-      rlUnknown9FB4E8 ; 9F/B4E8
+      rlMapMagicMeteorWaitSpritePhase ; 9F/B4E8
 
         .al
         .xl
@@ -6130,9 +6130,9 @@
       procUnknown9FB52D ; 9F/B52D
 
         ; Part of the Blizzard effect.
-        .structProcInfo "ON", rlUnknown9FB535, rlUnknown9FB53C, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicBlizzardInit, rlMapMagicBlizzardDarken, aProcMapMagicHaltCode
 
-      rlUnknown9FB535 ; 9F/B535
+      rlMapMagicBlizzardInit ; 9F/B535
 
         .al
         .xl
@@ -6147,7 +6147,7 @@
         rtl
 
 
-      rlUnknown9FB53C ; 9F/B53C
+      rlMapMagicBlizzardDarken ; 9F/B53C
 
         .al
         .xl
@@ -6155,8 +6155,8 @@
         .databank ?
         ; Part of the Blizzard effect.
         jsr rsDarkenMapMagicColors
-        bcc rlUnknown9FB535._B53B
-        lda #<>rlUnknown9FB559
+        bcc rlMapMagicBlizzardInit._B53B
+        lda #<>rlMapMagicBlizzardWaitAndSpawn
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
         sta aProcSystem.aBody0,b,x
@@ -6169,7 +6169,7 @@
         rtl
 
 
-      rlUnknown9FB559 ; 9F/B559
+      rlMapMagicBlizzardWaitAndSpawn ; 9F/B559
 
         .al
         .xl
@@ -6179,8 +6179,8 @@
 
         dec aProcSystem.aBody0,b,x
         bpl _B56D
-        jsr rlUnknown9FB5EC
-        lda #<>rlUnknown9FB56E
+        jsr rlMapMagicBlizzardSpawnEffects
+        lda #<>rlMapMagicBlizzardWaitCast
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0028
         sta aProcSystem.aBody0,b,x
@@ -6189,7 +6189,7 @@
         rtl
 
 
-      rlUnknown9FB56E ; 9F/B56E
+      rlMapMagicBlizzardWaitCast ; 9F/B56E
 
         .al
         .xl
@@ -6199,7 +6199,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _B57F
-        lda #<>rlUnknown9FB580
+        lda #<>rlMapMagicBlizzardWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
         sta aProcSystem.aBody0,b,x
@@ -6208,7 +6208,7 @@
         rtl
 
 
-      rlUnknown9FB580 ; 9F/B580
+      rlMapMagicBlizzardWaitStrike ; 9F/B580
 
         .al
         .xl
@@ -6217,8 +6217,8 @@
         ; Part of the Blizzard effect.
 
         dec aProcSystem.aBody0,b,x
-        bne rlUnknown9FB599._B5B7
-        lda #<>rlUnknown9FB599
+        bne rlMapMagicBlizzardReverseFade._B5B7
+        lda #<>rlMapMagicBlizzardReverseFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
         sta aProcSystem.aBody0,b,x
@@ -6227,7 +6227,7 @@
         rtl
 
 
-      rlUnknown9FB599 ; 9F/B599
+      rlMapMagicBlizzardReverseFade ; 9F/B599
 
         .al
         .xl
@@ -6237,7 +6237,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _B5B7
-        lda #<>rlUnknown9FB5B8
+        lda #<>rlMapMagicBlizzardWaitFreeHDMA
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
         sta aProcSystem.aBody0,b,x
@@ -6251,7 +6251,7 @@
         rtl
 
 
-      rlUnknown9FB5B8 ; 9F/B5B8
+      rlMapMagicBlizzardWaitFreeHDMA ; 9F/B5B8
 
         .al
         .xl
@@ -6262,7 +6262,7 @@
         dec aProcSystem.aBody0,b,x
         bne _B5CC
         jsr rsFreeMapMagicHDMA
-        lda #<>rlUnknown9FB5CD
+        lda #<>rlMapMagicBlizzardWaitFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta aProcSystem.aBody0,b,x
@@ -6271,7 +6271,7 @@
         rtl
 
 
-      rlUnknown9FB5CD ; 9F/B5CD
+      rlMapMagicBlizzardWaitFade ; 9F/B5CD
 
         .al
         .xl
@@ -6281,14 +6281,14 @@
 
         dec aProcSystem.aBody0,b,x
         bne _B5D8
-        lda #<>rlUnknown9FB5D9
+        lda #<>rlMapMagicBlizzardFadeBack
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _B5D8
         rtl
 
 
-      rlUnknown9FB5D9 ; 9F/B5D9
+      rlMapMagicBlizzardFadeBack ; 9F/B5D9
 
         .al
         .xl
@@ -6297,13 +6297,13 @@
         ; Part of the Blizzard effect.
 
         jsr rsFadeBackMapMagicColors
-        bcc rlUnknown9FB5EB
-        lda #<>rlUnknown9FB5EB
+        bcc rlMapMagicBlizzardDone
+        lda #<>rlMapMagicBlizzardDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta wMapMagicDone
 
-      rlUnknown9FB5EB ; 9F/B5EB
+      rlMapMagicBlizzardDone ; 9F/B5EB
 
         .al
         .xl
@@ -6314,7 +6314,7 @@
         rtl
 
 
-      rlUnknown9FB5EC ; 9F/B5EC
+      rlMapMagicBlizzardSpawnEffects ; 9F/B5EC
 
         .al
         .xl
@@ -6398,16 +6398,16 @@
       procUnknown9FB620 ; 9F/B620
 
         ; Part of the Sleep effect.
-        .structProcInfo "ON", rlUnknown9FB6CC, rlUnknown9FB633, aProcUnknown9FB628Code
+        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicSleepInit, aProcUnknown9FB628Code
 
       aProcUnknown9FB628Code ; 9F/B628
 
         ; Part of the Sleep effect.
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FBAD5
+        PROC_CALL rlMapMagicSleepStepPaletteAnim
         PROC_JUMP aProcUnknown9FB628Code
 
-      rlUnknown9FB633 ; 9F/B633
+      rlMapMagicSleepInit ; 9F/B633
 
         .al
         .xl
@@ -6440,7 +6440,7 @@
 
           .word <>aUnknown9FE2E5
 
-        lda #<>rlUnknown9FB67C
+        lda #<>rlMapMagicSleepWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -6460,7 +6460,7 @@
         rtl
 
 
-      rlUnknown9FB67C ; 9F/B67C
+      rlMapMagicSleepWaitStrike ; 9F/B67C
 
         .al
         .xl
@@ -6472,7 +6472,7 @@
         bne _B694
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FB695
+        lda #<>rlMapMagicSleepWaitHold
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
         sta aProcSystem.aBody0,b,x
@@ -6481,7 +6481,7 @@
         rtl
 
 
-      rlUnknown9FB695 ; 9F/B695
+      rlMapMagicSleepWaitHold ; 9F/B695
 
         .al
         .xl
@@ -6494,7 +6494,7 @@
         ldy aProcSystem.aBody7,b,x
         lda #$FF00
         sta aProcSystem.aBody4,b,y
-        lda #<>rlUnknown9FB6B7
+        lda #<>rlMapMagicSleepWaitEnd
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -6505,7 +6505,7 @@
         rtl
 
 
-      rlUnknown9FB6B7 ; 9F/B6B7
+      rlMapMagicSleepWaitEnd ; 9F/B6B7
 
         .al
         .xl
@@ -6526,9 +6526,9 @@
       procUnknown9FB6C4 ; 9F/B6C4
 
         ; Part of the Return effect.
-        .structProcInfo "ON", rlUnknown9FB6CC, rlUnknown9FB81B, aProcUnknown9FB6F7Code
+        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicReturnInit, aProcUnknown9FB6F7Code
 
-      rlUnknown9FB6CC ; 9F/B6CC
+      rlMapMagicStaffEffectInit ; 9F/B6CC
 
         .al
         .xl
@@ -6557,104 +6557,104 @@
 
         ; Part of the Return effect.
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0F
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0E
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0D
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0C
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0B
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0A
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $09
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $08
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $07
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $06
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $05
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $04
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $03
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $02
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $01
         PROC_YIELD 3
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $00
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0F
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0E
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0D
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0C
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0B
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $0A
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $09
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $08
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $07
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $06
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $05
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $04
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $03
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $02
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $01
         PROC_YIELD 2
-        PROC_CALL_ARGS rlUnknown9FBC45, 1
+        PROC_CALL_ARGS rlMapMagicReturnLoadPaletteStep, 1
         .byte $00
         PROC_JUMP aProcUnknown9FB6F7Code
 
-      rlUnknown9FB81B ; 9F/B81B
+      rlMapMagicReturnInit ; 9F/B81B
 
         .al
         .xl
@@ -6687,7 +6687,7 @@
 
           .word <>aUnknown9FDC77
 
-        lda #<>rlUnknown9FB864
+        lda #<>rlMapMagicReturnWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -6707,7 +6707,7 @@
         rtl
 
 
-      rlUnknown9FB864 ; 9F/B864
+      rlMapMagicReturnWaitStrike ; 9F/B864
 
         .al
         .xl
@@ -6719,14 +6719,14 @@
         bne _B876
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FB877
+        lda #<>rlMapMagicReturnLiftUnit
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _B876
         rtl
 
 
-      rlUnknown9FB877 ; 9F/B877
+      rlMapMagicReturnLiftUnit ; 9F/B877
 
         .al
         .xl
@@ -6734,9 +6734,9 @@
         .databank ?
         ; Part of the Return effect.
 
-        jsr rlUnknown9FB8AB._B8B8
+        jsr rlMapMagicReturnWaitEnd._B8B8
         bcc _B888
-        lda #<>rlUnknown9FB889
+        lda #<>rlMapMagicReturnWaitHold
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
         sta aProcSystem.aBody0,b,x
@@ -6745,7 +6745,7 @@
         rtl
 
 
-      rlUnknown9FB889 ; 9F/B889
+      rlMapMagicReturnWaitHold ; 9F/B889
 
         .al
         .xl
@@ -6758,7 +6758,7 @@
         ldy aProcSystem.aBody7,b,x
         lda #$FF00
         sta aProcSystem.aBody4,b,y
-        lda #<>rlUnknown9FB8AB
+        lda #<>rlMapMagicReturnWaitEnd
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -6769,7 +6769,7 @@
         rtl
 
 
-      rlUnknown9FB8AB ; 9F/B8AB
+      rlMapMagicReturnWaitEnd ; 9F/B8AB
 
         .al
         .xl
@@ -6868,16 +6868,16 @@
       procUnknown9FB974 ; 9F/B974
 
         ; Part of the Restore effect.
-        .structProcInfo "ON", rlUnknown9FB6CC, rlUnknown9FB987, aProcUnknown9FB97CCode
+        .structProcInfo "ON", rlMapMagicStaffEffectInit, rlMapMagicRestoreInit, aProcUnknown9FB97CCode
 
       aProcUnknown9FB97CCode ; 9F/B97C
 
         ; Part of the Restore effect.
         PROC_YIELD 1
-        PROC_CALL rlUnknown9FBB8E
+        PROC_CALL rlMapMagicRestoreStepPaletteAnim
         PROC_JUMP aProcUnknown9FB97CCode
 
-      rlUnknown9FB987 ; 9F/B987
+      rlMapMagicRestoreInit ; 9F/B987
 
         .al
         .xl
@@ -6910,7 +6910,7 @@
 
           .word <>aUnknown9FE2D9
 
-        lda #<>rlUnknown9FB9D0
+        lda #<>rlMapMagicRestoreWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -6930,7 +6930,7 @@
         rtl
 
 
-      rlUnknown9FB9D0 ; 9F/B9D0
+      rlMapMagicRestoreWaitStrike ; 9F/B9D0
 
         .al
         .xl
@@ -6942,7 +6942,7 @@
         bne _B9E8
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FB9E9
+        lda #<>rlMapMagicRestoreWaitHold
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
         sta aProcSystem.aBody0,b,x
@@ -6951,7 +6951,7 @@
         rtl
 
 
-      rlUnknown9FB9E9 ; 9F/B9E9
+      rlMapMagicRestoreWaitHold ; 9F/B9E9
 
         .al
         .xl
@@ -6964,7 +6964,7 @@
         ldy aProcSystem.aBody7,b,x
         lda #$FF00
         sta aProcSystem.aBody4,b,y
-        lda #<>rlUnknown9FBA0B
+        lda #<>rlMapMagicRestoreWaitEnd
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -6975,7 +6975,7 @@
         rtl
 
 
-      rlUnknown9FBA0B ; 9F/BA0B
+      rlMapMagicRestoreWaitEnd ; 9F/BA0B
 
         .al
         .xl
@@ -6996,9 +6996,9 @@
       aUnknown9FBA18 ; 9F/BA18
 
         ; Shared by the Restore, Return and Sleep effects.
-        .word <>rlUnknown9FBA1E, <>rlUnknown9FBA3E, <>aUnknown9FBA4F
+        .word <>rlMapMagicStaffSpriteInit, <>rlMapMagicStaffSpriteWaitEnd, <>aUnknown9FBA4F
 
-      rlUnknown9FBA1E ; 9F/BA1E
+      rlMapMagicStaffSpriteInit ; 9F/BA1E
 
         .al
         .xl
@@ -7019,7 +7019,7 @@
         rtl
 
 
-      rlUnknown9FBA3E ; 9F/BA3E
+      rlMapMagicStaffSpriteWaitEnd ; 9F/BA3E
 
         .al
         .xl
@@ -7048,7 +7048,7 @@
 
         _BA63
         ACTIVE_SPRITE_FRAME 1, aUnknown9FBA97
-        ACTIVE_SPRITE_CALL rlUnknown9FBA87
+        ACTIVE_SPRITE_CALL rlMapMagicStaffWaitSpritePhase
         .word <>_BA63
         ACTIVE_SPRITE_FRAME 2, aUnknown9FBABD
         ACTIVE_SPRITE_FRAME 2, aUnknown9FBAAF
@@ -7062,7 +7062,7 @@
 
         ; 9F/BA87
 
-      rlUnknown9FBA87 ; 9F/BA87
+      rlMapMagicStaffWaitSpritePhase ; 9F/BA87
 
         .al
         .xl
@@ -7135,7 +7135,7 @@
 
         .structSpriteArray aUnknown9FBACE._Sprites
 
-      rlUnknown9FBAD5 ; 9F/BAD5
+      rlMapMagicSleepStepPaletteAnim ; 9F/BAD5
 
         .al
         .xl
@@ -7196,7 +7196,7 @@
         .word $7E0B, $7E0E, $7E11, $7E14, $7E16, $7E19, $7E1C, $7E1F
         .word $7E1F, $7DDD, $7D7A, $7D38, $7CF6, $7CB4, $7C51, $7C0F
 
-      rlUnknown9FBB8E ; 9F/BB8E
+      rlMapMagicRestoreStepPaletteAnim ; 9F/BB8E
 
         .al
         .xl
@@ -7257,7 +7257,7 @@
         .word $7D40, $7520, $7120, $6900, $64E0, $5CE0, $58C0, $50A0
         .word $4CA0, $4480, $4060, $3860, $3440, $2C20, $2820, $2000
 
-      rlUnknown9FBC45 ; 9F/BC45
+      rlMapMagicReturnLoadPaletteStep ; 9F/BC45
 
         .al
         .xl
