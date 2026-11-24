@@ -60,7 +60,7 @@ The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) als
 
 ## The other animations
 
-- **Village raid** (`procVillageRaid`, from `rlStartVillageRaidAnimation`): queues the unit's sprites and weapon icons, loads the fire background and sprite (`rlVillageRaidCreateFireSprite`), and triggers `rlStartMapMagicVillageFire` (`rlVillageRaidStartFireEffect`).
+- **Village raid** (`procVillageRaid`, from `rlStartVillageRaidAnimation`): queues the unit's sprites and effect graphics (`rlMapActionQueueEffectGraphics`), loads the fire background and sprite (`rlVillageRaidCreateFireSprite`), and triggers `rlStartMapMagicVillageFire` (`rlVillageRaidStartFireEffect`).
 - **Return home** (`procReturnHome`, from `rlStartReturnHomeAnimation`): queues the unit's sprites, plays the Return magic effect (`rlReturnHomeStartMagicRound`, `rlProcWaitMapMagicDoneCycle`), and restores OAM/map animations (`rlEndReturnHomeSprites`).
 - **Give gold** (`procGiveGold`, from `rlStartGiveGoldAnimation`): shows both units, uploads coin graphics (`rlGiveGoldUploadCoinGraphics`) and plays `aGiveGoldCoinSpriteData` (`rlGiveGoldCreateCoinSprite`), then runs the experience and level-up steps.
 - **Holy weapon shine** (`procHolyWeaponShine`, from `rlStartHolyWeaponShine`): sets up the unit (`rlSetHolyWeaponShineUnit`), plays `rlMapBattleStartSkillEffect`, and signals completion (`rlSignalMapAnimationDone`).

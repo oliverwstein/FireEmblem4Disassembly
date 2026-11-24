@@ -2914,7 +2914,7 @@
         .autsiz
         .databank ?
 
-        ; A = side (1: BG colours $0C-$0E, else $04-$06), Y = HUD colour ID (from aMapBattleHPWindowAccentColourPointers).
+        ; A = side (1: BG colours 13-15, else 5-7), Y = HUD colour ID (from aMapBattleHPWindowAccentColourPointers).
 
         phb
         php

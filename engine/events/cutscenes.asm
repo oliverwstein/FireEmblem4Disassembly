@@ -1133,9 +1133,9 @@
         PROC_YIELD 56
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
-        PROC_CALL rlMapActionQueueWeaponIconGraphics
+        PROC_CALL rlMapActionQueueEffectGraphics
         PROC_YIELD 4
-        PROC_CALL rlMapActionUploadWeaponIconGraphics
+        PROC_CALL rlMapActionUploadEffectGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_CALL rlUnknown9EF578

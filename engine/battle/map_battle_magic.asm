@@ -3012,7 +3012,7 @@
         .autsiz
         .databank ?
 
-        ; Subtracts A from each RGB channel of SNES colour X, clamping each channel at 0.
+        ; Subtracts each RGB channel of Y from SNES colour X, clamping each channel at 0.
 
         pha
         pha

@@ -308,9 +308,9 @@
         PROC_YIELD 16
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
-        PROC_CALL rlMapActionQueueWeaponIconGraphics
+        PROC_CALL rlMapActionQueueEffectGraphics
         PROC_YIELD 4
-        PROC_CALL rlMapActionUploadWeaponIconGraphics
+        PROC_CALL rlMapActionUploadEffectGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_YIELD 2
@@ -512,7 +512,7 @@
       .al
       .xl
 
-      rlMapActionQueueWeaponIconGraphics ; 9E/9D3B
+      rlMapActionQueueEffectGraphics ; 9E/9D3B
 
         .al
         .autsiz
@@ -559,7 +559,7 @@
       .al
       .xl
 
-      rlMapActionUploadWeaponIconGraphics ; 9E/9D76
+      rlMapActionUploadEffectGraphics ; 9E/9D76
 
         .al
         .xl
@@ -620,7 +620,7 @@
 
       aMapActionEffectOAMPalette ; 9E/9DB9
 
-        ; Read by rlMapActionUploadWeaponIconGraphics.
+        ; Read by rlMapActionUploadEffectGraphics.
 
         .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
         .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
@@ -1359,9 +1359,9 @@
         PROC_YIELD 56
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
-        PROC_CALL rlMapActionQueueWeaponIconGraphics
+        PROC_CALL rlMapActionQueueEffectGraphics
         PROC_YIELD 4
-        PROC_CALL rlMapActionUploadWeaponIconGraphics
+        PROC_CALL rlMapActionUploadEffectGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_CALL rlReturnHomeCopySpriteSlotsToDefender
@@ -1884,9 +1884,9 @@
         PROC_YIELD 40
         PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
-        PROC_CALL rlMapActionQueueWeaponIconGraphics
+        PROC_CALL rlMapActionQueueEffectGraphics
         PROC_YIELD 4
-        PROC_CALL rlMapActionUploadWeaponIconGraphics
+        PROC_CALL rlMapActionUploadEffectGraphics
         PROC_YIELD 4
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_YIELD 2

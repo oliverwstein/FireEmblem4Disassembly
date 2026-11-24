@@ -18,7 +18,7 @@ Numbers come from `python3 tools/counts.py`; quote nothing else.
 
 ## Who wrote what
 
-Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` (unsigned, no commit bodies) and will return around 2026-11-29. Its mechanical work (carving, merging, checksums) passes the build. Its names were never checked by anything: the Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
+Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (unsigned, no commit bodies) and Wave 10 (`3590264`..`3359cbb`, unsigned, with evidence bodies, plus the follow-up fixup commit carrying `Co-Authored-By: Gemini <noreply@google.com>`). Its mechanical work (carving, merging, checksums) passes the build. Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
 
 ## Decisions the user has made
 
