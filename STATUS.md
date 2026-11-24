@@ -60,7 +60,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | About 160 procs (175), about 1,700 dialogue texts (1,987), low work RAM "visible in every bank" (only `$00`-`$3F` and `$80`-`$BF`) | introduction, OUTLINE.md | `d829d5c` |
 | A soldier "under forty bytes" (65 with its inventory and block headers) | introduction | `fba2948` |
 | Locations listed as "castles, villages, and gates"; chapters have no gates. "All 256 individual items" (140 are used); "every mutable piece" of a chapter in one RAM block | Part I opener, OUTLINE.md | `8760225` |
-| The phase-flag table said to hold an army's phases back; it gates only the banner and music, and the army's events and AI still run | map.md, wip/the-turn-draft.md | `db30b1e` |
+| The phase-flag table said to hold an army's phases back; it gates only the banner and music, and the army's events and AI still run | map.md, wip/the-turn-draft.md | `f111508` |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 
 ## Retail bugs and quirks found
