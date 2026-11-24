@@ -29,7 +29,7 @@
         rep #$20
         jsl rlSetUpTitleIntroScene1
         jsl rlLoadTitleIntroGraphics
-        jsl rlUnknown9BE179
+        jsl rlInitTitleTopBorderHeight
         rtl
 
         .databank 0
@@ -3317,7 +3317,7 @@
       .al
       .xl
 
-      rlUnknown9BE179 ; 9B/E179
+      rlInitTitleTopBorderHeight ; 9B/E179
 
         .al
         .xl
@@ -3334,7 +3334,7 @@
 
         ; 9B/E184
 
-      rlUnknown9BE184 ; 9B/E184
+      rlBuildTitleTopBorderHDMA ; 9B/E184
 
         .al
         .xl
@@ -3488,7 +3488,7 @@
       .al
       .xl
 
-      rlUnknown9BE2A4 ; 9B/E2A4
+      rlTitleIntroScene7SpawnOrbitSprites ; 9B/E2A4
 
         .al
         .xl
@@ -3540,7 +3540,7 @@
       .al
       .xl
 
-      rlUnknown9BE2E3 ; 9B/E2E3
+      rlTitleIntroScene7EnableAllTrailsUnused ; 9B/E2E3
 
         .al
         .xl
@@ -3578,7 +3578,7 @@
       .al
       .xl
 
-      rlUnknown9BE2FD ; 9B/E2FD
+      rlTitleIntroScene7EnableTrailsFirst6 ; 9B/E2FD
 
         .al
         .xl
@@ -3606,7 +3606,7 @@
 
         ; 9B/E317
 
-      rlUnknown9BE317 ; 9B/E317
+      rlTitleIntroScene7EnableTrailsLast6 ; 9B/E317
 
         .al
         .xl
@@ -3642,7 +3642,7 @@
       .al
       .xl
 
-      rlUnknown9BE331 ; 9B/E331
+      rlStepTitleIntroScene7FadeTrailsUnused ; 9B/E331
 
         .al
         .xl
@@ -3702,7 +3702,7 @@
       .al
       .xl
 
-      rlUnknown9BE372 ; 9B/E372
+      rlStepTitleIntroScene7OrbitContract ; 9B/E372
 
         .al
         .xl
@@ -3730,7 +3730,7 @@
 
         ; 9B/E396
 
-      rlUnknown9BE396 ; 9B/E396
+      rlStartTitleIntroScene7OrbitDecel ; 9B/E396
 
         .al
         .xl
@@ -3739,10 +3739,10 @@
 
         lda #$0000
         sta $7FD631
-        jsl rlUnknown9BE3B0
-        lda #(`rlUnknown9BE3B0)<<8
+        jsl rlStepTitleIntroScene7OrbitDecel
+        lda #(`rlStepTitleIntroScene7OrbitDecel)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BE3B0
+        lda #<>rlStepTitleIntroScene7OrbitDecel
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -3758,7 +3758,7 @@
       .al
       .xl
 
-      rlUnknown9BE3B0 ; 9B/E3B0
+      rlStepTitleIntroScene7OrbitDecel ; 9B/E3B0
 
         .al
         .xl
@@ -3825,7 +3825,7 @@
       .al
       .xl
 
-      rlUnknown9BE40B ; 9B/E40B
+      rlStepTitleIntroScene7OrbitExpand ; 9B/E40B
 
         .al
         .xl
@@ -3854,7 +3854,7 @@
 
         ; 9B/E435
 
-      rlUnknown9BE435 ; 9B/E435
+      rlUpdateTitleIntroScene7OrbitSprites ; 9B/E435
 
         .al
         .xl
@@ -3946,7 +3946,7 @@
 
 
         _E4D4
-        jsl rlUnknown9BE4DB
+        jsl rlMirrorTitleIntroScene7OrbitSprites
         ply
         plx
         rtl
@@ -3963,7 +3963,7 @@
       .al
       .xl
 
-      rlUnknown9BE4DB ; 9B/E4DB
+      rlMirrorTitleIntroScene7OrbitSprites ; 9B/E4DB
 
         .al
         .xl
@@ -4066,7 +4066,7 @@
       .al
       .xl
 
-      rlUnknown9BE5B2 ; 9B/E5B2
+      rlStartTitleIntroScene1BG2WaveHDMA ; 9B/E5B2
 
         ; Found through fe4.cdl.
         .al
@@ -4075,9 +4075,9 @@
         .databank ?
 
         phx
-        lda #(`rlUnknown9BE619)<<8
+        lda #(`rlVBlankTitleIntroScene1BG2WaveHDMA)<<8
         sta lTitleVBlankRoutine1+1
-        lda #<>rlUnknown9BE619
+        lda #<>rlVBlankTitleIntroScene1BG2WaveHDMA
         sta lTitleVBlankRoutine1
         lda #(`aUnknown95E78F)<<8
         sta lR44+1
@@ -4086,9 +4086,9 @@
         lda #$0004
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown9BE5E4)<<8
+        lda #(`rlStepTitleIntroScene1BG2WaveHDMA)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BE5E4
+        lda #<>rlStepTitleIntroScene1BG2WaveHDMA
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -4097,7 +4097,7 @@
 
         ; 9B/E5E4
 
-      rlUnknown9BE5E4 ; 9B/E5E4
+      rlStepTitleIntroScene1BG2WaveHDMA ; 9B/E5E4
 
         .al
         .xl
@@ -4142,7 +4142,7 @@
 
         ; 9B/E619
 
-      rlUnknown9BE619 ; 9B/E619
+      rlVBlankTitleIntroScene1BG2WaveHDMA ; 9B/E619
 
         .al
         .xl
@@ -4212,7 +4212,7 @@
       .al
       .xl
 
-      rlUnknown9BE697 ; 9B/E697
+      rlStopTitleIntroScene1BG2WaveHDMA ; 9B/E697
 
         .al
         .xl
@@ -4231,7 +4231,7 @@
 
         ; 9B/E6AD
 
-      rlUnknown9BE6AD ; 9B/E6AD
+      rlStartTitleIntroScene7BG2WaveHDMA ; 9B/E6AD
 
         .al
         .xl
@@ -4239,9 +4239,9 @@
         .databank ?
 
         phx
-        lda #(`rlUnknown9BE714)<<8
+        lda #(`rlVBlankTitleIntroScene7BG2WaveHDMA)<<8
         sta lTitleVBlankRoutine1+1
-        lda #<>rlUnknown9BE714
+        lda #<>rlVBlankTitleIntroScene7BG2WaveHDMA
         sta lTitleVBlankRoutine1
         lda #(`aUnknown95E78F)<<8
         sta lR44+1
@@ -4250,9 +4250,9 @@
         lda #$0004
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #(`rlUnknown9BE6DF)<<8
+        lda #(`rlStepTitleIntroScene7BG2WaveHDMA)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BE6DF
+        lda #<>rlStepTitleIntroScene7BG2WaveHDMA
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -4269,7 +4269,7 @@
       .al
       .xl
 
-      rlUnknown9BE6DF ; 9B/E6DF
+      rlStepTitleIntroScene7BG2WaveHDMA ; 9B/E6DF
 
         .al
         .xl
@@ -4314,7 +4314,7 @@
 
         ; 9B/E714
 
-      rlUnknown9BE714 ; 9B/E714
+      rlVBlankTitleIntroScene7BG2WaveHDMA ; 9B/E714
 
         .al
         .xl
@@ -4384,7 +4384,7 @@
       .al
       .xl
 
-      rlUnknown9BE791 ; 9B/E791
+      rlStopTitleIntroScene7BG2WaveHDMA ; 9B/E791
 
         .al
         .xl
@@ -4403,7 +4403,7 @@
 
         ; 9B/E7A7
 
-      rlUnknown9BE7A7 ; 9B/E7A7
+      rlStartTitleIntroScene7BG1WaveHDMA ; 9B/E7A7
 
         .al
         .xl
@@ -4417,9 +4417,9 @@
         sta $7FD059
         lda #$0000
         sta $7FD05B
-        lda #(`rlUnknown9BE88E)<<8
+        lda #(`rlVBlankTitleIntroScene7BG1WaveHDMA)<<8
         sta lTitleVBlankRoutine2+1
-        lda #<>rlUnknown9BE88E
+        lda #<>rlVBlankTitleIntroScene7BG1WaveHDMA
         sta lTitleVBlankRoutine2
         lda #(`aUnknown95E79B)<<8
         sta lR44+1
@@ -4428,10 +4428,10 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        jsl rlUnknown9BE7F2
-        lda #(`rlUnknown9BE7F2)<<8
+        jsl rlStepTitleIntroScene7BG1WaveHDMA
+        lda #(`rlStepTitleIntroScene7BG1WaveHDMA)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BE7F2
+        lda #<>rlStepTitleIntroScene7BG1WaveHDMA
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -4448,7 +4448,7 @@
       .al
       .xl
 
-      rlUnknown9BE7F2 ; 9B/E7F2
+      rlStepTitleIntroScene7BG1WaveHDMA ; 9B/E7F2
 
         .al
         .xl
@@ -4541,7 +4541,7 @@
       .al
       .xl
 
-      rlUnknown9BE88E ; 9B/E88E
+      rlVBlankTitleIntroScene7BG1WaveHDMA ; 9B/E88E
 
         .al
         .xl
@@ -4595,7 +4595,7 @@
       .al
       .xl
 
-      rlUnknown9BE8D7 ; 9B/E8D7
+      rlStartTitleBG1TableWaveHDMAUnused ; 9B/E8D7
 
         .al
         .xl
@@ -4607,9 +4607,9 @@
         phx
         lda #$00C3
         sta $7FD057
-        lda #(`rlUnknown9BE971)<<8
+        lda #(`rlVBlankTitleBG1TableWaveHDMAUnused)<<8
         sta lTitleVBlankRoutine2+1
-        lda #<>rlUnknown9BE971
+        lda #<>rlVBlankTitleBG1TableWaveHDMAUnused
         sta lTitleVBlankRoutine2
         lda #(`aUnknown95E79B)<<8
         sta lR44+1
@@ -4618,10 +4618,10 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        jsl rlUnknown9BE914
-        lda #(`rlUnknown9BE914)<<8
+        jsl rlStepTitleBG1TableWaveHDMAUnused
+        lda #(`rlStepTitleBG1TableWaveHDMAUnused)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BE914
+        lda #<>rlStepTitleBG1TableWaveHDMAUnused
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -4630,7 +4630,7 @@
 
         ; 9B/E914
 
-      rlUnknown9BE914 ; 9B/E914
+      rlStepTitleBG1TableWaveHDMAUnused ; 9B/E914
 
         .al
         .xl
@@ -4695,7 +4695,7 @@
 
         ; 9B/E971
 
-      rlUnknown9BE971 ; 9B/E971
+      rlVBlankTitleBG1TableWaveHDMAUnused ; 9B/E971
 
         .al
         .xl
@@ -4745,7 +4745,7 @@
       .al
       .xl
 
-      rlUnknown9BE9AE ; 9B/E9AE
+      rlStartTitleIntroScene7CurtainHDMA ; 9B/E9AE
 
         .al
         .xl
@@ -4760,9 +4760,9 @@
         sta $7FD083
         lda #$FE72
         sta $7FD085
-        lda #(`rlUnknown9BEA5C)<<8
+        lda #(`rlVBlankTitleIntroScene7CurtainHDMA)<<8
         sta lTitleVBlankRoutine2+1
-        lda #<>rlUnknown9BEA5C
+        lda #<>rlVBlankTitleIntroScene7CurtainHDMA
         sta lTitleVBlankRoutine2
         lda #(`aUnknown95E7A7)<<8
         sta lR44+1
@@ -4771,10 +4771,10 @@
         lda #$0002
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        jsl rlUnknown9BE9FD
-        lda #(`rlUnknown9BE9FD)<<8
+        jsl rlStepTitleIntroScene7CurtainHDMA
+        lda #(`rlStepTitleIntroScene7CurtainHDMA)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BE9FD
+        lda #<>rlStepTitleIntroScene7CurtainHDMA
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -4791,7 +4791,7 @@
       .al
       .xl
 
-      rlUnknown9BE9FD ; 9B/E9FD
+      rlStepTitleIntroScene7CurtainHDMA ; 9B/E9FD
 
         .al
         .xl
@@ -4860,7 +4860,7 @@
       .al
       .xl
 
-      rlUnknown9BEA5C ; 9B/EA5C
+      rlVBlankTitleIntroScene7CurtainHDMA ; 9B/EA5C
 
         .al
         .xl
@@ -4905,7 +4905,7 @@
       .al
       .xl
 
-      rlUnknown9BF1F4 ; 9B/F1F4
+      rlTitleStartPaletteEffectAndFillBG1Unused ; 9B/F1F4
 
         .al
         .xl
@@ -4944,7 +4944,7 @@
       .al
       .xl
 
-      rlUnknown9BF218 ; 9B/F218
+      rlTitleIntroScene8StartPaletteEffect2 ; 9B/F218
 
         .al
         .xl
@@ -4981,7 +4981,7 @@
       .al
       .xl
 
-      rlUnknown9BF23C ; 9B/F23C
+      rlStartTitleIntroScene6ColdataFade ; 9B/F23C
 
         ; Found through fe4.cdl.
         .al
@@ -4998,10 +4998,10 @@
         sta bBufferCOLDATA_1
         sta bBufferCOLDATA_2
         rep #$20
-        jsl rlUnknown9BF264
-        lda #(`rlUnknown9BF264)<<8
+        jsl rlStepTitleIntroScene6ColdataFade
+        lda #(`rlStepTitleIntroScene6ColdataFade)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF264
+        lda #<>rlStepTitleIntroScene6ColdataFade
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -5009,7 +5009,7 @@
 
         ; 9B/F264
 
-      rlUnknown9BF264 ; 9B/F264
+      rlStepTitleIntroScene6ColdataFade ; 9B/F264
 
         .al
         .xl
@@ -5059,7 +5059,7 @@
       .al
       .xl
 
-      rlUnknown9BF3F3 ; 9B/F3F3
+      rlBuildTitleIntroScene7PaletteTable ; 9B/F3F3
 
         .al
         .xl
@@ -5164,7 +5164,7 @@
       .al
       .xl
 
-      rlUnknown9BF49E ; 9B/F49E
+      rlStartTitleIntroScene7PaletteFadeIn ; 9B/F49E
 
         .al
         .xl
@@ -5176,9 +5176,9 @@
         sta $7FD063
         lda #$0020
         sta $7FD061
-        lda #(`rlUnknown9BF4BF)<<8
+        lda #(`rlStepTitleIntroScene7PaletteFadeIn)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF4BF
+        lda #<>rlStepTitleIntroScene7PaletteFadeIn
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -5194,7 +5194,7 @@
       .al
       .xl
 
-      rlUnknown9BF4BF ; 9B/F4BF
+      rlStepTitleIntroScene7PaletteFadeIn ; 9B/F4BF
 
         .al
         .xl
@@ -5286,7 +5286,7 @@
       .al
       .xl
 
-      rlUnknown9BF548 ; 9B/F548
+      rlTitleIntroScene7FlashWhite ; 9B/F548
 
         .al
         .xl
@@ -5340,7 +5340,7 @@
       .al
       .xl
 
-      rlUnknown9BF57A ; 9B/F57A
+      rlStartTitleIntroScene7PaletteFadeOut ; 9B/F57A
 
         .al
         .xl
@@ -5353,9 +5353,9 @@
         sta $7FD063
         lda #$0020
         sta $7FD061
-        lda #(`rlUnknown9BF59E)<<8
+        lda #(`rlStepTitleIntroScene7PaletteFadeOut)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF59E
+        lda #<>rlStepTitleIntroScene7PaletteFadeOut
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -5371,7 +5371,7 @@
       .al
       .xl
 
-      rlUnknown9BF59E ; 9B/F59E
+      rlStepTitleIntroScene7PaletteFadeOut ; 9B/F59E
 
         .al
         .xl
@@ -5506,7 +5506,7 @@
 
         ; 9B/F65C
 
-      rlUnknown9BF65C ; 9B/F65C
+      rlStartTitleLogoGlintScroll ; 9B/F65C
 
         ; Found through fe4.cdl.
         .al
@@ -5535,10 +5535,10 @@
         bcc _F678
         lda #1,s
         tax
-        jsl rlUnknown9BF6B1
-        lda #(`rlUnknown9BF6B1)<<8
+        jsl rlStepTitleLogoGlintScroll
+        lda #(`rlStepTitleLogoGlintScroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF6B1
+        lda #<>rlStepTitleLogoGlintScroll
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -5573,7 +5573,7 @@
       .al
       .xl
 
-      rlUnknown9BF6B1 ; 9B/F6B1
+      rlStepTitleLogoGlintScroll ; 9B/F6B1
 
         .al
         .xl
@@ -5604,7 +5604,7 @@
 
         ; 9B/F6D6
 
-      rlUnknown9BF6D6 ; 9B/F6D6
+      rlStartTitleLogoBG3Drift ; 9B/F6D6
 
         ; Found through fe4.cdl.
         .al
@@ -5628,10 +5628,10 @@
         sta $7FD069
         lda #1,s
         tax
-        jsl rlUnknown9BF726
-        lda #(`rlUnknown9BF726)<<8
+        jsl rlStepTitleLogoBG3Drift
+        lda #(`rlStepTitleLogoBG3Drift)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF726
+        lda #<>rlStepTitleLogoBG3Drift
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -5665,7 +5665,7 @@
       .al
       .xl
 
-      rlUnknown9BF726 ; 9B/F726
+      rlStepTitleLogoBG3Drift ; 9B/F726
 
         .al
         .xl
@@ -5730,7 +5730,7 @@
       .al
       .xl
 
-      rlUnknown9BF77A ; 9B/F77A
+      rlStartTitleLogoBG2Reveal ; 9B/F77A
 
         .al
         .xl
@@ -5747,12 +5747,12 @@
         inc x
         cpx #$0700
         bcc _F782
-        jsr rsUnknown9BF9E3
+        jsr rsQueueTitleLogoBG2TilemapUpload
         lda #1,s
         tax
-        lda #(`rlUnknown9BF7A3)<<8
+        lda #(`rlTitleLogoBG2RevealSetup)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF7A3
+        lda #<>rlTitleLogoBG2RevealSetup
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -5769,7 +5769,7 @@
       .al
       .xl
 
-      rlUnknown9BF7A3 ; 9B/F7A3
+      rlTitleLogoBG2RevealSetup ; 9B/F7A3
 
         .al
         .xl
@@ -5799,9 +5799,9 @@
         bcc _F7BF
         lda #1,s
         tax
-        lda #(`rlUnknown9BF7F0)<<8
+        lda #(`rlTitleLogoBG2RevealStep1)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF7F0
+        lda #<>rlTitleLogoBG2RevealStep1
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -5832,7 +5832,7 @@
       .al
       .xl
 
-      rlUnknown9BF7F0 ; 9B/F7F0
+      rlTitleLogoBG2RevealStep1 ; 9B/F7F0
 
         .al
         .xl
@@ -5857,12 +5857,12 @@
         tax
         cpx #$0700
         bcc _F7F4
-        jsr rsUnknown9BF9E3
+        jsr rsQueueTitleLogoBG2TilemapUpload
         lda #1,s
         tax
-        lda #(`rlUnknown9BF835)<<8
+        lda #(`rlTitleLogoBG2RevealStep2)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF835
+        lda #<>rlTitleLogoBG2RevealStep2
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -5879,7 +5879,7 @@
       .al
       .xl
 
-      rlUnknown9BF835 ; 9B/F835
+      rlTitleLogoBG2RevealStep2 ; 9B/F835
 
         .al
         .xl
@@ -5912,12 +5912,12 @@
         tax
         cpx #$0700
         bcc _F839
-        jsr rsUnknown9BF9E3
+        jsr rsQueueTitleLogoBG2TilemapUpload
         lda #1,s
         tax
-        lda #(`rlUnknown9BF89A)<<8
+        lda #(`rlTitleLogoBG2RevealStep3)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF89A
+        lda #<>rlTitleLogoBG2RevealStep3
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -5934,7 +5934,7 @@
       .al
       .xl
 
-      rlUnknown9BF89A ; 9B/F89A
+      rlTitleLogoBG2RevealStep3 ; 9B/F89A
 
         .al
         .xl
@@ -5963,12 +5963,12 @@
         tax
         cpx #$0700
         bcc _F89F
-        jsr rsUnknown9BF9E3
+        jsr rsQueueTitleLogoBG2TilemapUpload
         lda #3,s
         tax
-        lda #(`rlUnknown9BF8D9)<<8
+        lda #(`rlTitleLogoBG2RevealStep4)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF8D9
+        lda #<>rlTitleLogoBG2RevealStep4
         sta aTitleTimelineSlots.lRoutine,x
         ply
         plx
@@ -5986,7 +5986,7 @@
       .al
       .xl
 
-      rlUnknown9BF8D9 ; 9B/F8D9
+      rlTitleLogoBG2RevealStep4 ; 9B/F8D9
 
         .al
         .xl
@@ -6015,12 +6015,12 @@
         tax
         cpx #$0700
         bcc _F8DE
-        jsr rsUnknown9BF9E3
+        jsr rsQueueTitleLogoBG2TilemapUpload
         lda #3,s
         tax
-        lda #(`rlUnknown9BF918)<<8
+        lda #(`rlTitleLogoBG2RevealStep5)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF918
+        lda #<>rlTitleLogoBG2RevealStep5
         sta aTitleTimelineSlots.lRoutine,x
         ply
         plx
@@ -6038,7 +6038,7 @@
       .al
       .xl
 
-      rlUnknown9BF918 ; 9B/F918
+      rlTitleLogoBG2RevealStep5 ; 9B/F918
 
         .al
         .xl
@@ -6067,12 +6067,12 @@
         tax
         cpx #$0700
         bcc _F91D
-        jsr rsUnknown9BF9E3
+        jsr rsQueueTitleLogoBG2TilemapUpload
         lda #3,s
         tax
-        lda #(`rlUnknown9BF957)<<8
+        lda #(`rlTitleLogoBG2RevealStep6)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF957
+        lda #<>rlTitleLogoBG2RevealStep6
         sta aTitleTimelineSlots.lRoutine,x
         ply
         plx
@@ -6090,7 +6090,7 @@
       .al
       .xl
 
-      rlUnknown9BF957 ; 9B/F957
+      rlTitleLogoBG2RevealStep6 ; 9B/F957
 
         .al
         .xl
@@ -6119,12 +6119,12 @@
         tax
         cpx #$0700
         bcc _F95C
-        jsr rsUnknown9BF9E3
+        jsr rsQueueTitleLogoBG2TilemapUpload
         lda #3,s
         tax
-        lda #(`rlUnknown9BF996)<<8
+        lda #(`rlTitleLogoBG2RevealStep7)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF996
+        lda #<>rlTitleLogoBG2RevealStep7
         sta aTitleTimelineSlots.lRoutine,x
         ply
         plx
@@ -6142,7 +6142,7 @@
       .al
       .xl
 
-      rlUnknown9BF996 ; 9B/F996
+      rlTitleLogoBG2RevealStep7 ; 9B/F996
 
         .al
         .xl
@@ -6171,12 +6171,12 @@
         tax
         cpx #$0700
         bcc _F99B
-        jsr rsUnknown9BF9E3
+        jsr rsQueueTitleLogoBG2TilemapUpload
         lda #3,s
         tax
-        lda #(`rlUnknown9BF9D5)<<8
+        lda #(`rlTitleLogoBG2RevealFinish)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF9D5
+        lda #<>rlTitleLogoBG2RevealFinish
         sta aTitleTimelineSlots.lRoutine,x
         ply
         plx
@@ -6194,14 +6194,14 @@
       .al
       .xl
 
-      rlUnknown9BF9D5 ; 9B/F9D5
+      rlTitleLogoBG2RevealFinish ; 9B/F9D5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9BF9FA
+        jsr rsQueueTitleLogoBG2FullTilemapUpload
         sep #$20
         lda #$00
         sta aTitleTimelineSlots,x
@@ -6220,7 +6220,7 @@
       .al
       .xl
 
-      rsUnknown9BF9E3 ; 9B/F9E3
+      rsQueueTitleLogoBG2TilemapUpload ; 9B/F9E3
 
         .al
         .xl
@@ -6250,7 +6250,7 @@
       .al
       .xl
 
-      rsUnknown9BF9FA ; 9B/F9FA
+      rsQueueTitleLogoBG2FullTilemapUpload ; 9B/F9FA
 
         .al
         .xl
@@ -6280,7 +6280,7 @@
       .al
       .xl
 
-      rlUnknown9BFA11 ; 9B/FA11
+      rlStartTitleIntroScene8BG1Scroll ; 9B/FA11
 
         .al
         .xl
@@ -6290,10 +6290,10 @@
         phx
         lda #$0000
         sta $7FD04A
-        jsl rlUnknown9BFA2D
-        lda #(`rlUnknown9BFA2D)<<8
+        jsl rlStepTitleIntroScene8BG1Scroll
+        lda #(`rlStepTitleIntroScene8BG1Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BFA2D
+        lda #<>rlStepTitleIntroScene8BG1Scroll
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -6310,7 +6310,7 @@
       .al
       .xl
 
-      rlUnknown9BFA2D ; 9B/FA2D
+      rlStepTitleIntroScene8BG1Scroll ; 9B/FA2D
 
         .al
         .xl
@@ -6355,7 +6355,7 @@
       .al
       .xl
 
-      rlUnknown9BFA58 ; 9B/FA58
+      rlTitleFadeOutSetBG2SC ; 9B/FA58
 
         ; Found through fe4.cdl.
         .al
@@ -6397,7 +6397,7 @@
       .al
       .xl
 
-      rlUnknown9BFA6E ; 9B/FA6E
+      rlTitleFadeOutClearBG2TileBase ; 9B/FA6E
 
         ; Found through fe4.cdl.
         .al
@@ -6439,7 +6439,7 @@
       .al
       .xl
 
-      rlUnknown9BFA85 ; 9B/FA85
+      rlTitleFadeOutShowBG2Only ; 9B/FA85
 
         ; Found through fe4.cdl.
         .al
@@ -6483,7 +6483,7 @@
       .al
       .xl
 
-      rlUnknown9BFAA1 ; 9B/FAA1
+      rlTitleFadeOutRestoreBG2SC ; 9B/FAA1
 
         ; Found through fe4.cdl.
         .al
@@ -6604,9 +6604,9 @@
         bcc _FAF0
         lda #1,s
         tax
-        lda #(`rlUnknown9BFB5D)<<8
+        lda #(`rlFinishDimmingTitle)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BFB5D
+        lda #<>rlFinishDimmingTitle
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -6642,7 +6642,7 @@
       .al
       .xl
 
-      rlUnknown9BFB5D ; 9B/FB5D
+      rlFinishDimmingTitle ; 9B/FB5D
 
         .al
         .xl
@@ -6799,7 +6799,7 @@
       .al
       .xl
 
-      rlUnknown9BFBB0 ; 9B/FBB0
+      rlPlayTitleIntroSound5 ; 9B/FBB0
 
         .al
         .xl
@@ -6814,7 +6814,7 @@
 
         ; 9B/FBB8
 
-      rlUnknown9BFBB8 ; 9B/FBB8
+      rlPlayTitleIntroSound13 ; 9B/FBB8
 
         .al
         .xl

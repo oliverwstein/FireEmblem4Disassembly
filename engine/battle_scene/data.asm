@@ -984,7 +984,7 @@
 
       aUnknown97FB12 ; 97/FB12
 
-        ; Read by rlUnknown9BE5E4.
+        ; Read by rlStepTitleIntroScene1BG2WaveHDMA.
 
         .word $0000, $0000, $0001, $0001, $0001, $0002, $0002, $0002
         .word $0002, $0002, $0002, $0001, $0001, $0001, $0000, $0000
@@ -2993,7 +2993,7 @@
 
       aUnknownE0273B ; E0/273B
 
-        ; Read by rlUnknown9BF65C.
+        ; Read by rlStartTitleLogoGlintScroll.
 
         .word $1084, $2108, $318C, $4265, $318C, $4210, $18C6, $4265
         .word $296B, $1084, $18C6, $4265
@@ -4168,7 +4168,7 @@
 
       aUnknownE024E3 ; E0/24E3
 
-        ; Read by rlUnknown9BF3F3.
+        ; Read by rlBuildTitleIntroScene7PaletteTable.
 
         .word $0187, $2BFF, $3C20, $0236, $4379, $2F7C, $7FFF, $0DF8
         .word $2278, $0552, $016A, $477C, $0045, $21B4, $0974, $464F

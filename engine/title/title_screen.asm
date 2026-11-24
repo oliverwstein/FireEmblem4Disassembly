@@ -1283,7 +1283,7 @@
         jsl rlStartTitleLoadList
         jsl rlBattleSceneScriptClearLoading
         jsl rlSetUpTitleIntro
-        jsl rlUnknown9BF3F3
+        jsl rlBuildTitleIntroScene7PaletteTable
         jsl rlFreeBattleScenePaletteSlots
         jsl rlBattleSceneResetWindowEffect1
         jsl rlBattleSceneResetWindowEffect2
@@ -1435,7 +1435,7 @@
 
 
         _DD62
-        jsl rlUnknown9BE184
+        jsl rlBuildTitleTopBorderHDMA
         jsr rsRunTitleTimeline
         jsr rsRunTitleTimelineSlots
         jsl rlRunTitleLoadList
@@ -1473,7 +1473,7 @@
         jsl rlTitleScreenStartFadeOut
 
         _DDAD
-        jsl rlUnknown9BE184
+        jsl rlBuildTitleTopBorderHDMA
         jsr rsRunTitleTimeline
         jsr rsRunTitleTimelineSlots
         jsl rlRunTitleLoadList
@@ -1504,7 +1504,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9BE184
+        jsl rlBuildTitleTopBorderHDMA
         jsr rsRunTitleTimeline
         jsr rsRunTitleTimelineSlots
         jsl rlRunTitleLoadList
