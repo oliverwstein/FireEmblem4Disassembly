@@ -1639,7 +1639,7 @@
         ldx #$001E
 
         _A966
-        lda aUnknown8CEBC0,x
+        lda aOpeningSkyScenePalette2,x
         sta aBGPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -1647,7 +1647,7 @@
         ldx #$001C
 
         _A974
-        lda aUnknown8CEB00+2,x
+        lda aOpeningSkyScenePalette1+2,x
         sta $0102,b,x
         dec x
         dec x
@@ -1765,7 +1765,7 @@
         ldx #$001E
 
         _AA70
-        lda aUnknown8CEBC0,x
+        lda aOpeningSkyScenePalette2,x
         sta aBGPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -1773,7 +1773,7 @@
         ldx #$001C
 
         _AA7E
-        lda aUnknown8CEB00+2,x
+        lda aOpeningSkyScenePalette1+2,x
         sta $0102,b,x
         dec x
         dec x

@@ -1769,7 +1769,7 @@
         ldx #$001E
 
         _8CBA
-        lda aUnknown8C9800,x
+        lda aCastleCourtyardBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -1989,7 +1989,7 @@
         ldx #$01FE
 
         _8ED9
-        lda aUnknown8C9800,x
+        lda aCastleCourtyardBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -2078,7 +2078,7 @@
         ldx #$00FE
 
         _8F6E
-        lda aUnknown8C9800,x
+        lda aCastleCourtyardBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x

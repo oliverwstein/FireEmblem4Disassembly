@@ -1,8 +1,8 @@
 ; Palettes (BGR555), carved by tools/carve_palettes.py.
 
-    .section Unknown8CPalettes8C9800Section
+    .section BGPalettes8C9800Section
 
-      aUnknown8C9800 ; 8C/9800
+      aCastleCourtyardBGPalettes ; 8C/9800
         .word $5F90, $7F7F, $7F7F, $7F7F, $7F7F, $0421, $18C6, $56B5
         .word $4631, $3DEF, $35AD, $2D6B, $2529, $18C6, $0C63, $0421
         .word $3000, $3985, $7FBB, $0020, $7F7F, $0CC6, $6BBF, $0021
@@ -88,9 +88,9 @@
         .word $3800, $1175, $367C, $46DE, $573F, $73BF, $4210, $56D5
         .word $7BDD, $00AD, $11D6, $22BC, $375F, $1105, $1569, $2210
 
-    .endsection Unknown8CPalettes8C9800Section
+    .endsection BGPalettes8C9800Section
 
-    .section Unknown8CPalettes8CA000Section
+    .section BGPalettes8CA000Section
 
       aFountainBackgroundPaletteAnim ; 8C/A000
         .word $5580, $5600, $5660, $5580, $5600, $5660, $5580, $5600
@@ -126,7 +126,7 @@
         .word $3800, $001F, $03E0, $7C00, $03FF, $7FE0, $7C1F, $7FFF
         .word $0000, $0010, $0200, $4000, $0210, $4200, $4010, $4210
 
-      aUnknown8CA200 ; 8C/A200
+      aEpilogueCreditsBGPalettes ; 8C/A200
         .word $0000, $318B, $7FFF, $1484, $0000, $3103, $5310, $0C41
         .word $0000, $001F, $0001, $7FBF, $0000, $0113, $4FBF, $0441
         .word $2D6C, $1D8E, $03F1, $0325, $0203, $10EB, $0066, $0023
@@ -160,7 +160,7 @@
         .word $5FDC, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-      aUnknown8CA400 ; 8C/A400
+      aEpilogueRankingsBGPalettes ; 8C/A400
         .word $0000, $2D8C, $7FFF, $0C62, $0000, $0171, $1DD2, $3656
         .word $0000, $4205, $4E48, $5ECB, $5ED5, $154A, $2E14, $0024
         .word $0000, $1860, $3140, $4A00, $5ED5, $2880, $4DE0, $72C0
@@ -230,9 +230,9 @@
         .word $3C3C, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0C00, $0000, $0000, $0000, $0000
 
-    .endsection Unknown8CPalettes8CA000Section
+    .endsection BGPalettes8CA000Section
 
-    .section Unknown8CPalettes8CD000Section
+    .section BGPalettes8CD000Section
 
       aCastleClassChangeBGPalettes ; 8C/D000
         .word $420F, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
@@ -438,11 +438,11 @@
         .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-    .endsection Unknown8CPalettes8CD000Section
+    .endsection BGPalettes8CD000Section
 
-    .section Unknown8CPalettes8CEB00Section
+    .section BGPalettes8CEB00Section
 
-      aUnknown8CEB00 ; 8C/EB00
+      aOpeningSkyScenePalette1 ; 8C/EB00
         .word $3632, $20C6, $1484, $0C42, $7FFF, $7FFF, $7FFF, $7FFF
         .word $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
         .word $1C21, $0020, $0C64, $0A06, $10E0, $0860, $1522, $0CA3
@@ -456,7 +456,7 @@
         .word $2C21, $0923, $25A7, $25A7, $2165, $1D44, $1923, $0D02
         .word $0CC4, $1545, $0D25, $0D03, $08E2, $08A2, $0862, $0882
 
-      aUnknown8CEBC0 ; 8C/EBC0
+      aOpeningSkyScenePalette2 ; 8C/EBC0
         .word $0001, $4E73, $4610, $41EF, $39AD, $358C, $314A, $2D29
         .word $2908, $24E7, $20C6, $18A5, $1484, $0C42, $0821, $0800
         .word $4001, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
@@ -482,4 +482,4 @@
         .word $024D, $0842, $4864, $3824, $435C, $DA97, $5E33, $5D71
         .word $C4B1, $C4AA, $C8A6, $4864, $3824, $3022, $2022, $1440
 
-    .endsection Unknown8CPalettes8CEB00Section
+    .endsection BGPalettes8CEB00Section

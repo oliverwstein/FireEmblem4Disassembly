@@ -229,7 +229,7 @@
   .include "data/battle_animation/frames_9B.asm"
   .include "data/battle_animation/moves.asm"
   .include "audio/sound_data.asm"
-  .include "data/palettes/Unknown8CPalettes.asm"
+  .include "data/palettes/BGPalettes8C.asm"
 
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
@@ -4673,13 +4673,13 @@
 
       .dsection Data8C9400Section
 
-      .dsection Unknown8CPalettes8C9800Section
+      .dsection BGPalettes8C9800Section
 
       .dsection Data8C9D00Section
 
       .dsection BackgroundPalettes8C9E00Section
 
-      .dsection Unknown8CPalettes8CA000Section
+      .dsection BGPalettes8CA000Section
 
       .include "data/PortraitPalettes.asm"
 
@@ -4689,7 +4689,7 @@
 
       .dsection BackgroundPalettes8CCC00Section
 
-      .dsection Unknown8CPalettes8CD000Section
+      .dsection BGPalettes8CD000Section
 
       .dsection Table8CDC00Section
 
@@ -4783,7 +4783,7 @@
     * = $0CEB00
     .logical $8CEB00
 
-      .dsection Unknown8CPalettes8CEB00Section
+      .dsection BGPalettes8CEB00Section
 
       .dsection Unsorted8CED00Section
 

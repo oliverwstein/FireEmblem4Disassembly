@@ -423,7 +423,7 @@
         .autsiz
         .databank ?
 
-        ; Unreferenced credits setup loading dialogueEpilogueCredits8DC964, aUnknown8CA200, callback rlSetUpEpilogueTextWindowUnused
+        ; Unreferenced credits setup loading dialogueEpilogueCredits8DC964, aEpilogueCreditsBGPalettes, callback rlSetUpEpilogueTextWindowUnused
 
         jsl rlEvaluateEpilogueEndings
         lda #$0002
@@ -443,7 +443,7 @@
         ldx #$01FE
 
         _EDB0
-        lda aUnknown8CA200,x
+        lda aEpilogueCreditsBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -604,7 +604,7 @@
         ldx #$01FE
 
         _EEF4
-        lda aUnknown8CA200,x
+        lda aEpilogueCreditsBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -703,7 +703,7 @@
         .autsiz
         .databank ?
 
-        ; wEpiloguePart 2/step 6: clears VRAM, loads ranking gfx, aUnknown8CA400, score-based song, dialogueEpilogueCredits8DC9FF
+        ; wEpiloguePart 2/step 6: clears VRAM, loads ranking gfx, aEpilogueRankingsBGPalettes, score-based song, dialogueEpilogueCredits8DC9FF
 
         sep #$20
         lda #$80
@@ -785,7 +785,7 @@
         ldx #$01FE
 
         _F09D
-        lda aUnknown8CA400,x
+        lda aEpilogueRankingsBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -1723,7 +1723,7 @@
         .autsiz
         .databank ?
 
-        ; Blanks the screen, loads the end screen (aDecompressionDMAEntry8DAF95/9D and the palettes at aUnknown8CA400) and shows BG2.
+        ; Blanks the screen, loads the end screen (aDecompressionDMAEntry8DAF95/9D and the palettes at aEpilogueRankingsBGPalettes) and shows BG2.
 
         sep #$20
         lda #$80
@@ -1748,7 +1748,7 @@
         ldx #$01FE
 
         _AF6F
-        lda aUnknown8CA400,x
+        lda aEpilogueRankingsBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x

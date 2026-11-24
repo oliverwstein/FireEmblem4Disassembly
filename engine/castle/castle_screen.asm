@@ -447,7 +447,7 @@
         ldx #$00FE
 
         _B8A6
-        lda aUnknown8C9800,x
+        lda aCastleCourtyardBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
