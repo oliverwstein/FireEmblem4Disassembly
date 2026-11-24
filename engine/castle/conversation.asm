@@ -255,7 +255,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM g4bppUnknownDA7A00, $0400, $80, $C400
+          .structDMAToVRAM g4bppConversationSprites, $0400, $80, $C400
 
         ldx #$07FE
         lda #$00FF

@@ -2581,12 +2581,12 @@
         .autsiz
         .databank ?
 
-        ; Uploads coin OAM tiles (g4bppUnknownAFC400) and aGiveGoldCoinOAMPalette to OAM palette 6.
+        ; Uploads coin OAM tiles (g4bppGiveGoldSprites) and aGiveGoldCoinOAMPalette to OAM palette 6.
 
         phx
-        lda #(`g4bppUnknownAFC400)<<8
+        lda #(`g4bppGiveGoldSprites)<<8
         sta lR18+1
-        lda #<>g4bppUnknownAFC400
+        lda #<>g4bppGiveGoldSprites
         sta lR18
         lda #$0400
         sta wR0

@@ -424,7 +424,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gWorldMapCursorTiles, $01C0, $80, $AD40
+          .structDMAToVRAM gUnknownD97940, $01C0, $80, $AD40
 
         lda #0
         sta wEpilogueTimer

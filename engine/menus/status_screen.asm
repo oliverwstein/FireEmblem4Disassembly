@@ -237,7 +237,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM g4bppUnknownDE0A00, $0C00, $80, $E800
+          .structDMAToVRAM g4bppStatusScreenHolyBloodIcons, $0C00, $80, $E800
 
         jsl rlDMAByStruct
 

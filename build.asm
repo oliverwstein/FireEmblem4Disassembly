@@ -7419,7 +7419,7 @@
 
       gUnknownD97400 .binary "gfx/ui/tilemaps/UnknownD97400.bin" ; D97400, unreferenced
 
-      gWorldMapCursorTiles .binary "gfx/ui/tilemaps/WorldMapCursorTiles.bin" ; D97940
+      gUnknownD97940 .binary "gfx/ui/tilemaps/UnknownD97940.bin" ; D97940
 
       gUnknownD97B00 .binary "gfx/ui/tilemaps/UnknownD97B00.bin" ; D97B00, unreferenced
 
@@ -7478,7 +7478,7 @@
 
       gUnknownDA7800 .binary "gfx/ui/tilemaps/UnknownDA7800.bin" ; DA7800, unreferenced
 
-      g4bppUnknownDA7A00 .binary "gfx/ui/UnknownDA7A00.4bpp" ; DA7A00
+      g4bppConversationSprites .binary "gfx/ui/ConversationSprites.4bpp" ; DA7A00
 
     .here
 
@@ -7688,9 +7688,9 @@
     * = $1CF000
     .logical $9CF000
 
-      g4bppMapBattleLevelUpText .binary "gfx/ui/Unknown9CF000.4bpp" ; 9CF000
+      g4bppMapBattleLevelUpText .binary "gfx/ui/MapBattleLevelUpText.4bpp" ; 9CF000
 
-      g4bppMapBattleStatNames .binary "gfx/ui/Unknown9CF600.4bpp" ; 9CF600
+      g4bppMapBattleStatNames .binary "gfx/ui/MapBattleStatNames.4bpp" ; 9CF600
 
       .dsection Data9CFC00Section
 
@@ -7975,7 +7975,7 @@
 
       g4bppWeaponTypeIcons .binary "gfx/ui/WeaponTypeIcons.4bpp" ; DE0200
 
-      g4bppUnknownDE0A00 .binary "gfx/ui/UnknownDE0A00.4bpp" ; DE0A00
+      g4bppStatusScreenHolyBloodIcons .binary "gfx/ui/StatusScreenHolyBloodIcons.4bpp" ; DE0A00
 
       gStatusScreenTilemap4 .binary "gfx/ui/tilemaps/StatusScreenTilemap4.bin" ; DE1600
 
@@ -8662,7 +8662,7 @@
     * = $1FFC00
     .logical $9FFC00
 
-      g4bppMapBattlePavise .binary "gfx/ui/Unknown9FFC00.4bpp", 0, $0400 ; 9F/FC00
+      g4bppMapBattlePavise .binary "gfx/ui/MapBattlePavise.4bpp", 0, $0400 ; 9F/FC00
 
     .here
 
@@ -8966,7 +8966,7 @@
     * = $2DFF80
     .logical $ADFF80
 
-      g4bppMapBattleShadow .binary "gfx/ui/UnknownADFF80.4bpp", 0, $0080 ; AD/FF80
+      g4bppMapBattleShadow .binary "gfx/ui/MapBattleShadow.4bpp", 0, $0080 ; AD/FF80
 
     .here
 
@@ -9120,7 +9120,7 @@
     * = $2FC400
     .logical $AFC400
 
-      g4bppUnknownAFC400 .binary "gfx/ui/UnknownAFC400.4bpp", 0, $0400 ; AF/C400
+      g4bppGiveGoldSprites .binary "gfx/ui/GiveGoldSprites.4bpp", 0, $0400 ; AF/C400
 
       .dsection BackgroundPalettesAFC800Section
 
