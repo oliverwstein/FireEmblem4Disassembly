@@ -31,7 +31,7 @@
         jsl rlCopyPPURegisterBuffer
         jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
-        jsl rlUnknown82E147
+        jsl rlIRQEngineSyncAndSort
         lda $7FFC77
         bit #$0001
         beq _BF89
@@ -103,28 +103,28 @@
         sta lR44+1
         lda #<>aUnknown968095
         sta lR44
-        jsl rlUnknown82E0C6
+        jsl rlIRQEngineCreateEntry
         lda #(`aUnknown968000)<<8
         sta lR44+1
         lda #<>aUnknown968000
         sta lR44
-        jsl rlUnknown82E0C6
+        jsl rlIRQEngineCreateEntry
         lda #(`aUnknown96800F)<<8
         sta lR44+1
         lda #<>aUnknown96800F
         sta lR44
-        jsl rlUnknown82E0C6
+        jsl rlIRQEngineCreateEntry
         lda #(`aUnknown968050)<<8
         sta lR44+1
         lda #<>aUnknown968050
         sta lR44
-        jsl rlUnknown82E0C6
+        jsl rlIRQEngineCreateEntry
         lda #(`aUnknown968078)<<8
         sta lR44+1
         lda #<>aUnknown968078
         sta lR44
-        jsl rlUnknown82E0C6
-        jsl rlUnknown82E08D
+        jsl rlIRQEngineCreateEntry
+        jsl rlEnableIRQEngine
         lda #GAMESTATE_BATTLE_SCENE_SETUP
         sta wGameStateRoutine1,b
         lda #<>rsRunBattleSceneVBlank

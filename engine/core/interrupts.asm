@@ -389,7 +389,7 @@
 
         stz $169A,b,x
         stz $16DA,b,x
-        jsr rsUnknown82E177
+        jsr rsIRQEngineSortEntries
         dec $1695,b
         pla
         rts
@@ -721,7 +721,7 @@
         dec x
         dec x
         stx $1691,b
-        jsr rsUnknown82E283
+        jsr rsIRQEngineProgramNextEntry
 
         _E280
         plp

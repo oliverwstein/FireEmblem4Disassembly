@@ -517,9 +517,9 @@
         and #$00FF
         pha
 
-        lda #(`procUnknown8292A9)<<8
+        lda #(`procEventNoOp)<<8
         sta lR44+1
-        lda #<>procUnknown8292A9
+        lda #<>procEventNoOp
         sta lR44
 
         jsl rlEventEngineCreateProc
@@ -749,9 +749,9 @@
 
         phy
 
-        lda #(`procUnknown8293AE)<<8
+        lda #(`procEventCyclePalette)<<8
         sta lR44+1
-        lda #<>procUnknown8293AE
+        lda #<>procEventCyclePalette
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -889,9 +889,9 @@
         and #$00FF
         sta wMusicID,b
 
-        lda #(`procUnknown828AF2)<<8
+        lda #(`procEventWaitMapBattleEnd)<<8
         sta lR44+1
-        lda #<>procUnknown828AF2
+        lda #<>procEventWaitMapBattleEnd
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -999,9 +999,9 @@
         phy
         jsl rlResumePhaseMusic
 
-        lda #(`procUnknown828AF2)<<8
+        lda #(`procEventWaitMapBattleEnd)<<8
         sta lR44+1
-        lda #<>procUnknown828AF2
+        lda #<>procEventWaitMapBattleEnd
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -1089,9 +1089,9 @@
         phy
         jsl rlTryStartLoverHomeCastleConversation
 
-        lda #(`procUnknown828A88)<<8
+        lda #(`procEventDialogueWithBG)<<8
         sta lR44+1
-        lda #<>procUnknown828A88
+        lda #<>procEventDialogueWithBG
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -1579,7 +1579,7 @@
 
         phx
         ldx wR2
-        lda aUnknown91C21D,x
+        lda aEventUnitAllegianceValues,x
         and #$00FF
         sta wR6
         plx
@@ -1603,7 +1603,7 @@
 
         .databank 0
 
-      aUnknown91C21D ; 91/C21D
+      aEventUnitAllegianceValues ; 91/C21D
 
         ; Indexed with allegiance
 
@@ -2305,7 +2305,7 @@
 
         +
         lda wR0
-        jsr rsUnknown91C56C
+        jsr rsDispatchEventUnitMoveHandler
         sty wR0
 
         pla
@@ -2321,11 +2321,13 @@
 
         .databank 0
 
-      rsUnknown91C56C ; 91/C56C
+      rsDispatchEventUnitMoveHandler ; 91/C56C
 
         .al
         .autsiz
         .databank ?
+
+        ; Dispatches event unit move/load handler A via aEventUnitMoveHandlers
 
         ; Unit movement?
 
@@ -2402,9 +2404,9 @@
           bra _End
 
         +
-        lda #(`procUnknown828431)<<8
+        lda #(`procEventWaitMapSpritesHalting)<<8
         sta lR44+1
-        lda #<>procUnknown828431
+        lda #<>procEventWaitMapSpritesHalting
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2616,9 +2618,9 @@
         php
         phy
 
-        lda #(`procUnknown828BEA)<<8
+        lda #(`procEventPaletteSwap)<<8
         sta lR44+1
-        lda #<>procUnknown828BEA
+        lda #<>procEventPaletteSwap
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2670,9 +2672,9 @@
         php
         phy
 
-        lda #(`procUnknown8292B6)<<8
+        lda #(`procEventRunScriptLoop)<<8
         sta lR44+1
-        lda #<>procUnknown8292B6
+        lda #<>procEventRunScriptLoop
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2940,9 +2942,9 @@
         sta lR44
         jsl rlProcEngineCreateProc
 
-        lda #(`procUnknown828A30)<<8
+        lda #(`procEventWaitFadeToMap)<<8
         sta lR44+1
-        lda #<>procUnknown828A30
+        lda #<>procEventWaitFadeToMap
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2964,9 +2966,9 @@
         php
         phy
 
-        lda #(`procUnknown828CA3)<<8
+        lda #(`procEventShowMapAndScroll)<<8
         sta lR44+1
-        lda #<>procUnknown828CA3
+        lda #<>procEventShowMapAndScroll
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2986,9 +2988,9 @@
         php
         phy
 
-        lda #(`procUnknown828ECB)<<8
+        lda #(`procEventShowEmptyMap)<<8
         sta lR44+1
-        lda #<>procUnknown828ECB
+        lda #<>procEventShowEmptyMap
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -3008,9 +3010,9 @@
         php
         phy
 
-        lda #(`procUnknown828D52)<<8
+        lda #(`procEventSmoothMapScroll)<<8
         sta lR44+1
-        lda #<>procUnknown828D52
+        lda #<>procEventSmoothMapScroll
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -3644,9 +3646,9 @@
         phy
         rep #$30
 
-        lda #(`procUnknown829245)<<8
+        lda #(`procEventWaitButtonPress)<<8
         sta lR44+1
-        lda #<>procUnknown829245
+        lda #<>procEventWaitButtonPress
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -3668,9 +3670,9 @@
         phy
         rep #$30
 
-        lda #(`procUnknown82925E)<<8
+        lda #(`procEventWaitTimerOrButtonPress)<<8
         sta lR44+1
-        lda #<>procUnknown82925E
+        lda #<>procEventWaitTimerOrButtonPress
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -3818,9 +3820,9 @@
         jsr rsEventCommandRunEventCondition
 
         phy
-        lda #(`procUnknown828A93)<<8
+        lda #(`procEventWaitFlag0E7B)<<8
         sta lR44+1
-        lda #<>procUnknown828A93
+        lda #<>procEventWaitFlag0E7B
         sta lR44
         jsl rlEventEngineCreateProc
         ply
@@ -3857,9 +3859,9 @@
         jsl rlSetupKeeperDialogueBox
 
         phy
-        lda #(`procUnknown828AC3)<<8
+        lda #(`procEventWaitDialogueEnd)<<8
         sta lR44+1
-        lda #<>procUnknown828AC3
+        lda #<>procEventWaitDialogueEnd
         sta lR44
         jsl rlEventEngineCreateProc
         ply
@@ -4234,9 +4236,9 @@
         jsl rlInitWorldMapDialogueSlot
 
         phy
-        lda #(`procUnknown828AC3)<<8
+        lda #(`procEventWaitDialogueEnd)<<8
         sta lR44+1
-        lda #<>procUnknown828AC3
+        lda #<>procEventWaitDialogueEnd
         sta lR44
         jsl rlEventEngineCreateProc
         ply
@@ -4586,8 +4588,8 @@
         sta lR44+1
         lda #<>aMapRowUploadIRQ
         sta lR44
-        jsl rlUnknown82E0C6
-        jsl rlUnknown82E08D
+        jsl rlIRQEngineCreateEntry
+        jsl rlEnableIRQEngine
         rts
 
         .databank 0
@@ -4978,11 +4980,11 @@
       .al
       .xl
 
-      procUnknown828431 ; 82/8431
+      procEventWaitMapSpritesHalting ; 82/8431
 
-        .structProcInfo "UA", rlProcUnknown828431Init, rlProcUnknown828431Cycle, aProcUnknown828431Code
+        .structProcInfo "UA", rlProcEventWaitMapSpritesHaltingInit, rlProcEventWaitMapSpritesHaltingCycle, aProcEventWaitMapSpritesHaltingCode
 
-      rlProcUnknown828431Init ; 82/8439
+      rlProcEventWaitMapSpritesHaltingInit ; 82/8439
 
         .al
         .autsiz
@@ -4992,7 +4994,7 @@
 
         .databank 0
 
-      rlProcUnknown828431Cycle ; 82/843A
+      rlProcEventWaitMapSpritesHaltingCycle ; 82/843A
 
         .al
         .autsiz
@@ -5026,7 +5028,7 @@
 
         .databank 0
 
-      aProcUnknown828431Code ; 82/845D
+      aProcEventWaitMapSpritesHaltingCode ; 82/845D
 
         PROC_HALT
 
@@ -5038,13 +5040,13 @@
       .al
       .xl
 
-      procUnknown828A30 ; 82/8A30
+      procEventWaitFadeToMap ; 82/8A30
 
-        .structProcInfo "TT", rlProcUnknown828A30Init, rlProcUnknown828A30Cycle1, aProcUnknown828A30Code
+        .structProcInfo "TT", rlProcEventWaitFadeToMapInit, rlProcEventWaitFadeToMapCycle1, aProcEventWaitFadeToMapCode
 
         .word 0
 
-      rlProcUnknown828A30Init ; 82/8A3A
+      rlProcEventWaitFadeToMapInit ; 82/8A3A
 
         .al
         .autsiz
@@ -5061,7 +5063,7 @@
 
         .databank 0
 
-      rlProcUnknown828A30Cycle1 ; 82/8A51
+      rlProcEventWaitFadeToMapCycle1 ; 82/8A51
 
         .al
         .autsiz
@@ -5076,7 +5078,7 @@
           bit #$0080
           bne +
 
-            lda #<>rlProcUnknown828A30Cycle2
+            lda #<>rlProcEventWaitFadeToMapCycle2
             sta aProcSystem.aHeaderOnCycle,b,x
             bra _End
 
@@ -5092,7 +5094,7 @@
 
         .databank 0
 
-      rlProcUnknown828A30Cycle2 ; 82/8A77
+      rlProcEventWaitFadeToMapCycle2 ; 82/8A77
 
         .al
         .autsiz
@@ -5110,17 +5112,17 @@
 
         .databank 0
 
-      aProcUnknown828A30Code ; 82/8A86
+      aProcEventWaitFadeToMapCode ; 82/8A86
 
         PROC_HALT
 
-      procUnknown828A88 ; 82/8A88
+      procEventDialogueWithBG ; 82/8A88
 
-        .structProcInfo "LL", rlProcUnknown828A88Init, rlProcDialogueWithBGCycle1, aProcDialogueWithBGCode
+        .structProcInfo "LL", rlProcEventDialogueWithBGInit, rlProcDialogueWithBGCycle1, aProcDialogueWithBGCode
 
         .word 0
 
-      rlProcUnknown828A88Init ; 82/8A92
+      rlProcEventDialogueWithBGInit ; 82/8A92
 
         .al
         .autsiz
@@ -5130,13 +5132,13 @@
 
         .databank 0
 
-      procUnknown828A93 ; 82/8A93
+      procEventWaitFlag0E7B ; 82/8A93
 
-        .structProcInfo "TT", rlProcUnknown828A93Init, rlProcUnknown828A93Cycle1, aProcUnknown828A93Code
+        .structProcInfo "TT", rlProcEventWaitFlag0E7BInit, rlProcEventWaitFlag0E7BCycle1, aProcEventWaitFlag0E7BCode
 
         .word 0
 
-      rlProcUnknown828A93Init ; 82/8A9D
+      rlProcEventWaitFlag0E7BInit ; 82/8A9D
 
         .al
         .autsiz
@@ -5146,7 +5148,7 @@
 
         .databank 0
 
-      rlProcUnknown828A93Cycle1 ; 82/8A9E
+      rlProcEventWaitFlag0E7BCycle1 ; 82/8A9E
 
         .al
         .autsiz
@@ -5158,7 +5160,7 @@
 
           lda #4
           sta aProcSystem.aBody0,b,x
-          lda #<>rlProcUnknown828A93Cycle2
+          lda #<>rlProcEventWaitFlag0E7BCycle2
           sta aProcSystem.aHeaderOnCycle,b,x
 
         +
@@ -5166,7 +5168,7 @@
 
         .databank 0
 
-      rlProcUnknown828A93Cycle2 ; 82/8AB3
+      rlProcEventWaitFlag0E7BCycle2 ; 82/8AB3
 
         .al
         .autsiz
@@ -5184,17 +5186,17 @@
 
         .databank 0
 
-      aProcUnknown828A93Code ; 82/8AC1
+      aProcEventWaitFlag0E7BCode ; 82/8AC1
 
         PROC_HALT
 
-      procUnknown828AC3 ; 82/8AC3
+      procEventWaitDialogueEnd ; 82/8AC3
 
-        .structProcInfo "ME", rlProcUnknown828AC3Init, rlProcUnknown828AC3Cycle, aProcUnknown828AC3Code
+        .structProcInfo "ME", rlProcEventWaitDialogueEndInit, rlProcEventWaitDialogueEndCycle, aProcEventWaitDialogueEndCode
 
         .word 0
 
-      rlProcUnknown828AC3Init ; 82/8ACD
+      rlProcEventWaitDialogueEndInit ; 82/8ACD
 
         .al
         .autsiz
@@ -5204,11 +5206,13 @@
 
         .databank 0
 
-      rlUnknown828ACE ; 82/8ACE
+      rlProcEventWaitDialogueStartCycle ; 82/8ACE
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets wTextSound = 1 and switches to rlProcEventWaitDialogueEndCycle once DialogueStatusEnabled is set
 
         lda #1
         sta aDialogue.wTextSound,b
@@ -5217,7 +5221,7 @@
         bit #DialogueStatusEnabled
         beq +
 
-          lda #<>rlProcUnknown828AC3Cycle
+          lda #<>rlProcEventWaitDialogueEndCycle
           sta aProcSystem.aHeaderOnCycle,b,x
 
         +
@@ -5225,7 +5229,7 @@
 
         .databank 0
 
-      rlProcUnknown828AC3Cycle ; 82/8AE3
+      rlProcEventWaitDialogueEndCycle ; 82/8AE3
 
         .al
         .autsiz
@@ -5242,31 +5246,35 @@
 
         .databank 0
 
-      aProcUnknown828AC3Code ; 82/8AF0
+      aProcEventWaitDialogueEndCode ; 82/8AF0
 
         PROC_HALT
 
-      procUnknown828AF2 ; 82/8AF2
+      procEventWaitMapBattleEnd ; 82/8AF2
 
-        .structProcInfo "ME", rlProcUnknown828AF2Init, rlProcUnknown828AF2Cycle, aProcUnknown828AF2Code
+        .structProcInfo "ME", rlProcEventWaitMapBattleEndInit, rlProcEventWaitMapBattleEndCycle, aProcEventWaitMapBattleEndCode
 
         .word 0
 
-      rlUnknown828AFC ; 82/8AFC
+      rlProcEventWaitMusicEndInit ; 82/8AFC
 
         .al
         .autsiz
         .databank ?
+
+        ; Empty rtl init
 
         rtl
 
         .databank 0
 
-      rlUnknown828AFD ; 82/8AFD
+      rlProcEventWaitMusicEndCycle ; 82/8AFD
 
         .al
         .autsiz
         .databank ?
+
+        ; Frees event proc when wMusicID becomes 0
 
         lda wMusicID,b
         bne +
@@ -5278,17 +5286,17 @@
 
         .databank 0
 
-      aProcCodeUnknown828B07 ; 82/8B07
+      aProcEventWaitMusicEndCode ; 82/8B07
 
         PROC_HALT
 
-      procUnknown828B09 ; 82/8AD9
+      procEventWaitMapBattleEndAlt ; 82/8AD9
 
-        .structProcInfo "ME", rlProcUnknown828AF2Init, rlProcUnknown828AF2Cycle, aProcUnknown828AF2Code
+        .structProcInfo "ME", rlProcEventWaitMapBattleEndInit, rlProcEventWaitMapBattleEndCycle, aProcEventWaitMapBattleEndCode
 
         .word 0
 
-      rlProcUnknown828AF2Init ; 82/8B13
+      rlProcEventWaitMapBattleEndInit ; 82/8B13
 
         .al
         .autsiz
@@ -5298,7 +5306,7 @@
 
         .databank 0
 
-      rlProcUnknown828AF2Cycle ; 82/8B14
+      rlProcEventWaitMapBattleEndCycle ; 82/8B14
       
         .al
         .autsiz
@@ -5318,7 +5326,7 @@
 
         .databank 0
 
-      aProcUnknown828AF2Code ; 82/8B29
+      aProcEventWaitMapBattleEndCode ; 82/8B29
 
         PROC_HALT
 
@@ -5418,9 +5426,9 @@
       .as
       .xl
 
-      procUnknown828BEA  ; 82/8BEA
+      procEventPaletteSwap  ; 82/8BEA
 
-        .structProcInfo "CC", rlProcUnknown828BEAInit, rlProcUnknown828BEACycle, aProcUnknown828BEACode
+        .structProcInfo "CC", rlProcEventPaletteSwapInit, rlProcEventPaletteSwapCycle, aProcEventPaletteSwapCode
         .word 0
 
     .endsection Unsorted828BEASection
@@ -5431,7 +5439,7 @@
       .al
       .xl
 
-      rlProcUnknown828BEAInit ; 82/8BF4
+      rlProcEventPaletteSwapInit ; 82/8BF4
 
         .al
         .autsiz
@@ -5474,7 +5482,7 @@
 
         .databank 0
 
-      rlProcUnknown828BEACycle ; 82/8C38
+      rlProcEventPaletteSwapCycle ; 82/8C38
 
         .al
         .autsiz
@@ -5542,16 +5550,16 @@
 
         .databank 0
 
-      aProcUnknown828BEACode ; 82/8CA1
+      aProcEventPaletteSwapCode ; 82/8CA1
 
         PROC_HALT
 
-      procUnknown828CA3 ; 82/8CA3
+      procEventShowMapAndScroll ; 82/8CA3
 
-        .structProcInfo "BM", rlProcUnknown828CA3Init, rlProcUnknown828CA3Cycle, aProcUnknown828CA3Code
+        .structProcInfo "BM", rlProcEventShowMapAndScrollInit, rlProcEventShowMapAndScrollCycle, aProcEventShowMapAndScrollCode
         .word 0
 
-      rlProcUnknown828CA3Init ; 82/8CAD
+      rlProcEventShowMapAndScrollInit ; 82/8CAD
 
         .al
         .autsiz
@@ -5576,7 +5584,7 @@
 
         .databank 0
 
-      rlProcUnknown828CA3Cycle ; 82/8CCB
+      rlProcEventShowMapAndScrollCycle ; 82/8CCB
 
         .al
         .autsiz
@@ -5621,18 +5629,20 @@
         jsl rlEventEngineMarkProcNonBlocking
         bcc +
 
-          jsr rsUnknown828D12
+          jsr rsProcEventShowMapAndScrollEnd
 
         +
         rtl
 
         .databank 0
 
-      rsUnknown828D12 ; 82/8D12
+      rsProcEventShowMapAndScrollEnd ; 82/8D12
 
         .al
         .autsiz
         .databank ?
+
+        ; Toggles BG1 off in bBufferTM and ends proc
 
         lda bBufferTM
         eor #$0001
@@ -5640,13 +5650,13 @@
         ldx aProcSystem.wOffset,b
         jsr rsProcCodeEnd
 
-      aProcUnknown828CA3Code ; 82/8D1F
+      aProcEventShowMapAndScrollCode ; 82/8D1F
 
         PROC_HALT
 
         ; 82/8D21
 
-      procUnknown828D21 ; 82/8D21
+      procEventFadeInByTimerOld ; 82/8D21
 
         ; Unreferenced: an older copy of procEventFadeInByTimer. Its header
         ; points at that proc's routines; the two routines after it are an
@@ -5656,7 +5666,7 @@
 
         .word 0
 
-      rlUnknown828D2B ; 82/8D2B
+      rlProcEventFadeInByTimerOldInit ; 82/8D2B
 
         .al
         .xl
@@ -5681,7 +5691,7 @@
 
         ; 82/8D42
 
-      rlUnknown828D42 ; 82/8D42
+      rlProcEventFadeInByTimerOldCycle ; 82/8D42
 
         .al
         .xl
@@ -5702,7 +5712,7 @@
 
         ; 82/8D50
 
-      aProcUnknown828D21Code ; 82/8D50
+      aProcEventFadeInByTimerOldCode ; 82/8D50
 
         PROC_HALT
 
@@ -5714,12 +5724,12 @@
       .al
       .xl
 
-      procUnknown828D52 ; 82/8D52
+      procEventSmoothMapScroll ; 82/8D52
 
-        .structProcInfo "MS", rlProcUnknown828D52Init, rlProcUnknown828D52Cycle, aProcUnknown828D52Code
+        .structProcInfo "MS", rlProcEventSmoothMapScrollInit, rlProcEventSmoothMapScrollCycle, aProcEventSmoothMapScrollCode
         .word 0
 
-      rlProcUnknown828D52Init ; 82/8D5C
+      rlProcEventSmoothMapScrollInit ; 82/8D5C
 
         .al
         .autsiz
@@ -5737,7 +5747,7 @@
         lda [lR22],y
         and #$00FF
         sta aProcSystem.aBody1,b,x
-        jsr rsUnknown828E61
+        jsr rsInitEventSmoothMapScrollStep
         bcs +
 
           lda #0
@@ -5749,7 +5759,7 @@
 
         .databank 0
 
-      rlProcUnknown828D52Cycle ; 82/8D84
+      rlProcEventSmoothMapScrollCycle ; 82/8D84
 
         .al
         .autsiz
@@ -5802,7 +5812,7 @@
         +
         asl a
         tax
-        jsr (aUnknown828E1F,x)
+        jsr (aEventMapScrollDirectionHandlers,x)
 
         lda wMapScrollXPixels,b
         sta wBufferBG1HOFS
@@ -5833,8 +5843,8 @@
         +
         asl a
         tax
-        jsr (aUnknown828E1F,x)
-        jsr rsUnknown828E61
+        jsr (aEventMapScrollDirectionHandlers,x)
+        jsr rsInitEventSmoothMapScrollStep
         bcs _End
 
         jsl rlCheckPointInScreenMargins
@@ -5850,19 +5860,19 @@
 
         .databank 0
 
-      aUnknown828E1F ; 82/8E1F
+      aEventMapScrollDirectionHandlers ; 82/8E1F
 
-        .addr rsUnknown828E31
-        .addr rsUnknown828E36
-        .addr rsUnknown828E3B
-        .addr rsUnknown828E40
-        .addr rsUnknown828E45
-        .addr rsUnknown828E4A
-        .addr rsUnknown828E4F
-        .addr rsUnknown828E54
-        .addr rsUnknown828E59
+        .addr rsEventMapScrollUp
+        .addr rsEventMapScrollDown
+        .addr rsEventMapScrollLeft
+        .addr rsEventMapScrollRight
+        .addr rsEventMapScrollUpLeft
+        .addr rsEventMapScrollDownLeft
+        .addr rsEventMapScrollUpRight
+        .addr rsEventMapScrollDownRight
+        .addr rsEventMapScrollNone
 
-      rsUnknown828E31 ; 82/8E31
+      rsEventMapScrollUp ; 82/8E31
 
         .al
         .autsiz
@@ -5873,7 +5883,7 @@
  
         .databank 0
 
-      rsUnknown828E36 ; 82/8E36
+      rsEventMapScrollDown ; 82/8E36
 
         .al
         .autsiz
@@ -5884,7 +5894,7 @@
 
         .databank 0
 
-      rsUnknown828E3B ; 82/8E3B
+      rsEventMapScrollLeft ; 82/8E3B
 
         .al
         .autsiz
@@ -5895,7 +5905,7 @@
 
         .databank 0
 
-      rsUnknown828E40 ; 82/8E40
+      rsEventMapScrollRight ; 82/8E40
 
         .al
         .autsiz
@@ -5906,7 +5916,7 @@
 
         .databank 0
 
-      rsUnknown828E45 ; 82/8E45
+      rsEventMapScrollUpLeft ; 82/8E45
 
         .al
         .autsiz
@@ -5917,7 +5927,7 @@
 
         .databank 0
 
-      rsUnknown828E4A ; 82/8E4A
+      rsEventMapScrollDownLeft ; 82/8E4A
 
         .al
         .autsiz
@@ -5928,7 +5938,7 @@
 
         .databank 0
 
-      rsUnknown828E4F ; 82/8E4F
+      rsEventMapScrollUpRight ; 82/8E4F
 
         .al
         .autsiz
@@ -5939,7 +5949,7 @@
 
         .databank 0
 
-      rsUnknown828E54 ; 82/8E54
+      rsEventMapScrollDownRight ; 82/8E54
 
         .al
         .autsiz
@@ -5950,28 +5960,30 @@
 
         .databank 0
 
-      rsUnknown828E59 ; 82/8E59
+      rsEventMapScrollNone ; 82/8E59
 
         .al
         .autsiz
         .databank ?
 
-        jsl rlUnknown828E5E
+        jsl rlEventMapScrollNoOp
         rts
 
         .databank 0
 
-      rlUnknown828E5E ; 82/8E5E
+      rlEventMapScrollNoOp ; 82/8E5E
 
         .al
         .autsiz
         .databank ?
+
+        ; No-op (rtl) for direction 8
 
         rtl
 
         .databank 0
 
-      aProcUnknown828D52Code ; 82/8E5F
+      aProcEventSmoothMapScrollCode ; 82/8E5F
 
         PROC_HALT
 
@@ -5983,11 +5995,13 @@
       .as
       .xl
 
-      rsUnknown828E61 ; 82/8E61
+      rsInitEventSmoothMapScrollStep ; 82/8E61
 
         .al
         .autsiz
         .databank ?
+
+        ; Computes next smooth map scroll target, direction, and duration
 
         php
         rep #$30
@@ -6059,12 +6073,12 @@
       .al
       .xl
 
-      procUnknown828ECB ; 82/8ECB
+      procEventShowEmptyMap ; 82/8ECB
 
-        .structProcInfo "CM", rlProcUnknown828ECBInit, rlProcUnknown828ECBCycle, aProcUnknown828ECBCode
+        .structProcInfo "CM", rlProcEventShowEmptyMapInit, rlProcEventShowEmptyMapCycle, aProcEventShowEmptyMapCode
         .word 0
 
-      rlProcUnknown828ECBInit ; 82/8ED5
+      rlProcEventShowEmptyMapInit ; 82/8ED5
 
         .al
         .autsiz
@@ -6083,7 +6097,7 @@
 
         .databank 0
 
-      rlProcUnknown828ECBCycle ; 82/8EE9
+      rlProcEventShowEmptyMapCycle ; 82/8EE9
 
         .al
         .autsiz
@@ -6128,14 +6142,14 @@
         jsl rlEventEngineMarkProcNonBlocking
         bcc +
 
-          jsr rsUnknown828F30
+          jsr rsProcEventShowEmptyMapEnd
 
         +
         rtl
 
         .databank 0
 
-      rsUnknown828F30 ; 82/8F30
+      rsProcEventShowEmptyMapEnd ; 82/8F30
 
         .al
         .autsiz
@@ -6149,7 +6163,7 @@
 
         .databank 0
 
-      aProcUnknown828ECBCode ; 82/8F3D
+      aProcEventShowEmptyMapCode ; 82/8F3D
 
         PROC_HALT
 
@@ -6163,12 +6177,12 @@
       .al
       .xl
 
-      procUnknown829245 ; 82/9245
+      procEventWaitButtonPress ; 82/9245
 
-        .structProcInfo "e0", rlProcUnknown829245Init, rlProcUnknown829245Cycle, aProcUnknown829245Code
+        .structProcInfo "e0", rlProcEventWaitButtonPressInit, rlProcEventWaitButtonPressCycle, aProcEventWaitButtonPressCode
         .word 2
 
-      rlProcUnknown829245Init ; 82/924F
+      rlProcEventWaitButtonPressInit ; 82/924F
 
         .al
         .autsiz
@@ -6178,7 +6192,7 @@
 
         .databank 0
 
-      rlProcUnknown829245Cycle ; 82/9250
+      rlProcEventWaitButtonPressCycle ; 82/9250
 
         .al
         .autsiz
@@ -6195,16 +6209,16 @@
 
         .databank 0
 
-      aProcUnknown829245Code ; 82/925C
+      aProcEventWaitButtonPressCode ; 82/925C
 
         PROC_HALT
 
-      procUnknown82925E ; 82/925E
+      procEventWaitTimerOrButtonPress ; 82/925E
 
-        .structProcInfo "e0", rlProcUnknown82925EInit, rlProcUnknown82925ECycle, aProcUnknown82925ECode
+        .structProcInfo "e0", rlProcEventWaitTimerOrButtonPressInit, rlProcEventWaitTimerOrButtonPressCycle, aProcEventWaitTimerOrButtonPressCode
         .word 2
 
-      rlProcUnknown82925EInit ; 82/9268
+      rlProcEventWaitTimerOrButtonPressInit ; 82/9268
 
         .al
         .autsiz
@@ -6217,7 +6231,7 @@
 
         .databank 0
 
-      rlProcUnknown82925ECycle ; 82/9271
+      rlProcEventWaitTimerOrButtonPressCycle ; 82/9271
 
         .al
         .autsiz
@@ -6238,25 +6252,25 @@
 
         .databank 0
 
-      aProcUnknown82925ECode ; 82/9283
+      aProcEventWaitTimerOrButtonPressCode ; 82/9283
 
         PROC_HALT
 
-      procUnknown829285 ; 82/9285
+      procEventFillBG3Tilemap ; 82/9285
 
         ; Unreferenced: nothing creates this event proc. Its script calls
         ; rlFillAndUploadBG3Tilemap and ends; init and cycle do nothing.
 
-        .structProcInfo "e0", rlProcUnknown829285Nothing, rlProcUnknown829285Nothing, aProcUnknown829285Code
+        .structProcInfo "e0", rlProcEventFillBG3TilemapNoOp, rlProcEventFillBG3TilemapNoOp, aProcEventFillBG3TilemapCode
 
         .word 0
 
-      aProcUnknown829285Code ; 82/928F
+      aProcEventFillBG3TilemapCode ; 82/928F
 
         PROC_CALL rlFillAndUploadBG3Tilemap
         PROC_END
 
-      rlProcUnknown829285Nothing ; 82/9296
+      rlProcEventFillBG3TilemapNoOp ; 82/9296
 
         .al
         .xl
@@ -6267,20 +6281,20 @@
 
         .databank 0
 
-      procUnknown829297 ; 82/9297
+      procEventEnableMapMenuLayers ; 82/9297
 
-        ; Unreferenced: as procUnknown829285, calling rlEnableMapMenuLayerFlags.
+        ; Unreferenced: as procEventFillBG3Tilemap, calling rlEnableMapMenuLayerFlags.
 
-        .structProcInfo "e1", rlProcUnknown829297Nothing, rlProcUnknown829297Nothing, aProcUnknown829297Code
+        .structProcInfo "e1", rlProcEventEnableMapMenuLayersNoOp, rlProcEventEnableMapMenuLayersNoOp, aProcEventEnableMapMenuLayersCode
 
         .word 0
 
-      aProcUnknown829297Code ; 82/92A1
+      aProcEventEnableMapMenuLayersCode ; 82/92A1
 
         PROC_CALL rlEnableMapMenuLayerFlags
         PROC_END
 
-      rlProcUnknown829297Nothing ; 82/92A8
+      rlProcEventEnableMapMenuLayersNoOp ; 82/92A8
 
         .al
         .xl
@@ -6299,9 +6313,9 @@
       .al
       .xl
 
-      procUnknown8292A9 ; 82/92A9
+      procEventNoOp ; 82/92A9
 
-        .structProcInfo "NP", rlProcUnknown8292A9Init, rlProcUnknown8292A9Init, aProcUnknown8292A9Code
+        .structProcInfo "NP", rlProcEventNoOpInit, rlProcEventNoOpInit, aProcEventNoOpCode
         .word 0
 
     .endsection Unsorted8292A9Section
@@ -6312,7 +6326,7 @@
       .al
       .xl
 
-      rlProcUnknown8292A9Init ; 82/92B3
+      rlProcEventNoOpInit ; 82/92B3
 
         .al
         .autsiz
@@ -6322,16 +6336,16 @@
 
         .databank 0
 
-      aProcUnknown8292A9Code ; 82/92B4
+      aProcEventNoOpCode ; 82/92B4
 
         PROC_END
 
-      procUnknown8292B6 ; 82/92B6
+      procEventRunScriptLoop ; 82/92B6
 
-        .structProcInfo "RS", rlProcUnknown8292B6Init, rlProcUnknown8292B6Cycle, aProcUnknown8292B6Code ; 82/92A9
+        .structProcInfo "RS", rlProcEventRunScriptLoopInit, rlProcEventRunScriptLoopCycle, aProcEventRunScriptLoopCode ; 82/92A9
         .word 0
 
-      rlProcUnknown8292B6Init ; 82/92C0
+      rlProcEventRunScriptLoopInit ; 82/92C0
 
         .al
         .autsiz
@@ -6363,17 +6377,17 @@
 
         .databank 0
 
-      rlProcUnknown8292B6Cycle ; 82/92ED
+      rlProcEventRunScriptLoopCycle ; 82/92ED
 
         .al
         .autsiz
         .databank ?
 
         php
-        jsr rsUnknown829306
+        jsr rsEventScriptLoopWaitFreeProc
         bcc +
 
-          jsr rsUnknown82932C
+          jsr rsEventScriptLoopStep
           bcc +
 
             lda #0
@@ -6386,15 +6400,17 @@
 
         .databank 0
 
-      aProcUnknown8292B6Code ; 82/9304
+      aProcEventRunScriptLoopCode ; 82/9304
 
         PROC_HALT
 
-      rsUnknown829306 ; 82/9306
+      rsEventScriptLoopWaitFreeProc ; 82/9306
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns carry set when reserved proc slot aBody5 is free
 
         php
         phx
@@ -6437,11 +6453,13 @@
       .al
       .xl
 
-      rsUnknown82932C ; 82/932C
+      rsEventScriptLoopStep ; 82/932C
 
         .al
         .autsiz
         .databank ?
+
+        ; Executes one iteration of the looped event subroutine and restores script pointer
 
         php
         lda aProcSystem.aBody2,b,x
@@ -6458,7 +6476,7 @@
           sta aProcSystem.aBody3,b,x
           lda wActiveEventOffset,b
           sta aProcSystem.aBody4,b,x
-          jsr rsUnknown829391
+          jsr rsEventFindFreeProcSlot
 
           ldy #0
           sty wActiveEventOffset,b
@@ -6505,11 +6523,13 @@
       .al
       .xl
 
-      rsUnknown829391 ; 82/9391
+      rsEventFindFreeProcSlot ; 82/9391
 
         .al
         .autsiz
         .databank ?
+
+        ; Finds first free proc slot and stores offset in aBody5 (carry set if full)
 
         ; Store first free proc offset into aBody5
 
@@ -6539,12 +6559,12 @@
 
         .databank 0
 
-      procUnknown8293AE
+      procEventCyclePalette
 
-        .structProcInfo "CC", rlProcUnknown8293AEInit, rlProcUnknown8293AECycle, aProcUnknown8293AECode ; 82/93AE
+        .structProcInfo "CC", rlProcEventCyclePaletteInit, rlProcEventCyclePaletteCycle, aProcEventCyclePaletteCode ; 82/93AE
         .word 0
 
-      rlProcUnknown8293AEInit ; 82/93B8
+      rlProcEventCyclePaletteInit ; 82/93B8
 
         .al
         .autsiz
@@ -6596,7 +6616,7 @@
 
         .databank 0
 
-      rlProcUnknown8293AECycle ; 82/9407
+      rlProcEventCyclePaletteCycle ; 82/9407
 
         .al
         .autsiz
@@ -6670,7 +6690,7 @@
 
         .databank 0
 
-      aProcUnknown8293AECode ; 82/9467
+      aProcEventCyclePaletteCode ; 82/9467
 
         PROC_HALT
 
@@ -6684,7 +6704,7 @@
       .al
       .xl
 
-      rlUnknown829469 ; 82/9469
+      rlCreateProcEventWaitMapBattleEndAlt ; 82/9469
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -6692,9 +6712,11 @@
         .autsiz
         .databank ?
 
-        lda #(`procUnknown828B09)<<8
+        ; Unreferenced; creates blocking procEventWaitMapBattleEndAlt
+
+        lda #(`procEventWaitMapBattleEndAlt)<<8
         sta lR44+1
-        lda #<>procUnknown828B09
+        lda #<>procEventWaitMapBattleEndAlt
         sta lR44
         jsl rlEventEngineCreateProc
         rtl
@@ -6709,12 +6731,14 @@
       .al
       .xl
 
-      rlUnknown82E08D ; 82/E08D
+      rlEnableIRQEngine ; 82/E08D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Enables HV IRQ in NMITIMEN, syncs/sorts IRQ entries, and installs rsIRQEngineCycle
 
         sei
         phb
@@ -6729,7 +6753,7 @@
         rep #$20
         lda #$8000
         trb $168F,b
-        jsl rlUnknown82E147
+        jsl rlIRQEngineSyncAndSort
         lda #<>rsIRQEngineCycle
         sta wIRQPointer
         plp
@@ -6750,12 +6774,14 @@
       .al
       .xl
 
-      rlUnknown82E0C6 ; 82/E0C6
+      rlIRQEngineCreateEntry ; 82/E0C6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Adds an IRQ entry from lR44 (max 7 entries; carry set if full)
 
         phb
         php
@@ -6823,13 +6849,15 @@
       .al
       .xl
 
-      rlUnknown82E120 ; 82/E120
+      rlIRQEngineFreeCurrentEntry ; 82/E120
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced; clears active IRQ entry $1691 and decrements count $1695
 
         phb
         php
@@ -6855,12 +6883,14 @@
       .al
       .xl
 
-      rlUnknown82E147 ; 82/E147
+      rlIRQEngineSyncAndSort ; 82/E147
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sorts IRQ entries by scanline and programs hardware HV timer for next entry
 
         sei
         phb
@@ -6872,14 +6902,14 @@
         cmp $1693,b
         beq _E173
         sta $1693,b
-        jsr rsUnknown82E177
+        jsr rsIRQEngineSortEntries
         lda $1693,b
         beq _E16A
         dec a
         asl a
         sta $1691,b
         tax
-        jsr rsUnknown82E283
+        jsr rsIRQEngineProgramNextEntry
         bra _E173
 
 
@@ -6899,12 +6929,14 @@
 
         ; 82/E177
 
-      rsUnknown82E177 ; 82/E177
+      rsIRQEngineSortEntries ; 82/E177
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Shell-sorts active IRQ entries by V-count ($16DA)
 
         phb
         php
@@ -6937,7 +6969,7 @@
         lda $16DA,b,x
         cmp $16DA,b,y
         bcs _E1AA
-        jsr rsUnknown82E1BF
+        jsr rsIRQEngineSwapEntries
 
         _E1AA
         inc wR31
@@ -6961,12 +6993,14 @@
 
         ; 82/E1BF
 
-      rsUnknown82E1BF ; 82/E1BF
+      rsIRQEngineSwapEntries ; 82/E1BF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Swaps two IRQ entries X and Y across all IRQ engine arrays
 
         lda $169A,b,x
         sta $16A8,b
@@ -7030,12 +7064,14 @@
       .al
       .xl
 
-      rsUnknown82E283 ; 82/E283
+      rsIRQEngineProgramNextEntry ; 82/E283
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Writes HTIME/VTIME ($4207-$420A) and active IRQ routine ($1697/$1698) for entry X
 
         sep #$20
         lda $16CB,b,x

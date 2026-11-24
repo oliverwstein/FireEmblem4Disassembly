@@ -36,7 +36,7 @@
         jsl rlCopyPPURegisterBuffer
         jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
-        jsl rlUnknown82E147
+        jsl rlIRQEngineSyncAndSort
         jsl rlClearSpriteExtBuffer
         sep #$20
         lda #$00
@@ -116,13 +116,13 @@
         sta lR44+1
         lda #<>aTitleScreenTopIRQ
         sta lR44
-        jsl rlUnknown82E0C6
+        jsl rlIRQEngineCreateEntry
         lda #(`aTitleScreenBottomIRQ)<<8
         sta lR44+1
         lda #<>aTitleScreenBottomIRQ
         sta lR44
-        jsl rlUnknown82E0C6
-        jsl rlUnknown82E08D
+        jsl rlIRQEngineCreateEntry
+        jsl rlEnableIRQEngine
         lda #GAMESTATE_TITLE_SCREEN_SETUP
         sta wGameStateRoutine1,b
         lda #<>rsRunTitleScreenVBlank

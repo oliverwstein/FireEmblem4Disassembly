@@ -103,13 +103,13 @@
         sta lR44+1
         lda #<>aWorldMapTopIRQInfo
         sta lR44
-        jsl rlUnknown82E0C6
+        jsl rlIRQEngineCreateEntry
         lda #(`aWorldMapBottomIRQInfo)<<8
         sta lR44+1
         lda #<>aWorldMapBottomIRQInfo
         sta lR44
-        jsl rlUnknown82E0C6
-        jsl rlUnknown82E08D
+        jsl rlIRQEngineCreateEntry
+        jsl rlEnableIRQEngine
         lda #GAMESTATE_WORLD_MAP_SETUP
         sta wGameStateRoutine1,b
         lda #GAMESTATE_WORLD_MAP_UPKEEP

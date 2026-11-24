@@ -43,7 +43,7 @@
         jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
-        jsl rlUnknown82E147
+        jsl rlIRQEngineSyncAndSort
         lda bUnknown000E7B,b
         bit #$0010
         bne _AEC0

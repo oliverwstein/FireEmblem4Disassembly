@@ -791,7 +791,7 @@
 
         +
         lda wR0
-        jsr rsUnknown91C56C
+        jsr rsDispatchEventUnitMoveHandler
         ply
         clc
 

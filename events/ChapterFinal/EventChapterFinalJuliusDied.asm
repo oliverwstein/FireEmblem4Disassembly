@@ -144,9 +144,9 @@
 
       jsl rlResumePhaseMusic
 
-      lda #(`procUnknown828AF2)<<8
+      lda #(`procEventWaitMapBattleEnd)<<8
       sta lR44+1
-      lda #<>procUnknown828AF2
+      lda #<>procEventWaitMapBattleEnd
       sta lR44
       jsl rlEventEngineCreateProc
 
