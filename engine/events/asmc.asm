@@ -26,9 +26,9 @@
 
             lda #$0D00
             sta aProcSystem.wInput3,b
-            lda #(`procUnknown85BC0F)<<8
+            lda #(`procItemPopUp)<<8
             sta lR44+1
-            lda #<>procUnknown85BC0F
+            lda #<>procItemPopUp
             sta lR44
             jsl rlEventEngineCreateProc
 
@@ -60,7 +60,7 @@
           tax
           lda aDeploymentTable._UnitRAMPointer,x
           sta wSelectedUnitDataRAMPointer,b
-          jsr rsUnknown81B270
+          jsr rsOpenInventoryFullMenuForSlot8
           lda #$FFFF
           sta wInventoryFullDeploymentOffset,b
 
@@ -77,11 +77,13 @@
       .al
       .xl
 
-      rsUnknown81B270 ; 81/B270
+      rsOpenInventoryFullMenuForSlot8 ; 81/B270
 
         .al
         .autsiz
         .databank ?
+
+        ; Opens the inventory-full menu for item slot 8
 
         lda #8
         jsl rlGetItemIDByInventorySlot
@@ -176,16 +178,18 @@
         sta aActionStructUnit1.XPosition
         lda wEventUnitSlot1YCoordinate
         sta aActionStructUnit1.YPosition
-        jsl rlUnknown91BDA9
+        jsl rlStartEventStatUpRewards
         rtl
 
         .databank 0
 
-      rlUnknown91BDA9 ; 91/BDA9
+      rlStartEventStatUpRewards ; 91/BDA9
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs rlStartMapActionRewards with zeroed item, level, gold, and experience and halts the event
 
         sep #$20
         lda #0
@@ -242,7 +246,7 @@
       .al
       .xl
 
-      procUnknown85BC0F .structProcInfo "PW", rlProcItemPopUpInit, rlProcGoldPopUpShow, aProcDialogueBoxCode ; 85/BC0F
+      procItemPopUp .structProcInfo "PW", rlProcItemPopUpInit, rlProcGoldPopUpShow, aProcDialogueBoxCode ; 85/BC0F
 
         .long aGoldPopUpData
         .byte 1

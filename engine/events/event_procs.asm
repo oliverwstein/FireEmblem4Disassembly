@@ -42,7 +42,7 @@
           bne _End
 
         +
-        jsl rlUnknown819166
+        jsl rlStepEventMapScroll
         bcc _End
 
           lda wChapterFlags,b
@@ -315,20 +315,22 @@
 
         ; 82/90B0
 
-      procUnknown8290B0 ; 82/90B0
+      procEventScrollBG3 ; 82/90B0
 
         ; Unreferenced: nothing creates this event proc.
 
-        .structProcInfo "B3", rlProcUnknown8290B0Init, rlProcUnknown8290B0Cycle, aProcUnknown8290B0Code
+        .structProcInfo "B3", rlProcEventScrollBG3Init, rlProcEventScrollBG3Cycle, aProcEventScrollBG3Code
 
         .word $0010
 
-      rlProcUnknown8290B0Init ; 82/90BA
+      rlProcEventScrollBG3Init ; 82/90BA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Reads 4 BG3 scroll words from event script into proc body and snapshots wBufferBG3HOFS/VOFS
 
         lda lActiveEventPointer+1,b
         sta lR18+1
@@ -362,12 +364,14 @@
 
         ; 82/90F5
 
-      rlProcUnknown8290B0Cycle ; 82/90F5
+      rlProcEventScrollBG3Cycle ; 82/90F5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Steps BG3 HOFS/VOFS using 8.8 fixed-point deltas until distances reach 0, then frees proc
 
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody0,b,x
@@ -525,7 +529,7 @@
 
         ; 82/921C
 
-      aProcUnknown8290B0Code ; 82/921C
+      aProcEventScrollBG3Code ; 82/921C
 
         PROC_HALT
 
@@ -599,9 +603,9 @@
 
         ; Halt until $0002 of $7F4C07 is set
 
-        lda #(`procUnknown828B2B)<<8
+        lda #(`procHaltEvent)<<8
         sta lR44+1
-        lda #<>procUnknown828B2B
+        lda #<>procHaltEvent
         sta lR44
         jsl rlEventEngineCreateProc
         rtl
@@ -618,11 +622,13 @@
       .al
       .xl
 
-      rlUnknown819166 ; 81/9166
+      rlStepEventMapScroll ; 81/9166
 
         .al
         .autsiz
         .databank ?
+
+        ; Steps event map scrolling toward wMapPixelScrollDistance
 
         lda wMapCurrentlyScrollingFlag,b
         bne +
@@ -683,7 +689,7 @@
       .as
       .xl
 
-      procUnknown828B2B .structProcInfo "ME", rlProcHaltEventInit, rlProcHaltEventCycle, aProcHaltEventCode ; 82/8B2B
+      procHaltEvent .structProcInfo "ME", rlProcHaltEventInit, rlProcHaltEventCycle, aProcHaltEventCode ; 82/8B2B
 
         .word 0
 
@@ -831,7 +837,7 @@
         .autsiz
         .databank ?
 
-        ; Empty rtl init for procUnknown828B2B (created by rlCreateProcHaltEvent)
+        ; Empty rtl init for procHaltEvent (created by rlCreateProcHaltEvent)
 
         rtl
 
@@ -1022,9 +1028,9 @@
       .al
       .xl
 
-      procEventWaitProcUnknown88E02B ; 82/8BC8
+      procEventWaitFirstGenerationEnding ; 82/8BC8
 
-        .structProcInfo "ME", rlProcEventWaitProcUnknown88E02BInit, rlProcEventWaitProcUnknown88E02BCycle, aProcEventWaitProcUnknown88E02BCode
+        .structProcInfo "ME", rlProcEventWaitFirstGenerationEndingInit, rlProcEventWaitFirstGenerationEndingCycle, aProcEventWaitFirstGenerationEndingCode
 
         ; Unused: 2 zero bytes.
         .fill 2, $00
@@ -1037,14 +1043,14 @@
       .al
       .xl
 
-      rlProcEventWaitProcUnknown88E02BInit ; 82/8BD2
+      rlProcEventWaitFirstGenerationEndingInit ; 82/8BD2
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Empty rtl init for procEventWaitProcUnknown88E02B
+        ; Empty rtl init for procEventWaitFirstGenerationEnding
 
         rtl
 
@@ -1052,7 +1058,7 @@
 
         ; 82/8BD3
 
-      rlProcEventWaitProcUnknown88E02BCycle ; 82/8BD3
+      rlProcEventWaitFirstGenerationEndingCycle ; 82/8BD3
 
         .al
         .xl
@@ -1084,7 +1090,7 @@
       .al
       .xl
 
-      aProcEventWaitProcUnknown88E02BCode ; 82/8BE8
+      aProcEventWaitFirstGenerationEndingCode ; 82/8BE8
 
         PROC_HALT
 
@@ -1217,7 +1223,7 @@
       .al
       .xl
 
-      rlCreateProcUnknown88E02BAndWait ; 82/94CF
+      rlCreateProcFirstGenerationEndingAndWait ; 82/94CF
 
         .al
         .xl
@@ -1231,9 +1237,9 @@
         lda #<>procFirstGenerationEnding
         sta lR44
         jsl rlProcEngineCreateProc
-        lda #(`procEventWaitProcUnknown88E02B)<<8
+        lda #(`procEventWaitFirstGenerationEnding)<<8
         sta lR44+1
-        lda #<>procEventWaitProcUnknown88E02B
+        lda #<>procEventWaitFirstGenerationEnding
         sta lR44
         jsl rlEventEngineCreateProc
         rtl

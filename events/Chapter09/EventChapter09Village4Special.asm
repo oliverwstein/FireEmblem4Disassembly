@@ -27,7 +27,7 @@
     sta $7E4EB7
     lda #7
     sta $7E4EB9
-    jsl rlUnknown91BDA9
+    jsl rlStartEventStatUpRewards
     rtl
 
     .databank 0

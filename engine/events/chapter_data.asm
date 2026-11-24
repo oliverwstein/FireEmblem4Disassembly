@@ -144,13 +144,15 @@
       .al
       .xl
 
-      rlUnknown82F4F9 ; 82/F4F9
+      rlGetOffsetTableEntrySize ; 82/F4F9
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced; returns entry[A] - entry[A-1] from long offset table lR18 (1-based index)
 
         phb
         php

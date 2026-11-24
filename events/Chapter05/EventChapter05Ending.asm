@@ -204,7 +204,7 @@
     RUN_ASM rlASMCArvisAttacksSigurd
     YIELD
 
-    RUN_ASM rlCreateProcUnknown88E02BAndWait
+    RUN_ASM rlCreateProcFirstGenerationEndingAndWait
     YIELD
 
     RUN_EVENT_CONDITION

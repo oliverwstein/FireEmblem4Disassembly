@@ -27,7 +27,7 @@
     sta aActionStructUnit1.XPosition
     lda #36
     sta aActionStructUnit1.YPosition
-    jsl rlUnknown91BDA9
+    jsl rlStartEventStatUpRewards
     rtl
 
     .databank 0

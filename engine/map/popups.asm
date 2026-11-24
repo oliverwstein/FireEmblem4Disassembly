@@ -1177,9 +1177,9 @@
         .autsiz
         .databank ?
 
-        lda #(`procUnknown85BC0F)<<8
+        lda #(`procItemPopUp)<<8
         sta lR44+1
-        lda #<>procUnknown85BC0F
+        lda #<>procItemPopUp
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
