@@ -786,7 +786,7 @@
 
       aUnknown97F64E ; 97/F64E
 
-        ; Read by rlUnknown95F7B7.
+        ; Read by rlTitleIntroScene6InitWindowEffect1.
 
         .byte $17, $00, $03, $00, $00, $00, $00, $04, $01, $01, $00, $FD
 

@@ -48,14 +48,14 @@
           TITLE_TIMELINE_CALL 0, rlShowNextTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0528
-          TITLE_TIMELINE_CALL 0, rlUnknown95EAA8
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene1FadeOutHookNoOp
           TITLE_TIMELINE_SLOT 0, rlStartTitleSceneFadeOut
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0532
           TITLE_TIMELINE_SLOT 7, rlStartFadingOutTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $059D
-          TITLE_TIMELINE_CALL 0, rlUnknown95EAA9
+          TITLE_TIMELINE_CALL 0, rlTitleClearMainAndSubScreens
           TITLE_TIMELINE_CALL 0, rlUnknown9BE697
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
@@ -88,40 +88,40 @@
           TITLE_TIMELINE_CALL 0, rlShowNextTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $082A
-          TITLE_TIMELINE_SLOT 2, rlUnknown95FABC
-          TITLE_TIMELINE_SLOT 3, rlUnknown95F48E
-          TITLE_TIMELINE_CALL 0, rlUnknown95F9CE
+          TITLE_TIMELINE_SLOT 2, rlStartTitleIntroScene2SpriteRise
+          TITLE_TIMELINE_SLOT 3, rlStartTitleIntroScene2FadeOAMPal0
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2SpawnSpritePair1
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0848
-          TITLE_TIMELINE_SLOT 3, rlUnknown95F48E
-          TITLE_TIMELINE_CALL 0, rlUnknown95F9FB
+          TITLE_TIMELINE_SLOT 3, rlStartTitleIntroScene2FadeOAMPal0
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2SpawnSpritePair2
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0852
           TITLE_TIMELINE_SLOT 7, rlStartFadingOutTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0866
-          TITLE_TIMELINE_SLOT 3, rlUnknown95F48E
-          TITLE_TIMELINE_CALL 0, rlUnknown95FA1E
+          TITLE_TIMELINE_SLOT 3, rlStartTitleIntroScene2FadeOAMPal0
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2SpawnSpritePair3
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $087F
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0884
-          TITLE_TIMELINE_SLOT 3, rlUnknown95F4F0
-          TITLE_TIMELINE_CALL 0, rlUnknown95FA41
+          TITLE_TIMELINE_SLOT 3, rlStartTitleIntroScene2FadeOAMPal4
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2SpawnSpritePair4
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $08A2
-          TITLE_TIMELINE_SLOT 3, rlUnknown95F4F0
-          TITLE_TIMELINE_CALL 0, rlUnknown95FA64
+          TITLE_TIMELINE_SLOT 3, rlStartTitleIntroScene2FadeOAMPal4
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2SpawnSpritePair5
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $08C0
-          TITLE_TIMELINE_SLOT 3, rlUnknown95F4F0
-          TITLE_TIMELINE_CALL 0, rlUnknown95FA87
+          TITLE_TIMELINE_SLOT 3, rlStartTitleIntroScene2FadeOAMPal4
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2SpawnSpritePair6
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $08F2
-          TITLE_TIMELINE_SLOT 3, rlUnknown95F552
-          TITLE_TIMELINE_CALL 0, rlUnknown95FAAA
+          TITLE_TIMELINE_SLOT 3, rlStartTitleIntroScene2FadeOAMPal5
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2SpawnSpriteCenter
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $08FC
           TITLE_TIMELINE_SLOT 7, rlStartFadingInTitleCaption
@@ -131,7 +131,7 @@
           TITLE_TIMELINE_SLOT 7, rlStartFadingOutTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0B2A
-          TITLE_TIMELINE_CALL 0, rlUnknown95EB3B
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2HideBG2
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
@@ -139,15 +139,15 @@
           TITLE_TIMELINE_CALL 0, rlTitleIntroScene2FadePalette
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0BEE
-          TITLE_TIMELINE_CALL 0, rlUnknown95EB4C
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene2HideBG3
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0C26
           TITLE_TIMELINE_SLOT 1, rlStartTitleIntroScene3Scroll
-          TITLE_TIMELINE_SLOT 4, rlUnknown95F630
+          TITLE_TIMELINE_SLOT 4, rlStartTitleIntroScene3FadeBGPal34
           TITLE_TIMELINE_CALL 0, rlSetUpTitleIntroScene3
-          TITLE_TIMELINE_CALL 0, rlUnknown95F2E5
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene3StartPaletteEffect
           TITLE_TIMELINE_SLOT 7, rlStartFadingInTitleCaption
           TITLE_TIMELINE_CALL 0, rlShowNextTitleCaption
         TITLE_TIMELINE_NEXT
@@ -164,38 +164,38 @@
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0C71
-          TITLE_TIMELINE_CALL 0, rlUnknown95F2F9
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4StartPaletteEffect1
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0CA6
-          TITLE_TIMELINE_CALL 0, rlUnknown95EC4D
-          TITLE_TIMELINE_CALL 0, rlUnknown95F30D
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4ShowBG1
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4StartPaletteEffect2
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0CD6
-          TITLE_TIMELINE_CALL 0, rlUnknown95F321
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4StartPaletteEffect3
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0CD9
-          TITLE_TIMELINE_CALL 0, rlUnknown95F831
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4InitWindowEffect2
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0CDA
-          TITLE_TIMELINE_CALL 0, rlUnknown95EC58
-          TITLE_TIMELINE_CALL 0, rlUnknown95F85B
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4ShowSubBG3
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4RunWindowEffect2
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0D34
           TITLE_TIMELINE_SLOT 7, rlStartFadingOutTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0D4E
-          TITLE_TIMELINE_CALL 0, rlUnknown95F86D
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4EndWindowEffect2
           TITLE_TIMELINE_SLOT 5, rlStartTitleQuickFadeOut
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0D5E
-          TITLE_TIMELINE_CALL 0, rlUnknown95EC63
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene4SetScreens
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0D6E
           TITLE_TIMELINE_SLOT 0, rlStartTitleSceneFadeIn
           TITLE_TIMELINE_SLOT 1, rlStartTitleIntroScene5Scroll
           TITLE_TIMELINE_CALL 0, rlSetUpTitleIntroScene5
           TITLE_TIMELINE_CALL 0, rlFreeBattleScenePaletteSlots
-          TITLE_TIMELINE_CALL 0, rlUnknown95F335
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene5StartPaletteEffect
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
@@ -208,11 +208,11 @@
           TITLE_TIMELINE_CALL 0, rlShowNextTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0E67
-          TITLE_TIMELINE_CALL 0, rlUnknown95F777
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene5InitWindowEffect1
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0E68
-          TITLE_TIMELINE_CALL 0, rlUnknown95ECD6
-          TITLE_TIMELINE_CALL 0, rlUnknown95F7A5
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene5ShowSubBG3
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene5RunWindowEffect1
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0E9A
           TITLE_TIMELINE_SLOT 7, rlStartFadingOutTitleCaption
@@ -221,7 +221,7 @@
           TITLE_TIMELINE_SLOT 5, rlStartTitleQuickFadeOut
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0EEE
-          TITLE_TIMELINE_CALL 0, rlUnknown95ECE1
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene5SetScreens
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
@@ -232,7 +232,7 @@
           TITLE_TIMELINE_SLOT 1, rlStartTitleIntroScene6Scroll
           TITLE_TIMELINE_CALL 0, rlSetUpTitleIntroScene6
           TITLE_TIMELINE_CALL 0, rlFreeBattleScenePaletteSlots
-          TITLE_TIMELINE_CALL 0, rlUnknown95F349
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene6StartPaletteEffect1
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
@@ -241,12 +241,12 @@
           TITLE_TIMELINE_CALL 0, rlShowNextTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0FF7
-          TITLE_TIMELINE_CALL 0, rlUnknown95F7B7
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene6InitWindowEffect1
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0FF8
-          TITLE_TIMELINE_CALL 0, rlUnknown95ED4E
-          TITLE_TIMELINE_CALL 0, rlUnknown95F7E5
-          TITLE_TIMELINE_CALL 0, rlUnknown95F47A
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene6ShowSubBG3
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene6RunWindowEffect1
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene6StartPaletteEffect2
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $102A
           TITLE_TIMELINE_SLOT 7, rlStartFadingOutTitleCaption
@@ -263,14 +263,14 @@
           TITLE_TIMELINE_CALL 0, rlShowNextTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1098
-          TITLE_TIMELINE_CALL 0, rlUnknown95ED59
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene6FlashWhite
           TITLE_TIMELINE_SLOT 0, rlStartTitleSceneFadeOut
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $110D
-          TITLE_TIMELINE_CALL 0, rlUnknown95ED6A
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene6ClearBackdrop
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $10F2
           TITLE_TIMELINE_CALL 0, rlPlayTitleIntroSong2
@@ -310,7 +310,7 @@
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1301
-          TITLE_TIMELINE_CALL 0, rlUnknown95EDEA
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene7ShowBG1
           TITLE_TIMELINE_SLOT 5, rlUnknown9BE7A7
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1302
@@ -357,7 +357,7 @@
           TITLE_TIMELINE_SLOT 7, rlStartFadingOutTitleCaption
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1637
-          TITLE_TIMELINE_CALL 0, rlUnknown95EDF5
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene7HideSubBG1
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1638
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
@@ -376,11 +376,11 @@
         TITLE_TIMELINE_AT $1719
           TITLE_TIMELINE_CALL 0, rlSetUpTitleIntroScene8
           TITLE_TIMELINE_CALL 0, rlFreeBattleScenePaletteSlots
-          TITLE_TIMELINE_CALL 0, rlUnknown95F3D3
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene8StartPaletteEffect1
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1745
           TITLE_TIMELINE_CALL 0, rlUnknown9BFBB8
-          TITLE_TIMELINE_CALL 0, rlUnknown95F3E7
+          TITLE_TIMELINE_CALL 0, rlTitleIntroScene8FlashAndReveal
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1791
           TITLE_TIMELINE_SLOT 7, rlUnknown9BFA11
@@ -442,7 +442,7 @@
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1893
           TITLE_TIMELINE_SLOT 7, rlUnknown9BF6D6
-          TITLE_TIMELINE_CALL 0, rlUnknown95F426
+          TITLE_TIMELINE_CALL 0, rlTitleStartLogoPaletteEffect
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1BF9
           TITLE_TIMELINE_SLOT 0, rlStartTitleSceneFadeOut
@@ -465,7 +465,7 @@
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $005A
           TITLE_TIMELINE_SLOT 7, rlUnknown9BF6D6
-          TITLE_TIMELINE_CALL 0, rlUnknown95F426
+          TITLE_TIMELINE_CALL 0, rlTitleStartLogoPaletteEffect
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $038C
           TITLE_TIMELINE_SLOT 0, rlStartTitleSceneFadeOut
@@ -479,7 +479,7 @@
 
         TITLE_TIMELINE_AT $0000
           TITLE_TIMELINE_SLOT 4, rlStartDimmingTitle
-          TITLE_TIMELINE_CALL 0, rlUnknown95F440
+          TITLE_TIMELINE_CALL 0, rlTitleFadeOutStartPaletteEffects
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $0004

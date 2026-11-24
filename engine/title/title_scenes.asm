@@ -83,7 +83,7 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $33
         WRITE_RAM_END
 
-      rlUnknown95EAA8 ; 95/EAA8
+      rlTitleIntroScene1FadeOutHookNoOp ; 95/EAA8
 
         .al
         .xl
@@ -96,7 +96,7 @@
 
         ; 95/EAA9
 
-      rlUnknown95EAA9 ; 95/EAA9
+      rlTitleClearMainAndSubScreens ; 95/EAA9
 
         .al
         .xl
@@ -183,7 +183,7 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $30
         WRITE_RAM_END
 
-      rlUnknown95EB3B ; 95/EB3B
+      rlTitleIntroScene2HideBG2 ; 95/EB3B
 
         .al
         .xl
@@ -204,7 +204,7 @@
 
         ; 95/EB4C
 
-      rlUnknown95EB4C ; 95/EB4C
+      rlTitleIntroScene2HideBG3 ; 95/EB4C
 
         .al
         .xl
@@ -370,7 +370,7 @@
         WRITE_RAM_BYTE bBufferBG12NBA, $25
         WRITE_RAM_END
 
-      rlUnknown95EC4D ; 95/EC4D
+      rlTitleIntroScene4ShowBG1 ; 95/EC4D
 
         .al
         .xl
@@ -388,7 +388,7 @@
 
         ; 95/EC58
 
-      rlUnknown95EC58 ; 95/EC58
+      rlTitleIntroScene4ShowSubBG3 ; 95/EC58
 
         .al
         .xl
@@ -406,7 +406,7 @@
 
         ; 95/EC63
 
-      rlUnknown95EC63 ; 95/EC63
+      rlTitleIntroScene4SetScreens ; 95/EC63
 
         .al
         .xl
@@ -483,7 +483,7 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $33
         WRITE_RAM_END
 
-      rlUnknown95ECD6 ; 95/ECD6
+      rlTitleIntroScene5ShowSubBG3 ; 95/ECD6
 
         .al
         .xl
@@ -501,7 +501,7 @@
 
         ; 95/ECE1
 
-      rlUnknown95ECE1 ; 95/ECE1
+      rlTitleIntroScene5SetScreens ; 95/ECE1
 
         .al
         .xl
@@ -585,7 +585,7 @@
       .al
       .xl
 
-      rlUnknown95ED4E ; 95/ED4E
+      rlTitleIntroScene6ShowSubBG3 ; 95/ED4E
 
         ; Found through fe4.cdl.
         .al
@@ -604,7 +604,7 @@
 
         ; 95/ED59
 
-      rlUnknown95ED59 ; 95/ED59
+      rlTitleIntroScene6FlashWhite ; 95/ED59
 
         ; Found through fe4.cdl.
         .al
@@ -625,7 +625,7 @@
 
         ; 95/ED6A
 
-      rlUnknown95ED6A ; 95/ED6A
+      rlTitleIntroScene6ClearBackdrop ; 95/ED6A
 
         ; Found through fe4.cdl.
         .al
@@ -735,7 +735,7 @@
       .al
       .xl
 
-      rlUnknown95EDEA ; 95/EDEA
+      rlTitleIntroScene7ShowBG1 ; 95/EDEA
 
         .al
         .xl
@@ -753,7 +753,7 @@
 
         ; 95/EDF5
 
-      rlUnknown95EDF5 ; 95/EDF5
+      rlTitleIntroScene7HideSubBG1 ; 95/EDF5
 
         .al
         .xl
@@ -849,7 +849,7 @@
       .al
       .xl
 
-      rlUnknown95F2E5 ; 95/F2E5
+      rlTitleIntroScene3StartPaletteEffect ; 95/F2E5
 
         .al
         .xl
@@ -869,7 +869,7 @@
 
         ; 95/F2F9
 
-      rlUnknown95F2F9 ; 95/F2F9
+      rlTitleIntroScene4StartPaletteEffect1 ; 95/F2F9
 
         .al
         .xl
@@ -889,7 +889,7 @@
 
         ; 95/F30D
 
-      rlUnknown95F30D ; 95/F30D
+      rlTitleIntroScene4StartPaletteEffect2 ; 95/F30D
 
         .al
         .xl
@@ -909,7 +909,7 @@
 
         ; 95/F321
 
-      rlUnknown95F321 ; 95/F321
+      rlTitleIntroScene4StartPaletteEffect3 ; 95/F321
 
         .al
         .xl
@@ -929,7 +929,7 @@
 
         ; 95/F335
 
-      rlUnknown95F335 ; 95/F335
+      rlTitleIntroScene5StartPaletteEffect ; 95/F335
 
         .al
         .xl
@@ -949,7 +949,7 @@
 
         ; 95/F349
 
-      rlUnknown95F349 ; 95/F349
+      rlTitleIntroScene6StartPaletteEffect1 ; 95/F349
 
         .al
         .xl
@@ -977,7 +977,7 @@
       .al
       .xl
 
-      rlUnknown95F35D ; 95/F35D
+      rlTitleFillPalettesWhiteUnused ; 95/F35D
 
         .al
         .xl
@@ -1011,7 +1011,7 @@
 
         ; 95/F37D
 
-      rlUnknown95F37D ; 95/F37D
+      rlTitleStartFlashPaletteEffectsUnused ; 95/F37D
 
         .al
         .xl
@@ -1054,7 +1054,7 @@
 
       aUnknown95F3C5 ; 95/F3C5
 
-        ; Nothing in the build reaches this: rlUnknown95F37D writes it.
+        ; Nothing in the build reaches this: rlTitleStartFlashPaletteEffectsUnused writes it.
 
         WRITE_RAM_BYTE bBufferTM, $12
         WRITE_RAM_BYTE bBufferTS, $01
@@ -1070,7 +1070,7 @@
       .al
       .xl
 
-      rlUnknown95F3D3 ; 95/F3D3
+      rlTitleIntroScene8StartPaletteEffect1 ; 95/F3D3
 
         .al
         .xl
@@ -1090,7 +1090,7 @@
 
         ; 95/F3E7
 
-      rlUnknown95F3E7 ; 95/F3E7
+      rlTitleIntroScene8FlashAndReveal ; 95/F3E7
 
         .al
         .xl
@@ -1149,7 +1149,7 @@
       .al
       .xl
 
-      rlUnknown95F426 ; 95/F426
+      rlTitleStartLogoPaletteEffect ; 95/F426
 
         ; Found through fe4.cdl.
         .al
@@ -1172,7 +1172,7 @@
 
         ; 95/F440
 
-      rlUnknown95F440 ; 95/F440
+      rlTitleFadeOutStartPaletteEffects ; 95/F440
 
         ; Found through fe4.cdl.
         .al
@@ -1207,7 +1207,7 @@
 
         ; 95/F47A
 
-      rlUnknown95F47A ; 95/F47A
+      rlTitleIntroScene6StartPaletteEffect2 ; 95/F47A
 
         ; Found through fe4.cdl.
         .al
@@ -1236,7 +1236,7 @@
       .al
       .xl
 
-      rlUnknown95F48E ; 95/F48E
+      rlStartTitleIntroScene2FadeOAMPal0 ; 95/F48E
 
         .al
         .xl
@@ -1255,10 +1255,10 @@
         cpx #$001E
         bcc _F499
         plx
-        jsl rlUnknown95F4B7
-        lda #(`rlUnknown95F4B7)<<8
+        jsl rlStepTitleIntroScene2FadeOAMPal0
+        lda #(`rlStepTitleIntroScene2FadeOAMPal0)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95F4B7
+        lda #<>rlStepTitleIntroScene2FadeOAMPal0
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -1274,7 +1274,7 @@
       .al
       .xl
 
-      rlUnknown95F4B7 ; 95/F4B7
+      rlStepTitleIntroScene2FadeOAMPal0 ; 95/F4B7
 
         .al
         .xl
@@ -1295,7 +1295,7 @@
         lda #$00
         sta aTitleTimelineSlots.bActive,x
         rep #$20
-        jsl rlUnknown95F5B4
+        jsl rlTitleSetActiveSpritesHighPal
 
         _F4DE
         lda $7FD055
@@ -1320,7 +1320,7 @@
       .al
       .xl
 
-      rlUnknown95F4F0 ; 95/F4F0
+      rlStartTitleIntroScene2FadeOAMPal4 ; 95/F4F0
 
         .al
         .xl
@@ -1339,10 +1339,10 @@
         cpx #$001E
         bcc _F4FB
         plx
-        jsl rlUnknown95F519
-        lda #(`rlUnknown95F519)<<8
+        jsl rlStepTitleIntroScene2FadeOAMPal4
+        lda #(`rlStepTitleIntroScene2FadeOAMPal4)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95F519
+        lda #<>rlStepTitleIntroScene2FadeOAMPal4
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -1358,7 +1358,7 @@
       .al
       .xl
 
-      rlUnknown95F519 ; 95/F519
+      rlStepTitleIntroScene2FadeOAMPal4 ; 95/F519
 
         .al
         .xl
@@ -1379,7 +1379,7 @@
         lda #$00
         sta aTitleTimelineSlots.bActive,x
         rep #$20
-        jsl rlUnknown95F5B4
+        jsl rlTitleSetActiveSpritesHighPal
 
         _F540
         lda $7FD055
@@ -1404,7 +1404,7 @@
       .al
       .xl
 
-      rlUnknown95F552 ; 95/F552
+      rlStartTitleIntroScene2FadeOAMPal5 ; 95/F552
 
         .al
         .xl
@@ -1423,10 +1423,10 @@
         cpx #$001E
         bcc _F55D
         plx
-        jsl rlUnknown95F57B
-        lda #(`rlUnknown95F57B)<<8
+        jsl rlStepTitleIntroScene2FadeOAMPal5
+        lda #(`rlStepTitleIntroScene2FadeOAMPal5)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95F57B
+        lda #<>rlStepTitleIntroScene2FadeOAMPal5
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -1442,7 +1442,7 @@
       .al
       .xl
 
-      rlUnknown95F57B ; 95/F57B
+      rlStepTitleIntroScene2FadeOAMPal5 ; 95/F57B
 
         .al
         .xl
@@ -1463,7 +1463,7 @@
         lda #$00
         sta aTitleTimelineSlots.bActive,x
         rep #$20
-        jsl rlUnknown95F5B4
+        jsl rlTitleSetActiveSpritesHighPal
 
         _F5A2
         lda $7FD055
@@ -1480,7 +1480,7 @@
 
         ; 95/F5B4
 
-      rlUnknown95F5B4 ; 95/F5B4
+      rlTitleSetActiveSpritesHighPal ; 95/F5B4
 
         .al
         .xl
@@ -1520,7 +1520,7 @@
       .al
       .xl
 
-      rlUnknown95F5D9 ; 95/F5D9
+      rlStartTitleFadeBGPal1ToBlackUnused ; 95/F5D9
 
         .al
         .xl
@@ -1531,10 +1531,10 @@
 
         lda #$0000
         sta $7FD055
-        jsl rlUnknown95F5F3
-        lda #(`rlUnknown95F5F3)<<8
+        jsl rlStepTitleFadeBGPal1ToBlackUnused
+        lda #(`rlStepTitleFadeBGPal1ToBlackUnused)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95F5F3
+        lda #<>rlStepTitleFadeBGPal1ToBlackUnused
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -1542,7 +1542,7 @@
 
         ; 95/F5F3
 
-      rlUnknown95F5F3 ; 95/F5F3
+      rlStepTitleFadeBGPal1ToBlackUnused ; 95/F5F3
 
         .al
         .xl
@@ -1583,7 +1583,7 @@
 
       aUnknown95F62A ; 95/F62A
 
-        ; Palette fade list for rlFadePaletteToBlack (rlUnknown95F5F3).
+        ; Palette fade list for rlFadePaletteToBlack (rlStepTitleFadeBGPal1ToBlackUnused).
 
         .word $0022, $000F
         .word $FFFF
@@ -1596,7 +1596,7 @@
       .al
       .xl
 
-      rlUnknown95F630 ; 95/F630
+      rlStartTitleIntroScene3FadeBGPal34 ; 95/F630
 
         .al
         .xl
@@ -1605,10 +1605,10 @@
 
         lda #$0000
         sta $7FD055
-        jsl rlUnknown95F64A
-        lda #(`rlUnknown95F64A)<<8
+        jsl rlStepTitleIntroScene3FadeBGPal34
+        lda #(`rlStepTitleIntroScene3FadeBGPal34)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95F64A
+        lda #<>rlStepTitleIntroScene3FadeBGPal34
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -1624,7 +1624,7 @@
       .al
       .xl
 
-      rlUnknown95F64A ; 95/F64A
+      rlStepTitleIntroScene3FadeBGPal34 ; 95/F64A
 
         .al
         .xl
@@ -1673,13 +1673,13 @@
 
       aUnknown95F681 ; 95/F681
 
-        ; Palette fade list for rlFadePaletteToBlack (rlUnknown95F64A): palette offset and colour count, $FFFF ends it.
+        ; Palette fade list for rlFadePaletteToBlack (rlStepTitleIntroScene3FadeBGPal34): palette offset and colour count, $FFFF ends it.
 
         .word $0062, $000F
         .word $0082, $000F
         .word $FFFF
 
-      rlUnknown95F68B ; 95/F68B
+      rlStartTitleFlashFadeAllPalettesUnused ; 95/F68B
 
         .al
         .xl
@@ -1709,9 +1709,9 @@
         cpx #$00AE
         bcc _F6A6
         plx
-        lda #(`rlUnknown95F6DC)<<8
+        lda #(`rlStepTitleFlashFadeAllPalettesUnused)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95F6DC
+        lda #<>rlStepTitleFlashFadeAllPalettesUnused
         sta aTitleTimelineSlots.lRoutine,x
         lda #(`aUnknown95F3C5)<<8
         sta lR18+1
@@ -1734,7 +1734,7 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $01
         WRITE_RAM_END
 
-      rlUnknown95F6DC ; 95/F6DC
+      rlStepTitleFlashFadeAllPalettesUnused ; 95/F6DC
 
         .al
         .xl
@@ -1775,7 +1775,7 @@
 
       aUnknown95F713 ; 95/F713
 
-        ; Palette fade list for rlFadePaletteToBlack (rlUnknown95F6DC).
+        ; Palette fade list for rlFadePaletteToBlack (rlStepTitleFlashFadeAllPalettesUnused).
 
         .word $0022, $000F
         .word $0042, $000F
@@ -1798,7 +1798,7 @@
       .al
       .xl
 
-      rlUnknown95F777 ; 95/F777
+      rlTitleIntroScene5InitWindowEffect1 ; 95/F777
 
         .al
         .xl
@@ -1825,7 +1825,7 @@
 
         ; 95/F7A5
 
-      rlUnknown95F7A5 ; 95/F7A5
+      rlTitleIntroScene5RunWindowEffect1 ; 95/F7A5
 
         .al
         .xl
@@ -1852,7 +1852,7 @@
       .al
       .xl
 
-      rlUnknown95F7B7 ; 95/F7B7
+      rlTitleIntroScene6InitWindowEffect1 ; 95/F7B7
 
         ; Found through fe4.cdl.
         .al
@@ -1880,7 +1880,7 @@
 
         ; 95/F7E5
 
-      rlUnknown95F7E5 ; 95/F7E5
+      rlTitleIntroScene6RunWindowEffect1 ; 95/F7E5
 
         ; Found through fe4.cdl.
         .al
@@ -1908,7 +1908,7 @@
       .al
       .xl
 
-      rlUnknown95F831 ; 95/F831
+      rlTitleIntroScene4InitWindowEffect2 ; 95/F831
 
         .al
         .xl
@@ -1935,7 +1935,7 @@
 
         ; 95/F85B
 
-      rlUnknown95F85B ; 95/F85B
+      rlTitleIntroScene4RunWindowEffect2 ; 95/F85B
 
         .al
         .xl
@@ -1954,7 +1954,7 @@
 
         ; 95/F86D
 
-      rlUnknown95F86D ; 95/F86D
+      rlTitleIntroScene4EndWindowEffect2 ; 95/F86D
 
         .al
         .xl
@@ -2015,7 +2015,7 @@
       .al
       .xl
 
-      rlUnknown95F9CE ; 95/F9CE
+      rlTitleIntroScene2SpawnSpritePair1 ; 95/F9CE
 
         .al
         .xl
@@ -2044,7 +2044,7 @@
 
         ; 95/F9FB
 
-      rlUnknown95F9FB ; 95/F9FB
+      rlTitleIntroScene2SpawnSpritePair2 ; 95/F9FB
 
         .al
         .xl
@@ -2069,7 +2069,7 @@
 
         ; 95/FA1E
 
-      rlUnknown95FA1E ; 95/FA1E
+      rlTitleIntroScene2SpawnSpritePair3 ; 95/FA1E
 
         .al
         .xl
@@ -2094,7 +2094,7 @@
 
         ; 95/FA41
 
-      rlUnknown95FA41 ; 95/FA41
+      rlTitleIntroScene2SpawnSpritePair4 ; 95/FA41
 
         .al
         .xl
@@ -2119,7 +2119,7 @@
 
         ; 95/FA64
 
-      rlUnknown95FA64 ; 95/FA64
+      rlTitleIntroScene2SpawnSpritePair5 ; 95/FA64
 
         .al
         .xl
@@ -2144,7 +2144,7 @@
 
         ; 95/FA87
 
-      rlUnknown95FA87 ; 95/FA87
+      rlTitleIntroScene2SpawnSpritePair6 ; 95/FA87
 
         .al
         .xl
@@ -2169,7 +2169,7 @@
 
         ; 95/FAAA
 
-      rlUnknown95FAAA ; 95/FAAA
+      rlTitleIntroScene2SpawnSpriteCenter ; 95/FAAA
 
         .al
         .xl
@@ -2188,7 +2188,7 @@
 
         ; 95/FABC
 
-      rlUnknown95FABC ; 95/FABC
+      rlStartTitleIntroScene2SpriteRise ; 95/FABC
 
         .al
         .xl
@@ -2226,10 +2226,10 @@
         bcc _FAE4
         lda #1,s
         tax
-        jsl rlUnknown95FB0A
-        lda #(`rlUnknown95FB0A)<<8
+        jsl rlStepTitleIntroScene2SpriteRise
+        lda #(`rlStepTitleIntroScene2SpriteRise)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FB0A
+        lda #<>rlStepTitleIntroScene2SpriteRise
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -2246,7 +2246,7 @@
       .al
       .xl
 
-      rlUnknown95FB0A ; 95/FB0A
+      rlStepTitleIntroScene2SpriteRise ; 95/FB0A
 
         .al
         .xl
@@ -2309,11 +2309,11 @@
 
       aUnknown95FB4B ; 95/FB4B
 
-        ; Jump table of rlUnknown95FB0A.
-        .word <>rsUnknown95FB51
-        .word <>rsUnknown95FB7C
-        .word <>rsUnknown95FBD1
-      rsUnknown95FB51 ; 95/FB51
+        ; Jump table of rlStepTitleIntroScene2SpriteRise.
+        .word <>rsTitleIntroScene2SpriteWait
+        .word <>rsTitleIntroScene2SpriteHold
+        .word <>rsTitleIntroScene2SpriteAscend
+      rsTitleIntroScene2SpriteWait ; 95/FB51
 
         .al
         .xl
@@ -2342,14 +2342,14 @@
 
         _FB77
         tyx
-        jsr rsUnknown95FC23
+        jsr rsTitleIntroScene2SyncSpriteY
         rts
 
         .databank 0
 
         ; 95/FB7C
 
-      rsUnknown95FB7C ; 95/FB7C
+      rsTitleIntroScene2SpriteHold ; 95/FB7C
 
         .al
         .xl
@@ -2399,14 +2399,14 @@
 
         _FBCC
         tyx
-        jsr rsUnknown95FC23
+        jsr rsTitleIntroScene2SyncSpriteY
         rts
 
         .databank 0
 
         ; 95/FBD1
 
-      rsUnknown95FBD1 ; 95/FBD1
+      rsTitleIntroScene2SpriteAscend ; 95/FBD1
 
         .al
         .xl
@@ -2459,7 +2459,7 @@
 
         ; 95/FC23
 
-      rsUnknown95FC23 ; 95/FC23
+      rsTitleIntroScene2SyncSpriteY ; 95/FC23
 
         .al
         .xl
@@ -2495,7 +2495,7 @@
 
         ; 95/FC51
 
-      rlUnknown95FC51 ; 95/FC51
+      rlStartTitleFadeBrightnessUnused ; 95/FC51
 
         .al
         .xl
@@ -2503,14 +2503,14 @@
         .databank ?
 
         ; Nothing in the build reaches this: no title timeline names it. It installs
-        ; rlUnknown95FC6B as a title timeline slot routine, like rlUnknown95F630.
+        ; rlStepTitleFadeBrightnessUnused as a title timeline slot routine, like rlStartTitleIntroScene3FadeBGPal34.
 
         lda #$0000
         sta wTitleBrightnessStep
-        jsl rlUnknown95FC6B
-        lda #(`rlUnknown95FC6B)<<8
+        jsl rlStepTitleFadeBrightnessUnused
+        lda #(`rlStepTitleFadeBrightnessUnused)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FC6B
+        lda #<>rlStepTitleFadeBrightnessUnused
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -2518,7 +2518,7 @@
 
         ; 95/FC6B
 
-      rlUnknown95FC6B ; 95/FC6B
+      rlStepTitleFadeBrightnessUnused ; 95/FC6B
 
         .al
         .xl
@@ -2809,7 +2809,7 @@
       .al
       .xl
 
-      rlUnknown95FDE4 ; 95/FDE4
+      rlStartTitleBG2DiagonalScrollUnused ; 95/FDE4
 
         .al
         .xl
@@ -2821,10 +2821,10 @@
         phx
         lda #$0000
         sta $7FD046
-        jsl rlUnknown95FE00
-        lda #(`rlUnknown95FE00)<<8
+        jsl rlStepTitleBG2DiagonalScrollUnused
+        lda #(`rlStepTitleBG2DiagonalScrollUnused)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FE00
+        lda #<>rlStepTitleBG2DiagonalScrollUnused
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -2833,7 +2833,7 @@
 
         ; 95/FE00
 
-      rlUnknown95FE00 ; 95/FE00
+      rlStepTitleBG2DiagonalScrollUnused ; 95/FE00
 
         .al
         .xl
@@ -3258,7 +3258,7 @@
       .al
       .xl
 
-      rlUnknown95FFAC ; 95/FFAC
+      rlPlayTitleSound2Unused ; 95/FFAC
 
         .al
         .xl
