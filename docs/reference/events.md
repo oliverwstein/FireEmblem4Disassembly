@@ -31,7 +31,7 @@ When a gameplay action occurs (turn start, battle, talk, visit, seize, area entr
 
 1. `rlRunChapterEventConditions` loops over the condition list until `$FFFF`, dispatching each command byte through `aChapterEventConditionCommands` (`rsRunEventConditionCommand`).
 2. Most conditions funnel into `rsEvaluateEventCondition`, which checks `bEventActionIdentifier` against the expected action, tests (and optionally sets/clears) the condition's event flag (`$FF` = always), and calls `(lEventPointer)` to test the condition's parameters (including Gen 2 child/substitute ID unification via `rsEventUnifyGen2CharacterIds`).
-3. When a condition matches, its body runs; otherwise `rsTrySkipEventConditionCommand` or `rsEventFindConditionBreak` / `rsEventFindTurnCheckBreak` skips to the matching break marker (`$20`/`$6666` or `$25`/`$6666`).
+3. When an action condition matches, its body (the next command) runs and `rsEventFindConditionBreak` skips to the next `$20`/`$6666` break; when it misses, `rsTrySkipEventConditionCommand` skips the body. A failed turn check (`$21`) skips to the next `$25`/`$6666` break (`rsEventFindTurnCheckBreak`), and a failed state check (flags, counters, alive, married) to the next `$2E`/`$6666` break (`rsEventFindStateCheckBreak`). Every value of `bEventActionIdentifier` and its arguments is listed in `include/WRAM.h`; the guide's [Chapter 11](../guide/11-the-game-is-watching.md) explains the list format.
 
 ## Event script interpreter
 

@@ -117,7 +117,7 @@ fn run_action_ended_events() {                       // rsRunActionEndedEvents
 }
 ```
 
-Each condition in the chapter's list first compares its own action number with the announced one, so only conditions about units ending their action look further. It then skips itself if its flag is already set, and `CHECK_UNIT_IN_AREA` compares the four arguments with its parameters: the character (or any), the army (or any), and whether the tile lies inside the rectangle. On a match it sets its flag and runs the event ([Chapter 11](OUTLINE.md)).
+Each condition in the chapter's list first compares its own action number with the announced one, so only conditions about units ending their action look further. It then skips itself if its flag is already set, and `CHECK_UNIT_IN_AREA` compares the four arguments with its parameters: the character (or any), the army (or any), and whether the tile lies inside the rectangle. On a match it sets its flag and runs the event ([Chapter 11](11-the-game-is-watching.md)).
 
 The test happens once, at the end of the action, on the unit's final tile, so walking across (28, 37) without stopping there does nothing. The flag keeps the event from running twice. Lex's event uses that: if he has no Iron Axe to trade, the script clears both of its flags (`UNSET_FLAG_IF_IN_CHAPTER`), and the condition can match again the next time he stops on the tile.
 
