@@ -44,7 +44,7 @@
         sta aActiveSpriteSystem.aUnknown001300,b,y
 
         phx
-        jsr rsUnknown818A4A
+        jsr rsGetMovingMapSpriteStepShift
         asl a
         tax
         lda aUnknown81890B,x
@@ -205,7 +205,7 @@
 
             phx
             phy
-            jsr rsUnknown818A68
+            jsr rsStepMovingMapSpritePathScript
             ply
             plx
             bcs _End
@@ -233,7 +233,7 @@
 
         .byte $0F
 
-      rsUnknown8189E1 ; 81/89E1
+      rsActiveSpriteCmdDrawMovingMapSpriteBack2Unused ; 81/89E1
 
         .al
         .xl
@@ -502,7 +502,7 @@
       .al
       .xl
 
-      rlUnknown819062 ; 81/9062
+      rlBuildMovingMapSpritePathUnused ; 81/9062
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -528,10 +528,10 @@
         clc
         adc lR18
         sta lR18
-        jsr rsUnknown8190CC
+        jsr rsInitMovingMapSpritePathHeaderUnused
 
         _9081
-        jsr rsUnknown8190DC
+        jsr rsStepBuildMovingMapSpritePathUnused
         bcc _9081
         ply
         sty wR0
@@ -629,7 +629,7 @@
       .al
       .xl
 
-      rsUnknown8190CC ; 81/90CC
+      rsInitMovingMapSpritePathHeaderUnused ; 81/90CC
 
         ; Found by tools/sweep.py.
         .al
@@ -650,7 +650,7 @@
 
         ; 81/90DC
 
-      rsUnknown8190DC ; 81/90DC
+      rsStepBuildMovingMapSpritePathUnused ; 81/90DC
 
         ; Found by tools/sweep.py.
         .al
@@ -797,7 +797,7 @@
 
         .databank 0
 
-      rlProcUnknown87C056Cycle3 ; 87/C0C2
+      rlProcCastleTakenOverCycle3 ; 87/C0C2
 
         .al
         .autsiz
@@ -806,13 +806,13 @@
         jsl rlProcEngineFreeProc
         lda #GAMESTATE_MAP_STEP
         sta wGameStateRoutine1,b
-        jsl rlUnknown87C205
-        jsl rlUnknown87C1E1
+        jsl rlQueueSeizePopupRelocation
+        jsl rlRunCastleSeizeEventOrResumeMusic
         rtl
 
         .databank 0
 
-      rlUnknown87C0D5 ; 87/C0D5
+      rlPlayCastleTakenOverSound ; 87/C0D5
 
         .al
         .autsiz
@@ -890,7 +890,7 @@
 
         .databank 0
 
-      rlUnknown87C11D ; 87/C11D
+      rlCheckFactionHomeCastleCaptured ; 87/C11D
 
         .al
         .autsiz
@@ -921,7 +921,7 @@
 
         .databank 0
 
-      rlUnknown87C141 ; 87/C141
+      rlCheckFactionUnitsVisibleOnScreen ; 87/C141
 
         .al
         .autsiz
@@ -1022,7 +1022,7 @@
 
         .databank 0
 
-      rlUnknown87C1D0 ; 87/C1D0
+      rlUnloadFactionAndCheckVictoryTheme ; 87/C1D0
 
         .al
         .autsiz
@@ -1040,7 +1040,7 @@
 
         .databank 0
 
-      rlUnknown87C1E1 ; 87/C1E1
+      rlRunCastleSeizeEventOrResumeMusic ; 87/C1E1
 
         .al
         .autsiz
@@ -1069,7 +1069,7 @@
 
         .databank 0
 
-      rlUnknown87C205 ; 87/C205
+      rlQueueSeizePopupRelocation ; 87/C205
 
         .al
         .autsiz
@@ -1093,10 +1093,10 @@
         ; 87/C21D
 
 
-      aProcUnknown87C056Code ; 87/C21D
+      aProcCastleTakenOverCode ; 87/C21D
 
         PROC_YIELD 32
-        PROC_CALL rlUnknown87C0D5
+        PROC_CALL rlPlayCastleTakenOverSound
         PROC_SET_ONCYCLE rlProcCycleFlickerUnitsOfFactionSlot
         PROC_YIELD 64
         PROC_CALL rlHideUnitsOfFactionSlot
@@ -1104,20 +1104,20 @@
         PROC_YIELD 16
 
         _C235
-        PROC_CALL rlUnknown87C1D0
+        PROC_CALL rlUnloadFactionAndCheckVictoryTheme
 
         _C23A
         PROC_YIELD 16
         PROC_CALL rlRedrawVisibleMapTilemap
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown87C056Cycle3
+        PROC_SET_ONCYCLE rlProcCastleTakenOverCycle3
         PROC_HALT
 
       procFactionSlotUnitDeath ; 87/C249
 
-        .structProcInfo "DU", rlProcUnknown87C249Init, rlProcUnknown87C249Cycle, aProcUnknown87C249Code
+        .structProcInfo "DU", rlProcFactionSlotUnitDeathInit, rlProcFactionSlotUnitDeathCycle, aProcFactionSlotUnitDeathCode
 
-      rlProcUnknown87C249Init ; 87/C251
+      rlProcFactionSlotUnitDeathInit ; 87/C251
 
         .al
         .autsiz
@@ -1133,7 +1133,7 @@
         sta aProcSystem.aBody3,b,x
         lda #0
         sta aProcSystem.aBody4,b,x
-        jsl rlUnknown87C2FA
+        jsl rlRevealMatchingFactionUnits
 
         lda aProcSystem.wInput3,b
         bne +
@@ -1149,7 +1149,7 @@
 
         .databank 0
 
-      rlProcUnknown87C249Cycle ; 87/C282
+      rlProcFactionSlotUnitDeathCycle ; 87/C282
 
         .al
         .autsiz
@@ -1171,7 +1171,7 @@
         .autsiz
         .databank ?
 
-        jsl rlProcUnknown87C249Cycle
+        jsl rlProcFactionSlotUnitDeathCycle
 
         lda aProcSystem.aBody4,b,x
         beq ++
@@ -1183,11 +1183,11 @@
             sta aProcSystem.aBody4,b,x
 
           +
-          jsl rlUnknown87C2FA
+          jsl rlRevealMatchingFactionUnits
           bra ++
 
         +
-        jsl rlUnknown87C2B7
+        jsl rlHideMatchingFactionUnits
 
         +
         inc aProcSystem.aBody4,b,x
@@ -1195,7 +1195,7 @@
 
         .databank 0
 
-      rlUnknown87C2B7 ; 87/C2B7
+      rlHideMatchingFactionUnits ; 87/C2B7
 
         .al
         .autsiz
@@ -1249,7 +1249,7 @@
 
         .databank 0
 
-      rlUnknown87C2FA ; 87/C2FA
+      rlRevealMatchingFactionUnits ; 87/C2FA
 
         .al
         .autsiz
@@ -1323,7 +1323,7 @@
 
         .databank 0
 
-      rlUnknown87C352 ; 87/C352
+      rlSetFactionUnitDeathFlickerRate2 ; 87/C352
 
         .al
         .autsiz
@@ -1335,7 +1335,7 @@
 
         .databank 0
 
-      rlUnknown87C359 ; 87/C359
+      rlSetFactionUnitDeathFlickerRate1 ; 87/C359
 
         .al
         .autsiz
@@ -1347,18 +1347,18 @@
 
         .databank 0
 
-      aProcUnknown87C249Code ; 87/C360
+      aProcFactionSlotUnitDeathCode ; 87/C360
 
         PROC_YIELD 4
-        PROC_CALL rlUnknown87C0D5
+        PROC_CALL rlPlayCastleTakenOverSound
         PROC_SET_ONCYCLE rlProcFactionSlotUnitDeathCycle2
         PROC_YIELD 16
-        PROC_CALL rlUnknown87C352
+        PROC_CALL rlSetFactionUnitDeathFlickerRate2
         PROC_YIELD 8
-        PROC_CALL rlUnknown87C359
+        PROC_CALL rlSetFactionUnitDeathFlickerRate1
         PROC_YIELD 8
-        PROC_SET_ONCYCLE rlProcUnknown87C249Cycle
-        PROC_CALL rlUnknown87C2B7
+        PROC_SET_ONCYCLE rlProcFactionSlotUnitDeathCycle
+        PROC_CALL rlHideMatchingFactionUnits
         PROC_YIELD 8
         PROC_SET_ONCYCLE rlProcFactionSlotUnitDeathCycle3
         PROC_HALT
@@ -1695,7 +1695,7 @@
       .al
       .xl
 
-      rsUnknown818A4A ; 81/8A4A
+      rsGetMovingMapSpriteStepShift ; 81/8A4A
 
         .al
         .autsiz
@@ -1723,7 +1723,7 @@
 
         .databank 0
 
-      rsUnknown818A68 ; 81/8A68
+      rsStepMovingMapSpritePathScript ; 81/8A68
 
         .al
         .autsiz
@@ -1736,16 +1736,16 @@
         beq +
 
           ; If set, unload unit as soon as they are offscreen
-          jsr rsUnknown818C98
+          jsr rsCheckMovingMapSpriteOffscreen
           bcc +
 
             ; Character is not visible
-            jsl rlUnknown818B76
+            jsl rlScriptedMoveCmdEnd
             sec
             rts
 
         +
-        jsr rsUnknown818CBF
+        jsr rsUpdateMovingMapSpriteSoundPan
 
         lda aActiveSpriteSystem.aUnknown001320,b,y
         beq +
@@ -1769,13 +1769,13 @@
           cmp #$0080
           bne +
 
-            jsl rlUnknown818B76
+            jsl rlScriptedMoveCmdEnd
             sec
             rts
 
           +
           bit #$0080
-          beq rsUnknown818AD8
+          beq rsRunMovingMapSpriteMoveCmd
 
           phy
           and #$007F
@@ -1799,17 +1799,17 @@
 
       aScriptedMovementPointers ; 81/8AC6
 
-        .word <>rlUnknown818B76
-        .word <>rlUnknown818B5D
-        .word <>rlUnknown818BF0
-        .word <>rlUnknown818BF9
-        .word <>rlUnknown818C13
-        .word <>rlUnknown818C5D
-        .word <>rlUnknown818C62
-        .word <>rlUnknown818C67
-        .word <>rlUnknown818C6C
+        .word <>rlScriptedMoveCmdEnd
+        .word <>rlScriptedMoveCmdPause
+        .word <>rlScriptedMoveCmdLoop
+        .word <>rlScriptedMoveCmdJump
+        .word <>rlScriptedMoveCmdSetSpeed
+        .word <>rlScriptedMoveCmdFaceDown
+        .word <>rlScriptedMoveCmdFaceUp
+        .word <>rlScriptedMoveCmdFaceLeft
+        .word <>rlScriptedMoveCmdFaceRight
 
-      rsUnknown818AD8 ; 81/8AD8
+      rsRunMovingMapSpriteMoveCmd ; 81/8AD8
 
         .al
         .autsiz
@@ -1863,7 +1863,7 @@
         sta aMovingMapSprites.wPathScriptOffset,b,x
 
         phx
-        jsr rsUnknown818A4A
+        jsr rsGetMovingMapSpriteStepShift
         tax
         lda aUnknown818B54,x
         and #$00FF
@@ -1900,7 +1900,7 @@
         .byte $02
         .byte $01
 
-      rlUnknown818B5D ; 81/8B5D
+      rlScriptedMoveCmdPause ; 81/8B5D
 
         .al
         .autsiz
@@ -1924,7 +1924,7 @@
 
         .databank 0
 
-      rlUnknown818B76 ; 81/8B76
+      rlScriptedMoveCmdEnd ; 81/8B76
 
         .al
         .autsiz
@@ -1934,7 +1934,7 @@
         lda aMovingMapSprites.wActiveSpriteOffset,b,x
         tay
 
-        jsr rsUnknown818B91
+        jsr rsRestoreUnitAfterMovingSprite
 
         lda #$FFFF
         sta aMovingMapSprites.wActiveSpriteOffset,b,x
@@ -1948,7 +1948,7 @@
 
         .databank 0
 
-      rsUnknown818B91 ; 81/8B91
+      rsRestoreUnitAfterMovingSprite ; 81/8B91
 
         .al
         .autsiz
@@ -2008,7 +2008,7 @@
 
         .databank 0
 
-      rlUnknown818BF0 ; 81/8BF0
+      rlScriptedMoveCmdLoop ; 81/8BF0
 
         .al
         .autsiz
@@ -2022,7 +2022,7 @@
 
         .databank 0
 
-      rlUnknown818BF9 ; 81/8BF9
+      rlScriptedMoveCmdJump ; 81/8BF9
 
         .al
         .autsiz
@@ -2045,7 +2045,7 @@
 
         .databank 0
 
-      rlUnknown818C13 ; 81/8C13
+      rlScriptedMoveCmdSetSpeed ; 81/8C13
 
         .al
         .autsiz
@@ -2104,7 +2104,7 @@
       .al
       .xl
 
-      rlUnknown818C5D ; 81/8C5D
+      rlScriptedMoveCmdFaceDown ; 81/8C5D
 
         .al
         .autsiz
@@ -2113,7 +2113,7 @@
         lda #1
         bra +
 
-      rlUnknown818C62 ; 81/8C62
+      rlScriptedMoveCmdFaceUp ; 81/8C62
 
         .al
         .autsiz
@@ -2122,7 +2122,7 @@
         lda #2
         bra +
 
-      rlUnknown818C67 ; 81/8C67
+      rlScriptedMoveCmdFaceLeft ; 81/8C67
 
         .al
         .autsiz
@@ -2131,7 +2131,7 @@
         lda #3
         bra +
 
-      rlUnknown818C6C ; 81/8C6C
+      rlScriptedMoveCmdFaceRight ; 81/8C6C
 
         .al
         .autsiz
@@ -2176,7 +2176,7 @@
       .al
       .xl
 
-      rsUnknown818C98 ; 81/8C98
+      rsCheckMovingMapSpriteOffscreen ; 81/8C98
 
         .al
         .autsiz
@@ -2216,7 +2216,7 @@
 
         .databank 0
 
-      rsUnknown818CBF ; 81/8CBF
+      rsUpdateMovingMapSpriteSoundPan ; 81/8CBF
 
         .al
         .autsiz
@@ -2243,7 +2243,7 @@
         bra _Continue
 
         _Continue
-        jsl rlUnknown818CE2
+        jsl rlUpdateMovingMapSpriteSound
         ply
         plx
         plp
@@ -2251,7 +2251,7 @@
 
         .databank 0
 
-      rlUnknown818CE2 ; 81/8CE2
+      rlUpdateMovingMapSpriteSound ; 81/8CE2
 
         .al
         .autsiz
@@ -2266,7 +2266,7 @@
         and #$FF00
         bne +
 
-          jsr rsUnknown818D23
+          jsr rsStartMovingMapSpriteSoundChannel
           bra _End
 
         +
@@ -2310,7 +2310,7 @@
       .al
       .xl
 
-      rsUnknown818D23 ; 81/8D23
+      rsStartMovingMapSpriteSoundChannel ; 81/8D23
 
         .al
         .xl
@@ -2360,7 +2360,7 @@
 
       procCastleTakenOver ; 87/C056
 
-        .structProcInfo "TF", rlProcCastleTakenOverInit, rlProcCastleTakenOverCycle, aProcUnknown87C056Code
+        .structProcInfo "TF", rlProcCastleTakenOverInit, rlProcCastleTakenOverCycle, aProcCastleTakenOverCode
 
       rlProcCastleTakenOverInit ; 87/C05E
 
@@ -2368,7 +2368,7 @@
         .autsiz
         .databank ?
 
-        ; wInput0 = location, wInput1 = old owner, wInput2 = new owner. Skips to the end of the script unless the old owner's home castle was taken (rlUnknown87C11D) and some of its units must fade out (rlUnknown87C141). Holds the game state.
+        ; wInput0 = location, wInput1 = old owner, wInput2 = new owner. Skips to the end of the script unless the old owner's home castle was taken (rlCheckFactionHomeCastleCaptured) and some of its units must fade out (rlCheckFactionUnitsVisibleOnScreen). Holds the game state.
 
         ; wInput0 = LocationID
         ; wInput1 = old owner
@@ -2383,10 +2383,10 @@
         lda #0
         sta aProcSystem.aBody3,b,x
         sta aProcSystem.aBody4,b,x
-        jsl rlUnknown87C11D
+        jsl rlCheckFactionHomeCastleCaptured
         bcs +
 
-          lda #<>aProcUnknown87C056Code._C23A
+          lda #<>aProcCastleTakenOverCode._C23A
           sta aProcSystem.aHeaderCodeOffset,b,x
           lda #1
           sta aProcSystem.aHeaderSleepTimer,b,x
@@ -2394,11 +2394,11 @@
 
         +
         lda aProcSystem.aBody1,b,x
-        jsl rlUnknown87C141
+        jsl rlCheckFactionUnitsVisibleOnScreen
         cmp #0
         bne +
 
-          lda #<>aProcUnknown87C056Code._C235
+          lda #<>aProcCastleTakenOverCode._C235
           sta aProcSystem.aHeaderCodeOffset,b,x
           lda #1
           sta aProcSystem.aHeaderSleepTimer,b,x
@@ -5269,7 +5269,7 @@
       .al
       .xl
 
-      rlUnknown88DD0F ; 88/DD0F
+      rlDrawActiveUnitOverlaySpriteUnused ; 88/DD0F
 
         ; Nothing in the build reaches this. Draws a sprite array at the active
         ; unit (wR0 = $68, wR1 = $0885 + 6): aUnknown88DD57, or aUnknown88DD77
@@ -5334,7 +5334,7 @@
 
       aUnknown88DD57 ; 88/DD57
 
-        ; Drawn by rlUnknown88DD0F when the active unit's map sprite has bit 15 clear.
+        ; Drawn by rlDrawActiveUnitOverlaySpriteUnused when the active unit's map sprite has bit 15 clear.
         _Sprites := [[(   4,    4), $21, SpriteLarge, $00E0, 3, 1, false, false]]
         _Sprites..= [[(  16,   16), $00, SpriteSmall, $0022, 3, 2, false, false]]
         _Sprites..= [[(   8,   16), $00, SpriteSmall, $0021, 3, 2, false, false]]
@@ -5347,7 +5347,7 @@
 
       aUnknown88DD77 ; 88/DD77
 
-        ; Drawn by rlUnknown88DD0F when the active unit's map sprite has bit 15 set.
+        ; Drawn by rlDrawActiveUnitOverlaySpriteUnused when the active unit's map sprite has bit 15 set.
         _Sprites := [[(   4,    6), $21, SpriteLarge, $00E0, 3, 1, false, false]]
         _Sprites..= [[(   4,  -10), $21, SpriteLarge, $00E2, 3, 1, false, false]]
         _Sprites..= [[(  16,   16), $00, SpriteSmall, $0022, 3, 2, false, false]]
@@ -5843,7 +5843,7 @@
       .al
       .xl
 
-      rlUnknown88E00E ; 88/E00E
+      rlUploadStandingMapSpriteByOffsetUnused ; 88/E00E
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
