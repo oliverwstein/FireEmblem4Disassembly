@@ -46,7 +46,7 @@ The parts of the game written as content rather than code.
 | # | Chapter | Opening problem | Patterns | Source | Status |
 |---|---|---|---|---|---|
 | 11 | **[The game is watching](11-the-game-is-watching.md)** | A castle seized, a talk, a death, a turn count: each might start a scene. | Gameplay announces an action; each chapter's list of conditions checks it (close to Observer, without subscriptions); event flags | `events/event_engine`, `chapter_data`, `talk_events` | Drafted |
-| 12 | **Screenplays** | Writers need to stage scenes without writing assembly. | Bytecode with an escape hatch (`RUN_ASM`); scripts that block on procs | `events/event_scripts`, `event_procs`, `event_movement`, `asmc`, `events/` | Ready (events.md) |
+| 12 | **[Screenplays](12-screenplays.md)** | Writers need to stage scenes without writing assembly. | Bytecode with an escape hatch (`RUN_ASM`); scripts that block on procs | `events/event_scripts`, `event_procs`, `event_movement`, `asmc`, `events/` | Drafted |
 | 13 | **Dialogue and text** | About 2,000 texts with portraits, pauses, and music cues, drawn a letter at a time alongside menu glyphs. | A text markup language; glyph/tile-run rendering; the box as a proc | `dialogue/`, `text/dialogue/`, `menus/menu_text` | Ready (dialogue.md) |
 | 14 | **Armies with a mind** | Dozens of enemies have to think without dropping a frame. | Time-slicing in the main loop; a cycle state machine; group scripts that set goals; general tactics code | `ai/` | Ready (ai.md) |
 

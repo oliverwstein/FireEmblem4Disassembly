@@ -1,6 +1,6 @@
 # Chapter 11: The Game Is Watching
 
-A chapter's story reacts to play through one mechanism. Gameplay code that does something a scene might care about, such as ending a unit's action, taking a castle, starting a talk, killing a unit, or beginning a phase, **announces** it: it writes an action number and up to four arguments into fixed variables and calls `rlGetAndRunChapterMapEventConditions`. That routine walks the current chapter's **condition list**, a list of commands in ROM. Each condition names the action it waits for and the arguments it wants. A condition that matches runs the command after it, which usually starts a scene script ([Chapter 12](OUTLINE.md)) and sometimes sets a flag, attaches a quote to the battle in progress, or loads an army on the spot.
+A chapter's story reacts to play through one mechanism. Gameplay code that does something a scene might care about, such as ending a unit's action, taking a castle, starting a talk, killing a unit, or beginning a phase, **announces** it: it writes an action number and up to four arguments into fixed variables and calls `rlGetAndRunChapterMapEventConditions`. That routine walks the current chapter's **condition list**, a list of commands in ROM. Each condition names the action it waits for and the arguments it wants. A condition that matches runs the command after it, which usually starts a scene script ([Chapter 12](12-screenplays.md)) and sometimes sets a flag, attaches a quote to the battle in progress, or loads an army on the spot.
 
 Flags are the list's memory. Each chapter has 80 one-bit flags, and the game keeps 256 more that last the whole playthrough. A condition's flag keeps it from matching twice. Scripts and AI scripts set and clear flags to open talks, change the map, and record what has happened, and the chapter's talk table and map-change table read the same flags.
 
@@ -329,7 +329,7 @@ Action `$14` comes after the rounds are built, before the battle is shown. `SET_
 
 ## Scripts reach back
 
-The condition-list commands that change state (load an army, deploy a group, give an item, remove a unit, change talk targets) have no counterpart in the script language. A script runs one of them inline with `RUN_EVENT_CONDITION`, followed by the command's bytes, which the script engine hands to `rlTryRunEventConditionCommand`. The chapters' scripts do this 780 times. [Chapter 12](OUTLINE.md) covers the script side.
+The condition-list commands that change state (load an army, deploy a group, give an item, remove a unit, change talk targets) have no counterpart in the script language. A script runs one of them inline with `RUN_EVENT_CONDITION`, followed by the command's bytes, which the script engine hands to `rlTryRunEventConditionCommand`. The chapters' scripts do this 780 times. [Chapter 12](12-screenplays.md) covers the script side.
 
 ## Trade-offs and hard limits
 

@@ -37,12 +37,12 @@ When a gameplay action occurs (turn start, battle, talk, visit, seize, area entr
 
 1. `rlEventEngineBeginScript` increments `wEventEngineState`, clears event menu windows and moving map sprites (`rlClearMovingMapSpritesAndSound`), frees old event procs, and jumps into `rlRunEventCommand`.
 2. `rlRunEventCommand` first calls `rsEventEngineCheckProcsDone`, which polls `wEventProcBanks`/`wEventProcOffsets` (`rsEventEnginePollBlockingProcs`). Any proc started via `rlEventEngineCreateProc` blocks the script until it frees itself (`rlEventEngineFreeProc`), unless marked non-blocking (`$0200` via `rlEventEngineMarkProcNonBlocking`, e.g., `rlASMCContinueDuringDialogue`, `procEventCyclePalette`, or `procDemoSkipFadeOut`).
-3. Once no blocking procs remain, `rlRunEventCommand` reads commands from `[lR22]` (`lActiveEventPointer` + `wActiveEventOffset`), advancing or yielding (`$FD` / `$FEFE`) until the script finishes (`wEventEngineState = 2`).
+3. Once no blocking procs remain, `rlRunEventCommand` reads commands from `[lR22]` (`lActiveEventPointer` + `wActiveEventOffset`) and runs them until a handler returns carry set or a `YIELD` (`$FD`) ends the frame. It steps over a `SKIP_POINT` (`$FEFE`); `END_EVENT` (`$FFFF`) sets `wEventEngineState = 2`. The guide's [Chapter 12](../guide/12-screenplays.md) explains the interpreter and its waits.
 4. Unit movement and spawning commands (`MOVE_TEMPORARY_*`, `LOAD_UNIT_*`) dispatch through `aEventUnitMoveHandlers` (`rsDispatchEventUnitMoveHandler`), queue sprite decompression, assign map-sprite movement sound channels (`rlAssignMovingSpriteSoundChannel`, `rlStartMovingSpriteSound`), and can be waited on with `WAIT_UNTIL_MAP_SPRITES_HALTING` (`procEventWaitMapSpritesHalting`).
 
 ## Returning to the map and IRQ engine
 
-- `rsReturnToMapMainLoop` (installed as `wMainLoopPointer` by menus, battle scenes, epilogue, and event command `$3B` with `procEventWaitFadeToMap`) resets screen registers, BG2/BG3 tilemaps, OAM, sprites, HDMA, and IRQ, reloads the chapter map display (`rsSetupMapDisplayByGameMode` / `rsReloadChapterMapDisplay`), restores map menus and music (`rsResumeMapAfterMenu`), and resumes `GAMESTATE_MAP_STEP`.
+- `rsReturnToMapMainLoop` (installed as `wMainLoopPointer` by menus, battle scenes, epilogue, and the script command `RELOAD_MAP_SCREEN` (`$3B`) with `procEventWaitFadeToMap`) resets screen registers, BG2/BG3 tilemaps, OAM, sprites, HDMA, and IRQ, reloads the chapter map display (`rsSetupMapDisplayByGameMode` / `rsReloadChapterMapDisplay`), restores map menus and music (`rsResumeMapAfterMenu`), and resumes `GAMESTATE_MAP_STEP`.
 - The HV IRQ engine (`rlEnableIRQEngine`, `rlIRQEngineCreateEntry`, `rlIRQEngineSyncAndSort`, `rsIRQEngineSortEntries`, `rsIRQEngineProgramNextEntry`) lives in bank `$82` inside [event_scripts.asm](../../engine/events/event_scripts.asm) and is shared with the title screen, battle scene, world map, and map loop.
 
 ## Dependencies
