@@ -2186,9 +2186,9 @@
       procUnknown9F9D16 ; 9F/9D16
 
         ; Part of the Fenrir effect.
-        .structProcInfo "ON", rlUnknown9F9D1E, rlUnknown9F9D38, aProcUnknown9F9DA4Code
+        .structProcInfo "ON", rlMapMagicFenrirInit, rlMapMagicFenrirDarken, aProcUnknown9F9DA4Code
 
-      rlUnknown9F9D1E ; 9F/9D1E
+      rlMapMagicFenrirInit ; 9F/9D1E
 
         .al
         .xl
@@ -2206,7 +2206,7 @@
         rtl
 
 
-      rlUnknown9F9D38 ; 9F/9D38
+      rlMapMagicFenrirDarken ; 9F/9D38
 
         .al
         .xl
@@ -2215,7 +2215,7 @@
         ; Part of the Fenrir effect.
         jsr rsDarkenMapMagicColors
         bcc _9D49
-        lda #<>rlUnknown9F9D4A
+        lda #<>rlMapMagicFenrirWaitAndSpawn
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
         sta aProcSystem.aBody0,b,x
@@ -2224,7 +2224,7 @@
         rtl
 
 
-      rlUnknown9F9D4A ; 9F/9D4A
+      rlMapMagicFenrirWaitAndSpawn ; 9F/9D4A
 
         .al
         .xl
@@ -2233,7 +2233,7 @@
         ; Part of the Fenrir effect.
 
         dec aProcSystem.aBody0,b,x
-        bne rlUnknown9F9D38._9D49
+        bne rlMapMagicFenrirDarken._9D49
         jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC1C
@@ -2269,12 +2269,12 @@
 
           .byte $68
 
-        lda #<>rlUnknown9F9D87
+        lda #<>rlMapMagicFenrirWaitImpact
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
 
-      rlUnknown9F9D87 ; 9F/9D87
+      rlMapMagicFenrirWaitImpact ; 9F/9D87
 
         .al
         .xl
@@ -2287,7 +2287,7 @@
         ldy aProcSystem.aBody7,b,x
         lda #$FFFC
         sta aProcSystem.aBody4,b,y
-        lda #<>rlUnknown9F9DA3
+        lda #<>rlMapMagicFenrirDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #<>aProcUnknown9F9DA6Code
         sta aProcSystem.aHeaderCodeOffset,b,x
@@ -2296,7 +2296,7 @@
         rtl
 
 
-      rlUnknown9F9DA3 ; 9F/9DA3
+      rlMapMagicFenrirDone ; 9F/9DA3
 
         .al
         .xl
@@ -2317,20 +2317,20 @@
 
         ; Part of the Fenrir effect.
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9F9DCC, 1
+        PROC_CALL_ARGS rlMapMagicFenrirLoadPaletteStep, 1
         .byte $2A
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9F9DCC, 1
+        PROC_CALL_ARGS rlMapMagicFenrirLoadPaletteStep, 1
         .byte $1C
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9F9DCC, 1
+        PROC_CALL_ARGS rlMapMagicFenrirLoadPaletteStep, 1
         .byte $0E
         PROC_YIELD 1
-        PROC_CALL_ARGS rlUnknown9F9DCC, 1
+        PROC_CALL_ARGS rlMapMagicFenrirLoadPaletteStep, 1
         .byte $00
         PROC_HALT
 
-      rlUnknown9F9DCC ; 9F/9DCC
+      rlMapMagicFenrirLoadPaletteStep ; 9F/9DCC
 
         .al
         .xl
@@ -2399,9 +2399,9 @@
       aUnknown9F9F09 ; 9F/9F09
 
         ; Part of the Fenrir effect.
-        .word <>rlUnknown9F9F0F, <>rlUnknown9F9F38, <>aUnknown9F9FDE
+        .word <>rlMapMagicFenrirSpriteInit, <>rlMapMagicFenrirSpriteWaitCast, <>aUnknown9F9FDE
 
-      rlUnknown9F9F0F ; 9F/9F0F
+      rlMapMagicFenrirSpriteInit ; 9F/9F0F
 
         .al
         .xl
@@ -2428,7 +2428,7 @@
 
         .databank 0
 
-      rlUnknown9F9F38 ; 9F/9F38
+      rlMapMagicFenrirSpriteWaitCast ; 9F/9F38
 
         .al
         .xl
@@ -2437,8 +2437,8 @@
         ; Part of the Fenrir effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9F9F79
-        lda #<>rlUnknown9F9F7A
+        bne rlMapMagicFenrirSpriteNoOp
+        lda #<>rlMapMagicFenrirSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -2466,7 +2466,7 @@
 
         .databank 0
 
-      rlUnknown9F9F79 ; 9F/9F79
+      rlMapMagicFenrirSpriteNoOp ; 9F/9F79
 
         .al
         .xl
@@ -2476,7 +2476,7 @@
 
         rtl
 
-      rlUnknown9F9F7A ; 9F/9F7A
+      rlMapMagicFenrirSpriteFlyToTarget ; 9F/9F7A
 
         .al
         .xl
@@ -2487,7 +2487,7 @@
         jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9F92
-        lda #<>rlUnknown9F9F93
+        lda #<>rlMapMagicFenrirSpriteWaitImpact
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -2499,7 +2499,7 @@
         .databank 0
 
         ; 9F/9F93
-      rlUnknown9F9F93 ; 9F/9F93
+      rlMapMagicFenrirSpriteWaitImpact ; 9F/9F93
 
         .al
         .xl
@@ -2511,7 +2511,7 @@
         bne _9FAB
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9F9FAC
+        lda #<>rlMapMagicFenrirSpriteSignalHit
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0008
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -2522,7 +2522,7 @@
         .databank 0
 
         ; 9F/9FAC
-      rlUnknown9F9FAC ; 9F/9FAC
+      rlMapMagicFenrirSpriteSignalHit ; 9F/9FAC
 
         .al
         .xl
@@ -2532,7 +2532,7 @@
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9FC1
-        lda #<>rlUnknown9F9FC2
+        lda #<>rlMapMagicFenrirSpriteWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -2544,7 +2544,7 @@
         .databank 0
 
         ; 9F/9FC2
-      rlUnknown9F9FC2 ; 9F/9FC2
+      rlMapMagicFenrirSpriteWaitFade ; 9F/9FC2
 
         .al
         .xl
@@ -2554,7 +2554,7 @@
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9FCD
-        lda #<>rlUnknown9F9FCE
+        lda #<>rlMapMagicFenrirSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _9FCD
@@ -2563,7 +2563,7 @@
         .databank 0
 
         ; 9F/9FCE
-      rlUnknown9F9FCE ; 9F/9FCE
+      rlMapMagicFenrirSpriteFadeBack ; 9F/9FCE
 
         .al
         .xl
@@ -2596,7 +2596,7 @@
         ACTIVE_SPRITE_FRAME 3, aUnknown9FA079
         ACTIVE_SPRITE_FRAME 3, aUnknown9FA080
         ACTIVE_SPRITE_FRAME 3, aUnknown9FA087
-        ACTIVE_SPRITE_CALL rlUnknown9FA00E
+        ACTIVE_SPRITE_CALL rlMapMagicFenrirWaitSpritePhase
         .word <>_9FF2
 
         _A007
@@ -2604,7 +2604,7 @@
         ACTIVE_SPRITE_JUMP _A007
 
         ; 9F/A00E
-      rlUnknown9FA00E ; 9F/A00E
+      rlMapMagicFenrirWaitSpritePhase ; 9F/A00E
 
         .al
         .xl
@@ -2706,10 +2706,10 @@
 
         .structSpriteArray aUnknown9FA087._Sprites
 
-      aUnknown9FA08E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FA09A, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/A08E
+      aUnknown9FA08E .dstruct structHDMAIndirectEntryInfo, rlMapMagicFenrirHDMAInit, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/A08E
 
         ; Part of the Fenrir effect.
-      rlUnknown9FA09A ; 9F/A09A
+      rlMapMagicFenrirHDMAInit ; 9F/A09A
 
         .al
         .xl
@@ -2782,9 +2782,9 @@
       procUnknown9FA139 ; 9F/A139
 
         ; Part of the Fenrir effect.
-        .structProcInfo "ON", rlUnknown9FA141, rlUnknown9FA15A, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicFenrirVortexInit, rlMapMagicFenrirVortexCycle, aProcMapMagicHaltCode
 
-      rlUnknown9FA141 ; 9F/A141
+      rlMapMagicFenrirVortexInit ; 9F/A141
 
         .al
         .xl
@@ -2803,7 +2803,7 @@
         rtl
 
 
-      rlUnknown9FA15A ; 9F/A15A
+      rlMapMagicFenrirVortexCycle ; 9F/A15A
 
         .al
         .xl
@@ -2811,7 +2811,7 @@
         .databank ?
         ; Part of the Fenrir effect.
 
-        jsl rlUnknown9FA221
+        jsl rlMapMagicFenrirVortexStepDMA
         lda $7F50CD
         and #$01FF
         sta wR4
@@ -2883,7 +2883,7 @@
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
-        lda #<>rlUnknown9FA221
+        lda #<>rlMapMagicFenrirVortexStepDMA
         sta aProcSystem.aHeaderOnCycle,b,x
         stz aProcSystem.aBody4,b,x
         lda #$0000
@@ -2893,7 +2893,7 @@
         rtl
 
 
-      rlUnknown9FA221 ; 9F/A221
+      rlMapMagicFenrirVortexStepDMA ; 9F/A221
 
         .al
         .xl
@@ -2954,9 +2954,9 @@
       procUnknown9FA2D3 ; 9F/A2D3
 
         ; Part of the Bolganone effect.
-        .structProcInfo "ON", rlUnknown9FA2DB, rlUnknown9FA305, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicBolganoneInit, rlMapMagicBolganoneTintRed, aProcMapMagicHaltCode
 
-      rlUnknown9FA2DB ; 9F/A2DB
+      rlMapMagicBolganoneInit ; 9F/A2DB
 
         .al
         .xl
@@ -2970,7 +2970,7 @@
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         jsr rsSaveMapMagicColors
-        jsl rlUnknown9FA380
+        jsl rlMapMagicBolganoneStepPaletteAnim
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -2979,7 +2979,7 @@
         rtl
 
 
-      rlUnknown9FA305 ; 9F/A305
+      rlMapMagicBolganoneTintRed ; 9F/A305
 
         .al
         .xl
@@ -2988,14 +2988,14 @@
         ; Part of the Bolganone effect.
         jsr rsTintMapMagicColorsRed
         bcc _A310
-        lda #<>rlUnknown9FA311
+        lda #<>rlMapMagicBolganoneWaitSpawn
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _A310
         rtl
 
 
-      rlUnknown9FA311 ; 9F/A311
+      rlMapMagicBolganoneWaitSpawn ; 9F/A311
 
         .al
         .xl
@@ -3005,7 +3005,7 @@
 
         lda $7ECC06
         cmp #$0001
-        bne rlUnknown9FA305._A310
+        bne rlMapMagicBolganoneTintRed._A310
         jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC49
@@ -3030,14 +3030,14 @@
 
           .word <>aUnknown9FDC77
 
-        lda #<>rlUnknown9FA345
+        lda #<>rlMapMagicBolganoneShakeWait1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$001E
         sta aProcSystem.aBody0,b,x
         rtl
 
 
-      rlUnknown9FA345 ; 9F/A345
+      rlMapMagicBolganoneShakeWait1 ; 9F/A345
 
         .al
         .xl
@@ -3046,19 +3046,19 @@
         ; Part of the Bolganone effect.
 
         jsr rsShakeMapMagicBackground
-        jsl rlUnknown9FA380
+        jsl rlMapMagicBolganoneStepPaletteAnim
         dec aProcSystem.aBody0,b,x
         bne _A35D
         lda #$0010
         sta aProcSystem.aBody0,b,x
-        lda #<>rlUnknown9FA35E
+        lda #<>rlMapMagicBolganoneShakeWait2
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _A35D
         rtl
 
 
-      rlUnknown9FA35E ; 9F/A35E
+      rlMapMagicBolganoneShakeWait2 ; 9F/A35E
 
         .al
         .xl
@@ -3067,19 +3067,19 @@
         ; Part of the Bolganone effect.
 
         jsr rsShakeMapMagicBackground
-        jsl rlUnknown9FA380
+        jsl rlMapMagicBolganoneStepPaletteAnim
         dec aProcSystem.aBody0,b,x
         bne _A377
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FA378
+        lda #<>rlMapMagicBolganoneShakeLoop
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _A377
         rtl
 
 
-      rlUnknown9FA378 ; 9F/A378
+      rlMapMagicBolganoneShakeLoop ; 9F/A378
 
         .al
         .xl
@@ -3088,11 +3088,11 @@
         ; Part of the Bolganone effect.
 
         jsr rsShakeMapMagicBackground
-        jsl rlUnknown9FA380
+        jsl rlMapMagicBolganoneStepPaletteAnim
         rtl
 
 
-      rlUnknown9FA380 ; 9F/A380
+      rlMapMagicBolganoneStepPaletteAnim ; 9F/A380
 
         .al
         .xl
@@ -3174,9 +3174,9 @@
       aUnknown9FA4FD ; 9F/A4FD
 
         ; Part of the Bolganone effect.
-        .word <>rlUnknown9FA503, <>rlUnknown9FA527, <>aUnknown9FA563
+        .word <>rlMapMagicBolganoneSpriteInit, <>rlMapMagicBolganoneSpriteWaitEnd, <>aUnknown9FA563
 
-      rlUnknown9FA503 ; 9F/A503
+      rlMapMagicBolganoneSpriteInit ; 9F/A503
 
         .al
         .xl
@@ -3202,7 +3202,7 @@
         rtl
 
 
-      rlUnknown9FA527 ; 9F/A527
+      rlMapMagicBolganoneSpriteWaitEnd ; 9F/A527
 
         .al
         .xl
@@ -3216,10 +3216,10 @@
 
 
         _A531
-        lda #<>rlUnknown9FA537
+        lda #<>rlMapMagicBolganoneSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
 
-      rlUnknown9FA537 ; 9F/A537
+      rlMapMagicBolganoneSpriteFadeBack ; 9F/A537
 
         .al
         .xl
@@ -3271,22 +3271,22 @@
         ACTIVE_SPRITE_FRAME 8, aUnknown9FA549
         ACTIVE_SPRITE_FRAME 8, aUnknown9FA550
         ACTIVE_SPRITE_FRAME 2, aUnknown9FA557
-        ACTIVE_SPRITE_CALL rlUnknown9FA59B
+        ACTIVE_SPRITE_CALL rlMapMagicBolganoneSignalStart
 
         _A572
         ACTIVE_SPRITE_FRAME 1, aUnknown9FA557
-        ACTIVE_SPRITE_CALL rlUnknown9FA58D
+        ACTIVE_SPRITE_CALL rlMapMagicBolganoneWaitSpritePhase
         .word <>_A572
         ACTIVE_SPRITE_FRAME 8, aUnknown9FA550
         ACTIVE_SPRITE_FRAME 8, aUnknown9FA549
-        ACTIVE_SPRITE_CALL rlUnknown9FA5A3
+        ACTIVE_SPRITE_CALL rlMapMagicBolganoneSignalEnd
 
         _A586
         ACTIVE_SPRITE_FRAME 1, aUnknown9FA547
         ACTIVE_SPRITE_JUMP _A586
 
         ; 9F/A58D
-      rlUnknown9FA58D ; 9F/A58D
+      rlMapMagicBolganoneWaitSpritePhase ; 9F/A58D
 
         .al
         .xl
@@ -3309,7 +3309,7 @@
         .databank 0
 
         ; 9F/A59B
-      rlUnknown9FA59B ; 9F/A59B
+      rlMapMagicBolganoneSignalStart ; 9F/A59B
 
         .al
         .xl
@@ -3324,7 +3324,7 @@
         .databank 0
 
         ; 9F/A5A3
-      rlUnknown9FA5A3 ; 9F/A5A3
+      rlMapMagicBolganoneSignalEnd ; 9F/A5A3
 
         .al
         .xl
@@ -3358,9 +3358,9 @@
       procUnknown9FA5B1 ; 9F/A5B1
 
         ; Part of the Hel effect.
-        .structProcInfo "ON", rlUnknown9FA5B9, rlUnknown9FA5C0, aProcMapMagicHaltCode
+        .structProcInfo "ON", rlMapMagicHelInit, rlMapMagicHelDarkenAndSpawn, aProcMapMagicHaltCode
 
-      rlUnknown9FA5B9 ; 9F/A5B9
+      rlMapMagicHelInit ; 9F/A5B9
 
         .al
         .xl
@@ -3373,7 +3373,7 @@
         rtl
 
 
-      rlUnknown9FA5C0 ; 9F/A5C0
+      rlMapMagicHelDarkenAndSpawn ; 9F/A5C0
 
         .al
         .xl
@@ -3382,7 +3382,7 @@
         ; Part of the Hel effect.
         jsr rsDarkenMapMagicColors
         bcc _A602
-        lda #<>rlUnknown9FA603
+        lda #<>rlMapMagicHelWaitCast
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -3426,7 +3426,7 @@
         rtl
 
 
-      rlUnknown9FA603 ; 9F/A603
+      rlMapMagicHelWaitCast ; 9F/A603
 
         .al
         .xl
@@ -3436,7 +3436,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _A614
-        lda #<>rlUnknown9FA615
+        lda #<>rlMapMagicHelWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
@@ -3445,7 +3445,7 @@
         rtl
 
 
-      rlUnknown9FA615 ; 9F/A615
+      rlMapMagicHelWaitStrike ; 9F/A615
 
         .al
         .xl
@@ -3454,17 +3454,17 @@
         ; Part of the Hel effect.
 
         dec aProcSystem.aBody0,b,x
-        bne rlUnknown9FA62E._A64C
+        bne rlMapMagicHelReverseFade._A64C
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        lda #<>rlUnknown9FA62E
+        lda #<>rlMapMagicHelReverseFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000E
         sta aProcSystem.aBody0,b,x
         rtl
 
 
-      rlUnknown9FA62E ; 9F/A62E
+      rlMapMagicHelReverseFade ; 9F/A62E
 
         .al
         .xl
@@ -3474,7 +3474,7 @@
 
         dec aProcSystem.aBody0,b,x
         bne _A64C
-        lda #<>rlUnknown9FA64D
+        lda #<>rlMapMagicHelWaitFade
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0016
         sta aProcSystem.aBody0,b,x
@@ -3488,7 +3488,7 @@
         rtl
 
 
-      rlUnknown9FA64D ; 9F/A64D
+      rlMapMagicHelWaitFade ; 9F/A64D
 
         .al
         .xl
@@ -3498,14 +3498,14 @@
 
         dec aProcSystem.aBody0,b,x
         bne _A658
-        lda #<>rlUnknown9FA659
+        lda #<>rlMapMagicHelFadeBack
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _A658
         rtl
 
 
-      rlUnknown9FA659 ; 9F/A659
+      rlMapMagicHelFadeBack ; 9F/A659
 
         .al
         .xl
@@ -3514,13 +3514,13 @@
         ; Part of the Hel effect.
 
         jsr rsFadeBackMapMagicColors
-        bcc rlUnknown9FA66B
-        lda #<>rlUnknown9FA66B
+        bcc rlMapMagicHelDone
+        lda #<>rlMapMagicHelDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta wMapMagicDone
 
-      rlUnknown9FA66B ; 9F/A66B
+      rlMapMagicHelDone ; 9F/A66B
 
         .al
         .xl
