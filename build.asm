@@ -7321,9 +7321,9 @@
 
       g2bppShopLabels .binary "gfx/ui/ShopLabels.2bpp" ; D76800
 
-      aUnknownD77000 .binary "gfx/ui/tilemaps/UnknownD77000.bin" ; D77000
+      aCastleTownButtonTilemap .binary "gfx/ui/tilemaps/CastleTownButtonTilemap.bin" ; D77000
 
-      gUnknownD77800 .binary "gfx/ui/tilemaps/UnknownD77800.bin" ; D77800
+      gCastleCourtyardTilemap .binary "gfx/ui/tilemaps/CastleCourtyardTilemap.bin" ; D77800
 
     .here
 
@@ -7419,7 +7419,7 @@
 
       gUnknownD97400 .binary "gfx/ui/tilemaps/UnknownD97400.bin" ; D97400, unreferenced
 
-      gUnknownD97940 .binary "gfx/ui/tilemaps/UnknownD97940.bin" ; D97940
+      gWorldMapCursorTiles .binary "gfx/ui/tilemaps/WorldMapCursorTiles.bin" ; D97940
 
       gUnknownD97B00 .binary "gfx/ui/tilemaps/UnknownD97B00.bin" ; D97B00, unreferenced
 
@@ -7464,17 +7464,17 @@
 
       gUnknownDA6700 .binary "gfx/ui/tilemaps/UnknownDA6700.bin" ; DA6700, unreferenced
 
-      gUnknownDA6800 .binary "gfx/ui/tilemaps/UnknownDA6800.bin" ; DA6800
+      gConversationLeftWindowTilemap .binary "gfx/ui/tilemaps/ConversationLeftWindowTilemap.bin" ; DA6800
 
-      gUnknownDA6A40 .binary "gfx/ui/tilemaps/UnknownDA6A40.bin" ; DA6A40
+      gConversationClosedWindowTilemap .binary "gfx/ui/tilemaps/ConversationClosedWindowTilemap.bin" ; DA6A40
 
       gUnknownDA6C80 .binary "gfx/ui/tilemaps/UnknownDA6C80.bin" ; DA6C80, unreferenced
 
-      gUnknownDA6D00 .binary "gfx/ui/tilemaps/UnknownDA6D00.bin" ; DA6D00
+      gConversationRightWindowTilemap .binary "gfx/ui/tilemaps/ConversationRightWindowTilemap.bin" ; DA6D00
 
       gUnknownDA6F40 .binary "gfx/ui/tilemaps/UnknownDA6F40.bin" ; DA6F40, unreferenced
 
-      aUnknownDA7000 .binary "gfx/ui/tilemaps/UnknownDA7000.bin" ; DA7000
+      aCastleListBG3Template .binary "gfx/ui/tilemaps/CastleListBG3Template.bin" ; DA7000
 
       gUnknownDA7800 .binary "gfx/ui/tilemaps/UnknownDA7800.bin" ; DA7800, unreferenced
 
@@ -7983,17 +7983,17 @@
 
       gUnknownDE1E80 .binary "gfx/ui/tilemaps/UnknownDE1E80.bin" ; DE1E80
 
-      gUnknownDE22C0 .binary "gfx/ui/tilemaps/UnknownDE22C0.bin" ; DE22C0
+      gUnitWindowListTilemap .binary "gfx/ui/tilemaps/UnitWindowListTilemap.bin" ; DE22C0
 
-      gUnknownDE2480 .binary "gfx/ui/tilemaps/UnknownDE2480.bin" ; DE2480
+      gUnitWindowPage1Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage1Tilemap.bin" ; DE2480
 
-      gUnknownDE25C0 .binary "gfx/ui/tilemaps/UnknownDE25C0.bin" ; DE25C0
+      gUnitWindowPage2Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage2Tilemap.bin" ; DE25C0
 
-      gUnknownDE2700 .binary "gfx/ui/tilemaps/UnknownDE2700.bin" ; DE2700
+      gUnitWindowPage3Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage3Tilemap.bin" ; DE2700
 
-      gUnknownDE2840 .binary "gfx/ui/tilemaps/UnknownDE2840.bin" ; DE2840
+      gUnitWindowPage4Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage4Tilemap.bin" ; DE2840
 
-      gUnknownDE2980 .binary "gfx/ui/tilemaps/UnknownDE2980.bin" ; DE2980
+      gUnitWindowPage5Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage5Tilemap.bin" ; DE2980
 
       .dsection WindowPaletteDE2AC0Section
 
@@ -8007,7 +8007,7 @@
 
       g2bppMenuLabels .binary "gfx/ui/MenuLabels.2bpp" ; DE48C0
 
-      gUnknownDE60C0 .binary "gfx/ui/tilemaps/UnknownDE60C0.bin" ; DE60C0
+      gUnitWindowPage0Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage0Tilemap.bin" ; DE60C0
 
       .dsection DataDE6200Section
 

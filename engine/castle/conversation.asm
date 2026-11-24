@@ -558,7 +558,7 @@
         beq _DA3F
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDA6800, $0240, $80, $E800
+          .structDMAToVRAM gConversationLeftWindowTilemap, $0240, $80, $E800
 
         lda #$0040
         trb wConversationFlags,b
@@ -569,7 +569,7 @@
         beq _DA5A
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDA6D00, $0240, $80, $ED00
+          .structDMAToVRAM gConversationRightWindowTilemap, $0240, $80, $ED00
 
         lda #$0080
         trb wConversationFlags,b
@@ -592,7 +592,7 @@
         trb wConversationFlags,b
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDA6A40, $0240, $80, $E800
+          .structDMAToVRAM gConversationClosedWindowTilemap, $0240, $80, $E800
 
         rtl
 
@@ -611,7 +611,7 @@
         trb wConversationFlags,b
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDA6A40, $0240, $80, $ED00
+          .structDMAToVRAM gConversationClosedWindowTilemap, $0240, $80, $ED00
 
         rtl
 

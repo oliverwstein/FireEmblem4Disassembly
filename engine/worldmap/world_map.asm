@@ -236,7 +236,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD97940, $01C0, $80, $9D40
+          .structDMAToVRAM gWorldMapCursorTiles, $01C0, $80, $9D40
 
         lda #(`aDecompressionDMAEntry80B62E)<<8
         sta lR19+1

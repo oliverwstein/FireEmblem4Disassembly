@@ -414,7 +414,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD77800, $0800, $80, $A000
+          .structDMAToVRAM gCastleCourtyardTilemap, $0800, $80, $A000
 
         ldx #$06FE
         lda #$00FF
@@ -742,7 +742,7 @@
         .autsiz
         .databank ?
 
-        ; Loads the town screen: graphics, the button tilemap (aUnknownD77000), the castle's
+        ; Loads the town screen: graphics, the button tilemap (aCastleTownButtonTilemap), the castle's
         ; name, the missing facilities blanked, palettes and the window HDMA; puts the cursor
         ; on the buttons and moves to step $01.
 
@@ -779,7 +779,7 @@
         lda #$00FF
 
         _BAAF
-        lda aUnknownD77000,x
+        lda aCastleTownButtonTilemap,x
         sta aBG3TilemapBuffer,x
         dec x
         dec x

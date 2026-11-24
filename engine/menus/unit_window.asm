@@ -922,7 +922,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE22C0, $01C0, $80, $5000
+          .structDMAToVRAM gUnitWindowListTilemap, $01C0, $80, $5000
 
         lda wUnitWindowMaxRows
         cmp #$000A
@@ -1760,7 +1760,7 @@
         _B0AA
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE2480, $0140, $80, $B040
+          .structDMAToVRAM gUnitWindowPage1Tilemap, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -1934,7 +1934,7 @@
         _B1EE
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE25C0, $0140, $80, $B040
+          .structDMAToVRAM gUnitWindowPage2Tilemap, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -2086,7 +2086,7 @@
         _B30E
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE2700, $0140, $80, $B040
+          .structDMAToVRAM gUnitWindowPage3Tilemap, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -2236,7 +2236,7 @@
         _B427
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE2840, $0140, $80, $B040
+          .structDMAToVRAM gUnitWindowPage4Tilemap, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -2259,7 +2259,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE2980, $0140, $80, $B040
+          .structDMAToVRAM gUnitWindowPage5Tilemap, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -7609,7 +7609,7 @@
         _AF20
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE60C0, $0140, $80, $B040
+          .structDMAToVRAM gUnitWindowPage0Tilemap, $0140, $80, $B040
 
         jsl rlDMAByStruct
 

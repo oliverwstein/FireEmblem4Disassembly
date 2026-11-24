@@ -1940,7 +1940,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD77800, $0800, $80, $A000
+          .structDMAToVRAM gCastleCourtyardTilemap, $0800, $80, $A000
 
         ldx #$06FE
         lda #$00FF

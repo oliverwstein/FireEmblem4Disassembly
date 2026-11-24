@@ -2060,7 +2060,7 @@
         .autsiz
         .databank ?
 
-        ; Copies a rectangle of the BG3 tilemap from aUnknownDA7000: X start, Y width in tiles, A height in rows.
+        ; Copies a rectangle of the BG3 tilemap from aCastleListBG3Template: X start, Y width in tiles, A height in rows.
 
         stx wR0
         sty wR1
@@ -2068,7 +2068,7 @@
         sta wR2
 
         _A9AE
-        lda aUnknownDA7000,x
+        lda aCastleListBG3Template,x
         sta aBG3TilemapBuffer,x
         inc x
         inc x
