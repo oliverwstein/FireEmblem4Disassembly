@@ -50,6 +50,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `wMapStateFlags` bits 3 and 4 called "unit/action map menu open" and "secondary sub-menu"; they are unit menu modes 1 and 2 | include/WRAM.h | `2e80d68` |
 | `rlUnitMenuGuard`, `Dismount`, `Mount` and `ReturnSkill` said to be unreached; each is in its option table | engine/menus/unit_menu.asm | `2e80d68` |
 | AI actions 6 and 7 had swapped names: 6 (`rsAIActionGuardCastle`) guards, 7 (`rsAIActionEnterGuardedCastle`) leaves the guarding spot and goes inside | engine/ai/threat.asm | `2e80d68` |
+| `rsGetMapCursorMove` said Y only skips the repeat delay; it also skips the range-edge stop (map.md and Ch. 9 draft copied it) | engine/map/map_cursor.asm | `5fb4143` |
 | `wChapterFlags` `$0100` called unknown; it marks a chapter resumed from a map save (enter at map step 7) | include/WRAM.h | `2da731d` |
 | `rsMoveCursorToPhaseStart` comment had the auto cursor option backwards (on goes to the first unit, off to the saved tile); Ch. 8 draft copied it | engine/map/map_step.asm | `2da731d` |
 | `rlPhaseBannerCheckSkip` comment listed Select; the mask `$D0C0` is A, B, X, Y and Start; Ch. 8 draft copied it | engine/map/phase_banner.asm | `2da731d` |

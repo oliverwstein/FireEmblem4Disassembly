@@ -35,7 +35,7 @@ Each class has a movement type, and each movement type has a row in a table of c
 | Pirate | 10 | 20 | 20 | 20 | 50 | — | 7 |
 | Ballistician | — | — | — | — | — | — | — |
 
-The foot classes in the fourth row belong to several movement types that differ only in their cost for swamp. Peaks and cliffs are open only to fliers, and the guarding spot inside a castle and ramparts are closed to every movement type, fliers included. Units reach the guarding spot only through the guard command (Chapter 10).
+The foot classes in the fourth row belong to several movement types that differ only in their cost for swamp. Peaks, cliffs, and Bragi's Tower are open only to fliers, and the guarding spot inside a castle and ramparts are closed to every movement type, fliers included. Units reach the guarding spot only through the guard command ([below](#moves-that-begin-at-a-castle)).
 
 ### Who stands in the way
 
@@ -54,7 +54,7 @@ A chapter can close parts of its map to the player. Bits 10 to 15 of each tile's
 
 A weapon's range becomes flags: range 1 sets bit 0, range 2 sets bit 1, and range 10 sets bit 2. Each weapon the unit can wield adds the flags for its minimum and its maximum range. Ranges 3 to 9 set nothing, which suits the weapons in the game: every range is 1, 2, 1–2, 1–10, or 3–10.
 
-A unit holding a weapon that can reach 10 tiles (a ballista, or the Meteor, Bolting, Blizzard, or Fenrir tome) doesn't move. Its movement map is replaced with a diamond of radius 10 around it, red at distances 3 to 10 and at 1 or 2 only if another of its weapons covers that distance. When the player picks up one of their own units holding such a weapon, its command menu opens at once, the same as for a unit with nowhere to go. Ballisticians also have movement 0 and a movement type that can enter nothing.
+A unit that can wield a weapon reaching 10 tiles (a ballista, or the Meteor, Bolting, Blizzard, or Fenrir tome) doesn't move. Its movement map is replaced with a diamond of radius 10 around it, red at distances 3 to 10 and at 1 or 2 only if another of its weapons covers that distance. When the player picks up one of their own units with such a weapon, its command menu opens at once, the same as for a unit with nowhere to go. Carrying such a weapon without being able to wield it (lacking the weapon rank, or silenced, for a tome) changes nothing. Ballisticians also have movement 0 and a movement type that can enter nothing.
 
 ### What the overlay shows
 
@@ -72,7 +72,7 @@ The fill uses two 64 × 64 byte grids in bank `$7F`. They sit in a block of such
   $7F8A4A    └ list entries    4 bytes each: next entry, tile index
 ```
 
-The grids are centered on the unit's tile, at column 32, row 32, so the unit's tile is index 32 × 64 + 32, and the four neighbors of index `i` are `i − 64`, `i − 1`, `i + 1`, and `i + 64`. Code that turns a map tile into a grid index subtracts the unit's position plus 32 and keeps the low six bits of each coordinate. The grid therefore wraps around, and a window of tiles around the unit (`wMovementMapWindowLeft` to `Bottom`) decides which tiles count as inside it.
+The grids are centered on the unit's tile, at column 32, row 32, so the unit's tile is index 32 × 64 + 32, and the four neighbors of index `i` are `i − 64`, `i − 1`, `i + 1`, and `i + 64`. Code that turns a map tile into a grid index subtracts the unit's position, adds 32, and keeps the low six bits of each coordinate. (The overlay code gets the same result by subtracting the unit's position plus 32, the right edge of its window: modulo 64, subtracting 32 and adding 32 are the same.) The grid therefore wraps around, and a window of tiles around the unit (`wMovementMapWindowLeft` to `Bottom`) decides which tiles count as inside it.
 
 The two grids use these values:
 
@@ -157,7 +157,7 @@ While a unit is picked up, the map's upkeep routine cycles all three palettes' c
 
 With a unit of the active army picked up, A on a tile accepts it as a destination if the tile is inside the window, its movement value has bit 7 clear and isn't 0, and no other unit stands on it. That rules out tiles out of reach, attack tiles, closed areas, and tiles with allies on them. A rejected tile plays an error sound. With a unit of another army picked up, A puts it down: the player can pick up any unit that hasn't acted and isn't asleep to look at its range, but only move units of the active army.
 
-While a unit is picked up, a held direction moves the cursor only from a tile in the unit's movement to another tile in its movement, so holding a direction stops the cursor at the edge of the blue area. A new press moves it anywhere.
+While a unit is picked up, a held direction moves the cursor only from a tile in the unit's movement (blue, or a closed area) to another such tile, so holding a direction stops the cursor at the edge of the unit's movement. A new press moves it anywhere, and so does a held direction with Y held, which skips the check along with the repeat delay.
 
 ### Building the path
 
@@ -193,7 +193,7 @@ Among equally cheap routes, the frame on which A was pressed picks one: on even 
 
 Once the path is built, the overlay is hidden and the cursor travels back to the unit at 8 pixels a frame, one tile per step (cursor state 1). The walk (state 2) then reuses the cursor's stepping code: it reads the path from its last entry, which is the first step out from the unit, merges each run of steps in the same direction into one distance, turns the moving sprite to face that way, and moves the cursor along the run with the sprite drawn at the cursor. The map scrolls at the screen's margins as it does for the cursor. A unit whose speed stat is 5 or more walks at 3 pixels a frame, any other at 1. A walking sound chosen by the unit's map sprite plays throughout, panned to the cursor's side of the screen, with a water flag set on sea, river, and swamp for units that don't fly.
 
-At the end of the path, the unit's deployment row is moved to the cursor's tile ([Chapter 5](05-who-stands-where.md)) and its command menu opens (Chapter 10). The move isn't final until a command ends the unit's action. Until then, B in the command menu puts the unit back on the tile it started from, and the player can pick it up again.
+At the end of the path, the unit's deployment row is moved to the cursor's tile ([Chapter 5](05-who-stands-where.md)) and its command menu opens ([Chapter 10](OUTLINE.md)). The move isn't final until a command ends the unit's action. Until then, B in the command menu puts the unit back on the tile it started from, and the player can pick it up again.
 
 B before a destination is chosen puts the unit down where it stands. The tile the unit returns to is the one it was picked up from, which the cursor code keeps as the move's origin.
 
@@ -209,18 +209,18 @@ A castle has two tiles that matter to movement: the location's own tile, the **g
 
 The guard command isn't offered to a unit that has just departed.
 
-**Guard.** The guard command moves the unit onto the guarding spot at once, but the unit isn't guarding yet. Guarding starts when its action finishes on that tile, which is how the engine recognizes it: any unit whose action ends on a guarding spot starts guarding there. After the command, the cursor travels to the unit, a walk with no steps ends on its tile, and the command menu opens again in a second mode for the guard (Chapter 10). B in that menu undoes the guard according to how the move began:
+**Guard.** The guard command moves the unit onto the guarding spot at once, but the unit isn't guarding yet. Guarding starts when its action finishes on that tile, which is how the engine recognizes it: any unit whose action ends on a guarding spot starts guarding there. After the command, the cursor travels to the unit, a walk with no steps ends on its tile, and the command menu opens again in a second mode for the guard ([Chapter 10](OUTLINE.md)). B in that menu undoes the guard according to how the move began:
 
 | Guard chosen | Mode | B in the guard menu |
 |---|---|---|
 | in the command menu after an ordinary move | 4, cleared when the walk ends | back to the tile the unit was picked up from, put down |
 | after a sortie | 5, which B turns back into 1 | back to the gate and picked up; another B sends it inside |
-| on the castle screen | 3 | back inside the castle (below) |
-| in the home-castle menu (below) | 5 or 9 | back to the gate, and the home-castle menu opens again |
-
-**The home castle.** A player unit whose action ends on the gate of its own army's home castle doesn't finish its action. Its command menu opens again in a mode that B can't close, from which it can still enter or guard. The same mode opens for a Canto unit with nowhere to go. A computer unit that ends its action on its home castle's gate goes inside.
+| on the castle screen | 3 | back inside the castle, normally (next paragraph) |
+| in the home-castle menu (see The home castle) | 5 or 9 | back to the gate, and the home-castle menu opens again |
 
 The castle-screen row has a catch. Before going back inside, the undo checks whether the unit could move, using the four tiles next to the center of the movement map. Nothing has rebuilt that map since the castle screen, which keeps its item lists in the same memory and clears it each time it opens. Those four bytes stay 0 unless a list of at least 93 items was shown, so the unit normally goes back inside. With a value from 1 to `$7F` left in one of them, the undo instead puts the unit on the gate and picks it up, still in mode 3.
+
+**The home castle.** A player unit whose action ends on the gate of its own army's home castle doesn't finish its action. Its command menu opens again in a mode that B can't close, from which it can still enter or guard. The same mode opens for a Canto unit with nowhere to go. A computer unit that ends its action on its home castle's gate goes inside.
 
 ### Canto
 
@@ -247,7 +247,7 @@ The limits:
 - **Movement 0 to 12 after the Leg Ring.** The budget table has 13 entries; the highest class movement is 9.
 - **Budget at most 127.** 128 list heads, one per amount left; the largest budget used is 121.
 - **704 list entries.** Each reached tile takes one; a reach of 17 tiles fills at most 613.
-- **32 path steps.** `aMovementPath` is 64 bytes.
+- **32 path steps.** `aMovementPath` is 64 bytes, two per step.
 - **Six closed areas.** Bits 10 to 15 of the map word; they apply only to player units.
 - **Range flags for 1, 2, and 10 only.** Other ranges set no flag.
 - **A computer unit's destination must pass the player's check.** Otherwise the game executes `brk`.
@@ -259,8 +259,8 @@ The limits:
 - [engine/map/map_cursor.asm](../../engine/map/map_cursor.asm): the cursor's states and stepping, the stop at the edge of the range, and the overlay's pulsing colors.
 - [engine/map/map_tilemap.asm](../../engine/map/map_tilemap.asm): building the overlay's rows and columns from the movement map.
 - [engine/map/input.asm](../../engine/map/input.asm): A and B with a unit picked up, including sending a unit back into its castle or to guarding.
-- [engine/map/map_actions.asm](../../engine/map/map_actions.asm): the guard, depart, and return commands; [engine/map/deployment.asm](../../engine/map/deployment.asm): `rlFinishUnitAction`, which starts guarding and reopens the menu at the home castle.
-- [engine/map/deployment.asm](../../engine/map/deployment.asm): `rlTryStartUnitCanto` and the Canto budget.
+- [engine/map/map_actions.asm](../../engine/map/map_actions.asm): the guard, depart, and return commands.
+- [engine/map/deployment.asm](../../engine/map/deployment.asm): `rlTryStartUnitCanto` and the Canto budget; `rlFinishUnitAction`, which starts guarding and reopens the menu at the home castle.
 - [engine/units/stats.asm](../../engine/units/stats.asm): the movement budget and the Leg Ring; [engine/units/unit_info.asm](../../engine/units/unit_info.asm): the class's movement cost row.
 - [engine/items/inventory.asm](../../engine/items/inventory.asm): range flags from the inventory's weapons and staves.
 - [engine/events/event_engine.asm](../../engine/events/event_engine.asm): `REMOVE_AREA_RESTRICTION` and `SET_AREA_RESTRICTION`.

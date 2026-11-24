@@ -82,7 +82,7 @@ The music: a chapter's first phase plays the chapter's own song (`aChapterFirstP
 
 | State | Meaning |
 |---|---|
-| `MAP_CURSOR_FREE` | the D-pad moves the cursor a tile at a time (Y skips the repeat delay, and while a unit is selected a held direction stops at the edge of its range); the other buttons go to `rsMapInputHandler` |
+| `MAP_CURSOR_FREE` | the D-pad moves the cursor a tile at a time (while a unit is selected a held direction stops at the edge of its range; holding Y skips both that check and the repeat delay); the other buttons go to `rsMapInputHandler` |
 | `MAP_CURSOR_BACK_TO_UNIT` | a destination was chosen: the cursor goes back to the unit's tile |
 | `MAP_CURSOR_UNIT_WALKING` | the unit walks its path |
 | `MAP_CURSOR_CHOOSE_TARGET` | the D-pad picks a target, the battle forecast shows, A acts, B goes back |
