@@ -111,6 +111,6 @@ The terrain window and the unit window (`procTerrainWindow`, `procUnitWindow`, "
 
 - What modes 1 and 2 of the unit menu are for. Mode 1 follows `rlRequestUnitMenuMode1` (a player unit ending its action at its home castle), mode 2 the guard command's `rlRequestUnitMenuMode2`; the code only shows what each hides.
 - The depart check passes when `rlGetUnitByCoordinates` returns carry set for the tile two below the unit; what that tile means.
-- `UnitState0400`: set while assaulting? `rlFindTargetsForSelectedWeapon` uses target filter 4 when it is set, and `rlBuildUnitMenuSlotLists` clears it. Assault targets are found at range 2 only, for weapons with minimum range 1 (`rlFindTargetsForItemRange`).
+- `UnitStateAssault` (was `UnitState0400`; the debug menu labels bit $0400 とつげ(き)): set while assaulting. `rlFindTargetsForSelectedWeapon` uses target filter 4 when it is set, and `rlBuildUnitMenuSlotLists` clears it. Assault targets are found at range 2 only, for weapons with minimum range 1 (`rlFindTargetsForItemRange`).
 - The まち (town) command: location type 1, and its handler opens the castle screen.
 - The "RP" proc in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm), `procUnknown8583B3` (an empty list menu nothing creates), and the gradient table helpers (`rsWriteMapMenuGradientTop`...).

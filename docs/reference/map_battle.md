@@ -83,7 +83,7 @@ Other pieces: the weapon icon over each unit (`rlUploadMapBattleWeaponIcon`), th
 
 ## Open questions
 
-- `UnitState0400`: a unit with it shares a tile with another (battle.asm moves it a tile for the battle). What puts two units on one tile.
+- `UnitStateAssault` (was `UnitState0400`): the assault state (`rlUnitMenuAssault`, the AI's siege attack). The attacker targets a castle's defender, so the two share a tile; battle.asm moves it a tile for the battle.
 - `rlMapBattlePlayLordDodgeSound` plays sound `$97` only when a Junior Lord or a Prince is missed. Why those classes.
 - What `wMapMagicFlags`' edge bits change: they pick the HDMA line counts in `aMapMagicWindowLines` (`rsSetMapMagicWindowLines`).
 - Who sets the effect number `$27` (Berserk) in `event_scripts.asm` (near `$9E/ECA4`), and for which scene.
