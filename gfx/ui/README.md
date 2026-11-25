@@ -4,7 +4,22 @@ These sheets are stored uncompressed and copied to VRAM whole by `.structDMAToVR
 
 **How the depth was settled.** Every screen here runs in BG mode 1, where BG1, BG2 and the sprites are 4bpp and only BG3 is 2bpp. For each sheet, the layout the code sets before the copy (`rlSetLayerPositionsAndSizes`: wR1-wR4 are the BG tile bases, wR5 the sprite base and wR6-wR9 the tilemaps, all as VRAM word addresses) shows which layer can reach the destination. A sheet is 2bpp only where BG3 reaches it.
 
-**Colours.** The PNGs are grey: index 0 is black and the rest are evenly spaced greys. The pixel values are the game's colour numbers, but which palette row each tile uses is set by tilemaps or sprite attributes not read yet. When a palette is proven, recolour the PNG without changing its indices.
+**Colours.** Each PNG carries its proven BGR555 palette (preserving the game's colour indices without changing any pixel values):
+
+- `WindowFrames.4bpp.png`, `MenuLabels.2bpp.png`, `ShopLabels.2bpp.png`: `aWindowPalette` BG palette 0 (`$DE/0000`)
+- `MenuCursorSprites.4bpp.png`: `aWindowPalette` OAM palette 0 (`$DE/0100`)
+- `SkillIcons.4bpp.png`: `aWindowPalette` palette 6 (`$DE/00C0`)
+- `DialogueBoxFrames.4bpp.png`, `ItemStatLabels.2bpp.png`: `aDialogueBoxPalette` (`$DE/6200`)
+- `WeaponTypeIcons.4bpp.png`: `aUnknownDD7FD0` (`$DD/7FD0`, copied by `rlUnitWindowCopySpritePalette2`)
+- `StatusScreenHolyBloodIcons.4bpp.png`: `aUnknownDE2CA0` (`$DE/2CA0`, OAM palette 7 on the holy blood page)
+- `ShopScreen.4bpp.png`: `aCastleCourtyardBGPalettes` BG palette 0 (`$8C/9800`)
+- `CursorSprites.4bpp.png`: `aMapAndCastleSpriteOAMPalettes` OAM palette 0 (`$8C/9D00`)
+- `ConversationSprites.4bpp.png`: `aCastleVendorOAMPalettes` OAM palette 1 (`$8C/9720`)
+- `BlankTile.2bpp.png`: `gcUnknown9CBFA1` BG palette 0 (decompressed by `rlLoadSaveMenuScreen`)
+- `MapBattleLevelUpText.4bpp.png`, `MapBattleStatNames.4bpp.png`: `aMapBattleLevelUpPalettes + $100` (`$9C/FD00`, OAM palette 0)
+- `MapBattlePavise.4bpp.png`: `aMapBattlePaviseColors` (`$9E/D7E8`)
+- `GiveGoldSprites.4bpp.png`: `aGiveGoldCoinOAMPalette` (`$9E/DDC8`)
+- `MapBattleShadow.4bpp.png`: `aPortraitAndMapUIOAMPalettes` OAM palette 0 (`$8C/951E`)
 
 | Sheet | ROM | Tiles | Copied to (VRAM byte address) | Why that depth |
 |---|---|---|---|---|
