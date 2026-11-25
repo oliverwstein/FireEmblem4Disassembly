@@ -576,26 +576,26 @@
         _CC64
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CC64, $0001
-        PROC_SET_UNK_TIMER 30
+        PROC_SET_LOOP_COUNTER 30
         _CC70
         PROC_YIELD 1
-        PROC_JUMP_WHILE_UNK_TIMER _CC70
+        PROC_JUMP_WHILE_LOOP_COUNTER _CC70
         PROC_SET_ONCYCLE rlProcMapExperienceWindowStartEffect
         _CC7A
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CC7A, $0001
-        PROC_SET_UNK_TIMER 40
+        PROC_SET_LOOP_COUNTER 40
         _CC86
         PROC_YIELD 1
-        PROC_JUMP_WHILE_UNK_TIMER _CC86
+        PROC_JUMP_WHILE_LOOP_COUNTER _CC86
         PROC_SET_ONCYCLE rlProcMapExperienceWindowStartCount
         _CC90
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CC90, $0001
-        PROC_SET_UNK_TIMER 60
+        PROC_SET_LOOP_COUNTER 60
         _CC9C
         PROC_YIELD 1
-        PROC_JUMP_WHILE_UNK_TIMER _CC9C
+        PROC_JUMP_WHILE_LOOP_COUNTER _CC9C
         PROC_SET_ONCYCLE rlProcMapExperienceWindowClose
         PROC_HALT
 

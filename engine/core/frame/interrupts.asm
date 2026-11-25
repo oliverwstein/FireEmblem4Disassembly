@@ -154,13 +154,20 @@
 
       rlVBlank ; 80/81B6
 
-        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Native VBlank/NMI interrupt handler ($FFE0/$FFEA), calls (wVBlankPointer) or handles lag frame
+        ; Found by tools/sweep.py.
+        ; The NMI handler ($FFEA). Re-enables IRQs (cli), so the IRQ engine's mid-frame
+        ; interrupts can fire during it.
+        ;
+        ; If the previous VBlank routine is still running (bit 15 of wVBlankFlag, a lag
+        ; frame), it only counts wVBlankDisabledFramecount, sends the sound queues, copies
+        ; INIDISP and ticks the game timer. Otherwise it runs the routine at
+        ; wVBlankPointer, ticks the game timer and counts wVBlankEnabledFramecount, which
+        ; rlHaltUntilVBlank waits on.
 
         cli
         rep #$30
@@ -226,13 +233,14 @@
 
       rlIRQ ; 80/81FD
 
-        ; Found through fe4.cdl.
         .as
         .xs
         .autsiz
         .databank ?
 
-        ; Native IRQ interrupt handler ($FFEE/$FFFE), checks TIMEUP and calls (wIRQPointer)
+        ; Found through fe4.cdl.
+        ; The IRQ handler ($FFEE). Reads TIMEUP; if an H/V timer IRQ fired, runs the
+        ; routine at wIRQPointer (rsIRQEngineCycle while the IRQ engine is on).
 
         rep #$30
         jml _8203
@@ -294,13 +302,17 @@
 
       rsDefaultVBlankRoutine ; 80/9CA0
 
-        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; The VBlank routine rlReset installs. FE5: rsDefaultVBlankRoutine.
+        ; Found by tools/sweep.py.
+        ; The VBlank routine rlColdResetClearMemory installs, used until a screen installs
+        ; its own: blanks the screen, sends the DMA queue, the sprite and palette buffers
+        ; and the PPU register buffers, sends sound, reads the joypads, counts the frame,
+        ; runs the game state routines and the per-frame engines, hides unused sprites and
+        ; updates sound. It does not run the HDMA hand-off (rlHandlePossibleHDMA).
 
         sep #$20
         lda #$80

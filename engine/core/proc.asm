@@ -17,6 +17,9 @@
         .autsiz
         .databank ?
 
+        ; The proc engine's init routine (aProcEngineMainProcActionTable +0): zeroes all
+        ; of aProcSystem, freeing every proc.
+
         php
         phb
         phk
@@ -44,6 +47,18 @@
         .al
         .autsiz
         .databank ?
+
+        ; Creates a proc from the definition (structProcInfo) at lR44.
+        ;
+        ; Takes the highest free slot (15 down to 0). While the engine is stepping procs
+        ; (aProcSystem.wFlag bit 15), the slot being stepped is skipped even if its proc
+        ; has just ended, so a proc that ends and creates another in the same step does
+        ; not hand over its own slot. Fills the slot (sleep timer 1, bitfield, loop
+        ; counter and body cleared), runs the init routine with X = the slot * 2 and DB =
+        ; the definition's bank, then gives the proc one step at once and sets bitfield
+        ; $4000 so rlProcEngineMainProcLoop skips it for the rest of this frame.
+        ;
+        ; Output: carry clear and A = the slot * 2; carry set if all 16 slots are taken.
 
         php
         phb
@@ -97,7 +112,7 @@
 
         lda #0
         sta aProcSystem.aHeaderBitfield,b,x
-        sta aProcSystem.aHeaderUnknownTimer,b,x
+        sta aProcSystem.aHeaderLoopCounter,b,x
         sta aProcSystem.aBody0,b,x
         sta aProcSystem.aBody1,b,x
         sta aProcSystem.aBody2,b,x
@@ -142,21 +157,25 @@
         .databank 0
 
       rlProcEngineRunProcInit ; 82/80BB
-      
+
         .al
         .autsiz
         .databank ?
+
+        ; Jumps to the init routine in aProcSystem.lPointer.
 
         jml [aProcSystem.lPointer]
 
         .databank 0
 
       rlProcEngineCreateProcByIndex ; 82/80BE
-      
+
         .al
         .autsiz
         .databank ?
-          
+
+        ; Creates the proc at lR44 in slot A. Carry set if that slot is taken.
+
         php
         phb
         phx
@@ -188,10 +207,12 @@
         .databank 0
 
       rlProcEngineFreeProcByIndex ; 82/80DD
-      
+
         .al
         .autsiz
         .databank ?
+
+        ; Frees the proc in slot A. Carry set if the slot was already free.
 
         phb
         php
@@ -223,12 +244,14 @@
         .databank 0
 
       rlProcEngineCheckProcEnded ; 82/80F8
-      
+
         .al
         .autsiz
         .databank ?
 
-        ; Check if proc A has ended (bit $2000 of aUnknownBitfield)
+        ; A = a slot * 2. Carry set if bit $2000 (ended) is set in aLastFrameBitfield, the
+        ; copy of the slot's bitfield taken at the end of the last frame. The bit stays
+        ; there until another proc takes the slot.
 
         phb
         php
@@ -237,7 +260,7 @@
         phx
 
         tax
-        lda aProcSystem.aUnknownBitfield,b,x
+        lda aProcSystem.aLastFrameBitfield,b,x
         bit #$2000
         beq +
 
@@ -259,10 +282,13 @@
         .databank 0
 
       rlProcEngineFindProc ; 82/8111
-      
+
         .al
         .autsiz
         .databank ?
+
+        ; Finds the proc made from the definition at lR44. Carry set and X = its slot * 2
+        ; if one is running (the highest slot first).
 
         phb
         php
@@ -301,10 +327,13 @@
         .databank 0
 
       rlProcEngineFreeProc ; 82/8136
-      
+
         .al
         .autsiz
         .databank ?
+
+        ; Frees the proc in slot X / 2: clears its definition and sets bitfield $2000
+        ; (ended).
 
         stz aProcSystem.aHeaderTypeOffset,b,x
         lda aProcSystem.aHeaderBitfield,b,x
@@ -315,10 +344,13 @@
         .databank 0
 
       rlProcEngineMainProcLoop ; 82/8143
-      
+
         .al
         .autsiz
         .databank ?
+
+        ; The proc engine's per-frame routine (aTaskTable): steps every live proc, slot 15
+        ; down to 0, with wFlag bit 15 set, then rsProcEngineUnblockAllProcs.
 
         php
         phb
@@ -355,10 +387,20 @@
         .databank 0
 
       rsProcEngineRunProcOnCycleAndCode ; 82/816E
-      
+
         .al
         .autsiz
         .databank ?
+
+        ; One step of the proc in slot X / 2, with DB = its bank.
+        ;
+        ; Bitfield $1000 skips the step entirely (only rsPauseMapProcsAndHDMAUnused sets
+        ; it, and nothing calls that); $4000 skips it (created this frame). Otherwise runs
+        ; the on-cycle routine and counts the sleep timer down. At 0 the script runs from
+        ; aHeaderCodeOffset: a word with bit 15 set is the address of a command routine in
+        ; bank $82 (Procs.h), which returns here to read on; a word below $8000 becomes
+        ; the sleep timer and ends the step. PROC_YIELD 0 therefore sleeps 65,536 frames
+        ; (the timer wraps).
 
         sep #$20
         lda aProcSystem.aHeaderTypeBank,b,x
@@ -407,10 +449,12 @@
         .databank 0
 
       rlProcEngineRunProcOnCycle ; 82/81B0
-      
+
         .al
         .autsiz
         .databank ?
+
+        ; Jumps to the on-cycle routine of the proc in slot X / 2.
 
         lda aProcSystem.aHeaderTypeBank,b,x
         xba
@@ -422,10 +466,14 @@
         .databank 0
 
       rsProcEngineUnblockAllProcs ; 82/81C0
-      
+
         .al
         .autsiz
         .databank ?
+
+        ; At the end of the frame: clears bit $4000 (created this frame) of every slot's
+        ; bitfield and copies the bitfield to aLastFrameBitfield, which
+        ; rlProcEngineCheckProcEnded reads.
 
         ldx #(16 - 1) * 2
         
@@ -433,7 +481,7 @@
           lda aProcSystem.aHeaderBitfield,b,x
           and #~$4000
           sta aProcSystem.aHeaderBitfield,b,x
-          sta aProcSystem.aUnknownBitfield,b,x
+          sta aProcSystem.aLastFrameBitfield,b,x
           dec x
           dec x
           bpl _Loop
@@ -447,6 +495,9 @@
         .al
         .autsiz
         .databank ?
+
+        ; The third routine of aProcEngineMainProcActionTable. Nothing reads that entry
+        ; (see rlRegisterVBlankHook).
 
         rtl
 
@@ -463,6 +514,8 @@
         .al
         .autsiz
         .databank ?
+
+        ; PROC_END: frees the proc and ends the step.
 
         stz aProcSystem.aHeaderTypeOffset,b,x
 
@@ -481,6 +534,9 @@
         .autsiz
         .databank ?
 
+        ; PROC_HALT_SLEEP: as PROC_HALT, with the sleep timer set to 1 so the halt is read
+        ; again every frame. No script uses it.
+
         lda #1
         sta aProcSystem.aHeaderSleepTimer,b,x
 
@@ -489,6 +545,11 @@
         .al
         .autsiz
         .databank ?
+
+        ; PROC_HALT: leaves the script on this command and ends the step. The sleep timer
+        ; stays at 0, so it wraps and the script is not read again for 65,536 frames; only
+        ; the on-cycle routine runs. A proc halts until its on-cycle routine frees it or
+        ; changes aHeaderCodeOffset.
 
         dec y
         dec y
@@ -505,6 +566,9 @@
         .al
         .autsiz
         .databank ?
+
+        ; PROC_CALL: calls the long routine in the next three bytes, with X = the slot *
+        ; 2.
 
         lda $0000,b,y
         sta aProcSystem.lPointer,b
@@ -532,6 +596,9 @@
         .al
         .autsiz
         .databank ?
+
+        ; PROC_CALL_ARGS: calls the long routine in the next three bytes with Y pointing
+        ; at the arguments after the count byte, then skips that many bytes.
 
         lda $0000,b,y
         sta aProcSystem.lPointer,b
@@ -572,6 +639,8 @@
         .autsiz
         .databank ?
 
+        ; PROC_SET_ONCYCLE: sets the on-cycle routine (same bank) and bitfield $0800.
+
         lda $0000,b,y
         sta aProcSystem.aHeaderOnCycle,b,x
 
@@ -591,22 +660,24 @@
         .autsiz
         .databank ?
 
+        ; PROC_JUMP: continues at the next word.
+
         lda $0000,b,y
         tay
         rts
 
         .databank 0
 
-      rsProcCodeSetTimer ; 82/824E
+      rsProcCodeSetLoopCounter ; 82/824E
 
         .al
         .autsiz
         .databank ?
 
-        ; Set proc loop timer aHeaderUnknownTimer from inline word (PROC_SET_UNK_TIMER in Procs.h)
+        ; PROC_SET_LOOP_COUNTER: sets aHeaderLoopCounter to the next word.
 
         lda $0000,b,y
-        sta aProcSystem.aHeaderUnknownTimer,b,x
+        sta aProcSystem.aHeaderLoopCounter,b,x
 
         inc y
         inc y
@@ -614,15 +685,16 @@
 
         .databank 0
 
-      rsProcCodeJumpWhileTimer ; 82/8257
+      rsProcCodeJumpWhileLoopCounter ; 82/8257
 
         .al
         .autsiz
         .databank ?
 
-        ; Decrement aHeaderUnknownTimer and jump while non-zero (PROC_JUMP_WHILE_UNK_TIMER in Procs.h)
+        ; PROC_JUMP_WHILE_LOOP_COUNTER: counts aHeaderLoopCounter down and jumps while it
+        ; is not 0.
 
-        dec aProcSystem.aHeaderUnknownTimer,b,x
+        dec aProcSystem.aHeaderLoopCounter,b,x
         bne rsProcCodeJump
 
         inc y
@@ -636,6 +708,11 @@
         .al
         .autsiz
         .databank ?
+
+        ; PROC_JUMP_IF_BITS_UNSET: jumps to the first word if none of the bits in the
+        ; second are set in the proc's bitfield. With a PROC_YIELD before it and its own
+        ; position as the target, it waits until a routine sets the bit; scripts use bits
+        ; $0001, $0002 and $0004 this way.
 
         lda $0002,b,y
         bit aProcSystem.aHeaderBitfield,b,x
@@ -655,6 +732,8 @@
         .autsiz
         .databank ?
 
+        ; PROC_JUMP_IF_BITS_SET: jumps if any of the bits are set.
+
         lda $0002,b,y
         bit aProcSystem.aHeaderBitfield,b,x
         bne rsProcCodeJump
@@ -672,6 +751,10 @@
         .al
         .autsiz
         .databank ?
+
+        ; PROC_CREATE_ACTIVE_SPRITE: creates the active sprite whose definition is in the
+        ; next three bytes, at the X and Y in the two words after
+        ; (rlActiveSpriteEngineCreateSpriteHighestSlot). No script uses it.
 
         phy
         lda $0000,b,y

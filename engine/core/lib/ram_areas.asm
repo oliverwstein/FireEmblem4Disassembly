@@ -49,14 +49,14 @@
         sta structRAMAreaHeader.Flags,b,y
         bne +
 
-        lda wUnknown00056B
+        lda wRAMAreaHandlesPerBlock
         bra ++
 
         +
         lda #0
 
         +
-        sta structRAMAreaHeader.Unknown2,b,y
+        sta structRAMAreaHeader.HandlesPerBlock,b,y
         rep #$20
 
         lda wR0
@@ -83,7 +83,7 @@
         ply
 
         jsr rsAllocateRAMAreaHandleBlock
-        sta structRAMAreaHeader.Unknown3,b,y
+        sta structRAMAreaHeader.HandleBlock,b,y
 
         pla
         sta wR0
@@ -120,7 +120,9 @@
         .autsiz
         .databank ?
 
-        ; Allocate A bytes in lRAMAreaPointer backed by a relocatable handle slot
+        ; Nothing calls this. Allocates A bytes in the area at lRAMAreaPointer as a
+        ; movable entry reached through a handle, returned in lR25 ($FFFF without an area,
+        ; $FFFE without a handle block).
 
         phb
         php
@@ -346,10 +348,10 @@
 
         ; Load max size, subtract requested size
         tay
-        lda structRAMAreaEntryHeader.Offset,b,y
+        lda structRAMAreaEntryHeader.Size,b,y
         sec
         sbc wR0
-        sta structRAMAreaEntryHeader.Offset,b,y
+        sta structRAMAreaEntryHeader.Size,b,y
 
         cmp #7
         bcs +
@@ -535,7 +537,9 @@
         .autsiz
         .databank ?
 
-        ; Defragment lRAMAreaPointer by sliding handle-managed blocks over free gaps
+        ; Moves each movable (handle) entry that follows a free one down over it, updating
+        ; its handle, and merges the free space. Entries allocated in place ($40) do not
+        ; move. rsFindFreeRAMAreaEntry is the only caller.
 
         phb
         php
@@ -738,13 +742,14 @@
 
         .databank 0
 
-      rlClearRAMAreaEmptyFlag ; 82/EFBB
+      rlClearRAMAreaNoHandlesFlag ; 82/EFBB
 
         .al
         .autsiz
         .databank ?
 
-        ; Clear bit $80 of structRAMAreaHeader.Flags and return previous flags in A
+        ; Nothing calls this. Clears bit $80 (built without handles) of the area's flags;
+        ; returns the old flags in A.
 
         phb
         php
@@ -840,7 +845,7 @@
         .databank ?
 
         lda wR0
-        sta structRAMAreaEntryHeader.Offset,b,y
+        sta structRAMAreaEntryHeader.Size,b,y
         rts
 
         .databank 0
@@ -851,7 +856,7 @@
         .autsiz
         .databank ?
 
-        ; Write wR0 + 6 (data + entry header size) to structRAMAreaEntryHeader.Offset
+        ; Write wR0 + 6 (data + entry header size) to structRAMAreaEntryHeader.Size
 
         lda wR0
         clc
@@ -867,7 +872,11 @@
         .autsiz
         .databank ?
 
-        ; Find free RAMArea block >= wR0, compacting on retry or crashing on OOM
+        ; Finds the first free entry of at least wR0 bytes (rsCheckIfEntryFitsInRAMArea).
+        ; If none fits it compacts the area and looks again; if none fits then, it tints
+        ; the screen (CGADSUB, COLDATA) and runs into a BRK. Every entry the game
+        ; allocates is fixed in place, so compacting moves nothing and a full area stops
+        ; the game.
 
         jsr rsCheckIfEntryFitsInRAMArea
         bcs +
@@ -918,7 +927,7 @@
         beq +
 
         ; Is a guiding entry
-        lda structRAMAreaEntryHeader.Offset,b,y
+        lda structRAMAreaEntryHeader.Size,b,y
         cmp wR0
         bcs ++
 
@@ -926,7 +935,7 @@
         +
         tya
         clc
-        adc structRAMAreaEntryHeader.Offset,b,y
+        adc structRAMAreaEntryHeader.Size,b,y
         tay
         cpy wR2
         bcc -
@@ -956,7 +965,7 @@
 
         tya
         clc
-        adc structRAMAreaEntryHeader.Offset,b,y
+        adc structRAMAreaEntryHeader.Size,b,y
         rts
 
         .databank 0
@@ -1075,15 +1084,15 @@
             beq +
 
               ; Add the offset of the following entry to the current one
-              lda structRAMAreaEntryHeader.Offset,b,y
+              lda structRAMAreaEntryHeader.Size,b,y
               clc
-              adc structRAMAreaEntryHeader.Offset,b,x
-              sta structRAMAreaEntryHeader.Offset,b,y
+              adc structRAMAreaEntryHeader.Size,b,x
+              sta structRAMAreaEntryHeader.Size,b,y
 
               ; And remove the following entry
               lda #0
               sta structRAMAreaEntryHeader.Flags,b,x
-              sta structRAMAreaEntryHeader.Offset,b,x
+              sta structRAMAreaEntryHeader.Size,b,x
               sta structRAMAreaEntryHeader.BaseTable+1,b,x
               sta structRAMAreaEntryHeader.BaseTable,b,x
               bra _InnerLoop
@@ -1091,7 +1100,7 @@
             +
             tya
             clc
-            adc structRAMAreaEntryHeader.Offset,b,y
+            adc structRAMAreaEntryHeader.Size,b,y
             tay
             cpy wR2
             bcc _OuterLoop
@@ -1120,7 +1129,7 @@
         lda wR3
         pha
 
-        lda structRAMAreaHeader.Unknown2,b,y
+        lda structRAMAreaHeader.HandlesPerBlock,b,y
         and #$00FF
         beq _End
 

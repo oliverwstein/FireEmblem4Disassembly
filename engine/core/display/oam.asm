@@ -12,6 +12,11 @@
         .autsiz
         .databank ?
 
+        ; At the end of the frame: moves every sprite from wNextFreeSpriteOffset to the
+        ; end of aSpriteBuffer to Y = 240 (off the screen) and sets wNextFreeSpriteOffset
+        ; back to 0. The buffer offset wraps at 512 bytes, so after exactly 128 sprites
+        ; the offset is 0 and every sprite is hidden.
+
         phd
         sep #$30
         lda wNextFreeSpriteOffset+1,b
@@ -323,16 +328,8 @@
         .autsiz
         .databank ?
 
-        ; Inputs:
-        ; Y: Pointer to sprite array
-        ; DB: Bank of sprite array
-        ; wR0: X Coordinate base in pixels
-        ; wR1: Y Coordinate base in pixels
-        ; wR2: Timer
-        ; wR4: Sprite base
-        ; wR5: Attribute base
-
-        ; Only pushes sprite when timer >= sprite count
+        ; As rlPushToOAMBuffer, drawing only the array's first wR2 entries (all of them if
+        ; wR2 is larger; none if it is 0). The world map markers use it.
 
         lda wR2
         beq _End
@@ -422,13 +419,22 @@
 
       rlPushToOAMBufferWithScanlineCulling ; 80/889D
 
-        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Pushes a 16x16 OAM sprite using per-16px-scanline-band overflow culling/flicker (has entry ._88D8)
+        ; Found by tools/sweep.py.
+        ; Adds one 16 x 16 map unit sprite (from rlDrawDeployedUnitMapSprites; wR0 X, wR1
+        ; Y, wR4 tile and attributes) to the list of its 16-line band, if the band's quota
+        ; has room. This entry is for the top half of a tall sprite, marked $8000 in the
+        ; list, and is dropped when the band is full.
+        ;
+        ; ._88D8 is for a unit's body. When the band is full: a sprite within 16 pixels of
+        ; the screen's sides is dropped; any other takes the place of the sprite at the
+        ; band's read cursor, which is moved off the screen (Y $F0). It does that always
+        ; when that sprite is a top half, and on odd frames (wOAMStripFrameCounter)
+        ; otherwise, so the units of a crowded band take turns.
 
         lda wR1
         lsr a
@@ -579,13 +585,15 @@
 
       rlBeginOAMScanlineFrame ; 80/89AD
 
-        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Tallies active scanline OAM load, computes band limits, toggles flicker parity, and sets trailing ext bits
+        ; Found by tools/sweep.py.
+        ; Before the map units are drawn: counts the sprites already in the buffer on each
+        ; scanline, sets each band's quota (rsUpdateOAMBandSpriteLimits), counts
+        ; wOAMStripFrameCounter and clears the bands' lists.
 
         jsr rsCountSpritesPerScanline
         jsr rsUpdateOAMBandSpriteLimits
@@ -763,13 +771,16 @@
 
       rsCountSpritesPerScanline ; 80/8A6C
 
-        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Counts sprites overlapping each scanline into $7FEC88..$7FED87 for already-pushed OAM entries
+        ; Found by tools/sweep.py.
+        ; Counts, for each scanline (256 bytes at $7FEC88), the sprites already in
+        ; aSpriteBuffer that cover it: 1 for an 8 x 8 sprite on each of its 8 lines, 2
+        ; (two tiles wide) for a 16 x 16 on each of its 16. Sprites at Y $E0 or below the
+        ; screen are not counted.
 
         lda wNextFreeSpriteOffset,b
         bne _8A72
@@ -907,7 +918,11 @@
         .autsiz
         .databank ?
 
-        ; Computes peak sprite density per 16-scanline band and sets $0DF3 limits with $0E53 hysteresis
+        ; For each 16-line band, from the busiest scanline's count p: the band takes 17 -
+        ; (p + 1) / 2 more 16-pixel-wide sprites (17 when the buffer is empty), the
+        ; hardware's 34 tiles a line in 16-pixel sprites. A lower quota applies at once; a
+        ; higher one only after aOAMStripCooldownTimers runs out (wOAMStripCooldownReload
+        ; frames: 1, or $30 while a map battle has turned flicker on).
 
         phb
         pea #$7F00

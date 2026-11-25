@@ -137,12 +137,12 @@
         lda wDeathQuotePointer+1
         sta aActionStructUnit1.WeaponID
         lda #(`rlPushToOAMBufferDualTileBase)<<8
-        sta @l $0015E5
+        sta @l lActiveSpriteRenderer+1
         lda #<>rlPushToOAMBufferDualTileBase
-        sta @l $0015E4
+        sta @l lActiveSpriteRenderer
         plx
-        lda @l $000302
-        sta @l $0010B7,x
+        lda @l wGameStateRoutine1
+        sta @l aProcSystem.aBody7,x
         stz wGameStateRoutine1,b
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
@@ -687,7 +687,7 @@
         sta <>aMapAction.wMapBattleStrikeSignal,b
         sta <>aMapAction.wMapBattleStrikeDone,b
         sta <>aMapAction.wMapBattleRoundRunning,b
-        sta @l $000F37,x
+        sta @l aProcSystem.aHeaderBitfield,x
         lda #$0001
         sta <>aMapAction.wMapBattleRoundRunning,b
         lda <>aMapAction.lAttackerSpriteData+1,b
@@ -757,7 +757,7 @@
         lda #<>aMapBattleDefenderSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta aMapAction.wMapBattleDefenderSpriteSlot
@@ -765,10 +765,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0040
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -1095,7 +1095,7 @@
         lda wMapAnimationSignals
         ora #$0002
         sta wMapAnimationSignals
-        lda @l $0010B7,x
+        lda @l aProcSystem.aBody7,x
         sta wGameStateRoutine1,b
         jsl rlProcEngineFreeProc
 
@@ -1222,17 +1222,17 @@
         sta wMapMagicCasterPixel
         sta wMapMagicTargetPixel
         lda #(`rlPushToOAMBufferDualTileBase)<<8
-        sta @l $0015E5
+        sta @l lActiveSpriteRenderer+1
         lda #<>rlPushToOAMBufferDualTileBase
-        sta @l $0015E4
+        sta @l lActiveSpriteRenderer
         lda @l aActiveSpriteSystem
         sta wMapBattleSavedSpriteEngineFlag
         lda @l aActiveSpriteSystem
         ora #$4000
         sta @l aActiveSpriteSystem
         plx
-        lda @l $000302
-        sta @l $0010B7,x
+        lda @l wGameStateRoutine1
+        sta @l aProcSystem.aBody7,x
         stz wGameStateRoutine1,b
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
@@ -1568,7 +1568,7 @@
         sta @l aMapAction.wMapBattleStrikeSignal
         sta @l aMapAction.wMapBattleStrikeDone
         sta @l aMapAction.wMapBattleRoundRunning
-        sta @l $000F37,x
+        sta @l aProcSystem.aHeaderBitfield,x
         lda #$0001
         sta <>wMapMagicStart,b
         lda <>aMapAction.lAttackerSpriteData+1,b
@@ -1632,9 +1632,9 @@
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
         lda #(`rlPushToOAMBuffer)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBuffer
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         lda wMapBattleSavedSpriteEngineFlag
         sta aActiveSpriteSystem,b
         rtl
@@ -1893,12 +1893,12 @@
         PROC_CALL rlHolyWeaponShineClearRoundState
         PROC_YIELD 1
         PROC_CALL rlMapBattleStartSkillEffect
-        PROC_SET_UNK_TIMER 96
+        PROC_SET_LOOP_COUNTER 96
 
         -
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
-        PROC_JUMP_WHILE_UNK_TIMER -
+        PROC_JUMP_WHILE_LOOP_COUNTER -
 
         PROC_CALL rlMapBattleEndSkillEffect
         PROC_YIELD 16
@@ -2106,7 +2106,7 @@
         phx
         lda #$0000
         sta @l aMapAction.wMapBattleRoundRunning
-        sta @l $000F37,x
+        sta @l aProcSystem.aHeaderBitfield,x
         plx
         ply
         plp
@@ -2149,9 +2149,9 @@
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
         lda #(`rlPushToOAMBuffer)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBuffer
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         rtl
 
         .databank 0
@@ -2281,7 +2281,7 @@
         sta <>wMapBattleAttackerBallista,b
         sta <>wMapBattleDefenderBallista,b
         sta <>wMapBattleMusicLowered,b
-        sta @l $000F37,x
+        sta @l aProcSystem.aHeaderBitfield,x
         sta wMapAnimationSignals
         lda aActionStructUnit1.ClassID
         sta @l wR0
@@ -2339,12 +2339,12 @@
         plb
         .databank ?
         lda #(`rlPushToOAMBufferDualTileBase)<<8
-        sta @l $0015E5
+        sta @l lActiveSpriteRenderer+1
         lda #<>rlPushToOAMBufferDualTileBase
-        sta @l $0015E4
+        sta @l lActiveSpriteRenderer
         plx
-        lda @l $000302
-        sta @l $0010B7,x
+        lda @l wGameStateRoutine1
+        sta @l aProcSystem.aBody7,x
         stz wGameStateRoutine1,b
         jsl rlPauseMapSpriteAnimation
         jsl rlPauseMapTileAnimation
@@ -2505,7 +2505,7 @@
 
         lda #$0000
         sta aMapAction.wMapBattleRoundRunning
-        sta @l $000F37,x
+        sta @l aProcSystem.aHeaderBitfield,x
         rtl
 
         .databank 0
@@ -2563,9 +2563,9 @@
 
         _DD87
         lda #(`rlPushToOAMBuffer)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBuffer
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         stz wBufferBG3VOFS
         plx
         rtl
@@ -2677,7 +2677,7 @@
         adc #$0002
         tay
         lda #<>aGiveGoldCoinSpriteInfo
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta @l $001097
@@ -2686,10 +2686,10 @@
         lda #$0000
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl

@@ -512,16 +512,16 @@
         ; Shared by the Elfire and Fire effects.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicCasterPixel+1
         and #$00FF
         sec
         sbc #$000C
         and #$01FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$FF40
         sta aActiveSpriteSystem.aUnknown0013E0,b,x
         lda #$0000
@@ -593,12 +593,12 @@
         lda wMapMagicTargetPixel
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001200,b,x
+        sbc aActiveSpriteSystem.aXPosition,b,x
         sta wR0
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001240,b,x
+        sbc aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         jsl rlGetVectorAngle
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
@@ -635,7 +635,7 @@
         lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR1
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         cmp wR1
         bmi _94D4
         lda wMapMagicEffect
@@ -649,10 +649,10 @@
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
 
@@ -666,10 +666,10 @@
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
 
         _94D4
         rtl
@@ -813,7 +813,7 @@
         ; Part of the Fire effect.
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $51
@@ -833,7 +833,7 @@
         ; Part of the Fire effect.
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $4B
@@ -885,7 +885,7 @@
         ; Part of the Elfire effect.
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $52
@@ -905,7 +905,7 @@
         ; Part of the Elfire effect.
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $4C
@@ -2411,16 +2411,16 @@
         ; Part of the Fenrir effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicCasterPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0040
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $69
@@ -2444,12 +2444,12 @@
         lda wMapMagicTargetPixel
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001200,b,x
+        sbc aActiveSpriteSystem.aXPosition,b,x
         sta wR0
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001240,b,x
+        sbc aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         jsl rlGetVectorLength
         lsr a
@@ -2943,7 +2943,7 @@
         sta lR44+1
         lda #<>aMapMagicBolganoneSpriteInfo
         sta lR44
-        jsl rlActiveSpriteEngineCreateSpriteLastSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         jsr rsCreateMapMagicProc
 
           .word <>procMapMagicBolganone
@@ -3187,10 +3187,10 @@
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FA536
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $53
@@ -3199,7 +3199,7 @@
         clc
         adc #$0002
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
 
@@ -3662,7 +3662,7 @@
 
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $56
@@ -3682,7 +3682,7 @@
 
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $54
@@ -3692,7 +3692,7 @@
         and #$00FF
         sec
         sbc #$0010
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
 
         .databank 0
 
@@ -3705,7 +3705,7 @@
         .databank ?
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda #$0004
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
@@ -3721,13 +3721,13 @@
         .databank ?
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         stz aActiveSpriteSystem.aUnknown001320,b,x
         stz aActiveSpriteSystem.aUnknown001340,b,x
         rtl
@@ -3932,7 +3932,7 @@
 
         phx
         phy
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         sec
         sbc #$0030
         bpl _A809
@@ -3946,7 +3946,7 @@
         clc
         adc #$0018
         tay
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         and #$00FF
         tax
         lda #(`aMapMagicElthunderCasterBoltSpriteInfo)<<8
@@ -3963,7 +3963,7 @@
         clc
         adc #$0018
         tay
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         and #$00FF
         tax
         lda #(`aMapMagicElthunderMidBoltSpriteInfo)<<8
@@ -4022,7 +4022,7 @@
         sec
         sbc #$0018
         sta wR0
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         clc
         adc #$0018
         cmp wR0
@@ -4043,7 +4043,7 @@
 
 
         _A8A0
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $57
@@ -4111,19 +4111,19 @@
         .databank ?
         ; Part of the Thunder effect.
 
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         cmp #$000A
         bpl rlMapMagicThunderSpriteDummy
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$001F
         sec
         sbc #$0020
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #<>rlMapMagicThunderSpriteDummy
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -4151,7 +4151,7 @@
         .databank ?
         ; Part of the Thunder effect.
 
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $55
@@ -4288,14 +4288,14 @@
         sta wR0
         lda #$0010
         clc
-        adc aActiveSpriteSystem.aUnknown001240,b,x
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        adc aActiveSpriteSystem.aYPosition,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         cmp wR0
         bmi _A9F4
         jsr rlMapMagicThunderSpawnEffects
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #<>rlMapMagicThunderImpactInit
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda $0000,b,y
@@ -4783,13 +4783,13 @@
         ; Part of the Light effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         stz aActiveSpriteSystem.aUnknown0013E0,b,x
         stz aActiveSpriteSystem.aUnknown0013C0,b,x
         lda #$0028
@@ -5201,15 +5201,15 @@
         ; Part of the Thoron effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicCasterPixel+1
         and #$00FF
         clc
         adc #$FFF8
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0002
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F50C9
@@ -5237,12 +5237,12 @@
         lda wMapMagicTargetPixel
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001200,b,x
+        sbc aActiveSpriteSystem.aXPosition,b,x
         sta wR0
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001240,b,x
+        sbc aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         jsl rlGetVectorLength
         lsr a
@@ -5277,17 +5277,17 @@
         bne rlMapMagicThoronSpriteAim._B052
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda #<>rlMapMagicThoronSpriteWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0032
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $5C
@@ -5875,11 +5875,11 @@
         ; Part of the Meteor effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda #$00F8
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda #$FFF0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         stz aActiveSpriteSystem.aUnknown0013E0,b,x
         stz aActiveSpriteSystem.aUnknown0013C0,b,x
         lda $7ECC0A
@@ -5904,23 +5904,23 @@
         clc
         adc #$0080
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda $7F50CF
         eor #$FFFF
         inc a
         clc
         adc #$0070
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR0
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         cmp wR0
         bmi _B461
         lda wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $5F
@@ -6450,7 +6450,7 @@
         sta lR44+1
         lda #<>aMapMagicStaffSpriteInfo
         sta lR44
-        jsl rlActiveSpriteEngineCreateSpriteLastSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         plx
         lda wMapMagicTargetPixel
         and #$00FF
@@ -6547,7 +6547,7 @@
         stz aProcSystem.aBody3,b,x
         lda aMapAction.wMapBattleDefenderSpriteSlot
         tay
-        lda aActiveSpriteSystem.aUnknown001240,b,y
+        lda aActiveSpriteSystem.aYPosition,b,y
         sta aProcSystem.aBody5,b,x
         stz aProcSystem.aBody6,b,x
         rtl
@@ -6697,7 +6697,7 @@
         sta lR44+1
         lda #<>aMapMagicStaffSpriteInfo
         sta lR44
-        jsl rlActiveSpriteEngineCreateSpriteLastSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         plx
         lda wMapMagicTargetPixel
         and #$00FF
@@ -6806,7 +6806,7 @@
 
         _B8D7
         tay
-        lda aActiveSpriteSystem.aUnknown001240,b,y
+        lda aActiveSpriteSystem.aYPosition,b,y
         clc
         adc #$FFFE
         bmi _B91B
@@ -6834,7 +6834,7 @@
         inc a
         clc
         adc wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,y
+        sta aActiveSpriteSystem.aYPosition,b,y
         plx
         clc
         rts
@@ -6852,7 +6852,7 @@
         _B92B
         tay
         lda #$FFF8
-        sta aActiveSpriteSystem.aUnknown001240,b,y
+        sta aActiveSpriteSystem.aYPosition,b,y
         sec
         rts
 
@@ -6920,7 +6920,7 @@
         sta lR44+1
         lda #<>aMapMagicStaffSpriteInfo
         sta lR44
-        jsl rlActiveSpriteEngineCreateSpriteLastSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         plx
         lda wMapMagicTargetPixel
         and #$00FF
@@ -7008,15 +7008,15 @@
         ; Shared by the Restore, Return and Sleep effects.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         clc
         adc #$FFFC
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
 
@@ -7645,16 +7645,16 @@
         ; Part of the Mjolnir effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0060
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $5D
@@ -8445,13 +8445,13 @@
         ; Part of the Nosferatu effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicCasterPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
         .databank 0
@@ -8467,10 +8467,10 @@
         jsr rsMapMagicNosferatuCycleSpritePal
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda $7ECC06
         beq _C3EC
         lda #<>rlMapMagicNosferatuSpriteAtCaster
@@ -8492,10 +8492,10 @@
         jsr rsMapMagicNosferatuCycleSpritePal
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicCasterPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda $7ECC0C
         beq _C414
         stz aActiveSpriteSystem.aTypeOffset,b,x
@@ -9216,17 +9216,17 @@
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FC8CC
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $63
 
         lda wMapMagicCasterPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0030
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         jml rlMapMagicTornadoStepSpritePal
@@ -9247,12 +9247,12 @@
         lda wMapMagicTargetPixel
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001200,b,x
+        sbc aActiveSpriteSystem.aXPosition,b,x
         sta wR0
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001240,b,x
+        sbc aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         jsl rlGetVectorLength
         bne _C91C
@@ -9444,9 +9444,9 @@
 
         phx
         phy
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         tay
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tax
         lda #(`aMapMagicElwindSpriteInfo)<<8
         sta lR44+1
@@ -9485,13 +9485,13 @@
         ; Part of the Wind effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicCasterPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F50C9
@@ -9502,7 +9502,7 @@
         lda wMapMagicEffect
         cmp #$000B
         beq _CAD5
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $61
@@ -9511,7 +9511,7 @@
 
 
         _CAD5
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $62
@@ -9529,7 +9529,7 @@
         ; Part of the Wind effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F50C9
@@ -9571,12 +9571,12 @@
         lda wMapMagicTargetPixel
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001200,b,x
+        sbc aActiveSpriteSystem.aXPosition,b,x
         sta wR0
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001240,b,x
+        sbc aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         jsl rlGetVectorLength
         lsr a
@@ -9982,13 +9982,13 @@
         ; Part of the Warp effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
@@ -10060,9 +10060,9 @@
         stz aActiveSpriteSystem.aUnknown001220,b,x
         lda $7F509D
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda #$FFF8
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
 
@@ -10095,7 +10095,7 @@
         jsl rlMoveActiveSpriteByVelocity
         lda $7F509E
         and #$00FF
-        cmp aActiveSpriteSystem.aUnknown001240,b,x
+        cmp aActiveSpriteSystem.aYPosition,b,x
         beq _CE21
         bmi _CE21
         rtl
@@ -10140,12 +10140,12 @@
         ; Part of the BrokenStaff effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         and #$FFF8
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
@@ -10170,9 +10170,9 @@
         stz aActiveSpriteSystem.aUnknown001220,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda #$FFF8
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
         .databank 0
@@ -10206,7 +10206,7 @@
         jsl rlMoveActiveSpriteByVelocity
         lda wMapMagicTargetPixel+1
         and #$00FF
-        cmp aActiveSpriteSystem.aUnknown001240,b,x
+        cmp aActiveSpriteSystem.aYPosition,b,x
         beq _CEAA
         bmi _CEAA
         rtl
@@ -10305,7 +10305,7 @@
         .databank ?
         ; Part of the Warp effect.
 
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         bmi _CF4F
         lda $0000,b,y
         tay
@@ -10350,7 +10350,7 @@
         phy
         tay
         lda #$FFFE
-        sta aActiveSpriteSystem.aUnknown001240,b,y
+        sta aActiveSpriteSystem.aYPosition,b,y
         ply
         rtl
 
@@ -10415,10 +10415,10 @@
         tay
         lda $7F509D
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,y
+        sta aActiveSpriteSystem.aXPosition,b,y
         lda $7F509E
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,y
+        sta aActiveSpriteSystem.aYPosition,b,y
         ply
         rtl
 
@@ -10507,10 +10507,10 @@
         tay
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,y
+        sta aActiveSpriteSystem.aXPosition,b,y
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,y
+        sta aActiveSpriteSystem.aYPosition,b,y
         ply
         rtl
 
@@ -10678,15 +10678,15 @@
         ; Part of the Jormungandr effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicCasterPixel+1
         sec
         sbc #$0008
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
         .databank 0
@@ -10821,10 +10821,10 @@
 
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
         .databank 0
@@ -10839,7 +10839,7 @@
         ; Part of the Jormungandr effect.
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $5A
@@ -10859,7 +10859,7 @@
         ; Part of the Jormungandr effect.
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $5B
@@ -10997,13 +10997,13 @@
         ; Part of the Thief effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicCasterPixel+1
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda #$000A
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
@@ -11023,12 +11023,12 @@
         lda wMapMagicTargetPixel
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001200,b,x
+        sbc aActiveSpriteSystem.aXPosition,b,x
         sta wR0
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001240,b,x
+        sbc aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         jsl rlGetVectorLength
         lsr a
@@ -11389,7 +11389,7 @@
         sta lR44+1
         lda #<>aMapMagicValflameSpriteInfo
         sta lR44
-        jsl rlActiveSpriteEngineCreateSpriteLastSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         plx
         rts
 
@@ -11520,15 +11520,15 @@
         ; Part of the Valflame effect.
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wMapMagicTargetPixel+1
         clc
         adc #$0002
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         rtl
 
         .databank 0
@@ -11591,7 +11591,7 @@
 
         _D622
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         ldy wR0
         lda <>aMapMagicValflameOrbData,b,y
         bit wR2
@@ -11606,14 +11606,14 @@
         clc
         adc wR3
         sec
-        sbc aActiveSpriteSystem.aUnknown001200,b,x
+        sbc aActiveSpriteSystem.aXPosition,b,x
         sta wR0
         lda wMapMagicTargetPixel+1
         clc
         adc <>(aMapMagicValflameOrbData+2),b,y
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001240,b,x
+        sbc aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         jsl rlGetVectorLength
         lsr a
@@ -11628,7 +11628,7 @@
         lda #$0400
         sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
           .byte $4D
@@ -13513,7 +13513,7 @@
         ; Part of the Hel effect.
       aHDMAUnknown9FE384Code ; 9F/E384
 
-        HDMA_SET_INDIRECT_BANK $9F
+        HDMA_SET_TABLE_BANK $9F
         HDMA_YIELD 1, aUnknown9FE393
 
         _E38B
@@ -16058,9 +16058,9 @@
         sta $7F57EC
         jsr rsMapMagicCutsceneSavePalettes
         lda #(`rlPushToOAMBufferDualTileBase)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBufferDualTileBase
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         lda aActiveSpriteSystem,b
         sta wMapBattleSavedSpriteEngineFlag
         lda aActiveSpriteSystem,b
@@ -16499,15 +16499,15 @@
         adc #$0005
         tay
         lda #<>aMapBattleAttackerSpriteInfo
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         lda aActiveSpriteSystem.wOffset,b
         tax
         sta aMapAction.wMapBattleAttackerSpriteSlot
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         lda #$0005
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #(`aDecompressionBuffer)<<8
@@ -16538,15 +16538,15 @@
         lda #<>aMapBattleAttackerAuxSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         lda aActiveSpriteSystem.wOffset,b
         tax
         sta aMapAction.wMapBattleAttackerAuxSpriteSlot
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         lda #$0005
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
         sta aActiveSpriteSystem.aUnknown001320,b,x
         plx
@@ -16570,11 +16570,11 @@
         sta aProcSystem.aHeaderBitfield,b,x
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         cmp #$0060
         beq _F856
         dec a
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         bra _F862
 
 
@@ -16792,9 +16792,9 @@
         lda wMapBattleSavedSpriteEngineFlag
         sta aActiveSpriteSystem,b
         lda #(`rlPushToOAMBuffer)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBuffer
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         lda wMapAnimationSignals
         ora #$0002
         sta wMapAnimationSignals
@@ -17000,9 +17000,9 @@
         sta wMapScrollYPixels,b
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         eor aMapMagicCutsceneShakeOffsets2,x
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         bra _FA47
 
 
@@ -17020,9 +17020,9 @@
         sta wMapScrollYPixels,b
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         eor aMapMagicCutsceneShakeOffsets1,x
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
 
         _FA47
         lda #1,s

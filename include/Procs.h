@@ -56,15 +56,15 @@
       .word <>\Position
     .endsegment
 
-    PROC_SET_UNK_TIMER .segment Cycles
+    PROC_SET_LOOP_COUNTER .segment Cycles
       ; 82/824E
-      .word <>rsProcCodeSetTimer
+      .word <>rsProcCodeSetLoopCounter
       .word \Cycles
     .endsegment
 
-    PROC_JUMP_WHILE_UNK_TIMER .segment Position
+    PROC_JUMP_WHILE_LOOP_COUNTER .segment Position
       ; 82/8257
-      .word <>rsProcCodeJumpWhileTimer
+      .word <>rsProcCodeJumpWhileLoopCounter
       .word <>\Position
     .endsegment
 
@@ -85,8 +85,8 @@
     PROC_CREATE_ACTIVE_SPRITE .segment Sprite, XValue, YValue
       ; 82/8279
       ; Creates an active sprite from the definition Sprite. XValue and YValue
-      ; are passed in X and Y and end up in aActiveSpriteSystem.aUnknown001200
-      ; and aUnknown001240.
+      ; are passed in X and Y and become the sprite's position (aXPosition
+      ; and aYPosition). No script uses this command.
       .word <>rsProcCodeCreateActiveSprite
       .long \Sprite
       .word \XValue

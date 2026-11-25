@@ -38,27 +38,31 @@
         .autsiz
         .databank ?
 
+        ; The active sprite engine's init routine: frees every slot, clears its tile bases
+        ; and palette and wFlag (the engine is off), empties the render queue and puts
+        ; rlPushToOAMBuffer in lActiveSpriteRenderer.
+
         rep #$20
         ldx #size(aActiveSpriteSystem.aTypeOffset) -2
         lda #0
 
           -
           sta aActiveSpriteSystem.aTypeOffset,b,x
-          sta aActiveSpriteSystem.aUnknown001260,b,x
-          sta aActiveSpriteSystem.aUnknown001280,b,x
-          sta aActiveSpriteSystem.aUnknown0012A0,b,x
+          sta aActiveSpriteSystem.aTileBase,b,x
+          sta aActiveSpriteSystem.aTileBaseHigh,b,x
+          sta aActiveSpriteSystem.aPalette,b,x
           dec x
           dec x
           bpl -
 
         sta aActiveSpriteSystem.wFlag,b
-        sta $15E0,b
-        sta $15E2,b
+        sta wActiveSpriteOAMQueuePosition,b
+        sta wActiveSpriteOAMQueueCount,b
 
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E4+1,b
         lda #<>rlPushToOAMBuffer
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         rtl
 
         .databank 0
@@ -183,6 +187,10 @@
         .autsiz
         .databank ?
 
+        ; Creates the active sprite whose definition (structActiveSpriteInfo) is at lR44,
+        ; in the highest free slot, at X = the X register and Y = the Y register. Carry
+        ; set if all 16 slots are taken.
+
         phb
         phy
         phx
@@ -210,11 +218,14 @@
 
         .databank 0
 
-      rlActiveSpriteEngineCreateSpriteLowestSlot ; 81/80A1
+      rlActiveSpriteEngineCreateSpriteLowestSlotAbove0 ; 81/80A1
 
         .al
         .autsiz
         .databank ?
+
+        ; As rlActiveSpriteEngineCreateSpriteHighestSlot, in the lowest free slot from 1
+        ; up; slot 0 is never taken.
 
         phb
         phy
@@ -244,11 +255,14 @@
 
         .databank 0
 
-      rlActiveSpriteEngineCreateSpriteLastSlot ; 81/80BE
+      rlActiveSpriteEngineCreateSpriteLowestSlot ; 81/80BE
 
         .al
         .autsiz
         .databank ?
+
+        ; As rlActiveSpriteEngineCreateSpriteHighestSlot, in the lowest free slot from 0
+        ; up.
 
         phb
         phy
@@ -284,7 +298,8 @@
         .autsiz
         .databank ?
 
-        ; Allocate highest free active sprite slot keeping lR44 as relative struct base
+        ; As rlActiveSpriteEngineCreateSpriteHighestSlot, but the definition's routine and
+        ; script offsets count from lR44 (a definition inside a block of data).
 
         phb
         phy
@@ -341,6 +356,11 @@
         .autsiz
         .databank ?
 
+        ; Fills slot X / 2: the definition, its bank, the position the caller pushed, the
+        ; on-cycle routine and script, frame timer 1, aFrameOffset $8006 (in bank $81 that
+        ; is an empty sprite array; the first script step replaces it before the sprite is
+        ; drawn) and the other fields 0; then runs the init routine.
+
         sta aActiveSpriteSystem.aTypeOffset,x
         tay
 
@@ -354,9 +374,9 @@
         sta aActiveSpriteSystem.aBanks,x
 
         pla
-        sta aActiveSpriteSystem.aUnknown001200,x
+        sta aActiveSpriteSystem.aXPosition,x
         pla
-        sta aActiveSpriteSystem.aUnknown001240,x
+        sta aActiveSpriteSystem.aYPosition,x
 
         lda $0002,b,y
         clc
@@ -377,10 +397,10 @@
         lda #0
         sta aActiveSpriteSystem.aUnknown0011E0,x
         sta aActiveSpriteSystem.aUnknown001220,x
-        sta aActiveSpriteSystem.aUpdater,x
-        sta aActiveSpriteSystem.aUnknown001260,x
-        sta aActiveSpriteSystem.aUnknown001280,x
-        sta aActiveSpriteSystem.aUnknown0012A0,x
+        sta aActiveSpriteSystem.aLoopCounter,x
+        sta aActiveSpriteSystem.aTileBase,x
+        sta aActiveSpriteSystem.aTileBaseHigh,x
+        sta aActiveSpriteSystem.aPalette,x
         sta aActiveSpriteSystem.aUnknown0012C0,x
         sta aActiveSpriteSystem.aUnknown0012E0,x
         sta aActiveSpriteSystem.aUnknown001300,x
@@ -412,6 +432,12 @@
         .al
         .autsiz
         .databank ?
+
+        ; The active sprite engine's per-frame routine. With wFlag bit 15 clear it only
+        ; empties the render queue. Otherwise it steps every live sprite, slot 15 down to
+        ; 0 (unless bit 0, which nothing sets), draws them all, or with bit $4000 only
+        ; those whose X and Y are 0-255, and flushes the render queue. Bit $2000 picks
+        ; rlFlushActiveSpriteOAMQueue2000, which is the same flush.
 
         php
         phb
@@ -475,8 +501,8 @@
           rtl
 
         _Disabled
-        stz $15E0,b
-        stz $15E2,b
+        stz wActiveSpriteOAMQueuePosition,b
+        stz wActiveSpriteOAMQueueCount,b
         plb
         plp
         rtl
@@ -488,6 +514,12 @@
         .al
         .autsiz
         .databank ?
+
+        ; One step of sprite X / 2, with DB = its bank: runs the on-cycle routine, counts
+        ; the frame timer down, and at 0 runs the script. Each command is a byte, an index
+        ; into aActiveSpriteCommandPointers, and its operands (ActiveSpriteEngine.h).
+        ; Commands that show a frame, wait or end the sprite end the step; the others read
+        ; on.
 
         lda aActiveSpriteSystem.aBanks-1,b,x
         pha
@@ -574,7 +606,7 @@
         .autsiz
         .databank ?
 
-        ; Render every active sprite slot via jml [$15E4] without bounds checks
+        ; Render every active sprite slot via jml [lActiveSpriteRenderer] without bounds checks
 
         php
         phb
@@ -585,17 +617,17 @@
           beq _Next
 
             ldy aActiveSpriteSystem.aFrameOffset,b,x
-            lda aActiveSpriteSystem.aUnknown001200,b,x
+            lda aActiveSpriteSystem.aXPosition,b,x
             and #$00FF
             sta wR0
-            lda aActiveSpriteSystem.aUnknown001240,b,x
+            lda aActiveSpriteSystem.aYPosition,b,x
             and #$00FF
             sta wR1
-            lda aActiveSpriteSystem.aUnknown001260,b,x
+            lda aActiveSpriteSystem.aTileBase,b,x
             sta wR4
-            lda aActiveSpriteSystem.aUnknown001280,b,x
+            lda aActiveSpriteSystem.aTileBaseHigh,b,x
             sta wR6
-            lda aActiveSpriteSystem.aUnknown0012A0,b,x
+            lda aActiveSpriteSystem.aPalette,b,x
             xba
             asl a
             sta wR5
@@ -607,7 +639,7 @@
             rep #$20
             phk
             pea #<>(+)-1
-            jml [$15E4]
+            jml [lActiveSpriteRenderer]
 
             +
             plb
@@ -629,7 +661,7 @@
         .autsiz
         .databank ?
 
-        ; Render active sprites with 0 <= X,Y < $0100 via jml [$15E4]
+        ; Render active sprites with 0 <= X,Y < $0100 via jml [lActiveSpriteRenderer]
 
         php
         phb
@@ -640,7 +672,7 @@
         beq _Next
 
           ldy aActiveSpriteSystem.aFrameOffset,b,x
-          lda aActiveSpriteSystem.aUnknown001200,b,x
+          lda aActiveSpriteSystem.aXPosition,b,x
           bmi _Next
 
           cmp #$0100
@@ -648,7 +680,7 @@
 
           and #$00FF
           sta wR0
-          lda aActiveSpriteSystem.aUnknown001240,b,x
+          lda aActiveSpriteSystem.aYPosition,b,x
           bmi _Next
 
           cmp #$0100
@@ -656,11 +688,11 @@
 
           and #$00FF
           sta wR1
-          lda aActiveSpriteSystem.aUnknown001260,b,x
+          lda aActiveSpriteSystem.aTileBase,b,x
           sta wR4
-          lda aActiveSpriteSystem.aUnknown001280,b,x
+          lda aActiveSpriteSystem.aTileBaseHigh,b,x
           sta wR6
-          lda aActiveSpriteSystem.aUnknown0012A0,b,x
+          lda aActiveSpriteSystem.aPalette,b,x
           xba
           asl a
           sta wR5
@@ -672,7 +704,7 @@
           rep #$20
           phk
           pea #<>(+)-1
-          jml [$15E4]
+          jml [lActiveSpriteRenderer]
 
           +
           plb
@@ -694,18 +726,20 @@
         .autsiz
         .databank ?
 
-        ; Unused: append 12-byte sprite draw request into deferred $1400 OAM queue
+        ; Nothing calls this. Adds a 12-byte entry (sprite array, X, Y, tile base,
+        ; attributes, bank) to aActiveSpriteOAMQueue for the flush after the sprites are
+        ; drawn.
 
         php
         sep #$20
         phb
         pla
         rep #$20
-        ldx $15E0,b
+        ldx wActiveSpriteOAMQueuePosition,b
         and #$00FF
         sta $140A,b,x
         tya
-        sta $1400,b,x
+        sta aActiveSpriteOAMQueue,b,x
         lda wR0
         sta $1402,b,x
         lda wR1
@@ -717,8 +751,8 @@
         txa
         clc
         adc #12
-        sta $15E0,b
-        inc $15E2,b
+        sta wActiveSpriteOAMQueuePosition,b
+        inc wActiveSpriteOAMQueueCount,b
         plp
         rtl
 
@@ -730,10 +764,12 @@
         .autsiz
         .databank ?
 
-        ; Flush $1400 deferred sprite queue to rlPushToOAMBuffer in order
+        ; Draws the entries of aActiveSpriteOAMQueue in order through rlPushToOAMBuffer
+        ; and empties it. Only rlQueueActiveSpriteOAM fills the queue, so it is always
+        ; empty.
 
         phb
-        lda $15E2,b
+        lda wActiveSpriteOAMQueueCount,b
         beq _End
 
           lda #0
@@ -741,7 +777,7 @@
             _Loop
             tax
             phx
-            ldy $1400,b,x
+            ldy aActiveSpriteOAMQueue,b,x
             lda $1402,b,x
             sta $00
             lda $1404,b,x
@@ -759,17 +795,17 @@
             jsl rlPushToOAMBuffer
             plb
             pla
-            dec $15E2,b
+            dec wActiveSpriteOAMQueueCount,b
             beq +
 
               clc
               adc #12
-              cmp $15E0,b
+              cmp wActiveSpriteOAMQueuePosition,b
               bcc _Loop
 
           +
-          stz $15E0,b
-          stz $15E2,b
+          stz wActiveSpriteOAMQueuePosition,b
+          stz wActiveSpriteOAMQueueCount,b
 
         _End
         plb
@@ -793,10 +829,13 @@
         .autsiz
         .databank `aActiveSpriteYBucketThresholds
 
+        ; Nothing calls this. Draws the queue's entries by their Y position in 16-line
+        ; bands, bottom band first.
+
         phb
         phk
         plb
-        lda $15E2,b
+        lda wActiveSpriteOAMQueueCount,b
         beq _End
 
           ldy #$0020
@@ -815,7 +854,7 @@
 
                 phx
                 phy
-                ldy $1400,b,x
+                ldy aActiveSpriteOAMQueue,b,x
                 lda $1402,b,x
                 sta wR0
                 lda $1404,b,x
@@ -834,14 +873,14 @@
                 plb
                 ply
                 plx
-                dec $15E2,b
+                dec wActiveSpriteOAMQueueCount,b
                 beq +
 
               _Next
               txa
               clc
               adc #12
-              cmp $15E0,b
+              cmp wActiveSpriteOAMQueuePosition,b
               bcc _InnerLoop
 
             dec y
@@ -849,8 +888,8 @@
             bpl _OuterLoop
 
           +
-          stz $15E0,b
-          stz $15E2,b
+          stz wActiveSpriteOAMQueuePosition,b
+          stz wActiveSpriteOAMQueueCount,b
         
         _End
         plb
@@ -884,7 +923,10 @@
         .autsiz
         .databank ?
 
-        ; OAM sprite pusher for battles/cutscenes: dec Y, apply wR4/wR6 tile base by tile range
+        ; A renderer for lActiveSpriteRenderer (the map battle, map actions and cutscenes
+        ; install it), with the inputs of rlPushToOAMBuffer plus wR6. Each entry's tile
+        ; below $20 is used as it is; $20-$3F gets wR4 added, $40 and up wR6. The Y offset
+        ; counts one line higher than rlPushToOAMBuffer's.
 
         phy
         phx
@@ -1076,7 +1118,7 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: back up Y by 2 and re-run current opcode after aFrameTimer expires
+        ; Not in the command table. Would leave the script on the command before this one.
 
         dec y
         dec y
@@ -1125,7 +1167,7 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: set aOnCycle to rsActiveSpriteStub
+        ; Not in the command table. Sets the on-cycle routine to rsActiveSpriteStub.
 
         lda #<>rsActiveSpriteStub
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -1162,7 +1204,7 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: call inline 24-bit subroutine via aActiveSpriteSystem.lPointer
+        ; Not in the command table. Calls the long routine in the next three bytes.
 
         lda $0000,b,y
         sta aActiveSpriteSystem.lPointer,b
@@ -1225,10 +1267,10 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: set aUpdater loop counter from inline word
+        ; Not in the command table: set the aLoopCounter loop counter from inline word
 
         lda $0000,b,y
-        sta aActiveSpriteSystem.aUpdater,b,x
+        sta aActiveSpriteSystem.aLoopCounter,b,x
         inc y
         inc y
         rts
@@ -1241,7 +1283,7 @@
         .autsiz
         .databank ?
 
-        dec aActiveSpriteSystem.aUpdater,b,x
+        dec aActiveSpriteSystem.aLoopCounter,b,x
         bne rsActiveSpriteCommandJump
 
         inc y
@@ -1256,9 +1298,9 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: decrement aUpdater and relative-branch via cmd $16 while non-zero
+        ; Not in the command table: decrement aLoopCounter and relative-branch via cmd $16 while non-zero
 
-        dec aActiveSpriteSystem.aUpdater,b,x
+        dec aActiveSpriteSystem.aLoopCounter,b,x
         bne rsActiveSpriteCommandJumpRelative
 
         inc y
@@ -1272,7 +1314,8 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: jump to inline offset and yield 1 frame if byte at 24-bit addr != 0
+        ; Not in the command table. If the byte at the long address in the operand is not
+        ; 0, jumps to the next word and ends the step.
 
         phb
         phx
@@ -1318,7 +1361,8 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: jump to inline offset and yield 1 frame if word at 24-bit addr == 0
+        ; Not in the command table. If the word at the long address in the operand is 0,
+        ; jumps to the next word and ends the step.
 
         phx
         phb
@@ -1364,7 +1408,8 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: write inline word to inline 24-bit RAM address
+        ; Not in the command table. Writes the word after the long address in the operand
+        ; to that address.
 
         phb
         phx
@@ -1396,7 +1441,8 @@
         .autsiz
         .databank ?
 
-        ; Unused cmd: load script Y indirectly from 1 of 2 RAM pointers by aUnknown001320
+        ; Not in the command table. Continues at the word stored at one of two long
+        ; addresses, by the sprite's aUnknown001320.
 
         phb
         phx
@@ -1510,8 +1556,8 @@
         +
         xba
         clc
-        adc aActiveSpriteSystem.aUnknown001200,b,x
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        adc aActiveSpriteSystem.aXPosition,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
 
         lda $0000,b,y
         and #$FF00
@@ -1522,8 +1568,8 @@
         +
         xba
         clc
-        adc aActiveSpriteSystem.aUnknown001240,b,x
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        adc aActiveSpriteSystem.aYPosition,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         inc y
         inc y
         rts
@@ -1537,7 +1583,7 @@
         .databank ?
 
         phx
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tax
         jsl rlGetSoundPanFromXPixel
         sta $00
@@ -2078,7 +2124,7 @@
         cmp #$FFFF
         beq _B329
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
         lda $7F57EA
         bne _B337
@@ -2088,7 +2134,7 @@
         cmp #$FFFF
         beq _B342
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
 
         _B337

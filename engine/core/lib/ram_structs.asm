@@ -11,7 +11,7 @@
         .autsiz
         .databank ?
 
-        ; Zero $054A..$056C struct/RAMArea vars and initialize wUnknown00056B to $0010
+        ; Zero $054A..$056C struct/RAMArea vars and initialize wRAMAreaHandlesPerBlock to $0010
 
         phb
         php
@@ -27,7 +27,7 @@
           bpl -
 
         lda #$0010
-        sta wUnknown00056B,b
+        sta wRAMAreaHandlesPerBlock,b
         plp
         plb
         rtl
@@ -108,7 +108,7 @@
         lda #3
 
         +
-        sta structRAMStructHeader.Unknown,b,y
+        sta structRAMStructHeader.Flags,b,y
         rep #$20
         
         _End
@@ -228,7 +228,7 @@
         rep #$20
         plb
 
-        lda structRAMStructHeader.Unknown,b,x
+        lda structRAMStructHeader.Flags,b,x
         bit #$0080
         bne _CLC
 
@@ -391,7 +391,7 @@
         rep #$20
         plb
 
-        lda structRAMStructHeader.Unknown,b,x
+        lda structRAMStructHeader.Flags,b,x
         bit #$0080
         bne _CLC
 

@@ -12,6 +12,10 @@
         .autsiz
         .databank ?
 
+        ; From the main loop (rsRunFrameTasks, rsMapMainLoop): runs every queued
+        ; decompression (rlDecompressor) and empties the queue. An entry with a source of
+        ; 0 ends it; reading past $20 bytes hangs.
+
         phb
         php
         phk
@@ -69,6 +73,11 @@
         .al
         .autsiz
         .databank ?
+
+        ; Queues the decompression of the stream at lR18 to lR19, writing a 0 source after
+        ; it to end the queue. The queue (aDecompressionArray, $20 bytes) holds five
+        ; entries; the fifth's end marker reaches bFrameCounterByOnes, and nothing checks
+        ; for a sixth. With the screen blanked the queue runs at once.
 
         php
         phx
@@ -905,6 +914,8 @@
         .autsiz
         .databank ?
 
+        ; Queues the stream at lR44 for decompression into aDecompressionBuffer.
+
         lda lR44
         sta lR18
         lda lR44+1
@@ -926,6 +937,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Ends the proc once the decompression queue is empty.
 
         lda bDecompressionArrayFlag,b
         and #$00FF

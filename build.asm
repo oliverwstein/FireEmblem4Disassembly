@@ -416,6 +416,7 @@
       .dsection RandomChanceSection
 
       .dsection BlockCopySection
+      .dsection SetMainLoopPointerSection
 
       .dsection Unsorted80A9F2Section
 

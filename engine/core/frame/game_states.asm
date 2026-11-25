@@ -1,4 +1,7 @@
-; Game state dispatch table (aGameStateRoutines) and per-VBlank hook registry.
+; The game state table (aGameStateRoutines) and its dispatcher; the table of
+; per-frame engines (aTaskTable, rlRegisterVBlankHook, rlRunVBlankHooks); and
+; rlSetMainLoopPointer, which installs a main loop routine (an opener) to change
+; screens.
 
 
     .section Unsorted809B00Section
@@ -94,6 +97,9 @@
         .autsiz
         .databank ?
 
+        ; Every frame, from the VBlank routine: runs the game state routine
+        ; wGameStateRoutine1, then wGameStateRoutine2.
+
         phb
 
         lda wGameStateRoutine1,b
@@ -117,7 +123,9 @@
         .autsiz
         .databank ?
 
-        ; Indexes aGameStateRoutines; bank $7D redirects wGameStateRoutine1, else sets DB and calls rlJumpToGameStateRoutine
+        ; Calls entry A / 3 of aGameStateRoutines with DB = its bank. An entry whose bank
+        ; byte is $7D is not called: its low word becomes wGameStateRoutine1. No entry of
+        ; the table has that bank.
 
         tax
         sep #$20
@@ -176,7 +184,7 @@
         .autsiz
         .databank ?
 
-        ; Clears the 16-slot (48-byte) per-VBlank engine hook array at $0309..$0338
+        ; Clears aTaskTable (16 three-byte slots).
 
         php
         phb
@@ -208,7 +216,12 @@
         .autsiz
         .databank ?
 
-        ; Registers a 3-byte VBlank cycle callback from [lR44]+2 into $0309..$0338 and runs init at [lR44]+0
+        ; Registers a per-frame engine. lR44 points at its action table: +0 an init
+        ; routine, run at once; +2 the per-frame routine, stored in the highest free slot
+        ; of aTaskTable. Both are in the table's bank. A third word (+4) is read only by
+        ; rlFindAndJumpTaskTableUnused, which nothing calls.
+        ;
+        ; Output: carry set if all 16 slots are taken.
 
         phb
         phk
@@ -281,13 +294,15 @@
 
       rlFindAndJumpTaskTableUnused ; 80/9C3E
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Unreferenced: searches aTaskTable for [lR44]+2 and jumps via lTaskJumpPointer
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Nothing calls this. Finds the registered engine whose per-frame routine is the
+        ; one at lR44 +2 and calls the routine at lR44 +4, the third word of its action
+        ; table. It is the only code that reads that word.
 
         phb
         phk
@@ -351,7 +366,10 @@
         .autsiz
         .databank ?
 
-        ; Executes all active 24-bit callbacks in $0309..$0338 each VBlank
+        ; Every frame, from the VBlank routine: calls each routine in aTaskTable, slot 15
+        ; down to 0. rlRegisterVBlankHook fills slots from 15 down, so the engines run in
+        ; the order they were registered: procs, active sprites, HDMA, the IRQ engine,
+        ; events.
 
         php
         phb
@@ -463,3 +481,49 @@
     .endsection Unsorted8BA7CBSection
 
 
+    .section SetMainLoopPointerSection
+
+      .al
+      .xl
+
+
+      rlSetMainLoopPointer ; 80/A9D4
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Installs A as the main loop routine (wMainLoopPointer). With bit $0010 of
+        ; wEventEngineFlags set it would put A in wR26 instead and clear the bit, but
+        ; nothing sets that bit.
+
+        phb
+        php
+        phk
+        plb
+        pha
+
+        lda wEventEngineFlags,b
+        bit #$0010
+        bne +
+
+        pla
+        sta wMainLoopPointer
+        bra ++
+
+        +
+        pla
+        sta wR26
+        lda #$0010
+        trb wEventEngineFlags,b
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 80/A9F2
+
+    .endsection SetMainLoopPointerSection

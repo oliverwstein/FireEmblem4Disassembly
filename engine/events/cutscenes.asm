@@ -88,7 +88,7 @@
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET -, $0004
 
-        PROC_SET_UNK_TIMER 5
+        PROC_SET_LOOP_COUNTER 5
 
         ; Meteors fall
         -
@@ -99,7 +99,7 @@
         PROC_CALL rlEndMapMagicEffect
         PROC_CALL rlRestoreMapMagicScreenRegisters
         PROC_YIELD 1
-        PROC_JUMP_WHILE_UNK_TIMER -
+        PROC_JUMP_WHILE_LOOP_COUNTER -
 
         PROC_CALL rlClearBelhallaMagesProcBit4
 
@@ -945,17 +945,17 @@
         sta wMapMagicCasterPixel
         sta wMapMagicTargetPixel
         lda #$8100
-        sta @l $0015E5
+        sta @l lActiveSpriteRenderer+1
         lda #$841B
-        sta @l $0015E4
+        sta @l lActiveSpriteRenderer
         lda @l aActiveSpriteSystem
         sta wMapBattleSavedSpriteEngineFlag
         lda @l aActiveSpriteSystem
         ora #$4000
         sta @l aActiveSpriteSystem
         plx
-        lda @l $000302
-        sta @l $0010B7,x
+        lda @l wGameStateRoutine1
+        sta @l aProcSystem.aBody7,x
         stz wGameStateRoutine1,b
         jsl rlPauseMapSpriteAnimation
         jsl rlPauseMapTileAnimation
@@ -1103,17 +1103,17 @@
         sta wMapMagicTargetPixel
         sta wMapMagicCasterPixel
         lda #$8100
-        sta @l $0015E5
+        sta @l lActiveSpriteRenderer+1
         lda #$841B
-        sta @l $0015E4
+        sta @l lActiveSpriteRenderer
         lda @l aActiveSpriteSystem
         sta wMapBattleSavedSpriteEngineFlag
         lda @l aActiveSpriteSystem
         ora #$4000
         sta @l aActiveSpriteSystem
         plx
-        lda @l $000302
-        sta @l $0010B7,x
+        lda @l wGameStateRoutine1
+        sta @l aProcSystem.aBody7,x
         stz wGameStateRoutine1,b
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
@@ -1255,16 +1255,16 @@
         sta aMapAction.wMapBattleDefenderAuxSpriteSlot
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         ora #$8000
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         cmp #$FFFF
         beq _F5AA
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         ora #$8000
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
 
         _F5AA
         plx
@@ -1284,16 +1284,16 @@
         phx
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         and #$7FFF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         cmp #$FFFF
         beq _F5CE
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         and #$7FFF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
 
         _F5CE
         plx
@@ -1544,10 +1544,10 @@
         plx
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
-        lda #$8000
-        sta $15E4+1,b
-        lda #$87C7
-        sta $15E4,b
+        lda #(`rlPushToOAMBuffer)<<8
+        sta lActiveSpriteRenderer+1,b
+        lda #<>rlPushToOAMBuffer
+        sta lActiveSpriteRenderer,b
 
         lda wMapBattleSavedSpriteEngineFlag
         sta aActiveSpriteSystem.wFlag,b

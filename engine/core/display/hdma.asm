@@ -7,13 +7,16 @@
 
       rlHandlePossibleHDMA ; 80/A328
 
-        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Starts the pending DMA channels, runs the HDMA engine and enables its channels. FE5: rlHandlePossibleHDMA.
+        ; Found by tools/sweep.py.
+        ; Called by a VBlank routine after the DMA queue: starts the DMA channels queued
+        ; in bDMAPendingChannels, then programs every HDMA channel whose entry is live
+        ; from the HDMA engine (rlHDMAArrayEngineProcessHDMAArray) and enables them. Only
+        ; the VBlank routines that call this have HDMA; rsDefaultVBlankRoutine does not.
 
         phb
         php
@@ -56,11 +59,14 @@
         .addr rlHDMAEngineStub
 
       rlResetHDMAEngine ; 82/C006
-      
+
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The HDMA engine's init routine: clears aHDMASystem, turns HDMA off and resets
+        ; the eight channels' registers.
 
         php
         phb
@@ -113,6 +119,11 @@
         .al
         .autsiz
         .databank ?
+
+        ; Creates an HDMA entry from the definition at lR44 (structHDMADirectEntryInfo or
+        ; structHDMAIndirectEntryInfo) in the lowest free of the eight slots; slot n runs
+        ; on DMA channel n. Runs the init routine with X = the slot * 2 and wR41 = the
+        ; slot * 16 (its channel's register offset). Carry set if all eight are taken.
 
         php
         phb
@@ -203,6 +214,8 @@
         .autsiz
         .databank ?
 
+        ; Creates the entry at lR44 in slot wR40. Carry set if the slot is taken.
+
         php
         phb
 
@@ -259,6 +272,10 @@
         .autsiz
         .databank ?
 
+        ; The HDMA engine's per-frame routine: steps each live entry, slot 0 to 7, and
+        ; passes the channels of the live entries to bHDMAPendingChannels for
+        ; rlHandlePossibleHDMA.
+
         php
         phb
         phk
@@ -302,6 +319,12 @@
         .al
         .autsiz
         .databank ?
+
+        ; One step of entry X / 2. Its channel counts as live even when bitfield $1000
+        ; skips the step (only rsPauseMapProcsAndHDMAUnused sets it). Runs the on-cycle
+        ; routine, counts the sleep timer down and at 0 runs the script: a word with bit
+        ; 15 set is a command (HDMA.h); any other is HDMA_YIELD, a frame count followed by
+        ; the table to use for those frames.
 
         lda aHDMAChannelTable,x
         ora aHDMASystem.bPendingChannels,b
@@ -388,6 +411,9 @@
         .al
         .autsiz
         .databank ?
+
+        ; For each channel set in bBufferHDMAEN, writes the entry's table address, B-bus
+        ; register, DMAP and indirect bank to the channel's registers.
 
         php
         sep #$30
@@ -635,6 +661,10 @@
         .al
         .autsiz
         .databank ?
+
+        ; HDMA_SET_TABLE_BANK: writes the next byte to the bank of the entry's table
+        ; (aBankAndBBADx.bBank). It was called HDMA_SET_INDIRECT_BANK, but it does not
+        ; touch the indirect bank.
 
         sep #$20
         lda $0000,b,y

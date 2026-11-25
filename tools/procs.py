@@ -25,8 +25,8 @@ COMMANDS = {
     0x82820C: ('PROC_CALL_ARGS', None, 'next'),        # 3 + 1 + the count in that byte
     0x828237: ('PROC_SET_ONCYCLE', 2, 'next'),
     0x828249: ('PROC_JUMP', 2, 'jump'),
-    0x82824E: ('PROC_SET_UNK_TIMER', 2, 'next'),
-    0x828257: ('PROC_JUMP_WHILE_UNK_TIMER', 2, 'branch'),
+    0x82824E: ('PROC_SET_LOOP_COUNTER', 2, 'next'),
+    0x828257: ('PROC_JUMP_WHILE_LOOP_COUNTER', 2, 'branch'),
     0x82825F: ('PROC_JUMP_IF_BITS_UNSET', 4, 'branch'),
     0x82826C: ('PROC_JUMP_IF_BITS_SET', 4, 'branch'),
     0x828279: ('PROC_CREATE_ACTIVE_SPRITE', 7, 'next'),
@@ -150,13 +150,13 @@ def render(rom, commands, start, end, label, run_labels, name_of):
                 line += '\n          .byte ' + ', '.join(f'${b:02X}' for b in args[4:])
         elif name == 'PROC_SET_ONCYCLE':
             line = f'PROC_SET_ONCYCLE {routine(bank | int.from_bytes(args, "little"))}'
-        elif name in ('PROC_JUMP', 'PROC_JUMP_WHILE_UNK_TIMER'):
+        elif name in ('PROC_JUMP', 'PROC_JUMP_WHILE_LOOP_COUNTER'):
             line = f'{name} {position(bank | int.from_bytes(args[:2], "little"))}'
         elif name in ('PROC_JUMP_IF_BITS_UNSET', 'PROC_JUMP_IF_BITS_SET'):
             bits = int.from_bytes(args[2:4], 'little')
             line = f'{name} {position(bank | int.from_bytes(args[:2], "little"))}, ${bits:04X}'
-        elif name == 'PROC_SET_UNK_TIMER':
-            line = f'PROC_SET_UNK_TIMER {int.from_bytes(args, "little")}'
+        elif name == 'PROC_SET_LOOP_COUNTER':
+            line = f'PROC_SET_LOOP_COUNTER {int.from_bytes(args, "little")}'
         elif name == 'PROC_CREATE_ACTIVE_SPRITE':
             sprite = int.from_bytes(args[:3], 'little')
             xv, yv = int.from_bytes(args[3:5], 'little'), int.from_bytes(args[5:7], 'little')

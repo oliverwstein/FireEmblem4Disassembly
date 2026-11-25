@@ -36,7 +36,8 @@
     .endsegment
 
     ACTIVE_SPRITE_JUMP_WHILE_COUNTER .segment Position
-      ; $02: count aUpdater down; jump to Position while it is not 0.
+      ; $02: count aLoopCounter down; jump to Position while it is not 0. No command
+      ; in the table sets the counter, and no script uses this command.
       .byte $02
       .word <>\Position
     .endsegment
@@ -173,7 +174,7 @@
 
     ACTIVE_SPRITE_MOVE .segment XOffset, YOffset
       ; $19: add the signed bytes to the sprite's X and Y
-      ; (aUnknown001200, aUnknown001240).
+      ; (aXPosition, aYPosition).
       .byte $19
       .char \XOffset, \YOffset
     .endsegment

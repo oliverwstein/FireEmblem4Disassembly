@@ -103,7 +103,7 @@
       .word \Bits
     .endsegment
 
-    HDMA_SET_INDIRECT_BANK .segment Bank
+    HDMA_SET_TABLE_BANK .segment Bank
       ; 82/C261
       .word <>rsHDMACodeSetTableBank
       .byte \Bank

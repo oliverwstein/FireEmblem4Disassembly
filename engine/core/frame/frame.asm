@@ -11,7 +11,9 @@
         .autsiz
         .databank ?
 
-        ; Quick reset
+        ; The soft reset: when exactly Select, L and R are held (Start may be too) and
+        ; Start is newly pressed, blanks the screen, stops DMA and HDMA, empties the DMA
+        ; queue and jumps to rlSoftReset.
 
         php
         lda wJoy1Input

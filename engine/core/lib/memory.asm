@@ -1,4 +1,7 @@
-; Block memory copies with MVN/MVP.
+; Block copies with MVN/MVP: the instructions take their banks as operands, so
+; the copy runs from a four-byte stub in RAM (rsBlockCopyMVNRAM, rsBlockCopyMVPRAM)
+; that each call rewrites. Also calling a routine through a table of long pointers
+; (rlCallIndirectRoutineFromTable).
 
     .section BlockCopySection
 
@@ -90,43 +93,6 @@
  
         .databank 0
 
-      rlSetMainLoopPointer ; 80/A9D4
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Set wMainLoopPointer to A, or save to wR26 and clear wEventEngineFlags bit $0010
-
-        phb
-        php
-        phk
-        plb
-        pha
-
-        lda wEventEngineFlags,b
-        bit #$0010
-        bne +
-
-        pla
-        sta wMainLoopPointer
-        bra ++
-
-        +
-        pla
-        sta wR26
-        lda #$0010
-        trb wEventEngineFlags,b
-
-        +
-        plp
-        plb
-        rtl
-
-        .databank 0
-
-        ; 80/A9F2
-
     .endsection BlockCopySection
 
 
@@ -142,7 +108,9 @@
         .autsiz
         .databank ?
 
-        ; Copies MVN and MVP RAM stubs into rsBlockCopyMVNRAM and rsBlockCopyMVPRAM
+        ; Copies the MVN and MVP stubs into RAM (rsBlockCopyMVNRAM, rsBlockCopyMVPRAM). It
+        ; copies five bytes for MVP, the fifth from the code after the template; the block
+        ; copies rewrite the stubs' opcode, banks and return each time anyway.
 
         phb
         php

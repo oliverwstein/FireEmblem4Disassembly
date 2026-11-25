@@ -2001,7 +2001,7 @@
         lda #<>aMapBattleAttackerSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta aMapAction.wMapBattleAttackerSpriteSlot
@@ -2011,7 +2011,7 @@
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda aMapAction.wAttackerAllegiance
         inc a
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda aMapAction.wSideTallSprite
@@ -2019,7 +2019,7 @@
         lda wMapBattleAttackerBallista
         bne _8AE1
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
 
         _8AE1
         lda aMapAction.wSideTallSprite
@@ -2038,15 +2038,15 @@
         lda #<>aMapBattleAttackerAuxSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta aMapAction.wMapBattleAttackerAuxSpriteSlot
         lda #$0020
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda aMapAction.wAttackerAllegiance
         inc a
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
         sta aActiveSpriteSystem.aUnknown001320,b,x
 
@@ -2144,19 +2144,19 @@
         lda #<>aMapBattleDefenderSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta aMapAction.wMapBattleDefenderSpriteSlot
         lda #$0008
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda aMapAction.wSide
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda aMapAction.wSideTallSprite
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda aMapAction.wDefenderAllegiance
         inc a
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda wMapBattleDefenderBallista
@@ -2166,7 +2166,7 @@
 
         _8C28
         lda #$0020
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
 
         _8C2E
         lda aMapAction.wSideTallSprite
@@ -2185,15 +2185,15 @@
         lda #<>aMapBattleDefenderAuxSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta aMapAction.wMapBattleDefenderAuxSpriteSlot
         lda #$0040
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         lda aMapAction.wDefenderAllegiance
         inc a
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
         sta aActiveSpriteSystem.aUnknown001320,b,x
 
@@ -2768,9 +2768,9 @@
 
         _900B
         lda #(`rlPushToOAMBuffer)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBuffer
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         lda wMapBattleSavedSpriteEngineFlag
         sta aActiveSpriteSystem,b
         jsl rlDisableOAMScanlineFlicker
@@ -3018,13 +3018,13 @@
         lda aMapAction.wMapBattleAttackerSpriteSlot,x
         tax
         lda #$0005
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         plx
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         bmi _918F
         tax
         lda #$0005
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         clc
         bra _918F
 
@@ -4549,9 +4549,9 @@
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
         lda #(`rlPushToOAMBuffer)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBuffer
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         rtl
 
         .databank 0
@@ -4656,44 +4656,44 @@
         sta wMapBattleDefeatBlinkStep
         lda wMapBattleDefeatedSprite
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         eor #$1000
-        sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         eor #$1000
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda wMapBattleDefeatedAuxSprite
         tax
         cpx #$FFFF
         beq _A082
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         eor #$1000
-        sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         eor #$1000
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         bra _A082
 
 
         _A033
         lda wMapBattleDefeatedSprite
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         ora #$1000
-        sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         ora #$1000
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda wMapBattleDefeatedAuxSprite
         cmp #$FFFF
         beq _A066
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         ora #$1000
-        sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         ora #$1000
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
 
         _A066
         plx
@@ -5366,11 +5366,11 @@
         lda wBallistaBoltYFraction
         sta aActiveSpriteSystem.aUnknown001220,b,x
         lda wBallistaBoltX
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda wBallistaBoltY
         sec
         sbc wBallistaBoltHeight
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         lda wBallistaBoltSide
         eor #$0001
         asl a
@@ -5532,7 +5532,7 @@
         _A4D5
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldy aActiveSpriteSystem.wOffset,b
         lda $7F57EA
         tax
@@ -5544,13 +5544,13 @@
         tax
         lda aBallistaBoltTileBases,x
         tyx
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
         phx
         ldx wR0,b
         lda aMapAction.wAttackerAllegiance,x
         plx
         inc a
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda wBallistaBoltSide
         sta aActiveSpriteSystem.aUnknown001320,b,x
         plx
@@ -5654,7 +5654,7 @@
 
         ; Carry set when the active sprite X is less than wR2 pixels from (wR0, wR1) on both axes.
 
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         sec
         sbc wR0
         bpl _A572
@@ -5664,7 +5664,7 @@
         _A572
         cmp wR2
         bpl _A588
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         sec
         sbc wR1
         bpl _A582
@@ -6415,14 +6415,14 @@
         lda aMapAction.wMapBattleAttackerSpriteSlot,x
         tax
         lda #$0005
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         ldx wR0
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         cmp #$FFFF
         beq _AA16
         tax
         lda #$0005
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
 
         _AA16
         lda wMapBattleSkillEffect
@@ -6812,17 +6812,17 @@
         ldx wR1
         lda aMapAction.wMapBattleAttackerSpriteSlot,x
         tax
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         clc
         adc wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         ldx wR1
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         tax
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         clc
         adc wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
 
         _AE20
         plx
@@ -6892,19 +6892,19 @@
         phx
         lda aMapAction.wMapBattleAttackerSpriteSlot,x
         tax
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         sec
         sbc wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         plx
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         cmp #$FFFF
         beq _AE95
         tax
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         sec
         sbc wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
 
         _AE95
         lda $7F57EC
@@ -6977,19 +6977,19 @@
         phx
         lda aMapAction.wMapBattleAttackerSpriteSlot,x
         tax
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         clc
         adc wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
         plx
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         cmp #$FFFF
         beq _AF0A
         tax
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         clc
         adc wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aYPosition,b,x
 
         _AF0A
         lda $7F57EC
@@ -7345,16 +7345,16 @@
         phx
         lda aMapAction.wMapBattleDefenderSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         ora #$8000
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
         lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp #$FFFF
         beq _B0B0
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         ora #$8000
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aXPosition,b,x
 
         _B0B0
         plx
@@ -7397,7 +7397,7 @@
         tax
         lda aMapAction.wMapBattleAttackerSpriteSlot,x
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         pha
         lda wMapBattleDefeatedSide
         jsl rlGetDefeatedUnitVoice
@@ -7623,13 +7623,13 @@
         _B1C8
         lda aMapAction.wMapBattleDefenderSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
         lda $7F57EA
         bne _B1E0
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
 
         _B1E0
@@ -7744,13 +7744,13 @@
         _B28B
         lda aMapAction.wMapBattleDefenderSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
         lda $7F57EA
         bne _B2A3
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
 
         _B2A3
@@ -7802,7 +7802,7 @@
         _B357
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsl rlGetSoundPanFromXPixel
         ora wR0
         jsl rlPlaySoundEffect2
@@ -7829,7 +7829,7 @@
         cmp #$FFFF
         beq _B382
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
         lda $7F57EA
         bne _B390
@@ -7839,7 +7839,7 @@
         cmp #$FFFF
         beq _B39C
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
 
         _B390
@@ -7870,13 +7870,13 @@
         phx
         lda aMapAction.wMapBattleDefenderSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
         lda $7F57EA
         beq _B3B9
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         tay
 
         _B3B9
@@ -7913,7 +7913,7 @@
         phx
         lda aMapAction.wMapBattleDefenderSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsl rlGetSoundPanFromXPixel
         ora #$002F
         jsl rlPlaySoundEffect2
@@ -8056,7 +8056,7 @@
         sta wR0
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsl rlGetSoundPanFromXPixel
         ora wR0
         jsl rlPlaySoundEffect2
@@ -8090,7 +8090,7 @@
         _B461
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         jsl rlGetSoundPanFromXPixel
         ora wR0
         jsl rlPlaySoundEffect2
@@ -8989,9 +8989,9 @@
         jsl rlInitMapBattleCombatants
         jsl rlQueueMapBattleSpriteGraphics
         lda #(`rlPushToOAMBufferDualTileBase)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBufferDualTileBase
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         lda #<>rlMapBattleWaitDecompression
         sta aProcSystem.aHeaderOnCycle,b,x
         plx
@@ -9815,11 +9815,11 @@
         PROC_JUMP_IF_BITS_UNSET _CC6C, $0002
         PROC_CALL rlMapBattleStartSkillEffect
         PROC_JUMP_IF_BITS_UNSET _CBA7, $0002
-        PROC_SET_UNK_TIMER 96
+        PROC_SET_LOOP_COUNTER 96
         _CB8F
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
-        PROC_JUMP_WHILE_UNK_TIMER _CB8F
+        PROC_JUMP_WHILE_LOOP_COUNTER _CB8F
         PROC_CALL rlMapBattleEndSkillEffect
         PROC_JUMP_IF_BITS_SET _CB70, $0002
         PROC_YIELD 16
@@ -9862,11 +9862,11 @@
         PROC_YIELD 1
         PROC_CALL rlMapBattleRoundStep
         PROC_JUMP_IF_BITS_UNSET _CC20, $0002
-        PROC_SET_UNK_TIMER 16
+        PROC_SET_LOOP_COUNTER 16
         _CC31
         PROC_YIELD 1
         PROC_CALL rlMapBattleRoundStep
-        PROC_JUMP_WHILE_UNK_TIMER _CC31
+        PROC_JUMP_WHILE_LOOP_COUNTER _CC31
         PROC_CALL rlMapBattleStartWarpArrival
         PROC_JUMP_IF_BITS_UNSET _CC54, $0002
         _CC47
@@ -10406,7 +10406,7 @@
         lda #$DAE0
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F57EE
@@ -10415,10 +10415,10 @@
         lda aMapAction.wSide
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         jsl rlMapBattlePlaySound2E
         plx
         ply
@@ -10915,9 +10915,9 @@
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         lda #(`rlPushToOAMBufferDualTileBase)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBufferDualTileBase
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         rtl
 
         .databank 0
@@ -11413,9 +11413,9 @@
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
         lda #(`rlPushToOAMBuffer)<<8
-        sta $15E5,b
+        sta lActiveSpriteRenderer+1,b
         lda #<>rlPushToOAMBuffer
-        sta $15E4,b
+        sta lActiveSpriteRenderer,b
         rtl
 
         .databank 0
@@ -11498,7 +11498,7 @@
         lda #<>aScriptedCritSiblingSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritSprite
@@ -11506,10 +11506,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -11541,7 +11541,7 @@
         lda #<>aScriptedCritSiblingSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritPartnerSprite
@@ -11549,10 +11549,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -11631,11 +11631,11 @@
 
       aProcScriptedCritLoverEffectCode ; 9E/E3E8
 
-        PROC_SET_UNK_TIMER 30
+        PROC_SET_LOOP_COUNTER 30
         _E3EC
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
-        PROC_JUMP_WHILE_UNK_TIMER _E3EC
+        PROC_JUMP_WHILE_LOOP_COUNTER _E3EC
         PROC_CALL rlScriptedCritLoverStartFlight
         _E3FC
         PROC_YIELD 1
@@ -11676,7 +11676,7 @@
         lda #<>aScriptedCritLoverSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritSprite
@@ -11684,10 +11684,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -11719,7 +11719,7 @@
         lda #<>aScriptedCritLoverSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritPartnerSprite
@@ -11727,10 +11727,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -11773,9 +11773,9 @@
         jsl rlMoveActiveSpriteByVelocity
         lda wScriptedCritSprite
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         sta wR0
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         lda #$0001
         sta wR2
@@ -11983,11 +11983,11 @@
 
       aProcScriptedCritTriangleEffectCode ; 9E/E5F9
 
-        PROC_SET_UNK_TIMER 30
+        PROC_SET_LOOP_COUNTER 30
         _E5FD
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
-        PROC_JUMP_WHILE_UNK_TIMER _E5FD
+        PROC_JUMP_WHILE_LOOP_COUNTER _E5FD
         PROC_CALL rlScriptedCritTriangleStartFlight
         _E60D
         PROC_YIELD 1
@@ -12026,7 +12026,7 @@
         lda #<>aScriptedCritTriangleSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritSprite
@@ -12034,10 +12034,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -12069,7 +12069,7 @@
         lda #<>aScriptedCritTriangleSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritPartnerSprite
@@ -12077,10 +12077,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -12112,7 +12112,7 @@
         lda #<>aScriptedCritTriangleSpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritPartner2Sprite
@@ -12120,10 +12120,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -12195,9 +12195,9 @@
         jsl rlMoveActiveSpriteByVelocity
         lda wScriptedCritSprite
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         sta wR0
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         lda #$0001
         sta wR2
@@ -12209,9 +12209,9 @@
         jsl rlMoveActiveSpriteByVelocity
         lda wScriptedCritSprite
         tax
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aXPosition,b,x
         sta wR0
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         lda #$0001
         sta wR2
@@ -12343,11 +12343,11 @@
 
       aProcScriptedCritType4EffectCode ; 9E/E85D
 
-        PROC_SET_UNK_TIMER 30
+        PROC_SET_LOOP_COUNTER 30
         _E861
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
-        PROC_JUMP_WHILE_UNK_TIMER _E861
+        PROC_JUMP_WHILE_LOOP_COUNTER _E861
         PROC_CALL rlScriptedCritTriangleStartFlight
         _E871
         PROC_YIELD 1
@@ -12386,7 +12386,7 @@
         lda #<>aScriptedCritType4SpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritSprite
@@ -12394,10 +12394,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -12427,7 +12427,7 @@
         lda #<>aScriptedCritType4SpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritPartnerSprite
@@ -12435,10 +12435,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl
@@ -12468,7 +12468,7 @@
         lda #<>aScriptedCritType4SpriteInfo
         ldx wR0
         ldy wR1
-        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
         sta wScriptedCritPartner2Sprite
@@ -12476,10 +12476,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001260,b,x
-        sta aActiveSpriteSystem.aUnknown001280,b,x
+        sta aActiveSpriteSystem.aTileBase,b,x
+        sta aActiveSpriteSystem.aTileBaseHigh,b,x
         plx
         ply
         rtl

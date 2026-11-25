@@ -1119,7 +1119,7 @@
         stz $2111,b
         lda $7FE4C5
         and #$FF
-        sta $16DA,b,x
+        sta aIRQSystem.aVTime,b,x
         lda #$11
         sta $2121,b
         lda aUnknownE000B0
@@ -1201,7 +1201,7 @@
         stz $2111,b
         lda $7FE4CB
         and #$FF
-        sta $16DA,b,x
+        sta aIRQSystem.aVTime,b,x
         lda #$11
         sta $2121,b
         lda $0122,b

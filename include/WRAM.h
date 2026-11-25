@@ -222,9 +222,15 @@
     wDMAArrayPosition .word ?           ; $000343
     bDMAArrayFlag .byte ?               ; $000345
     aDMAArray .fill $100                ; $000346
+      ; The DMA queue: entries of a type byte and its fields (1 CGRAM, 7 bytes; 2 to
+      ; VRAM and 3 from VRAM, 9 bytes; 4 any register, 11 bytes), ended by a 0.
+      ; rlProcessDMAStructArray sends it in VBlank on channel 1; nothing checks for
+      ; overflow when adding, and the sender hangs if it reads past $100 bytes.
     wDecompressionArrayPosition .word ? ; $000446
     bDecompressionArrayFlag .byte ?     ; $000448
     aDecompressionArray .fill $20       ; $000449
+      ; The decompression queue: 6-byte entries (source, destination), ended by a 0
+      ; source. Five fit; the fifth's end marker reaches bFrameCounterByOnes.
     bFrameCounterByOnes .byte ?         ; $000469
     bFrameCounterByThrees .byte ?       ; $00046A
     aRNArray .fill 55                   ; $00046B
@@ -449,7 +455,7 @@
 
     lRAMAreaPointer .long ?             ; $000565
     lRAMAreaPointerBuffer .long ?       ; $000568
-    wUnknown00056B .word ?              ; $00056B
+    wRAMAreaHandlesPerBlock .word ?              ; $00056B
     wLoadedUnitCount .word ?            ; $00056D
     wSelectedUnitDataRAMPointer .word ? ; $00056F
     lRoutineVariable .long ?            ; $000571
@@ -540,6 +546,9 @@
     lTaskJumpPointer .long ?   ; $000306
       ; Indirect target jumped to by rlRunVBlankHookInit / rlRunVBlankHookCycle.
     aTaskTable .block          ; $000309 ($30 bytes: 16 x 3-byte long pointers)
+      ; The per-frame engines' routines (rlRegisterVBlankHook), run every frame by
+      ; rlRunVBlankHooks from slot 15 down. Boot registers five: procs, active
+      ; sprites, HDMA, the IRQ engine (a routine that does nothing) and events.
       lEntry0 .long ?          ; $000309
       .fill 45                 ; $00030C-$000338
     .endblock
@@ -1375,6 +1384,14 @@
     lChapterEventRAMDataEntryPointer .long ?      ; $000EC5
 
     aProcSystem .block                            ; $000EC8
+      ; The proc engine (engine/core/proc.asm): 16 slots, each field an array of 16
+      ; words indexed by slot * 2 (wOffset while a proc runs). wFlag bit 15 is set
+      ; while rlProcEngineMainProcLoop steps the procs. lPointer is scratch for jumps.
+      ; wInput0-wInput3 pass arguments to a proc's init routine.
+      ; aHeaderBitfield: $0800 on-cycle changed by PROC_SET_ONCYCLE, $1000 skip the
+      ; proc (only rsPauseMapProcsAndHDMAUnused sets it, and nothing calls that),
+      ; $2000 ended, $4000 created this frame; the low bits are the proc's own, set by
+      ; its routines and tested by PROC_JUMP_IF_BITS_*.
       wFlag .word ?                               ; $000EC8
       wOffset .word ?                             ; $000ECA
       lPointer .long ?                            ; $000ECC
@@ -1389,7 +1406,7 @@
       aHeaderOnCycle .fill (size(word) * 16)      ; $000F57
       aHeaderCodeOffset .fill (size(word) * 16)   ; $000F77
       aHeaderSleepTimer .fill (size(word) * 16)   ; $000F97
-      aHeaderUnknownTimer .fill (size(word) * 16) ; $000FB7
+      aHeaderLoopCounter .fill (size(word) * 16) ; $000FB7 ; PROC_SET_LOOP_COUNTER, PROC_JUMP_WHILE_LOOP_COUNTER
       aBody0 .fill (size(word) * 16)              ; $000FD7
       aBody1 .fill (size(word) * 16)              ; $000FF7
       aBody2 .fill (size(word) * 16)              ; $001017
@@ -1398,28 +1415,33 @@
       aBody5 .fill (size(word) * 16)              ; $001077
       aBody6 .fill (size(word) * 16)              ; $001097
       aBody7 .fill (size(word) * 16)              ; $0010B7
-      aUnknownBitfield .fill (size(word) * 16)    ; $0010D7
+      aLastFrameBitfield .fill (size(word) * 16)    ; $0010D7 ; each slot's bitfield as the last frame ended (rlProcEngineCheckProcEnded)
     .endblock
 
     aActiveSpriteSystem .block
+      ; The active sprite engine (engine/core/display/active_sprites.asm): 16 slots,
+      ; each field an array of 16 words indexed by slot * 2. wFlag: $8000 the engine
+      ; runs, $4000 draw only sprites whose X and Y are 0-255, $2000 chooses between
+      ; two flushes of the render queue that do the same thing, $0001 skip the
+      ; scripts (nothing sets it).
       wFlag .word ?                           ; $0010F7
       wOffset .word ?                         ; $0010F9
       .word ?                                 ; $0010FB
       lPointer .long ?                        ; $0010FD
       aTypeOffset     .fill (size(word) * 16) ; $001100
       aBanks          .fill (size(word) * 16) ; $001120
-      aUpdater        .fill (size(word) * 16) ; $001140
+      aLoopCounter    .fill (size(word) * 16) ; $001140 ; counted down by command $02; no command in the table sets it
       aOnCycle        .fill (size(word) * 16) ; $001160
       aFrameTimer     .fill (size(word) * 16) ; $001180
       aCodeOffset     .fill (size(word) * 16) ; $0011A0
-      aFrameOffset    .fill (size(word) * 16) ; $0011C0
+      aFrameOffset    .fill (size(word) * 16) ; $0011C0 ; the sprite array drawn each frame (structSpriteArray), in the sprite's bank
       aUnknown0011E0  .fill (size(word) * 16) ; $0011E0
-      aUnknown001200  .fill (size(word) * 16) ; $001200
+      aXPosition      .fill (size(word) * 16) ; $001200 ; screen X; X at creation
       aUnknown001220  .fill (size(word) * 16) ; $001220
-      aUnknown001240  .fill (size(word) * 16) ; $001240
-      aUnknown001260  .fill (size(word) * 16) ; $001260
-      aUnknown001280  .fill (size(word) * 16) ; $001280
-      aUnknown0012A0  .fill (size(word) * 16) ; $0012A0
+      aYPosition      .fill (size(word) * 16) ; $001240 ; screen Y; Y at creation
+      aTileBase       .fill (size(word) * 16) ; $001260 ; added to each entry's tile (wR4 for the renderer)
+      aTileBaseHigh   .fill (size(word) * 16) ; $001280 ; tile base for tiles $40 and up with rlPushToOAMBufferDualTileBase (wR6)
+      aPalette        .fill (size(word) * 16) ; $0012A0 ; OAM palette ORed into each entry (<< 9, wR5)
       aUnknown0012C0  .fill (size(word) * 16) ; $0012C0 ; holds mover index
       aUnknown0012E0  .fill (size(word) * 16) ; $0012E0
       aUnknown001300  .fill (size(word) * 16) ; $001300 ; holds movement direction
@@ -1433,7 +1455,17 @@
 
     .bend
 
-    ; $001400
+    aActiveSpriteOAMQueue .fill (40 * 12) ; $001400
+      ; A deferred render queue: 12-byte entries (sprite array, X, Y, tile base,
+      ; attributes, bank) flushed through rlPushToOAMBuffer after the sprites are
+      ; drawn. Only rlQueueActiveSpriteOAM fills it, and nothing calls that.
+    wActiveSpriteOAMQueuePosition .word ? ; $0015E0
+    wActiveSpriteOAMQueueCount .word ?    ; $0015E2
+    lActiveSpriteRenderer .long ?         ; $0015E4
+      ; The routine that draws each active sprite (Y = its sprite array, wR0/wR1 its
+      ; position, wR4/wR6 tile bases, wR5 its palette). rlActiveSpriteEngineReset puts
+      ; rlPushToOAMBuffer here; the map battle, map actions and cutscenes install
+      ; rlPushToOAMBufferDualTileBase.
 
   .endvirtual
 
@@ -1445,6 +1477,11 @@
   .virtual $0015E7
 
     aHDMASystem .block                   ; $0015E7
+      ; The HDMA engine (engine/core/display/hdma.asm): 8 entries, entry n on DMA
+      ; channel n, each field an array of 8 words indexed by entry * 2. aOffset is
+      ; the table the channel reads (HDMA_YIELD sets it); aTimer the loop counter.
+      ; aBitfield: $0800 on-cycle changed, $1000 skip (only the unused
+      ; rsPauseMapProcsAndHDMAUnused sets it), $2000 ended; low bits the entry's own.
       wFlag .word ?                      ; $0015E7
       wOffset .word ?                    ; $0015E9
       lPointer .long ?                   ; $0015EB
@@ -1465,6 +1502,25 @@
         bDMAPx .byte ?                   ; $00167F
         bIndirectBank .byte ?            ; $001680
       .endrept
+    .bend
+
+    aIRQSystem .block                    ; $00168F
+      ; The IRQ engine (engine/core/display/irq.asm). Seven entries, kept sorted by
+      ; their V time with the lowest scanline at the highest index; the eighth word
+      ; of each array is the scratch space rsIRQEngineSwapEntries swaps through.
+      wFlag .word ?                      ; $00168F ; $8000: the engine is off (rlDisableIRQEngine)
+      wOffset .word ?                    ; $001691 ; the entry whose IRQ comes next, * 2
+      wSortedCount .word ?               ; $001693 ; wCount when the entries were last sorted
+      wCount .word ?                     ; $001695 ; live entries, 0-7
+      lRoutine .long ?                   ; $001697 ; the routine the next IRQ calls
+      aTypeOffset .fill (size(word) * 8) ; $00169A ; the entry's definition; 0 = free
+      aTypeBank .fill (size(word) * 8)   ; $0016AA ; its bank: the routine's and script's
+      aBitfield .fill (size(word) * 8)   ; $0016BA ; tested by the script's bit jumps; nothing sets it
+      aHTime .fill (size(word) * 8)      ; $0016CA ; HTIME for the IRQ
+      aVTime .fill (size(word) * 8)      ; $0016DA ; VTIME for the IRQ; the script can change it
+      aRoutine .fill (size(word) * 8)    ; $0016EA ; called at the IRQ
+      aCodeOffset .fill (size(word) * 8) ; $0016FA
+      aSleepTimer .fill (size(word) * 8) ; $00170A
     .bend
 
   .endvirtual
