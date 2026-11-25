@@ -1,6 +1,6 @@
 # Full-screen menus
 
-Three screens take over the whole display from the map or the castle: the **status screen** (one unit's full record), the **revive screen** (the revive staff's list of dead units) and the **options menu**. Each has a bank `$80` opener, which resets the screen and installs its game state routines, and its running code in bank `$89`. They share the menu VBlank routine (`rsRunMenuScreenVBlank`) with the unit, item, skill and data windows. The map's own menus are on [map_menu.md](map_menu.md). Per-routine details: [routines/menus.md](routines/menus.md).
+Full-screen menus take over the whole display from the map or the castle: the **status screen** (one unit's full record), the **revive screen** (the revive staff's list of dead units), the **options menu**, the map menu's four **overview windows** (unit, item, skill, data) and the **game over** screen. Each has a bank `$80` opener, which resets the screen and installs its game state routines, and its running code in bank `$89` or `$8B`. All of them share the menu VBlank routine (`rsRunMenuScreenVBlank`). The map's own menus are on [map_menu.md](map_menu.md). Per-routine details: [routines/menus.md](routines/menus.md).
 
 ## Files
 
@@ -11,6 +11,11 @@ Three screens take over the whole display from the map or the castle: the **stat
 | [options_menu.asm](../../engine/menus/options_menu.asm) | the opener `rsOpenOptionsMenu`, game state routines `$29`-`$2B`, the nine options, their texts and HDMA |
 | [window_graphics.asm](../../engine/menus/window_graphics.asm) | `rlLoadWindowGraphics` (window frames and palette, for the map, castle, dialogue and events) and the dialogue box graphics |
 | [menu_text.asm](../../engine/menus/menu_text.asm) | menu text drawing, numbers, and `rlDrawBG3TileRun` (a run of two-row tiles), which all these screens use |
+| [unit_window.asm](../../engine/menus/unit_window.asm) | the unit window (map menu ユニット): `rsUnitWindowOpen`, game state routines `$20`-`$22`, six pages, sorting, swapping units; banks `$80` and `$8B` |
+| [item_window.asm](../../engine/menus/item_window.asm) | the item window (アイテム): `rsItemWindowOpen`, game state routines `$23`-`$25`, the item list and its three sort orders; banks `$80` and `$89` |
+| [skill_window.asm](../../engine/menus/skill_window.asm) | the skill window (スキル): `rsSkillWindowOpen`, game state routines `$2C`-`$2E`, 18 skills and their holders; banks `$80` and `$8B` |
+| [data_window.asm](../../engine/menus/data_window.asm) | the data window (データ): `rsDataWindowOpen`, game state routines `$2F`-`$31`, the chapter's goal and the armies; banks `$80` and `$8B` |
+| [game_over.asm](../../engine/menus/game_over.asm) | the game over screen and `procGameOver` |
 
 Data: constants in [include/Menus.h](../../include/Menus.h) (`STATUS_SCREEN_STEP_*`, `STATUS_SCREEN_REOPEN_*`, `REVIVE_SCREEN_*`, `OPTIONS_MENU_STEP_*`, `OPTION_*`); RAM in [include/WRAM.h](../../include/WRAM.h): the status screen's block at `$7F8183` (`wStatusScreen*`, `aStatusScreen*`) and its buffers at `$7FAF50`; `wUnitWindowCaller` at `$7F82C5`; the options block at `$7F8400` (`wOptionsMenuCursor`, `aOptionsMenuValues`, `aOptionsMenuOpeningValues`); the revive screen's `wReviveScreenDrawMode` (`$7F8403`), `wReviveScreenStaffUser` and `wReviveScreenConfirmCursor` (`$7FB016`). Other screens reuse all of this, so the names are only written in these files (`SCOPED` in [tools/name_ram.py](../../tools/name_ram.py)). The revive screen keeps its list in the unit window's variables (`aUnitWindowDeploymentSlots`, `wUnitWindowCurrentHighlightLine`).
 
@@ -94,12 +99,32 @@ In `REVIVE_SCREEN_STEP_CHOOSE_UNIT` the arrows move the cursor, and the unit und
 
 In `OPTIONS_MENU_STEP_CHOOSE`, Up and Down move between options. The cursor is drawn 10 pixels on for one frame first (`wOptionsMenuCursorMove`). Left/L and Right/R change the value, within `aOptionsMenuValueCounts`, and Y puts back the opening values. The description box at the top (`rlOptionsMenuDrawDescription`) and the line of choices with the chosen one highlighted (`rlOptionsMenuDrawChoices`) follow the cursor. A or B writes the values into the settings (`rlOptionsMenuApplyValues`) and leaves (`OPTIONS_MENU_STEP_LEAVE`) to the map, or to the castle if the menu was opened there.
 
+## The overview windows
+
+The map menu's four overview commands ([map_menu.md](map_menu.md)) open full-screen windows built the same way as the screens above: a bank `$80` opener installed as the main loop routine, three game state routines (render every frame, show once, run a step every frame), `rsRunMenuScreenVBlank`, and RAM that overlaps the status screen's (`$7F8183` on). Each closes to the map (`rsReturnToMapMainLoop`), or to the castle screen when bit 5 of `wChapterFlags` is set.
+
+**Unit window.** Lists the player's units (`rsUnitWindowGetUnits`, `aUnitWindowDeploymentSlots`) on six pages, `wGameStateStep` 0-5, drawn by `aUnitWindowPageDrawers`: 0 class, level, experience and HP; 1 the equipped weapon and its might, hit and avoid; 2 the seven stats; 3 movement, gold, arena level and talk target; 4 the ten weapon ranks (as sprites, `rsUnitWindowRenderWeaponRankIcons`); 5 the skill icons. Left and right turn pages (`aUnitWindowPageTurnInputHandlers`). Each row shows the unit's map sprite and a marker for a unit ready to promote. HDMA tables scroll BG1, BG2 and BG3 and change the colour math by line.
+
+*Sorting.* Up on the first row enters sort selection (`wUnitWindowSortTypeFlag`, `rsUnitWindowHandleSortSelection`), where left and right pick a column; A sorts descending, X ascending (`rsUnitWindowUpdateSort`, the column's type from `aUnitWindowPageSortTypePointers`). `rlUnitWindowGetSortScores` fills `aUnitWindowSortScores` through `aUnitWindowSortScoreGetters` (one per `wUnitWindowSortType`, 0-37: join order, class, level, experience, HP, maximum HP, weapon, might, hit, avoid, the seven stats, gold, movement, the ten weapon ranks, skill count, arena level, talk target; `$26` is the saved order). `rlUnitWindowSetSortDescending`/`Ascending` sort the rows: for each place, every later row that scores higher (lower) is moved up into it and the rows between shift down (`rsUnitWindowSwapSortSlots`, a move despite its name). Equal scores never pass each other, so the sort is stable; the level sort uses that, sorting by experience first and then by level (`rsUnitWindowGetLevelSortScores`).
+
+*Swapping.* Y starts a swap (`rlUnitWindowStartUnitSwap`); A or Y on a second row moves it (`rsUnitWindowSwapUnits`) and renumbers `aUnitJoinOrder` from the new order, so the swap changes the join order every other list uses. The page, sort and order are kept between visits (`rlUnitWindowSaveListOrder`) and cleared by `rlResetUnitWindowSettings` (a new game, units reset for a chapter) and `rlUnitWindowClearSavedListOrder` (a load).
+
+*A on a row.* A unit on the map becomes the active unit and the window closes to the map with the cursor on it (`rlUnitWindowCloseToMap`). Any other unit opens its status screen (`rlUnitWindowOpenSelectedUnitScreen`), which returns to `rsUnitWindowOpen` and the same place.
+
+**Item window.** `rsItemWindowBuildItemList` lists every item held by a living, non-captive unit of faction slot 0 (`aItemWindowList`; storage is not included), with the selected item's stats, weapon rank, description and, for a weapon or attack tome, its weapon triangle (`aItemWindowWeaponTriangleTypes`, `aItemWindowMagicTriangleTypes`). Y or right opens the sort panel (step 1). Its three rows are the three orders starting from the current one (`aItemWindowNextSortModes`); A sorts by the row's order (`rlItemWindowSort`: 0 owner, by character ID; 1 type, by `aItemTypeSortRanks`; 2 name, by `aItemWindowNameSortScores`, apparently kana order). `rlItemWindowSortList` moves each higher-scoring entry up and shifts the rest (`rsItemWindowMoveListEntry`), so it is stable and the previous order decides ties. `wItemWindowSortMode` is kept between visits. A makes the owner the active unit and closes to the map with the cursor on it, or, for a unit off the map, fades to its castle (step 4).
+
+**Skill window.** Lists 18 skills (the IDs at `$8BDFBF`) with each one's icon, name, description and the player's living, non-captive units that have it (`rsSkillWindowGetSkillHolders`, 32 words per skill in `aSkillWindowSkillHolders`). It counts personal and class skills; with Select held as the window opens, skills from items as well. The first 12 holders show; arrows mark more, and the holder list scrolls.
+
+**Data window.** The chapter title, its goal (`aDataWindowChapterGoals`, by chapter), the turn, and a list of the armies (`rsDataWindowGetArmies`, faction slots 0-6 with a name and units or a castle) with each one's banner, leader, relation to the player (`rlGetFactionRelation`, coloured by `aDataWindowRelationPaletteOffsets`) and units alive. X (step 1) shows the selected army's details: name, home castle, and its leader's name, level, HP, attack, 48x64 portrait and animated map sprite. The leaders' portraits are decompressed to VRAM `$4400` on, `$400` words apart, when the window opens.
+
+**Game over.** `rsSetupGameOverScreen` loads the screen's tiles and two tilemaps and creates `procGameOver`, which loads its palettes and plays music `$72`. From frame `$84` it shakes BG2 (`rsGameOverShake`, `aGameOverShakeOffsets`); Start, once faded in, or 1,020 frames, soft-resets.
+
 ## Depends on
 
 - **Units** ([units.md](routines/units.md)): every getter the status screen draws; holy blood, weapon ranks, promotion, the skill list (`rlCollectSelectedUnitIconSkills`), love and talk partners, generation IDs.
 - **Items** ([items.md](routines/items.md)): item names, descriptions, stats, ranks, durability, equippability.
 - **Battle** ([battle.md](routines/battle.md)): battle might, hit and avoid; drop items; the action struct for the revive staff.
-- **Unit and item windows**: the revive screen's list variables; the windows open the status screen and come back.
+- **Unit and item windows**: the revive screen's list variables; the unit window opens the status screen and comes back.
 - **Castle** ([castle.md](castle.md)): opens the status and options screens and is returned to; reads the condition names.
 - **Core** ([core.md](core.md)): game states, the menu VBlank routine, procs and fades, HDMA, DMA, decompression, sprites.
 

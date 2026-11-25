@@ -2,7 +2,7 @@
 
 Current state and next steps for the **writing**: the engine guide (`docs/guide/`) and the reference pages (`docs/reference/`). Read this first. The code phase (naming, carving, shiftability) is recorded in [HISTORY.md](HISTORY.md), whose first section says where it stopped; the roadmap is [PLAN.md](PLAN.md); tool usage is in [tools/README.md](tools/README.md). **Rewrite this file at the end of every session.**
 
-## Current state (2026-11-24)
+## Current state (2026-11-25)
 
 The build is byte-identical and checksums verify. Code changes made while writing must keep it so, and are committed separately from prose.
 
@@ -23,7 +23,8 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | IV | 14 [Armies with a mind](docs/guide/14-armies-with-a-mind.md) | draft, not yet reviewed |
 | V | 15 [Castles and towns](docs/guide/15-castles-and-towns.md), 16 [The arena](docs/guide/16-the-arena.md) | draft, not yet reviewed |
 | V | 17 [Love and lineage](docs/guide/17-love-and-lineage.md), 18 [Saving](docs/guide/18-saving.md), 19 [Between chapters](docs/guide/19-between-chapters.md), 20 [The opening](docs/guide/20-the-opening.md), 21 [Endings and scores](docs/guide/21-endings-and-scores.md) | draft, not yet reviewed |
-| VI–VII | 22–31 | not started; OUTLINE.md marks which have a reference page |
+| VI | 22 [A map bigger than the screen](docs/guide/22-a-map-bigger-than-the-screen.md), 23 [Two ways to show a fight](docs/guide/23-two-ways-to-show-a-fight.md), 24 [The battle scene](docs/guide/24-the-battle-scene.md), 25 [Full-screen windows and the status screen](docs/guide/25-full-screen-windows-and-the-status-screen.md) | rewritten 2026-11-25 from Gemini's drafts (a211ef4) after a review; not yet reviewed |
+| VII | 26–31 | not started; OUTLINE.md marks which have a reference page |
 
 **Reference pages** (`docs/reference/`): core, ai, arena, battle, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, rankings, save, title, units, worldmap. Missing: **sound** (lowest priority) and **debug**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
 
@@ -87,6 +88,9 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 
 | What was wrong | Where | Fixed in |
 |---|---|---|
+| Gemini's Part VI drafts: map battles said to change real HP (they drive HP windows only); `procMapBattle` round loop and the scripted-crit path misdrawn; map descriptors called 25 bytes (27) inside `aChapterMapPointers` (pointers to them); cursor kept in map pixels (screen pixels); tile animations on steps 0 and 1 of 16 (each of 8, one set per step); item window said to list storage; status screen menus' RAM all said to start at `$7F8183`; Chapter 25's "unit window" clashed with Chapter 10's | docs/guide/22-25 | rewrite 2026-11-25 |
+| The player cursor's margins given as X `$30`-`$C7`, Y `$28`-`$A7` (that box is `rlCheckPointInScreenMargins`, for events); the cursor keeps 48 pixels from every edge (X `$30`-`$C0`, Y `$30`-`$A0`), 16 at the map's edge | engine/map/camera.asm header, docs/reference/map.md | 2026-11-25 |
+| menus.md had nothing on the unit, item, skill and data windows or game over | docs/reference/menus.md | section added 2026-11-25 |
 | Love data said to belong only to generation 1 women; generation 2 daughters have it too | introduction, Part I opener | `9da974d` |
 | Inventories said to have 7 slots; there are 8, the eighth holding a new item until one is given up | introduction | `9da974d` |
 | Stale name `rsFillChildExtendedPersonalData`; Thief staff's 0 durability omitted | units.md, items.md | `9da974d` |

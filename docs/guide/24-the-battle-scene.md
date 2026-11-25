@@ -1,213 +1,281 @@
-# Chapter 24: The battle scene
+# Chapter 24: The Battle Scene
 
-When battle animations are enabled—or when a signature duel like Naga, Loptous, the Valkyrie Staff, an arena bout, or a class change requires full spectacle—the game leaves the chapter map behind and hands the entire SNES display to the battle scene. Two full-size combatants stand on terrain-matched parallax backgrounds with foreground foliage, spell polygons, palette animations, a dynamic camera, battle quotes, a bottom HUD with HP bars and combat stats, and an end-of-fight sequence for experience, level-ups, and item drops. All of it must fit inside 64 KB of VRAM and run at 60 frames per second.
+The battle scene is the full-screen view of a fight: two large combatants on a background drawn from their terrain, and a panel along the bottom with each side's name, weapon, HP, and battle stats. It plays the same record the map battle does ([Chapter 23](23-two-ways-to-show-a-fight.md)), the action structs and the round log, and like the map battle it changes nothing in the game's state. It takes over the whole display, as its own game state with its own VBlank routine, and returns to the map, the castle, or the arena when the fight is over.
 
-This chapter covers how the battle scene takes over the screen, how it structures its five-IRQ frame and `$0C00`-byte VBlank upload budget, how it loads backgrounds and places combatants, how it reads rounds and resolves strike physics, how the four animation slots and sequence programs drive motion, how the battle scene script bytecode and palette engine stage spells, and how the HUD, gauges, and 21 end steps close the fight.
+Its work is divided among several small engines, each running every frame:
 
-## Entry, transition, and screen architecture
+- **The round reader** takes the next entry of the round log when the stage is quiet, and turns it into an action for the attacker.
+- **Four animation slots**, one for each combatant and one for each combatant's projectile, play the actions. Each slot runs a queue of moves and a **sequence script** of poses and commands.
+- **The battle scene script**, a bytecode of its own, stages everything that isn't a combatant: spell graphics, background changes, window and scroll effects, screen shakes, sounds, and the HUD's gauges.
+- **Ten palette effect slots** animate colors.
+- **The end steps** run after the last round: experience, level up, messages, and the fade out.
 
-From the map, starting a battle scene stops the music and picks a transition by `wBattleType`. Normal battles (`0`) launch an indirect HDMA window wipe (`aBattleTransitionHDMAInfo`) that alternates between two 240-line `WH0` buffers each frame, closing the screen shut along the jagged contour in `aBattleTransitionShape` before installing the scene opener. Arena bouts (`1`), class changes (`2`), and castle battles (`3`) fade out through `procMainLoopChangeFade` instead, while the opening attract-mode demo enters the scene opener directly.
+The engines pass control back and forth through small flags. A sequence can start a script, a script can land a strike, and a combatant can freeze until the other side releases it.
 
-The opener (`rsOpenBattleScene` in [engine/battle_scene/battle_screen.asm](../../engine/battle_scene/battle_screen.asm)) resets the active sprite, HDMA, and IRQ engines, clears the four animation slots, installs five mid-frame IRQ splits, and sets game state `$18` (`rlBattleSceneSetup`) with the scene's own VBlank and main-loop handlers.
+This chapter covers getting into and out of the scene, how the screen is divided, setting the stage, the rounds and the animation slots, the scene script and the palette effects, the HUD, and the end steps.
 
-The five IRQs carve the 224-line frame into a letterboxed arena on top and a multi-band HUD on the bottom:
+## Getting in and out
 
-```
-  Scanline  0 +----------------------------------------------+  Forced blank (top letterbox)
-  IRQ 1 (14)  +----------------------------------------------+  rlBattleSceneHBlankApplyINIDISP
-              |  Arena: background, foreground, combatants   |  Camera pans BG2/BG3
-              |  (camera tracks midpoint or active striker)  |
-  IRQ 2 (126) +----------------------------------------------+  Switch to HUD mode; set $7FE1CF = 1
-              |  Upper HUD ($7F/C800, $7F/D0C0)              |  Independent HUD BG2/BG3 scroll
-  IRQ 3 (156) +----------------------------------------------+  Mid-HUD split (HUD modes 1 and 3)
-  IRQ 4 (161) +----------------------------------------------+  Lower-HUD split (HUD mode 1)
-  IRQ 5 (207) +----------------------------------------------+  rlBattleSceneHBlankForceBlank (bottom letterbox)
-```
+`rlStartBattleScene` ([engine/battle/battle.asm](../../engine/battle/battle.asm)) stops the music and leaves the map. An ordinary battle (`wBattleType` 0) closes the screen with a window wipe: an HDMA table rewrites a window's left edge on every scanline, and two 240-line buffers alternate each frame as the shape in `aBattleTransitionShape` closes in (`aBattleTransitionHDMAInfo`). Arena bouts, class changes, and fights on the castle screen fade out instead. The opening's demo goes straight in.
 
-Once setup blanks the screen once, game state `$19` executes the scene frame loop until the closing fade finishes (`bBattleSceneFade == $40` at brightness `0`):
+`rsOpenBattleScene` ([engine/battle_scene/battle_screen.asm](../../engine/battle_scene/battle_screen.asm)) resets the proc, sprite, HDMA, and interrupt engines, clears the animation slots, runs `rlBattleSceneInit`, sets up five mid-frame interrupts, and installs game state `$18` with the scene's VBlank and main loop routines. State `$18` blanks the screen once and moves to state `$19`, which runs the scene's frame until the fade out ends. Then it leaves according to the fight: to the map (in mode 3 after Julius's defeat, below), back to the castle after an arena fight, to the castle screen after a class change or a castle fight, or to game state 0.
 
-```rust
-fn battle_scene_frame() -> bool { // rsBattleSceneRunFrame
-    run_intro_steps();            // fade in, opening script, wait for BattleSceneRoundMayRun
-    update_brightness_and_fade();
+## The screen
 
-    if bBattleSceneRoundState & BattleSceneRoundMayRun != 0 {
-        rlBattleAnimationRunMoveQueue();
-        rlBattleSceneRunRounds(); // advance aBattleRoundsData when queues are idle
-    }
+### Layers
 
-    step_combatant_physics();     // X, gravity, jump, Y for slots $00/$43 and effects $86/$C9
-    rlBattleAnimationUpdateAll(); // sequence scripts and sprite drawing
-    rlRunBattleSceneScript();     // spell/camera/window bytecode
-    run_effects_and_camera();     // palette slots, camera tracking, HP bar drain (1 pt/frame)
+The scene uses background mode 1, three layers of tiles, with BG3 drawn above everything when its priority bit is set:
 
-    wait_for_vblank();            // polls $7FE1CF cleared by VBlank
-    build_hdma_tables();
-    check_arena_and_end_steps();  // B-retreat, arena next bout ($FEFF), or 21 end steps
-    fade_finished()
-}
-```
-
-### The VBlank upload queue
-
-Decompressing battle sheets, backgrounds, and spell frames produces more bytes than a single 2.3 ms VBlank can transfer. The scene therefore routes VRAM writes through a 16-slot queue (`aBattleSceneUploads`). Each VBlank, the uploader sends queued entries up to a hard cap of `$0C00` (3,072) bytes and leaves the rest for the next frame; oversized graphics go through a chunked feeder (`rlBattleSceneStartLargeUpload`) that pushes one slice per frame.
-
-## Backgrounds, foregrounds, and placement
-
-During initialization, `rlBattleSceneInit` ([engine/battle_scene/scene.asm](../../engine/battle_scene/scene.asm)) configures Mode 1 with BG3 priority, copies both action structs into `aBattleSceneCombatant1`/`2`, and loads the stage:
-
-1. **Terrain backgrounds and snow variants:** Each combatant's terrain indexes `aBattleBackgroundTerrainIndices` ([engine/battle_scene/backgrounds.asm](../../engine/battle_scene/backgrounds.asm)). In Chapter 4, the loader adds 26 to pick the snowy versions (`PlainsSnow`, `ForestSnow`, `CastleSnow`, and so on). When `wBattleType == 2` (class change), the loader ignores terrain and selects background `$17`.
-2. **Foreground layers:** `rsBattleSceneGetForeground` scans `aBattleForegroundTerrainPairs` for matching attacker/defender terrain pairs (such as forest or village edges) and loads two foreground tilemaps over the arena.
-3. **Combatant sheets and character accents:** Each unit's weapon, extra tiles, class sheet, and palette are decompressed, and selected named characters overwrite sprite colors 12–14 with personal accent colors.
-4. **Placement modes:** The starting gap between combatants defaults to twice byte 6 of the body record (`$C8` for ranged magic swords, `$E0` for distance-2 staves), then the first striker's weapon can override placement via `aBattleSceneWeaponPlacements`:
-
-| Mode | Weapons | Stage layout |
-|---|---|---|
-| `0` | Meteor, Bolting, Blizzard, Fenrir, ballistae; ranged Physic, Restore, Silence, Sleep, Berserk | Striker centered alone; target hidden (`bBattleAnimationCombatantFlags` bit 6) |
-| `1` | Fortify | Both centered (`BattleSceneFlagSolo2`) |
-| `2` | Rescue, Valkyrie | Target hidden until revealed by script |
-| `3` | Class change (`wBattleType == 2`), any weapon | Old class centered; other side hidden |
-| `4` | Magic and status swords | Default gap (no override) |
-
-For a Dancer's refresh (`wActionStructUnit1` action `$08`), the scene sets `BattleSceneFlagDance` and `BattleSceneFlagSolo2`, centers both units, and assigns the Dancer's dedicated animation IDs.
-
-## Reading rounds and strike physics
-
-While `BattleSceneRoundMayRun` is set and both move queues are idle, `rsBattleSceneStartNextRound` ([engine/battle_scene/rounds.asm](../../engine/battle_scene/rounds.asm)) reads the next 16-bit entry from `aBattleRoundsData`:
-
-| Entry | Meaning |
+| Layer | Holds |
 |---|---|
-| Low byte `bBattleRoundFlags`, high byte damage | Strike: bit `0` side (`0` attacker, `1` defender), `$02` staff, `$04` critical, `$08` miss, `$10` fatal, `$20` ranged, `$40` magic |
-| `$xxFE` | Skill activation: high byte is `SkillID` (`Astra`, `Luna`, `Sol`, `Holy`, `Darkness`, `Pavise`) |
-| `$xxFD` | Skipped entry |
-| `$FEFF` | End of an arena bout; loops back to round 0 unless B was held (`BattleSceneRoundArenaRetreat`) |
-| `$FFFF` | End of rounds |
+| BG2 | The terrain background: a 64 × 32-cell tilemap, 512 pixels wide, so the camera can pan across it |
+| BG1 | The foreground drawn over the combatants for some pairs of terrains; spell scripts also use it |
+| BG3 | Message windows and text |
+| Sprites | The combatants, their projectiles, and spell sprites |
 
-Before a combatant's first round with a holy weapon (`Tyrfing`, `Gungnir`, ..., `ValkyrieStaff`), the scene plays script `$43` and sound `$90`. For a skill entry (`$xxFE`), it plays the corresponding banner script (`$36`–`$3A` or `$3F`). After any fatal strike (`$10`), the reader sets bit 7 of `bBattleSceneStrikeFlags` and stops reading further entries.
+The combatants are built from many hardware sprites each. Their pose graphics are uploaded to video RAM when the pose changes, a few rows of tiles at a time.
 
-Each strike selects an action ID from `aBattleSceneAttackActions` using the weapon's `AnimStyle` (`Sword`, `Lance`, `Axe`, `Ranged`, `Magic`, `Staff`—with javelins and hand axes switching to `AttackStyleRanged` at distance 2 or more) and the combatant's variant bits. Magic swords branch by type: status swords launch their weapon script immediately, while elemental magic swords queue a physical swing followed by a spell.
+### Five interrupts per frame
 
-A strike lands when the attacker's sequence hits `ANIM_CMD_F1` or a scene script executes `$FFFA`:
+The bottom of the screen is a different picture from the top. The arena and the HUD use different tilemaps, tile bases, layers, and scroll positions, and the scene reprograms the PPU (the picture processor) partway down the screen to switch between them. A horizontal-blank interrupt (an IRQ, set to fire on a given scanline) stops the CPU at that line, and its handler rewrites the registers in the short gap before the next line is drawn. The scene installs five, through the IRQ engine ([Chapter 29](OUTLINE.md)):
+
+```
+  line   0  +--------------------------------------------+  display off: black band
+  line  14  +--------------------------------------------+  IRQ 1: display on, at the fade's brightness
+            |  the arena: BG2 background, BG1 foreground |
+            |  combatants, effects; scrolled by camera   |
+  line 126  +--------------------------------------------+  IRQ 2: switch to the HUD's tilemaps,
+            |  HUD: names, weapons, HP, stats             |  tiles, layers, and scroll
+  line 156  +--------------------------------------------+  IRQ 3: split within the HUD (some layouts)
+  line 161  +--------------------------------------------+  IRQ 4: split within the HUD (one layout)
+  line 207  +--------------------------------------------+  IRQ 5: display off: black band
+  line 224  +--------------------------------------------+
+```
+
+IRQ 2 turns the display off for an instant, switches the main screen to BG2 and BG3, points them at the HUD's tilemap and tiles, sets their scroll, rewrites a few colors, and turns the display back on. A value at `$7F/E4C2` picks one of four HUD layouts, and the later splits apply only to some of them. A critical hit shakes only the HUD: the shake changes the scroll values IRQ 2 writes (`$7F/FC73`–`$7F/FC76`, from `aBattleSceneHUDShakeOffsets`), so the arena above stays still.
+
+### The frame
+
+The scene's frame runs from its VBlank routine, after the uploads, the same way the map's does ([the introduction](00-introduction.md)). `rsBattleSceneRunFrame` ([engine/battle_scene/scene.asm](../../engine/battle_scene/scene.asm)):
 
 ```rust
-fn apply_strike(defender: &mut Combatant, round: RoundEntry) { // rlBattleSceneApplyStrike
-    defender.hp_target = defender.hp_whole.saturating_sub(round.damage);
-    defender.hp_speed = -1.0;                                // 8.8 fixed-point: 1 HP per frame
-    defender.damage_flash_timer = 25;                        // 25 frames of white flash
+fn battle_scene_frame() -> bool {              // rsBattleSceneRunFrame
+    run_intro_steps();                         // fade in, opening script, wait
+    update_fade();
+    if round_may_run() {
+        run_move_queues();                     // rlBattleAnimationRunMoveQueue
+        run_rounds();                          // rlBattleSceneRunRounds
+    }
+    move_combatants_and_effects();             // X, gravity, jumps, Y; slots $00, $43, $86, $C9
+    run_sequences_and_draw();                  // rlBattleAnimationUpdateAll
+    run_scene_script();                        // rlRunBattleSceneScript
+    run_palette_effects_flash_shake_hp();
+    wait_until_flag_set(0x7FE1CF);             // set by IRQ 2 at line 126
+    build_bg2_scroll_tables();                 // per-line scroll and perspective for the arena
+    check_arena_and_end_steps();
+    fade_out_finished()
+}
+```
 
-    // Knockback velocity scales inversely with class weight, then decays by 3/4 each frame
-    let weight = aBattleSceneClassWeights[defender.class];
-    defender.knockback_velocity = 0x0762 / weight;           // followed by $18 frames of shake
+The arena's BG2 scroll is changed on every scanline by HDMA, from tables the frame rebuilds. VBlank clears the flag at `$7F/E1CF`, and IRQ 2 sets it once the arena has been drawn. Waiting on the flag means a table is never rewritten while the lines it controls are on their way to the screen.
 
-    let pan = sound_pan(defender.screen_x);
-    let sfx = if round.damage == 0 { 0x95 } else { 0x91 + hit_kind };
-    play_sound(sfx + if round.is_critical { 0x50 } else { 0 }, pan);
+### Uploading in pieces
 
-    if attacker.weapon == EarthSword || active_skill == Sol {
-        rlBattleSceneStartDrain();                           // attacker regains dealt damage
+Decompressed graphics for poses, spells, and backgrounds would often need more than one VBlank to copy. The scene queues copies to video RAM in a 16-entry list (`aBattleSceneUploads`), and each VBlank `rlBattleSceneRunUploads` sends queued entries up to `$0C00` bytes, leaving the rest for the next frame. A copy too big for the queue goes through `rlBattleSceneStartLargeUpload`, which feeds the queue one slice per frame.
+
+## Setting the stage
+
+`rlBattleSceneInit` copies each side's class, character, weapon, HP, maximum HP, gender, terrain, and experience from the action structs into `aBattleSceneCombatant1` and `aBattleSceneCombatant2`, and loads the stage.
+
+### Background and foreground
+
+The background shows the defender's terrain, or the attacker's for a dance and for placements 0 and 1 (below). `rlGetBattleBackgroundPointers` maps the terrain to one of 24 backgrounds in `aBattleBackgrounds` ([engine/battle_scene/backgrounds.asm](../../engine/battle_scene/backgrounds.asm)). In Chapter 4 it uses a second mapping that picks the snowy versions. A snowy background is the same tiles and tilemap with a different palette, and so is Desert, which reuses Sand's. A class change ignores terrain and uses background `$17`.
+
+A foreground goes on BG1 when `aBattleForegroundTerrainPairs` has an entry for the attacker's and defender's terrains, Chapter 4 again having its own set. Bows, tomes, and staves get no foreground (`aBattleSceneNoForegroundList`).
+
+### Placing the combatants
+
+The two start apart by twice a distance in the combatant's body record (below), or by `$C8` pixels for a magic sword used at range and `$E0` for a staff used from two tiles away. The first striker's weapon can then change the layout (`aBattleSceneWeaponPlacements`):
+
+| Placement | Weapons | Layout |
+|---|---|---|
+| 0 | Meteor, Bolting, Blizzard, Fenrir, the ballistae; Physic, Restore, Silence, Sleep, and Berserk from 3 or more tiles away | The striker alone at the center; the target hidden |
+| 1 | Fortify | Both at the center |
+| 2 | Rescue, Valkyrie | The target hidden until a script shows it |
+| 3 | Any weapon in a class change | The unit at the center; the other side hidden |
+| 4 | The magic and status swords | No change |
+
+A dance (action `$08` in unit 1's action struct) puts both at the center and gives a Dancer its dance animations.
+
+### Choosing animations
+
+Each weapon has an animation category and an **attack style**: sword, lance, axe, ranged, magic, or staff. A javelin or hand axe used from two tiles away becomes ranged. The class, the category, and the style select four animation IDs from `aBattleAnimationLookup`. A few named characters also get three colors of their own over sprite colors 12–14.
+
+## Playing the rounds
+
+### Reading an entry
+
+`rlBattleSceneRunRounds` ([engine/battle_scene/rounds.asm](../../engine/battle_scene/rounds.asm)) waits until both combatants' move queues are empty and nothing is moving. Then `rsBattleSceneStartNextRound` reads one entry of the round log:
+
+- **A strike** (low byte flags, high byte damage). It sets who attacks and who defends, pans the camera if the attacker is off center, and queues the attacker's action for its attack style: a normal attack, a critical, a fatal critical, or a staff. A combatant too far away first closes in.
+- **A skill** (`$xxFE`). It shows the skill's banner: scripts `$36`–`$3A` for Astra, Luna, Sol, Holy, and Darkness, and `$3F` for Pavise.
+- **`$FEFF`**, the end of an arena bout: back to the first round for another bout, unless the player held B to retreat ([Chapter 16](16-the-arena.md)).
+- **`$FFFF`**, the end.
+
+At a combatant's first round with a holy weapon (Tyrfing, Gungnir, and the rest through the Valkyrie Staff), the reader first plays script `$43` and sound `$90`. Before reading an entry it checks the previous one, and after a fatal strike it marks the fight as over (bit 7 of `bBattleSceneStrikeFlags`) and reads no further.
+
+Magic swords take one more decision. The Berserk, Silence, and Sleep Swords start their weapon's script at once. Any other magic sword striking from range queues a swing and then the spell. Tomes, staves, and magic swords each name a script in `aBattleSceneWeaponScripts`, and the four long-range staves name a second one for use from three or more tiles away. The attacker's sequence starts that script with command `$F0`.
+
+### When the strike lands
+
+The round log gives no timing. The strike lands when the attacker's sequence reaches command `$F1`, when a projectile reaches the defender, or when a spell's script issues `$FFFA`. All three call `rlBattleSceneApplyStrike`:
+
+```rust
+fn apply_strike(round: RoundEntry) {                 // rlBattleSceneApplyStrike
+    defender.hp_target = defender.hp - round.damage; // falls one point a frame
+    start_damage_flash(defender, 25);                // frames
+    defender.knockback = 0x0762 / class_weight(defender.class);  // aBattleSceneClassWeights
+    play_hit_sound(round);                           // $91-$94, $95 for no damage; +$50 critical
+    if round.critical { start_hud_shake(); }
+    if attacker.weapon == EarthSword || sol_active() {
+        start_drain(attacker, round.damage);         // the attacker regains it
     }
 }
 ```
 
-HP is stored in 8.8 fixed-point (`structBattleSceneCombatant.HP`), so the HUD updater ticks the number and bar smoothly each frame, chiming sound `$0D` for every whole point lost or healed (`$FFFB` heals instead of damaging).
+HP is held as an 8.8 fixed-point number (`structBattleSceneCombatant.HP`). Each frame the HP routines move it toward its target, redraw the number and bar, and play sound `$0D` for every whole point. The knockback pushes the defender away by a strength that loses a quarter each frame, then shakes it sideways for 24 frames. The heavier the class, the shorter the push. Script command `$FFFB` starts a heal in place of a strike.
 
-## The four animation slots and sequence programs
+## The animation slots
 
-[engine/battle_scene/combatants.asm](../../engine/battle_scene/combatants.asm) manages four `$43`-byte animation slots starting at `$0AF3`, plus a fifth `$0BFF` spawn template used to initialize projectiles:
-
-```
-  $0AF3 + $00 : Combatant 1 (main unit)      <--->  $0AF3 + $86 : Combatant 1 Effect (arrow/axe/spell)
-  $0AF3 + $43 : Combatant 2 (main unit)      <--->  $0AF3 + $C9 : Combatant 2 Effect (arrow/axe/spell)
-                                                       ^
-                                                       | copied from $0BFF spawn template on ANIM_CMD_EF
-```
-
-Each slot runs two layered engines:
-
-- **Move queues (`aBattleSceneMoveQueues`, 16 entries per combatant):** Queuing an action pushes a class's move program from [engine/battle_scene/animations.asm](../../engine/battle_scene/animations.asm), and [engine/battle_scene/animation_moves.asm](../../engine/battle_scene/animation_moves.asm) steps through approaches, leaps, and retreats while collision checks stop combatants from overlapping. The camera tracks either the midpoint of both units or the attacker alone.
-- **Sequence scripts:** The sequence interpreter reads pose indices and control opcodes `$E8`–`$FF` ([include/BattleAnimation.h](../../include/BattleAnimation.h)). Pose delays scale by an 8.8 speed multiplier, and whenever a pose changes, the renderer queues its tile rows for VBlank. Command `$F4` freezes a combatant until the opposite side or its effect slot sends a release signal (`$F3`). Command `$EF` spawns the projectile in the effect slot (`rlBattleAnimationSetEffectMotion`), which flies by straight gravity, a coordinate table, or a path script (`$8080`–`$8085`). Command `$EC` spawns afterimages (drawn 8 or 12 frames behind) or odd-frame mirrored illusions.
-
-Each combatant also references an 8-byte body record (width, aim/launch height, minimum gap, two speeds, and half-start distance), and shadows are drawn on alternate frames under each visible combatant's ground position. On river or sea terrain, footstep sounds `$11`–`$19` automatically switch to water splashes (`$21`–`$29`).
-
-## The battle scene script bytecode and palette effects
-
-While animation slots move sprites, [engine/battle_scene/script.asm](../../engine/battle_scene/script.asm) runs a third bytecode engine (alongside event scripts and proc scripts) to orchestrate backgrounds, spell polygons, mosaic/wave window effects, screen shakes, and sound cues. Every instruction is a 16-bit word:
+[engine/battle_scene/combatants.asm](../../engine/battle_scene/combatants.asm) keeps four slots of `$43` bytes from `$0AF3`, with a fifth record used to build projectiles:
 
 ```
-  15   14   13        9   8                   0
- +----+----+-----------+-----------------------+
- | 0  |Wait|  Command  |     9-bit Argument    |   Normal command (0..24)
- +----+----+-----------+-----------------------+
- | 1  | 1  | 1  1  1  1  1  1  1  1 | Control  |   $FFF8..$FFFF control word
- +----+----+-----------+-----------------------+
+  $0AF3 + $00   combatant 1         $0AF3 + $86   combatant 1's effect (arrow, axe, spell)
+  $0AF3 + $43   combatant 2         $0AF3 + $C9   combatant 2's effect
+  $0BFF         spawn record: a new effect is built here, then copied into its slot
 ```
+
+### Moves
+
+An **action** is an entry in the class's move program ([engine/battle_scene/animations.asm](../../engine/battle_scene/animations.asm)): a list of moves or a single sequence. The moves wait in a 16-entry queue per combatant (`aBattleSceneMoveQueues`) and run one at a time when the combatant stands ready. The move routines in [engine/battle_scene/animation_moves.asm](../../engine/battle_scene/animation_moves.asm) walk, leap, and retreat. A combatant stops against the other's body or the edge of the stage. The camera follows the midpoint of the two combatants, or the attacker alone. A missed strike queues a dodge for the defender.
+
+Each combatant has an 8-byte **body record**, chosen by class and weapon category: its width, the height projectiles aim at and fly from, the distance it keeps from the other side, two speeds, and half its starting distance.
+
+### Sequences
+
+A **sequence** is a list of poses, each with a delay, and of commands `$E8`–`$FF` ([include/BattleAnimation.h](../../include/BattleAnimation.h)). The delays are scaled by the slot's 8.8 speed multiplier. Some of the commands:
+
+| Command | Does |
+|---|---|
+| `$F0` | Start the weapon's scene script |
+| `$F1` | Land the strike |
+| `$F4` | Freeze until released |
+| `$F3` | Release the other side |
+| `$EF` | Launch the effect slot |
+| `$EC` | Start an afterimage, or a mirrored double |
+
+Freezing and releasing are how the two sides stay in step. A defender can wait at `$F4` until the attacker's swing (`$F3`) or its projectile (on landing) releases it, and a script can release either side with `$FFFD` or `$FFFC`.
+
+A new pose queues its tiles for upload. Shadows are drawn under each visible combatant on alternate frames. On river or sea terrain, the footstep sounds `$11`–`$19` become splashes `$21`–`$29`.
+
+### Projectiles
+
+Command `$EF` builds the effect in the spawn record from a template, places it at the thrower plus an offset for its class (one list each for bows, hand axes, and javelins), aims it at the defender's height from the body record, and copies it into slot `$86` or `$C9`. Each frame the slot moves by one of three motions, chosen by attack style and weapon: straight flight under gravity, with a pose chosen by its slope; a table of positions (`aBattleAnimationEffectPaths`); or a small path script with commands `$8080`–`$8085`. Reaching the defender lands the strike. Afterimages draw the owner's pose as it was 8 or 12 frames earlier, and the mirrored double draws the slot reflected around the defender on odd frames.
+
+## The battle scene script
+
+The scene's third engine runs scripts that stage spells and every other screen effect ([engine/battle_scene/script.asm](../../engine/battle_scene/script.asm)). It is the game's third bytecode, after event scripts ([Chapter 12](12-screenplays.md)) and proc scripts. A script is a list of 16-bit words:
+
+```
+   15  14  13 ........ 9  8 ................ 0
+  +---+---+-------------+--------------------+
+  | 0 | W |   command   |      argument      |   command 0-24; W: wait until it finishes
+  +---+---+-------------+--------------------+
+  $FFF8-$FFFF: control words
+```
+
+The 25 commands (`aBattleSceneCommandHandlers`) cover the stage: decompress graphics to video RAM, copy, write values into RAM, load a background, a portrait, or colors, start a palette effect, a window effect, an HDMA scroll effect, or a BG2 shake, scroll the camera to a combatant, play a sound (optionally panned to a combatant or its opponent), and wait. Three commands run routines from a table of 72 (`aBattleSceneScriptRoutines`): once, every frame until the routine reports it is done, or every frame from then on. The control words end the script (`$FFFF`), stop for the frame (`$FFFE`), release a combatant (`$FFFD`, `$FFFC`), land a strike (`$FFFA`), heal (`$FFFB`), or drain (`$FFF8`).
 
 ```rust
-fn run_battle_scene_script_word(word: u16) { // rlRunBattleSceneScript
-    if word >= 0xFFF8 {
-        match word {
-            0xFFFF => stop_script(),
-            0xFFFE => yield_frame(),
-            0xFFFB => rlBattleSceneStartHeal(),
-            0xFFFA => rlBattleSceneApplyStrike(),
-            0xFFF8 => if !missed { rlBattleSceneStartDrain() },
-            _ => {}
+fn run_script_word(word: u16) {                  // rlRunBattleSceneScript
+    match word {
+        0xFFFF => end_script(),
+        0xFFFE => stop_for_frame(),
+        0xFFFD | 0xFFFC => release_combatant(word),
+        0xFFFB => rlBattleSceneStartHeal(),
+        0xFFFA => rlBattleSceneApplyStrike(),
+        0xFFF8 => rlBattleSceneStartDrain(),
+        _ => {
+            let command = (word >> 9) & 0x1F;
+            let argument = word & 0x01FF;
+            let wait = word & 0x4000 != 0;
+            run_command(command, argument, wait); // aBattleSceneCommandHandlers
         }
-        return;
     }
-
-    let cmd = (word & 0x3E00) >> 9;          // 25 handlers in aBattleSceneCommandHandlers
-    let arg = word & 0x01FF;                 // 9-bit argument
-    let wait = (word & 0x4000) != 0;         // stall script until operation finishes
-    dispatch_command(cmd, arg, wait);
 }
 ```
 
-Commands `4`, `5`, and `8` index into 72 long pointers in `aBattleSceneScriptRoutines` ([engine/battle_scene/data.asm](../../engine/battle_scene/data.asm)) to call a helper once, poll it every frame until bit 0 of `$7F/E4B7` clears, or install it as a persistent per-frame callback.
+Each frame the interpreter counts down its wait timers, holds while a command it waits on is unfinished, and then runs words until one stops for the frame. Holding A clears the skippable wait timer, so some pauses can be cut short.
 
 ### Palette effects
 
-Command `11` launches entries from `aBattleScenePaletteEffects` into ten slots (`aBattleScenePaletteSlots` at `$7F/FD9A`). Each frame, `rlBattleSceneRunPaletteEffects` ([engine/battle_scene/effects.asm](../../engine/battle_scene/effects.asm)) mutates `aBGPaletteBuffer` according to one of 13 effect types:
+Command 11 starts an entry of `aBattleScenePaletteEffects` in one of ten slots (`aBattleScenePaletteSlots`). Each frame `rlBattleSceneRunPaletteEffects` ([engine/battle_scene/effects.asm](../../engine/battle_scene/effects.asm)) changes a range of colors in the palette buffer by the slot's type:
 
-| Type | Behavior |
+| Type | Does |
 |---|---|
-| `0` | Plays a sequence of color frames (`$80 \| delay` optional; `$FE` loops, `$FF` ends) |
-| `1`, `2` | Scrolls colors down (`1`) or up (`2`) by one slot, shifting in the next color from data |
-| `3`, `4` | Rotates the color range down (`3`) or up (`4`) every `Value` frames |
-| `5`, `6` | Fades a step at a time toward black (`5`) or white (`6`) |
-| `7` | Fades a step at a time toward target colors in data |
-| `8`, `9` | Sets the range immediately to black (`8`) or white (`9`) |
-| `10` | Copies target colors immediately from data |
-| `11` | Restores the saved palette from `$7F/FE00` |
-| `12` | Scrolls like type `1`, brightened by `wBattleScenePaletteBrighten` steps |
+| 0 | Plays frames of colors, with optional delays; `$FE` loops and `$FF` ends |
+| 1, 2 | Scrolls the colors down or up one place, bringing in the next color from the data |
+| 3, 4 | Rotates the colors down or up every few frames |
+| 5, 6 | Fades a step at a time to black or white |
+| 7 | Fades a step at a time toward the colors in the data |
+| 8, 9 | Sets black or white |
+| 10 | Sets the colors in the data |
+| 11 | Restores the saved palette |
+| 12 | As type 1, with each new color brightened |
 
-## The HUD, gauges, and the 21 end steps
+A slot can count down the script's wait when it ends, so a script can wait for a flash to finish. The map battle borrows this engine for its skill effects ([Chapter 23](23-two-ways-to-show-a-fight.md)), and the title screen for its own ([Chapter 20](20-the-opening.md)).
 
-[engine/battle_scene/hud.asm](../../engine/battle_scene/hud.asm) builds the bottom panel once during initialization into `$7F/C800` (VRAM `$D000`) and `$7F/D0C0` (VRAM `$D8C0`). It renders ten combat stats (`CurrentHP`, `Level`, `BattleAdjustedHit`, `BattleMight`, `BattleDefense` for each side, printing `255` as `--`), applies faction colors and banners, and pre-renders unit and weapon names into 2bpp tiles at `$7E/AC88` (VRAM `$F800`). On a critical hit, `rlBattleSceneStartHUDShake` shakes only the bottom split by feeding `aBattleSceneHUDShakeOffsets` into the IRQ scroll registers (`$7F/FC73`–`$7F/FC76`).
+## The HUD
 
-A single shared 8.8 gauge engine at `$7F/ED4B` (`wBattleSceneGaugeValue`...) drives both post-battle progress displays:
+[engine/battle_scene/hud.asm](../../engine/battle_scene/hud.asm) builds the bottom panel once, during setup, into two tilemaps in work RAM (`$7F/C800` and `$7F/D0C0`). It holds each side's HP with its bar, level, hit, might, and defense (a 255 shows as two dashes), the army's color and banner, and the unit's and weapon's names. The names are drawn with the text font into tiles of their own at setup. During the fight only the HP rows change, and they are queued for upload every frame.
 
-- **Experience bar (script `0`):** Counts from `wBattleSceneExperience` to `wBattleSceneExperience + wBattleSceneExperienceGained` while playing sound `$0B`, wrapping past 100 and chiming `$0C` when it stops.
-- **Level-up window (script `1`):** Draws all nine gauges of `aBattleSceneLevelUpGauges` (level and eight stats, capped at 80 for HP and 30 for all other stats) and fills each gained stat.
+One **gauge** engine (`wBattleSceneGaugeValue` at `$7F/ED4B`) counts a number toward a target at an 8.8 speed and draws it with a bar. It serves two displays:
 
-Once the round log ends, `rlBattleSceneRunEndStep` ([engine/battle_scene/results.asm](../../engine/battle_scene/results.asm)) walks the 21 entries of `aBattleSceneEndSteps` in reverse order whenever nothing else is active: revealing BG3, playing class-change scripts (`$33`/`$35` when `wBattleType == 2`) or fatal defeat scripts (`$34`/`$31`) with voice-indexed defeat cries (`$89`–`$8B`), displaying the death quote, running the experience bar and level-up window, opening the message window (`$2A`) for obtained items (`$2C`), gold (`$2F`), and broken weapons (`$44`) via the dialogue engine, running Julius's finale scripts (`$4A`–`$4C` when combatant 1 defeats `JuliusChFinal`, switching to map mode 3), and fading out.
+- **The experience bar** counts from the unit's experience to that plus the gain, with sound `$0B`, wrapping past 100, and plays `$0C` when it stops.
+- **The level-up window** draws nine gauges, the level and eight stats, and fills each stat that rose. HP's bar holds 80 points and the others 30.
+
+## The end steps
+
+When the rounds are over, `rlBattleSceneRunEndStep` ([engine/battle_scene/results.asm](../../engine/battle_scene/results.asm)) works through the 21 entries of `aBattleSceneEndSteps`, last to first, starting the next one whenever nothing else is running. Most start a scene script:
+
+1. Show BG3.
+2. For a class change, scripts `$33` and `$35`. After a fatal strike, scripts `$34` and `$31` and the defeated unit's cry (`$89`–`$8B`, by voice).
+3. The death quote.
+4. The experience bar, and a level up: its banner (`$3B`) and the stat gains.
+5. The message window (`$2A`), and each message: an item obtained (`$2C`), gold obtained or stolen (`$2F`), a weapon broken (`$44`). Each waits for a button (`$30`). The messages run through the dialogue engine ([Chapter 13](13-dialogue-and-text.md)), drawn into the scene's BG3.
+6. Julius's scripts when the fight ends with his defeat (`$4A`, `$4B`, `$4C`).
+7. The fade out.
+
+Julius's defeat is noticed at the moment of the strike. A fatal blow by unit 1 on `JuliusChFinal` slows the fade, fades the music, and sets the flag that returns to the map in mode 3. His death quote is shown through `rlBattleSceneShowJuliusQuote` in place of the normal one.
 
 ## Trade-offs and hard limits
 
-Separating the battle scene into its own game state with dedicated IRQ splits and a 4-slot animator lets the game render large, multi-part sprites and full-screen spells that would never fit alongside the map, at the cost of strict resource budgets:
-
-- **VBlank upload cap (`$0C00` bytes/frame):** Oversized transfers must be chunked across frames, and `aBattleSceneUploads` holds at most 16 pending copies.
-- **Fixed slot counts:** 4 animation slots (2 combatants + 2 effects), 10 palette effect slots, and 16-entry move queues.
-- **Shared WRAM (`$7F/E000`–`$7F/FFFF`):** The battle scene's working RAM overlaps the map's text and unit buffers, so entering a battle scene requires a full screen transition rather than an instant overlay.
-- **Engine quirks:** `bBattleSceneRanged` is read but never stored in `rsBattleSceneStartNextRound` (the branch skips the store), and `rlBattleAnimationGetEffectArcHeight` indexes `aBattleSceneCombatant1` with `X = $0E` instead of the animation slot offset.
+- **Upload budget.** At most `$0C00` bytes reach video RAM per frame through the queue, which holds 16 copies. Anything larger is fed in slices, so big graphics arrive over several frames.
+- **Fixed slots.** Two combatants, two projectiles, ten palette effects, and 16 queued moves per combatant.
+- **Shared work RAM.** The scene's variables at `$7F/E000`–`$7F/FFFF` occupy the same addresses as the map's text buffer and unit buffers. The scene overwrites them, and the map rebuilds its display when the scene returns.
+- **The background follows one side.** Only one terrain's background is drawn, the defender's in most fights.
+- **Two oddities.** `rsBattleSceneStartNextRound` loads the round's ranged bit for `bBattleSceneRanged` but branches past the store, so the variable never holds it. `rlBattleAnimationGetEffectArcHeight` reads the defender's height using an offset meant for the slots on combatant 1's record, a different byte; what that changes on screen isn't known.
 
 ## Where it lives in the source
 
-- [engine/battle_scene/battle_screen.asm](../../engine/battle_scene/battle_screen.asm): `rsOpenBattleScene`, `rsRunBattleSceneVBlank`, `rsRunBattleSceneMainLoop`, and `aBattleTransitionHDMAInfo`.
-- [engine/battle_scene/scene.asm](../../engine/battle_scene/scene.asm) and [screen.asm](../../engine/battle_scene/screen.asm): `rlBattleSceneInit`, `rsBattleSceneRunFrame`, IRQs (`aBattleSceneIRQ1Setup`–`5Setup`), HDMA tables, and VBlank uploads.
-- [engine/battle_scene/rounds.asm](../../engine/battle_scene/rounds.asm) and [results.asm](../../engine/battle_scene/results.asm): `aBattleRoundsData` playback, `rlBattleSceneApplyStrike`, and the 21 end steps.
-- [engine/battle_scene/combatants.asm](../../engine/battle_scene/combatants.asm), [animation_moves.asm](../../engine/battle_scene/animation_moves.asm), and [animations.asm](../../engine/battle_scene/animations.asm): the four animation slots, sequence interpreter, move routines, and class animation data.
-- [engine/battle_scene/script.asm](../../engine/battle_scene/script.asm), [effects.asm](../../engine/battle_scene/effects.asm), and [data.asm](../../engine/battle_scene/data.asm): the battle scene bytecode, palette effects, window/HDMA effects, and bank `$97`–`$99`/`$E0` tables.
-- [engine/battle_scene/loading.asm](../../engine/battle_scene/loading.asm), [backgrounds.asm](../../engine/battle_scene/backgrounds.asm), and [hud.asm](../../engine/battle_scene/hud.asm): graphics/terrain loading and the bottom HUD and gauges.
-- [engine/castle/class_change.asm](../../engine/castle/class_change.asm): `rlStartCastleClassChange`, which launches the scene with `wBattleType == 2`.
-- [docs/reference/battle_scene.md](../reference/battle_scene.md): full reference for the battle scene.
+- [engine/battle/battle.asm](../../engine/battle/battle.asm): `rlStartBattleScene`.
+- [engine/battle_scene/battle_screen.asm](../../engine/battle_scene/battle_screen.asm): `rsOpenBattleScene`, the scene's VBlank and main loop, and the window wipe.
+- [engine/battle_scene/scene.asm](../../engine/battle_scene/scene.asm): `rlBattleSceneInit`, `rsBattleSceneRunFrame`, the scene's flags, the fade, and the intro.
+- [engine/battle_scene/screen.asm](../../engine/battle_scene/screen.asm): the five IRQs, the HDMA tables, and the VBlank work.
+- [engine/battle_scene/loading.asm](../../engine/battle_scene/loading.asm) and [backgrounds.asm](../../engine/battle_scene/backgrounds.asm): graphics, backgrounds, foregrounds, and placement.
+- [engine/battle_scene/rounds.asm](../../engine/battle_scene/rounds.asm): reading the rounds and landing a strike.
+- [engine/battle_scene/combatants.asm](../../engine/battle_scene/combatants.asm), [animation_moves.asm](../../engine/battle_scene/animation_moves.asm), and [animations.asm](../../engine/battle_scene/animations.asm): the animation slots, moves, sequences, projectiles, and each class's animation data.
+- [engine/battle_scene/script.asm](../../engine/battle_scene/script.asm), [effects.asm](../../engine/battle_scene/effects.asm), and [data.asm](../../engine/battle_scene/data.asm): the scene script, its effects, and its tables.
+- [engine/battle_scene/hud.asm](../../engine/battle_scene/hud.asm) and [results.asm](../../engine/battle_scene/results.asm): the HUD, the gauge, and the end steps.
+- [include/BattleScene.h](../../include/BattleScene.h) and [include/BattleAnimation.h](../../include/BattleAnimation.h): structures, flags, and sequence commands.
+- [docs/reference/battle_scene.md](../reference/battle_scene.md): the reference page.

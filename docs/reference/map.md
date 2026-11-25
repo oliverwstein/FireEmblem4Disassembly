@@ -31,7 +31,7 @@ Data: [include/Map.h](../../include/Map.h) (`MAP_CURSOR_*`, `MAP_AI_*`, `MAP_RET
 
 Everything on the map is placed in **tiles** of 16x16 pixels. `aMapData` holds one word per tile (the map is 64 tiles wide, or 128 when `wMapWidthMode` is 8); the low bits (`wMapTileIDMask`) are a tile ID, and each tile ID is four 8x8 tilemap entries in a table at `$7F0000`. `aTerrainTileset` gives each tile ID its terrain.
 
-The **camera** is `wMapScrollXPixels`/`YPixels`, the map pixel at the top left of the screen, kept between `wMapMinXScroll` and `wMapMaxXScroll` (and Y), which come from the chapter's map data. `wMapXOffset`/`YOffset` save it while the map is left. The **cursor** is `wCursorXOffset`/`YOffset`, a position on the screen, so the cursor's tile is (camera + cursor) / 16. It may move within 48 pixels of the screen's edge (X `$30`-`$C7`, Y `$28`-`$A7`); beyond that the map scrolls instead. [camera.asm](../../engine/map/camera.asm) has the conversions.
+The **camera** is `wMapScrollXPixels`/`YPixels`, the map pixel at the top left of the screen, kept between `wMapMinXScroll` and `wMapMaxXScroll` (and Y), which come from the chapter's map data. `wMapXOffset`/`YOffset` save it while the map is left. The **cursor** is `wCursorXOffset`/`YOffset`, a position on the screen, so the cursor's tile is (camera + cursor) / 16. It stays 48 pixels from each edge of the screen (its top left at X `$30`-`$C0`, Y `$30`-`$A0`, or 16 pixels when the camera is against the map's edge); a move past that scrolls the map instead (`rsMoveMapCursorLeft`...). Events test a looser box (`rlCheckPointInScreenMargins`: X `$30`-`$C7`, Y `$28`-`$A7`). [camera.asm](../../engine/map/camera.asm) has the conversions.
 
 ## A frame
 

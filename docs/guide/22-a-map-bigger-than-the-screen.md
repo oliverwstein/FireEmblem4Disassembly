@@ -1,160 +1,189 @@
-# Chapter 22: A map bigger than the screen
+# Chapter 22: A Map Bigger than the Screen
 
-A chapter map in *Genealogy of the Holy War* is 64 × 64 tiles of 16 × 16 pixels—1,024 × 1,024 pixels of terrain, castles, roads, and mountain passes—while a single SNES background layer's tilemap is only 32 × 32 tiles of 8 × 8 pixels, or 256 × 256 pixels. Unpacking an entire chapter into 8 × 8 tilemaps in video RAM would consume 32 KB, half of the console's 64 KB VRAM, before a single unit sprite or menu window could be loaded. Instead, the engine keeps only the 32 × 32-tile viewport in VRAM and streams newly exposed rows and columns through a rolling buffer as the camera moves, deriving every terrain rule from the same tile IDs that draw the picture.
+A chapter map is a grid of 64 × 64 tiles, each 16 × 16 pixels, so 1,024 pixels on a side. The screen shows 256 × 224 pixels of it, 16 tiles across and 14 down. The SNES draws a background layer from a **tilemap** in video RAM: a grid of 8 × 8-pixel cells, each a two-byte entry naming a tile graphic, a palette, a priority bit, and two flip bits. The map's layer uses a tilemap of 32 × 32 cells, 256 pixels square, and the layer's scroll registers wrap around it in both directions. Written out as 8 × 8 cells, a whole chapter would be 128 × 128 entries, 32 KB, half of video RAM.
 
-This chapter covers how chapter maps are packed and loaded, how the camera and cursor share screen space, how tile streaming updates both the map and the range overlay during VBlank, how animated tiles cycle, and how the minimap renders the whole battlefield on demand.
+The engine keeps one 32 × 32 tilemap and rewrites its edges as the camera moves. Every step of the camera builds the row or column of cells about to come into view from the map data in work RAM, and the next vertical blank (VBlank) copies it into the tilemap. The same map data supplies the terrain: one tile ID per map tile picks both the four cells that draw it and the terrain the rules read.
 
-## How a chapter map is packed and loaded
+This chapter covers the map data and how a chapter loads it, the camera and the cursor, streaming rows and columns, the animated tiles, and the minimap.
 
-Every chapter from the Prologue to the Final Chapter has a 25-byte descriptor in `aChapterMapPointers` ([engine/map/chapter_maps.asm](../../engine/map/chapter_maps.asm)). When a chapter opens, the map loader unpacks six components into WRAM and VRAM:
+## The map data
 
-| Component | Destination | Format and size | Purpose |
-|---|---|---|---|
-| Layout | `aMapData` | 64 × 64 words (compressed) | 16 × 16 tile IDs (`wMapTileIDMask = $03FF`) plus area-restriction bits |
-| Metatile table | `$7F/0000` | 1,024 metatiles × 4 words (compressed, 8 KB) | Four 8 × 8 tilemap entries per tile ID |
-| Tile graphics | VRAM `$2800` | `$2000` bytes of 4bpp tiles (compressed) | Map terrain tileset |
-| Palettes | `aBGPaletteBuffer` (palettes 1–7) | `$E0` bytes (uncompressed) | Seven 16-color map palettes |
-| Bounds header | `wMapWidthMode`, scroll limits | 6 words | Width mode (`4` = 64 tiles, `8` = 128 tiles), min/max scroll bounds |
-| Terrain table | `aTerrainTileset` | Compressed byte table | Maps each 10-bit tile ID to one of 26 terrain types |
+### Tile IDs
 
-Chapters reuse graphics wherever their geography overlaps. Chapter 2 reuses the Prologue's metatile table, 4bpp tileset, and terrain table with its own layout and palette, and the Final Chapter reuses Chapter 5's tileset and terrain table.
+`aMapData` holds one word per map tile, row by row. The low 10 bits are the **tile ID**, kept by the mask `wMapTileIDMask` (`$03FF`). The top 6 bits are the area tags that close parts of the map to the player ([Chapter 9](09-moving-a-unit.md)).
 
-The bounds header stores the map's full pixel width and height rather than raw hardware scroll limits, so the loader subtracts one screen width (`$0100`, 256 pixels) and one screen height (`$00E0`, 224 pixels) to compute the maximum scroll coordinates. For the Prologue (`$0400 × $0200`), the camera pans across `0..$0300` horizontally and `0..$0120` vertically; for Chapters 1 through Final (`$0400 × $0400`), both axes run `0..$0300`.
+A tile ID is an index into two tables the chapter loads:
 
-### Metatiles and terrain from tile IDs
-
-Each entry in `aMapData` is a 16-bit word. Its low 10 bits (`wMapTileIDMask = $03FF`) index both the visual metatile table at `$7F/0000` and the gameplay terrain table `aTerrainTileset`. Its upper six bits (`10..15`) store the chapter's area-restriction ID ([Chapter 9](09-moving-a-unit.md)).
-
-Each metatile occupies 8 bytes (four 16-bit SNES tilemap words) in `$7F/0000`, stored in column-major order so a builder can step through either a row or a column by adding a fixed offset:
+- **The metatile table** at `$7F/0000`: four tilemap entries per ID, 8 bytes each, 1,024 IDs, 8 KB in all. The four entries are the tile's 8 × 8 quarters, stored by column:
 
 ```
-  Metatile at $7F/0000 + (tile_id * 8)          16×16 Map Tile on Screen
-  +--------+--------+--------+--------+         +-----------+-----------+
-  | +0: TL | +2: BL | +4: TR | +6: BR |  --->   |  TL (8×8) |  TR (8×8) |
-  +--------+--------+--------+--------+         +-----------+-----------+
-     Each word masked with $DFFF                |  BL (8×8) |  BR (8×8) |
-     (clears bit 13 priority bit)               +-----------+-----------+
+  $7F/0000 + id × 8                    on screen
+  +------+------+------+------+        +------+------+
+  |  TL  |  BL  |  TR  |  BR  |        |  TL  |  TR  |
+  +------+------+------+------+        +------+------+
+   +0     +2     +4     +6             |  BL  |  BR  |
+                                       +------+------+
 ```
 
-Masking each entry with `$DFFF` clears bit 13 (the SNES background priority bit), ensuring map terrain always renders behind high-priority sprites and menu windows.
+- **The terrain table** `aTerrainTileset`: one byte per ID, naming one of 26 terrains (plains, forest, castle, river, and so on, listed in [include/Terrain.h](../../include/Terrain.h)). Movement costs by terrain are in [data/terrain/MovementCost.csv](../../data/terrain/MovementCost.csv) ([Chapter 9](09-moving-a-unit.md)), and avoid bonuses in [data/terrain/TerrainAvoid.csv](../../data/terrain/TerrainAvoid.csv) ([Chapter 6](06-resolving-a-battle.md)): ground units get +40 in thickets, +30 on mountains, castles, and forts, +20 in forests, villages, and shrines, and −40 on peaks and cliffs. Fliers get nothing except +20 on a shrine.
 
-Because terrain is derived directly from the tile ID, map changes—such as a raised bridge, a destroyed village, or an opened castle gate—need only overwrite words in `aMapData`. That single write updates both the rendered picture and the gameplay rules for those squares. Movement costs and avoid bonuses live in two CSV-backed tables: [data/terrain/MovementCost.csv](../../data/terrain/MovementCost.csv) (cost per movement type across all 26 terrain types, with `$80` marking impassable tiles) and [data/terrain/TerrainAvoid.csv](../../data/terrain/TerrainAvoid.csv) (ground and flying avoid bonuses, ranging from `-40` on peaks and cliffs to `+40` in thickets).
+Since both tables are keyed by the same ID, writing a new ID into `aMapData` changes both the picture and the rules on that square. That is how the chapters' map changes work: a table in the chapter data pairs an event flag with a position and a block of replacement IDs, and the event engine writes them in once the flag is set ([Chapter 11](11-the-game-is-watching.md)). A battle scene or the castle screen can overwrite `aMapData`, and the way back decompresses the layout from ROM again, so the engine marks each applied change (`aChapterActiveMapChanges`) and writes it in again after a reload (`rlApplyAllActiveMapChanges`).
 
-## Camera, cursor margins, and coordinates
+### A chapter's descriptor
 
-The camera (`wMapScrollXPixels`, `wMapScrollYPixels`) tracks the map pixel at the top-left corner of the screen, while the cursor (`wCursorXOffset`, `wCursorYOffset`) is stored in map pixels as well. Converting between map space and screen space is a single subtraction (`cursor - camera`), and converting a pixel coordinate to a 16 × 16 map tile is a 4-bit right shift (`>> 4`).
+`aChapterMapPointers` ([engine/map/chapter_maps.asm](../../engine/map/chapter_maps.asm)) has one long pointer per chapter, prologue to final. Each points to a 27-byte descriptor:
 
-Rather than centering the camera on the cursor on every D-pad press, the camera controller defines a central comfort box 48 pixels inside the screen edges (`X $30..$C7`, `Y $28..$A7`). As long as the cursor stays inside that box, the background stays still; only when the cursor steps past a margin does the camera scroll to follow it.
+| Field | Destination | Notes |
+|---|---|---|
+| Layout | `aMapData` | Compressed, 64 × 64 words |
+| Metatile table | `$7F/0000` | Compressed, 8 KB |
+| Tile graphics | Video RAM `$2800` | Compressed 4bpp tiles |
+| Palette | Background palettes 1–7 | Uncompressed |
+| Width mode, a second width word, minimum X and Y scroll | `wMapWidthMode`, `$075E`, `wMapMinXScroll`, `wMapMinYScroll` | 4, 4, 0, 0 in every chapter. Nothing reads `$075E`. |
+| Map width and height in pixels | `wMapMaxXScroll`, `wMapMaxYScroll` | The loader subtracts one screen, `$0100` and `$00E0` |
+| Terrain table | `aTerrainTileset` | Compressed |
 
-```
-  0                    $30                 $C7         $FF
-0 +---------------------+-------------------+-----------+
-  |                     |                   |           |
-$28                     +-------------------+           |
-  |                     |  Free cursor box  |           |
-  |                     |   (no scrolling)  |           |
-$A7                     +-------------------+           |
-  |                                                     |
-$DF +---------------------------------------------------+
-```
+Chapters 1 through Final are `$0400` pixels square, so the camera's top-left corner runs from 0 to `$0300` on both axes. The prologue is `$0400` wide and `$0200` tall (64 × 32 tiles), so its vertical range is 0 to `$0120`.
+
+Two chapters borrow another's tiles. Chapter 2 has its own layout and palette but the prologue's metatiles, graphics, and terrain table; the final chapter does the same with Chapter 5's. A borrowed tile set brings its terrain table along, so the same tile ID means the same terrain in both chapters.
+
+`rlGetMapDataIndex` turns a tile position into an offset in `aMapData`. Width mode 4 is a 64-tile row and mode 8 a 128-tile row. Every chapter uses mode 4, and so does the world map, which sets the word itself ([Chapter 19](19-between-chapters.md)).
+
+## The camera and the cursor
+
+The **camera** (`wMapScrollXPixels`, `wMapScrollYPixels`) is the map pixel at the screen's top-left corner, kept between the descriptor's limits. The **cursor** (`wCursorXOffset`, `wCursorYOffset`) is a position on the screen, so the tile under it is `(camera + cursor) / 16` on each axis.
+
+The D-pad moves the cursor one tile per press, 4 pixels a frame (8 with Y held), so a tile takes four frames, or two. The cursor moves freely while it stays at least 48 pixels from every edge of the screen: X from `$30` to `$C0`, Y from `$30` to `$A0`, measured at the cursor tile's top-left corner. A press that would carry it past that margin moves the camera instead, at the same speed, and the cursor stays put on the screen. When the camera is already against the edge of the map, the cursor may go to within 16 pixels of the screen's edge (`rsMoveMapCursorLeft` and its three neighbors in [engine/map/map_cursor.asm](../../engine/map/map_cursor.asm)).
+
+A **scroll step** moves the camera `wMapScrollSpeed` pixels in a direction given as joypad bits in `wMapScrollDirectionIdentifier`: `$0100` right, `$0200` left, `$0400` down, `$0800` up, and their sums for diagonals. `rlContinueMapScroll` runs one step per frame while `wMapScrollingFlag` is set. Each step sets the background scroll registers and builds the strip of cells entering the screen on that side:
 
 ```rust
-fn check_cursor_in_margins() -> bool { // rlCheckPointInScreenMargins
-    let screen_x = wCursorXOffset - wMapScrollXPixels;
-    let screen_y = wCursorYOffset - wMapScrollYPixels;
-    // Returns true (carry clear) if inside X $30..$C7 and Y $28..$A7;
-    // crossing any edge triggers a camera scroll step in that direction.
-    (0x0030..0x00C8).contains(&screen_x) && (0x0028..0x00A8).contains(&screen_y)
+fn map_scroll_step_left() {                  // rlMapScrollStepLeft
+    camera_x -= wMapScrollSpeed;             // rsMapScrollLeftSetBGOFS
+    build_left_column();                     // rsBuildMapLeftColumn
+    wMapColumnUploadVRAMOffset = (camera_x & 0xF8) >> 3;   // tilemap column
+    wMapColumnUploadFlag = 1;                // copy it in the next VBlank
 }
 ```
 
-Each scroll step advances the camera by `wMapScrollSpeed` pixels according to the joypad-style directional bitmask in `wMapScrollDirectionIdentifier` (`$0100` right, `$0200` left, `$0400` down, `$0800` up, and sums for diagonals). Event cutscenes drive the same steppers through a script compiler (`rlCreateMapScrollScriptFromCoordinates`), which translates start and target tile coordinates into a sequence of directional scroll commands in `$7E/DD88` and executes them at `wEventMapScrollSpeed`.
+The diagonal steps do both a column and a row. Events move the camera through the same steps: `rlCreateMapScrollScriptFromCoordinates` turns a start and an end tile into a list of directional steps at `$7E/DD88`, which the event's scroll runs at `wEventMapScrollSpeed`.
 
-To index a tile `(x, y)` inside `aMapData`, the coordinate helper checks `wMapWidthMode`: mode `4` shifts `y` by 7 (`* 128` bytes, or 64 words per row), while mode `8` shifts `y` by 8 (`* 256` bytes, or 128 words per row).
+## Streaming rows and columns
 
-## Tile streaming and the VMAIN row/column trick
+### The tilemap as a ring
 
-The SNES BG1 tilemap at VRAM `$5000` is a 32 × 32 grid of 8 × 8 entries (2,048 bytes). Because SNES background scroll registers wrap modulo 256 pixels on both axes, the 32 × 32 tilemap behaves as a toroidal ring buffer sliding across the 64 × 64-tile chapter map:
+The map layer's tilemap is at video RAM `$5000`. Because the scroll registers wrap at 256 pixels, map pixel `(x, y)` always lands in tilemap cell `((x / 8) mod 32, (y / 8) mod 32)`, wherever the camera is. A cell that scrolls off one side is the cell that will be needed next on the opposite side, so the engine never moves anything already in the tilemap. It only overwrites the cells for the strip entering the screen:
 
 ```
-  64×64 map in WRAM (aMapData)           32×32 tilemap in VRAM ($5000)
-  +---------------------------+          +--------------------+
-  |                           |          | wraps X mod 32     |
-  |    +-------------+        |   DMA    | wraps Y mod 32     |
-  |    |   Visible   | [col]--+--------->| |                | |
-  |    |   viewport  |        |  VMAIN   | +----------------+ |
-  |    +------+------+        |  $80/$81 | | new row        | |
-  |         [row]-------------+--------->| +----------------+ |
-  +---------------------------+          +--------------------+
+  aMapData (64 × 64 tiles, work RAM)        tilemap at $5000 (32 × 32 cells)
+  +-------------------------------+         +------------------------+
+  |      camera                   |         |   row = (y/8) mod 32   |
+  |      +-------------+          |         |  +------------------+  |
+  |      |   screen    |<- new    |  VBlank |  |                  |  |
+  |      | 16 × 14     |  column  | ------> |  |  same cells, in  |  |
+  |      +-------------+          |         |  |  wrapped order   |  |
+  |            ^ new row          |         |  +------------------+  |
+  +-------------------------------+         +------------------------+
 ```
 
-Whenever a scroll step crosses an 8-pixel boundary, the streamer builds only the newly exposed 8-pixel strip into a 64-byte WRAM staging buffer (`$05DC` for a row, `$059C` for a column) and sets its upload flag. If a unit is currently picked up (`wUnitSelectedFlag != 0`), it builds the matching 64-byte strip for the BG3 movement-range overlay (`aMovementMap`) into `$06DC` or `$069C` at the same time.
+Vertically, the screen's 224 lines leave 32 lines of the tilemap off screen, room for the next row. Horizontally, the screen is the tilemap's full 256 pixels, so when the camera sits between two 8-pixel columns, the column leaving on the left and the column entering on the right are the same tilemap column. The map's display setup hides it: it sets window 1 to pixels 8 through 247 and masks the map layer and the sprites outside it, leaving an 8-pixel black band at each side of the screen (`rlSetUpChapterMapDisplay` in [engine/map/map_display.asm](../../engine/map/map_display.asm)).
+
+### Building a strip
+
+A row of the tilemap is 32 cells, the width of 16 map tiles. The row builders read 16 entries of `aMapData`, look up each tile ID's four cells, and take the top two or the bottom two, depending on which half of the map tile this row of cells crosses (bit 3 of the row's Y). They write into a 64-byte buffer laid out like the tilemap row, starting at the cell where the leftmost tile lands and wrapping at the end (`wMapTileBufferWrapped`):
 
 ```rust
-fn build_map_row(map_index: usize, half_y: usize, row_buf: &mut [u16; 32]) { // rsBuildMapRowTiles
-    // half_y (wR2) is 0 for the top half of a 16x16 metatile, 2 for the bottom half
-    for x in 0..16 {
-        let tile_id = aMapData[map_index + x] & wMapTileIDMask;
-        let meta = tile_id * 4;                                           // 4 words per metatile at $7F/0000
-        row_buf[x * 2]     = METATILES[meta + (half_y / 2)] & 0xDFFF;     // top/bottom-left 8x8
-        row_buf[x * 2 + 1] = METATILES[meta + (half_y / 2) + 2] & 0xDFFF; // top/bottom-right 8x8
-    } // wraps around the 32-word ring buffer via wMapTileBufferWrapped
+fn build_map_row(map_index: usize, half: usize, start_cell: usize) { // rsBuildMapRowTiles
+    // half: 0 for the tiles' top quarters, 1 for their bottom quarters
+    let mut cell = start_cell;                          // (camera_x / 8) % 32
+    for i in 0..16 {
+        let id = aMapData[map_index + i] & wMapTileIDMask;
+        let quarters = &METATILES[id];                  // TL, BL, TR, BR at $7F/0000
+        row_buffer[cell]     = quarters[half]     & !0x2000; // left quarter
+        row_buffer[cell + 1] = quarters[half + 2] & !0x2000; // right quarter
+        cell = (cell + 2) % 32;
+    }
 }
 ```
 
-When the camera begins on an odd 8-pixel boundary—halfway across a 16 × 16 metatile—dedicated `HalfOffset` builders (`rsBuildMapRowTilesHalfOffset`, `rsBuildMapColumnTilesHalfOffset`) split the edge metatiles cleanly so the seam never tears.
+Each entry has its priority bit (bit 13) cleared on the way, whatever the metatile table holds, so map terrain always draws at the layer's low priority.
 
-During VBlank, the tilemap uploader flushes any flagged row or column buffer using the SNES VRAM address increment register (`VMAIN`, `$2115`), turning a single 64-byte DMA into either a horizontal or vertical strip:
+When the camera's X is not a multiple of 16, the screen starts halfway across a map tile. `rsBuildMapRowTilesHalfOffset` handles that case: it begins with the right quarter of the first tile and ends with the left quarter of the seventeenth. Columns work the same way, with `rsBuildMapColumnTiles` and `rsBuildMapColumnTilesHalfOffset` choosing left or right quarters by bit 3 of the camera's X.
+
+The buffers are `$05DC` for a row and `$059C` for a column. While a unit is picked up (`wUnitSelectedFlag`), the same step builds the matching strip of the range overlay from `aMovementMap` into `$06DC` or `$069C` ([Chapter 9](09-moving-a-unit.md)). The overlay is a second background layer, BG3, scrolled with the map.
+
+### Uploading in VBlank
+
+`rlUploadMapRowAndColumn` copies the flagged strips to video RAM during VBlank. One register makes the same 64-byte copy write a row or a column. The video port's address-increment setting (`VMAIN`, `$2115`) says how far the write address moves after each two-byte entry: one word, for the next cell in the row, or 32 words, for the cell below:
 
 ```rust
-fn upload_map_row_and_column() { // rlUploadMapRowAndColumn
+fn upload_map_row_and_column() {                         // rlUploadMapRowAndColumn
     if wMapRowUploadFlag != 0 {
         wMapRowUploadFlag = 0;
-        // VMAIN = $80: increment VRAM word address by +1 (horizontal row)
-        dma_to_vram(0x5000 + wMapRowUploadVRAMOffset, 0x05DC, 0x40, VMAIN_INC_1);
+        VMAIN = 0x80;                                     // +1 word per entry: a row
+        dma_to_vram(0x5000 + wMapRowUploadVRAMOffset, 0x05DC, 64);
         if wUnitSelectedFlag != 0 {
-            dma_to_vram(0x5800 + wMapRowUploadVRAMOffset, 0x06DC, 0x40, VMAIN_INC_1);
+            dma_to_vram(0x5800 + wMapRowUploadVRAMOffset, 0x06DC, 64);
         }
     }
     if wMapColumnUploadFlag != 0 {
         wMapColumnUploadFlag = 0;
-        // VMAIN = $81: increment VRAM word address by +32 (vertical column)
-        dma_to_vram(0x5000 + wMapColumnUploadVRAMOffset, 0x059C, 0x40, VMAIN_INC_32);
+        VMAIN = 0x81;                                     // +32 words per entry: a column
+        dma_to_vram(0x5000 + wMapColumnUploadVRAMOffset, 0x059C, 64);
         if wUnitSelectedFlag != 0 {
-            dma_to_vram(0x5800 + wMapColumnUploadVRAMOffset, 0x069C, 0x40, VMAIN_INC_32);
+            dma_to_vram(0x5800 + wMapColumnUploadVRAMOffset, 0x069C, 64);
         }
     }
 }
 ```
 
-When an event alters tiles across the entire screen—such as seizing a castle or triggering a bridge change—a full-screen rebuild (`rlRedrawVisibleMapTilemap`) reconstructs all 32 rows into `aBG2TilemapBuffer` (`$7E/7388`) and DMAs the full `$0800` bytes to VRAM `$5000`, while its companion (`rlRedrawRangeOverlayTilemap`) refreshes BG3. During certain scripted cutscenes, a mid-frame IRQ (`aMapRowUploadIRQ`) waits for HBlank partway down the screen, briefly forces blank on `$2100`, and invokes the row/column uploader directly.
+A scroll step costs at most 128 bytes of VBlank time, or 256 with the overlay showing.
 
-### Animated map tiles
+### Redrawing the whole screen
 
-Water ripples, torch flames, and castle banners animate without touching any tilemap entries. On steps 0 and 1 of the 16-step `wMapSpriteFrameCounter` cycle, `rlUploadMapAnimations` ([engine/map/map_sprites.asm](../../engine/map/map_sprites.asm)) DMAs the next tile sheet frame for `g4bppMapTileAnimations1` (`$0800` bytes, 16 frames → VRAM `$0C00`) and `g4bppMapTileAnimations2` (`$0400` bytes, 32 frames → VRAM `$0A00`). Bit 0 of `wMapSpriteAnimationPauseFlags` freezes tile animation during menus or battles without disturbing map sprites.
+When many tiles change at once (a castle taken, a map change, the return from a full-screen window), `rlRedrawVisibleMapTilemap` rebuilds the screen. It saves the camera, moves it a screen's height down, sets the scroll speed to 8, and steps it back up one row at a time, building each row in turn into `aBG2TilemapBuffer` at `$7E/7388`. The finished `$0800`-byte tilemap is then copied to `$5000` in one piece, and the camera restored. `rlRedrawRangeOverlayTilemap` does the same for the overlay.
+
+During some events the strips are uploaded mid-frame instead: `aMapRowUploadIRQ` asks for an interrupt at scanline `$D7`, near the bottom of the screen, whose handler waits for the horizontal blank, turns the display off, runs the uploader, and turns it back on.
+
+## Animated tiles
+
+Water and other animated terrain change without any tilemap writes. Two sheets of tile graphics, `g4bppMapTileAnimations1` and `g4bppMapTileAnimations2`, hold successive frames of a block of tiles. Every eight frames, `rlUploadMapAnimations` ([engine/map/map_sprites.asm](../../engine/map/map_sprites.asm)) copies the next frame of the first sheet (`$0800` bytes) to video RAM `$0C00`, and on the following frame the next frame of the second (`$0400` bytes) to `$0A00`. Every tilemap cell that names those tiles changes picture at once. The other six frames of each eight upload the standing units' sprite frames ([Chapter 5](05-who-stands-where.md)), so the tile animations and the map sprites take turns with the VBlank time.
+
+Bit 0 of `wMapSpriteAnimationPauseFlags` stops the tile animations (`rlPauseMapTileAnimation`), and bit 15 stops the sprites. Map battles, map action animations, cutscenes, the dialogue box, the castle screen, and the credits pause the tiles.
 
 ## The minimap
 
-Pressing Start opens `procMinimap` ([engine/map/minimap.asm](../../engine/map/minimap.asm)), which shrinks the entire 64 × 64 battlefield into a 128 × 128-pixel overview at 2 × 2 pixels per tile. Rather than stalling the frame to render all 4,096 tiles at once, the proc slices the work across eight frames at `$200` (512) tiles per frame. Each tile looks up a palette index in `aMinimapTerrainColors` (with closed villages forced to color `9`), overlays unit dots colored by allegiance, and frames the active camera region with a flashing rectangle. While open, the D-pad scrolls the map underneath, holding R, X, A, or Y toggles translucency, and B or Start closes the overlay.
+Start opens the minimap (`procMinimap` in [engine/map/minimap.asm](../../engine/map/minimap.asm)). It draws the whole map with each tile as a 2 × 2-pixel dot, a 128 × 128-pixel picture for a 64 × 64 map. There's no hardware mode for drawing single pixels, so the engine treats a block of 256 tile graphics as a bitmap. It sets bits directly in a copy of those graphics in work RAM (`$7E/8B88`), then copies them to video RAM and writes a 16 × 16-cell tilemap (16 × 8 for the prologue) that places each of those tiles once.
 
-The Warp staff hijacks the same proc by setting bit 11 of `wChapterFlags`. In that mode, `rsMinimapShowWarpCastle` repurposes the D-pad to step through the player's empty castles and home castle, printing each castle's name until the player confirms a destination with A or cancels with B.
+The proc spreads the work over several frames:
+
+1. Clear the pixel buffer.
+2. Draw terrain, `$200` tiles a frame, eight frames for a full map. Each tile's terrain picks a color from `aMinimapTerrainColors`, and closed villages are drawn in color 9.
+3. Draw a dot for each unit, colored by army.
+4. Copy the pixels to video RAM, `$0800` bytes a frame for four frames.
+5. Write the tilemap.
+
+The minimap is on BG2, a layer the map otherwise leaves off. Color math dims the map layers under it. A box of sprites shows the part of the map currently on screen, cycling through four colors. While the minimap is open (bit 5 of `wMapSystemFlags`), the D-pad scrolls the map under it, holding R, X, A, or Y makes it see-through, and B or Start closes it.
+
+The Warp staff uses the same proc to choose a destination. With bit 11 of `wChapterFlags` set, the D-pad steps through the player's empty castles and the home castle, showing each one's name (`rsMinimapShowWarpCastle`); A chooses, and B cancels.
 
 ## Trade-offs and hard limits
 
-Streaming a single 8-pixel strip per frame keeps VBlank DMA overhead to 128 bytes (256 bytes with the range overlay active), leaving ample bandwidth for unit sprites, dialogue boxes, and palette fades. That design imposes four hard limits:
-
-- **Maximum scroll speed:** Because `rlUploadMapRowAndColumn` uploads at most one row and one column per VBlank, scrolling faster than 8 pixels per frame on an axis would skip a strip and leave stale tiles on screen.
-- **10-bit metatile space:** `wMapTileIDMask` (`$03FF`) caps each chapter tileset at 1,024 distinct 16 × 16 metatiles so the upper six bits of every `aMapData` word remain free for area-restriction IDs.
-- **64 × 64 (or 128-wide) grid:** `rlGetMapDataIndex` supports only `wMapWidthMode` values `4` (64 tiles wide) and `8` (128 tiles wide). Every shipped chapter map—as well as the world map in [Chapter 19](19-between-chapters.md)—uses mode `4`.
-- **Unused second map layer:** `rsBuildMapRowTiles` and `rsBuildMapColumnTiles` still test bit 1 of `wUnknown00075A` to build a second priority-tagged tile layer from `$7F/6400` into `$065C`/`$061C`, though nothing in the game enables that bit or uploads those buffers.
+- **Scroll speed.** Each step builds one row and one column at the leading edge, so a step can't be more than 8 pixels, or a strip of cells would be skipped and left stale. The player's fastest speed, with Y held, is exactly 8.
+- **1,024 tile IDs per chapter.** The 10-bit mask leaves the top 6 bits of each map word for area tags.
+- **Width.** `rlGetMapDataIndex` knows only 64-tile and 128-tile rows. Nothing uses the wider mode.
+- **One frame's work per strip.** A big change goes through the full redraw, which rebuilds all 32 rows in one pass and copies `$0800` bytes.
+- **An unused second layer.** With bit 1 of `wUnknown00075A`, the row and column builders also build a second strip from IDs at `$7F/6400`, with the priority bit set, into `$065C` and `$061C`. The only writes to that variable, in the two map display setups, store 1, and nothing uploads those buffers.
 
 ## Where it lives in the source
 
-- [engine/map/chapter_maps.asm](../../engine/map/chapter_maps.asm): `aChapterMapPointers`, `rlLoadChapterMapLayout`, and `rlLoadChapterMapGraphics`.
-- [engine/map/map_tilemap.asm](../../engine/map/map_tilemap.asm): `rlUploadMapRowAndColumn`, `rsBuildMapRowTiles`, `rlRedrawVisibleMapTilemap`, `rlRedrawRangeOverlayTilemap`, and `aMapRowUploadIRQ`.
-- [engine/map/camera.asm](../../engine/map/camera.asm) and [engine/map/scroll.asm](../../engine/map/scroll.asm): `rlGetMapDataIndex`, `rlCheckPointInScreenMargins`, `rlMapScrollStep*`, and `rlCreateMapScrollScriptFromCoordinates`.
-- [engine/map/map_display.asm](../../engine/map/map_display.asm): `rlSetUpChapterMapDisplay` and map display restoration.
-- [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): `rlUploadMapAnimations` (`g4bppMapTileAnimations1`/`2`).
-- [engine/map/minimap.asm](../../engine/map/minimap.asm): `procMinimap`, `aMinimapTerrainColors`, and `rsMinimapShowWarpCastle`.
-- [data/terrain/MovementCost.csv](../../data/terrain/MovementCost.csv) and [data/terrain/TerrainAvoid.csv](../../data/terrain/TerrainAvoid.csv): terrain movement and avoid tables.
-- [docs/reference/map.md](../reference/map.md): full reference for the chapter map system.
+- [engine/map/chapter_maps.asm](../../engine/map/chapter_maps.asm): `aChapterMapPointers`, the 12 descriptors, `rlLoadChapterMapLayout`, `rlLoadChapterMapGraphics`.
+- [engine/map/camera.asm](../../engine/map/camera.asm): `rlGetMapDataIndex`, the conversions between tiles, map pixels, and screen positions, and centering the camera.
+- [engine/map/scroll.asm](../../engine/map/scroll.asm): the scroll steps, `rlContinueMapScroll`, the strip queuing routines, and `rlCreateMapScrollScriptFromCoordinates`.
+- [engine/map/map_tilemap.asm](../../engine/map/map_tilemap.asm): the row and column builders, `rlUploadMapRowAndColumn`, the full redraws, and `aMapRowUploadIRQ`.
+- [engine/map/map_cursor.asm](../../engine/map/map_cursor.asm): cursor movement and the screen margins.
+- [engine/map/map_display.asm](../../engine/map/map_display.asm): `rlSetUpChapterMapDisplay`, including the side window.
+- [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): `rlUploadMapAnimations` and the pause flags.
+- [engine/map/minimap.asm](../../engine/map/minimap.asm): `procMinimap` and the Warp castle choice.
+- [data/terrain/](../../data/terrain/): movement costs and avoid bonuses by terrain.
+- [docs/reference/map.md](../reference/map.md): the reference page.

@@ -1,176 +1,212 @@
-# Chapter 25: Full-screen windows and the status screen
+# Chapter 25: Full-Screen Windows and the Status Screen
 
-A tactical RPG needs more than small map popups: it needs a multi-page character sheet, sortable unit, item, skill, and army overviews, an options screen, a Valkyrie revival grid, and a Game Over screen. Every one of these views must temporarily take over the entire SNES display and working RAM—whether opened from the chapter map or from inside a castle—and return cleanly to whatever launched it without losing the caller's cursor or page.
+Eight screens take over the whole display for a while and then hand it back. The **status screen** shows one unit's full record. Four overview windows from the map menu list the army: the **unit list**, the **item window**, the **skill window**, and the **data window**. The **options menu** changes the settings, the **revive screen** chooses a dead unit for the Valkyrie Staff, and the **game over** screen ends the game. Each can be opened from the map, and most from the castle screen too, and each returns to whatever opened it.
 
-This chapter covers the shared full-screen menu architecture and scoped WRAM reuse, the status screen's split-scrolling pages and Holy Blood ring, each of the four map-menu overview windows, the options, revive, and Game Over screens, and the shared window and text primitives beneath them.
+These screens follow the pattern of the castle screen ([Chapter 15](15-castles-and-towns.md)): an opener replaces the frame's routines, a few game state routines run the screen, and leaving installs the next screen's opener. They share one VBlank routine, and they keep their variables in the same block of work RAM, since only one of them is ever open. A screen that opens another and expects to come back records where to return to and saves whatever it needs to restore.
 
-## The shared full-screen menu pattern
+This chapter covers the shared pattern, the status screen, the four overview windows, the options, revive, and game over screens, and how the screens pass control between them.
 
-Every full-screen menu follows the same lifecycle, split between a bank `$80` opener and bank `$89`/`$8B` step routines. Rather than inventing a fresh VBlank handler per screen, all seven menus share `rsRunMenuScreenVBlank` ([engine/menus/status_screen.asm](../../engine/menus/status_screen.asm)), which flushes DMA, OAM, HDMA, PPU register buffers, joypad input, and menu tilemap uploads each frame:
+## The pattern
+
+### Opening
+
+A screen opens by installing its opener as the main loop routine, directly or through a fade proc. The opener runs once:
 
 ```rust
-fn open_full_screen_menu(opener: fn(), setup_state: u16, upkeep_state: u16) {
-    set_forced_blank(0x80);
+fn open_full_screen(setup: GameStateRoutine, upkeep: GameStateRoutine) {
+    force_blank();
     wVBlankPointer = rsRunMenuScreenVBlank;
-    halt_and_disable_vblank();
-    reset_screen_registers_and_engines(); // proc, active-sprite, HDMA, IRQ
-
-    configure_vram_layer_bases();
-    init_screen_variables_and_graphics();
-
-    wGameStateRoutine1 = setup_state;     // runs once, then advances to step routine
-    wGameStateRoutine2 = upkeep_state;    // runs every frame (e.g., cursor/sprite upkeep)
+    reset_engines();                         // procs, active sprites, HDMA, IRQs
+    load_graphics_and_tilemaps();
+    set_layers_windows_and_hdma();
+    wGameStateRoutine1 = setup;              // runs once, then hands over to a step routine
+    wGameStateRoutine2 = upkeep;             // runs every frame: sprites, cursors
     wGameStateStep = 0;
-    wMainLoopPointer = rsRunFrameTasks;   // soft-reset check, decompression, deferred sound
-    enable_vblank_and_unblank();
+    wMainLoopPointer = rsRunFrameTasks;      // soft reset, decompression queue, deferred sound
+    unblank();
 }
 ```
 
-### Scoped WRAM reuse and caller-return pointers
+`rsRunMenuScreenVBlank` ([engine/menus/status_screen.asm](../../engine/menus/status_screen.asm)) is the usual VBlank list: the queued copies to video RAM, palettes and sprites, HDMA, the buffered PPU registers, the sound queue, the joypad, the game state routines, and the menu tilemap uploads (`rlMapMenuVBlankUpload`). The main loop does only the background tasks, so the AI, which runs from the map's main loop ([Chapter 14](14-armies-with-a-mind.md)), stops while any of these screens is up.
 
-Because full-screen menus never run simultaneously, they overlay the same WRAM region starting at `$7F/8183`:
+The screens' game state routines and steps:
 
-```
-  $7F/8183 +--------------------------------------------------------+
-           | Status screen: unit snapshot, Holy Blood levels, steps |
-           |--------------------------------------------------------|
-           | Unit / Item / Skill / Data windows:                    |
-           |   aUnitWindowDeploymentSlots, sort scores, cursors     |
-           |--------------------------------------------------------|
-           | Options menu: cursor, aOptionsMenuValues / Opening     |
-           |--------------------------------------------------------|
-           | Revive screen: borrows aUnitWindowDeploymentSlots      |
-           |   & saves cursor in wItemWindowCursorRow before X!     |
-           +--------------------------------------------------------+
-```
-
-When a screen can be reached from multiple callers, the caller writes its own low-word opener address into `wStatusScreenCaller` (or `wUnitWindowCaller`) before jumping:
-
-| `wStatusScreenCaller` | Opened from | Fade-in speed | B returns to |
+| Screen | Opener | Game state routines | Steps |
 |---|---|---|---|
-| `rsUnitWindowOpen` | Unit window (A on off-map unit) | `5` | Unit window (preserving place via `wUnitWindowCaller = rsOpenStatusScreen`) |
-| `rsReviveScreenOpen` | Revive screen (X) | `1` | Revive screen (cursor saved in `wItemWindowCursorRow`) |
-| `rsOpenCastleScreen` | Castle courtyard | `1` | Castle screen (`wChapterFlags` bit 5 set) |
-| `rsReturnToMapMainLoop` | Chapter map (X on unit) | None (full brightness) | Map, or castle if `wChapterFlags` bit 5 is set |
+| Status screen | `rsOpenStatusScreen` | `$07`–`$09` | 11 |
+| Unit list | `rsUnitWindowOpen` | `$20`–`$22` | 6 (one per page) |
+| Item window | `rsItemWindowOpen` | `$23`–`$25` | 5 |
+| Options menu | `rsOpenOptionsMenu` | `$29`–`$2B` | 4 |
+| Skill window | `rsSkillWindowOpen` | `$2C`–`$2E` | 2 |
+| Data window | `rsDataWindowOpen` | `$2F`–`$31` | 3 |
+| Revive screen | `rsReviveScreenOpen` | `$32`–`$34` | |
+| Game over | `rsSetupGameOverScreen` | (a proc) | |
+
+### Sharing RAM
+
+The screens' variables overlap in bank `$7F`:
+
+| From | Screen |
+|---|---|
+| `$7F/8183` | Status screen; data window |
+| `$7F/8185` | Skill window |
+| `$7F/82C5`–`$7F/8438` | Unit list (its caller word at `$82C5`) |
+| `$7F/8400` | Options menu |
+| `$7F/8467` | Item window |
+
+The revive screen keeps its list in the unit list's variables (`aUnitWindowDeploymentSlots`). Opening one of these screens overwrites the state of whichever screen opened it. The disassembly writes these names only inside the files that own them (`SCOPED` in [tools/name_ram.py](../../tools/name_ram.py)), because the same address means different things on different screens.
+
+### Coming back
+
+Closing a screen goes back to the map (`rsReturnToMapMainLoop`, which rebuilds the map's display), or to the castle screen when bit 5 of `wChapterFlags` says the castle is open. The status screen can be opened from four places, so it needs more: the caller stores the low word of its own opener in `wStatusScreenCaller` before opening it, and closing the status screen installs that opener again.
+
+| Opened from | `wStatusScreenCaller` | Fade in | B returns to |
+|---|---|---|---|
+| The map (X on a unit) | `rsReturnToMapMainLoop` | None, at full brightness | The map, or the castle |
+| The castle courtyard | `rsOpenCastleScreen` | Speed 1 | The castle screen |
+| The unit list (A on a unit off the map) | `rsUnitWindowOpen` | Speed 5 | The unit list |
+| The revive screen (X) | `rsReviveScreenOpen` | Speed 1 | The revive screen |
+
+Reopening a screen runs its opener from the start, which would normally reset it. The unit list and the revive screen keep their place in two ways. The unit list saves its page, sort, and row order before leaving (`rlUnitWindowSaveListOrder`), and its opener restores them when `wUnitWindowCaller` names the status screen. The revive screen keeps its cursor in `wItemWindowCursorRow`, an item window variable.
 
 ## The status screen
 
-The status screen runs an 11-step state machine (`$00`–`$0A` in `rlStatusScreenStep`) across three primary views:
+### Pages
+
+The status screen shows one unit across three views:
 
 ```
-  Scanline  0 +----------------------------------------------+  BG3VOFS = 0 (pinned by HDMA)
-              |  Unit header: portrait, name, class, LV/EXP  |  First $57 (87) scanlines
-  Scanline 87 +----------------------------------------------+  BG3VOFS = wBufferBG3VOFS
-              |  Scrollable body (steps $00 <-> $01):        |  Down/Up scrolls at 7 px/frame
-              |    Top half: 7 stats + bonuses, inventory    |
-              |    Bottom half: leadership, lover/army,      |
-              |      movement, gold, arena, ranks, skills    |
-              +----------------------------------------------+
+  line  0  +-----------------------------------------+  header: portrait, name, class,
+           |                                         |  level, experience
+  line 87  +-----------------------------------------+  BG3 scroll below this line
+           | top half: HP, first weapon's attack,    |
+           |   hit, range, avoid; seven stats with   |  Down/Up scrolls 7 lines a frame
+           |   bonuses; inventory                    |  between the halves
+           | bottom half: commander or leadership,   |
+           |   lover or army, movement, talk partner,|
+           |   gold, arena level, condition, ten     |
+           |   weapon ranks, skills                  |
+           +-----------------------------------------+
 ```
 
-- **Top and bottom stat pages (`$00`, `$01`):** Both halves live on a single tall BG3 tilemap. Pressing Down or Up scrolls BG2 and BG3 together by `STATUS_SCREEN_SCROLL_SPEED` (7) lines per frame toward `STATUS_SCREEN_SCROLL_BOTTOM`, while `rlStatusScreenBuildBG3SplitTable` keeps the first `$57` scanlines pinned at scroll `0` and a second HDMA draws the background gradient.
-- **Holy blood page (`$02`, `$05`):** Pressing A switches to a ring of twelve crests, with Loptous—the thirteenth blood—centered in the middle with its own graphics and gradient. On the first visit, step `$05` (`STATUS_SCREEN_STEP_LOAD_HOLY_BLOOD`) decompresses the crest sheet into `aDecompressionBuffer` and streams it to VRAM over five consecutive frames. Each inherited blood glints once for minor blood or twice on independent timers for major blood.
-- **Item and skill details (`$03`, `$08`):** Pressing X places a cursor onto inventory items (displaying hit, might, range, weight, uses, kills, description, and weapon triangle) or onto skills on the bottom half (name, description, and personal vs. class origin).
+- **The stat page** is one BG3 tilemap taller than the screen. Down and Up scroll BG2 and BG3 together, `STATUS_SCREEN_SCROLL_SPEED` (7) lines a frame, between 0 and `STATUS_SCREEN_SCROLL_BOTTOM` (`$87`). An HDMA table (`rlStatusScreenBuildBG3SplitTable`) holds BG3's scroll at 0 for the first 87 lines, so the header stays put while the rest moves. A second HDMA table draws the background's gradient.
+- **The holy blood page** (A) is a ring of twelve crests, one per holy blood, with Loptous, the thirteenth, in the middle with its own graphics and gradient. Each blood the unit carries glints: once for minor blood, twice on separate timers for major. The first visit decompresses the crest graphics and sends them to video RAM in five pieces over five frames.
+- **Details** (X) puts a cursor on the inventory, showing an item's hit, might, range, weight, uses, kills, description, and weapon triangle, or on the bottom half's skills, showing a skill's name, description, and whether it is personal or from the class.
 
-Before drawing, `rsInitializeStatusScreenVariables` snapshots the unit's data and applies context redactions: non-player units hide experience, item uses, kills, and lover (and enemy luck displays as `0`); promotion-ready units blink a marker beside their portrait; dropped or unique items carry a marker; and `rsDrawWeaponRankLetter` prints `A`, `B`, `C`, `-`, or a star for major-blood weapon ranks and arena level 7.
+### What it shows, and for whom
 
-Pressing R or L cycles through player generation IDs `1..$18`:
+Before drawing, `rsInitializeStatusScreenVariables` gathers the unit's facts into the screen's block: the 13 holy blood levels, the commander or leadership stars, the skills with icons, whether the unit is at its promotion level (a marker blinks beside the portrait), the item it drops or holds as unique (a marker beside it), and its condition (a dead, captive, moved, or sleeping unit gets the grey palette). For a unit outside the player's army the screen hides experience, item uses, kills, and the lover, and R and L do nothing. An enemy's luck shows as 0.
+
+Weapon ranks show as A, B, C, or a dash, and a star for the rank a major blood gives. The same star marks arena level 7.
+
+### Another unit
+
+R and L step through the player's generation IDs 1 to 24 ([Chapter 1](01-a-unit-is-made-of-parts.md)), skipping units that are dead or captive unless Select is held:
 
 ```rust
-fn cycle_status_unit(direction: i8) { // rsStatusScreenNextUnit / PreviousUnit
+fn next_status_unit(direction: i8) {           // rsStatusScreenNextUnit / PreviousUnit
     loop {
-        gen_id = wrap_1_to_24(gen_id + direction);
-        if let Some(unit) = player_unit_by_gen_id(gen_id) {
-            if !unit.is_dead_or_captive() || joypad_held(SELECT) {
-                select_unit(unit);
+        gen_id = wrap_within_1_to_24(gen_id + direction);
+        if let Some(unit) = player_unit(gen_id) {
+            if !(unit.dead || unit.captive) || select_held() {
+                select(unit);
                 break;
             }
         }
     }
-    wStatusScreenReopenMode = current_page_tag(); // $1234 top, $4321 bottom, $1111 holy blood
-    fade_out_and_reopen(rsOpenStatusScreen);
+    wStatusScreenReopenMode = page_tag();      // $1234 top, $4321 bottom, $1111 holy blood
+    fade_out_then_install(rsOpenStatusScreen);
 }
 ```
 
-Holding Select lets the player inspect units that have already died or been captured.
+The screen changes unit by reopening itself. The page tag is an arbitrary value that tells the setup routine which page to fade in on.
 
-## The four map-menu overview windows
+## The overview windows
 
-Each of the four overview commands in the main map menu ([Chapter 10](10-menus-over-the-map.md)) installs its own full-screen view:
+The map menu's four overview commands ([Chapter 10](10-menus-over-the-map.md)) each open a full-screen window.
 
-### Unit window
+### The unit list
 
-[engine/menus/unit_window.asm](../../engine/menus/unit_window.asm) (game states `$20`–`$22`) presents the player's army across six scrollable pages (`wGameStateStep 0..5`) covering stats, combat parameters, weapon ranks, skills, and personal status. Columns can be sorted by any stat, weapon rank, skill, or original recruitment order (`aUnitJoinOrder`), and a swap mode lets the player reorder rows directly. Pressing A on a deployed unit closes the window and jumps the map cursor to that unit; pressing A on a unit inside a castle opens its status screen instead, setting `wUnitWindowCaller` so closing the status screen returns to the same row.
+The unit list ([engine/menus/unit_window.asm](../../engine/menus/unit_window.asm)) is a table of the player's units with six pages of columns: class, level, experience, and HP; the equipped weapon with might, hit, and avoid; the seven stats; movement, gold, arena level, and talk target; the ten weapon ranks; and skills. Each row shows the unit's map sprite and a marker for a unit ready to promote.
 
-### Item window
-
-[engine/menus/item_window.asm](../../engine/menus/item_window.asm) (states `$23`–`$25`) scans every player unit's inventory and storage to build a flat list of all owned items alongside the selected item's stats and description. Three sort modes—by owner, item type, or name—cycle with a button press and persist across visits in `wItemWindowSortMode`. Pressing A jumps straight to the unit holding the highlighted item.
-
-### Skill window
-
-[engine/menus/skill_window.asm](../../engine/menus/skill_window.asm) (states `$2C`–`$2E`) lists 18 skills with each skill's icon, description, and every player unit that possesses it. Normally the scan checks only personal and class skills; holding Select while opening the window instructs the builder to count skills granted by held items (such as the Pursuit Ring or Miracle Sword) as well.
-
-### Data window
-
-[engine/menus/data_window.asm](../../engine/menus/data_window.asm) (states `$2F`–`$31`) summarizes the strategic state of the chapter: chapter title, victory goal, turn number, and a table of every active army with its leader, diplomatic relation to the player, and living unit count. Pressing X opens an army's detail panel showing its home castle and its leader's portrait, map sprite, level, HP, and attack power.
-
-## Options, Valkyrie revive, and Game Over
-
-Three specialized screens complete the full-screen menu suite:
-
-- **Options menu ([options_menu.asm](../../engine/menus/options_menu.asm), states `$29`–`$2B`):** Copies current settings into `aOptionsMenuValues` and keeps a backup in `aOptionsMenuOpeningValues`. Up and Down move the cursor (animating a 10-pixel slide for one frame via `wOptionsMenuCursorMove`), Left/L and Right/R cycle values within `aOptionsMenuValueCounts`, Y restores `aOptionsMenuOpeningValues`, and A or B commits changes (`rlOptionsMenuApplyValues`) back to the map or castle:
-
-| Option | Choices | Availability |
-|---|---|---|
-| `OPTION_ANIMATION` | Real, map, each unit | Always |
-| `OPTION_TERRAIN_WINDOW`, `UNIT_WINDOW`, `AUTO_CURSOR` | On, off | Always |
-| `OPTION_MESSAGE_SPEED` | `1`–`5` | Always |
-| `OPTION_ENEMY_SPEED` | Real, fast | Always |
-| `OPTION_SOUND` | Stereo, mono, off | Always |
-| `OPTION_AUTO_SAVE` | Off, file `1`–`4` (`0` or `file + 1`) | Always |
-| `OPTION_ENEMY_AI` | Normal, clever | Save completion count `> 0` |
-
-- **Revive screen ([revive_screen.asm](../../engine/menus/revive_screen.asm), states `$32`–`$34`):** Launched by `rsCastleStaffValkyrie`, it scans for dead player units and arranges their names and animated map sprites in a three-column grid (or displays `REVIVE_SCREEN_STEP_NOBODY_DEAD`). Pressing X opens the highlighted unit's status screen, stashing the grid cursor in `wItemWindowCursorRow` so it survives the round trip; pressing A asks for confirmation and calls `rlBuildCastleActionRounds` to execute the Valkyrie Staff.
-- **Game Over ([game_over.asm](../../engine/menus/game_over.asm)):** `rsSetupGameOverScreen` decompresses the Game Over 4bpp tiles (`gcUnknownC02B6B` → VRAM `$0000`) and both tilemaps (`gcUnknownC03455` → `$A000`, `gcUnknownC03558` → `$A800`), spawns `procGameOver` (`"GO"`), loads `aGameOverPalettes`, starts music `$72`, and fades in. From frame `$84` onward, `rsGameOverShake` shakes BG2 using `aGameOverShakeOffsets`; pressing Start once faded in—or letting the 1,020-frame timer expire—calls `rlSoftReset`.
-
-## Shared window and text primitives
-
-Two small modules supply the visual building blocks used across maps, castles, and full-screen menus:
-
-- **Window frames ([window_graphics.asm](../../engine/menus/window_graphics.asm)):** `rlLoadWindowGraphics` dispatches on a style index at `$0756` (`0..3`) to DMA border tiles to VRAM `$6000` and copy `aWindowPalette` into BG palette 0. All four handlers load the exact same `g4bppWindowFrames` and `aWindowPalette`, leaving behind a stub for selectable window borders that never shipped. `rlGetDialogueBoxGraphicsAndPalette` loads the dialogue box's frame tiles and palette (`$DE/6200`) into the same slot.
-- **Menu text ([menu_text.asm](../../engine/menus/menu_text.asm)):** `rlDrawMenuTextLine` stamps Shift-JIS strings into a menu tilemap as top and bottom 8 × 8 tile pairs:
+Up from the first row moves the cursor onto the column headings. Left and right pick a column, A sorts descending, and X ascending. Sort types are numbered 0 to 37, with 32 in use: join order, class, level, experience, HP, maximum HP, weapon, might, hit, avoid, each stat, gold, movement, each weapon rank, number of skills, arena level, and talk target. A sort has two parts. A getter per sort type fills `aUnitWindowSortScores` with one number per row, and one routine orders the rows by those numbers:
 
 ```rust
-fn draw_menu_text_char(ch: u16, tilemap: &mut [u16], row_stride: usize) { // rlDrawMenuTextLine
-    if let Some((top, bottom)) = lookup_kanji_override(ch) { // 15 entries in aMenuFontKanjiOverrides
-        write_tile_pair(tilemap, row_stride, base_tile + top, base_tile + bottom);
-        return;
+fn sort_descending(rows: &mut [Row], score: &mut [i16]) { // rlUnitWindowSetSortDescending
+    for i in 0..rows.len() {
+        for j in i + 1..rows.len() {
+            if score[j] > score[i] {
+                move_entry(rows, score, j, i);   // to place i; rows i..j-1 shift down one
+            }
+        }
     }
-    let bank_offset = aMenuFontBankOffsets[(ch.high_byte() - 0x81) as usize];
-    let idx = decode_sjis_low_index(ch.low_byte()) + bank_offset;
-    write_tile_pair(
-        tilemap, row_stride,
-        base_tile + aMenuFontBankOffsets[idx],               // top 8x8 glyph tile
-        base_tile + aMenuFontBottomTiles[idx],               // bottom 8x8 glyph tile
-    );
 }
 ```
 
-Two companion helpers handle BG3 directly: `rlDrawBG3TileRun` stamps consecutive two-row graphic labels, and `rlDrawMenuTextNumber` formats up to five-digit numbers.
+Moving an entry instead of swapping two means rows with equal scores never pass each other: the sort is stable. The level sort relies on that. It sorts by experience first and then by level, leaving units of the same level in experience order. Getters that want "best first" under a descending sort negate their numbers. For example, the weapon rank getters negate the rank so A comes before B.
+
+Y starts a swap. Moving one unit to another's row renumbers `aUnitJoinOrder` from the new order, so the swap changes the order the rest of the game uses for the player's units. The page, sort, and order are kept between visits, and cleared on a new game, on a chapter's unit reset, and on loading a save.
+
+A on a unit that is on the map closes the window with the map cursor on that unit. A on a unit that isn't on the map, such as one inside a castle, opens its status screen and comes back to the same row.
+
+### The item window
+
+The item window ([engine/menus/item_window.asm](../../engine/menus/item_window.asm)) lists every item carried by a living, non-captive unit of the player's army, 12 rows at a time, with the selected item's stats, rank, description, and weapon triangle. Items in storage aren't listed.
+
+Its sort panel offers three orders: by owner, by type (the game's item order, `aItemTypeSortRanks`), and by name (a table that looks like kana order). The panel's rows start from the current order. The sort moves each higher-scoring entry up and shifts the rest, as the unit list's does, so it is stable, and the previous order breaks ties: sorting by type after sorting by owner gives the items of each type in owner order. The chosen order is kept between visits. A on an item goes to the unit holding it.
+
+### The skill window
+
+The skill window ([engine/menus/skill_window.asm](../../engine/menus/skill_window.asm)) lists 18 skills with each one's icon, name, description, and the player's units that have it, the first 12 shown with an arrow for more. It counts personal and class skills. Holding Select as the window opens also counts skills that come from items, such as the Pursuit Ring.
+
+### The data window
+
+The data window ([engine/menus/data_window.asm](../../engine/menus/data_window.asm)) shows the chapter's title, its goal (`aDataWindowChapterGoals`), the turn, and a row for each army on the map: its banner, its leader, its relation to the player ([Chapter 4](04-armies-and-allegiance.md)), and its units alive. X opens an army's details: its home castle and its leader's name, level, HP, attack, portrait, and animated map sprite. Every leader's portrait is decompressed into video RAM when the window opens, `$400` words apart, so moving between armies changes only which tiles the portrait sprite uses and which palettes are loaded.
+
+## Options, revive, and game over
+
+### The options menu
+
+The options menu ([engine/menus/options_menu.asm](../../engine/menus/options_menu.asm)) copies the current settings into `aOptionsMenuValues` and keeps a second copy of the values it opened with (`aOptionsMenuOpeningValues`):
+
+| Option | Values |
+|---|---|
+| `OPTION_ANIMATION` | Real, map, each unit ([Chapter 23](23-two-ways-to-show-a-fight.md)) |
+| `OPTION_TERRAIN_WINDOW`, `OPTION_UNIT_WINDOW`, `OPTION_AUTO_CURSOR` | On, off |
+| `OPTION_MESSAGE_SPEED` | 1–5 |
+| `OPTION_ENEMY_SPEED` | Real, fast |
+| `OPTION_SOUND` | Stereo, mono, off |
+| `OPTION_AUTO_SAVE` | Off, or a file 1–4 (stored as 0, or the file plus 1) |
+| `OPTION_ENEMY_AI` | Normal, clever |
+
+The ninth option, the enemy AI, appears only once the save file has finished the game, and the menu uses a second set of row positions and HDMA lines when it does. Up and Down move between options, Left/L and Right/R change the value, Y puts back the opening values, and A or B writes the values into the settings and leaves.
+
+### The revive screen
+
+The castle's Valkyrie Staff handler (`rsCastleStaffValkyrie`) installs the revive screen ([engine/menus/revive_screen.asm](../../engine/menus/revive_screen.asm)). It lists the player's dead units in a grid of three columns, with each one's map sprite over its name; the unit under the cursor animates. X opens that unit's status screen. A asks for confirmation and then builds the staff action from the user to the chosen unit (`rlBuildCastleActionRounds`), which plays as a battle scene. With nobody dead, the screen says so and B leaves.
+
+### Game over
+
+`rsSetupGameOverScreen` ([engine/menus/game_over.asm](../../engine/menus/game_over.asm)) loads the screen's graphics and creates `procGameOver`, which loads its palettes and starts music `$72`. From frame `$84` on, it shakes BG2 through the offsets in `aGameOverShakeOffsets`. Start, once the screen is fully bright, or 1,020 frames of waiting, soft-resets the game.
+
+## Shared pieces
+
+Every screen draws its text with the menu font routines in [engine/menus/menu_text.asm](../../engine/menus/menu_text.asm): `rlDrawMenuTextLine` writes a string as pairs of 8 × 8 tiles, top and bottom, into a tilemap buffer, and `rlDrawMenuTextNumber` writes numbers of up to five digits ([Chapter 13](13-dialogue-and-text.md)). Window frames come from `rlLoadWindowGraphics` ([engine/menus/window_graphics.asm](../../engine/menus/window_graphics.asm)), which takes a style number at `$0756` but loads the same frames and palette for all four styles.
 
 ## Trade-offs and hard limits
 
-Reusing `$7F/8183`+ across seven full-screen menus keeps WRAM free for the map and battle engines, at the cost of requiring explicit state handoffs whenever two screens nest:
-
-- **Cursor preservation across nested screens:** Because the revive screen borrows unit-window WRAM and the status screen overwrites `$7F/8183`+, the revive screen must stash its cursor in `wItemWindowCursorRow` before opening the status screen.
-- **Fixed pool caps:** Unit cycling and join-order sorting assume at most 24 player units (`GenID 1..$18`), and the skill window indexes a fixed list of 18 skills.
-- **Unused remnants:** `rlStatusScreenBuildBG2SplitTableUnused` and options-menu step `$02` (`rsOptionsMenuReturnToMap`) remain in the ROM with no callers.
+- **One screen's state at a time.** The shared block means a screen's state doesn't survive another screen opening, unless it is saved somewhere else first. The unit list saves its order and the revive screen parks its cursor in another screen's variable.
+- **Returning by address.** `wStatusScreenCaller` holds only the low word of the caller's opener, so every screen that opens the status screen must have its opener in bank `$80`, as all four do.
+- **24 player units.** The status screen's R and L step through generation IDs 1 to 24.
+- **A fixed skill list.** The skill window shows the 18 skills in its own table (`$8B/DFBF`); a skill not in that table can't appear there.
+- **Unused pieces.** `rlStatusScreenBuildBG2SplitTableUnused` and options step `$02` (`rsOptionsMenuReturnToMap`) have no callers.
 
 ## Where it lives in the source
 
-- [engine/menus/status_screen.asm](../../engine/menus/status_screen.asm): `rsRunMenuScreenVBlank`, `rsOpenStatusScreen`, the 11-step state machine, and condition/skill description tables.
-- [engine/menus/unit_window.asm](../../engine/menus/unit_window.asm), [item_window.asm](../../engine/menus/item_window.asm), [skill_window.asm](../../engine/menus/skill_window.asm), and [data_window.asm](../../engine/menus/data_window.asm): the four map-menu overview screens.
-- [engine/menus/options_menu.asm](../../engine/menus/options_menu.asm), [revive_screen.asm](../../engine/menus/revive_screen.asm), and [game_over.asm](../../engine/menus/game_over.asm): options, Valkyrie revival, and Game Over.
-- [engine/menus/window_graphics.asm](../../engine/menus/window_graphics.asm) and [menu_text.asm](../../engine/menus/menu_text.asm): shared window frames, palettes, and text/number helpers.
-- [include/Menus.h](../../include/Menus.h) and [include/WRAM.h](../../include/WRAM.h): step constants and scoped menu WRAM definitions.
-- [docs/reference/menus.md](../reference/menus.md): full reference for full-screen menus.
+- [engine/menus/status_screen.asm](../../engine/menus/status_screen.asm): `rsRunMenuScreenVBlank`, `rsOpenStatusScreen`, the status screen's steps, pages, and HDMA.
+- [engine/menus/unit_window.asm](../../engine/menus/unit_window.asm): the unit list, its pages, sorting, and swapping.
+- [engine/menus/item_window.asm](../../engine/menus/item_window.asm), [skill_window.asm](../../engine/menus/skill_window.asm), and [data_window.asm](../../engine/menus/data_window.asm): the other overview windows.
+- [engine/menus/options_menu.asm](../../engine/menus/options_menu.asm), [revive_screen.asm](../../engine/menus/revive_screen.asm), and [game_over.asm](../../engine/menus/game_over.asm): options, revive, and game over.
+- [engine/menus/menu_text.asm](../../engine/menus/menu_text.asm) and [window_graphics.asm](../../engine/menus/window_graphics.asm): text and window frames.
+- [include/Menus.h](../../include/Menus.h): step constants and options; [include/WRAM.h](../../include/WRAM.h): the shared block.
+- [docs/reference/menus.md](../reference/menus.md): the reference page.
