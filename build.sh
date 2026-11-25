@@ -103,6 +103,7 @@ generate() {
   stamp data/character/CharacterData.csv.asm tools/FE4c2a.py data/character/CharacterData.csv
   (cd data/item && python3 "$ROOT/tools/FE4c2a.py" ItemData.csv ItemDataHelper.h ItemData.csv.asm)
   stamp data/item/ItemData.csv.asm tools/FE4c2a.py data/item/ItemData.csv
+  python3 tools/gen_offsets.py
 }
 
 assemble() { # assemble <output> <log>

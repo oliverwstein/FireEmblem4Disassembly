@@ -19,4 +19,7 @@ for %%t in (*.csv) do (
     python "%c2a%" "%%t" "%%~nt.csv.asm"
 )
 
+cd %~dp0
+python "tools\gen_offsets.py"
+
 pause
