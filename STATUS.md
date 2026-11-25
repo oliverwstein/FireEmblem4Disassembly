@@ -127,6 +127,9 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
 | core.md: game states `$1A`/`$1B` called the map battle (the title screen); event procs said to be "a separate set" (they share the 16 slots); the third action-table routine and proc bit `$1000` left open | docs/reference/core.md | replaced by the core pages, 2026-11-25 |
 | Introduction: the map battle given a setup and step (the title screen has them); an event said to run inside a proc; "two more engines" beside the procs (four); three engines registered at boot (five) | docs/guide/00-introduction.md | 2026-11-25 |
+| Ch. 22: the map's rows and columns said to be uploaded in VBlank, and the row-upload IRQ used "during some events"; the IRQ at line `$D7` is installed whenever the map is up and does every upload, leaving the lines below it dark until VBlank | docs/guide/22 | 2026-11-25 |
+| Ch. 25: every menu opener said to reset the procs; the status screen and the four overview windows free only the map's unit and terrain window procs | docs/guide/25 | 2026-11-25 |
+| map.md: the map's main loop said to run the game state routines and redraw the dialogue boxes (both are in `rsMapVBlank`; the main loop runs the AI and the queues) | docs/reference/map.md | 2026-11-25 |
 | Ch. 6: the random numbers said to be seeded from the frame counter; the counter is always 0 there, so the table starts the same at every boot, and saves carry it | docs/guide/06 | 2026-11-25 |
 
 ## Retail bugs and quirks found

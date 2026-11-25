@@ -16,7 +16,7 @@ A screen opens by installing its opener as the main loop routine, directly or th
 fn open_full_screen(setup: GameStateRoutine, upkeep: GameStateRoutine) {
     force_blank();
     wVBlankPointer = rsRunMenuScreenVBlank;
-    reset_engines();                         // procs, active sprites, HDMA, IRQs
+    reset_engines();                         // active sprites, HDMA, IRQs; procs: see below
     load_graphics_and_tilemaps();
     set_layers_windows_and_hdma();
     wGameStateRoutine1 = setup;              // runs once, then hands over to a step routine
@@ -26,6 +26,8 @@ fn open_full_screen(setup: GameStateRoutine, upkeep: GameStateRoutine) {
     unblank();
 }
 ```
+
+Every opener resets the active sprites, the HDMA engine and the IRQ engine. Procs differ. The options menu, the revive screen and game over reset the whole proc engine (`rlProcEngineResetProcEngine`). The status screen and the four overview windows only free the map's unit and terrain window procs (`rlClearUnitWindowAndTerrainWindowProcs`); any other proc running on the map keeps running while the screen is up, since the proc engine runs from VBlank whatever the screen ([procs.md](../reference/procs.md)).
 
 `rsRunMenuScreenVBlank` ([engine/menus/status_screen.asm](../../engine/menus/status_screen.asm)) is the usual VBlank list: the queued copies to video RAM, palettes and sprites, HDMA, the buffered PPU registers, the sound queue, the joypad, the game state routines, and the menu tilemap uploads (`rlMapMenuVBlankUpload`). The main loop does only the background tasks, so the AI, which runs from the map's main loop ([Chapter 14](14-armies-with-a-mind.md)), stops while any of these screens is up.
 

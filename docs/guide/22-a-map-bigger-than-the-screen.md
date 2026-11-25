@@ -2,7 +2,7 @@
 
 A chapter map is a grid of 64 × 64 tiles, each 16 × 16 pixels, so 1,024 pixels on a side. The screen shows 256 × 224 pixels of it, 16 tiles across and 14 down. The SNES draws a background layer from a **tilemap** in video RAM: a grid of 8 × 8-pixel cells, each a two-byte entry naming a tile graphic, a palette, a priority bit, and two flip bits. The map's layer uses a tilemap of 32 × 32 cells, 256 pixels square, and the layer's scroll registers wrap around it in both directions. Written out as 8 × 8 cells, a whole chapter would be 128 × 128 entries, 32 KB, half of video RAM.
 
-The engine keeps one 32 × 32 tilemap and rewrites its edges as the camera moves. Every step of the camera builds the row or column of cells about to come into view from the map data in work RAM, and the next vertical blank (VBlank) copies it into the tilemap. The same map data supplies the terrain: one tile ID per map tile picks both the four cells that draw it and the terrain the rules read.
+The engine keeps one 32 × 32 tilemap and rewrites its edges as the camera moves. Every step of the camera builds the row or column of cells about to come into view from the map data in work RAM, and an interrupt near the bottom of the screen copies it into the tilemap before the new scroll position takes effect. The same map data supplies the terrain: one tile ID per map tile picks both the four cells that draw it and the terrain the rules read.
 
 This chapter covers the map data and how a chapter loads it, the camera and the cursor, streaming rows and columns, the animated tiles, and the minimap.
 
@@ -62,7 +62,7 @@ fn map_scroll_step_left() {                  // rlMapScrollStepLeft
     camera_x -= wMapScrollSpeed;             // rsMapScrollLeftSetBGOFS
     build_left_column();                     // rsBuildMapLeftColumn
     wMapColumnUploadVRAMOffset = (camera_x & 0xF8) >> 3;   // tilemap column
-    wMapColumnUploadFlag = 1;                // copy it in the next VBlank
+    wMapColumnUploadFlag = 1;                // copy it at the row-upload IRQ
 }
 ```
 
@@ -79,7 +79,7 @@ The map layer's tilemap is at video RAM `$5000`. Because the scroll registers wr
   +-------------------------------+         +------------------------+
   |      camera                   |         |   row = (y/8) mod 32   |
   |      +-------------+          |         |  +------------------+  |
-  |      |   screen    |<- new    |  VBlank |  |                  |  |
+  |      |   screen    |<- new    |   IRQ   |  |                  |  |
   |      | 16 × 14     |  column  | ------> |  |  same cells, in  |  |
   |      +-------------+          |         |  |  wrapped order   |  |
   |            ^ new row          |         |  +------------------+  |
@@ -112,9 +112,13 @@ When the camera's X is not a multiple of 16, the screen starts halfway across a 
 
 The buffers are `$05DC` for a row and `$059C` for a column. While a unit is picked up (`wUnitSelectedFlag`), the same step builds the matching strip of the range overlay from `aMovementMap` into `$06DC` or `$069C` ([Chapter 9](09-moving-a-unit.md)). The overlay is a second background layer, BG3, scrolled with the map.
 
-### Uploading in VBlank
+### Uploading at the bottom of the screen
 
-`rlUploadMapRowAndColumn` copies the flagged strips to video RAM during VBlank. One register makes the same 64-byte copy write a row or a column. The video port's address-increment setting (`VMAIN`, `$2115`) says how far the write address moves after each two-byte entry: one word, for the next cell in the row, or 32 words, for the cell below:
+Whenever the map is up, it has one entry in the IRQ engine ([scanlines.md](../reference/scanlines.md)): `rsStartChapterMap` and `rsReturnToMapMainLoop` both install `aMapRowUploadIRQ` ([engine/map/map_loop.asm](../../engine/map/map_loop.asm)), an interrupt at scanline `$D7` (215), near the bottom of the screen. Its routine, `rlIRQUploadMapRowAndColumn`, waits for the horizontal blank, forces the display off, and runs the uploader. Video RAM can be written while the display is off, so the last lines of each frame serve as extra transfer time. When it is done it writes `INIDISP` back with only the forced-blank bit of `bBufferINIDISP`, that is with brightness 0, so the screen stays dark from that line to the bottom until the next VBlank restores the brightness.
+
+The scroll step that built a strip ran earlier in the same frame, in the game state routines; the upload at line `$D7` follows it, and the next VBlank writes the new scroll registers (`rlCopyPPURegisterBuffer`). The new cells are in place before the camera moves onto them.
+
+`rlUploadMapRowAndColumn` copies the flagged strips to video RAM. One register makes the same 64-byte copy write a row or a column. The video port's address-increment setting (`VMAIN`, `$2115`) says how far the write address moves after each two-byte entry: one word, for the next cell in the row, or 32 words, for the cell below:
 
 ```rust
 fn upload_map_row_and_column() {                         // rlUploadMapRowAndColumn
@@ -137,13 +141,11 @@ fn upload_map_row_and_column() {                         // rlUploadMapRowAndCol
 }
 ```
 
-A scroll step costs at most 128 bytes of VBlank time, or 256 with the overlay showing.
+A scroll step moves at most 128 bytes, or 256 with the overlay showing, none of it in VBlank.
 
 ### Redrawing the whole screen
 
 When many tiles change at once (a castle taken, a map change, the return from a full-screen window), `rlRedrawVisibleMapTilemap` rebuilds the screen. It saves the camera, moves it a screen's height down, sets the scroll speed to 8, and steps it back up one row at a time, building each row in turn into `aBG2TilemapBuffer` at `$7E/7388`. The finished `$0800`-byte tilemap is then copied to `$5000` in one piece, and the camera restored. `rlRedrawRangeOverlayTilemap` does the same for the overlay.
-
-During some events the strips are uploaded mid-frame instead: `aMapRowUploadIRQ` asks for an interrupt at scanline `$D7`, near the bottom of the screen, whose handler waits for the horizontal blank, turns the display off, runs the uploader, and turns it back on.
 
 ## Animated tiles
 
@@ -180,7 +182,8 @@ The Warp staff uses the same proc to choose a destination. With bit 11 of `wChap
 - [engine/map/chapter_maps.asm](../../engine/map/chapter_maps.asm): `aChapterMapPointers`, the 12 descriptors, `rlLoadChapterMapLayout`, `rlLoadChapterMapGraphics`.
 - [engine/map/camera.asm](../../engine/map/camera.asm): `rlGetMapDataIndex`, the conversions between tiles, map pixels, and screen positions, and centering the camera.
 - [engine/map/scroll.asm](../../engine/map/scroll.asm): the scroll steps, `rlContinueMapScroll`, the strip queuing routines, and `rlCreateMapScrollScriptFromCoordinates`.
-- [engine/map/map_tilemap.asm](../../engine/map/map_tilemap.asm): the row and column builders, `rlUploadMapRowAndColumn`, the full redraws, and `aMapRowUploadIRQ`.
+- [engine/map/map_tilemap.asm](../../engine/map/map_tilemap.asm): the row and column builders, `rlUploadMapRowAndColumn`, the full redraws, `aMapRowUploadIRQ` and `rlIRQUploadMapRowAndColumn`.
+- [engine/map/map_loop.asm](../../engine/map/map_loop.asm): `rsSetupMapRowUploadIRQ`, called by `rsStartChapterMap` and `rsReturnToMapMainLoop`.
 - [engine/map/map_cursor.asm](../../engine/map/map_cursor.asm): cursor movement and the screen margins.
 - [engine/map/map_display.asm](../../engine/map/map_display.asm): `rlSetUpChapterMapDisplay`, including the side window.
 - [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): `rlUploadMapAnimations` and the pause flags.
