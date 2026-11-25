@@ -1,4 +1,4 @@
-# Chapter 15: Castles and towns
+# Chapter 15: Castles and Towns
 
 The **castle screen** is the game state for the inside of a castle, with its own frame routine and its own step table. It has four parts. The **courtyard** shows the units waiting in the player's home castle, one fixed seat per character, and gives each of them six commands: go to town, sortie, guard, class change, use a staff or dance, and give money. The **town** is a row of up to six buttons, one per **facility**: item shop, secondhand shop, repair shop, depot, augury, and arena. Each facility is a **keeper**, a portrait that talks through a dialogue box beside a list of items, topics, or weapons. The same screen also hosts the **conversation scene**, the full-screen backdrop with two portraits that events use for their longer scenes.
 
@@ -10,7 +10,7 @@ This chapter covers who is inside a castle and how the screen is entered and lef
 
 ### Residence
 
-Each unit's personal data has a **residing castle**, a location ID, and its unit states have a **fielded** bit ([Chapter 1](01-a-unit-is-made-of-parts.md)). A unit is inside a castle when it isn't fielded; the residing castle says which. The routine the disassembly calls `rlGetSelectedUnitHomeCastle` returns this byte, with carry set if the unit is on the map. It is a per-unit value, distinct from the army's home castle in its faction header ([Chapter 4](04-armies-and-allegiance.md)), though for most units the two agree.
+Each unit's personal data has a **residing castle**, a location ID, and its unit states have a **fielded** bit ([Chapter 1](01-a-unit-is-made-of-parts.md)). A unit is inside a castle when it isn't fielded; the residing castle says which. `rlGetSelectedUnitHomeCastle` returns this byte, with carry set if the unit is on the map. It is a per-unit value, distinct from the army's home castle in its faction header ([Chapter 4](04-armies-and-allegiance.md)), though for most units the two agree.
 
 Going inside sets both fields. `rlSetUnitResidingInCastle` writes the castle's ID into the unit, clears the fielded bit, marks the unit's deployment row hidden and moves it onto the castle's gate. The row stays in the deployment table ([Chapter 5](05-who-stands-where.md)), so nothing has to be re-created when the unit comes out.
 
@@ -87,7 +87,7 @@ Step `$14` runs the same routine as `$11`; B in the town uses it. Step `$13`, th
 
 ### Borrowed memory
 
-The castle screen keeps its tables in RAM that belongs to the map. The courtyard's tables, the list arrays, the keeper, and the cursors sit in a block at `$7F757A`-`$7F8092`, inside the map's buffers, and the courtyard's slot table is written into `aMovementMap` itself, which `rlClearMovementMapBuffer` zeroes (`$C38` bytes) each time the courtyard is built. Names in that block are scoped to the castle's files (`SCOPED` in [tools/name_ram.py](../../tools/name_ram.py)).
+The castle screen keeps its tables in RAM that belongs to the map. The courtyard's tables, the list arrays, the keeper, and the cursors sit in a block at `$7F757A`–`$7F8092`, inside the map's buffers, and the courtyard's slot table is written into `aMovementMap` itself, which `rlClearMovementMapBuffer` zeroes (`$C38` bytes) each time the courtyard is built.
 
 The map rebuilds its range maps when a unit is picked up, so the borrowing is safe in normal play. [Chapter 9](09-moving-a-unit.md) describes the one place it shows: undoing a guard chosen on the castle screen reads an `aMovementMap` the castle left behind.
 
@@ -131,7 +131,7 @@ A staff user's command opens a two-line menu: じょうない (inside the castle
 
 An inside target is chosen with the courtyard cursor, which jumps between the units of a target list (`rlBuildCastleTargetList`): every unit in the castle, other than the user, that passes the map's target filter for the staff ([Chapter 10](10-menus-over-the-map.md)) without the range test. Dance and give use the same list with their own filters: a unit that has moved, for a dance; a unit of the army under the 50,000-gold cap for a giver with Steal, or the giver's lover otherwise.
 
-The action itself is a battle. `rlBuildCastleActionRounds` ends the user's action, fills the two action structs with both units standing on terrain 9, and builds the rounds ([Chapter 6](06-resolving-a-battle.md)) with battle type 3. With battle animations off, type 3 plays as a map battle whose two units are drawn at their courtyard spots (`rlGetMapBattleUnitScreenPosition`); with animations on, it is a full battle scene, and the castle reloads the map on the way back.
+The action itself is a battle. `rlBuildCastleActionRounds` ends the user's action, fills the two action structs with both units standing on `TerrainCastle` (`$09`), and builds the rounds ([Chapter 6](06-resolving-a-battle.md)) with battle type 3. With battle animations off, type 3 plays as a map battle whose two units are drawn at their courtyard spots; with animations on, it is a full battle scene, and the castle reloads the map on the way back.
 
 A dance inside has no single target. `rlBuildCastleDanceRounds` passes `$FFFF`, and the dance's effect routine, seeing the castle bit, refreshes every unit in the dancer's castle except the dancer. On the map, the same routine refreshes every unit in the target grid: each adjacent unit of the army that has moved. The dancer gets 10 experience either way.
 
@@ -241,7 +241,7 @@ The stock comes from the chapter data. A castle's location entry has a pointer t
 | 7 | Ribaut | 23 |
 | 8 | Ulster | 21 |
 | 9 | Meath | 15 |
-| 10 | Perlucos | 7 |
+| 10 | Peruluke | 7 |
 
 Nothing takes an item out of the shop state except a purchase, so the stock grows by one list per chapter. A Slim Sword left unbought in Chapter 1 is still for sale in Chapter 4. At the start of Chapter 6, `rlResetUnitsForChapter` returns every shop and pawnbroker record to unobtained ([Chapter 17](17-love-and-lineage.md)), and the generation 2 lists start the stock over.
 
@@ -298,7 +298,7 @@ The conversation scene is a castle step that events borrow. It is entered with h
 
 `DIALOGUE_WITH_BG` fills them from its arguments ([Chapter 12](12-screenplays.md)): `procDialogueWithBG` copies the text pointer, background, exit mode, and fade timer, then fades the map out into the castle screen.
 
-The background is a full-screen picture with two tile sets, two tilemaps, and a palette (`rlLoadDialogueBackground`). Two of the six are animated every frame: the fountain (`rsAnimateFountainBackground`), and the throne room, which cycles four palettes (`aThroneBackgroundPaletteAnim1`-`4`).
+The background is a full-screen picture with two tile sets, two tilemaps, and a palette (`rlLoadDialogueBackground`). Two of the six are animated every frame: the fountain (`rsAnimateFountainBackground`), and the throne room, which cycles four palettes (`aThroneBackgroundPaletteAnim1`–`4`).
 
 The portraits are sprites. The left speaker is drawn through the keeper's routine, in OAM palette 5, mirrored, and the right speaker through the unit portrait's, in palette 4; the windows behind them are tilemaps on a background layer. The dialogue engine, running in conversation mode ([Chapter 13](13-dialogue-and-text.md)), drives them through `wConversationFlags`:
 
@@ -320,18 +320,18 @@ When the text ends, `rsConversationEnd` leaves by `wConversationExitMode`:
 | `CONVERSATION_EXIT_COURTYARD` (0) | the courtyard, with the unit list rebuilt | no script |
 | `CONVERSATION_EXIT_TOWN` (1) | the town again, for `wCastleEventUnit` | 1 script: Chulainn's recruitment, run on entering a town |
 | `CONVERSATION_EXIT_MAP` (3) | the map, through `rsReturnToMapMainLoop` | 185 scripts; the lovers' home castle visits |
-| `CONVERSATION_EXIT_CALLBACK` (4) | a fade, then the next epilogue page (`rlShowNextEpilogueCharacterEnding`) | the epilogue ([Chapter 21](21-endings-and-scores.md)) |
+| `CONVERSATION_EXIT_CALLBACK` (4) | a fade, then the next epilogue page | the epilogue ([Chapter 21](21-endings-and-scores.md)) |
 | `CONVERSATION_EXIT_FADE_OUT` (5) | a fade to black; the scene then waits | 18 scripts, whose next commands rebuild the screen |
 
 `DIALOGUE_WITH_BG`'s handler first sets exit 0 and the proc then overwrites it with the script's argument, so no script reaches the courtyard exit.
 
 ### The lovers' home castle visits
 
-When a unit goes into its home castle while its lover waits inside, the two have a short conversation, once per couple. After a unit goes into its home castle from the map, the map step announces event action 4, and if no event starts it calls `rlTryStartLoverHomeCastleConversation` (an event command, `rsEventCommandLoverHomeCastle`, calls it too). It checks that the unit has a lover, that the lover is alive, a player unit, off the map, and residing in the player's home castle (`rlCheckCharacterWaitingInHomeCastle`), and that the woman's permanent flag in `aLoverHomeCastleFlags` is clear. Then it sets the flag and opens the conversation scene with the arriving unit on the left, the fountain behind them, and exit 3. A mother and the daughter who can stand in for her ([Chapter 13](13-dialogue-and-text.md)) share a flag.
+When a unit goes into its home castle while its lover waits inside, the two have a short conversation, once per couple. After a unit goes into its home castle from the map, the map step announces event action 4, and if no event starts it tries to begin the lover conversation (an event command, `rsEventCommandLoverHomeCastle`, tries it too). It checks that the unit has a lover, that the lover is alive, a player unit, off the map, and residing in the player's home castle, and that the woman's permanent flag in `aLoverHomeCastleFlags` is clear. Then it sets the flag and opens the conversation scene with the arriving unit on the left, the fountain behind them, and exit 3. A mother and the daughter who can stand in for her ([Chapter 13](13-dialogue-and-text.md)) share a flag.
 
-The text is assembled on the way in. `rlBuildLoverHomeCastleConversation` copies the arriving unit's line from `aLoverHomeCastleArrivalLines` into RAM at `$7F8183`, then appends the waiting lover's reply from `aLoverHomeCastleReplyLines` over the first line's end code. Each table is indexed by character ID, so any arrival line can meet any reply: 63 arrival lines and 63 replies cover every couple, and four short name texts make up the 130 in the folder. Two ASMC commands in the lines insert the other person's name, adding 様 (sama) for Seliph and Leif.
+The text is assembled on the way in. The builder copies the arriving unit's line from `aLoverHomeCastleArrivalLines` into RAM at `$7F8183`, then appends the waiting lover's reply from `aLoverHomeCastleReplyLines` over the first line's end code. Each table is indexed by character ID, so any arrival line can meet any reply: 63 arrival lines and 63 replies cover every couple, and four short name texts make up the 130 in the folder. Two ASMC commands in the lines insert the other person's name, adding 様 (sama) for Seliph and Leif.
 
-## Trade-offs and limits
+## Trade-offs and hard limits
 
 The castle screen is cheap in memory because it owns almost nothing. Units, items, money, and love points stay where the map keeps them, and the screen's tables live in borrowed map RAM and are rebuilt every time a part of the screen opens. The facilities share one list format and one set of drawing routines, and the keeper pattern turns each facility into a sub-state table plus a column of lines.
 
@@ -354,7 +354,7 @@ The limits:
 - [engine/castle/keepers.asm](../../engine/castle/keepers.asm): portraits as sprites and the keeper's dialogue box.
 - [engine/castle/lists.asm](../../engine/castle/lists.asm): the list arrays, their builders, drawing, and input; the yes/no prompt and the option row.
 - [engine/castle/shop.asm](../../engine/castle/shop.asm), [depot.asm](../../engine/castle/depot.asm), [augury.asm](../../engine/castle/augury.asm), [class_change.asm](../../engine/castle/class_change.asm): the facilities.
-- [engine/castle/conversation.asm](../../engine/castle/conversation.asm) and [lover_conversation.asm](../../engine/castle/lover_conversation.asm): the conversation scene and the lovers' visits.
-- [engine/units/unit_state.asm](../../engine/units/unit_state.asm): buying, selling, repairing, storing, and residing in a castle; [engine/map/locations.asm](../../engine/map/locations.asm): `rlBuildCastleUnitList` and the shop lists' setup; [engine/items/staves.asm](../../engine/items/staves.asm): the inside staff tests; [engine/battle/battle.asm](../../engine/battle/battle.asm): the castle dance.
+- [engine/castle/conversation.asm](../../engine/castle/conversation.asm) and [lover_conversation.asm](../../engine/castle/lover_conversation.asm): the conversation scene (`rlShowNextEpilogueCharacterEnding` callback for the epilogue) and the lovers' visits (`rlTryStartLoverHomeCastleConversation`, `rlCheckCharacterWaitingInHomeCastle`, `rlBuildLoverHomeCastleConversation`).
+- [engine/units/unit_state.asm](../../engine/units/unit_state.asm): buying, selling, repairing, storing, and residing in a castle; [engine/map/locations.asm](../../engine/map/locations.asm): `rlBuildCastleUnitList` and the shop lists' setup; [engine/items/staves.asm](../../engine/items/staves.asm): the inside staff tests; [engine/battle/battle.asm](../../engine/battle/battle.asm): the castle dance; [engine/battle/map_battle.asm](../../engine/battle/map_battle.asm): `rlGetMapBattleUnitScreenPosition`.
 - [include/Castle.h](../../include/Castle.h): handlers, steps, cursor states, commands, facility bits, keepers, exits; the castle's RAM is in [include/WRAM.h](../../include/WRAM.h); each chapter's castles, facility bits, and shop list are in [events/](../../events/).
 - [docs/reference/castle.md](../reference/castle.md): the reference page.

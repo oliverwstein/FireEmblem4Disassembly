@@ -1,4 +1,4 @@
-# Chapter 16: The arena
+# Chapter 16: The Arena
 
 The arena is a town facility where a unit fights a ladder of seven opponents for money. Each unit has an **arena level** from 0 to 7, the number of arena fights it has won, kept in three bits of its unit states. Each chapter has two **opponent lists**, one for a unit fighting with a melee weapon and one for a bow, each indexed by arena level. The **arena menu** is a keeper screen on the castle screen ([Chapter 15](15-castles-and-towns.md)). A **fight** is an ordinary battle scene run with battle type 1, which changes a handful of rules in the battle engine: the rounds are built one exchange at a time until someone falls or the player yields, a fallen player unit keeps 1 HP instead of dying, and a win pays a prize and raises the arena level.
 
@@ -14,7 +14,7 @@ The level picks an opponent from the current chapter's lists. A unit at level 3 
 
 ### Opponent lists
 
-A chapter's event data has a pointer to its arena table (`structChapterEventData.ArenaOpponentsPointer`): two pointers, then two lists of character IDs ended by `$FFFF` (`aChapterNNArenaOpponents` in [events/](../../events/)). Chapter 1's:
+A chapter's event data has a pointer to its arena table (`structChapterEventData.ArenaOpponentsPointer`): two pointers, then two lists of character IDs ended by `$FFFF` (such as `aChapter01ArenaOpponents` in [events/](../../events/)). Chapter 1's:
 
 | Level | For a melee weapon | For a bow |
 |---|---|---|
@@ -69,7 +69,7 @@ The town's arena button saves the unit (`wCastleSavedUnitRAMPointer`), clears `w
 | 12, 13 | the weapon list |
 | 14, 15 | leave for the town |
 
-A first visit runs 0, 4, 12, 13, 9, 10, 11: greet, choose to fight, pick a weapon (choosing one equips it), see the opponent's window, and start. A unit with no weapon it can equip is told so and stays at step 4. The opponent's window (`rsDrawArenaOpponent`) shows the opponent's name, class, and level, the weapon it will fight with (the first of its first two items that reaches the fight's distance), a ring if it carries one, and a reminder that B leaves the fight.
+A first visit runs 0, 4, 9, 10, 11 when a weapon is already equipped: greet, choose to fight, see the opponent's window, and start. If no weapon is equipped, step 4 routes through steps 12 and 13 to pick and equip one first, and the player can also reach those steps by choosing *change weapon* at step 10 or step 8. A unit with no weapon it can equip is told so and stays at step 4. The opponent's window (`rsDrawArenaOpponent`) shows the opponent's name, class, and level, the weapon it will fight with (the first of its first two items that reaches the fight's distance), a ring if it carries one, and a reminder that B leaves the fight.
 
 ## A fight
 
@@ -91,7 +91,7 @@ fn start_arena_battle(unit: &Unit) {                        // rlStartArenaBattl
 }
 ```
 
-`rlCreateUnit` fills a full unit record at `$2100` from the character's data, as for any unit loaded by an event, but adds it to no army. The stats setup (`rlSetupArenaBattleStats`) is a shorter form of the map's forecast ([Chapter 6](06-resolving-a-battle.md)): it fills both action structs, sets the battle distance to the minimum range of the player's weapon, gives the opponent the first of its weapons that can strike at that distance (or its first weapon, if none can), then applies the weapon triangle, the final adjustments, the triggerable skills, and effectiveness. Both units stand on terrain `$17`, a type no map uses, and there is no aura scan.
+`rlCreateUnit` fills a full unit record at `$2100` from the character's data, as for any unit loaded by an event, but adds it to no army. The stats setup (`rlSetupArenaBattleStats`) is a shorter form of the map's forecast ([Chapter 6](06-resolving-a-battle.md)): it fills both action structs, sets the battle distance to the minimum range of the player's weapon, gives the opponent the first of its weapons that can strike at that distance (or its first weapon, if none can), then applies the weapon triangle, the final adjustments, the triggerable skills, and effectiveness. Both units stand on `TerrainShrine` (`$17`), a type no map uses, and there is no aura scan.
 
 Battle type 1 always plays the full battle scene, whatever the unit's animation setting.
 
@@ -176,7 +176,7 @@ After a yield, nothing is settled. The opponent's record stays at `$2100`, bit `
 
 A weapon changed after a yield changes the next fight's distance, which is the new weapon's minimum range, but not the opponent, which is already built. The opponent's window, which looks the opponent up again, shows whoever the new weapon's list names at that level. In Chapter 1 at level 3, a unit that yields to Shark and switches to a bow sees Hood in the window and fights Shark at two tiles, where Shark's sword can't reach.
 
-## Trade-offs and limits
+## Trade-offs and hard limits
 
 The arena is built on the battle engine. A fight is an ordinary pair of action structs and an ordinary round buffer; the arena's rules are a few tests of the battle type in the round builder, the strike code, and the death handler, plus the `$FEFF` marker that lets the battle scene ask for more. Building each exchange in the battle scene's main loop keeps the scene drawing while the next one is computed. The cost is state that has to be cleaned up by hand: the opponent's record, the in-progress bit, and the fight counter all stay live across a yield, and every way out of the arena has to call `rlHandleArenaExitEvent` to release them.
 
@@ -197,5 +197,5 @@ The limits:
 - [engine/battle/battle.asm](../../engine/battle/battle.asm): the arena's initiator, the `$FEFF` exchange marker, the fatal strike and prize, and the weapon slot check.
 - [engine/battle_scene/scene.asm](../../engine/battle_scene/scene.asm): retreating with B, the break between exchanges, building the next exchange, and the return to the castle; [engine/battle_scene/rounds.asm](../../engine/battle_scene/rounds.asm): reading `$FEFF`.
 - [engine/units/unit_state.asm](../../engine/units/unit_state.asm): `rlActionStructArenaWinResults`, `aArenaMoneyRewards`, and `rlActionStructHandleArenaDefeat`; [engine/events/event_engine.asm](../../engine/events/event_engine.asm): `rlHandleArenaExitEvent`.
-- [events/](../../events/): each chapter's `aChapterNNArenaOpponents`; the arena RAM and the battle type are in [include/WRAM.h](../../include/WRAM.h).
+- [events/](../../events/): each chapter's opponent tables (e.g. `aChapter01ArenaOpponents`); the arena RAM and the battle type are in [include/WRAM.h](../../include/WRAM.h).
 - [docs/reference/arena.md](../reference/arena.md): the reference page.

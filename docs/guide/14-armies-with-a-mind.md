@@ -27,7 +27,7 @@ The AI can also block on purpose. A unit sortieing from a castle queues the relo
 
 ### The cycle
 
-`rlRunAIEngineCycle` does nothing unless the map step is running (and isn't in step 3, the phase-start events, or step 5, the healing windows), no event is running, the cycle is enabled, and no per-unit event is waiting. Then it runs one step of `wAIEngineCycleType`:
+`rlRunAIEngineCycle` does nothing unless the map step is running (and isn't in step 3, the phase-start events, or step 5, the healing windows), no event is running, the cycle is enabled (bit `$40` set and bit `$80` clear), and no per-unit event is waiting. Then it runs one step of `wAIEngineCycleType`:
 
 | Cycle | Routine | Does |
 |---|---|---|
@@ -84,7 +84,7 @@ The AI caches what it needs about units in two lists in bank `$7E`. Cycle 1 buil
 
 The target entry adds the target's terrain; the unit entry adds the destination the group plan gives the unit.
 
-The threat range is a quick upper bound. A unit's reach in tiles is greatest on roads, which cost 7 tenths of a movement point, so the engine takes movement × 10/7, rounded up, from a table, and adds the weapon's maximum range. A target uses its movement; the AI's own units use movement + 1 and their longest-reaching weapon. The range is compared with the Manhattan distance (the sum of the differences in X and Y), with no terrain at all. In cycle 2, before the script runs, `rlAICheckIfAnyFoeInAlliesThreatRange` compares every target with every member, and any pair within range sets bit `$0004` of `wAIGroupFlags`: a foe is near.
+The threat range is a quick upper bound. A unit's reach in tiles is greatest on roads, which cost 7 tenths of a movement point, so the engine takes movement × 10/7, rounded up, from a table, and adds the weapon's maximum range. A target uses its movement; the AI's own units use movement + 1 and their longest-reaching weapon. The range is compared with the Manhattan distance (the sum of the differences in X and Y), with no terrain at all. In cycle 2, before the script runs, the engine compares every target with every member, and any pair within range sets bit `$0004` of `wAIGroupFlags`: a foe is near.
 
 ### The unit maps
 
@@ -117,7 +117,7 @@ The macros are in [include/AI.h](../../include/AI.h). By use in the chapters:
 
 Seven commands appear in no script: the plain jump, a single village, the leader's return home on its own (`AI_LEADER_RETREAT_IF_HP_BELOW` uses it), clearing a flag, and three copies of the surround command (`$1A`–`$1C`, identical to `$1D`).
 
-"Engageable" (`rlAICheckIfAnyGroupUnitCanEngageFoe`) needs a foe near, and then a member whose longest-reaching weapon covers a foe's tile from somewhere it can move this turn. For such a pair the engine estimates the member's damage to the foe (below). If the estimate fails, because the member can't hurt the foe at all, the check counts the pair as engageable; if the member can hurt it, the pair counts only when the member's HP plus its defense (resistance against magic) is at least the foe's might. The first member found acts first. Two slips make the check generous: a member that can do no damage passes it, and the test meant to skip defeated and hidden foes looks at the member's own deployment state instead.
+"Engageable" needs a foe near, and then a member whose longest-reaching weapon covers a foe's tile from somewhere it can move this turn. For such a pair the engine estimates the member's damage to the foe (below). If the estimate fails, because the member can't hurt the foe at all, the check counts the pair as engageable; if the member can hurt it, the pair counts only when the member's HP plus its defense (resistance against magic) is at least the foe's might. The first member found acts first. Two slips make the check generous: a member that can do no damage passes it, and the test meant to skip defeated and hidden foes looks at the member's own deployment state instead.
 
 Chapter 1's scripts show how the commands combine. Genoa's group 2 defends its castle; Verdane's group 4 waits:
 
@@ -140,7 +140,7 @@ aFactionGroup07AI4                      ; Verdane, group 4
     AI_END
 ```
 
-Genoa's guard defends its castle. On the first turn one of its units can engage a foe, its script sets `FlagChapter01_FoesNearGenoa`. Verdane's group 4 holds where it is until something comes within reach. Once the flag is set, it marches on Genoa castle, or on every foe once Genoa has fallen, and its leader won't attack Sigurd. The chapter's event list watches the same flag: before a unit of that group acts with the flag set, event action `$21` runs the scene in which Ayra starts moving. The script and the event list share state only through the flag.
+Genoa's guard defends its castle. On the first turn one of its units can engage a foe, its script sets `FlagChapter01_FoesNearGenoa`. Verdane's group 4 holds where it is until something comes within reach. Once the flag is set, it marches on Genoa castle, or on every foe once Genoa has fallen, and Sigurd is left out of its target map and never attacked by its leader. The chapter's event list watches the same flag: before a unit of that group acts with the flag set, event action `$21` runs the scene in which Ayra starts moving. The script and the event list share state only through the flag.
 
 ### Objectives
 
@@ -178,7 +178,7 @@ The **mode** (`wAIGroupMode`) is the group's attack policy, and it changes a few
 | 1 | the attack tile is reachable | the default |
 | 2 | the attack tile is reachable and the expected damage is above 0 | |
 | 3 | never | takes no castles |
-| 4 | as 2, and HP − 5 + turn / 2 and damage dealt / 2 + turn / 2 are both at least the damage expected back, and 3 × HP is at least the tile's threat | no threat map |
+| 4 | as 2, and HP − 5 + turn / 2 and ceil(damage dealt / 2) + turn / 2 are both at least the damage expected back, and 3 × HP is at least the tile's threat | no threat map |
 | 5 | only from the tile the unit stands on, with damage above 0 | no threat map; every unit guarding a castle uses 5 |
 | 6 | never | |
 | 7 | as 2, but leaves foes guarding a castle alone | takes no castles |
@@ -215,9 +215,9 @@ A formation is a list of 18 offsets from the waypoint, one per formation slot. T
  .  .  .  L  .  .  .
 ```
 
-The pattern is turned toward the waypoint before it is used. `rlAIUpdateFormationDirectionTowardTarget` compares the waypoint with the leader's position and picks up, right, down, or left along the axis with the larger difference; the four routines in `aFormationDirectionRoutines` rotate each offset by a quarter turn per step. Formation 0 and the castle defense (13) don't turn.
+The pattern is turned toward the waypoint before it is used. The engine compares the waypoint with the leader's position and picks up, right, down, or left along the axis with the larger difference; the four routines in `aFormationDirectionRoutines` rotate each offset by a quarter turn per step. Formation 0 and the castle defense (13) don't turn.
 
-Cycle 4 gives every member its destination: the waypoint plus its rotated offset (`rlSetTargetPositionForAIGroupMembers`). A member guarding a castle stays. A group with no waypoint gets its current positions as destinations. A castle-defending group whose members already stand in formation is skipped for the turn: the cycle moves straight to the next group.
+Cycle 4 gives every member its destination: the waypoint plus its rotated offset. A member guarding a castle stays. A group with no waypoint gets its current positions as destinations. A castle-defending group whose members already stand in formation is skipped for the turn: the cycle moves straight to the next group.
 
 The destination is only a goal. Whether the unit reaches it, or does something else, is decided in its own turn.
 
@@ -259,11 +259,11 @@ A unit inside a castle comes out onto the gate if the gate is free of unfriendly
 
 ### Taking castles
 
-Before its objective, every unit outside modes 3, 6, and 7 looks for an enemy castle to take (`rsCheckIfCastlesCapturable`). Berserk units, groups with objective 7, and leaders under objectives 10 and 11 don't look. For each castle held by an army at war with the unit's, the gate must be in the unit's movement map and free of its allies. If no one guards the castle, the unit moves onto the gate to seize it (action 4). If someone does, and the unit has a weapon that reaches 1 and could hurt the guard, it attacks the guard (action 2, a siege, or 15). After a siege, cycle 6 checks the castle again, and if the guard has fallen, it starts a seize at once (`rsAICheckCastleCaptureAfterSiege`).
+Before its objective, every unit outside modes 3, 6, and 7 looks for an enemy castle to take (`rsCheckIfCastlesCapturable`). Berserk units, groups with objective 7, and leaders under objectives 10 and 11 don't look. For each castle held by an army at war with the unit's, the gate must be in the unit's movement map and free of its allies. If no one guards the castle, the unit moves onto the gate to seize it (action 4). If someone does, and the unit has a weapon that reaches 1 and could hurt the guard, it attacks the guard (action 2, a siege, or 15). After a siege, cycle 6 checks the castle again, and if the guard has fallen, it starts a seize at once.
 
 ### Weapons and staves
 
-`rsAIEvaluateInventoryActions` tries every item in the unit's inventory that it can use. A weapon is tested against the targets, a healing staff against friendly units, and a status staff against the targets. For each target within the unit's threat range, `rlAIEvaluateAttackTilesForTarget` walks the tiles at each distance from the weapon's minimum range to its maximum around the target, a diamond ring per distance, starting below the target. Each tile inside the map that the unit's class can enter, not a castle gate, and empty or holding the unit itself, is a candidate, and the candidate goes to the routine for the item:
+`rsAIEvaluateInventoryActions` tries every item in the unit's inventory that it can use. A weapon is tested against the targets, a healing staff against friendly units, and a status staff against the targets. For each target within the unit's threat range, the engine walks the tiles at each distance from the weapon's minimum range to its maximum around the target, a diamond ring per distance, starting below the target. Each tile inside the map that the unit's class can enter, not a castle gate, and empty or holding the unit itself, is a candidate, and the candidate goes to the routine for the item:
 
 | Item | Candidate tile must | Score | Action |
 |---|---|---|---|
@@ -293,7 +293,7 @@ score = expected damage dealt
       − threat on the attack tile (foes that could attack it, at most 7)
 ```
 
-The **threat map** behind the last term is `aRangeMap`. For every target within 16 tiles of the group's leader, the engine fills that foe's movement and marks every tile its first weapon could hit from anywhere it could move, adding 1 to each (`rlFillRangeMapOfAITargetsNearLeader`). Foes whose weapons start at range 3 (ballistae and the long-range tomes) are left out. Modes 4 and 5 skip this step, and their units read whatever `aRangeMap` holds: by then that is usually the input grid of the player-style range search ([Chapter 9](09-moving-a-unit.md)), built when the previous computer unit was picked up to walk. Its values (1 for friends, `$FE` and `$FF` for walls and foes) aren't threat counts, and they sit on a grid centered on that unit.
+The **threat map** behind the last term is `aRangeMap`. For every target within 16 tiles of the group's leader, the engine fills that foe's movement and marks every tile its first weapon could hit from anywhere it could move, adding 1 to each. Foes whose weapons start at range 3 (ballistae and the long-range tomes) are left out. Modes 4 and 5 skip this step, and their units read whatever `aRangeMap` holds: by then that is usually the input grid of the player-style range search ([Chapter 9](09-moving-a-unit.md)), built when the previous computer unit was picked up to walk. Its values (1 for friends, `$FE` and `$FF` for walls and foes) aren't threat counts, and they sit on a grid centered on that unit.
 
 A wounded target scores higher, a killing blow higher still, and a unit below 21 HP scores every attack lower. The threat term favors tiles fewer foes can reach, by at most 7 points.
 
@@ -313,7 +313,7 @@ A group with no leader, or with a leader who has no leadership stars, lets chanc
 
 ### Toward the destination
 
-With no action chosen, the destination is the formation spot. `rsAIMoveSelectedUnitTowardTarget` moves the unit there or as close as it can get:
+With no action chosen, the destination is the formation spot. The unit moves there or as close as it can get:
 
 1. Fill a distance map from the destination back toward the unit, over a cost map in which each tile with an enemy or neutral unit costs 24 more, so the path bends around them without treating them as walls.
 2. Look at every tile in a square around the unit, (movement + 1) × 10/7 tiles in each direction. Of the tiles the unit can stop on (in its movement map, not held by another friendly unit, and not a castle gate unless the action is a siege, a seize, or entering a castle), take the one with the lowest distance, breaking ties by the lowest threat.
@@ -366,11 +366,11 @@ The limits:
 - [engine/ai/engine.asm](../../engine/ai/engine.asm): `rlRunAIEngineCycle` and the eight cycle routines, the seize after a siege (`rsAICheckCastleCaptureAfterSiege`), the cycle switches (`rlEnableAIEngineCycle`, `rlDisableAIEngineCycle`), and the clever-mode flag (`rlGetCleverModeFlag`).
 - [engine/ai/scripts.asm](../../engine/ai/scripts.asm): `rlRunAIScript`, `aAIScriptCommands` and every command, the engageability check (`rlAICheckIfAnyGroupUnitCanEngageFoe`), and the group's alive ratio.
 - [engine/ai/lists.asm](../../engine/ai/lists.asm): `rlBuildAITargetList` and `rlBuildAIUnitList`.
-- [engine/ai/groups.asm](../../engine/ai/groups.asm): leaders, the script lookup (`rlGetFactionGroupDataGroupAIScript`), leadership power, formation destinations and directions, and `aFormationPatternOffsets` with its 15 patterns.
-- [engine/ai/threat.asm](../../engine/ai/threat.asm): threat ranges, the group's target and waypoint (`rlAIUpdateGroupTargetAndWaypoint`), one unit's turn (`rlAIRunSelectedUnitTurn`, `aAIGroupObjectiveRoutines`), the move (`rsAIMoveSelectedUnitTowardTarget`), and the 16 actions.
+- [engine/ai/groups.asm](../../engine/ai/groups.asm): leaders, the script lookup (`rlGetFactionGroupDataGroupAIScript`), leadership power, formation destinations (`rlSetTargetPositionForAIGroupMembers`) and directions (`rlAIUpdateFormationDirectionTowardTarget`), and `aFormationPatternOffsets` with its 15 patterns.
+- [engine/ai/threat.asm](../../engine/ai/threat.asm): threat ranges (`rlAICheckIfAnyFoeInAlliesThreatRange`), the group's target and waypoint (`rlAIUpdateGroupTargetAndWaypoint`), one unit's turn (`rlAIRunSelectedUnitTurn`, `aAIGroupObjectiveRoutines`), the move (`rsAIMoveSelectedUnitTowardTarget`), and the 16 actions.
 - [engine/ai/actions.asm](../../engine/ai/actions.asm): who can act, inventory evaluation, staves, castle capture, the objective routines, sorties, and the closest-tile search (`rlAIFindBestMoveTowardTarget`).
 - [engine/ai/attack.asm](../../engine/ai/attack.asm): attack tiles (`rlAIEvaluateAttackTilesForTarget`), the attack types, the score (`rsAICalculateAttackChance`, `rsAICheckIfNewBestTarget`), expected damage, and the nearest-target fill (`rlGetNearestPossibleTarget`).
-- [engine/ai/maps.asm](../../engine/ai/maps.asm): the AI's movement fill, cost maps, unit maps, the threat map, the target map, and the waypoint walk (`rlTraceTargetPathToReachableTile`).
+- [engine/ai/maps.asm](../../engine/ai/maps.asm): the AI's movement fill, cost maps, unit maps, the threat map (`rlFillRangeMapOfAITargetsNearLeader`), the target map, and the waypoint walk (`rlTraceTargetPathToReachableTile`).
 - [engine/map/map_loop.asm](../../engine/map/map_loop.asm): the main loop that calls the AI and the interrupt handler that checks `bAIEngineFlags`; [engine/map/map_step.asm](../../engine/map/map_step.asm): the per-unit event (`rsRunQueuedAIUnitEvent`); [engine/map/unit_movement.asm](../../engine/map/unit_movement.asm): the computer phase's walk.
 - [include/AI.h](../../include/AI.h): the list entries and the script commands; the AI's RAM, its flags and modes are in [include/WRAM.h](../../include/WRAM.h); the scripts are in [events/](../../events/), after each chapter's faction groups.
 - [docs/reference/ai.md](../reference/ai.md): the reference page.

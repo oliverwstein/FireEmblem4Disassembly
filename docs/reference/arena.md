@@ -23,7 +23,7 @@ Data: each chapter's `aChapterNNArenaOpponents` in [events/](../../events/) (`st
 | 1 | `rsArenaMenuStepWaitDialogue` | waits for the line, then `wNextMenuState` |
 | 2 | `rsArenaMenuStepAfterBattle` | the result: win (prize line, steps 5-6, then 7 or the champion line), loss (step 15), yield (step 3) |
 | 3 | `rsArenaMenuStepAfterYield` | the yield line, step 8 |
-| 4 | `rsArenaMenuStepFightOrQuit` | fight (needs a weapon; step 12) or quit |
+| 4 | `rsArenaMenuStepFightOrQuit` | fight (needs a weapon; step 9 if one is equipped, step 12 otherwise) or quit |
 | 5, 6 | `...WaitGoldDialogue`, `...CountUpGold` | the money shown counts up 100 a frame |
 | 7 | `rsArenaMenuStepConfirmNextRound` | next opponent? |
 | 8 | `rsArenaMenuStepLeaveContinueWeapon` | after a yield: leave, continue (step 11), change weapon |
