@@ -113,4 +113,4 @@ The terrain window and the unit window (`procTerrainWindow`, `procUnitWindow`, "
 
 - `UnitStateAssault` (was `UnitState0400`; the debug menu labels bit $0400 とつげ(き)): set while assaulting. `rlFindTargetsForSelectedWeapon` uses target filter 4 when it is set, and `rlBuildUnitMenuSlotLists` clears it. Assault targets are found at range 2 only, for weapons with minimum range 1 (`rlFindTargetsForItemRange`).
 - The まち (town) command: location type 1, and its handler opens the castle screen.
-- The "RP" proc in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm), `procUnknown8583B3` (an empty list menu nothing creates), and the gradient table helpers (`rsWriteMapMenuGradientTop`...).
+- The "RP" proc in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm), `procUnitMenuUnused` (an empty list menu nothing creates), and the gradient table helpers (`rsWriteMapMenuGradientTop`...).

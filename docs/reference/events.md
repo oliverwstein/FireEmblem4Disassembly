@@ -23,7 +23,7 @@ Macros and constants live in [include/events/Main.h](../../include/events/Main.h
 - `rlStartChapterEvents` looks up the chapter's entry in `aChapterEventPointers` and calls `rlBeginChapterEvents`, which appends an entry to `aChapterEventRAMData` (`structChapterEventRAMEntry`) and starts the chapter's opening event.
 - `rlRefreshChapterEventPointers` updates `EventPointer` for every entry in `aChapterEventRAMData` from `aChapterEventPointers` (used when loading a save or returning to the map).
 - Event flags are stored as permanent flags (`include/PermanentFlags.h`) and per-chapter flags inside `aChapterEventRAMData`, tested and updated by `rlCheckEventFlagSet`, `rlSetEventFlag`, and `rlUnsetEventFlag`.
-- Active map tile changes are tracked as bits in `aChapterActiveMapChanges` (`rlCheckMapChangeActive`), cleared on generation change (`rlClearChapterActiveMapChanges`), and re-applied when reloading the map display (`rlApplyAllActiveMapChanges`).
+- Active map tile changes are tracked as bits in `aChapterActiveMapChanges` (`rsCheckMapChangeActive`), cleared on generation change (`rlClearChapterActiveMapChanges`), and re-applied when reloading the map display (`rlApplyAllActiveMapChanges`).
 
 ## Event conditions
 

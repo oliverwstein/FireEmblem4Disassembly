@@ -2,7 +2,7 @@
 
 A disassembly of *Fire Emblem: Seisen no Keifu* (Japan, version 1.0). It builds a ROM that is byte-for-byte identical to the original.
 
-The project is a work in progress; [STATUS.md](STATUS.md) gives the current state and [PLAN.md](PLAN.md) the roadmap. About 97% of the ROM is currently built from source. The rest is copied from your original ROM at build time; see [Base ROM](#base-rom).
+The project is a work in progress; [STATUS.md](STATUS.md) gives the current state and [PLAN.md](PLAN.md) the roadmap. Every byte of the ROM is built from source; see [Base ROM](#base-rom).
 
 ## Building
 
@@ -63,7 +63,6 @@ You need:
 | `debug/` | The leftover debug menu. |
 | `rankings/` | The end-of-game rankings. |
 | `sound/` | Choosing music. |
-| `unsorted/` | Code that is disassembled but not yet assigned to a system, filed by bank. |
 
 ### How files relate to ROM addresses
 

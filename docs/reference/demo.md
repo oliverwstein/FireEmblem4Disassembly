@@ -43,6 +43,6 @@ Each page is a `RUN_ASM` routine (`rlShowOpeningCreditsPage1`-`8`). It blanks th
 ## Open questions
 
 - `$1832` and `$0CC2`: `DEMO_ALLOW_SKIP` sets `$1832` to 0 (and sends sound command `$D0`) when `$0CC2` is 0 and `wDemoIndex` is 0 or 1, else to 1; the last screen plays sound `$E7` only when it is 1.
-- `rlUnknown97FDC1`/`FDC6` start the two battle scenes from `aDemoBattlesPointerTable`; the second reads `$0CC2`, so `$0CC2` is probably which battle scene plays.
+- `rlASMCLoadFirstDemoBattle` / `rlASMCLoadNextDemoBattle` start the two battle scenes from `aDemoBattlesPointerTable`; the second reads `$0CC2`, so `$0CC2` is probably which battle scene plays.
 - Unused leftovers: setters for chapters 2 and 7 (`rlASMCSetOpeningMapChapter2Unused`, `7Unused`) and a second sky scene setup.
 - The seventh vertical scroll HDMA info is unused.

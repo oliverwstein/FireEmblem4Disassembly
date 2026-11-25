@@ -18,6 +18,7 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 
 - [core.md](core.md): the frame, boot, game states, the engines that run every frame, procs.
 - [items.md](items.md): global item instances (`aItemRAMData`), ROM item templates, per-unit inventories, equip/range checks, pricing, broken weapons, and staff targeting/healing.
+- [battle.md](battle.md): combat setup, stat calculation, skills, weapon traits, staff effects, scripted criticals, and round resolution.
 - [units.md](units.md): unit pools, four-type ROM/RAM dispatch, classes, stats, skills, weapon ranks, Holy Blood, factions, turn-start effects, level-ups, lovers, generation transfer, and inheritance.
 - [ai.md](ai.md): the enemy (and allied) AI.
 - [castle.md](castle.md): the castle screen: courtyard, unit commands, town, shops, depot, augury, class change, conversation scenes, the lovers' home castle conversation.

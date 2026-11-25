@@ -72,7 +72,7 @@ B leaves the town: back to the courtyard, or, for a unit that came in from the m
 
 ### The facilities
 
-All the keeper screens work alike: the keeper's portrait (OAM palette 5, mirrored) talks through a dialogue box (`rsSetupKeeperDialogueBox`). The lines come from `aShopDialoguePointers`, one table indexed by line group and keeper. Sub-state 1 always waits for the text and then moves to `wNextMenuState`. The options come from `lKeeperOptionList`, and each option's code chooses which list is drawn beside it (`rsDrawCastleListIcons`): 0 the stock, 1 and 2 the unit's inventory.
+All the keeper screens work alike: the keeper's portrait (OAM palette 5, mirrored) talks through a dialogue box (`rsSetupKeeperDialogueBox`). The lines come from `aShopDialoguePointers`, one table indexed by line group and keeper. Sub-state 1 always waits for the text and then moves to `wNextMenuState`. The options come from `lKeeperOptionList`, and each option's code chooses which list is drawn beside it (`rsCastleDrawListItemIcons`): 0 the stock, 1 and 2 the unit's inventory.
 
 - **Shop** (`aShopStepHandlers`, 21 sub-states). The item shop offers *buy* and *belongings*. The belongings list can only be looked at, and the keeper tells you to look at the goods instead. The secondhand shop offers *sell* and *buy*, the repair shop only repair.
   - **Buying** (`$03`-`$08`): the stock is every item in the shop's item state (`rlBuildStockList`), from every castle: the owner is never compared, so the stock is every shop list put on sale so far in the generation (one castle per chapter has a list). Items the unit can't use (`rlCheckSelectedUnitCanUseItem`: rank, women-only weapons) are marked unavailable and can't be bought. The price is halved if the unit, its class or an item it holds has Bargain (`rlCheckUnitHasBargain`). Buying fails if the inventory has 7 items or the unit cannot pay.
@@ -120,5 +120,4 @@ The text is put together for each couple (`rlBuildLoverHomeCastleConversation`, 
 - Step `$13` (`rsCastleStepExitToMapNoReset`) and shop sub-state `$14` (`rsShopLeaveToCourtyard`): nothing found selects them. (Step `$14` is B in the town.)
 - Keepers 4 and 6, and option codes 3-5: present in the tables (`rsSetKeeperOptionList`, `aKeeperPortraits`) but not seen used.
 - `$7F80A3`-`$7F80A7` hold both the fountain animation and the town's HDMA table, and are unnamed for now. `$7F8183` holds the augury topics; as the status screen's `wStatusScreenCaller` it is named only in the status screen's files (see [menus.md](menus.md)).
-- `rlUnknown84D334` and `rlUnknown9EDAE7` (giving money) are still `Unknown`.
 - Why class change is refused in chapter 6. In that chapter the command's label is drawn blank, its button gets another palette, and pressing it only plays the error sound (`rsCastleUnitCommandNameClassChange`, `rsCastleUnitCommandClassChange`); the code gives no reason.

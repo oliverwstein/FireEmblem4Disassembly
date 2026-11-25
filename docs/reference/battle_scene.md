@@ -193,7 +193,7 @@ Script commands 4, 5 and 8 take an index into `aBattleSceneScriptRoutines` (72 l
 ## Depends on
 
 - **The battle calculation** (bank `$84`, [engine/battle/battle.asm](../../engine/battle/battle.asm)): the action structs and `aBattleRoundsData`.
-- **The core:** the HDMA engine, the IRQ engine (`rlUnknown82E0C6`), the decompressor, DMA, sound (`rlPlaySoundEffect2`, `rlGetSoundPanFromXPixel`), the dialogue engine for the messages.
+- **The core:** the HDMA engine, the IRQ engine (`rlIRQEngineCreateEntry`), the decompressor, DMA, sound (`rlPlaySoundEffect2`, `rlGetSoundPanFromXPixel`), the dialogue engine for the messages.
 - **Used by** the title screen (its effects and `wBattleSceneFrame`) and the demo battles.
 
 ## Open questions

@@ -22,9 +22,10 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | IV | 13 [Dialogue and text](docs/guide/13-dialogue-and-text.md) | draft, reviewed |
 | IV | 14 [Armies with a mind](docs/guide/14-armies-with-a-mind.md) | draft, not yet reviewed |
 | V | 15 [Castles and towns](docs/guide/15-castles-and-towns.md), 16 [The arena](docs/guide/16-the-arena.md) | draft, not yet reviewed |
-| V–VII | 17–31 | not started; OUTLINE.md marks which have a reference page |
+| V | 17 [Love and lineage](docs/guide/17-love-and-lineage.md), 18 [Saving](docs/guide/18-saving.md), 19 [Between chapters](docs/guide/19-between-chapters.md), 20 [The opening](docs/guide/20-the-opening.md), 21 [Endings and scores](docs/guide/21-endings-and-scores.md) | draft, not yet reviewed |
+| VI–VII | 22–31 | not started; OUTLINE.md marks which have a reference page |
 
-**Reference pages** (`docs/reference/`): core, ai, arena, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, save, title, units, worldmap. Missing: **battle** (Chapters 6–7 were written from the source; the battle interlude needs it) and **rankings**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
+**Reference pages** (`docs/reference/`): core, ai, arena, battle, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, rankings, save, title, units, worldmap. Missing: **sound** (lowest priority) and **debug**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
 
 ## How chapters are written
 
@@ -79,6 +80,8 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `rlArenaMenuRunStep` called unreachable (castle step `$04` runs it); arena header spoke of a wager (no entry fee); event action `$1C` said to fire on leaving the arena (it fires after every win) | arena.asm, WRAM.h | `6532ccb` |
 | `rlEndUnitAction` wrote `wCastleSavedUnitRAMPointer` by raw address (how the town knows its visitor); the lover visit comment said the lover must be fielded (it must be off the map) | unit_movement.asm, lover_conversation.asm | `507ceaa` |
 | `TerrainShrine` called unused; arena fighters stand on it (`rlPopulateArenaActionStruct` wrote it as `$0017`) | include/Terrain.h, unit_commands.asm | `09cd71d` |
+| Stray `.fill` bytes in `aUnused9FFACC` and `aUnknown9BFE13` overlapped Bank `$9F/FC00` (1,081 bytes) and Bank `$DC/0000` (858 bytes); 4 raw `lKeeperOptionList` pointers in `shop.asm`; 3 hardcoded `$8D00` bank loads in `save_menu.asm` | map_magic_effects.asm, title_scenes.asm, shop.asm, save_menu.asm, build.asm | `bc33371` |
+| 3 `rlUnknown8FBB*` routines in Chapter 8/9 events (`rlEventJuliusWarpInStart`, `rlEventDeployJuliusChFinal`, `rlEventUnhideJuliusChFinal`); 4 stale `Unknown` names in `battle_scene/` comments | EventChapter08IshtarLeave.asm, EventChapter09ArionDied.asm, rounds.asm, loading.asm | `6f4b491` |
 
 **In the documentation** (reference pages, guide drafts):
 
