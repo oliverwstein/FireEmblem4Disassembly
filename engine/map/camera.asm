@@ -6,8 +6,10 @@
 ; between castles (rsJumpToNextCastle). Bank $88.
 ;
 ; wMapScrollXPixels/YPixels is the camera; wCursorXOffset/YOffset is the cursor
-; on the screen. The cursor may move within 48 pixels of the screen edge (X
-; $30-$C7, Y $28-$A7) before the map scrolls instead.
+; on the screen. The player's cursor stays 48 pixels from each screen edge (its
+; top left at X $30-$C0, Y $30-$A0; 16 pixels when the camera is at the map's
+; edge) and the map scrolls instead (map_cursor.asm, rsMoveMapCursorLeft...).
+; rlCheckPointInScreenMargins, used by events, tests a looser box.
 
 
     .section Unsorted88BF37Section
