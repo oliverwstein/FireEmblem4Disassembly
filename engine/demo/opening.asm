@@ -1558,9 +1558,9 @@
         jsl rlDisableMapMenuUploads
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD44143
+        ldx #<>acOpeningSkySceneTilemap0
         stx DecompressionVariables
-        lda #`gcUnknownD44143
+        lda #`acOpeningSkySceneTilemap0
         sta $CA
         ldx #$7B88
         stx $CB
@@ -1574,9 +1574,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD43402
+        ldx #<>g4bppcOpeningSkySceneTiles
         stx DecompressionVariables
-        lda #`gcUnknownD43402
+        lda #`g4bppcOpeningSkySceneTiles
         sta $CA
         ldx #$9388
         stx $CB
@@ -1590,9 +1590,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD4486F
+        ldx #<>acOpeningSkySceneTilemap2
         stx DecompressionVariables
-        lda #`gcUnknownD4486F
+        lda #`acOpeningSkySceneTilemap2
         sta $CA
         ldx #$8388
         stx $CB
@@ -1606,9 +1606,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD4429B
+        ldx #<>acOpeningSkySceneTilemap1
         stx DecompressionVariables
-        lda #`gcUnknownD4429B
+        lda #`acOpeningSkySceneTilemap1
         sta $CA
         ldx #$A388
         stx $CB
@@ -1683,9 +1683,9 @@
         jsl rlDisableMapMenuUploads
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD44143
+        ldx #<>acOpeningSkySceneTilemap0
         stx DecompressionVariables
-        lda #`gcUnknownD44143
+        lda #`acOpeningSkySceneTilemap0
         sta $CA
         ldx #$7B88
         stx $CB
@@ -1699,9 +1699,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD43402
+        ldx #<>g4bppcOpeningSkySceneTiles
         stx DecompressionVariables
-        lda #`gcUnknownD43402
+        lda #`g4bppcOpeningSkySceneTiles
         sta $CA
         ldx #$9388
         stx $CB
@@ -1715,9 +1715,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD4486F
+        ldx #<>acOpeningSkySceneTilemap2
         stx DecompressionVariables
-        lda #`gcUnknownD4486F
+        lda #`acOpeningSkySceneTilemap2
         sta $CA
         ldx #$8388
         stx $CB
@@ -1731,9 +1731,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD4429B
+        ldx #<>acOpeningSkySceneTilemap1
         stx DecompressionVariables
-        lda #`gcUnknownD4429B
+        lda #`acOpeningSkySceneTilemap1
         sta $CA
         ldx #$A388
         stx $CB

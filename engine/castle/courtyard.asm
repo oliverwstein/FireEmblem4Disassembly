@@ -2013,9 +2013,9 @@
         jsl rlLoadWindowGraphics
         sep #$20
         rep #$10
-        ldx #<>gcUnknownC02542
+        ldx #<>g4bppcMapMenuTiles3600
         stx DecompressionVariables
-        lda #`gcUnknownC02542
+        lda #`g4bppcMapMenuTiles3600
         sta $CA
         ldx #$8F88
         stx $CB

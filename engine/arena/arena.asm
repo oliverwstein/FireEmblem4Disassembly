@@ -31,19 +31,19 @@
       aArenaDecompressionEntry0000 ; 8A/E4C3
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
-        .structDecompressionDMAEntry gcUnknownD306D6, $1000, $0000
+        .structDecompressionDMAEntry g4bppcArenaBGTiles, $1000, $0000
 
 
       aArenaDecompressionEntry2800 ; 8A/E4CB
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
-        .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800
+        .structDecompressionDMAEntry acCastleShopAndArenaBG1Tilemap, $0800, $2800
 
 
       aArenaDecompressionEntry2C00 ; 8A/E4D3
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
-        .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00
+        .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00
 
 
       rlArenaMenuRunStep ; 8A/E4DB

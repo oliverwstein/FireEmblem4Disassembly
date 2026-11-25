@@ -148,18 +148,18 @@
         jsl rlUnitWindowCopySpritePalette1
         lda #$0004
         jsl rlUnitWindowCopySpritePalette2
-        lda #(`gcUnknownDD3DC0)<<8
+        lda #(`acItemWindowBG1Tilemap)<<8
         sta lR18+1
-        lda #<>gcUnknownDD3DC0
+        lda #<>acItemWindowBG1Tilemap
         sta lR18
         lda #(`aBG2TilemapBuffer)<<8
         sta lR19+1
         lda #<>aBG2TilemapBuffer
         sta lR19
         jsl rlAppendDecompList
-        lda #(`gcUnknownDD3E96)<<8
+        lda #(`acItemWindowBG2Tilemap)<<8
         sta lR18+1
-        lda #<>gcUnknownDD3E96
+        lda #<>acItemWindowBG2Tilemap
         sta lR18
         lda #$7E00
         sta lR19+1

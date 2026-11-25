@@ -167,18 +167,18 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $3000
 
-        lda #(`gcUnknownDD373A)<<8
+        lda #(`acDataWindowBG1Tilemap)<<8
         sta lR18+1
-        lda #<>gcUnknownDD373A
+        lda #<>acDataWindowBG1Tilemap
         sta lR18
         lda #(`aBG2TilemapBuffer)<<8
         sta lR19+1
         lda #<>aBG2TilemapBuffer
         sta lR19
         jsl rlAppendDecompList
-        lda #(`gcUnknownDD3851)<<8
+        lda #(`acDataWindowBG2Tilemap)<<8
         sta lR18+1
-        lda #<>gcUnknownDD3851
+        lda #<>acDataWindowBG2Tilemap
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -820,9 +820,9 @@
         ; Decompresses the battle banner graphics and copies each army's banner to VRAM
         ; (rsDataWindowCopyBanner).
 
-        lda #(`gcUnknownDD304B)<<8
+        lda #(`acDataWindowBannerTilemap)<<8
         sta lR18+1
-        lda #<>gcUnknownDD304B
+        lda #<>acDataWindowBannerTilemap
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

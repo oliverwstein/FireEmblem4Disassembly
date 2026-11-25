@@ -212,9 +212,9 @@
         jsl rlDecompressor
         sep #$20
         rep #$10
-        ldx #<>gcUnknown94E9EE
+        ldx #<>g4bppcTitleScreenTiles94E9EE
         stx DecompressionVariables
-        lda #`gcUnknown94E9EE
+        lda #`g4bppcTitleScreenTiles94E9EE
         sta $CA
         ldx #$4000
         stx $CB

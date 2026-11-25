@@ -627,7 +627,7 @@
         .long gcUnknownF3365D, aDecompressionBuffer
         .word $0000, $0800
         .byte $00
-        .long gcUnknown94FF6D, aDecompressionBuffer
+        .long acTitleScreenTilemap94FF6D, aDecompressionBuffer
         .word $0400, $0800
         .byte $00
         .long gcTitleIntroCaption09, aDecompressionBuffer
@@ -636,7 +636,7 @@
         .long gcTitleIntroCaption09Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknown94E9EE, aDecompressionBuffer
+        .long g4bppcTitleScreenTiles94E9EE, aDecompressionBuffer
         .word $1000, $2000
         .byte $00
         .long gcUnknownF5597A, aDecompressionBuffer

@@ -5,16 +5,16 @@
 start $C00000
 end $C03C05
 
-gcUnknownC00000 gcUnknownC00000 ; 17664 bytes decompressed
+acDataC00000Unused acDataC00000Unused ; 17664 bytes decompressed
 # Hiragana font (seen in the preview); loaded by rsBattleSceneLoadNameFont and the map battle quotes.
 gcHiraganaFont gcHiraganaFont ; 6144 bytes decompressed
 # Menu labels and icons (seen in the preview); loaded by rlLoadMenuIconGraphics.
 gcMenuLabelsAndIcons gcMenuLabelsAndIcons ; 2048 bytes decompressed
-gcUnknownC01FBA gcUnknownC01FBA ; 1024 bytes decompressed
-gcUnknownC022B6 gcUnknownC022B6 ; 1440 bytes decompressed
-gcUnknownC02542 gcUnknownC02542 ; 1024 bytes decompressed
-gcUnknownC02786 gcUnknownC02786 ; 2048 bytes decompressed
+g4bppcMapMenuTiles3400 g4bppcMapMenuTiles3400 ; 1024 bytes decompressed
+acMapBattleHUDTiles acMapBattleHUDTiles ; 1440 bytes decompressed
+g4bppcMapMenuTiles3600 g4bppcMapMenuTiles3600 ; 1024 bytes decompressed
+acDataC02786Unused acDataC02786Unused ; 2048 bytes decompressed
 g4bppcGameOverTiles g4bppcGameOverTiles ; 3520 bytes decompressed
 acGameOverBG1Tilemap acGameOverBG1Tilemap ; 2048 bytes decompressed
 acGameOverBG2Tilemap acGameOverBG2Tilemap ; 2048 bytes decompressed
-gcUnknownC0365A gcUnknownC0365A ; 3584 bytes decompressed
+g4bppcMapMagicRippleTiles g4bppcMapMagicRippleTiles ; 3584 bytes decompressed

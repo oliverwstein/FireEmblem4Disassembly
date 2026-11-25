@@ -521,9 +521,9 @@
         ; Decompresses map action effect OAM graphics to aDecompressionBuffer+$2000/$3000.
 
         phx
-        lda #(`gcUnknownD676F6)<<8
+        lda #(`g4bppcMapActionEffectGfx1)<<8
         sta lR18+1
-        lda #<>gcUnknownD676F6
+        lda #<>g4bppcMapActionEffectGfx1
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -533,9 +533,9 @@
         sta lR19
         jsl rlAppendDecompList
 
-        lda #(`gcUnknownD677E9)<<8
+        lda #(`g4bppcMapActionEffectGfx2)<<8
         sta lR18+1
-        lda #<>gcUnknownD677E9
+        lda #<>g4bppcMapActionEffectGfx2
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

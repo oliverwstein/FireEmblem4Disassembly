@@ -198,9 +198,9 @@
         lda #<>aUnknown87C784
         sta lR19
         jsl rlApplyMapMenuPaletteData
-        lda #(`gcUnknownC0365A)<<8
+        lda #(`g4bppcMapMagicRippleTiles)<<8
         sta lR18+1
-        lda #<>gcUnknownC0365A
+        lda #<>g4bppcMapMagicRippleTiles
         sta lR18
         lda #$7E00
         sta lR19+1

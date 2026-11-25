@@ -4490,7 +4490,7 @@
         .word $3800, $0800
         .long gcUnknownF339EB, aDecompressionBuffer
         .word $6000, $1000
-        .long gcUnknown94FF6D, aDecompressionBuffer
+        .long acTitleScreenTilemap94FF6D, aDecompressionBuffer
         .word $7000, $0800
         .long gcUnknownF33DD0, aDecompressionBuffer
         .word $3000, $1400

@@ -436,12 +436,12 @@
       .dsection Unsorted80B041Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B084 .structDecompressionDMAEntry gcUnknownC02542, $0400, $3600 ; 80/B084
+      aDecompressionDMAEntry80B084 .structDecompressionDMAEntry g4bppcMapMenuTiles3600, $0400, $3600 ; 80/B084
 
       .dsection Unsorted80B08CSection
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B09B .structDecompressionDMAEntry gcUnknownC01FBA, $0400, $3400 ; 80/B09B
+      aDecompressionDMAEntry80B09B .structDecompressionDMAEntry g4bppcMapMenuTiles3400, $0400, $3400 ; 80/B09B
 
       .dsection Unsorted80B0A3Section
 
@@ -467,9 +467,9 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80B61E .structDecompressionDMAEntry gcWorldMapTiles, $6000, $0000 ; 80/B61E
-      aDecompressionDMAEntry80B626 .structDecompressionDMAEntry gcUnknownD13D09, $1000, $3000 ; 80/B626
-      aDecompressionDMAEntry80B62E .structDecompressionDMAEntry gcUnknownD1432E, $0100, $4000 ; 80/B62E
-      aDecompressionDMAEntry80B636 .structDecompressionDMAEntry gcUnknownD14375, $0800, $6000 ; 80/B636
+      aDecompressionDMAEntry80B626 .structDecompressionDMAEntry g4bppcWorldMapOverlayTiles, $1000, $3000 ; 80/B626
+      aDecompressionDMAEntry80B62E .structDecompressionDMAEntry acWorldMapData4000, $0100, $4000 ; 80/B62E
+      aDecompressionDMAEntry80B636 .structDecompressionDMAEntry acWorldMapBG3Tilemap, $0800, $6000 ; 80/B636
 
       ; 80/B63E: an unreferenced lone rts (as at 80/B640).
       .byte $60
@@ -513,8 +513,8 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80BB45 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/BB45
-      aDecompressionDMAEntry80BB4D .structDecompressionDMAEntry gcUnknownD35B40, $0800, $5400 ; 80/BB4D
-      aDecompressionDMAEntry80BB55 .structDecompressionDMAEntry gcUnknownD33EFA, $2000, $1000 ; 80/BB55
+      aDecompressionDMAEntry80BB4D .structDecompressionDMAEntry acCastleTownBGTilemap, $0800, $5400 ; 80/BB4D
+      aDecompressionDMAEntry80BB55 .structDecompressionDMAEntry g4bppcCastleTownBGTiles, $2000, $1000 ; 80/BB55
 
       .dsection Unsorted80BB5DSection
 
@@ -625,7 +625,7 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/D41D
-      aDecompressionDMAEntry80D425 .structDecompressionDMAEntry gcUnknownDD3CE4, $0700, $1800 ; 80/D425
+      aDecompressionDMAEntry80D425 .structDecompressionDMAEntry acSkillWindowBG1Tilemap, $0700, $1800 ; 80/D425
       aDecompressionDMAEntry80D42D .structDecompressionDMAEntry g4bppcDebugMenuWindowTiles, $0800, $2000 ; 80/D42D
 
       .dsection Unsorted80D435Section
@@ -650,8 +650,8 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80E72E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/E72E
-      aDecompressionDMAEntry80E736 .structDecompressionDMAEntry gcUnknownDD3932, $0800, $4200 ; 80/E736
-      aDecompressionDMAEntry80E73E .structDecompressionDMAEntry gcUnknownDD3BDE, $0700, $2000 ; 80/E73E
+      aDecompressionDMAEntry80E736 .structDecompressionDMAEntry acOptionsMenuTiles, $0800, $4200 ; 80/E736
+      aDecompressionDMAEntry80E73E .structDecompressionDMAEntry acOptionsMenuBG1Tilemap, $0700, $2000 ; 80/E73E
 
       .dsection Unsorted80E746Section
 
@@ -679,19 +679,19 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80EFA8 .structDecompressionDMAEntry g4bppcBattleBackgroundThicket, $4000, $0000 ; 80/EFA8
-      aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry gcUnknownD317A0, $2000, $2000 ; 80/EFB0
+      aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry g4bppcEpilogueCreditsBG1Tiles, $2000, $2000 ; 80/EFB0
       aDecompressionDMAEntry80EFB8 .structDecompressionDMAEntry g4bppcDialogueBackgroundFountainForeground, $2000, $3000 ; 80/EFB8
-      aDecompressionDMAEntry80EFC0 .structDecompressionDMAEntry gcUnknownD32CCB, $1000, $6000 ; 80/EFC0
-      aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry gcUnknownD33090, $1000, $5000 ; 80/EFC8
-      aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry gcUnknownD335B5, $1000, $5800 ; 80/EFD0
+      aDecompressionDMAEntry80EFC0 .structDecompressionDMAEntry g4bppcEpilogueCreditsSpriteTiles0, $1000, $6000 ; 80/EFC0
+      aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry g4bppcEpilogueCreditsSpriteTiles1, $1000, $5000 ; 80/EFC8
+      aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry g4bppcEpilogueCreditsSpriteTiles2, $1000, $5800 ; 80/EFD0
 
       .dsection Unsorted80EFD8Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80F187 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $3000 ; 80/F187
       aDecompressionDMAEntry80F18F .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $5000 ; 80/F18F
-      aDecompressionDMAEntry80F197 .structDecompressionDMAEntry gcUnknownD35EB4, $5800, $0000 ; 80/F197
-      aDecompressionDMAEntry80F19F .structDecompressionDMAEntry gcUnknownD42C50, $1000, $5800 ; 80/F19F
+      aDecompressionDMAEntry80F197 .structDecompressionDMAEntry g4bppcEpilogueEndScreenTiles, $5800, $0000 ; 80/F197
+      aDecompressionDMAEntry80F19F .structDecompressionDMAEntry g4bppcEpilogueRankingsSpriteTiles, $1000, $5800 ; 80/F19F
 
       .dsection Unsorted80F1A7Section
 
@@ -717,7 +717,7 @@
       .dsection Table80F413Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80F42B .structDecompressionDMAEntry gcUnknownDD3FA6, $4000, $0000 ; 80/F42B
+      aDecompressionDMAEntry80F42B .structDecompressionDMAEntry g4bppcChapterIntroBG1Tiles, $4000, $0000 ; 80/F42B
       aDecompressionDMAEntry80F433 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $4000 ; 80/F433
       aDecompressionDMAEntry80F43B .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $6000 ; 80/F43B
 
@@ -2129,7 +2129,7 @@
       .dsection Unsorted85D648Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry85D669 .structDecompressionDMAEntry gcUnknownC022B6, $0800, $4C00 ; 85/D669
+      aDecompressionDMAEntry85D669 .structDecompressionDMAEntry acMapBattleHUDTiles, $0800, $4C00 ; 85/D669
 
       .dsection Unsorted85D671Section
 
@@ -3718,15 +3718,15 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8ABE4B .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/BE4B
-      aDecompressionDMAEntry8ABE53 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/BE53
-      aDecompressionDMAEntry8ABE5B .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/BE5B
+      aDecompressionDMAEntry8ABE53 .structDecompressionDMAEntry acCastleShopAndArenaBG1Tilemap, $0800, $2800 ; 8A/BE53
+      aDecompressionDMAEntry8ABE5B .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/BE5B
 
       .dsection Unsorted8ABE63Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8ABF0F .structDecompressionDMAEntry gcUnknownD22430, $1000, $0000 ; 8A/BF0F
-      aDecompressionDMAEntry8ABF17 .structDecompressionDMAEntry gcUnknownD27F1A, $1000, $0000 ; 8A/BF17
-      aDecompressionDMAEntry8ABF1F .structDecompressionDMAEntry gcUnknownD2769C, $1000, $0000 ; 8A/BF1F
+      aDecompressionDMAEntry8ABF0F .structDecompressionDMAEntry g4bppcCastleArmoryBGTiles, $1000, $0000 ; 8A/BF0F
+      aDecompressionDMAEntry8ABF17 .structDecompressionDMAEntry g4bppcCastleRepairShopBGTiles, $1000, $0000 ; 8A/BF17
+      aDecompressionDMAEntry8ABF1F .structDecompressionDMAEntry g4bppcCastlePawnShopBGTiles, $1000, $0000 ; 8A/BF1F
 
       .dsection Unsorted8ABF27Section
 
@@ -3931,10 +3931,10 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/EE89
-      aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry gcUnknownD240B0, $1000, $0000 ; 8A/EE91
+      aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry g4bppcClassChangeBGTiles, $1000, $0000 ; 8A/EE91
       aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundUnknown17, $2000, $1000 ; 8A/EE99
-      aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry gcUnknownD24914, $0800, $2800 ; 8A/EEA1
-      aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/EEA9
+      aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry acClassChangeBGTilemap, $0800, $2800 ; 8A/EEA1
+      aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/EEA9
 
       .dsection Unsorted8AEEB1Section
 
@@ -3953,9 +3953,9 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AF263 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/F263
-      aDecompressionDMAEntry8AF26B .structDecompressionDMAEntry gcUnknownD30F54, $1000, $0000 ; 8A/F26B
-      aDecompressionDMAEntry8AF273 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/F273
-      aDecompressionDMAEntry8AF27B .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/F27B
+      aDecompressionDMAEntry8AF26B .structDecompressionDMAEntry g4bppcDepotBGTiles, $1000, $0000 ; 8A/F26B
+      aDecompressionDMAEntry8AF273 .structDecompressionDMAEntry acCastleShopAndArenaBG1Tilemap, $0800, $2800 ; 8A/F273
+      aDecompressionDMAEntry8AF27B .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/F27B
 
       .dsection Unsorted8AF283Section
 
@@ -3981,10 +3981,10 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AFA0C .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/FA0C
-      aDecompressionDMAEntry8AFA14 .structDecompressionDMAEntry gcUnknownD269F9, $1000, $0000 ; 8A/FA14
-      aDecompressionDMAEntry8AFA1C .structDecompressionDMAEntry gcUnknownD24CA4, $2000, $1000 ; 8A/FA1C
-      aDecompressionDMAEntry8AFA24 .structDecompressionDMAEntry gcUnknownD272B9, $0800, $2800 ; 8A/FA24
-      aDecompressionDMAEntry8AFA2C .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/FA2C
+      aDecompressionDMAEntry8AFA14 .structDecompressionDMAEntry g4bppcAuguryBG1Tiles, $1000, $0000 ; 8A/FA14
+      aDecompressionDMAEntry8AFA1C .structDecompressionDMAEntry g4bppcAuguryBG2Tiles, $2000, $1000 ; 8A/FA1C
+      aDecompressionDMAEntry8AFA24 .structDecompressionDMAEntry acAuguryBGTilemap, $0800, $2800 ; 8A/FA24
+      aDecompressionDMAEntry8AFA2C .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/FA2C
 
       .dsection Unsorted8AFA34Section
 
@@ -4934,14 +4934,14 @@
       .dsection Unsorted8DAF33Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8DAF95 .structDecompressionDMAEntry gcUnknownD35EB4, $3000, $0000 ; 8D/AF95
-      aDecompressionDMAEntry8DAF9D .structDecompressionDMAEntry gcUnknownD421EE, $0800, $5800 ; 8D/AF9D
+      aDecompressionDMAEntry8DAF95 .structDecompressionDMAEntry g4bppcEpilogueEndScreenTiles, $3000, $0000 ; 8D/AF95
+      aDecompressionDMAEntry8DAF9D .structDecompressionDMAEntry acEpilogueEndScreenTilemap, $0800, $5800 ; 8D/AF9D
 
       .dsection Unsorted8DAFA5Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8DB056 .structDecompressionDMAEntry gcUnknownD429F6, $0800, $5800 ; 8D/B056
-      aDecompressionDMAEntry8DB05E .structDecompressionDMAEntry gcUnknownD428B8, $0800, $6800 ; 8D/B05E
+      aDecompressionDMAEntry8DB056 .structDecompressionDMAEntry acEpilogueRankingBG1Tilemap, $0800, $5800 ; 8D/B056
+      aDecompressionDMAEntry8DB05E .structDecompressionDMAEntry acEpilogueRankingBG2Tilemap, $0800, $6800 ; 8D/B05E
       aDecompressionDMAEntry8DB066 .structDecompressionDMAEntry gcRankingScreenTiles, $1000, $4000 ; 8D/B066
 
       .dsection Unsorted8DB06ESection

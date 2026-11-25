@@ -16320,9 +16320,9 @@
         .databank ?
 
         phx
-        lda #(`gcUnknownAFF670)<<8
+        lda #(`g4bppcMapMagicCutsceneGfx1)<<8
         sta lR18+1
-        lda #<>gcUnknownAFF670
+        lda #<>g4bppcMapMagicCutsceneGfx1
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -16346,9 +16346,9 @@
         .databank ?
 
         phx
-        lda #(`gcUnknownD67D7D)<<8
+        lda #(`g4bppcMapMagicCutsceneGfx2)<<8
         sta lR18+1
-        lda #<>gcUnknownD67D7D
+        lda #<>g4bppcMapMagicCutsceneGfx2
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

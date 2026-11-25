@@ -268,9 +268,9 @@
         jsl rlHandleMapMenuDecompressionDMA
         sep #$20
         rep #$10
-        ldx #<>gcUnknownD428B8
+        ldx #<>acEpilogueRankingBG2Tilemap
         stx DecompressionVariables
-        lda #`gcUnknownD428B8
+        lda #`acEpilogueRankingBG2Tilemap
         sta $CA
         ldx #$8388
         stx $CB
