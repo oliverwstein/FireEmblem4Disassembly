@@ -351,7 +351,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A,x
+        lda aBattleSceneCombatantBodyRecords,x
         and #$00FF
         jsl rlBattleSceneNoOp2
         plx
@@ -387,7 +387,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A+1,x
+        lda aBattleSceneCombatantBodyRecords+1,x
         and #$00FF
         plx
         rtl
@@ -424,7 +424,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A+2,x
+        lda aBattleSceneCombatantBodyRecords+2,x
         and #$00FF
         jsl rlBattleSceneNoOp2
         ply
@@ -461,7 +461,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A+3,x
+        lda aBattleSceneCombatantBodyRecords+3,x
         and #$00FF
         plx
         rts
@@ -497,7 +497,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A+4,x
+        lda aBattleSceneCombatantBodyRecords+4,x
         and #$00FF
         plx
         rts
@@ -541,7 +541,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A+5,x
+        lda aBattleSceneCombatantBodyRecords+5,x
         and #$00FF
         plx
         rts
@@ -677,7 +677,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A+6,x
+        lda aBattleSceneCombatantBodyRecords+6,x
         and #$00FF
         jsl rlBattleSceneNoOp2
         asl a
@@ -734,7 +734,7 @@
 
       rlBattleAnimationGetBodyByte7 ; 95/B7CF
 
-        ; Called only from unreachable code in rsBattleScenePlaceCombatants. X = 0 or $43 (the combatant); returns byte 7 of the combatant's aUnknown97EA9A record (index $7FE1BE/$7FE1BF).
+        ; Called only from unreachable code in rsBattleScenePlaceCombatants. X = 0 or $43 (the combatant); returns byte 7 of the combatant's aBattleSceneCombatantBodyRecords record (index $7FE1BE/$7FE1BF).
         .al
         .xl
         .autsiz
@@ -759,7 +759,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A+7,x
+        lda aBattleSceneCombatantBodyRecords+7,x
         and #$00FF
         plx
         rtl
@@ -2847,7 +2847,7 @@
         .autsiz
         .databank ?
 
-        ; A = sound: when the combatant's weapon is in aUnknown998F02 (BattleSceneFlagListedWeapon1/2), sounds $47, $6D, $8C and $8E become the next sound.
+        ; A = sound: when the combatant's weapon is in aBattleSceneListedWeapons (BattleSceneFlagListedWeapon1/2), sounds $47, $6D, $8C and $8E become the next sound.
 
         phx
         pha

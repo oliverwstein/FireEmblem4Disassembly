@@ -2568,87 +2568,87 @@
         .byte $00, $00, $00, $00, $00, $00, $7F, $00, $00, $00, $00, $40, $00, $00, $00, $00
         .byte $00, $00, $00
 
-      aUnknown978F7D ; 97/8F7D
+      aBattleSceneEffectOffsetTable ; 97/8F7D
 
         ; Offset table starting at $97/8F7D (77 entries).
 
-        .word _8F7D_904F - aUnknown978F7D
-        .word _8F7D_9061 - aUnknown978F7D
-        .word _8F7D_909D - aUnknown978F7D
-        .word _8F7D_9631 - aUnknown978F7D
-        .word _8F7D_92AD - aUnknown978F7D
-        .word _8F7D_967F - aUnknown978F7D
-        .word _8F7D_931B - aUnknown978F7D
-        .word _8F7D_9715 - aUnknown978F7D
-        .word _8F7D_977B - aUnknown978F7D
-        .word _8F7D_97DF - aUnknown978F7D
-        .word _8F7D_986B - aUnknown978F7D
-        .word _8F7D_98DB - aUnknown978F7D
-        .word _8F7D_995F - aUnknown978F7D
-        .word _8F7D_9999 - aUnknown978F7D
-        .word _8F7D_99CF - aUnknown978F7D
-        .word _8F7D_9A13 - aUnknown978F7D
-        .word _8F7D_9A7B - aUnknown978F7D
-        .word _8F7D_9AEF - aUnknown978F7D
-        .word _8F7D_9B4B - aUnknown978F7D
-        .word _8F7D_9107 - aUnknown978F7D
-        .word _8F7D_9BD3 - aUnknown978F7D
-        .word _8F7D_9C69 - aUnknown978F7D
-        .word _8F7D_9CC3 - aUnknown978F7D
-        .word _8F7D_9D65 - aUnknown978F7D
-        .word _8F7D_9DFD - aUnknown978F7D
-        .word _8F7D_9017 - aUnknown978F7D
-        .word _8F7D_91CF - aUnknown978F7D
-        .word _8F7D_9207 - aUnknown978F7D
-        .word _8F7D_9173 - aUnknown978F7D
-        .word _8F7D_926F - aUnknown978F7D
-        .word _8F7D_93AD - aUnknown978F7D
-        .word _8F7D_93E3 - aUnknown978F7D
-        .word _8F7D_9421 - aUnknown978F7D
-        .word _8F7D_9465 - aUnknown978F7D
-        .word _8F7D_94A7 - aUnknown978F7D
-        .word _8F7D_94EB - aUnknown978F7D
-        .word _8F7D_9567 - aUnknown978F7D
-        .word _8F7D_95CF - aUnknown978F7D
-        .word _8F7D_923F - aUnknown978F7D
-        .word _8F7D_9611 - aUnknown978F7D
-        .word _8F7D_9E97 - aUnknown978F7D
-        .word _8F7D_9EBD - aUnknown978F7D
-        .word _8F7D_9EDF - aUnknown978F7D
-        .word _8F7D_9F0D - aUnknown978F7D
-        .word _8F7D_9F37 - aUnknown978F7D
-        .word _8F7D_9F3F - aUnknown978F7D
-        .word _8F7D_9F93 - aUnknown978F7D
-        .word _8F7D_9FE7 - aUnknown978F7D
-        .word _8F7D_9FEF - aUnknown978F7D
-        .word _8F7D_9FF7 - aUnknown978F7D
-        .word _8F7D_A00B - aUnknown978F7D
-        .word _8F7D_A011 - aUnknown978F7D
-        .word _8F7D_A0AF - aUnknown978F7D
-        .word _8F7D_A0B3 - aUnknown978F7D
-        .word _8F7D_A0E1 - aUnknown978F7D
-        .word _8F7D_A0E9 - aUnknown978F7D
-        .word _8F7D_A0F1 - aUnknown978F7D
-        .word _8F7D_A0F9 - aUnknown978F7D
-        .word _8F7D_A0FF - aUnknown978F7D
-        .word _8F7D_A105 - aUnknown978F7D
-        .word _8F7D_A10B - aUnknown978F7D
-        .word _8F7D_A153 - aUnknown978F7D
-        .word _8F7D_A159 - aUnknown978F7D
-        .word _8F7D_A17F - aUnknown978F7D
-        .word _8F7D_A185 - aUnknown978F7D
-        .word _8F7D_A199 - aUnknown978F7D
-        .word _8F7D_A1BD - aUnknown978F7D
-        .word _8F7D_A1EF - aUnknown978F7D
-        .word _8F7D_A1FD - aUnknown978F7D
-        .word _8F7D_A205 - aUnknown978F7D
-        .word _8F7D_A243 - aUnknown978F7D
-        .word _8F7D_A2A9 - aUnknown978F7D
-        .word _8F7D_A2F5 - aUnknown978F7D
-        .word _8F7D_A359 - aUnknown978F7D
-        .word _8F7D_A3AB - aUnknown978F7D
-        .word _8F7D_A3DB - aUnknown978F7D
-        .word _8F7D_A3F1 - aUnknown978F7D
+        .word _8F7D_904F - aBattleSceneEffectOffsetTable
+        .word _8F7D_9061 - aBattleSceneEffectOffsetTable
+        .word _8F7D_909D - aBattleSceneEffectOffsetTable
+        .word _8F7D_9631 - aBattleSceneEffectOffsetTable
+        .word _8F7D_92AD - aBattleSceneEffectOffsetTable
+        .word _8F7D_967F - aBattleSceneEffectOffsetTable
+        .word _8F7D_931B - aBattleSceneEffectOffsetTable
+        .word _8F7D_9715 - aBattleSceneEffectOffsetTable
+        .word _8F7D_977B - aBattleSceneEffectOffsetTable
+        .word _8F7D_97DF - aBattleSceneEffectOffsetTable
+        .word _8F7D_986B - aBattleSceneEffectOffsetTable
+        .word _8F7D_98DB - aBattleSceneEffectOffsetTable
+        .word _8F7D_995F - aBattleSceneEffectOffsetTable
+        .word _8F7D_9999 - aBattleSceneEffectOffsetTable
+        .word _8F7D_99CF - aBattleSceneEffectOffsetTable
+        .word _8F7D_9A13 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9A7B - aBattleSceneEffectOffsetTable
+        .word _8F7D_9AEF - aBattleSceneEffectOffsetTable
+        .word _8F7D_9B4B - aBattleSceneEffectOffsetTable
+        .word _8F7D_9107 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9BD3 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9C69 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9CC3 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9D65 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9DFD - aBattleSceneEffectOffsetTable
+        .word _8F7D_9017 - aBattleSceneEffectOffsetTable
+        .word _8F7D_91CF - aBattleSceneEffectOffsetTable
+        .word _8F7D_9207 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9173 - aBattleSceneEffectOffsetTable
+        .word _8F7D_926F - aBattleSceneEffectOffsetTable
+        .word _8F7D_93AD - aBattleSceneEffectOffsetTable
+        .word _8F7D_93E3 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9421 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9465 - aBattleSceneEffectOffsetTable
+        .word _8F7D_94A7 - aBattleSceneEffectOffsetTable
+        .word _8F7D_94EB - aBattleSceneEffectOffsetTable
+        .word _8F7D_9567 - aBattleSceneEffectOffsetTable
+        .word _8F7D_95CF - aBattleSceneEffectOffsetTable
+        .word _8F7D_923F - aBattleSceneEffectOffsetTable
+        .word _8F7D_9611 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9E97 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9EBD - aBattleSceneEffectOffsetTable
+        .word _8F7D_9EDF - aBattleSceneEffectOffsetTable
+        .word _8F7D_9F0D - aBattleSceneEffectOffsetTable
+        .word _8F7D_9F37 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9F3F - aBattleSceneEffectOffsetTable
+        .word _8F7D_9F93 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9FE7 - aBattleSceneEffectOffsetTable
+        .word _8F7D_9FEF - aBattleSceneEffectOffsetTable
+        .word _8F7D_9FF7 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A00B - aBattleSceneEffectOffsetTable
+        .word _8F7D_A011 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A0AF - aBattleSceneEffectOffsetTable
+        .word _8F7D_A0B3 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A0E1 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A0E9 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A0F1 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A0F9 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A0FF - aBattleSceneEffectOffsetTable
+        .word _8F7D_A105 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A10B - aBattleSceneEffectOffsetTable
+        .word _8F7D_A153 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A159 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A17F - aBattleSceneEffectOffsetTable
+        .word _8F7D_A185 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A199 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A1BD - aBattleSceneEffectOffsetTable
+        .word _8F7D_A1EF - aBattleSceneEffectOffsetTable
+        .word _8F7D_A1FD - aBattleSceneEffectOffsetTable
+        .word _8F7D_A205 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A243 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A2A9 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A2F5 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A359 - aBattleSceneEffectOffsetTable
+        .word _8F7D_A3AB - aBattleSceneEffectOffsetTable
+        .word _8F7D_A3DB - aBattleSceneEffectOffsetTable
+        .word _8F7D_A3F1 - aBattleSceneEffectOffsetTable
 
       _8F7D_9017 ; 97/9017
         .byte $3B, $08, $01, $42, $FE, $FF, $02, $42, $FE, $FF, $00, $1A, $06, $56, $FE, $FF
@@ -3164,54 +3164,54 @@
 
         ; 97/A411
 
-      aUnknown97A411 ; 97/A411
+      aBattleSceneWindowEffect1Table ; 97/A411
 
         ; Window effect 1 offset table (44 entries).
 
-        .word _A411_A469 - aUnknown97A411
-        .word _A411_A477 - aUnknown97A411
-        .word _A411_A494 - aUnknown97A411
-        .word _A411_A4A2 - aUnknown97A411
-        .word _A411_A4A5 - aUnknown97A411
-        .word _A411_A4AA - aUnknown97A411
-        .word _A411_A4B3 - aUnknown97A411
-        .word _A411_A4B8 - aUnknown97A411
-        .word _A411_A4F2 - aUnknown97A411
-        .word _A411_A511 - aUnknown97A411
-        .word _A411_A53D - aUnknown97A411
-        .word _A411_A552 - aUnknown97A411
-        .word _A411_A57E - aUnknown97A411
-        .word _A411_A58C - aUnknown97A411
-        .word _A411_A5CC - aUnknown97A411
-        .word _A411_A5E7 - aUnknown97A411
-        .word _A411_A5EA - aUnknown97A411
-        .word _A411_A5F8 - aUnknown97A411
-        .word _A411_A5FB - aUnknown97A411
-        .word _A411_A616 - aUnknown97A411
-        .word _A411_A61B - aUnknown97A411
-        .word _A411_A629 - aUnknown97A411
-        .word _A411_A62E - aUnknown97A411
-        .word _A411_A666 - aUnknown97A411
-        .word _A411_A689 - aUnknown97A411
-        .word _A411_A68C - aUnknown97A411
-        .word _A411_A69A - aUnknown97A411
-        .word _A411_A6C5 - aUnknown97A411
-        .word _A411_A6D1 - aUnknown97A411
-        .word _A411_A6FA - aUnknown97A411
-        .word _A411_A6FF - aUnknown97A411
-        .word _A411_A70D - aUnknown97A411
-        .word _A411_A719 - aUnknown97A411
-        .word _A411_A727 - aUnknown97A411
-        .word _A411_A7A6 - aUnknown97A411
-        .word _A411_A7AB - aUnknown97A411
-        .word _A411_A7B9 - aUnknown97A411
-        .word aUnknown97A7C7 - aUnknown97A411
-        .word aUnknown97A7C7._A411_A844 - aUnknown97A411
-        .word aUnknown97A7C7._A411_A8CF - aUnknown97A411
-        .word aUnknown97A7C7._A411_A8DD - aUnknown97A411
-        .word aUnknown97A7C7._A411_A934 - aUnknown97A411
-        .word aUnknown97A7C7._A411_A942 - aUnknown97A411
-        .word aUnknown97A7C7._A411_A985 - aUnknown97A411
+        .word _A411_A469 - aBattleSceneWindowEffect1Table
+        .word _A411_A477 - aBattleSceneWindowEffect1Table
+        .word _A411_A494 - aBattleSceneWindowEffect1Table
+        .word _A411_A4A2 - aBattleSceneWindowEffect1Table
+        .word _A411_A4A5 - aBattleSceneWindowEffect1Table
+        .word _A411_A4AA - aBattleSceneWindowEffect1Table
+        .word _A411_A4B3 - aBattleSceneWindowEffect1Table
+        .word _A411_A4B8 - aBattleSceneWindowEffect1Table
+        .word _A411_A4F2 - aBattleSceneWindowEffect1Table
+        .word _A411_A511 - aBattleSceneWindowEffect1Table
+        .word _A411_A53D - aBattleSceneWindowEffect1Table
+        .word _A411_A552 - aBattleSceneWindowEffect1Table
+        .word _A411_A57E - aBattleSceneWindowEffect1Table
+        .word _A411_A58C - aBattleSceneWindowEffect1Table
+        .word _A411_A5CC - aBattleSceneWindowEffect1Table
+        .word _A411_A5E7 - aBattleSceneWindowEffect1Table
+        .word _A411_A5EA - aBattleSceneWindowEffect1Table
+        .word _A411_A5F8 - aBattleSceneWindowEffect1Table
+        .word _A411_A5FB - aBattleSceneWindowEffect1Table
+        .word _A411_A616 - aBattleSceneWindowEffect1Table
+        .word _A411_A61B - aBattleSceneWindowEffect1Table
+        .word _A411_A629 - aBattleSceneWindowEffect1Table
+        .word _A411_A62E - aBattleSceneWindowEffect1Table
+        .word _A411_A666 - aBattleSceneWindowEffect1Table
+        .word _A411_A689 - aBattleSceneWindowEffect1Table
+        .word _A411_A68C - aBattleSceneWindowEffect1Table
+        .word _A411_A69A - aBattleSceneWindowEffect1Table
+        .word _A411_A6C5 - aBattleSceneWindowEffect1Table
+        .word _A411_A6D1 - aBattleSceneWindowEffect1Table
+        .word _A411_A6FA - aBattleSceneWindowEffect1Table
+        .word _A411_A6FF - aBattleSceneWindowEffect1Table
+        .word _A411_A70D - aBattleSceneWindowEffect1Table
+        .word _A411_A719 - aBattleSceneWindowEffect1Table
+        .word _A411_A727 - aBattleSceneWindowEffect1Table
+        .word _A411_A7A6 - aBattleSceneWindowEffect1Table
+        .word _A411_A7AB - aBattleSceneWindowEffect1Table
+        .word _A411_A7B9 - aBattleSceneWindowEffect1Table
+        .word aTitleSceneWindowEffectData - aBattleSceneWindowEffect1Table
+        .word aTitleSceneWindowEffectData._A411_A844 - aBattleSceneWindowEffect1Table
+        .word aTitleSceneWindowEffectData._A411_A8CF - aBattleSceneWindowEffect1Table
+        .word aTitleSceneWindowEffectData._A411_A8DD - aBattleSceneWindowEffect1Table
+        .word aTitleSceneWindowEffectData._A411_A934 - aBattleSceneWindowEffect1Table
+        .word aTitleSceneWindowEffectData._A411_A942 - aBattleSceneWindowEffect1Table
+        .word aTitleSceneWindowEffectData._A411_A985 - aBattleSceneWindowEffect1Table
 
       _A411_A469 ; 97/A469
         .byte $01, $03, $00, $00, $00, $00, $01, $00, $00, $F4, $02, $02, $00, $FD
@@ -3355,7 +3355,7 @@
       _A411_A7B9 ; 97/A7B9
         .byte $00, $00, $03, $00, $00, $00, $00, $04, $00, $F2, $01, $01, $00, $FD
 
-      aUnknown97A7C7 ; 97/A7C7
+      aTitleSceneWindowEffectData ; 97/A7C7
         .byte $80, $02, $01, $03, $01, $04, $01, $05, $01, $06, $00, $07, $00, $08, $00, $09
         .byte $00, $0A, $00, $0B, $00, $0C, $00, $0D, $00, $0E, $00, $0F, $00, $10, $00, $11
         .byte $00, $12, $00, $13, $00, $14, $00, $15, $00, $16, $00, $17, $00, $18, $00, $19
@@ -3408,8 +3408,8 @@
 
         ; Palette effect offset table (191 entries).
 
-        .word aUnknown97AF21._A9A8_AFC8 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFD0 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFC8 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFD0 - aBattleScenePaletteEffects
         .word _A9A8_AB26 - aBattleScenePaletteEffects
         .word _A9A8_AB2D - aBattleScenePaletteEffects
         .word _A9A8_AB34 - aBattleScenePaletteEffects
@@ -3524,93 +3524,93 @@
         .word _A9A8_ADF7 - aBattleScenePaletteEffects
         .word _A9A8_ADFC - aBattleScenePaletteEffects
         .word _A9A8_AE03 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE11 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE15 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE1D - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE22 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE27 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE2B - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE2F - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE37 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE3E - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE45 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE4C - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE54 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE5B - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE5F - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE63 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE6A - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE71 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE78 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE7F - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE86 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE8D - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE94 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE9B - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AE9F - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEA6 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEAD - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEB2 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEBA - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEBF - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEC3 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEC7 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AECF - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AED3 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEDB - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEE0 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEE5 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEE9 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEF1 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AEF9 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AF01 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AF09 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AF11 - aBattleScenePaletteEffects
-        .word aUnknown97AE0A._A9A8_AF19 - aBattleScenePaletteEffects
-        .word aUnknown97AF21 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF26 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF2D - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF32 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF39 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF40 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF47 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF4E - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF55 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF5C - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF63 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF6A - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF71 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF78 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF80 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF85 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF89 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF91 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF96 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF9B - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AF9F - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFA6 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFAE - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFB3 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFB8 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFC0 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFC4 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFC8 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFD0 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFD5 - aBattleScenePaletteEffects
-        .word aUnknown97AF21._A9A8_AFDD - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE11 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE15 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE1D - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE22 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE27 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE2B - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE2F - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE37 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE3E - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE45 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE4C - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE54 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE5B - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE5F - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE63 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE6A - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE71 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE78 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE7F - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE86 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE8D - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE94 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE9B - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AE9F - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEA6 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEAD - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEB2 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEBA - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEBF - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEC3 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEC7 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AECF - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AED3 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEDB - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEE0 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEE5 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEE9 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEF1 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AEF9 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AF01 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AF09 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AF11 - aBattleScenePaletteEffects
+        .word aTitleScenePaletteEffect1._A9A8_AF19 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF26 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF2D - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF32 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF39 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF40 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF47 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF4E - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF55 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF5C - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF63 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF6A - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF71 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF78 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF80 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF85 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF89 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF91 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF96 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF9B - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AF9F - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFA6 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFAE - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFB3 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFB8 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFC0 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFC4 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFC8 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFD0 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFD5 - aBattleScenePaletteEffects
+        .word aBattleScenePaletteEffectAF21._A9A8_AFDD - aBattleScenePaletteEffects
 
       _A9A8_AB26 ; 97/AB26
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BC16F
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BC16F
 
       _A9A8_AB2D ; 97/AB2D
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BC1BB
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BC1BB
 
       _A9A8_AB34 ; 97/AB34
-        PALETTE_EFFECT $02, $02, $21, $07, aUnknown9BC1DD
+        PALETTE_EFFECT $02, $02, $21, $07, aBattleScenePaletteScript9BC1DD
 
       _A9A8_AB3B ; 97/AB3B
-        PALETTE_EFFECT $02, $02, $21, $07, aUnknown9BC1FF
+        PALETTE_EFFECT $02, $02, $21, $07, aBattleScenePaletteScript9BC1FF
 
       _A9A8_AB42 ; 97/AB42
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $07
@@ -3619,31 +3619,31 @@
         PALETTE_EFFECT_VALUE $02, $05, $31, $2F, $01
 
       _A9A8_AB4B ; 97/AB4B
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC241
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BC241
 
       _A9A8_AB52 ; 97/AB52
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AB56 ; 97/AB56
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC265
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BC265
 
       _A9A8_AB5D ; 97/AB5D
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AB61 ; 97/AB61
-        PALETTE_EFFECT $02, $02, $24, $0C, aUnknown9BC2E7
+        PALETTE_EFFECT $02, $02, $24, $0C, aBattleScenePaletteScript9BC2E7
 
       _A9A8_AB68 ; 97/AB68
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AB6C ; 97/AB6C
-        PALETTE_EFFECT $02, $00, $21, $0F, aUnknown9BC31B
+        PALETTE_EFFECT $02, $00, $21, $0F, aBattleScenePaletteScript9BC31B
 
       _A9A8_AB73 ; 97/AB73
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC42E
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BC42E
 
       _A9A8_AB7A ; 97/AB7A
-        PALETTE_EFFECT $02, $00, $21, $0F, aUnknown9BC450
+        PALETTE_EFFECT $02, $00, $21, $0F, aBattleScenePaletteScript9BC450
 
       _A9A8_AB81 ; 97/AB81
         PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $04, $7FF636
@@ -3658,19 +3658,19 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AB9D ; 97/AB9D
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC59F
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BC59F
 
       _A9A8_ABA4 ; 97/ABA4
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC601
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BC601
 
       _A9A8_ABAB ; 97/ABAB
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC643
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BC643
 
       _A9A8_ABB2 ; 97/ABB2
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC6A5
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BC6A5
 
       _A9A8_ABB9 ; 97/ABB9
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC6E8
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BC6E8
 
       _A9A8_ABC0 ; 97/ABC0
         PALETTE_EFFECT_VALUE $03, $06, $31, $2F, $00
@@ -3685,7 +3685,7 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_ABD3 ; 97/ABD3
-        PALETTE_EFFECT_VALUE_DATA $02, $07, $21, $08, $01, aUnknownE02090
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $21, $08, $01, aBattleScenePaletteE02090
 
       _A9A8_ABDB ; 97/ABDB
         PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $2F, $01, $7FF636
@@ -3697,13 +3697,13 @@
         PALETTE_EFFECT_NO_DATA $02, $09, $31, $2F
 
       _A9A8_ABEF ; 97/ABEF
-        PALETTE_EFFECT $02, $01, $21, $08, aUnknown9BC82A
+        PALETTE_EFFECT $02, $01, $21, $08, aBattleScenePaletteScript9BC82A
 
       _A9A8_ABF6 ; 97/ABF6
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_ABFA ; 97/ABFA
-        PALETTE_EFFECT $02, $00, $21, $0F, aUnknown9BC92C
+        PALETTE_EFFECT $02, $00, $21, $0F, aBattleScenePaletteScript9BC92C
 
       _A9A8_AC01 ; 97/AC01
         PALETTE_EFFECT $02, $0A, $31, $2F, $7FFE62
@@ -3715,97 +3715,97 @@
         PALETTE_EFFECT_VALUE $02, $05, $C1, $3F, $03
 
       _A9A8_AC15 ; 97/AC15
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BCB6B
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BCB6B
 
       _A9A8_AC1C ; 97/AC1C
         PALETTE_EFFECT $02, $0A, $31, $2F, $7FF636
 
       _A9A8_AC23 ; 97/AC23
-        PALETTE_EFFECT $02, $02, $21, $0A, aUnknown9BCBAD
+        PALETTE_EFFECT $02, $02, $21, $0A, aBattleScenePaletteScript9BCBAD
 
       _A9A8_AC2A ; 97/AC2A
-        PALETTE_EFFECT $03, $02, $2B, $05, aUnknown9BCBC3
+        PALETTE_EFFECT $03, $02, $2B, $05, aBattleScenePaletteScript9BCBC3
 
       _A9A8_AC31 ; 97/AC31
-        PALETTE_EFFECT $04, $02, $1B, $05, aUnknown9BCBD7
+        PALETTE_EFFECT $04, $02, $1B, $05, aBattleScenePaletteScript9BCBD7
 
       _A9A8_AC38 ; 97/AC38
-        PALETTE_EFFECT $05, $02, $11, $0A, aUnknown9BCBED
+        PALETTE_EFFECT $05, $02, $11, $0A, aBattleScenePaletteScript9BCBED
 
       _A9A8_AC3F ; 97/AC3F
-        PALETTE_EFFECT $02, $01, $21, $0A, aUnknown9BCC03
+        PALETTE_EFFECT $02, $01, $21, $0A, aBattleScenePaletteScript9BCC03
 
       _A9A8_AC46 ; 97/AC46
-        PALETTE_EFFECT $03, $01, $2B, $05, aUnknown9BCC19
+        PALETTE_EFFECT $03, $01, $2B, $05, aBattleScenePaletteScript9BCC19
 
       _A9A8_AC4D ; 97/AC4D
-        PALETTE_EFFECT $04, $01, $1B, $05, aUnknown9BCC45
+        PALETTE_EFFECT $04, $01, $1B, $05, aBattleScenePaletteScript9BCC45
 
       _A9A8_AC54 ; 97/AC54
-        PALETTE_EFFECT $05, $01, $11, $0A, aUnknown9BCC73
+        PALETTE_EFFECT $05, $01, $11, $0A, aBattleScenePaletteScript9BCC73
 
       _A9A8_AC5B ; 97/AC5B
-        PALETTE_EFFECT $02, $02, $21, $0A, aUnknown9BCC89
+        PALETTE_EFFECT $02, $02, $21, $0A, aBattleScenePaletteScript9BCC89
 
       _A9A8_AC62 ; 97/AC62
-        PALETTE_EFFECT $03, $02, $2B, $05, aUnknown9BCC9F
+        PALETTE_EFFECT $03, $02, $2B, $05, aBattleScenePaletteScript9BCC9F
 
       _A9A8_AC69 ; 97/AC69
-        PALETTE_EFFECT $04, $02, $1B, $05, aUnknown9BCCB3
+        PALETTE_EFFECT $04, $02, $1B, $05, aBattleScenePaletteScript9BCCB3
 
       _A9A8_AC70 ; 97/AC70
-        PALETTE_EFFECT $05, $02, $11, $0A, aUnknown9BCCCF
+        PALETTE_EFFECT $05, $02, $11, $0A, aBattleScenePaletteScript9BCCCF
 
       _A9A8_AC77 ; 97/AC77
-        PALETTE_EFFECT $02, $01, $21, $0A, aUnknown9BCCE5
+        PALETTE_EFFECT $02, $01, $21, $0A, aBattleScenePaletteScript9BCCE5
 
       _A9A8_AC7E ; 97/AC7E
-        PALETTE_EFFECT $03, $01, $2B, $05, aUnknown9BCD0F
+        PALETTE_EFFECT $03, $01, $2B, $05, aBattleScenePaletteScript9BCD0F
 
       _A9A8_AC85 ; 97/AC85
-        PALETTE_EFFECT $04, $01, $1B, $05, aUnknown9BCD2D
+        PALETTE_EFFECT $04, $01, $1B, $05, aBattleScenePaletteScript9BCD2D
 
       _A9A8_AC8C ; 97/AC8C
-        PALETTE_EFFECT $05, $01, $11, $0A, aUnknown9BCD4B
+        PALETTE_EFFECT $05, $01, $11, $0A, aBattleScenePaletteScript9BCD4B
 
       _A9A8_AC93 ; 97/AC93
-        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BCD75
+        PALETTE_EFFECT $02, $01, $21, $0E, aBattleScenePaletteScript9BCD75
 
       _A9A8_AC9A ; 97/AC9A
-        PALETTE_EFFECT $03, $01, $2F, $01, aUnknown9BCDB7
+        PALETTE_EFFECT $03, $01, $2F, $01, aBattleScenePaletteScript9BCDB7
 
       _A9A8_ACA1 ; 97/ACA1
-        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BCDF9
+        PALETTE_EFFECT $02, $01, $21, $0E, aBattleScenePaletteScript9BCDF9
 
       _A9A8_ACA8 ; 97/ACA8
-        PALETTE_EFFECT $03, $01, $2F, $01, aUnknown9BCE3B
+        PALETTE_EFFECT $03, $01, $2F, $01, aBattleScenePaletteScript9BCE3B
 
       _A9A8_ACAF ; 97/ACAF
-        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BCE7D
+        PALETTE_EFFECT $02, $01, $21, $0E, aBattleScenePaletteScript9BCE7D
 
       _A9A8_ACB6 ; 97/ACB6
-        PALETTE_EFFECT $03, $01, $2F, $01, aUnknown9BCEBF
+        PALETTE_EFFECT $03, $01, $2F, $01, aBattleScenePaletteScript9BCEBF
 
       _A9A8_ACBD ; 97/ACBD
-        PALETTE_EFFECT $02, $01, $21, $08, aUnknown9BCF01
+        PALETTE_EFFECT $02, $01, $21, $08, aBattleScenePaletteScript9BCF01
 
       _A9A8_ACC4 ; 97/ACC4
-        PALETTE_EFFECT $02, $01, $21, $08, aUnknown9BCF25
+        PALETTE_EFFECT $02, $01, $21, $08, aBattleScenePaletteScript9BCF25
 
       _A9A8_ACCB ; 97/ACCB
-        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BCF26
+        PALETTE_EFFECT $02, $01, $21, $0E, aBattleScenePaletteScript9BCF26
 
       _A9A8_ACD2 ; 97/ACD2
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BCF68
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BCF68
 
       _A9A8_ACD9 ; 97/ACD9
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BCFAA
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BCFAA
 
       _A9A8_ACE0 ; 97/ACE0
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BCFEC
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BCFEC
 
       _A9A8_ACE7 ; 97/ACE7
-        PALETTE_EFFECT $03, $01, $2A, $06, aUnknown9BD02E
+        PALETTE_EFFECT $03, $01, $2A, $06, aBattleScenePaletteScript9BD02E
 
       _A9A8_ACEE ; 97/ACEE
         PALETTE_EFFECT_VALUE_DATA $03, $07, $C1, $3E, $04, $7FFF82
@@ -3814,68 +3814,68 @@
         PALETTE_EFFECT_NO_DATA $03, $09, $C1, $3E
 
       _A9A8_ACFA ; 97/ACFA
-        PALETTE_EFFECT $02, $02, $31, $0F, aUnknown9BD72E
+        PALETTE_EFFECT $02, $02, $31, $0F, aBattleScenePaletteScript9BD72E
 
       _A9A8_AD01 ; 97/AD01
-        PALETTE_EFFECT $02, $02, $31, $0F, aUnknown9BD6EC
+        PALETTE_EFFECT $02, $02, $31, $0F, aBattleScenePaletteScript9BD6EC
 
       _A9A8_AD08 ; 97/AD08
-        PALETTE_EFFECT $02, $02, $31, $0F, aUnknown9BD790
+        PALETTE_EFFECT $02, $02, $31, $0F, aBattleScenePaletteScript9BD790
 
       _A9A8_AD0F ; 97/AD0F
-        PALETTE_EFFECT $03, $01, $21, $0F, aUnknown9BD51D
+        PALETTE_EFFECT $03, $01, $21, $0F, aBattleScenePaletteScript9BD51D
 
       _A9A8_AD16 ; 97/AD16
-        PALETTE_EFFECT $03, $01, $21, $0F, aUnknown9BD4BC
+        PALETTE_EFFECT $03, $01, $21, $0F, aBattleScenePaletteScript9BD4BC
 
       _A9A8_AD1D ; 97/AD1D
-        PALETTE_EFFECT $03, $01, $21, $0F, aUnknown9BD5E4
+        PALETTE_EFFECT $03, $01, $21, $0F, aBattleScenePaletteScript9BD5E4
 
       _A9A8_AD24 ; 97/AD24
-        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD3C5
+        PALETTE_EFFECT $02, $02, $21, $0F, aBattleScenePaletteScript9BD3C5
 
       _A9A8_AD2B ; 97/AD2B
-        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD385
+        PALETTE_EFFECT $02, $02, $21, $0F, aBattleScenePaletteScript9BD385
 
       _A9A8_AD32 ; 97/AD32
-        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD3A5
+        PALETTE_EFFECT $02, $02, $21, $0F, aBattleScenePaletteScript9BD3A5
 
       _A9A8_AD39 ; 97/AD39
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD80C
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BD80C
 
       _A9A8_AD40 ; 97/AD40
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD7F2
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BD7F2
 
       _A9A8_AD47 ; 97/AD47
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD826
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BD826
 
       _A9A8_AD4E ; 97/AD4E
         PALETTE_EFFECT_NO_DATA $04, $08, $31, $2F
         .byte $01 ; type 8 reads nothing more: this byte is not part of the entry
 
       _A9A8_AD53 ; 97/AD53
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD03C
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BD03C
 
       _A9A8_AD5A ; 97/AD5A
-        PALETTE_EFFECT $03, $01, $31, $0F, aUnknown9BD056
+        PALETTE_EFFECT $03, $01, $31, $0F, aBattleScenePaletteScript9BD056
 
       _A9A8_AD61 ; 97/AD61
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD078
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BD078
 
       _A9A8_AD68 ; 97/AD68
-        PALETTE_EFFECT $03, $01, $31, $0F, aUnknown9BD092
+        PALETTE_EFFECT $03, $01, $31, $0F, aBattleScenePaletteScript9BD092
 
       _A9A8_AD6F ; 97/AD6F
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD0B4
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BD0B4
 
       _A9A8_AD76 ; 97/AD76
-        PALETTE_EFFECT $03, $01, $31, $0F, aUnknown9BD0F8
+        PALETTE_EFFECT $03, $01, $31, $0F, aBattleScenePaletteScript9BD0F8
 
       _A9A8_AD7D ; 97/AD7D
-        PALETTE_EFFECT $02, $00, $41, $0F, aUnknown9BD158
+        PALETTE_EFFECT $02, $00, $41, $0F, aBattleScenePaletteScript9BD158
 
       _A9A8_AD84 ; 97/AD84
-        PALETTE_EFFECT $03, $02, $21, $0F, aUnknown9BD324
+        PALETTE_EFFECT $03, $02, $21, $0F, aBattleScenePaletteScript9BD324
 
       _A9A8_AD8B ; 97/AD8B
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $1F
@@ -3887,10 +3887,10 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $31, $2F
 
       _A9A8_AD97 ; 97/AD97
-        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BD364
+        PALETTE_EFFECT $02, $01, $21, $0E, aBattleScenePaletteScript9BD364
 
       _A9A8_AD9E ; 97/AD9E
-        PALETTE_EFFECT_VALUE_DATA $03, $07, $11, $0F, $00, aUnknownE02138
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $11, $0F, $00, aBattleScenePaletteE02138
 
       _A9A8_ADA6 ; 97/ADA6
         PALETTE_EFFECT_VALUE $03, $05, $11, $0F, $00
@@ -3899,13 +3899,13 @@
         PALETTE_EFFECT_NO_DATA $03, $08, $11, $0F
 
       _A9A8_ADAF ; 97/ADAF
-        PALETTE_EFFECT $03, $02, $41, $0F, aUnknown9BD3F9
+        PALETTE_EFFECT $03, $02, $41, $0F, aBattleScenePaletteScript9BD3F9
 
       _A9A8_ADB6 ; 97/ADB6
-        PALETTE_EFFECT $03, $02, $41, $0F, aUnknown9BD365
+        PALETTE_EFFECT $03, $02, $41, $0F, aBattleScenePaletteScript9BD365
 
       _A9A8_ADBD ; 97/ADBD
-        PALETTE_EFFECT $03, $02, $41, $0F, aUnknown9BD41B
+        PALETTE_EFFECT $03, $02, $41, $0F, aBattleScenePaletteScript9BD41B
 
       _A9A8_ADC4 ; 97/ADC4
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
@@ -3914,10 +3914,10 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $41, $0F
 
       _A9A8_ADCC ; 97/ADCC
-        PALETTE_EFFECT $04, $01, $00, $01, aUnknown9BD43B
+        PALETTE_EFFECT $04, $01, $00, $01, aBattleScenePaletteScript9BD43B
 
       _A9A8_ADD3 ; 97/ADD3
-        PALETTE_EFFECT $03, $00, $31, $2F, aUnknown9BD45D
+        PALETTE_EFFECT $03, $00, $31, $2F, aBattleScenePaletteScript9BD45D
 
       _A9A8_ADDA ; 97/ADDA
         PALETTE_EFFECT_NO_DATA $02, $08, $31, $0F
@@ -3932,25 +3932,25 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $2F
 
       _A9A8_ADEF ; 97/ADEF
-        PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $1F, $02, aUnknownE0221D
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $1F, $02, aBattleScenePaletteE0221D
 
       _A9A8_ADF7 ; 97/ADF7
         PALETTE_EFFECT_VALUE $02, $06, $31, $1F, $01
 
       _A9A8_ADFC ; 97/ADFC
-        PALETTE_EFFECT $02, $01, $00, $01, aUnknown9BD646
+        PALETTE_EFFECT $02, $01, $00, $01, aBattleScenePaletteScript9BD646
 
       _A9A8_AE03 ; 97/AE03
-        PALETTE_EFFECT $02, $00, $31, $2F, aUnknown9BD64A
+        PALETTE_EFFECT $02, $00, $31, $2F, aBattleScenePaletteScript9BD64A
 
-      aUnknown97AE0A ; 97/AE0A
-        PALETTE_EFFECT $04, $01, $11, $01, aUnknown9BD6AA
+      aTitleScenePaletteEffect1 ; 97/AE0A
+        PALETTE_EFFECT $04, $01, $11, $01, aBattleScenePaletteScript9BD6AA
 
       _A9A8_AE11 ; 97/AE11
         PALETTE_EFFECT_NO_DATA $03, $08, $21, $3F
 
       _A9A8_AE15 ; 97/AE15
-        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $03, aUnknownE02315
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $03, aBattleScenePaletteE02315
 
       _A9A8_AE1D ; 97/AE1D
         PALETTE_EFFECT_VALUE $03, $05, $31, $2F, $03
@@ -3965,22 +3965,22 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $2F
 
       _A9A8_AE2F ; 97/AE2F
-        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $1F, $04, aUnknownE02373
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $1F, $04, aBattleScenePaletteE02373
 
       _A9A8_AE37 ; 97/AE37
-        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BD85C
+        PALETTE_EFFECT $02, $01, $21, $0E, aBattleScenePaletteScript9BD85C
 
       _A9A8_AE3E ; 97/AE3E
-        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BD876
+        PALETTE_EFFECT $02, $01, $21, $0E, aBattleScenePaletteScript9BD876
 
       _A9A8_AE45 ; 97/AE45
-        PALETTE_EFFECT $03, $01, $2F, $01, aUnknown9BD8AC
+        PALETTE_EFFECT $03, $01, $2F, $01, aBattleScenePaletteScript9BD8AC
 
       _A9A8_AE4C ; 97/AE4C
         PALETTE_EFFECT_VALUE_DATA $04, $07, $31, $1F, $01, $7FF636
 
       _A9A8_AE54 ; 97/AE54
-        PALETTE_EFFECT $03, $01, $00, $01, aUnknown9BD8C4
+        PALETTE_EFFECT $03, $01, $00, $01, aBattleScenePaletteScript9BD8C4
 
       _A9A8_AE5B ; 97/AE5B
         PALETTE_EFFECT_NO_DATA $02, $08, $00, $01
@@ -3989,43 +3989,43 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AE63 ; 97/AE63
-        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD8C8
+        PALETTE_EFFECT $02, $02, $21, $0F, aBattleScenePaletteScript9BD8C8
 
       _A9A8_AE6A ; 97/AE6A
-        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD8E2
+        PALETTE_EFFECT $02, $02, $21, $0F, aBattleScenePaletteScript9BD8E2
 
       _A9A8_AE71 ; 97/AE71
-        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD914
+        PALETTE_EFFECT $02, $02, $21, $0F, aBattleScenePaletteScript9BD914
 
       _A9A8_AE78 ; 97/AE78
-        PALETTE_EFFECT $02, $01, $1C, $04, aUnknown9BD962
+        PALETTE_EFFECT $02, $01, $1C, $04, aBattleScenePaletteScript9BD962
 
       _A9A8_AE7F ; 97/AE7F
-        PALETTE_EFFECT $02, $01, $1C, $04, aUnknown9BD978
+        PALETTE_EFFECT $02, $01, $1C, $04, aBattleScenePaletteScript9BD978
 
       _A9A8_AE86 ; 97/AE86
-        PALETTE_EFFECT $02, $01, $1C, $04, aUnknown9BD98E
+        PALETTE_EFFECT $02, $01, $1C, $04, aBattleScenePaletteScript9BD98E
 
       _A9A8_AE8D ; 97/AE8D
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD99A
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BD99A
 
       _A9A8_AE94 ; 97/AE94
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD9B4
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BD9B4
 
       _A9A8_AE9B ; 97/AE9B
         PALETTE_EFFECT_NO_DATA $02, $08, $1C, $14
 
       _A9A8_AE9F ; 97/AE9F
-        PALETTE_EFFECT $02, $0C, $21, $07, aUnknown9BCFEC
+        PALETTE_EFFECT $02, $0C, $21, $07, aBattleScenePaletteScript9BCFEC
 
       _A9A8_AEA6 ; 97/AEA6
-        PALETTE_EFFECT $03, $0C, $2A, $06, aUnknown9BD02E
+        PALETTE_EFFECT $03, $0C, $2A, $06, aBattleScenePaletteScript9BD02E
 
       _A9A8_AEAD ; 97/AEAD
         PALETTE_EFFECT_VALUE $04, $06, $28, $02, $04
 
       _A9A8_AEB2 ; 97/AEB2
-        PALETTE_EFFECT_VALUE_DATA $04, $07, $28, $02, $04, aUnknownE02080
+        PALETTE_EFFECT_VALUE_DATA $04, $07, $28, $02, $04, aBattleScenePaletteE02080
 
       _A9A8_AEBA ; 97/AEBA
         PALETTE_EFFECT_VALUE $05, $05, $81, $3E, $04
@@ -4043,7 +4043,7 @@
         PALETTE_EFFECT_NO_DATA $06, $08, $51, $0F
 
       _A9A8_AED3 ; 97/AED3
-        PALETTE_EFFECT_VALUE_DATA $06, $07, $51, $0F, $04, aUnknownE027A5
+        PALETTE_EFFECT_VALUE_DATA $06, $07, $51, $0F, $04, aBattleScenePaletteE027A5
 
       _A9A8_AEDB ; 97/AEDB
         PALETTE_EFFECT_VALUE $06, $06, $51, $0F, $04
@@ -4075,47 +4075,47 @@
       _A9A8_AF19 ; 97/AF19
         PALETTE_EFFECT_VALUE_DATA $08, $07, $31, $1F, $06, $7FFE62
 
-      aUnknown97AF21 ; 97/AF21
+      aBattleScenePaletteEffectAF21 ; 97/AF21
         PALETTE_EFFECT_VALUE $09, $03, $FA, $05, $02
 
       _A9A8_AF26 ; 97/AF26
-        PALETTE_EFFECT $03, $02, $19, $07, aUnknown9BD9F2
+        PALETTE_EFFECT $03, $02, $19, $07, aBattleScenePaletteScript9BD9F2
 
       _A9A8_AF2D ; 97/AF2D
         PALETTE_EFFECT_VALUE $03, $05, $21, $0F, $00
 
       _A9A8_AF32 ; 97/AF32
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDA02
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BDA02
 
       _A9A8_AF39 ; 97/AF39
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDA52
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BDA52
 
       _A9A8_AF40 ; 97/AF40
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDA74
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BDA74
 
       _A9A8_AF47 ; 97/AF47
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDA96
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BDA96
 
       _A9A8_AF4E ; 97/AF4E
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDAD8
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BDAD8
 
       _A9A8_AF55 ; 97/AF55
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDB08
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BDB08
 
       _A9A8_AF5C ; 97/AF5C
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDB2A
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BDB2A
 
       _A9A8_AF63 ; 97/AF63
-        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDB4C
+        PALETTE_EFFECT $02, $01, $21, $07, aBattleScenePaletteScript9BDB4C
 
       _A9A8_AF6A ; 97/AF6A
-        PALETTE_EFFECT $02, $02, $24, $0C, aUnknown9BDB8C
+        PALETTE_EFFECT $02, $02, $24, $0C, aBattleScenePaletteScript9BDB8C
 
       _A9A8_AF71 ; 97/AF71
-        PALETTE_EFFECT $02, $02, $24, $0C, aUnknown9BDBB0
+        PALETTE_EFFECT $02, $02, $24, $0C, aBattleScenePaletteScript9BDBB0
 
       _A9A8_AF78 ; 97/AF78
-        PALETTE_EFFECT_VALUE_DATA $03, $07, $21, $03, $04, aUnknownE0207A
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $21, $03, $04, aTitleScenePaletteE0207A
 
       _A9A8_AF80 ; 97/AF80
         PALETTE_EFFECT_VALUE $03, $05, $21, $03, $01
@@ -4124,7 +4124,7 @@
         PALETTE_EFFECT_NO_DATA $03, $08, $21, $0F
 
       _A9A8_AF89 ; 97/AF89
-        PALETTE_EFFECT_VALUE_DATA $03, $07, $21, $0F, $02, aUnknownE022B7
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $21, $0F, $02, aTitleScenePaletteE022B7
 
       _A9A8_AF91 ; 97/AF91
         PALETTE_EFFECT_VALUE $03, $05, $21, $0F, $02
@@ -4136,10 +4136,10 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $11, $1F
 
       _A9A8_AF9F ; 97/AF9F
-        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BDBE2
+        PALETTE_EFFECT $02, $01, $21, $0F, aBattleScenePaletteScript9BDBE2
 
       _A9A8_AFA6 ; 97/AFA6
-        PALETTE_EFFECT_VALUE_DATA $03, $07, $11, $03, $02, aUnknownE02156
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $11, $03, $02, aBattleScenePaletteE02156
 
       _A9A8_AFAE ; 97/AFAE
         PALETTE_EFFECT_VALUE $03, $05, $11, $03, $02
@@ -4157,7 +4157,7 @@
         PALETTE_EFFECT_NO_DATA $02, $08, $11, $1F
 
       _A9A8_AFC8 ; 97/AFC8
-        PALETTE_EFFECT_VALUE_DATA $02, $07, $11, $1F, $00, aUnknownE0215C
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $11, $1F, $00, aBattleScenePaletteE0215C
 
       _A9A8_AFD0 ; 97/AFD0
         PALETTE_EFFECT_VALUE $02, $05, $11, $1F, $00
@@ -4170,33 +4170,33 @@
 
         ; 97/AFE5
 
-      aUnknown97AFE5 ; 97/AFE5
+      aBattleScenePaletteCopyTable ; 97/AFE5
 
         ; Command 14 palette copy table (23 entries).
 
-        .word _AFE5_B013 - aUnknown97AFE5
-        .word _AFE5_B018 - aUnknown97AFE5
-        .word _AFE5_B01D - aUnknown97AFE5
-        .word _AFE5_B022 - aUnknown97AFE5
-        .word _AFE5_B027 - aUnknown97AFE5
-        .word _AFE5_B02C - aUnknown97AFE5
-        .word _AFE5_B02C - aUnknown97AFE5
-        .word _AFE5_B031 - aUnknown97AFE5
-        .word _AFE5_B036 - aUnknown97AFE5
-        .word _AFE5_B03B - aUnknown97AFE5
-        .word _AFE5_B040 - aUnknown97AFE5
-        .word _AFE5_B045 - aUnknown97AFE5
-        .word _AFE5_B04A - aUnknown97AFE5
-        .word _AFE5_B04F - aUnknown97AFE5
-        .word _AFE5_B054 - aUnknown97AFE5
-        .word _AFE5_B059 - aUnknown97AFE5
-        .word _AFE5_B05E - aUnknown97AFE5
-        .word _AFE5_B063 - aUnknown97AFE5
-        .word _AFE5_B068 - aUnknown97AFE5
-        .word _AFE5_B06D - aUnknown97AFE5
-        .word _AFE5_B072 - aUnknown97AFE5
-        .word _AFE5_B077 - aUnknown97AFE5
-        .word _AFE5_B07C - aUnknown97AFE5
+        .word _AFE5_B013 - aBattleScenePaletteCopyTable
+        .word _AFE5_B018 - aBattleScenePaletteCopyTable
+        .word _AFE5_B01D - aBattleScenePaletteCopyTable
+        .word _AFE5_B022 - aBattleScenePaletteCopyTable
+        .word _AFE5_B027 - aBattleScenePaletteCopyTable
+        .word _AFE5_B02C - aBattleScenePaletteCopyTable
+        .word _AFE5_B02C - aBattleScenePaletteCopyTable
+        .word _AFE5_B031 - aBattleScenePaletteCopyTable
+        .word _AFE5_B036 - aBattleScenePaletteCopyTable
+        .word _AFE5_B03B - aBattleScenePaletteCopyTable
+        .word _AFE5_B040 - aBattleScenePaletteCopyTable
+        .word _AFE5_B045 - aBattleScenePaletteCopyTable
+        .word _AFE5_B04A - aBattleScenePaletteCopyTable
+        .word _AFE5_B04F - aBattleScenePaletteCopyTable
+        .word _AFE5_B054 - aBattleScenePaletteCopyTable
+        .word _AFE5_B059 - aBattleScenePaletteCopyTable
+        .word _AFE5_B05E - aBattleScenePaletteCopyTable
+        .word _AFE5_B063 - aBattleScenePaletteCopyTable
+        .word _AFE5_B068 - aBattleScenePaletteCopyTable
+        .word _AFE5_B06D - aBattleScenePaletteCopyTable
+        .word _AFE5_B072 - aBattleScenePaletteCopyTable
+        .word _AFE5_B077 - aBattleScenePaletteCopyTable
+        .word _AFE5_B07C - aBattleScenePaletteCopyTable
 
       _AFE5_B013 ; 97/B013
         .byte $11, $0F, $DE, $20, $E0
@@ -5199,26 +5199,26 @@
         .byte $96, $80, $FE, $00
         .word $FFFF
 
-      aUnknown97BD3E ; 97/BD3E
+      aBattleSceneScriptTableBD3E ; 97/BD3E
 
-        .word _BD3E_BD62 - aUnknown97BD3E
-        .word _BD3E_BD65 - aUnknown97BD3E
-        .word _BD3E_BD6D - aUnknown97BD3E
-        .word _BD3E_BD75 - aUnknown97BD3E
-        .word _BD3E_BD7D - aUnknown97BD3E
-        .word _BD3E_BD85 - aUnknown97BD3E
-        .word _BD3E_BD8D - aUnknown97BD3E
-        .word _BD3E_BD95 - aUnknown97BD3E
-        .word _BD3E_BD9D - aUnknown97BD3E
-        .word _BD3E_BDA5 - aUnknown97BD3E
-        .word _BD3E_BDA8 - aUnknown97BD3E
-        .word _BD3E_BDAB - aUnknown97BD3E
-        .word _BD3E_BDAE - aUnknown97BD3E
-        .word _BD3E_BDB6 - aUnknown97BD3E
-        .word _BD3E_BDB9 - aUnknown97BD3E
-        .word _BD3E_BDC1 - aUnknown97BD3E
-        .word _BD3E_BDC9 - aUnknown97BD3E
-        .word _BD3E_BDCC - aUnknown97BD3E
+        .word _BD3E_BD62 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BD65 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BD6D - aBattleSceneScriptTableBD3E
+        .word _BD3E_BD75 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BD7D - aBattleSceneScriptTableBD3E
+        .word _BD3E_BD85 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BD8D - aBattleSceneScriptTableBD3E
+        .word _BD3E_BD95 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BD9D - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDA5 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDA8 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDAB - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDAE - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDB6 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDB9 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDC1 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDC9 - aBattleSceneScriptTableBD3E
+        .word _BD3E_BDCC - aBattleSceneScriptTableBD3E
 
       _BD3E_BD62 ; 97/BD62
         .byte $69, $BE, $96
@@ -7217,7 +7217,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda aUnknown97EA9A+2,x
+        lda aBattleSceneCombatantBodyRecords+2,x
         and #$00FF
         sta wR8
         ldx wBattleAnimationDefenderOffset,b

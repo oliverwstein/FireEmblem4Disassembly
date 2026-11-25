@@ -8,7 +8,7 @@
       .al
       .xl
 
-      aUnknown95937C ; 95/937C
+      aBattleSceneHPBarDigitOffsets ; 95/937C
 
         ; Read by rsBattleSceneUpdateHP1, rsBattleSceneUpdateHP2.
 
@@ -24,7 +24,7 @@
       .al
       .xl
 
-      aUnknown959894 ; 95/9894
+      aBattleSceneHPBarBaseTile ; 95/9894
 
         ; Read by rlBattleSceneDrawHPBar.
 
@@ -437,7 +437,7 @@
         .byte $47, $07, $2D
         .byte $FF
 
-      aUnknown97EA9A ; 97/EA9A
+      aBattleSceneCombatantBodyRecords ; 97/EA9A
 
         ; 48 combatant body records (8 bytes each), read by bank $95 & bank $96.
 
@@ -790,18 +790,18 @@
 
         .byte $17, $00, $03, $00, $00, $00, $00, $04, $01, $01, $00, $FD
 
-      aUnknown97F65A ; 97/F65A
+      aTitleSceneEffectConfig1 ; 97/F65A
 
         .byte $16, $00, $03, $00
         .byte $00, $00, $00, $04, $01, $01, $00, $FD
 
-      aUnknown97F666 ; 97/F666
+      aTitleSceneEffectConfig2 ; 97/F666
 
         .byte $03, $00, $03, $00, $00, $00, $00, $04
         .byte $02, $38, $00, $01, $80, $00, $00, $81, $80, $00, $00, $00, $80, $00, $00, $00
         .byte $FD
 
-      aUnknown97F67F ; 97/F67F
+      aTitleSceneWindowData1 ; 97/F67F
 
         .byte $83, $02, $37, $02, $02, $7F, $00, $00, $82, $80, $00, $00, $00, $80, $80
         .byte $FF, $02, $36, $03, $03, $7F, $00, $00, $83, $7F, $00, $01, $82, $81, $00, $FE
@@ -841,7 +841,7 @@
         .byte $26, $92, $84, $FE, $C9, $92, $00, $00, $25, $5B, $87, $01, $02, $19, $48, $14
         .byte $9A, $BD, $FC, $C8, $9A, $C4, $FF, $36, $5C, $D9, $00, $00, $FD
 
-      aUnknown97F8CB ; 97/F8CB
+      aTitleSceneWindowData2 ; 97/F8CB
 
         .byte $83, $02, $21
         .byte $43, $43, $5F, $7A, $00, $C3, $A0, $86, $FF, $00, $A0, $82, $FF, $02, $17, $4C
@@ -852,60 +852,60 @@
         .byte $D4, $8B, $39, $00, $18, $56, $21, $03, $00, $FF
 
         ; Palette / battle sprite effect entries ($97/F928-$97/F9C4)
-      aUnknown97F928 ; 97/F928
+      aTitleSceneSpriteDesc01 ; 97/F928
 
-        .long aUnknown99F6C1
+        .long aTitleSceneSpriteAnimScript1
         .byte $15, $F7, $6E, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F935 ; 97/F935
+      aTitleSceneSpriteDesc02 ; 97/F935
 
-        .long aUnknown99F6C1
+        .long aTitleSceneSpriteAnimScript1
         .byte $15, $F7, $92, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F942 ; 97/F942
+      aTitleSceneSpriteDesc03 ; 97/F942
 
-        .long aUnknown99F6C1
+        .long aTitleSceneSpriteAnimScript1
         .byte $15, $F7, $4D, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F94F ; 97/F94F
+      aTitleSceneSpriteDesc04 ; 97/F94F
 
-        .long aUnknown99F6C1
+        .long aTitleSceneSpriteAnimScript1
         .byte $15, $F7, $B3, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F95C ; 97/F95C
+      aTitleSceneSpriteDesc05 ; 97/F95C
 
-        .long aUnknown99F6D5
+        .long aTitleSceneSpriteAnimScript3
         .byte $15, $F7, $3A, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F969 ; 97/F969
+      aTitleSceneSpriteDesc06 ; 97/F969
 
-        .long aUnknown99F6D5
+        .long aTitleSceneSpriteAnimScript3
         .byte $15, $F7, $C6, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F976 ; 97/F976
+      aTitleSceneSpriteDesc07 ; 97/F976
 
-        .long aUnknown99F6CB
+        .long aTitleSceneSpriteAnimScript2
         .byte $15, $F7, $3B, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F983 ; 97/F983
+      aTitleSceneSpriteDesc08 ; 97/F983
 
-        .long aUnknown99F6CB
+        .long aTitleSceneSpriteAnimScript2
         .byte $15, $F7, $C5, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F990 ; 97/F990
+      aTitleSceneSpriteDesc09 ; 97/F990
 
-        .long aUnknown99F6CB
+        .long aTitleSceneSpriteAnimScript2
         .byte $15, $F7, $4F, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F99D ; 97/F99D
+      aTitleSceneSpriteDesc10 ; 97/F99D
 
-        .long aUnknown99F6CB
+        .long aTitleSceneSpriteAnimScript2
         .byte $15, $F7, $B1, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F9AA ; 97/F9AA
+      aTitleSceneSpriteDesc11 ; 97/F9AA
 
-        .long aUnknown99F6CB
+        .long aTitleSceneSpriteAnimScript2
         .byte $15, $F7, $71, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97F9B7 ; 97/F9B7
+      aTitleSceneSpriteDesc12 ; 97/F9B7
 
-        .long aUnknown99F6CB
+        .long aTitleSceneSpriteAnimScript2
         .byte $15, $F7, $8F, $00, $F0, $00, $00, $00, $00, $00
 
-      aUnknown97F9C4 ; 97/F9C4
+      aTitleSceneSpriteDesc13 ; 97/F9C4
 
         .byte $13, $FE, $9B, $37, $FE, $80, $00, $F0, $00, $00, $00, $00, $00
 
-      aUnknown97F9D1 ; 97/F9D1
+      aTitleSceneSpriteOffsets ; 97/F9D1
 
         .byte $00, $00, $62
         .byte $00, $C4, $00, $26, $01, $88, $01, $EA, $01, $AE, $02, $10, $03, $72, $03, $D4
@@ -913,72 +913,72 @@
         .byte $01, $70, $01, $36, $01, $14, $01, $6C, $01, $31, $01, $04, $01, $63, $01, $56
         .byte $04
 
-      aUnknown97FA05 ; 97/FA05
+      aTitleSceneSpriteYVelocities ; 97/FA05
 
         .byte $18, $00, $18, $00, $11, $00, $11, $00, $06, $00, $06, $00, $FA, $FF, $FA
         .byte $FF, $EF, $FF, $EF, $FF, $E8, $FF, $E8, $FF, $80, $FF
-      aUnknown97FA1F ; 97/FA1F
+      aTitleSceneSpriteDesc14 ; 97/FA1F
 
-        .long aUnknown99F6DF
-        .long aUnknown99F6DF
-        .long aUnknown99F6DF
-        .long aUnknown99F6DF
-        .long aUnknown99F703
-        .long aUnknown99F703
-        .long aUnknown99F6F1
-        .long aUnknown99F6F1
-        .long aUnknown99F6F1
-        .long aUnknown99F6F1
-        .long aUnknown99F6F1
-        .long aUnknown99F6F1
+        .long aTitleSceneSpriteAnimScript4
+        .long aTitleSceneSpriteAnimScript4
+        .long aTitleSceneSpriteAnimScript4
+        .long aTitleSceneSpriteAnimScript4
+        .long aTitleSceneSpriteAnimScript6
+        .long aTitleSceneSpriteAnimScript6
+        .long aTitleSceneSpriteAnimScript5
+        .long aTitleSceneSpriteAnimScript5
+        .long aTitleSceneSpriteAnimScript5
+        .long aTitleSceneSpriteAnimScript5
+        .long aTitleSceneSpriteAnimScript5
+        .long aTitleSceneSpriteAnimScript5
         .byte $1D, $FE, $9B
-        .long aUnknown97FA6A
-        .long aUnknown97FA77
-        .long aUnknown97FA84
-        .long aUnknown97FA91
-        .long aUnknown97FA9E
-        .long aUnknown97FAAB
-        .long aUnknown97FAB8
-        .long aUnknown97FAC5
-        .long aUnknown97FAD2
-        .long aUnknown97FADF
-        .long aUnknown97FAEC
-        .long aUnknown97FAF9
-      aUnknown97FA6A ; 97/FA6A
-        .long aUnknown99F945
+        .long aTitleSceneCrusaderDesc01
+        .long aTitleSceneCrusaderDesc02
+        .long aTitleSceneCrusaderDesc03
+        .long aTitleSceneCrusaderDesc04
+        .long aTitleSceneCrusaderDesc05
+        .long aTitleSceneCrusaderDesc06
+        .long aTitleSceneCrusaderDesc07
+        .long aTitleSceneCrusaderDesc08
+        .long aTitleSceneCrusaderDesc09
+        .long aTitleSceneCrusaderDesc10
+        .long aTitleSceneCrusaderDesc11
+        .long aTitleSceneCrusaderDesc12
+      aTitleSceneCrusaderDesc01 ; 97/FA6A
+        .long aTitleSceneCrusaderAnimScript03
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FA77 ; 97/FA77
-        .long aUnknown99F955
+      aTitleSceneCrusaderDesc02 ; 97/FA77
+        .long aTitleSceneCrusaderAnimScript07
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FA84 ; 97/FA84
-        .long aUnknown99F951
+      aTitleSceneCrusaderDesc03 ; 97/FA84
+        .long aTitleSceneCrusaderAnimScript06
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FA91 ; 97/FA91
-        .long aUnknown99F949
+      aTitleSceneCrusaderDesc04 ; 97/FA91
+        .long aTitleSceneCrusaderAnimScript04
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FA9E ; 97/FA9E
-        .long aUnknown99F961
+      aTitleSceneCrusaderDesc05 ; 97/FA9E
+        .long aTitleSceneCrusaderAnimScript10
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FAAB ; 97/FAAB
-        .long aUnknown99F969
+      aTitleSceneCrusaderDesc06 ; 97/FAAB
+        .long aTitleSceneCrusaderAnimScript12
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FAB8 ; 97/FAB8
-        .long aUnknown99F941
+      aTitleSceneCrusaderDesc07 ; 97/FAB8
+        .long aTitleSceneCrusaderAnimScript02
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FAC5 ; 97/FAC5
-        .long aUnknown99F93D
+      aTitleSceneCrusaderDesc08 ; 97/FAC5
+        .long aTitleSceneCrusaderAnimScript01
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FAD2 ; 97/FAD2
-        .long aUnknown99F94D
+      aTitleSceneCrusaderDesc09 ; 97/FAD2
+        .long aTitleSceneCrusaderAnimScript05
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FADF ; 97/FADF
-        .long aUnknown99F959
+      aTitleSceneCrusaderDesc10 ; 97/FADF
+        .long aTitleSceneCrusaderAnimScript08
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FAEC ; 97/FAEC
-        .long aUnknown99F95D
+      aTitleSceneCrusaderDesc11 ; 97/FAEC
+        .long aTitleSceneCrusaderAnimScript09
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
-      aUnknown97FAF9 ; 97/FAF9
-        .long aUnknown99F965
+      aTitleSceneCrusaderDesc12 ; 97/FAF9
+        .long aTitleSceneCrusaderAnimScript11
         .byte $6D, $F9, $00, $00, $F0, $00, $00, $00, $00, $00
         .byte $0B, $20, $35, $4B, $60, $75, $8B, $A0, $B5, $CB, $E0, $F5
 
@@ -990,7 +990,7 @@
         .word $0002, $0002, $0002, $0001, $0001, $0001, $0000, $0000
         .word $0000, $0000, -$0001, -$0001, -$0001, -$0002, -$0002, -$0002
         .word -$0002, -$0002, -$0002, -$0001, -$0001, -$0001, $0000, $0000
-      aUnknown97FB52 ; 97/FB52
+      aTitleSceneScrollCurve ; 97/FB52
 
         .word $0000, $0001, $0002, $0003, $0004, $0004, $0005, $0005
         .word $0005, $0005, $0004, $0004, $0003, $0002, $0001, $0000
@@ -1043,7 +1043,7 @@
       .al
       .xl
 
-      aUnknown988000 ; 98/8000
+      aBattleSceneBG2PerspectiveRecords ; 98/8000
 
         ; 256 x 41-byte records. Read by rsBattleSceneBuildBG2PerspectiveTable.
 
@@ -1943,7 +1943,7 @@
 
         ; 98/B3BA
 
-      aUnknown98B3BA ; 98/B3BA
+      aBattleSceneDamageFlashTable1 ; 98/B3BA
 
         ; Read by rsBattleSceneStepDamageFlash.
 
@@ -1954,7 +1954,7 @@
 
         ; 98/B3EC
 
-      aUnknown98B3EC ; 98/B3EC
+      aBattleSceneDamageFlashTable2 ; 98/B3EC
 
         ; Read by rsBattleSceneStepDamageFlash.
 
@@ -1973,7 +1973,7 @@
       .al
       .xl
 
-      aUnknown998000 ; 99/8000
+      aBattleSceneWaveScaleTable ; 99/8000
 
         ; 101 percentage-scaling pairs (0..100). Read by rlBattleSceneStepWaveOffsetTable.
 
@@ -2485,7 +2485,7 @@
 
         ; 99/862F
 
-      aUnknown99862F ; 99/862F
+      aBattleSceneLevelUpNumberOffsets ; 99/862F
 
         ; Read by rlBattleSceneScriptStepLevelUpNumber.
 
@@ -2498,7 +2498,7 @@
 
         ; 99/8683
 
-      aUnknown998683 ; 99/8683
+      aBattleSceneLevelUpStatGainTable ; 99/8683
 
         ; Read by rlBattleSceneScriptNextStatGain.
 
@@ -2631,7 +2631,7 @@
       .al
       .xl
 
-      aUnknown998DD8 ; 99/8DD8
+      aBattleSceneEffectSpeedTable ; 99/8DD8
 
         .byte $02, $02, $02, $02, $02, $03, $03, $03, $03, $05, $05, $05, $07, $07, $09, $09
         .byte $09, $09, $07, $07, $05, $05, $05, $03, $03, $03, $03, $02, $02, $02, $02, $02
@@ -2828,7 +2828,7 @@
       .al
       .xl
 
-      aUnknown998F02 ; 99/8F02
+      aBattleSceneListedWeapons ; 99/8F02
 
         ; Read by rsBattleSceneCheckListedWeapon.
 
@@ -2887,7 +2887,7 @@
 
         ; E0/00B0
 
-      aUnknownE000B0 ; E0/00B0
+      aBattleSceneHUDColorPalette ; E0/00B0
 
         ; Read by rlBattleSceneDrawLevelUpWindow, rlBattleSceneHBlankNormalHUD, rlBattleSceneHBlankMode1MidHUD, rlBattleSceneShowLevelUpBanner.
 
@@ -2942,7 +2942,7 @@
       .al
       .xl
 
-      aUnknownE02667 ; E0/2667
+      aTitleGraphicsPaletteE02667 ; E0/2667
 
         ; Read by rlLoadTitleGraphics.
 
@@ -2998,7 +2998,7 @@
         .word $1084, $2108, $318C, $4265, $318C, $4210, $18C6, $4265
         .word $296B, $1084, $18C6, $4265
 
-      aUnknownE02753 ; E0/2753
+      aTitleLogoPaletteE02753 ; E0/2753
 
         .word $18C6, $2108, $18C6
 
@@ -3028,7 +3028,7 @@
         .word $0000, $0421, $0842, $14A5, $18C6, $1CE7, $2108, $2529
         .word $294A, $2D6B, $35AD, $3DEF, $4A52, $56B5, $6739
 
-      aUnknownE027A5 ; E0/27A5
+      aBattleScenePaletteE027A5 ; E0/27A5
 
         .word $7E60
         .word $7E82, $7A84, $7AA5, $76C7, $76C9, $76EB, $730C, $730E
@@ -3092,52 +3092,52 @@
       .al
       .xl
 
-      aUnknown99F6C1 ; 99/F6C1
+      aTitleSceneSpriteAnimScript1 ; 99/F6C1
         .byte $01, $03, $02, $03, $03, $03, $04, $03, $80, $04
-      aUnknown99F6CB ; 99/F6CB
+      aTitleSceneSpriteAnimScript2 ; 99/F6CB
         .byte $05, $03, $06, $03, $07, $03, $08, $03, $80, $04
-      aUnknown99F6D5 ; 99/F6D5
+      aTitleSceneSpriteAnimScript3 ; 99/F6D5
         .byte $09, $03, $0A, $03, $0B, $03, $0C, $03, $80, $04
-      aUnknown99F6DF ; 99/F6DF
+      aTitleSceneSpriteAnimScript4 ; 99/F6DF
         .byte $01, $03, $02, $03, $03, $03, $04, $03, $0D, $03, $0E, $03, $0F, $03, $10, $03
         .byte $80, $04
-      aUnknown99F6F1 ; 99/F6F1
+      aTitleSceneSpriteAnimScript5 ; 99/F6F1
         .byte $05, $03, $06, $03, $07, $03, $08, $03, $15, $03, $16, $03, $17, $03, $18, $03
         .byte $80, $04
-      aUnknown99F703 ; 99/F703
+      aTitleSceneSpriteAnimScript6 ; 99/F703
         .byte $09, $03, $0A, $03, $0B, $03, $0C, $03, $19, $03, $1A, $03, $1B, $03, $1C, $03
         .byte $80, $04
 
-      aUnknown99F715 ; 99/F715
+      aTitleSceneSpriteFrameTable1 ; 99/F715
 
-        .word _F715_F74D - aUnknown99F715
-        .word _F715_F76D - aUnknown99F715
-        .word _F715_F78D - aUnknown99F715
-        .word _F715_F7AD - aUnknown99F715
-        .word _F715_F7CD - aUnknown99F715
-        .word _F715_F7D4 - aUnknown99F715
-        .word _F715_F7DB - aUnknown99F715
-        .word _F715_F7E2 - aUnknown99F715
-        .word _F715_F7E9 - aUnknown99F715
-        .word _F715_F7F0 - aUnknown99F715
-        .word _F715_F7F7 - aUnknown99F715
-        .word _F715_F7FE - aUnknown99F715
-        .word _F715_F805 - aUnknown99F715
-        .word _F715_F825 - aUnknown99F715
-        .word _F715_F845 - aUnknown99F715
-        .word _F715_F865 - aUnknown99F715
-        .word _F715_F885 - aUnknown99F715
-        .word _F715_F8A5 - aUnknown99F715
-        .word _F715_F8C5 - aUnknown99F715
-        .word _F715_F8E5 - aUnknown99F715
-        .word _F715_F905 - aUnknown99F715
-        .word _F715_F90C - aUnknown99F715
-        .word _F715_F913 - aUnknown99F715
-        .word _F715_F91A - aUnknown99F715
-        .word _F715_F921 - aUnknown99F715
-        .word _F715_F928 - aUnknown99F715
-        .word _F715_F92F - aUnknown99F715
-        .word _F715_F936 - aUnknown99F715
+        .word _F715_F74D - aTitleSceneSpriteFrameTable1
+        .word _F715_F76D - aTitleSceneSpriteFrameTable1
+        .word _F715_F78D - aTitleSceneSpriteFrameTable1
+        .word _F715_F7AD - aTitleSceneSpriteFrameTable1
+        .word _F715_F7CD - aTitleSceneSpriteFrameTable1
+        .word _F715_F7D4 - aTitleSceneSpriteFrameTable1
+        .word _F715_F7DB - aTitleSceneSpriteFrameTable1
+        .word _F715_F7E2 - aTitleSceneSpriteFrameTable1
+        .word _F715_F7E9 - aTitleSceneSpriteFrameTable1
+        .word _F715_F7F0 - aTitleSceneSpriteFrameTable1
+        .word _F715_F7F7 - aTitleSceneSpriteFrameTable1
+        .word _F715_F7FE - aTitleSceneSpriteFrameTable1
+        .word _F715_F805 - aTitleSceneSpriteFrameTable1
+        .word _F715_F825 - aTitleSceneSpriteFrameTable1
+        .word _F715_F845 - aTitleSceneSpriteFrameTable1
+        .word _F715_F865 - aTitleSceneSpriteFrameTable1
+        .word _F715_F885 - aTitleSceneSpriteFrameTable1
+        .word _F715_F8A5 - aTitleSceneSpriteFrameTable1
+        .word _F715_F8C5 - aTitleSceneSpriteFrameTable1
+        .word _F715_F8E5 - aTitleSceneSpriteFrameTable1
+        .word _F715_F905 - aTitleSceneSpriteFrameTable1
+        .word _F715_F90C - aTitleSceneSpriteFrameTable1
+        .word _F715_F913 - aTitleSceneSpriteFrameTable1
+        .word _F715_F91A - aTitleSceneSpriteFrameTable1
+        .word _F715_F921 - aTitleSceneSpriteFrameTable1
+        .word _F715_F928 - aTitleSceneSpriteFrameTable1
+        .word _F715_F92F - aTitleSceneSpriteFrameTable1
+        .word _F715_F936 - aTitleSceneSpriteFrameTable1
 
       _F715_F74D ; 99/F74D
         .byte $06, $00, $00, $00, $04, $21, $38, $F8, $01, $04, $20, $38, $00, $00, $FC, $11
@@ -3236,45 +3236,45 @@
         .byte $01, $00, $FB, $C3, $F6, $1E, $B8
 
         ; 99/F93D
-      aUnknown99F93D ; 99/F93D
+      aTitleSceneCrusaderAnimScript01 ; 99/F93D
         .byte $01, $10, $80, $01
-      aUnknown99F941 ; 99/F941
+      aTitleSceneCrusaderAnimScript02 ; 99/F941
         .byte $02, $10, $80, $01
-      aUnknown99F945 ; 99/F945
+      aTitleSceneCrusaderAnimScript03 ; 99/F945
         .byte $03, $10, $80, $01
-      aUnknown99F949 ; 99/F949
+      aTitleSceneCrusaderAnimScript04 ; 99/F949
         .byte $04, $10, $80, $01
-      aUnknown99F94D ; 99/F94D
+      aTitleSceneCrusaderAnimScript05 ; 99/F94D
         .byte $05, $10, $80, $01
-      aUnknown99F951 ; 99/F951
+      aTitleSceneCrusaderAnimScript06 ; 99/F951
         .byte $06, $10, $80, $01
-      aUnknown99F955 ; 99/F955
+      aTitleSceneCrusaderAnimScript07 ; 99/F955
         .byte $07, $10, $80, $01
-      aUnknown99F959 ; 99/F959
+      aTitleSceneCrusaderAnimScript08 ; 99/F959
         .byte $08, $10, $80, $01
-      aUnknown99F95D ; 99/F95D
+      aTitleSceneCrusaderAnimScript09 ; 99/F95D
         .byte $09, $10, $80, $01
-      aUnknown99F961 ; 99/F961
+      aTitleSceneCrusaderAnimScript10 ; 99/F961
         .byte $0A, $10, $80, $01
-      aUnknown99F965 ; 99/F965
+      aTitleSceneCrusaderAnimScript11 ; 99/F965
         .byte $0B, $10, $80, $01
-      aUnknown99F969 ; 99/F969
+      aTitleSceneCrusaderAnimScript12 ; 99/F969
         .byte $0C, $10, $80, $01
 
-      aUnknown99F96D ; 99/F96D
+      aTitleSceneCrusaderFrameTable ; 99/F96D
 
-        .word _F96D_F985 - aUnknown99F96D
-        .word _F96D_F99B - aUnknown99F96D
-        .word _F96D_F9B1 - aUnknown99F96D
-        .word _F96D_F9C7 - aUnknown99F96D
-        .word _F96D_F9DD - aUnknown99F96D
-        .word _F96D_F9F3 - aUnknown99F96D
-        .word _F96D_FA09 - aUnknown99F96D
-        .word _F96D_FA1F - aUnknown99F96D
-        .word _F96D_FA35 - aUnknown99F96D
-        .word _F96D_FA4B - aUnknown99F96D
-        .word _F96D_FA61 - aUnknown99F96D
-        .word _F96D_FA77 - aUnknown99F96D
+        .word _F96D_F985 - aTitleSceneCrusaderFrameTable
+        .word _F96D_F99B - aTitleSceneCrusaderFrameTable
+        .word _F96D_F9B1 - aTitleSceneCrusaderFrameTable
+        .word _F96D_F9C7 - aTitleSceneCrusaderFrameTable
+        .word _F96D_F9DD - aTitleSceneCrusaderFrameTable
+        .word _F96D_F9F3 - aTitleSceneCrusaderFrameTable
+        .word _F96D_FA09 - aTitleSceneCrusaderFrameTable
+        .word _F96D_FA1F - aTitleSceneCrusaderFrameTable
+        .word _F96D_FA35 - aTitleSceneCrusaderFrameTable
+        .word _F96D_FA4B - aTitleSceneCrusaderFrameTable
+        .word _F96D_FA61 - aTitleSceneCrusaderFrameTable
+        .word _F96D_FA77 - aTitleSceneCrusaderFrameTable
 
       _F96D_F985 ; 99/F985
         .byte $04, $00, $00, $C2, $00, $22, $3E, $F0, $C3, $00, $20, $3E, $00, $C2, $F0, $02
@@ -3332,36 +3332,36 @@
       .al
       .xl
 
-      aUnknown9BC16F ; 9B/C16F
+      aBattleScenePaletteScript9BC16F ; 9B/C16F
         .byte $82, $04, $21, $04, $21, $08, $42, $08, $63, $0C, $83, $0C, $84, $10, $A4, $10
         .byte $C5, $14, $C6, $14, $E6, $19, $07, $19, $08, $1D, $28, $1D, $49, $25, $8B, $2D
         .byte $CD, $29, $AC, $29, $8C, $21, $6A, $21, $49, $1D, $28, $19, $08, $18, $E7, $18
         .byte $E7, $14, $C6, $0C, $84, $08, $63, $08, $42, $04, $42, $04, $21, $00, $00, $00
         .byte $00, $04, $21, $04, $41, $08, $42, $08, $63, $0C, $84, $FF
 
-      aUnknown9BC1BB ; 9B/C1BB
+      aBattleScenePaletteScript9BC1BB ; 9B/C1BB
         .byte $82, $19, $08, $18, $E7, $18, $E7, $14, $C6, $0C, $84, $08, $63, $08, $42, $04
         .byte $42, $04, $21, $00, $00, $00, $00, $04, $21, $04, $41, $08, $42, $08, $63, $0C
         .byte $84, $FF
 
-      aUnknown9BC1DD ; 9B/C1DD
+      aBattleScenePaletteScript9BC1DD ; 9B/C1DD
         .byte $82, $14, $C6, $18, $E7, $18, $E7, $19, $08, $1D, $28, $21, $49, $21, $6A, $29
         .byte $8C, $31, $EE, $3E, $51, $3E, $51, $31, $EE, $29, $8C, $21, $6A, $21, $49, $1D
         .byte $28, $FF
 
-      aUnknown9BC1FF ; 9B/C1FF
+      aBattleScenePaletteScript9BC1FF ; 9B/C1FF
         .byte $82, $08, $62, $08, $63, $0C, $83, $0C, $84, $0C, $A4, $10, $A4, $10, $A5, $10
         .byte $C5, $14, $C5, $14, $E6, $14, $E6, $14, $E6, $10, $C5, $10, $C5, $10, $A4, $0C
         .byte $A4, $0C, $84, $0C, $83, $08, $63, $08, $62, $08, $42, $04, $42, $04, $41, $04
         .byte $21, $00, $21, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $FF
 
-      aUnknown9BC241 ; 9B/C241
+      aBattleScenePaletteScript9BC241 ; 9B/C241
         .byte $80, $7F, $FF, $03, $FF, $02, $BF, $01, $BF, $00, $FF, $00, $BF, $00, $18, $00
         .byte $0B, $70, $1F, $40, $1F, $2C, $1B, $1C, $16, $14, $14, $0C, $12, $00, $0B, $00
         .byte $00, $7F, $FF, $FF
 
-      aUnknown9BC265 ; 9B/C265
+      aBattleScenePaletteScript9BC265 ; 9B/C265
         .byte $80, $7F, $FF, $03, $FF, $02, $BF, $01, $BF, $00, $FF, $00, $BF, $00, $18, $00
         .byte $0B, $70, $1F, $40, $1F, $2C, $1B, $1C, $16, $14, $14, $0C, $12, $00, $0B, $00
         .byte $00, $7F, $FF, $03, $FF, $02, $BF, $01, $BF, $00, $FF, $00, $BF, $00, $18, $00
@@ -3372,13 +3372,13 @@
         .byte $0B, $70, $1F, $40, $1F, $2C, $1B, $1C, $16, $14, $14, $0C, $12, $00, $0B, $00
         .byte $00, $FF
 
-      aUnknown9BC2E7 ; 9B/C2E7
+      aBattleScenePaletteScript9BC2E7 ; 9B/C2E7
         .byte $81, $43, $FF, $43, $FF, $03, $1C, $02, $DA, $02, $37, $01, $B4, $01, $73, $01
         .byte $52, $01, $31, $01, $10, $00, $EF, $00, $CE, $00, $6C, $00, $6C, $00, $CE, $00
         .byte $EF, $01, $10, $01, $31, $01, $52, $01, $73, $01, $B4, $02, $37, $02, $DA, $03
         .byte $1C, $43, $FF, $FF
 
-      aUnknown9BC31B ; 9B/C31B
+      aBattleScenePaletteScript9BC31B ; 9B/C31B
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -3398,12 +3398,12 @@
         .byte $00, $14, $00, $16, $00, $5A, $01, $5B, $01, $5B, $01, $7D, $01, $9F, $02, $1F
         .byte $02, $BF, $FF
 
-      aUnknown9BC42E ; 9B/C42E
+      aBattleScenePaletteScript9BC42E ; 9B/C42E
         .byte $80, $02, $FF, $03, $5F, $00, $0F, $00, $0F, $00, $0C, $00, $0F, $00, $10, $00
         .byte $15, $00, $96, $00, $D9, $01, $38, $01, $1A, $01, $D8, $01, $FB, $02, $1C, $1A
         .byte $DC, $FF
 
-      aUnknown9BC450 ; 9B/C450
+      aBattleScenePaletteScript9BC450 ; 9B/C450
         .byte $82, $00, $0D, $00, $10, $00, $14, $00, $16, $00, $5A, $01, $5B, $01, $5B, $01
         .byte $7D, $01, $9F, $02, $1F, $02, $BF, $03, $5F, $03, $FF, $1F, $FF, $43, $FF, $00
         .byte $02, $00, $00, $00, $05, $00, $09, $00, $0D, $00, $10, $00, $14, $00, $16, $00
@@ -3426,7 +3426,7 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BC59F ; 9B/C59F
+      aBattleScenePaletteScript9BC59F ; 9B/C59F
         .byte $81, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $00, $01, $04, $02, $04
         .byte $02, $04, $03, $04, $03, $04, $04, $04, $04, $04, $05, $04, $05, $08, $05, $08
         .byte $06, $08, $06, $08, $07, $08, $06, $0C, $08, $14, $09, $18, $0B, $20, $0D, $24
@@ -3435,14 +3435,14 @@
         .byte $1A, $38, $19, $30, $18, $2C, $17, $24, $15, $20, $14, $18, $13, $14, $12, $0C
         .byte $11, $FF
 
-      aUnknown9BC601 ; 9B/C601
+      aBattleScenePaletteScript9BC601 ; 9B/C601
         .byte $81, $08, $10, $00, $0F, $00, $0F, $08, $10, $0C, $11, $14, $12, $18, $13, $20
         .byte $14, $24, $15, $2C, $16, $30, $18, $38, $19, $3C, $1A, $44, $1B, $48, $1C, $50
         .byte $1D, $54, $1E, $5C, $1F, $5C, $1F, $54, $1E, $50, $1D, $48, $1C, $44, $1B, $3C
         .byte $1A, $38, $19, $30, $18, $2C, $17, $24, $15, $20, $14, $18, $13, $14, $12, $0C
         .byte $11, $FE
 
-      aUnknown9BC643 ; 9B/C643
+      aBattleScenePaletteScript9BC643 ; 9B/C643
         .byte $81, $14, $0B, $18, $0B, $18, $0B, $18, $0B, $14, $0A, $14, $0A, $14, $09, $10
         .byte $09, $10, $08, $10, $08, $0C, $07, $0C, $07, $0C, $06, $08, $06, $08, $06, $08
         .byte $05, $04, $05, $04, $04, $04, $04, $04, $04, $04, $03, $04, $03, $04, $03, $04
@@ -3451,14 +3451,14 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $FF
 
-      aUnknown9BC6A5 ; 9B/C6A5
+      aBattleScenePaletteScript9BC6A5 ; 9B/C6A5
         .byte $81, $00, $00, $00, $21, $00, $22, $00, $43, $00, $64, $00, $85, $00, $86, $00
         .byte $A7, $00, $E7, $01, $06, $01, $25, $01, $44, $01, $83, $01, $A2, $01, $C1, $01
         .byte $E0, $80, $01, $E4, $01, $E6, $02, $08, $02, $09, $02, $0B, $02, $0D, $02, $2F
         .byte $02, $31, $02, $32, $02, $34, $02, $56, $02, $58, $02, $5A, $02, $5B, $02, $7D
         .byte $02, $7F, $FF
 
-      aUnknown9BC6E8 ; 9B/C6E8
+      aBattleScenePaletteScript9BC6E8 ; 9B/C6E8
         .byte $80, $03, $E8, $03, $E4, $03, $E4, $03, $E7, $03, $EB, $03, $EE, $03, $F2, $03
         .byte $F5, $03, $F8, $03, $FC, $03, $FF, $03, $FF, $03, $BF, $03, $7F, $03, $3F, $02
         .byte $FF, $02, $BF, $02, $7F, $01, $FF, $02, $3F, $02, $7F, $02, $BF, $02, $FF, $03
@@ -3481,7 +3481,7 @@
         .byte $3F, $03, $7F, $03, $BF, $03, $FF, $03, $FB, $03, $F7, $03, $F3, $03, $F0, $03
         .byte $EC, $FF
 
-      aUnknown9BC82A ; 9B/C82A
+      aBattleScenePaletteScript9BC82A ; 9B/C82A
         .byte $81, $50, $A0, $4C, $A0, $44, $80, $40, $60, $38, $60, $34, $40, $2C, $20, $28
         .byte $20, $20, $00, $20, $00, $28, $20, $2C, $20, $34, $40, $38, $60, $40, $60, $44
         .byte $80, $4C, $A0, $50, $A0, $58, $C0, $5C, $E0, $64, $E0, $69, $00, $71, $20, $75
@@ -3500,7 +3500,7 @@
         .byte $20, $7D, $40, $7D, $40, $75, $20, $71, $20, $69, $00, $64, $E0, $5C, $E0, $58
         .byte $C0, $FF
 
-      aUnknown9BC92C ; 9B/C92C
+      aBattleScenePaletteScript9BC92C ; 9B/C92C
         .byte $80, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -3538,188 +3538,188 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BCB6B ; 9B/CB6B
+      aBattleScenePaletteScript9BCB6B ; 9B/CB6B
         .byte $80, $3D, $CE, $0D, $EF, $3D, $EF, $3D, $CE, $3D, $AD, $3D, $8C, $3D, $6B, $3D
         .byte $4A, $3D, $29, $3D, $0E, $3C, $E7, $3C, $C6, $3C, $A5, $3C, $84, $3C, $63, $3C
         .byte $42, $3C, $21, $3C, $00, $3C, $00, $3C, $01, $3C, $42, $3C, $63, $3C, $84, $3C
         .byte $A5, $3C, $C6, $3D, $E7, $3D, $08, $3D, $29, $3D, $4A, $3D, $6B, $3D, $8C, $3D
         .byte $AD, $FE
 
-      aUnknown9BCBAD ; 9B/CBAD
+      aBattleScenePaletteScript9BCBAD ; 9B/CBAD
         .byte $82, $00, $11, $00, $12, $00, $13, $00, $14, $00, $15, $00, $11, $00, $12, $00
         .byte $13, $00, $14, $00, $15, $FE
 
-      aUnknown9BCBC3 ; 9B/CBC3
+      aBattleScenePaletteScript9BCBC3 ; 9B/CBC3
         .byte $82, $7F, $FF, $4F, $FF, $0B, $1F, $12, $1F, $19, $DF, $00, $1D, $00, $1A, $00
         .byte $17, $00, $14, $FE
 
-      aUnknown9BCBD7 ; 9B/CBD7
+      aBattleScenePaletteScript9BCBD7 ; 9B/CBD7
         .byte $81, $00, $1A, $00, $17, $00, $14, $00, $11, $7F, $FF, $4F, $FF, $0B, $1F, $12
         .byte $1F, $19, $DF, $00, $1D, $FE
 
-      aUnknown9BCBED ; 9B/CBED
+      aBattleScenePaletteScript9BCBED ; 9B/CBED
         .byte $82, $00, $11, $00, $12, $00, $13, $00, $14, $00, $15, $00, $11, $00, $12, $00
         .byte $13, $00, $14, $00, $15, $FE
 
-      aUnknown9BCC03 ; 9B/CC03
+      aBattleScenePaletteScript9BCC03 ; 9B/CC03
         .byte $82, $00, $11, $00, $15, $00, $14, $00, $13, $00, $12, $00, $11, $00, $15, $00
         .byte $14, $00, $13, $00, $12, $FE
 
-      aUnknown9BCC19 ; 9B/CC19
+      aBattleScenePaletteScript9BCC19 ; 9B/CC19
         .byte $82, $00, $1D, $00, $9F, $01, $5F, $12, $1F, $0B, $1F, $00, $1A, $00, $14, $00
         .byte $17, $00, $1A, $00, $1D, $19, $DF, $00, $14, $00, $13, $00, $12, $00, $11, $00
         .byte $15, $00, $14, $00, $13, $00, $12, $00, $11, $00, $15, $FE
 
-      aUnknown9BCC45 ; 9B/CC45
+      aBattleScenePaletteScript9BCC45 ; 9B/CC45
         .byte $84, $12, $1F, $0B, $1F, $00, $1A, $00, $14, $00, $17, $00, $1A, $00, $1D, $00
         .byte $1D, $00, $9F, $01, $5F, $00, $1D, $19, $DF, $00, $14, $00, $13, $00, $12, $00
         .byte $11, $00, $15, $00, $14, $00, $13, $00, $12, $00, $11, $00, $15, $FE
 
-      aUnknown9BCC73 ; 9B/CC73
+      aBattleScenePaletteScript9BCC73 ; 9B/CC73
         .byte $82, $00, $11, $00, $15, $00, $14, $00, $13, $00, $12, $00, $11, $00, $15, $00
         .byte $14, $00, $13, $00, $12, $FE
 
-      aUnknown9BCC89 ; 9B/CC89
+      aBattleScenePaletteScript9BCC89 ; 9B/CC89
         .byte $82, $00, $03, $00, $05, $00, $07, $00, $0A, $00, $0A, $00, $11, $00, $12, $00
         .byte $13, $00, $14, $00, $15, $FF
 
-      aUnknown9BCC9F ; 9B/CC9F
+      aBattleScenePaletteScript9BCC9F ; 9B/CC9F
         .byte $82, $00, $0A, $00, $0D, $00, $15, $00, $11, $00, $14, $00, $17, $00, $1A, $00
         .byte $1D, $19, $DF, $FF
 
-      aUnknown9BCCB3 ; 9B/CCB3
+      aBattleScenePaletteScript9BCCB3 ; 9B/CCB3
         .byte $81, $00, $00, $00, $00, $00, $00, $00, $00, $00, $0A, $00, $0D, $00, $15, $00
         .byte $11, $00, $14, $00, $17, $00, $1A, $00, $1D, $19, $DF, $FF
 
-      aUnknown9BCCCF ; 9B/CCCF
+      aBattleScenePaletteScript9BCCCF ; 9B/CCCF
         .byte $82, $00, $03, $00, $05, $00, $07, $00, $0A, $00, $0A, $00, $11, $00, $12, $00
         .byte $13, $00, $14, $00, $15, $FF
 
-      aUnknown9BCCE5 ; 9B/CCE5
+      aBattleScenePaletteScript9BCCE5 ; 9B/CCE5
         .byte $82, $00, $00, $00, $15, $00, $0E, $00, $0B, $00, $07, $00, $05, $00, $03, $00
         .byte $03, $00, $01, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BCD0F ; 9B/CD0F
+      aBattleScenePaletteScript9BCD0F ; 9B/CD0F
         .byte $82, $00, $11, $00, $0F, $00, $0D, $00, $0B, $00, $0A, $00, $08, $00, $06, $00
         .byte $04, $00, $02, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BCD2D ; 9B/CD2D
+      aBattleScenePaletteScript9BCD2D ; 9B/CD2D
         .byte $84, $00, $0B, $00, $0A, $00, $08, $00, $06, $00, $04, $00, $02, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BCD4B ; 9B/CD4B
+      aBattleScenePaletteScript9BCD4B ; 9B/CD4B
         .byte $82, $00, $00, $00, $15, $00, $0E, $00, $0B, $00, $07, $00, $05, $00, $03, $00
         .byte $03, $00, $01, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BCD75 ; 9B/CD75
+      aBattleScenePaletteScript9BCD75 ; 9B/CD75
         .byte $81, $08, $03, $08, $02, $04, $02, $30, $05, $30, $65, $2C, $A4, $2D, $04, $2D
         .byte $44, $2D, $A4, $29, $E3, $2A, $43, $42, $A5, $3E, $87, $36, $6A, $32, $4C, $2A
         .byte $0F, $1D, $B1, $11, $94, $09, $36, $3C, $00, $38, $00, $34, $00, $30, $00, $28
         .byte $01, $24, $03, $20, $04, $1C, $06, $18, $05, $14, $05, $14, $04, $10, $04, $0C
         .byte $03, $FE
 
-      aUnknown9BCDB7 ; 9B/CDB7
+      aBattleScenePaletteScript9BCDB7 ; 9B/CDB7
         .byte $81, $18, $05, $18, $05, $18, $04, $18, $04, $18, $04, $18, $03, $18, $03, $18
         .byte $03, $18, $02, $18, $02, $18, $02, $18, $01, $18, $01, $18, $01, $18, $00, $18
         .byte $00, $18, $00, $18, $00, $18, $01, $18, $01, $18, $01, $18, $02, $18, $02, $18
         .byte $02, $18, $03, $18, $03, $18, $03, $18, $04, $18, $04, $18, $04, $18, $05, $18
         .byte $05, $FE
 
-      aUnknown9BCDF9 ; 9B/CDF9
+      aBattleScenePaletteScript9BCDF9 ; 9B/CDF9
         .byte $81, $00, $00, $00, $00, $00, $00, $00, $00, $04, $00, $08, $00, $0C, $00, $10
         .byte $00, $14, $00, $18, $00, $1C, $00, $20, $00, $24, $00, $28, $00, $2C, $00, $30
         .byte $00, $34, $00, $38, $00, $3C, $00, $30, $05, $30, $65, $2C, $A4, $2D, $04, $2D
         .byte $44, $2D, $A4, $29, $E3, $2A, $43, $42, $A5, $3E, $87, $36, $6A, $32, $4C, $2A
         .byte $0F, $FF
 
-      aUnknown9BCE3B ; 9B/CE3B
+      aBattleScenePaletteScript9BCE3B ; 9B/CE3B
         .byte $81, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $04, $00, $04, $00, $08, $00, $08, $00, $08, $00, $0C
         .byte $00, $0C, $00, $10, $00, $10, $00, $10, $00, $14, $00, $14, $00, $14, $00, $18
         .byte $00, $FF
 
-      aUnknown9BCE7D ; 9B/CE7D
+      aBattleScenePaletteScript9BCE7D ; 9B/CE7D
         .byte $81, $1D, $B1, $11, $94, $09, $36, $3C, $00, $38, $00, $34, $00, $30, $00, $2C
         .byte $00, $28, $00, $24, $00, $20, $00, $1C, $00, $18, $00, $14, $00, $10, $00, $0C
         .byte $00, $08, $00, $04, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $FF
 
-      aUnknown9BCEBF ; 9B/CEBF
+      aBattleScenePaletteScript9BCEBF ; 9B/CEBF
         .byte $81, $18, $00, $18, $00, $14, $00, $14, $00, $10, $00, $10, $00, $10, $00, $0C
         .byte $00, $0C, $00, $08, $00, $08, $00, $08, $00, $04, $00, $04, $00, $04, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $FF
 
-      aUnknown9BCF01 ; 9B/CF01
+      aBattleScenePaletteScript9BCF01 ; 9B/CF01
         .byte $81, $00, $AE, $00, $F0, $01, $59, $01, $DA, $02, $5A, $03, $3D, $03, $9F, $43
         .byte $FF, $43, $FF, $03, $9F, $03, $3D, $02, $5A, $01, $DA, $01, $59, $00, $F0, $00
         .byte $28, $00, $28, $FE
 
-      aUnknown9BCF25 ; 9B/CF25
+      aBattleScenePaletteScript9BCF25 ; 9B/CF25
         .byte $FF
 
-      aUnknown9BCF26 ; 9B/CF26
+      aBattleScenePaletteScript9BCF26 ; 9B/CF26
         .byte $80, $3D, $AD, $3D, $CE, $0D, $EF, $3D, $EF, $3D, $CE, $3D, $AD, $3D, $8C, $3D
         .byte $6B, $3D, $4A, $3D, $29, $3D, $0E, $3C, $E7, $3C, $C6, $3C, $A5, $3C, $84, $3C
         .byte $63, $3C, $42, $3C, $21, $3C, $00, $3C, $00, $3C, $01, $3C, $42, $3C, $63, $3C
         .byte $84, $3C, $A5, $3C, $C6, $3D, $E7, $3D, $08, $3D, $29, $3D, $4A, $3D, $6B, $3D
         .byte $8C, $FE
 
-      aUnknown9BCF68 ; 9B/CF68
+      aBattleScenePaletteScript9BCF68 ; 9B/CF68
         .byte $80, $43, $A0, $47, $C0, $09, $60, $0D, $80, $11, $C0, $15, $E0, $1A, $00, $1E
         .byte $20, $22, $60, $26, $80, $2A, $A0, $2E, $C0, $33, $00, $37, $20, $3B, $40, $3F
         .byte $60, $43, $A0, $47, $C0, $09, $60, $0D, $80, $11, $C0, $15, $E0, $1A, $00, $1E
         .byte $20, $22, $60, $26, $80, $2A, $A0, $2E, $C0, $33, $00, $37, $20, $3B, $40, $3F
         .byte $60, $FE
 
-      aUnknown9BCFAA ; 9B/CFAA
+      aBattleScenePaletteScript9BCFAA ; 9B/CFAA
         .byte $80, $00, $A0, $00, $80, $00, $80, $00, $80, $00, $60, $00, $60, $00, $60, $00
         .byte $60, $00, $40, $00, $40, $00, $40, $00, $40, $00, $20, $00, $20, $00, $20, $00
         .byte $20, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $FF
 
-      aUnknown9BCFEC ; 9B/CFEC
+      aBattleScenePaletteScript9BCFEC ; 9B/CFEC
         .byte $81, $4C, $0E, $5C, $4E, $64, $4B, $64, $49, $60, $46, $5C, $25, $5C, $03, $5C
         .byte $03, $4C, $00, $2C, $00, $2C, $00, $4C, $00, $5C, $03, $5C, $03, $5C, $25, $60
         .byte $46, $64, $49, $64, $4B, $5C, $4E, $4C, $0E, $44, $0C, $3C, $0A, $38, $09, $34
         .byte $08, $30, $07, $24, $04, $24, $04, $30, $07, $34, $08, $38, $09, $3C, $0A, $44
         .byte $0C, $FE
 
-      aUnknown9BD02E ; 9B/D02E
+      aBattleScenePaletteScript9BD02E ; 9B/D02E
         .byte $80, $01, $36, $01, $36, $01, $14, $00, $F2, $00, $CF, $00, $AD, $FE
 
-      aUnknown9BD03C ; 9B/D03C
+      aBattleScenePaletteScript9BD03C ; 9B/D03C
         .byte $82, $48, $07, $40, $C0, $34, $A0, $2C, $80, $20, $60, $18, $20, $0C, $20, $08
         .byte $00, $00, $00, $00, $00, $7E, $10, $7C, $06, $FE
 
-      aUnknown9BD056 ; 9B/D056
+      aBattleScenePaletteScript9BD056 ; 9B/D056
         .byte $82, $00, $00, $00, $00, $18, $02, $18, $02, $14, $02, $14, $02, $10, $02, $10
         .byte $01, $10, $01, $0C, $01, $0C, $01, $08, $01, $08, $01, $08, $01, $04, $01, $04
         .byte $00, $FE
 
-      aUnknown9BD078 ; 9B/D078
+      aBattleScenePaletteScript9BD078 ; 9B/D078
         .byte $82, $00, $00, $00, $00, $7C, $06, $40, $05, $38, $80, $38, $80, $2C, $60, $24
         .byte $40, $18, $20, $10, $00, $0C, $20, $08, $00, $FF
 
-      aUnknown9BD092 ; 9B/D092
+      aBattleScenePaletteScript9BD092 ; 9B/D092
         .byte $82, $00, $00, $00, $00, $18, $02, $18, $02, $14, $02, $14, $02, $10, $02, $10
         .byte $01, $10, $01, $0C, $01, $0C, $01, $08, $01, $08, $01, $08, $01, $04, $01, $04
         .byte $00, $FF
 
-      aUnknown9BD0B4 ; 9B/D0B4
+      aBattleScenePaletteScript9BD0B4 ; 9B/D0B4
         .byte $82, $48, $07, $40, $C0, $34, $A0, $2C, $80, $20, $60, $18, $20, $0C, $20, $0C
         .byte $20, $0C, $20, $08, $20, $08, $20, $08, $20, $08, $20, $04, $00, $04, $00, $04
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $FF
 
-      aUnknown9BD0F8 ; 9B/D0F8
+      aBattleScenePaletteScript9BD0F8 ; 9B/D0F8
         .byte $82, $00, $00, $00, $00, $18, $02, $18, $02, $14, $02, $14, $02, $10, $02, $10
         .byte $01, $10, $01, $0C, $01, $0C, $01, $08, $01, $08, $01, $08, $01, $04, $01, $04
         .byte $00, $04, $00, $00, $00, $18, $02, $18, $02, $14, $02, $14, $02, $10, $02, $10
@@ -3727,7 +3727,7 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BD158 ; 9B/D158
+      aBattleScenePaletteScript9BD158 ; 9B/D158
         .byte $88, $00, $05, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $07, $00, $0B, $86
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -3758,48 +3758,48 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BD324 ; 9B/D324
+      aBattleScenePaletteScript9BD324 ; 9B/D324
         .byte $81, $03, $9F, $03, $9F, $03, $9F, $03, $1F, $02, $9F, $02, $1F, $01, $9F, $00
         .byte $5F, $00, $1C, $00, $19, $00, $15, $00, $12, $00, $0A, $00, $09, $00, $07, $00
         .byte $06, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BD364 ; 9B/D364
+      aBattleScenePaletteScript9BD364 ; 9B/D364
         .byte $FF
 
-      aUnknown9BD365 ; 9B/D365
+      aBattleScenePaletteScript9BD365 ; 9B/D365
         .byte $82, $02, $FF, $03, $5F, $02, $FF, $02, $BF, $02, $1F, $01, $5D, $00, $17, $00
         .byte $10, $00, $0C, $00, $06, $00, $0C, $00, $10, $00, $17, $01, $5D, $02, $1F, $FE
 
-      aUnknown9BD385 ; 9B/D385
+      aBattleScenePaletteScript9BD385 ; 9B/D385
         .byte $82, $00, $04, $00, $07, $00, $2B, $00, $4E, $00, $91, $00, $B4, $00, $F8, $01
         .byte $1B, $00, $F8, $00, $B4, $00, $91, $00, $4E, $00, $2B, $00, $07, $00, $04, $FE
 
-      aUnknown9BD3A5 ; 9B/D3A5
+      aBattleScenePaletteScript9BD3A5 ; 9B/D3A5
         .byte $82, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
         .byte $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $FF
 
-      aUnknown9BD3C5 ; 9B/D3C5
+      aBattleScenePaletteScript9BD3C5 ; 9B/D3C5
         .byte $82, $00, $07, $00, $0C, $00, $0F, $00, $0D, $00, $09, $00, $07, $00, $04, $00
         .byte $02, $00, $00, $00, $00, $00, $00, $00, $00, $00, $04, $00, $08, $00, $0B, $00
         .byte $0F, $00, $53, $00, $97, $00, $74, $00, $51, $00, $2E, $00, $0C, $00, $09, $00
         .byte $06, $00, $03, $FF
 
-      aUnknown9BD3F9 ; 9B/D3F9
+      aBattleScenePaletteScript9BD3F9 ; 9B/D3F9
         .byte $82, $00, $00, $00, $00, $01, $1B, $00, $F8, $00, $B4, $00, $91, $00, $4E, $00
         .byte $2B, $00, $07, $00, $04, $00, $0C, $00, $10, $00, $17, $01, $5D, $02, $1F, $02
         .byte $BF, $FF
 
-      aUnknown9BD41B ; 9B/D41B
+      aBattleScenePaletteScript9BD41B ; 9B/D41B
         .byte $82, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
         .byte $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $FF
 
-      aUnknown9BD43B ; 9B/D43B
+      aBattleScenePaletteScript9BD43B ; 9B/D43B
         .byte $81, $00, $02, $00, $04, $00, $06, $00, $08, $00, $0A, $00, $0C, $00, $0E, $00
         .byte $10, $00, $12, $00, $14, $00, $16, $00, $18, $00, $1A, $00, $1C, $00, $1E, $00
         .byte $1F, $FF
 
-      aUnknown9BD45D ; 9B/D45D
+      aBattleScenePaletteScript9BD45D ; 9B/D45D
         .byte $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F
         .byte $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F
         .byte $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F
@@ -3807,7 +3807,7 @@
         .byte $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F
         .byte $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $FF
 
-      aUnknown9BD4BC ; 9B/D4BC
+      aBattleScenePaletteScript9BD4BC ; 9B/D4BC
         .byte $81, $3B, $BE, $80, $3F, $DE, $81, $1A, $F9, $80, $0E, $97, $81, $06, $56, $80
         .byte $0A, $77, $81, $0E, $97, $80, $12, $B8, $81, $16, $D9, $80, $1A, $F9, $81, $1F
         .byte $1A, $80, $23, $1A, $81, $2B, $3B, $80, $2F, $5C, $81, $33, $7C, $80, $37, $9D
@@ -3816,7 +3816,7 @@
         .byte $1A, $80, $23, $1A, $81, $2B, $3B, $80, $2F, $5C, $81, $33, $7C, $80, $37, $9D
         .byte $FE
 
-      aUnknown9BD51D ; 9B/D51D
+      aBattleScenePaletteScript9BD51D ; 9B/D51D
         .byte $81, $00, $00, $80, $00, $00, $81, $00, $00, $80, $00, $00, $81, $00, $00, $80
         .byte $00, $00, $81, $00, $00, $80, $00, $00, $81, $00, $00, $80, $00, $00, $81, $00
         .byte $00, $80, $00, $00, $81, $00, $00, $80, $00, $01, $81, $00, $22, $80, $00, $43
@@ -3831,7 +3831,7 @@
         .byte $96, $80, $12, $96, $81, $1E, $D8, $80, $22, $F9, $81, $2B, $3A, $80, $2F, $5B
         .byte $81, $37, $9D, $80, $3B, $BD, $FF
 
-      aUnknown9BD5E4 ; 9B/D5E4
+      aBattleScenePaletteScript9BD5E4 ; 9B/D5E4
         .byte $80, $03, $E4, $03, $E4, $0B, $E6, $13, $E8, $1B, $E9, $23, $EB, $2B, $ED, $33
         .byte $EF, $3B, $F1, $47, $F2, $4F, $F4, $57, $F6, $5F, $F8, $67, $FA, $6F, $FB, $77
         .byte $FD, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F
@@ -3840,10 +3840,10 @@
         .byte $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F
         .byte $FF, $FF
 
-      aUnknown9BD646 ; 9B/D646
+      aBattleScenePaletteScript9BD646 ; 9B/D646
         .byte $80, $7F, $FF, $FF
 
-      aUnknown9BD64A ; 9B/D64A
+      aBattleScenePaletteScript9BD64A ; 9B/D64A
         .byte $80, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F
         .byte $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F
         .byte $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F
@@ -3851,21 +3851,21 @@
         .byte $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F
         .byte $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $7F, $FF, $FF
 
-      aUnknown9BD6AA ; 9B/D6AA
+      aBattleScenePaletteScript9BD6AA ; 9B/D6AA
         .byte $82, $00, $00, $04, $21, $08, $42, $0C, $63, $10, $84, $14, $A5, $18, $C6, $1C
         .byte $E7, $21, $08, $25, $29, $29, $4A, $2D, $6B, $31, $8C, $35, $AD, $39, $CE, $3D
         .byte $EF, $42, $10, $46, $31, $4A, $52, $4E, $73, $52, $94, $56, $B5, $5A, $D6, $5E
         .byte $F7, $63, $18, $67, $39, $6B, $5A, $6F, $7B, $73, $9C, $77, $BD, $7B, $DE, $7F
         .byte $FF, $FF
 
-      aUnknown9BD6EC ; 9B/D6EC
+      aBattleScenePaletteScript9BD6EC ; 9B/D6EC
         .byte $81, $03, $E0, $0B, $E2, $13, $E4, $1B, $E6, $23, $E8, $2B, $EA, $33, $EC, $3F
         .byte $EF, $47, $F1, $4F, $F3, $57, $F5, $5F, $F7, $67, $F9, $6F, $FB, $77, $FD, $7F
         .byte $FF, $7F, $FF, $77, $FD, $6F, $FB, $67, $F9, $5F, $F7, $57, $F5, $4F, $F3, $47
         .byte $F1, $3B, $EE, $33, $EC, $2B, $EA, $23, $E8, $1B, $E6, $13, $E4, $0B, $E2, $03
         .byte $E0, $FE
 
-      aUnknown9BD72E ; 9B/D72E
+      aBattleScenePaletteScript9BD72E ; 9B/D72E
         .byte $80, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $01, $00, $01, $40, $01, $80, $01, $A0, $01, $80, $01, $60, $01, $40, $01
@@ -3874,7 +3874,7 @@
         .byte $48, $1E, $27, $19, $E6, $15, $A5, $11, $64, $0D, $23, $09, $02, $04, $C1, $00
         .byte $80, $FF
 
-      aUnknown9BD790 ; 9B/D790
+      aBattleScenePaletteScript9BD790 ; 9B/D790
         .byte $80, $00, $80, $04, $C1, $09, $02, $0D, $23, $11, $64, $15, $A5, $19, $E6, $1E
         .byte $27, $22, $48, $26, $89, $2A, $CA, $2F, $0B, $33, $4C, $37, $6D, $3B, $AE, $3F
         .byte $EF, $00, $20, $00, $40, $00, $40, $00, $60, $00, $60, $00, $60, $00, $80, $00
@@ -3883,135 +3883,135 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $FF
 
-      aUnknown9BD7F2 ; 9B/D7F2
+      aBattleScenePaletteScript9BD7F2 ; 9B/D7F2
         .byte $82, $1C, $02, $18, $02, $18, $01, $14, $01, $10, $01, $0C, $01, $08, $01, $08
         .byte $01, $04, $00, $00, $00, $4C, $09, $24, $04, $FE
 
-      aUnknown9BD80C ; 9B/D80C
+      aBattleScenePaletteScript9BD80C ; 9B/D80C
         .byte $82, $00, $00, $00, $00, $4C, $09, $24, $04, $1C, $02, $18, $02, $18, $01, $14
         .byte $01, $10, $01, $0C, $01, $08, $01, $08, $01, $FF
 
-      aUnknown9BD826 ; 9B/D826
+      aBattleScenePaletteScript9BD826 ; 9B/D826
         .byte $82, $00, $00, $00, $00, $34, $04, $24, $04, $20, $04, $1C, $03, $18, $03, $14
         .byte $02, $14, $02, $10, $02, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BD85C ; 9B/D85C
+      aBattleScenePaletteScript9BD85C ; 9B/D85C
         .byte $80, $00, $00, $00, $00, $08, $00, $10, $01, $18, $01, $20, $01, $28, $02, $2C
         .byte $02, $34, $02, $3C, $03, $44, $03, $7C, $0F, $FE
 
-      aUnknown9BD876 ; 9B/D876
+      aBattleScenePaletteScript9BD876 ; 9B/D876
         .byte $80, $24, $00, $2C, $00, $34, $00, $40, $00, $48, $00, $50, $00, $58, $00, $60
         .byte $00, $6C, $00, $74, $00, $7C, $00, $7C, $00, $7C, $00, $7C, $00, $7C, $00, $7C
         .byte $00, $7C, $00, $7C, $00, $7C, $00, $7C, $00, $7C, $00, $7C, $00, $7C, $00, $7C
         .byte $00, $7C, $00, $7C, $00, $FF
 
-      aUnknown9BD8AC ; 9B/D8AC
+      aBattleScenePaletteScript9BD8AC ; 9B/D8AC
         .byte $80, $24, $00, $2C, $00, $34, $00, $40, $00, $48, $00, $50, $00, $58, $00, $60
         .byte $00, $6C, $00, $74, $00, $7C, $00, $FF
 
-      aUnknown9BD8C4 ; 9B/D8C4
+      aBattleScenePaletteScript9BD8C4 ; 9B/D8C4
         .byte $80, $7C, $85, $FF
 
-      aUnknown9BD8C8 ; 9B/D8C8
+      aBattleScenePaletteScript9BD8C8 ; 9B/D8C8
         .byte $80, $00, $00, $00, $00, $00, $00, $00, $00, $04, $00, $0C, $20, $18, $80, $24
         .byte $E0, $31, $40, $24, $E0, $1C, $A0, $14, $60, $FF
 
-      aUnknown9BD8E2 ; 9B/D8E2
+      aBattleScenePaletteScript9BD8E2 ; 9B/D8E2
         .byte $80, $7E, $DF, $76, $BC, $6E, $79, $62, $56, $5A, $13, $51, $EF, $49, $AC, $41
         .byte $89, $41, $89, $35, $46, $2D, $23, $24, $E0, $7F, $F6, $7F, $E0, $67, $40, $5E
         .byte $C0, $52, $80, $4A, $20, $41, $E0, $39, $A0, $31, $40, $24, $E0, $1C, $A0, $14
         .byte $60, $FE
 
-      aUnknown9BD914 ; 9B/D914
+      aBattleScenePaletteScript9BD914 ; 9B/D914
         .byte $80, $7F, $F6, $67, $40, $5A, $C0, $4E, $60, $41, $E0, $35, $80, $29, $00, $24
         .byte $E0, $20, $C0, $1C, $A0, $14, $60, $0C, $20, $29, $00, $24, $E0, $20, $C0, $1C
         .byte $C0, $18, $A0, $14, $80, $14, $80, $10, $60, $0C, $40, $08, $20, $04, $20, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BD962 ; 9B/D962
+      aBattleScenePaletteScript9BD962 ; 9B/D962
         .byte $80, $00, $00, $04, $00, $14, $00, $2C, $00, $48, $00, $04, $00, $14, $00, $2C
         .byte $00, $48, $00, $04, $00, $FF
 
-      aUnknown9BD978 ; 9B/D978
+      aBattleScenePaletteScript9BD978 ; 9B/D978
         .byte $80, $48, $00, $04, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BD98E ; 9B/D98E
+      aBattleScenePaletteScript9BD98E ; 9B/D98E
         .byte $80, $48, $00, $04, $00, $14, $00, $2C, $00, $48, $00, $FE
 
-      aUnknown9BD99A ; 9B/D99A
+      aBattleScenePaletteScript9BD99A ; 9B/D99A
         .byte $80, $10, $60, $18, $A0, $24, $E0, $2D, $20, $39, $60, $41, $A0, $56, $00, $5E
         .byte $40, $6E, $A0, $7F, $60, $00, $00, $08, $40, $FE
 
-      aUnknown9BD9B4 ; 9B/D9B4
+      aBattleScenePaletteScript9BD9B4 ; 9B/D9B4
         .byte $80, $00, $00, $00, $00, $00, $00, $08, $40, $10, $60, $18, $A0, $24, $E0, $24
         .byte $E0, $20, $C0, $18, $A0, $14, $80, $0C, $40, $08, $20, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BD9F2 ; 9B/D9F2
+      aBattleScenePaletteScript9BD9F2 ; 9B/D9F2
         .byte $80, $01, $FF, $00, $07, $00, $0A, $00, $0E, $00, $12, $00, $54, $00, $B7, $FE
 
-      aUnknown9BDA02 ; 9B/DA02
+      aBattleScenePaletteScript9BDA02 ; 9B/DA02
         .byte $82, $00, $21, $00, $00, $04, $21, $08, $42, $0C, $63, $0C, $84, $10, $A5, $14
         .byte $C6, $18, $E7, $1D, $28, $21, $49, $25, $6A, $25, $8B, $29, $AC, $2D, $CD, $31
         .byte $EE, $36, $0F, $46, $93, $36, $0F, $31, $CD, $2D, $AD, $25, $8B, $21, $4A, $1D
         .byte $28, $14, $E6, $14, $C6, $10, $A5, $0C, $84, $0C, $83, $08, $62, $04, $42, $04
         .byte $21, $00, $00, $00, $00, $04, $21, $04, $42, $08, $62, $0C, $63, $0C, $84, $FF
 
-      aUnknown9BDA52 ; 9B/DA52
+      aBattleScenePaletteScript9BDA52 ; 9B/DA52
         .byte $82, $1D, $28, $14, $E6, $14, $C6, $10, $A5, $0C, $84, $0C, $83, $08, $62, $04
         .byte $42, $04, $21, $00, $00, $00, $00, $04, $21, $04, $42, $08, $62, $0C, $63, $0C
         .byte $84, $FF
 
-      aUnknown9BDA74 ; 9B/DA74
+      aBattleScenePaletteScript9BDA74 ; 9B/DA74
         .byte $82, $10, $A5, $14, $C6, $14, $E6, $1D, $28, $21, $4A, $25, $8B, $2D, $AD, $31
         .byte $CD, $3E, $51, $4A, $B4, $4A, $B4, $3E, $51, $31, $CD, $2D, $AD, $25, $8B, $21
         .byte $4A, $FF
 
-      aUnknown9BDA96 ; 9B/DA96
+      aBattleScenePaletteScript9BDA96 ; 9B/DA96
         .byte $82, $0C, $83, $0C, $84, $10, $A4, $10, $A5, $14, $C5, $14, $E6, $14, $E6, $19
         .byte $07, $19, $07, $1D, $28, $1D, $28, $1D, $07, $19, $07, $18, $E6, $14, $E6, $14
         .byte $C5, $10, $A5, $10, $A4, $0C, $84, $0C, $83, $08, $63, $08, $42, $08, $42, $04
         .byte $21, $04, $21, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $FF
 
-      aUnknown9BDAD8 ; 9B/DAD8
+      aBattleScenePaletteScript9BDAD8 ; 9B/DAD8
         .byte $82, $04, $21, $00, $00, $04, $21, $08, $42, $0C, $84, $10, $A5, $14, $C6, $18
         .byte $E7, $19, $08, $1D, $4A, $21, $6B, $25, $8C, $29, $AD, $2D, $CE, $31, $EF, $36
         .byte $31, $3A, $52, $46, $B5, $36, $10, $31, $CD, $29, $8C, $21, $8B, $25, $6A, $FF
 
-      aUnknown9BDB08 ; 9B/DB08
+      aBattleScenePaletteScript9BDB08 ; 9B/DB08
         .byte $82, $21, $49, $1D, $27, $18, $E7, $10, $A5, $0C, $84, $0C, $83, $08, $62, $04
         .byte $42, $04, $21, $00, $00, $00, $00, $04, $21, $04, $42, $08, $62, $0C, $63, $0C
         .byte $84, $FF
 
-      aUnknown9BDB2A ; 9B/DB2A
+      aBattleScenePaletteScript9BDB2A ; 9B/DB2A
         .byte $82, $10, $A5, $18, $E7, $1D, $27, $21, $49, $25, $6A, $21, $8B, $29, $8C, $31
         .byte $CD, $36, $10, $46, $B5, $46, $B5, $36, $10, $31, $CD, $29, $8C, $21, $8B, $25
         .byte $6A, $FF
 
-      aUnknown9BDB4C ; 9B/DB4C
+      aBattleScenePaletteScript9BDB4C ; 9B/DB4C
         .byte $82, $0C, $84, $10, $A4, $10, $A5, $14, $C5, $14, $E6, $18, $E7, $19, $07, $1D
         .byte $28, $1D, $28, $21, $49, $21, $49, $1D, $28, $1D, $28, $19, $07, $18, $E6, $14
         .byte $C6, $14, $C5, $10, $A5, $10, $84, $0C, $83, $08, $63, $08, $42, $04, $41, $04
         .byte $21, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF
 
-      aUnknown9BDB8C ; 9B/DB8C
+      aBattleScenePaletteScript9BDB8C ; 9B/DB8C
         .byte $81, $00, $01, $00, $01, $00, $01, $00, $01, $00, $01, $00, $02, $00, $04, $00
         .byte $06, $00, $08, $00, $4A, $00, $8C, $00, $CE, $01, $30, $01, $D4, $02, $77, $02
         .byte $DA, $3F, $DE, $FF
 
-      aUnknown9BDBB0 ; 9B/DBB0
+      aBattleScenePaletteScript9BDBB0 ; 9B/DBB0
         .byte $81, $3F, $DE, $02, $DA, $02, $77, $01, $B3, $01, $0F, $00, $AD, $00, $6B, $00
         .byte $29, $00, $07, $00, $05, $00, $03, $00, $01, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $FF
 
-      aUnknown9BDBE2 ; 9B/DBE2
+      aBattleScenePaletteScript9BDBE2 ; 9B/DBE2
         .byte $80, $00, $AF, $00, $B0, $00, $02, $00, $03, $00, $24, $00, $25, $00, $26, $00
         .byte $47, $00, $48, $00, $48, $03, $FF, $01, $DF, $00, $6B, $00, $8C, $00, $8D, $00
         .byte $8E, $00, $AF, $00, $B0, $00, $02, $00, $03, $00, $24, $00, $25, $00, $26, $00
@@ -4026,23 +4026,23 @@
       .al
       .xl
 
-      aUnknownE0205C ; E0/205C
+      aBattleScenePaletteE0205CUnused ; E0/205C
 
         .word $7BBC, $473D, $1994, $10CC, $4906, $34C4, $28A3, $0000
         .word $2C25, $4088, $4D0B, $0009, $0092, $015C, $0802
 
         ; E0/207A
 
-      aUnknownE0207A ; E0/207A
+      aTitleScenePaletteE0207A ; E0/207A
 
         .byte $38, $0E, $1F, $33, $F7, $1E
 
-      aUnknownE02080 ; E0/2080
+      aBattleScenePaletteE02080 ; E0/2080
 
         .byte $F0, $7F, $1F, $64, $69, $50, $ED, $60, $71, $71
         .byte $9F, $6D, $18, $2C, $0A, $00
 
-      aUnknownE02090 ; E0/2090
+      aBattleScenePaletteE02090 ; E0/2090
 
         .byte $1F, $70, $13, $7C, $0D, $5C, $0B, $50, $09, $44
         .byte $07, $3C, $05, $30, $01, $1C, $01, $00, $06, $00, $10, $00, $00, $00, $1F, $00
@@ -4056,18 +4056,18 @@
         .byte $FF, $7F, $FF, $77, $FF, $6F, $FF, $67, $FF, $5F, $FF, $57, $FF, $4F, $FF, $47
         .byte $FF, $3F, $FF, $33, $FF, $2B, $FF, $23, $FF, $1B, $FF, $13, $FF, $0B
 
-      aUnknownE02138 ; E0/2138
+      aBattleScenePaletteE02138 ; E0/2138
 
         .byte $00, $0C
         .byte $40, $0C, $E0, $00, $20, $09, $60, $09, $40, $09, $80, $09, $80, $01, $23, $16
         .byte $24, $16, $8B, $2A, $8B, $2A, $8A, $2E, $8D, $36, $72, $46
 
-      aUnknownE02156 ; E0/2156
+      aBattleScenePaletteE02156 ; E0/2156
 
         .byte $4A, $00, $CA, $00
         .byte $4A, $05
 
-      aUnknownE0215C ; E0/215C
+      aBattleScenePaletteE0215C ; E0/215C
 
         .byte $AD, $35, $52, $4A, $FF, $7F, $7F, $7F, $D6, $5A, $39, $67, $FF, $7F
         .byte $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F, $7F
@@ -4083,7 +4083,7 @@
         .byte $7E, $F3, $7F, $FF, $73, $00, $00, $F0, $7F, $FF, $63, $FF, $2B, $75, $51, $F9
         .byte $61, $9D, $72
 
-      aUnknownE0221D ; E0/221D
+      aBattleScenePaletteE0221D ; E0/221D
 
         .byte $BF, $7F, $BF, $2F, $7D, $22, $3E, $16, $16, $12, $F8, $0D, $F7
         .byte $09, $D4, $21, $2F, $01, $EE, $00, $8D, $00, $29, $00, $1F, $7E, $05, $14, $00
@@ -4105,7 +4105,7 @@
 
         ; E0/22B7
 
-      aUnknownE022B7 ; E0/22B7
+      aTitleScenePaletteE022B7 ; E0/22B7
 
         .word $7FE0, $77A0, $6F60, $6300, $5AC0, $5280, $4A40, $4200
         .word $35A0, $2D60, $2520, $1CE0, $14A0, $0840, $0000, $1403
@@ -4114,7 +4114,7 @@
         .word $77BD, $6F7B, $6318, $5AD6, $5294, $4A52, $4210, $35AD
         .word $2D6B, $2529, $1CE7, $14A5, $0842, $0000, $0000
 
-      aUnknownE02315 ; E0/2315
+      aBattleScenePaletteE02315 ; E0/2315
 
         .word $7FFF
         .word $5AF9, $5294, $3E11, $420F, $3C73, $318C, $1CE6, $048A
@@ -4124,7 +4124,7 @@
         .word $5AF9, $5294, $3E11, $420F, $009F, $318C, $1CE6, $0488
         .word $3826, $1400, $0043, $1083, $0001, $0000
 
-      aUnknownE02373 ; E0/2373
+      aBattleScenePaletteE02373 ; E0/2373
 
         .word $1A17, $19F8
         .word $1594, $1130, $0CF0, $112F, $0CEC, $08A8, $0D07, $0886
@@ -4134,7 +4134,7 @@
 
         ; E0/23B1
 
-      aUnknownE023B1 ; E0/23B1
+      aTitleIntroPaletteE023B1 ; E0/23B1
 
         ; Read by rlLoadTitleIntroGraphics.
 
@@ -4143,7 +4143,7 @@
 
         ; E0/23CF
 
-      aUnknownE023CF ; E0/23CF
+      aTitleScenePaletteE023CF ; E0/23CF
 
         .word $7FFF, $7FFF, $7FFF, $7FFF, $0821, $0C42, $1463, $7FFF
         .word $0400, $0821, $1042, $7FFF, $0000, $0400, $0C21, $219A

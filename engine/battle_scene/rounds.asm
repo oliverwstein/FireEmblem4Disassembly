@@ -772,11 +772,11 @@
         .autsiz
         .databank ?
 
-        ; Queues action from aUnknown95ABB4 by attack style plus variant and sets variant bits to 1.
+        ; Queues action from aBattleSceneAttackStyleActions1 by attack style plus variant and sets variant bits to 1.
 
         phx
         jsr rsBattleSceneGetAttackStyle
-        lda aUnknown95ABB4,x
+        lda aBattleSceneAttackStyleActions1,x
         and #$00FF
         plx
         pha
@@ -799,7 +799,7 @@
         ; 95/ABB4
 
 
-      aUnknown95ABB4 ; 95/ABB4
+      aBattleSceneAttackStyleActions1 ; 95/ABB4
 
         .byte $05, $05, $05, $05, $04, $04, $03
 
@@ -1147,11 +1147,11 @@
         .autsiz
         .databank ?
 
-        ; Queues action from aUnknown95ADD2 by attack style (offset +$14 if defender Y fixed) and sets variant bits to 2.
+        ; Queues action from aBattleSceneAttackStyleActions2 by attack style (offset +$14 if defender Y fixed) and sets variant bits to 2.
 
         phx
         jsr rsBattleSceneGetAttackStyle
-        lda aUnknown95ADD2,x
+        lda aBattleSceneAttackStyleActions2,x
         and #$00FF
         plx
         pha
@@ -1187,7 +1187,7 @@
         ; 95/ADD2
 
 
-      aUnknown95ADD2 ; 95/ADD2
+      aBattleSceneAttackStyleActions2 ; 95/ADD2
 
         .byte $00, $00, $1B, $1B
 

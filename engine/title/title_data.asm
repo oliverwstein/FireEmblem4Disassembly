@@ -203,7 +203,7 @@
         .byte $89, $7F, $FF, $83, $7F, $BA, $FE
 
       aTitleLogoPaletteEffect ; 99/FE18
-        PALETTE_EFFECT_VALUE_DATA $03, $07, $0D, $01, $00, aUnknownE02753
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $0D, $01, $00, aTitleLogoPaletteE02753
 
       aTitleFadeOutPaletteEffect0 ; 99/FE20
         PALETTE_EFFECT_VALUE $00, $05, $11, $38, $00

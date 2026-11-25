@@ -160,7 +160,7 @@
         rep #$20
         asl a
         tax
-        lda aUnknown98B3BA,x
+        lda aBattleSceneDamageFlashTable1,x
         sta $2181,b
         sep #$20
         lda #$01
@@ -178,7 +178,7 @@
         rep #$20
         asl a
         tax
-        lda aUnknown98B3EC,x
+        lda aBattleSceneDamageFlashTable2,x
         sta $2181,b
         sep #$20
         lda #$01
@@ -941,7 +941,7 @@
       .al
       .xl
 
-      aBattleSceneWindowEffect2HDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FED7A, PPU_REG_BASE + $26, $41, $7F ; 95/E69E
+      aBattleSceneWindowEffect2HDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FED7A, PPU_REG_BASE + $26, $41, $7F ; 95/E69E
 
     .endsection Table95E69ESection
 
@@ -985,52 +985,52 @@
       .al
       .xl
 
-      aUnknown95E6AC ; 95/E6AC
+      aBattleSceneHDMAHaltCode ; 95/E6AC
         HDMA_HALT
 
-      aUnknown95E6AE .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FED96, PPU_REG_BASE + $28, $41, $7F ; 95/E6AE
+      aBattleSceneWindowEffect2RightHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FED96, PPU_REG_BASE + $28, $41, $7F ; 95/E6AE
 
-      aBattleSceneSpellWindowHDMAInfo1 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE4EA, PPU_REG_BASE + $26, $41, $7F ; 95/E6BA
+      aBattleSceneSpellWindowHDMAInfo1 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FE4EA, PPU_REG_BASE + $26, $41, $7F ; 95/E6BA
 
-      aBattleSceneSpellWindowHDMAInfo2 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE506, PPU_REG_BASE + $28, $41, $7F ; 95/E6C6
+      aBattleSceneSpellWindowHDMAInfo2 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FE506, PPU_REG_BASE + $28, $41, $7F ; 95/E6C6
 
-      aBattleSceneLetterboxHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE1F6, PPU_REG_BASE + $0F, $43, $7F ; 95/E6D2
+      aBattleSceneLetterboxHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FE1F6, PPU_REG_BASE + $0F, $43, $7F ; 95/E6D2
 
-      aUnknown95E6DE .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE39A, PPU_REG_BASE + $32, $42, $7F ; 95/E6DE
+      aBattleSceneCOLDATAHDMAInfoUnused .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FE39A, PPU_REG_BASE + $32, $42, $7F ; 95/E6DE
 
-      aBattleSceneHUDBannerHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE3CA, PPU_REG_BASE + $32, $40, $7F ; 95/E6EA
+      aBattleSceneHUDBannerHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FE3CA, PPU_REG_BASE + $32, $40, $7F ; 95/E6EA
 
-      aBattleSceneBG2ScrollHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0D, $43, $7F ; 95/E6F6
+      aBattleSceneBG2ScrollHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FF6B4, PPU_REG_BASE + $0D, $43, $7F ; 95/E6F6
 
-      aBattleSceneMosaicWindowHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FE506, PPU_REG_BASE + $28, $41, $7F ; 95/E702
+      aBattleSceneMosaicWindowHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FE506, PPU_REG_BASE + $28, $41, $7F ; 95/E702
 
-      aBattleSceneBG2VScrollHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0E, $42, $7F ; 95/E70E
+      aBattleSceneBG2VScrollHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FF6B4, PPU_REG_BASE + $0E, $42, $7F ; 95/E70E
 
-      aBattleSceneBG2ScrollHDMA3Info .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $0F, $43, $7F ; 95/E71A
+      aBattleSceneBG2ScrollHDMA3Info .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FF6B4, PPU_REG_BASE + $0F, $43, $7F ; 95/E71A
 
-      aBattleSceneBG1ScrollHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6D4, PPU_REG_BASE + $0D, $43, $7F ; 95/E726
+      aBattleSceneBG1ScrollHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FF6D4, PPU_REG_BASE + $0D, $43, $7F ; 95/E726
 
-      aBattleSceneBackdropHDMAInfo1 .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneKnockbackShake+429, PPU_REG_BASE + $21, $00 ; 95/E732
+      aBattleSceneBackdropHDMAInfo1 .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, aBattleSceneKnockbackShake+429, PPU_REG_BASE + $21, $00 ; 95/E732
 
-      aBattleSceneBackdropHDMAInfo2 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $22, $42, $98 ; 95/E73D
+      aBattleSceneBackdropHDMAInfo2 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FF6B4, PPU_REG_BASE + $22, $42, $98 ; 95/E73D
 
-      aBattleSceneAttackerColorHDMAInfo .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $26, $01 ; 95/E749
+      aBattleSceneAttackerColorHDMAInfo .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FF6B4, PPU_REG_BASE + $26, $01 ; 95/E749
 
-      aBattleSceneSolo2HDMAInfo1 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneHUDColors+448, PPU_REG_BASE + $21, $40, $99 ; 95/E754
+      aBattleSceneSolo2HDMAInfo1 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, aBattleSceneHUDColors+448, PPU_REG_BASE + $21, $40, $99 ; 95/E754
 
-      aBattleSceneSolo2HDMAInfo2 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneHUDColors+438, PPU_REG_BASE + $22, $42, $99 ; 95/E760
+      aBattleSceneSolo2HDMAInfo2 .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, aBattleSceneHUDColors+438, PPU_REG_BASE + $22, $42, $99 ; 95/E760
 
-      aBattleSceneColorMathHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneSeaColumns+64, PPU_REG_BASE + $32, $40, $7F ; 95/E76C
+      aBattleSceneColorMathHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, aBattleSceneSeaColumns+64, PPU_REG_BASE + $32, $40, $7F ; 95/E76C
 
-      aBattleSceneBG2HShakeHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, aBattleSceneHUDShakeOffsets+54, PPU_REG_BASE + $0F, $42, $7F ; 95/E778
+      aBattleSceneBG2HShakeHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, aBattleSceneHUDShakeOffsets+54, PPU_REG_BASE + $0F, $42, $7F ; 95/E778
 
-      aUnknown95E784 .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FD06B, PPU_REG_BASE + $2C, $01 ; 95/E784
+      aBattleSceneTMHDMAInfoUnused .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FD06B, PPU_REG_BASE + $2C, $01 ; 95/E784
 
-      aTitleIntroBG2WaveHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FD633, PPU_REG_BASE + $0F, $42, $7F ; 95/E78F
+      aTitleIntroBG2WaveHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FD633, PPU_REG_BASE + $0F, $42, $7F ; 95/E78F
 
-      aTitleIntroBG1WaveHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FD64C, PPU_REG_BASE + $0D, $42, $7F ; 95/E79B
+      aTitleIntroBG1WaveHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FD64C, PPU_REG_BASE + $0D, $42, $7F ; 95/E79B
 
-      aTitleIntroScene7CurtainHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aUnknown95E6AC, $7FD076, PPU_REG_BASE + $00, $40, $99 ; 95/E7A7
+      aTitleIntroScene7CurtainHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FD076, PPU_REG_BASE + $00, $40, $99 ; 95/E7A7
 
 
     .endsection Table95E6ACSection
@@ -5828,7 +5828,7 @@
         asl a
         asl a
         tax
-        lda aUnknown998000,x
+        lda aBattleSceneWaveScaleTable,x
         tay
         pla
         cpy #$0000
@@ -5836,7 +5836,7 @@
         asl a
         asl a
         tax
-        lda aUnknown998000+2,x
+        lda aBattleSceneWaveScaleTable+2,x
         pha
         tya
         pha
@@ -9502,7 +9502,7 @@
         _DD00
         lda $7FF5F0,x
         sec
-        sbc aUnknown998DD8,y
+        sbc aBattleSceneEffectSpeedTable,y
         sta $7FF5F0,x
         inc x
         inc x
@@ -14188,9 +14188,9 @@
 
 
         _FA7D
-        lda #(`aUnknown97AF21)<<8
+        lda #(`aBattleScenePaletteEffectAF21)<<8
         sta lR18+1
-        lda #<>aUnknown97AF21
+        lda #<>aBattleScenePaletteEffectAF21
         sta lR18
         lda #$0000
         sta wR0

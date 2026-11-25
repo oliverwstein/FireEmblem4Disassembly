@@ -445,7 +445,7 @@
         sta $0242,b,x
         lda aTitleScreenPalette6,x
         sta $0282,b,x
-        lda aUnknownE02667,x
+        lda aTitleGraphicsPaletteE02667,x
         lsr a
         and #$3DEF
         sta $01E2,b,x

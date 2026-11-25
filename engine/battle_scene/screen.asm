@@ -145,11 +145,11 @@
         lda #$0029
         sta wR11
         jsl rlUnsignedMultiply16By16
-        lda #(`aUnknown988000)<<8
+        lda #(`aBattleSceneBG2PerspectiveRecords)<<8
         sta lR18+1
         lda wR12
         clc
-        adc #<>aUnknown988000
+        adc #<>aBattleSceneBG2PerspectiveRecords
         sta lR18
         ldx #$0000
         ldy #$0000
@@ -396,7 +396,7 @@
         rep #$20
         beq _9375
         tax
-        lda aUnknown95937C,x
+        lda aBattleSceneHPBarDigitOffsets,x
         and #$00FF
         bne _9375
         lda #$3540
@@ -630,7 +630,7 @@
       .xl
 
       aBattleSceneIRQ5Setup ; 96/8000
-        .word $0060, $00CF, <>rlBattleSceneIRQ5Handler, <>aUnknown96800D
+        .word $0060, $00CF, <>rlBattleSceneIRQ5Handler, <>aBattleSceneIRQ5Code
 
     .endsection Table968000Section
 
@@ -663,11 +663,11 @@
       .al
       .xl
 
-      aUnknown96800D ; 96/800D
+      aBattleSceneIRQ5Code ; 96/800D
         .word <>rsIRQCodeHalt
 
       aBattleSceneIRQ2Setup ; 96/800F
-        .word $0060, $007E, <>rlBattleSceneIRQ2Handler, <>aUnknown96804E
+        .word $0060, $007E, <>rlBattleSceneIRQ2Handler, <>aBattleSceneIRQ2Code
 
     .endsection Table96800DSection
 
@@ -729,11 +729,11 @@
       .al
       .xl
 
-      aUnknown96804E ; 96/804E
+      aBattleSceneIRQ2Code ; 96/804E
         .word <>rsIRQCodeHalt
 
       aBattleSceneIRQ3Setup ; 96/8050
-        .word $0060, $009C, <>rlBattleSceneIRQ3Handler, <>aUnknown968076
+        .word $0060, $009C, <>rlBattleSceneIRQ3Handler, <>aBattleSceneIRQ3Code
 
     .endsection Table96804ESection
 
@@ -781,11 +781,11 @@
       .al
       .xl
 
-      aUnknown968076 ; 96/8076
+      aBattleSceneIRQ3Code ; 96/8076
         .word <>rsIRQCodeHalt
 
       aBattleSceneIRQ4Setup ; 96/8078
-        .word $0060, $00A1, <>rlBattleSceneIRQ4Handler, <>aUnknown968093
+        .word $0060, $00A1, <>rlBattleSceneIRQ4Handler, <>aBattleSceneIRQ4Code
 
     .endsection Table968076Section
 
@@ -826,11 +826,11 @@
       .al
       .xl
 
-      aUnknown968093 ; 96/8093
+      aBattleSceneIRQ4Code ; 96/8093
         .word <>rsIRQCodeHalt
 
       aBattleSceneIRQ1Setup ; 96/8095
-        .word $0060, $000E, <>rlBattleSceneIRQ1Handler, <>aUnknown9680A2
+        .word $0060, $000E, <>rlBattleSceneIRQ1Handler, <>aBattleSceneIRQ1Code
 
     .endsection Table968093Section
 
@@ -863,7 +863,7 @@
       .al
       .xl
 
-      aUnknown9680A2 ; 96/80A2
+      aBattleSceneIRQ1Code ; 96/80A2
         .word <>rsIRQCodeHalt
 
     .endsection Table9680A2Section
@@ -1037,17 +1037,17 @@
         sta $2122,b
         lda #$15
         sta $2121,b
-        lda aUnknownE000B0+6
+        lda aBattleSceneHUDColorPalette+6
         sta $2122,b
-        lda aUnknownE000B0+7
+        lda aBattleSceneHUDColorPalette+7
         sta $2122,b
-        lda aUnknownE000B0+8
+        lda aBattleSceneHUDColorPalette+8
         sta $2122,b
-        lda aUnknownE000B0+9
+        lda aBattleSceneHUDColorPalette+9
         sta $2122,b
-        lda aUnknownE000B0+10
+        lda aBattleSceneHUDColorPalette+10
         sta $2122,b
-        lda aUnknownE000B0+11
+        lda aBattleSceneHUDColorPalette+11
         sta $2122,b
         lda $7FFC6F
         sta $420C,b
@@ -1122,17 +1122,17 @@
         sta aIRQSystem.aVTime,b,x
         lda #$11
         sta $2121,b
-        lda aUnknownE000B0
+        lda aBattleSceneHUDColorPalette
         sta $2122,b
-        lda aUnknownE000B0+1
+        lda aBattleSceneHUDColorPalette+1
         sta $2122,b
-        lda aUnknownE000B0+2
+        lda aBattleSceneHUDColorPalette+2
         sta $2122,b
-        lda aUnknownE000B0+3
+        lda aBattleSceneHUDColorPalette+3
         sta $2122,b
-        lda aUnknownE000B0+4
+        lda aBattleSceneHUDColorPalette+4
         sta $2122,b
-        lda aUnknownE000B0+5
+        lda aBattleSceneHUDColorPalette+5
         sta $2122,b
         lda bBattleSceneSavedINIDISP
         bit #$80
@@ -1969,7 +1969,7 @@
         _8F73
         lda $7E5313
         tax
-        lda aUnknown998683,x
+        lda aBattleSceneLevelUpStatGainTable,x
         cmp #$0080
         bne _8F89
         jsl rlBattleSceneEndScriptRoutine
@@ -1977,9 +1977,9 @@
 
 
         _8F89
-        lda aUnknown998683,x
+        lda aBattleSceneLevelUpStatGainTable,x
         sta lR18
-        lda aUnknown998683+1,x
+        lda aBattleSceneLevelUpStatGainTable+1,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
@@ -2014,9 +2014,9 @@
         _8FCD
         jsr rsBattleSceneFormatTwoDigitTiles
         sta $7E530F
-        lda aUnknown998683+3,x
+        lda aBattleSceneLevelUpStatGainTable+3,x
         sta lR18
-        lda aUnknown998683+4,x
+        lda aBattleSceneLevelUpStatGainTable+4,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
@@ -2028,9 +2028,9 @@
         lda lR18
         sta $7E52FF
         pla
-        lda aUnknown998683+6,x
+        lda aBattleSceneLevelUpStatGainTable+6,x
         sta $7E530B
-        lda aUnknown998683+8,x
+        lda aBattleSceneLevelUpStatGainTable+8,x
         and #$00FF
         jsl rlBattleSceneStartStatGauge
         lda $7E5313
@@ -2354,22 +2354,22 @@
         asl a
         asl a
         tax
-        lda aUnknown99862F,x
+        lda aBattleSceneLevelUpNumberOffsets,x
         and #$00FF
         clc
         adc #1,s
         sta $7E52F7
-        lda aUnknown99862F+1,x
+        lda aBattleSceneLevelUpNumberOffsets+1,x
         and #$00FF
         clc
         adc #1,s
         sta $7E52FC
-        lda aUnknown99862F+2,x
+        lda aBattleSceneLevelUpNumberOffsets+2,x
         and #$00FF
         clc
         adc #1,s
         sta $7E5301
-        lda aUnknown99862F+3,x
+        lda aBattleSceneLevelUpNumberOffsets+3,x
         and #$00FF
         clc
         adc #1,s
@@ -2434,7 +2434,7 @@
         _92FA
         lda $7E5313
         tax
-        lda aUnknown998683,x
+        lda aBattleSceneLevelUpStatGainTable,x
         cmp #$0080
         bne _9310
         jsl rlBattleSceneEndScriptRoutine
@@ -2442,9 +2442,9 @@
 
 
         _9310
-        lda aUnknown998683,x
+        lda aBattleSceneLevelUpStatGainTable,x
         sta lR18
-        lda aUnknown998683+1,x
+        lda aBattleSceneLevelUpStatGainTable+1,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
@@ -2461,9 +2461,9 @@
         pha
         jsr rsBattleSceneFormatTwoDigitTiles
         sta $7E530F
-        lda aUnknown998683+3,x
+        lda aBattleSceneLevelUpStatGainTable+3,x
         sta lR18
-        lda aUnknown998683+4,x
+        lda aBattleSceneLevelUpStatGainTable+4,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
@@ -2475,9 +2475,9 @@
         lda lR18
         sta $7E52FF
         pla
-        lda aUnknown998683+6,x
+        lda aBattleSceneLevelUpStatGainTable+6,x
         sta $7E530B
-        lda aUnknown998683+8,x
+        lda aBattleSceneLevelUpStatGainTable+8,x
         and #$00FF
         jsl rlBattleSceneStartStatGauge
         lda $7E5313
@@ -3063,11 +3063,11 @@
         ldx #$0000
 
         _A1ED
-        lda aUnknownE02315,x
+        lda aBattleScenePaletteE02315,x
         lsr a
         and #$3DEF
         sta $7FE6DD,x
-        lda aUnknownE02315+64,x
+        lda aBattleScenePaletteE02315+64,x
         lsr a
         and #$3DEF
         sta $7FE6FD,x

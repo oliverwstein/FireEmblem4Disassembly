@@ -138,11 +138,11 @@
         ldx #$0000
 
         _EADD
-        lda aUnknownE023CF+30,x
+        lda aTitleScenePaletteE023CF+30,x
         sta $0162,b,x
-        lda aUnknownE023CF+92,x
+        lda aTitleScenePaletteE023CF+92,x
         sta $01C2,b,x
-        lda aUnknownE023CF+154,x
+        lda aTitleScenePaletteE023CF+154,x
         sta $0242,b,x
         sta $02C2,b,x
         sta $7EEB88,x
@@ -156,7 +156,7 @@
         ldx #$0000
 
         _EB0C
-        lda aUnknownE023CF,x
+        lda aTitleScenePaletteE023CF,x
         sta $0122,b,x
         inc x
         inc x
@@ -245,7 +245,7 @@
         ldx #$0000
 
         _EB7C
-        lda aUnknownE0207A+130,x
+        lda aTitleScenePaletteE0207A+130,x
         sta $0122,b,x
         lda #$0000
         sta $0142,b,x
@@ -298,7 +298,7 @@
         ldx #$0000
 
         _EBD8
-        lda aUnknownE0207A+130,x
+        lda aTitleScenePaletteE0207A+130,x
         sta $0122,b,x
         inc x
         inc x
@@ -446,7 +446,7 @@
         ldx #$0000
 
         _EC93
-        lda aUnknownE022B7+94,x
+        lda aTitleScenePaletteE022B7+94,x
         sta $0162,b,x
         inc x
         inc x
@@ -455,7 +455,7 @@
         ldx #$0000
 
         _ECA4
-        lda aUnknownE022B7+30,x
+        lda aTitleScenePaletteE022B7+30,x
         sta $0122,b,x
         lda #$0000
         sta $0142,b,x
@@ -541,7 +541,7 @@
         ldx #$0000
 
         _ED11
-        lda aUnknownE0207A+419,x
+        lda aTitleScenePaletteE0207A+419,x
         sta $0162,b,x
         inc x
         inc x
@@ -550,7 +550,7 @@
         ldx #$0000
 
         _ED22
-        lda aUnknownE0207A+481,x
+        lda aTitleScenePaletteE0207A+481,x
         sta $0142,b,x
         inc x
         inc x
@@ -675,7 +675,7 @@
         ldx #$0000
 
         _ED9D
-        lda aUnknownE02667,x
+        lda aTitleGraphicsPaletteE02667,x
         sta $01E2,b,x
         inc x
         inc x
@@ -684,7 +684,7 @@
         ldx #$0000
 
         _EDAE
-        lda aUnknownE02667+30,x
+        lda aTitleGraphicsPaletteE02667+30,x
         sta $02C2,b,x
         inc x
         inc x
@@ -1214,9 +1214,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97AE0A)<<8
+        lda #(`aTitleScenePaletteEffect1)<<8
         sta lR18+1
-        lda #<>aUnknown97AE0A
+        lda #<>aTitleScenePaletteEffect1
         sta lR18
         lda #$0000
         sta wR0
@@ -1804,9 +1804,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97F65A)<<8
+        lda #(`aTitleSceneEffectConfig1)<<8
         sta lR18+1
-        lda #<>aUnknown97F65A
+        lda #<>aTitleSceneEffectConfig1
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect1
@@ -1831,9 +1831,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97A7C7._A411_A844)<<8
+        lda #(`aTitleSceneWindowEffectData._A411_A844)<<8
         sta lR18+1
-        lda #<>aUnknown97A7C7._A411_A844
+        lda #<>aTitleSceneWindowEffectData._A411_A844
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect1
@@ -1887,9 +1887,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97A7C7)<<8
+        lda #(`aTitleSceneWindowEffectData)<<8
         sta lR18+1
-        lda #<>aUnknown97A7C7
+        lda #<>aTitleSceneWindowEffectData
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect1
@@ -1914,9 +1914,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97F666)<<8
+        lda #(`aTitleSceneEffectConfig2)<<8
         sta lR18+1
-        lda #<>aUnknown97F666
+        lda #<>aTitleSceneEffectConfig2
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect2
@@ -1941,9 +1941,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97F67F)<<8
+        lda #(`aTitleSceneWindowData1)<<8
         sta lR18+1
-        lda #<>aUnknown97F67F
+        lda #<>aTitleSceneWindowData1
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect2
@@ -1960,9 +1960,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97F8CB)<<8
+        lda #(`aTitleSceneWindowData2)<<8
         sta lR18+1
-        lda #<>aUnknown97F8CB
+        lda #<>aTitleSceneWindowData2
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect2
@@ -2022,15 +2022,15 @@
         .databank ?
 
         ldx #$0436
-        lda #(`aUnknown97F9AA)<<8
+        lda #(`aTitleSceneSpriteDesc11)<<8
         sta lR18+1
-        lda #<>aUnknown97F9AA
+        lda #<>aTitleSceneSpriteDesc11
         sta lR18
         jsl rlStartTitleSprite
         ldx #$0498
-        lda #(`aUnknown97F9B7)<<8
+        lda #(`aTitleSceneSpriteDesc12)<<8
         sta lR18+1
-        lda #<>aUnknown97F9B7
+        lda #<>aTitleSceneSpriteDesc12
         sta lR18
         jsl rlStartTitleSprite
         sep #$20
@@ -2051,15 +2051,15 @@
         .databank ?
 
         ldx #$0372
-        lda #(`aUnknown97F990)<<8
+        lda #(`aTitleSceneSpriteDesc09)<<8
         sta lR18+1
-        lda #<>aUnknown97F990
+        lda #<>aTitleSceneSpriteDesc09
         sta lR18
         jsl rlStartTitleSprite
         ldx #$03D4
-        lda #(`aUnknown97F99D)<<8
+        lda #(`aTitleSceneSpriteDesc10)<<8
         sta lR18+1
-        lda #<>aUnknown97F99D
+        lda #<>aTitleSceneSpriteDesc10
         sta lR18
         jsl rlStartTitleSprite
         rtl
@@ -2076,15 +2076,15 @@
         .databank ?
 
         ldx #$02AE
-        lda #(`aUnknown97F976)<<8
+        lda #(`aTitleSceneSpriteDesc07)<<8
         sta lR18+1
-        lda #<>aUnknown97F976
+        lda #<>aTitleSceneSpriteDesc07
         sta lR18
         jsl rlStartTitleSprite
         ldx #$0310
-        lda #(`aUnknown97F983)<<8
+        lda #(`aTitleSceneSpriteDesc08)<<8
         sta lR18+1
-        lda #<>aUnknown97F983
+        lda #<>aTitleSceneSpriteDesc08
         sta lR18
         jsl rlStartTitleSprite
         rtl
@@ -2101,15 +2101,15 @@
         .databank ?
 
         ldx #$0188
-        lda #(`aUnknown97F95C)<<8
+        lda #(`aTitleSceneSpriteDesc05)<<8
         sta lR18+1
-        lda #<>aUnknown97F95C
+        lda #<>aTitleSceneSpriteDesc05
         sta lR18
         jsl rlStartTitleSprite
         ldx #$01EA
-        lda #(`aUnknown97F969)<<8
+        lda #(`aTitleSceneSpriteDesc06)<<8
         sta lR18+1
-        lda #<>aUnknown97F969
+        lda #<>aTitleSceneSpriteDesc06
         sta lR18
         jsl rlStartTitleSprite
         rtl
@@ -2126,15 +2126,15 @@
         .databank ?
 
         ldx #$00C4
-        lda #(`aUnknown97F942)<<8
+        lda #(`aTitleSceneSpriteDesc03)<<8
         sta lR18+1
-        lda #<>aUnknown97F942
+        lda #<>aTitleSceneSpriteDesc03
         sta lR18
         jsl rlStartTitleSprite
         ldx #$0126
-        lda #(`aUnknown97F94F)<<8
+        lda #(`aTitleSceneSpriteDesc04)<<8
         sta lR18+1
-        lda #<>aUnknown97F94F
+        lda #<>aTitleSceneSpriteDesc04
         sta lR18
         jsl rlStartTitleSprite
         rtl
@@ -2151,15 +2151,15 @@
         .databank ?
 
         ldx #$0000
-        lda #(`aUnknown97F928)<<8
+        lda #(`aTitleSceneSpriteDesc01)<<8
         sta lR18+1
-        lda #<>aUnknown97F928
+        lda #<>aTitleSceneSpriteDesc01
         sta lR18
         jsl rlStartTitleSprite
         ldx #$0062
-        lda #(`aUnknown97F935)<<8
+        lda #(`aTitleSceneSpriteDesc02)<<8
         sta lR18+1
-        lda #<>aUnknown97F935
+        lda #<>aTitleSceneSpriteDesc02
         sta lR18
         jsl rlStartTitleSprite
         rtl
@@ -2176,9 +2176,9 @@
         .databank ?
 
         ldx #$024C
-        lda #(`aUnknown97F9C4)<<8
+        lda #(`aTitleSceneSpriteDesc13)<<8
         sta lR18+1
-        lda #<>aUnknown97F9C4
+        lda #<>aTitleSceneSpriteDesc13
         sta lR18
         jsl rlStartTitleSprite
         rtl
@@ -2373,14 +2373,14 @@
         sta #1,s
         pla
         tax
-        lda aUnknown97FA1F,x
+        lda aTitleSceneSpriteDesc14,x
         sta lR18
-        lda aUnknown97FA1F+1,x
+        lda aTitleSceneSpriteDesc14+1,x
         sta lR18+1
         tya
         asl a
         tax
-        lda aUnknown97F9D1,x
+        lda aTitleSceneSpriteOffsets,x
         tax
         lda lR18
         sta aTitleSprites.Script,x
@@ -2420,7 +2420,7 @@
         and #$00FF
         sta wR0
         phx
-        lda aUnknown97F9D1,x
+        lda aTitleSceneSpriteOffsets,x
         tax
         lda aTitleSprites.Y,x
         sec
@@ -2472,9 +2472,9 @@
         txa
         asl a
         tax
-        lda aUnknown97FA05,x
+        lda aTitleSceneSpriteYVelocities,x
         sta wR0
-        lda aUnknown97F9D1,x
+        lda aTitleSceneSpriteOffsets,x
         tax
         lda wBufferBG1VOFS
         eor #$FFFF
@@ -3464,7 +3464,7 @@
         _E286
         lda aTitleIntroPalette2,x
         sta $0162,b,x
-        lda aUnknownE023B1,x
+        lda aTitleIntroPaletteE023B1,x
         sta $0142,b,x
         lda aTitleIntroPalette1,x
         sta $0102,b,x
@@ -3866,7 +3866,7 @@
 
         _E43A
         phx
-        lda aUnknown97FAF9+13,x
+        lda aTitleSceneCrusaderDesc12+13,x
         clc
         adc $7FD62C
         and #$00FF
@@ -4297,7 +4297,7 @@
         _E6FF
         lda wBufferBG2HOFS
         clc
-        adc aUnknown97FB52,x
+        adc aTitleSceneScrollCurve,x
         sta [lR18],y
         inc y
         inc y
@@ -4658,7 +4658,7 @@
         tax
 
         _E937
-        lda aUnknown97FB52+64,x
+        lda aTitleSceneScrollCurve+64,x
         sta [lR18],y
         inc x
         inc x

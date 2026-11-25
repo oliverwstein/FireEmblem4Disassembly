@@ -1022,7 +1022,7 @@
         .autsiz
         .databank ?
 
-        ; Sets wBattleSceneFlags from the battle: melee, battle type 2, solo, and which side carries a holy weapon or a weapon of aUnknown998F02.
+        ; Sets wBattleSceneFlags from the battle: melee, battle type 2, solo, and which side carries a holy weapon or a weapon of aBattleSceneListedWeapons.
 
         lda #$0000
         sta wBattleSceneFlags
@@ -1150,14 +1150,14 @@
         .autsiz
         .databank ?
 
-        ; Carry set when A is in aUnknown998F02 (the silver weapons, blades and holy swords and lances).
+        ; Carry set when A is in aBattleSceneListedWeapons (the silver weapons, blades and holy swords and lances).
 
         phx
         pha
         ldx #$0000
 
         _A62F
-        lda aUnknown998F02,x
+        lda aBattleSceneListedWeapons,x
         cmp #$FFFF
         beq _A642
         and #$00FF

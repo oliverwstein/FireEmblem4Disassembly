@@ -1042,7 +1042,7 @@
         .autsiz
         .databank ?
 
-        ; Script routine $33: restores BG palettes 0 and 6 from the copies at $7ECC08 and $7ECC28, and four colors of palette 0 from aUnknownE000B0.
+        ; Script routine $33: restores BG palettes 0 and 6 from the copies at $7ECC08 and $7ECC28, and four colors of palette 0 from aBattleSceneHUDColorPalette.
 
         phx
         ldx #$0000
@@ -1065,12 +1065,12 @@
         cpx #$001E
         bcc -
 
-        lda aUnknownE000B0+12
+        lda aBattleSceneHUDColorPalette+12
         sta $0108,b
         ldx #$0000
 
         -
-        lda @l aUnknownE000B0,x
+        lda @l aBattleSceneHUDColorPalette,x
         sta $010A,b,x
         inc x
         inc x
@@ -1106,7 +1106,7 @@
         ldx #$0000
 
         _F680
-        lda aUnknownE000B0+14,x
+        lda aBattleSceneHUDColorPalette+14,x
         sta $0274,b,x
         inc x
         inc x

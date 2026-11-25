@@ -153,7 +153,7 @@
         rep #$20
         beq _946D
         tax
-        lda aUnknown95937C,x
+        lda aBattleSceneHPBarDigitOffsets,x
         and #$00FF
         bne _946D
         lda #$3540
@@ -987,7 +987,7 @@
         lda wR1
         cmp #$0004
         bcc _986D
-        lda aUnknown959894
+        lda aBattleSceneHPBarBaseTile
         and #$00FF
         pha
         lda wR0
@@ -2976,12 +2976,12 @@
         sta bBattleSceneBG3Mode
         rep #$20
         stz aBGPaletteBuffer,b
-        lda aUnknownE000B0+12
+        lda aBattleSceneHUDColorPalette+12
         sta $0108,b
         ldx #$0000
 
         _8713
-        lda aUnknownE000B0,x
+        lda aBattleSceneHUDColorPalette,x
         sta $010A,b,x
         inc x
         inc x
