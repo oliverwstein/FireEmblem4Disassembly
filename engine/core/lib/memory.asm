@@ -244,3 +244,27 @@
     .endsection Unsorted80A861Section
 
 
+    .section MainDataEntry12UnusedSection
+
+      aMainDataEntry12Unused .word 0 ; 83/D8E6
+
+    .endsection MainDataEntry12UnusedSection
+
+
+    .section SwapToMainDataBankSection
+
+      rlSwapToMainDataBank ; 83/F7C1
+
+        .al
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        rtl
+
+        .databank 0
+
+    .endsection SwapToMainDataBankSection
+
+

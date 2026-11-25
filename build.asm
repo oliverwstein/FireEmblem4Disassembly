@@ -716,10 +716,7 @@
 
       .dsection Table80F413Section
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80F42B .structDecompressionDMAEntry g4bppcChapterIntroBG1Tiles, $4000, $0000 ; 80/F42B
-      aDecompressionDMAEntry80F433 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $4000 ; 80/F433
-      aDecompressionDMAEntry80F43B .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $6000 ; 80/F43B
+      .dsection ChapterIntroDecompressionDMAEntriesSection
 
       .dsection Unsorted80F443Section
 
@@ -1336,7 +1333,7 @@
       aLoveGrowthOffsets  .include "data/offset/LoveGrowthOffsets.csv.asm"                              ; 83/8738
       aGen1LoveGrowths .binclude "data/character/Gen1LoveGrowths.csv.asm"                               ; 83/876A
       aGen2LoveGrowths .binclude "data/character/Gen2LoveGrowths.csv.asm"                               ; 83/87F1
-      aUnknown838961 .binclude "data/Unknown838961.asm"                                                 ; 83/8961
+      aUnused838961 .binclude "data/Unused838961.asm"                                                 ; 83/8961
       aChildrenDataOffsets .binclude "data/offset/ChildrenDataOffsets.csv.asm"                          ; 83/8993
       aChildrenData .binclude "data/character/ChildrenData.csv.asm"                                     ; 83/89A5
       aHolyBloodGrowthBoostsOffsets .binclude "data/offset/HolyBloodDataOffsets.csv.asm"                ; 83/89C9
@@ -1353,7 +1350,7 @@
       aCharacterNames .binclude "text/menutext/CharacterNames.asm"                                        ; 83/9ECD
       aCharacterDataOffsets .include "data/offset/CharacterDataOffsets.csv.asm"                         ; 83/ADF5
       aCharacterData .binclude "data/character/CharacterData.csv.asm"                                   ; 83/B267
-      aMainDataEntry12Unused .word 0                                                                              ; 83/D8E6
+      .dsection MainDataEntry12UnusedSection
       aFactionNameOffsets .include "data/offset/FactionNameOffsets.csv.asm"                             ; 83/D8E8
       aFactionNames .binclude "text/menutext/FactionNames.asm"                                            ; 83/D956
       aItemNameOffsets .include "data/offset/ItemNameOffsets.csv.asm"                                   ; 83/DC12
@@ -1367,17 +1364,7 @@
       aCastleNameOffsets .include "data/offset/CastleNameOffsets.csv.asm"                               ; 83/F517
       aCastleNames .binclude "text/menutext/CastleNames.asm"                                              ; 83/F573
 
-      rlSwapToMainDataBank ; 83/F7C1
-
-        .al
-        .autsiz
-        .databank ?
-
-        phk
-        plb
-        rtl
-
-        .databank 0
+      .dsection SwapToMainDataBankSection
 
         .fill $838000 + $8000 - *, 0
 
@@ -3704,8 +3691,8 @@
 
       .dsection PortraitSlotDecompressionPointersSection
 
-      aPortraitGraphicPointers .include "data/PortraitGraphicPointers.csv.asm" ; 8A/B4F9
-      aPortraitPalettePointers .include "data/PortraitPalettePointers.csv.asm" ; 8A/B7E1
+      aPortraitGraphicPointers .include "data/portraits/PortraitGraphicPointers.csv.asm" ; 8A/B4F9
+      aPortraitPalettePointers .include "data/portraits/PortraitPalettePointers.csv.asm" ; 8A/B7E1
 
       ; 8A/BAC9: unreferenced, two long pointers to aDialogueBackgroundPointers.
       aUnused8ABAC9 .long aDialogueBackgroundPointers, aDialogueBackgroundPointers
@@ -4279,7 +4266,7 @@
 
       .dsection BGPalettes8CA000Section
 
-      .include "data/PortraitPalettes.asm"
+      .include "data/portraits/PortraitPalettes.asm"
 
       .dsection BackgroundPalettes8CC500Section
 
@@ -7001,17 +6988,17 @@
 
       g4bppMapTiles .binary "gfx/map/MapTiles.4bpp" ; D90000
 
-      aMapDisplayDataD95000 .binary "gfx/map/UnknownD95000.bin" ; D95000
+      aBaseMapTileEntries .binary "gfx/map/BaseMapTileEntries.bin" ; D95000
 
-      aUnknownD96800 .binary "gfx/map/UnknownD96800.bin" ; D96800, unreferenced
+      aUnusedD96800 .binary "gfx/map/UnusedD96800.bin" ; D96800, unreferenced
 
       gWorldMapTilemap .binary "gfx/ui/tilemaps/WorldMapTilemap.bin" ; D96C00
 
-      gUnknownD97400 .binary "gfx/ui/tilemaps/UnknownD97400.bin" ; D97400, unreferenced
+      gUnusedD97400 .binary "gfx/ui/tilemaps/UnusedD97400.bin" ; D97400, unreferenced
 
-      gWorldMapDataD97940 .binary "gfx/ui/tilemaps/UnknownD97940.bin" ; D97940
+      gWorldMapDataD97940 .binary "gfx/ui/tilemaps/WorldMapDataD97940.bin" ; D97940
 
-      gUnknownD97B00 .binary "gfx/ui/tilemaps/UnknownD97B00.bin" ; D97B00, unreferenced
+      gUnusedD97B00 .binary "gfx/ui/tilemaps/UnusedD97B00.bin" ; D97B00, unreferenced
 
       aFirstGenerationEndingBG2Tilemap .binary "gfx/ui/tilemaps/FirstGenerationEndingBG2Tilemap.bin" ; D97C00
 
@@ -7048,25 +7035,25 @@
 
       g4bppStandingMapSprites2 .binary "gfx/map/StandingMapSprites2.4bpp" ; DA0000
 
-      g4bppUnknownDA45C0 .binary "gfx/map/UnknownDA45C0.4bpp" ; DA45C0, unreferenced: 250 tiles, mostly blank
+      g4bppUnusedDA45C0 .binary "gfx/map/UnusedDA45C0.4bpp" ; DA45C0, unreferenced: 250 tiles, mostly blank
 
       .dsection DataDA6500Section
 
-      gUnknownDA6700 .binary "gfx/ui/tilemaps/UnknownDA6700.bin" ; DA6700, unreferenced
+      gUnusedDA6700 .binary "gfx/ui/tilemaps/UnusedDA6700.bin" ; DA6700, unreferenced
 
       gConversationLeftWindowTilemap .binary "gfx/ui/tilemaps/ConversationLeftWindowTilemap.bin" ; DA6800
 
       gConversationClosedWindowTilemap .binary "gfx/ui/tilemaps/ConversationClosedWindowTilemap.bin" ; DA6A40
 
-      gUnknownDA6C80 .binary "gfx/ui/tilemaps/UnknownDA6C80.bin" ; DA6C80, unreferenced
+      gUnusedDA6C80 .binary "gfx/ui/tilemaps/UnusedDA6C80.bin" ; DA6C80, unreferenced
 
       gConversationRightWindowTilemap .binary "gfx/ui/tilemaps/ConversationRightWindowTilemap.bin" ; DA6D00
 
-      gUnknownDA6F40 .binary "gfx/ui/tilemaps/UnknownDA6F40.bin" ; DA6F40, unreferenced
+      gUnusedDA6F40 .binary "gfx/ui/tilemaps/UnusedDA6F40.bin" ; DA6F40, unreferenced
 
       aCastleListBG3Template .binary "gfx/ui/tilemaps/CastleListBG3Template.bin" ; DA7000
 
-      gUnknownDA7800 .binary "gfx/ui/tilemaps/UnknownDA7800.bin" ; DA7800, unreferenced
+      gUnusedDA7800 .binary "gfx/ui/tilemaps/UnusedDA7800.bin" ; DA7800, unreferenced
 
       g4bppConversationSprites .binary "gfx/ui/ConversationSprites.4bpp" ; DA7A00
 

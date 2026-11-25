@@ -104,7 +104,7 @@ def group_entries(count, graphics):
     ti, ii = rows[0].index('Type'), rows[0].index('ID')
     unit_type = {int(r[ii].lstrip('$'), 16): r[ti] for r in rows[1:] if r[ii]}
     index = {name: k for k, (name, _) in
-             enumerate(list(csv.reader(open(os.path.join(data, 'PortraitGraphicPointers.csv'))))[1:])}
+             enumerate(list(csv.reader(open(os.path.join(data, 'portraits', 'PortraitGraphicPointers.csv'))))[1:])}
 
     def entry_index(value):                 # PortraitDataSigurd, or a number
         return index[value] if value in index else int(value.lstrip('$'), 16)
@@ -159,8 +159,8 @@ def main():
 
     rom = open(os.path.join(ROOT, 'fe4.sfc'), 'rb').read()
     labels = load_labels()
-    graphics = pointer_table('PortraitGraphicPointers.csv', labels)
-    palettes = pointer_table('PortraitPalettePointers.csv', labels)
+    graphics = pointer_table(os.path.join('portraits', 'PortraitGraphicPointers.csv'), labels)
+    palettes = pointer_table(os.path.join('portraits', 'PortraitPalettePointers.csv'), labels)
     ids = parse_ids(args.ids, len(graphics)) if args.ids else range(len(graphics))
     os.makedirs(args.out, exist_ok=True)
 

@@ -334,6 +334,16 @@
     .endsection Table80F413Section
 
 
+    .section ChapterIntroDecompressionDMAEntriesSection
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80F42B .structDecompressionDMAEntry g4bppcChapterIntroBG1Tiles, $4000, $0000 ; 80/F42B
+      aDecompressionDMAEntry80F433 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $4000 ; 80/F433
+      aDecompressionDMAEntry80F43B .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $6000 ; 80/F43B
+
+    .endsection ChapterIntroDecompressionDMAEntriesSection
+
+
     .section Unsorted80F443Section
 
       .al

@@ -289,7 +289,7 @@ def self_test(root, rom):
             failures += 1
             print(f'FAIL {os.path.relpath(path, root)}')
     print(f'gfx/: {len(files) - failures} of {len(files)} streams end at their file end')
-    csv_path = os.path.join(root, 'data', 'PortraitGraphicPointers.csv')
+    csv_path = os.path.join(root, 'data', 'portraits', 'PortraitGraphicPointers.csv')
     labels = {}
     for line in open(os.path.join(root, 'labels.txt')):
         parts = line.split()
