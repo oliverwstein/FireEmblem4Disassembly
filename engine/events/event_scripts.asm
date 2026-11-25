@@ -1,5 +1,6 @@
-; The event script interpreter (procs that run event scripts, the command table and
-; command dispatch) and the event script commands themselves.
+; The event script interpreter (the event engine's states, run from its per-frame
+; hook: begin a script, run its commands, the command table and dispatch, and the
+; procs a script starts and waits on) and the event script commands themselves.
 ; After the interpreter: clearing the event engine's state, procs and sprites
 ; (rlResetEventAndSpriteState, the engine's end state), the unused skip routine, and
 ; the list of map menus an event script opened (rlClearEventMenuWindowList).
