@@ -9,7 +9,7 @@ Rule: Every change to source, data, or assets must keep `./build.sh` byte-identi
 |---|---:|---:|---|
 | Unnamed RAM addresses | 1,296 (`4,727` operands) | 1,224 (`3,552` operands) | `python3 tools/name_ram.py --report 50` |
 | Distinct `*Unknown*` identifiers | 864 | 846 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
-| Compressed-only `.comp` streams | 510 (`273` `Unknown`) | 169 (`169` `Unknown`) | `find gfx audio -name '*.comp'` (check for missing `.png` / unpacked file) |
+| Compressed-only `.comp` streams | 510 (`273` `Unknown`) | 0 | `find gfx audio -name '*.comp'` (check for missing `.png` / unpacked file) |
 | Greyscale UI PNG sheets | 18 | 0 | `ls gfx/ui/*.png` (see [gfx/ui/README.md](gfx/ui/README.md)) |
 | Undecoded chapter maps / battle layouts | `aChapterMapPointers` + 120 battle layouts | 0 (`tools/chapter_maps.py`, `tools/map_battle_layouts.py`) | `find gfx/compressed -name '*MapBattle*Layout*.comp' \| wc -l` |
 | Raw SPC700 driver / `other` sound chunks | 5 driver blocks / 118 `other` chunks | 5 driver blocks / 118 `other` chunks | `ls audio/driver audio/chunks` |
@@ -63,7 +63,7 @@ Workflow: identify usage from callers, declare in [include/WRAM.h](include/WRAM.
 
 Workflow: identify via loader routines and [gfx/compressed/CATALOG.md](gfx/compressed/CATALOG.md), rename with `tools/name_streams.py`, and unpack to `.png`/`.bin` via `tools/unpack_streams.py` so `./build.sh` round-trips them through `tools/gfx.py lz`.
 
-- [ ] `gfx/compressed/E02EBD/` — 169 remaining (169 `Unknown`; 11 unpacked)
+- [x] `gfx/compressed/E02EBD/` — 180 total (all unpacked)
 - [x] `gfx/compressed/A08000/` — 81 total (all unpacked; 0 `Unknown`)
 - [x] `gfx/compressed/D50000/` — 78 total (all unpacked)
 - [x] `gfx/compressed/D05673/` — 56 total (all unpacked)
