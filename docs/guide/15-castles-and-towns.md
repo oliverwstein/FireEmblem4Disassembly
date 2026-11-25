@@ -101,7 +101,7 @@ A battle scene started from the castle (a staff, a dance, or a class change) ove
 
 ### Seats
 
-The courtyard has 24 seats on a 4 × 6 grid, one for each **generation ID**: the 15 men's and 9 women's IDs that the love and inheritance tables are indexed by ([Chapter 17](OUTLINE.md)). In generation 2 a child and the substitute who can join in its place share an ID, and so a seat. Each character's seat is fixed, by two tables per generation: `aCastleGridCharactersGen1`/`Gen2` map a grid slot to a generation ID, and `aCastleCourtyardSpotsGen1`/`Gen2` give each generation ID a spot in the courtyard picture. Chapter 6 on uses the generation 2 tables. `rlCastleBuildCourtyardTables` fills, from the unit list, a table from generation ID to unit (`aCastleUnitsByCharacter`) and each seat's sprite position, and counts the units present.
+The courtyard has 24 seats on a 4 × 6 grid, one for each **generation ID**: the 15 men's and 9 women's IDs that the love and inheritance tables are indexed by ([Chapter 17](17-love-and-lineage.md)). In generation 2 a child and the substitute who can join in its place share an ID, and so a seat. Each character's seat is fixed, by two tables per generation: `aCastleGridCharactersGen1`/`Gen2` map a grid slot to a generation ID, and `aCastleCourtyardSpotsGen1`/`Gen2` give each generation ID a spot in the courtyard picture. Chapter 6 on uses the generation 2 tables. `rlCastleBuildCourtyardTables` fills, from the unit list, a table from generation ID to unit (`aCastleUnitsByCharacter`) and each seat's sprite position, and counts the units present.
 
 The VBlank routine draws each unit at its spot as a map sprite (`rlCastleDrawCourtyardUnitSprites`), grey if it has moved this turn or is asleep. A seat whose character isn't inside is an empty spot.
 
@@ -243,7 +243,7 @@ The stock comes from the chapter data. A castle's location entry has a pointer t
 | 9 | Meath | 15 |
 | 10 | Perlucos | 7 |
 
-Nothing takes an item out of the shop state except a purchase, so the stock grows by one list per chapter. A Slim Sword left unbought in Chapter 1 is still for sale in Chapter 4. At the start of Chapter 6, `rlResetUnitsForChapter` returns every shop and pawnbroker record to unobtained ([Chapter 17](OUTLINE.md)), and the generation 2 lists start the stock over.
+Nothing takes an item out of the shop state except a purchase, so the stock grows by one list per chapter. A Slim Sword left unbought in Chapter 1 is still for sale in Chapter 4. At the start of Chapter 6, `rlResetUnitsForChapter` returns every shop and pawnbroker record to unobtained ([Chapter 17](17-love-and-lineage.md)), and the generation 2 lists start the stock over.
 
 ### Buying, selling, repairing
 
@@ -267,7 +267,7 @@ The fortune teller answers questions on a short list of topics. `rlAuguryScreenS
 
 - **Record** reads the unit's win and loss counts (`rlGetUnitWinCount`, `rlGetUnitLossCount`), which are kept per generation ID in two halves, one per generation.
 - **Parents** names the child's father and mother.
-- **Love** finds the unit's lover, or, without one, the unpaired unit of the other sex with the most love points (`rlGetUnitLoverOrTopCandidate`; a tie goes to the later unit in the list), and reads their points. The points are kept on the woman's side of the love table ([Chapter 17](OUTLINE.md)), so a man's question looks up his own ID in the woman's row.
+- **Love** finds the unit's lover, or, without one, the unpaired unit of the other sex with the most love points (`rlGetUnitLoverOrTopCandidate`; a tie goes to the later unit in the list), and reads their points. The points are kept on the woman's side of the love table ([Chapter 17](17-love-and-lineage.md)), so a man's question looks up his own ID in the woman's row.
 
 | Love points | Answer |
 |---|---|
@@ -320,7 +320,7 @@ When the text ends, `rsConversationEnd` leaves by `wConversationExitMode`:
 | `CONVERSATION_EXIT_COURTYARD` (0) | the courtyard, with the unit list rebuilt | no script |
 | `CONVERSATION_EXIT_TOWN` (1) | the town again, for `wCastleEventUnit` | 1 script: Chulainn's recruitment, run on entering a town |
 | `CONVERSATION_EXIT_MAP` (3) | the map, through `rsReturnToMapMainLoop` | 185 scripts; the lovers' home castle visits |
-| `CONVERSATION_EXIT_CALLBACK` (4) | a fade, then the next epilogue page (`rlShowNextEpilogueCharacterEnding`) | the epilogue ([Chapter 21](OUTLINE.md)) |
+| `CONVERSATION_EXIT_CALLBACK` (4) | a fade, then the next epilogue page (`rlShowNextEpilogueCharacterEnding`) | the epilogue ([Chapter 21](21-endings-and-scores.md)) |
 | `CONVERSATION_EXIT_FADE_OUT` (5) | a fade to black; the scene then waits | 18 scripts, whose next commands rebuild the screen |
 
 `DIALOGUE_WITH_BG`'s handler first sets exit 0 and the proc then overwrites it with the script's argument, so no script reaches the courtyard exit.

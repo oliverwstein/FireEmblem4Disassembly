@@ -45,7 +45,7 @@ Separately, at the start of every turn, every unit in all seven faction slots ha
 
 ### The player's phase
 
-On the player's phase, before turn 51, each woman in the army gains love points with each man in it, and more with each man standing next to her ([Chapter 17](OUTLINE.md)). On the frame after the last healing window opens, while the windows may still be up, the cursor moves to the army's first unit on turn 1 or with the Auto-Cursor option on; with Auto-Cursor off, it returns to the tile where the player chose End Turn. From turn 2, with the Auto-Save option on, the save prompt opens once every healing window has closed and the cursor has stopped.
+On the player's phase, before turn 51, each woman in the army gains love points with each man in it, and more with each man standing next to her ([Chapter 17](17-love-and-lineage.md)). On the frame after the last healing window opens, while the windows may still be up, the cursor moves to the army's first unit on turn 1 or with the Auto-Cursor option on; with Auto-Cursor off, it returns to the tile where the player chose End Turn. From turn 2, with the Auto-Save option on, the save prompt opens once every healing window has closed and the cursor has stopped.
 
 A phase ends when the player chooses End Turn or, for a computer army, when no AI group has anything left to do ([Chapter 14](OUTLINE.md)). Each army's units are un-grayed as soon as its own phase ends.
 

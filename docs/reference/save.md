@@ -30,7 +30,7 @@ The words after each slot hold `wLastUsedOptions`, `wRankingScore`, `wAntiTamper
 
 The save menu sets `aSave.wMenuOperation` to the slot (1-4), with bit 15 set for a load; `rlHandleSaveFile` acts on it.
 
-**Saving** (`rlSaveToSaveSlot`): clears the slot, writes the timer and losses, then the body (`rsSaveSaveFileBody`): each part is a list of (offset, bit width) pairs read by `rsSaveBitpackedDataOffsets` and written bit by bit (`rsWriteBitpackedSaveData`) from `aSave.wAvtiveSaveSlotOffset`. Units go through the buffers: a unit's personal, extended, ROM, inventory and lover data are copied into `aUnit1DataBuffer` and compacted (`rlCompactStaticDynamicUnitBuffer1UnitStates`...) before packing, and each item records its owner's character ID and inventory slot. Then the magic number and checksum, the last used options, and `rlSetLastSavedSlot`.
+**Saving** (`rlSaveToSaveSlot`): clears the slot, writes the timer and losses, then the body (`rsSaveSaveFileBody`): each part is a list of (offset, bit width) pairs read by `rsSaveBitpackedDataOffsets` and written bit by bit (`rsWriteBitpackedSaveData`) from `aSave.wActiveSaveSlotOffset`. Units go through the buffers: a unit's personal, extended, ROM, inventory and lover data are copied into `aUnit1DataBuffer` and compacted (`rlCompactStaticDynamicUnitBuffer1UnitStates`...) before packing, and each item records its owner's character ID and inventory slot. Then the magic number and checksum, the last used options, and `rlSetLastSavedSlot`.
 
 **Loading** (`rlLoadFromSaveSlot`): resets the game's RAM, reads the timer and losses, then the body in the same order. Each unit is rebuilt by `rlCreateUnitFromBuffers`: allocate the unit and its data blocks by unit type (static, dynamic, holy, enemy; `aSave.wCreatedUnitType`), unpack the buffers into them, and restore what the save does not keep (`rsRestorePersonalData`: love data ID, cleared bonuses, class money; `rsRestoreLeadershipStars`; a child's constant data; `rsGatherUnitItems`, which finds the unit's items by owner ID and slot and writes the unit pointer over them; inventory; lover data for female units). The unit is put back on the map (`rsRestoreUnitDeployment`) and in its faction's list (`rsAddUnitToFaction`).
 
@@ -75,8 +75,7 @@ Choosing a slot only sets `aSave.wMenuOperation`; `rlHandleSaveFile` (run from t
 
 ## Open questions
 
-- Whether a lower kept ranking value is the better rank (`rlCalculateFinalRankingScore`).
-- What the unused row types 1 (中断から始める, resume from a suspend) and 7-9 (保存, 消す, やめる) were for; no code builds them into a menu.
+- Whether the unused row types 1 (中断から始める, resume from a suspend) and 7-9 (保存, 消す, やめる) were for; no code builds them into a menu.
 - The save menu's HDMA tables (`aUnknown91E0A0`, `aUnknown91E190`) and whether the second entry (`aUnknown91E185`) is ever created.
 - What the `Unknown` fields of `structSaveDataEntry` hold (`Unknown0006`, `Unknown0013`, the unnamed words after `UnitLosses`).
 - Where saves in the older format (`$1206`) came from.

@@ -40,7 +40,7 @@ The parts group data by how often it changes:
 - **Constant** (22 bytes): who the unit *is*. ID, name, generation ID, gender, father, eight growth rates, three skill bytes, and holy blood.
 - **Enemy ROM data**: a generic enemy's 13-byte ROM entry, pointed at just past its type byte: ID, name, class, gender, level, leadership, faction member ID, equipment, and an item to drop.
 - **Inventory** (13 bytes): a 4-byte list header (item count, capacity, entry size), eight one-byte item slots, and the equipped-weapon flags ([Chapter 3](OUTLINE.md)).
-- **Lover** (30 bytes): fifteen words of love points, one per eligible man ([Chapter 17](OUTLINE.md)).
+- **Lover** (30 bytes): fifteen words of love points, one per eligible man ([Chapter 17](17-love-and-lineage.md)).
 
 ## Pointing into ROM
 
@@ -128,7 +128,7 @@ fn check_character_waiting_in_home_castle(id: CharacterId) -> bool {   // rlChec
 }
 ```
 
-It is an implicit `self`, referenced about 760 times across the engine. It keeps calls to one instruction and leaves the CPU's three registers free. The cost is that any routine handling two units must swap the global and restore it, and forgetting to restore it is exactly the bug behind FE4's misdirected love points ([Chapter 17](OUTLINE.md)). To reach every unit, code walks `aUnitRAMPointers`, the list of all current headers.
+It is an implicit `self`, referenced about 760 times across the engine. It keeps calls to one instruction and leaves the CPU's three registers free. The cost is that any routine handling two units must swap the global and restore it, and forgetting to restore it is exactly the bug behind FE4's misdirected love points ([Chapter 17](17-love-and-lineage.md)). To reach every unit, code walks `aUnitRAMPointers`, the list of all current headers.
 
 ## Pools
 

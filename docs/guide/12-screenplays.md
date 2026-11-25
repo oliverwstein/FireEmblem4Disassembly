@@ -358,7 +358,7 @@ The chapter events are the bulk of the scripts, and the same engine runs several
 | The attract mode's opening (`aOpeningEvent`) | the title screen, when its intro ends | `MOVE_TEMPORARY_TO_COORDS_CLASS`, `DEMO_ALLOW_SKIP`, `OPEN_TITLE_SCREEN` |
 | A pre-combat conversation | `SET_PRECOMBAT_DIALOGUE` ([Chapter 11](11-the-game-is-watching.md)) | a template copied to RAM |
 
-The world map commands scroll the world map, fade it, show and clear its narration box, and place portraits, markers, and highlights ([Chapter 19](OUTLINE.md)). Chapter 2's introduction:
+The world map commands scroll the world map, fade it, show and clear its narration box, and place portraits, markers, and highlights ([Chapter 19](19-between-chapters.md)). Chapter 2's introduction:
 
 ```
 PLAY_SONG SONG_WORLD_MAP_GENERATION1
@@ -374,7 +374,7 @@ YIELD
 ...
 ```
 
-The attract mode's opening ([Chapter 20](OUTLINE.md)) walks units with `MOVE_TEMPORARY_TO_COORDS_CLASS`, which can draw a character with a different map sprite. `DEMO_ALLOW_SKIP` starts a proc that ends the opening when the script finishes or the player presses Start, and `OPEN_TITLE_SCREEN` fades to the title screen.
+The attract mode's opening ([Chapter 20](20-the-opening.md)) walks units with `MOVE_TEMPORARY_TO_COORDS_CLASS`, which can draw a character with a different map sprite. `DEMO_ALLOW_SKIP` starts a proc that ends the opening when the script finishes or the player presses Start, and `OPEN_TITLE_SCREEN` fades to the title screen.
 
 ### Templates in RAM
 

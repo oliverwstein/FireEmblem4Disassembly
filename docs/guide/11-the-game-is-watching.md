@@ -307,7 +307,7 @@ Saving writes the permanent flags and the whole pool. Loading reads them back an
 
 ## Characters across generations
 
-Fourteen of the generation 2 children have a substitute who joins in the child's place when the child doesn't exist ([Chapter 17](OUTLINE.md)): Dalvin for Scathach, Asaello for Febail, Creidne for Larcei, and so on. A talk written for one should usually work for the other. The `CHECK_CHILD_` conditions map every character ID from Seliph's onward through `aEventsUnifiedGen2CharacterIds`, which sends each child to its substitute and every other character (the substitutes included) to itself, and compare the mapped IDs. A `CHECK_CHILD_TALK` written for Creidne and Iucharba therefore matches a talk started by Creidne or by Larcei. Chapters 6 to 10 and the final chapter use `CHECK_CHILD_TALK` 38 times; the other `CHILD` variants exist and no chapter uses them.
+Fourteen of the generation 2 children have a substitute who joins in the child's place when the child doesn't exist ([Chapter 17](17-love-and-lineage.md)): Dalvin for Scathach, Asaello for Febail, Creidne for Larcei, and so on. A talk written for one should usually work for the other. The `CHECK_CHILD_` conditions map every character ID from Seliph's onward through `aEventsUnifiedGen2CharacterIds`, which sends each child to its substitute and every other character (the substitutes included) to itself, and compare the mapped IDs. A `CHECK_CHILD_TALK` written for Creidne and Iucharba therefore matches a talk started by Creidne or by Larcei. Chapters 6 to 10 and the final chapter use `CHECK_CHILD_TALK` 38 times; the other `CHILD` variants exist and no chapter uses them.
 
 ## Conditions that change a battle
 

@@ -49,7 +49,7 @@ The generated `.dialogue.txt` files are assembled with six 64tass encodings (`Di
 
 ### The command set
 
-A command byte below `$10` is a one-byte command. `$00` is an escape: the next byte is the command number, so every command can be written as two bytes, and the ones above `$0F` can only be written that way. A command number with bit 7 set is handed to the world map's own command table, for its narration ([Chapter 19](OUTLINE.md)). The handlers are in `aDialogueCommandPointers`; the macros are in [include/Dialogue.h](../../include/Dialogue.h). The counts below are uses in the source texts:
+A command byte below `$10` is a one-byte command. `$00` is an escape: the next byte is the command number, so every command can be written as two bytes, and the ones above `$0F` can only be written that way. A command number with bit 7 set is handed to the world map's own command table, for its narration ([Chapter 19](19-between-chapters.md)). The handlers are in `aDialogueCommandPointers`; the macros are in [include/Dialogue.h](../../include/Dialogue.h). The counts below are uses in the source texts:
 
 | Family | Commands (uses) |
 |---|---|
@@ -205,7 +205,7 @@ While a slot draws characters, its speaker's mouth moves. Every frame that draws
 
 ### Children and substitutes
 
-From Chapter 6 on, fourteen pairs of characters share their texts. Each child of the first generation has a substitute who joins in their place if the child was never born ([Chapter 17](OUTLINE.md)): Lester or Deimne, Arthur or Amid, Nanna or Jeanne. Every portrait command and the child name command pass their character through one lookup. If the character belongs to one of the pairs in `aDialogueChildrenCharacterIDs`, it finds whoever holds that pair's generation ID and returns them, and falls back to the substitute if no one does. Chapter 6's talk between Arthur and Seliph is written once:
+From Chapter 6 on, fourteen pairs of characters share their texts. Each child of the first generation has a substitute who joins in their place if the child was never born ([Chapter 17](17-love-and-lineage.md)): Lester or Deimne, Arthur or Amid, Nanna or Jeanne. Every portrait command and the child name command pass their character through one lookup. If the character belongs to one of the pairs in `aDialogueChildrenCharacterIDs`, it finds whoever holds that pair's generation ID and returns them, and falls back to the substitute if no one does. Chapter 6's talk between Arthur and Seliph is written once:
 
 ```
 {DIALOGUE_LEFT}{DIALOGUE_OPEN_BOX}{DIALOGUE_LOAD_PORTRAIT PortraitArthur}

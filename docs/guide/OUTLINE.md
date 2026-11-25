@@ -60,11 +60,11 @@ What carries across castles, chapters, and generations, along with the bookends 
 |---|---|---|---|---|---|
 | 15 | **[Castles and towns](15-castles-and-towns.md)** | A home base inside the map: shops, the pawn shop, repair, storage, the augury, class change, and conversations. | A screen within a screen; lists shared by many facilities | `castle/` | Drafted |
 | 16 | **[The arena](16-the-arena.md)** | An opponent ladder inside the castle that reuses the battle engine while tracking yields, defeats, and prizes. | Reusing combat in a controlled loop; arena state per unit | `arena/` | Drafted |
-| 17 | **Love and lineage** | Love points every turn, and children whose growths, blood, and weapons come from whom their parents married. | A 9 × 15 grid; derived data computed once at a generation change | `units/lovers`, `generations`, `inheritance`, `events/first_generation_ending` | Ready (units.md) |
-| 18 | **Saving** | Battery-backed SRAM, three slots, and data that must be written the moment it happens. | Serializing the pools; checksums | `save/` | Ready (save.md) |
-| 19 | **Between chapters** | The world map, the chapter intro, and the history pages. | Another screen with its own frame; edge IRQs and layer HDMA | `worldmap/`, `save/jugdral_history` | Ready (worldmap.md) |
-| 20 | **The opening** | The title screen, its intro, and an attract mode that plays real battles. | Timelines; reusing gameplay code as a demo | `title/`, `demo/` | Ready (title.md, demo.md) |
-| 21 | **Endings and scores** | Endings chosen from parents, lovers, and survivors; a ranking of the whole playthrough. | Data-driven endings; records kept across the game | `epilogue/`, `rankings/` | Ready (epilogue.md); rankings need reference |
+| 17 | **[Love and lineage](17-love-and-lineage.md)** | Love points every turn, and children whose growths, blood, and weapons come from whom their parents married. | A 9 × 15 grid; derived data computed once at a generation change | `units/lovers`, `generations`, `inheritance`, `events/first_generation_ending` | Drafted |
+| 18 | **[Saving](18-saving.md)** | Battery-backed SRAM, four slots, and data that must be written the moment it happens. | Serializing the pools; checksums | `save/` | Drafted |
+| 19 | **[Between chapters](19-between-chapters.md)** | The world map, the chapter intro, and the history pages. | Another screen with its own frame; edge IRQs and layer HDMA | `worldmap/`, `save/jugdral_history` | Drafted |
+| 20 | **[The opening](20-the-opening.md)** | The title screen, its intro, and an attract mode that plays real battles. | Timelines; reusing gameplay code as a demo | `title/`, `demo/` | Drafted |
+| 21 | **[Endings and scores](21-endings-and-scores.md)** | Endings chosen from parents, lovers, and survivors; a ranking of the whole playthrough. | Data-driven endings; records kept across the game | `epilogue/`, `rankings/` | Drafted |
 
 > **Epigraph for Chapter 17 (Love and lineage):**
 > *"One generation passes away, and another generation comes;

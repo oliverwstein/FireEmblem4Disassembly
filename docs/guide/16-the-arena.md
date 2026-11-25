@@ -8,7 +8,7 @@ This chapter covers the ladder and how an opponent is chosen, the menu, a fight 
 
 ### Arena level
 
-The arena level is the low three bits of a unit's states (`UnitStateArenaLevelMask`, read by `rlGetSelectedUnitArenaLevel`). It starts at 0 for every unit, rises by one with each win, and stops at 7. A unit at level 7 is turned away at the door with a line saying no opponents are left. The level belongs to the unit, so each unit climbs its own ladder, and it is saved with the rest of the unit's states ([Chapter 18](OUTLINE.md)). The unit window can sort by it.
+The arena level is the low three bits of a unit's states (`UnitStateArenaLevelMask`, read by `rlGetSelectedUnitArenaLevel`). It starts at 0 for every unit, rises by one with each win, and stops at 7. A unit at level 7 is turned away at the door with a line saying no opponents are left. The level belongs to the unit, so each unit climbs its own ladder, and it is saved with the rest of the unit's states ([Chapter 18](18-saving.md)). The unit window can sort by it.
 
 The level picks an opponent from the current chapter's lists. A unit at level 3 in Chapter 1 meets Chapter 1's fourth opponent; the same unit, still at level 3 in Chapter 4, meets Chapter 4's.
 

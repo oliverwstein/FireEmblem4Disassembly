@@ -31,7 +31,7 @@ The routines that move from part to part (`rlStartEpilogueCredits` and `rlStartE
 
 The play record is one long dialogue (`dialogueEpilogueCredits8DC9FF`) printed into a text window (`rlSetUpEpilogueRecordTextWindow`). Its ASMCs fill in the numbers: `rlASMCRecordTurnsPrologue`... `rlASMCRecordTurnsFinal` put a chapter's turn count (`aChapterTurncounts`) in `DIALOGUE_NUMBER1` and push spaces to right-align it (`rsAlignRecordNumber2`), `rlASMCRecordTurnsTotal` the sum. `rlASMCRecordNextGeneration1Unit` and `...Generation2Unit` are loops written as ASMCs: each finds the next recruited character, sets its name, wins and losses (`rlGetCharacterWinCount`, `rlGetCharacterLossCount`) and pushes a line of text followed by the ASMC itself again, until the last character.
 
-The ranking screen (`rlShowEpilogueRankingScreen`) shows the tactics, experience, survival and combat rankings and the final score ([engine/rankings/](../../engine/rankings/)), the play time in hours and minutes, the number of times the save has finished the game, and 16 letters from `aUnknown7FC70A`. After 384 frames one more row is uploaded, and then the game waits for the secret code (`aEpilogueSecretCode`: Select, Up, A, Down, B, Left, X, Right, Y, L, R, Start). Entered in full, it uploads a hidden row of the screen and the epilogue stops at step 18 for good. A wrong button starts the code again.
+The ranking screen (`rlShowEpilogueRankingScreen`) shows the tactics, experience, survival and combat rankings and the final score ([engine/rankings/](../../engine/rankings/)), the play time in hours and minutes, the number of times the save has finished the game, and 16 letters from `aEpiloguePairingPassword`. After 384 frames one more row is uploaded, and then the game waits for the secret code (`aEpilogueSecretCode`: Select, Up, A, Down, B, Left, X, Right, Y, L, R, Start). Entered in full, it uploads a hidden row of the screen and the epilogue stops at step 18 for good. A wrong button starts the code again.
 
 ## Depends on
 
@@ -42,8 +42,6 @@ The ranking screen (`rlShowEpilogueRankingScreen`) shows the tactics, experience
 
 ## Open questions
 
-- What the 16 letters at `aUnknown7FC70A` are, and what the hidden row revealed by the secret code shows (the screen alone can settle both).
-- `rlSetupEpilogueCreditsDisplay` skips the credits text and goes straight to the end screen when the final ranking score is not 0; whether that is what happens on a normal ending.
-- `aEpilogueCharacterSceneDialogue` points every character at one of two texts (`dialogueEpilogueCredits8DCC6B` for characters 25-39, `8DCC94` after); the scene's real text must come from elsewhere (the conversation scene's own lookup).
+- What the hidden row revealed by the secret code (`$7E/8108` → VRAM `$D580`) displays visually on screen (the 16 letters at `aEpiloguePairingPassword` are the pairing password built by `rsCollectEpiloguePairingsForCode`, `rsPackEpiloguePairingsChecksum`, and `rsEncodeEpiloguePassword` using the 9-byte key `"FireEmblm"` at `aEpiloguePasswordKey`).
 - Three debug button handlers are unreached (`rsEpilogueDebugButtonsUnused`, `rsEpilogueDebugButtons2Unused`, and `rlSetUpEpilogueTextWindowUnused`'s caller), and `aUnknown8DADFA`'s HDMA info is unused.
 - Step 5 draws three of the credits sprites during the world map event; what they are on screen.

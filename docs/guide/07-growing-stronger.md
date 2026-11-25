@@ -95,7 +95,7 @@ fn roll_stat_growth(growth: u8) -> u8 {              // rsRollForStatGrowth
 }
 ```
 
-Each `rlGetLevelUpStats` call also increments `wTotalLevelUpCount`, which the rankings system reads at the end of the game ([Chapter 21](OUTLINE.md)). One small quirk appears when a `+2` roll crosses a personal cap: if a stat is already at its cap (`80`, `15`, or `30`), the gain helper returns `0`; if a stat is one point below cap (such as `14` Strength) and rolls `+2`, RAM clamps the stored stat to `15` while `LevelUpData` still records the rolled `+2`.
+Each `rlGetLevelUpStats` call also increments `wTotalLevelUpCount`, which the rankings system reads at the end of the game ([Chapter 21](21-endings-and-scores.md)). One small quirk appears when a `+2` roll crosses a personal cap: if a stat is already at its cap (`80`, `15`, or `30`), the gain helper returns `0`; if a stat is one point below cap (such as `14` Strength) and rolls `+2`, RAM clamps the stored stat to `15` while `LevelUpData` still records the rolled `+2`.
 
 ### Promotion as a zero-round battle scene
 
