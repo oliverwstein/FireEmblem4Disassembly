@@ -73,7 +73,7 @@
 
     lda #ArionCh09
     sta wRoutineVariable1
-    jsl rlUnknown8FBBA7
+    jsl rlEventJuliusWarpInStart
     rtl
 
     .databank 0
@@ -85,7 +85,7 @@
     .databank ?
 
     ldx #4
-    jsl rlUnknown8FBBFC
+    jsl rlEventDeployJuliusChFinal
     rtl
 
     .databank 0
@@ -96,7 +96,7 @@
     .autsiz
     .databank ?
 
-    jsl rlUnknown8FBC11
+    jsl rlEventUnhideJuliusChFinal
     rtl
 
     .databank 0

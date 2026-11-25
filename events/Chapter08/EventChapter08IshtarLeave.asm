@@ -66,7 +66,7 @@
 
     lda #IshtarCh08
     sta wRoutineVariable1
-    jsl rlUnknown8FBBA7
+    jsl rlEventJuliusWarpInStart
     rtl
 
     .databank 0
@@ -78,7 +78,7 @@
     .databank ?
 
     ldx #1
-    jsl rlUnknown8FBBFC
+    jsl rlEventDeployJuliusChFinal
     rtl
 
     .databank 0
@@ -89,7 +89,7 @@
     .autsiz
     .databank ?
 
-    jsl rlUnknown8FBC11
+    jsl rlEventUnhideJuliusChFinal
     rtl
 
     .databank 0
@@ -106,7 +106,7 @@
 
     .databank 0
 
-  rlUnknown8FBBA7 ; 8F/BBA7
+  rlEventJuliusWarpInStart ; 8F/BBA7
 
     .al
     .autsiz
@@ -143,7 +143,7 @@
 
     .databank 0
 
-  rlUnknown8FBBFC ; 8F/BBFC
+  rlEventDeployJuliusChFinal ; 8F/BBFC
 
     .al
     .autsiz
@@ -160,7 +160,7 @@
 
     .databank 0
 
-  rlUnknown8FBC11 ; 8F/BC11
+  rlEventUnhideJuliusChFinal ; 8F/BC11
 
     .al
     .autsiz

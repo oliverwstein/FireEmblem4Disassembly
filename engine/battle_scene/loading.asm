@@ -72,7 +72,7 @@
         .autsiz
         .databank ?
 
-        ; Picks whose terrain the background shows and loads it (rsUnknown958CB9, rsUnknown958CE5, rsUnknown958DDB).
+        ; Picks whose terrain the background shows and loads it (rsBattleSceneSetWaterFlags, rsBattleSceneLoadBackgroundLayer, rsBattleSceneLoadForeground).
 
         phx
         lda wBattleSceneFlags

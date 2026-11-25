@@ -169,7 +169,7 @@
         .autsiz
         .databank ?
 
-        ; Reads the round at lBattleSceneRoundPointer: $FD skipped, $FE a skill activation (rlUnknown96F697), $FFFF the end, $FEFF the end of an arena round. Otherwise sets attacker and defender by bit 0 and queues the attacker's action: staff, normal, critical, miss; then moves on and sets bit 0 of $7FE186 at the end.
+        ; Reads the round at lBattleSceneRoundPointer: $FD skipped, $FE a skill activation (rlBattleSceneShowSkill), $FFFF the end, $FEFF the end of an arena round. Otherwise sets attacker and defender by bit 0 and queues the attacker's action: staff, normal, critical, miss; then moves on and sets bit 0 of $7FE186 at the end.
 
         lda lBattleSceneRoundPointer+1,b
         sta lR18+1
