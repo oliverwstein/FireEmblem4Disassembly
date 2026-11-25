@@ -519,10 +519,10 @@
         .long gcTitleIntroCaption01Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownF676FE, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF676FE, aDecompressionBuffer
         .word $4000, $4000
         .byte $00
-        .long gcUnknownF524B7, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF524B7, aDecompressionBuffer
         .word $3800, $1000
         .byte $00
         .long gcTitleIntroCaption02, aDecompressionBuffer
@@ -540,16 +540,16 @@
         .long g4bppcBattleBackgroundUnknown16, aDecompressionBuffer
         .word $0000, $4000
         .byte $00
-        .long gcUnknownF5222D, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF5222D, aDecompressionBuffer
         .word $3000, $1000
         .byte $00
-        .long gcUnknownF47E55, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF47E55, aDecompressionBuffer
         .word $2000, $1000
         .byte $00
-        .long gcUnknownF527E5, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF527E5, aDecompressionBuffer
         .word $7000, $1000
         .byte $00
-        .long gcUnknownF50A88, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF50A88, aDecompressionBuffer
         .word $6000, $2000
         .byte $00
         .long gcTitleIntroCaption04, aDecompressionBuffer
@@ -558,10 +558,10 @@
         .long gcTitleIntroCaption04Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownF03141, aDecompressionBuffer
+        .long acTitleSceneTilemapF03141, aDecompressionBuffer
         .word $2800, $0800
         .byte $00
-        .long gcUnknownF5299B, aDecompressionBuffer
+        .long acTitleSceneTilemapF5299B, aDecompressionBuffer
         .word $2C00, $0800
         .byte $00
         .long gcTitleIntroCaption05, aDecompressionBuffer
@@ -576,10 +576,10 @@
         .long gcTitleIntroCaption06Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownF02266, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF02266, aDecompressionBuffer
         .word $4000, $2000
         .byte $00
-        .long gcUnknownF019F4, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF019F4, aDecompressionBuffer
         .word $5000, $2000
         .byte $00
         .long gcTitleIntroCaption07, aDecompressionBuffer
@@ -588,22 +588,22 @@
         .long gcTitleIntroCaption07Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownF02FC1, aDecompressionBuffer
+        .long acTitleSceneTilemapF02FC1, aDecompressionBuffer
         .word $2000, $0800
         .byte $00
-        .long gcUnknownF039A2, aDecompressionBuffer
+        .long acTitleSceneTilemapF039A2, aDecompressionBuffer
         .word $2400, $0800
         .byte $00
-        .long gcUnknownF41F38, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF41F38, aDecompressionBuffer
         .word $0000, $3800
         .byte $00
-        .long gcUnknownF43803, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF43803, aDecompressionBuffer
         .word $7000, $1000
         .byte $00
-        .long gcUnknownF03A1C, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF03A1C, aDecompressionBuffer
         .word $3000, $2000
         .byte $00
-        .long gcUnknownF06B78, aDecompressionBuffer
+        .long acTitleSceneTilemapF06B78, aDecompressionBuffer
         .word $1C00, $0800
         .byte $00
         .long gcTitleIntroCaption08, aDecompressionBuffer
@@ -612,19 +612,19 @@
         .long gcTitleIntroCaption08Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownF30E6F, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF30E6F, aDecompressionBuffer
         .word $4000, $4000
         .byte $00
-        .long gcUnknownF339EB, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF339EB, aDecompressionBuffer
         .word $2800, $1000
         .byte $00
-        .long gcUnknownF27E72, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF27E72, aDecompressionBuffer
         .word $6000, $1800
         .byte $00
-        .long gcUnknownF33663, aDecompressionBuffer
+        .long acTitleSceneTilemapF33663, aDecompressionBuffer
         .word $6C00, $0800
         .byte $00
-        .long gcUnknownF3365D, aDecompressionBuffer
+        .long acTitleSceneTilemapF3365D, aDecompressionBuffer
         .word $0000, $0800
         .byte $00
         .long acTitleScreenTilemap94FF6D, aDecompressionBuffer
@@ -639,7 +639,7 @@
         .long g4bppcTitleScreenTiles94E9EE, aDecompressionBuffer
         .word $1000, $2000
         .byte $00
-        .long gcUnknownF5597A, aDecompressionBuffer
+        .long acTitleSceneTilemapF5597A, aDecompressionBuffer
         .word $0800, $0800
         .byte $00
         .long gcTitleIntroCaption10, aDecompressionBuffer
@@ -648,13 +648,13 @@
         .long gcTitleIntroCaption10Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownF52B03, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF52B03, aDecompressionBuffer
         .word $3000, $2000
         .byte $00
-        .long gcUnknownF5580C, aDecompressionBuffer
+        .long acTitleSceneTilemapF5580C, aDecompressionBuffer
         .word $0C00, $0800
         .byte $00
-        .long gcUnknownF547D4, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF547D4, aDecompressionBuffer
         .word $2000, $1800
         .byte $00
         .long gcTitleIntroCaption11, aDecompressionBuffer
@@ -663,13 +663,13 @@
         .long gcTitleIntroCaption11Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long gcUnknownF55B0E, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF55B0E, aDecompressionBuffer
         .word $4000, $2200
         .byte $00
-        .long gcUnknownF57E44, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF57E44, aDecompressionBuffer
         .word $6000, $2C80
         .byte $00
-        .long gcUnknownF57B55, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF57B55, aDecompressionBuffer
         .word $5800, $1000
         .byte $00
         .long gcTitleIntroCaption12, aDecompressionBuffer
@@ -687,10 +687,10 @@
         .long $7F7800
         .word $7C00, $0800
         .byte $00
-        .long gcUnknownF57C2D, aDecompressionBuffer
+        .long acTitleSceneTilemapF57C2D, aDecompressionBuffer
         .word $0C00, $0800
         .byte $00
-        .long gcUnknownF57765, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF57765, aDecompressionBuffer
         .word $5100, $0B00
         .byte $00
         .long g4bppcSaveMenuMainTiles, aDecompressionBuffer

@@ -4278,59 +4278,59 @@
 
         ; Read by rlBattleSceneCommandDecompressToVRAM (10 bytes: Source, Dest, VRAMWordAddress, Count).
 
-        .long gcUnknownE03749, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesE03749, aDecompressionBuffer
         .word $7000, $0400
-        .long gcUnknownEF0815, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF0815, aDecompressionBuffer
         .word $3000, $0600
-        .long gcUnknownEF0A82, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF0A82, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownEF0C10, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF0C10, aDecompressionBuffer
         .word $3000, $0800
-        .long gcUnknownEF0F33, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF0F33, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownEF1175, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF1175, aDecompressionBuffer
         .word $3000, $1000
-        .long gcUnknownEF1680, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF1680, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownEF5739, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF5739, aDecompressionBuffer
         .word $2000, $2000
-        .long gcUnknownEF6513, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF6513, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF11286, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF11286, aDecompressionBuffer
         .word $2000, $1C00
-        .long gcUnknownF124AF, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF124AF, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF12801, aDecompressionBuffer
+        .long acBattleSceneEffectDataF12801, aDecompressionBuffer
         .word $7400, $0800
-        .long gcUnknownEF19AE, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF19AE, aDecompressionBuffer
         .word $2000, $2000
-        .long gcUnknownEF29FC, aDecompressionBuffer
+        .long acBattleSceneEffectDataEF29FC, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF01360, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF01360, aDecompressionBuffer
         .word $3000, $0500
-        .long gcUnknownF018FC, aDecompressionBuffer
+        .long acBattleSceneEffectDataF018FC, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF0013D, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF0013D, aDecompressionBuffer
         .word $2000, $1C00
-        .long gcUnknownF016E8, aDecompressionBuffer
+        .long acBattleSceneEffectDataF016E8, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownEF2EB2, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF2EB2, aDecompressionBuffer
         .word $2000, $2000
-        .long gcUnknownEF3FF1, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF3FF1, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownEF421A, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF421A, aDecompressionBuffer
         .word $3000, $0120
-        .long gcUnknownEF4246, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF4246, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownEF4324, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF4324, aDecompressionBuffer
         .word $2000, $1800
-        .long gcUnknownEF49D5, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF49D5, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownEF4C33, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF4C33, aDecompressionBuffer
         .word $2000, $1000
-        .long gcUnknownEF5460, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF5460, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownEF55C9, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF55C9, aDecompressionBuffer
         .word $3800, $1000
         .long $000000, $000000
         .word $0000, $0000
@@ -4342,213 +4342,213 @@
         .word $0000, $0000
         .long $000000, $000000
         .word $0000, $0000
-        .long gcUnknownEF6771, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF6771, aDecompressionBuffer
         .word $2000, $0400
-        .long gcUnknownEF68C3, aDecompressionBuffer
+        .long acBattleSceneEffectDataEF68C3, aDecompressionBuffer
         .word $3800, $0800
         .long $000000, $000000
         .word $0000, $0000
         .long $000000, $000000
         .word $0000, $0000
-        .long gcUnknownEF6F42, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF6F42, aDecompressionBuffer
         .word $2000, $1400
-        .long gcUnknownEF7972, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF7972, aDecompressionBuffer
         .word $3000, $2000
-        .long gcUnknownEF7EBA, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF7EBA, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownEF7FFC, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF7FFC, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF019F4, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF019F4, aDecompressionBuffer
         .word $0000, $2000
-        .long gcUnknownF02266, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF02266, aDecompressionBuffer
         .word $2000, $2000
-        .long gcUnknownF02FC1, aDecompressionBuffer
+        .long acTitleSceneTilemapF02FC1, aDecompressionBuffer
         .word $3000, $0200
-        .long gcUnknownF03141, aDecompressionBuffer
+        .long acTitleSceneTilemapF03141, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF0358F, aDecompressionBuffer
+        .long acBattleSceneEffectDataF0358F, aDecompressionBuffer
         .word $6000, $0800
-        .long gcUnknownF03771, aDecompressionBuffer
+        .long acBattleSceneEffectDataF03771, aDecompressionBuffer
         .word $6000, $0800
-        .long gcUnknownF039A2, aDecompressionBuffer
+        .long acTitleSceneTilemapF039A2, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF03A1C, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF03A1C, aDecompressionBuffer
         .word $2000, $2000
-        .long gcUnknownF046BF, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF046BF, aDecompressionBuffer
         .word $0000, $4000
-        .long gcUnknownF06B78, aDecompressionBuffer
+        .long acTitleSceneTilemapF06B78, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF07009, aDecompressionBuffer
+        .long acBattleSceneEffectDataF07009, aDecompressionBuffer
         .word $6000, $0800
-        .long gcUnknownF07458, aDecompressionBuffer
+        .long acBattleSceneEffectDataF07458, aDecompressionBuffer
         .word $6000, $0800
-        .long gcUnknownF078E5, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF078E5, aDecompressionBuffer
         .word $2000, $4000
-        .long gcUnknownF10762, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF10762, aDecompressionBuffer
         .word $7000, $1000
-        .long gcUnknownF10DF5, aDecompressionBuffer
+        .long acBattleSceneEffectDataF10DF5, aDecompressionBuffer
         .word $6000, $0800
-        .long gcUnknownF12972, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF12972, aDecompressionBuffer
         .word $2000, $2000
-        .long gcUnknownF14061, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF14061, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF14534, aDecompressionBuffer
+        .long acBattleSceneEffectDataF14534, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF149C5, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF149C5, aDecompressionBuffer
         .word $2000, $0A00
-        .long gcUnknownF14E0F, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF14E0F, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF14F90, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF14F90, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF15110, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF15110, aDecompressionBuffer
         .word $2000, $1E00
-        .long gcUnknownF15927, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF15927, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF15C82, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF15C82, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF15FDD, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF15FDD, aDecompressionBuffer
         .word $2000, $1000
-        .long gcUnknownF16912, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF16912, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF16A9C, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF16A9C, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF16C14, aDecompressionBuffer
+        .long acBattleSceneEffectDataF16C14, aDecompressionBuffer
         .word $3000, $0200
-        .long gcUnknownF16D80, aDecompressionBuffer
+        .long acBattleSceneEffectDataF16D80, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF17076, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF17076, aDecompressionBuffer
         .word $2000, $0400
-        .long gcUnknownF1718D, aDecompressionBuffer
+        .long acBattleSceneEffectDataF1718D, aDecompressionBuffer
         .word $3000, $0200
-        .long gcUnknownF17245, aDecompressionBuffer
+        .long acBattleSceneEffectDataF17245, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF173D5, aDecompressionBuffer
+        .long acBattleSceneEffectDataF173D5, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF1756A, aDecompressionBuffer
+        .long acBattleSceneEffectDataF1756A, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF17647, aDecompressionBuffer
+        .long acBattleSceneEffectDataF17647, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF1771D, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF1771D, aDecompressionBuffer
         .word $2000, $1200
-        .long gcUnknownF20083, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF20083, aDecompressionBuffer
         .word $7000, $0D00
-        .long gcUnknownF206F9, aDecompressionBuffer
+        .long acBattleSceneEffectDataF206F9, aDecompressionBuffer
         .word $3C00, $0800
-        .long gcUnknownF209BE, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF209BE, aDecompressionBuffer
         .word $3000, $1800
-        .long gcUnknownF21081, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF21081, aDecompressionBuffer
         .word $2200, $1200
-        .long gcUnknownF21830, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF21830, aDecompressionBuffer
         .word $3000, $0E00
-        .long gcUnknownF2200D, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF2200D, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF22128, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF22128, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF22240, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF22240, aDecompressionBuffer
         .word $7000, $1000
-        .long gcUnknownF22579, aDecompressionBuffer
+        .long acBattleSceneEffectDataF22579, aDecompressionBuffer
         .word $2C00, $0800
-        .long gcUnknownF22851, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF22851, aDecompressionBuffer
         .word $2000, $0400
-        .long gcUnknownF2292F, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF2292F, aDecompressionBuffer
         .word $2000, $0A00
-        .long gcUnknownF22E80, aDecompressionBuffer
+        .long acBattleSceneEffectDataF22E80, aDecompressionBuffer
         .word $3000, $0200
-        .long gcUnknownF22FD8, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF22FD8, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF2316A, aDecompressionBuffer
+        .long acBattleSceneEffectDataF2316A, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF232C0, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF232C0, aDecompressionBuffer
         .word $2000, $1600
-        .long gcUnknownF23B79, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF23B79, aDecompressionBuffer
         .word $3000, $0F00
-        .long gcUnknownF2447D, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF2447D, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF246DA, aDecompressionBuffer
+        .long acBattleSceneEffectDataF246DA, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF2487B, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF2487B, aDecompressionBuffer
         .word $2000, $1200
-        .long gcUnknownF25289, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF25289, aDecompressionBuffer
         .word $3000, $1000
-        .long gcUnknownF25C57, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF25C57, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF25DD4, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF25DD4, aDecompressionBuffer
         .word $3800, $1000
-        .long gcUnknownF25F67, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF25F67, aDecompressionBuffer
         .word $7000, $1800
-        .long gcUnknownF262AC, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF262AC, aDecompressionBuffer
         .word $2000, $1800
-        .long gcUnknownF2736D, aDecompressionBuffer
+        .long acBattleSceneEffectDataF2736D, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF27E72, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF27E72, aDecompressionBuffer
         .word $2000, $1800
-        .long gcUnknownF30E6F, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF30E6F, aDecompressionBuffer
         .word $0000, $4000
-        .long gcUnknownF3365D, aDecompressionBuffer
+        .long acTitleSceneTilemapF3365D, aDecompressionBuffer
         .word $3000, $0010
-        .long gcUnknownF33663, aDecompressionBuffer
+        .long acTitleSceneTilemapF33663, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF339EB, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF339EB, aDecompressionBuffer
         .word $6000, $1000
         .long acTitleScreenTilemap94FF6D, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF33DD0, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF33DD0, aDecompressionBuffer
         .word $3000, $1400
-        .long gcUnknownF3426A, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF3426A, aDecompressionBuffer
         .word $0000, $6000
-        .long gcUnknownF40D9D, aDecompressionBuffer
+        .long acBattleSceneEffectDataF40D9D, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF40F1E, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF40F1E, aDecompressionBuffer
         .word $6000, $1000
-        .long gcUnknownF41469, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF41469, aDecompressionBuffer
         .word $2000, $1000
-        .long gcUnknownF41C5A, aDecompressionBuffer
+        .long acBattleSceneEffectDataF41C5A, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF41DCD, aDecompressionBuffer
+        .long acBattleSceneEffectDataF41DCD, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF41F38, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF41F38, aDecompressionBuffer
         .word $0000, $3400
         .long $000000, $000000
         .word $0000, $0000
-        .long gcUnknownF43803, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF43803, aDecompressionBuffer
         .word $6000, $1000
         .long $000000, $000000
         .word $0000, $0000
         .long $000000, $000000
         .word $0000, $0000
-        .long gcUnknownF43D26, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF43D26, aDecompressionBuffer
         .word $2000, $1E00
-        .long gcUnknownF4493C, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF4493C, aDecompressionBuffer
         .word $0000, $2A00
-        .long gcUnknownF460FF, aDecompressionBuffer
+        .long acBattleSceneEffectDataF460FF, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF46551, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF46551, aDecompressionBuffer
         .word $3000, $2000
-        .long gcUnknownEF698D, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesEF698D, aDecompressionBuffer
         .word $2000, $0520
-        .long gcUnknownEF6D77, aDecompressionBuffer
+        .long acBattleSceneEffectDataEF6D77, aDecompressionBuffer
         .word $3800, $0800
-        .long gcUnknownF276E0, aDecompressionBuffer
+        .long acBattleSceneEffectDataF276E0, aDecompressionBuffer
         .word $3000, $0800
-        .long gcUnknownF27D79, aDecompressionBuffer
+        .long acBattleSceneEffectDataF27D79, aDecompressionBuffer
         .word $7000, $0800
-        .long gcUnknownF61BB4, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF61BB4, aDecompressionBuffer
         .word $1000, $0C00
-        .long gcUnknownF621E6, aDecompressionBuffer
+        .long acBattleSceneEffectDataF621E6, aDecompressionBuffer
         .word $1800, $0800
-        .long gcUnknownF62298, aDecompressionBuffer
+        .long acBattleSceneEffectDataF62298, aDecompressionBuffer
         .word $47B0, $0040
-        .long gcUnknownF622C0, aDecompressionBuffer
+        .long acBattleSceneEffectDataF622C0, aDecompressionBuffer
         .word $57B0, $00A0
-        .long gcUnknownF6232E, aDecompressionBuffer
+        .long acBattleSceneEffectDataF6232E, aDecompressionBuffer
         .word $57B0, $00A0
         .long gcBattleSceneLevelUpBanner, aDecompressionBuffer
         .word $47B0, $00A0
-        .long gcUnknownF6239C, aDecompressionBuffer
+        .long acBattleSceneEffectDataF6239C, aDecompressionBuffer
         .word $57B0, $0060
-        .long gcUnknownF41F38, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF41F38, aDecompressionBuffer
         .word $2000, $3400
-        .long gcUnknownF43AD9, aDecompressionBuffer
+        .long acBattleSceneEffectDataF43AD9, aDecompressionBuffer
         .word $3C00, $0800
 
         ; 97/B5D1
@@ -4557,16 +4557,16 @@
 
         ; Read by rlBattleSceneCommandDecompress (6 bytes: Source, Dest).
 
-        .long gcUnknownE03105, $7E9388
-        .long gcUnknownE033A5, $7E9B88
-        .long gcUnknownE03B09, $7FCBC0
-        .long gcUnknownE03D3B, $7FD480
-        .long gcUnknownE03D7F, $7E9388
-        .long gcUnknownE04000, $7E9588
-        .long gcUnknownE040D3, $7E9588
-        .long gcUnknownE02EBD, aDecompressionBuffer
+        .long acBattleSceneDecompE03105, $7E9388
+        .long g4bppcBattleSceneDecompE033A5, $7E9B88
+        .long g4bppcBattleSceneDecompE03B09, $7FCBC0
+        .long g4bppcBattleSceneDecompE03D3B, $7FD480
+        .long acBattleSceneDecompE03D7F, $7E9388
+        .long g4bppcBattleSceneDecompE04000, $7E9588
+        .long g4bppcBattleSceneDecompE040D3, $7E9588
+        .long g4bppcBattleSceneHUDTiles, aDecompressionBuffer
         .long gcBattleSceneStatLabels, $7E8F88
-        .long gcUnknownF3426A, aDecompressionBuffer
+        .long g4bppcTitleSceneTilesF3426A, aDecompressionBuffer
 
         ; 97/B60D
 

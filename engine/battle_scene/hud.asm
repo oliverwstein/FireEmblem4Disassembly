@@ -1196,9 +1196,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownE02EBD
+        ldx #<>g4bppcBattleSceneHUDTiles
         stx DecompressionVariables
-        lda #`gcUnknownE02EBD
+        lda #`g4bppcBattleSceneHUDTiles
         sta $CA
         ldx #$8B88
         stx $CB
@@ -1229,9 +1229,9 @@
         jsl rlBattleSceneLoadNames
         sep #$20
         rep #$10
-        ldx #<>gcUnknownE03A1D
+        ldx #<>g4bppcBattleSceneHUDWindowTilemap
         stx DecompressionVariables
-        lda #`gcUnknownE03A1D
+        lda #`g4bppcBattleSceneHUDWindowTilemap
         sta $CA
         ldx #$C800
         stx $CB
@@ -1251,9 +1251,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownE03C68
+        ldx #<>g4bppcBattleSceneHUDTilemap
         stx DecompressionVariables
-        lda #`gcUnknownE03C68
+        lda #`g4bppcBattleSceneHUDTilemap
         sta $CA
         ldx #$D0C0
         stx $CB

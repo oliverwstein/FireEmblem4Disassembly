@@ -200,9 +200,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF55B0E
+        ldx #<>g4bppcTitleSceneTilesF55B0E
         stx DecompressionVariables
-        lda #`gcUnknownF55B0E
+        lda #`g4bppcTitleSceneTilesF55B0E
         sta $CA
         ldx #$0000
         stx $CB
@@ -224,9 +224,9 @@
         jsl rlDecompressor
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF57599
+        ldx #<>acTitleSceneTilemapF57599
         stx DecompressionVariables
-        lda #`gcUnknownF57599
+        lda #`acTitleSceneTilemapF57599
         sta $CA
         ldx #$6000
         stx $CB
@@ -236,9 +236,9 @@
         jsl rlDecompressor
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF5597A
+        ldx #<>acTitleSceneTilemapF5597A
         stx DecompressionVariables
-        lda #`gcUnknownF5597A
+        lda #`acTitleSceneTilemapF5597A
         sta $CA
         ldx #$6800
         stx $CB
@@ -322,9 +322,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF57765
+        ldx #<>g4bppcTitleSceneTilesF57765
         stx DecompressionVariables
-        lda #`gcUnknownF57765
+        lda #`g4bppcTitleSceneTilesF57765
         sta $CA
         ldx #$8B88
         stx $CB
@@ -338,9 +338,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF57B55
+        ldx #<>g4bppcTitleSceneTilesF57B55
         stx DecompressionVariables
-        lda #`gcUnknownF57B55
+        lda #`g4bppcTitleSceneTilesF57B55
         sta $CA
         ldx #$8B88
         stx $CB
@@ -354,9 +354,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF57C2D
+        ldx #<>acTitleSceneTilemapF57C2D
         stx DecompressionVariables
-        lda #`gcUnknownF57C2D
+        lda #`acTitleSceneTilemapF57C2D
         sta $CA
         ldx #$8B88
         stx $CB
@@ -402,9 +402,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF57E44
+        ldx #<>g4bppcTitleSceneTilesF57E44
         stx DecompressionVariables
-        lda #`gcUnknownF57E44
+        lda #`g4bppcTitleSceneTilesF57E44
         sta $CA
         ldx #$8B88
         stx $CB

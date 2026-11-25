@@ -3397,9 +3397,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF3426A
+        ldx #<>g4bppcTitleSceneTilesF3426A
         stx DecompressionVariables
-        lda #`gcUnknownF3426A
+        lda #`g4bppcTitleSceneTilesF3426A
         sta $CA
         ldx #$8B88
         stx $CB
@@ -3413,9 +3413,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF40F1E
+        ldx #<>g4bppcTitleSceneTilesF40F1E
         stx DecompressionVariables
-        lda #`gcUnknownF40F1E
+        lda #`g4bppcTitleSceneTilesF40F1E
         sta $CA
         ldx #$8B88
         stx $CB
@@ -3429,9 +3429,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF468D3
+        ldx #<>g4bppcTitleSceneTilesF468D3
         stx DecompressionVariables
-        lda #`gcUnknownF468D3
+        lda #`g4bppcTitleSceneTilesF468D3
         sta $CA
         ldx #$8B88
         stx $CB
@@ -3445,9 +3445,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownF47CBD
+        ldx #<>acTitleSceneTilemapF47CBD
         stx DecompressionVariables
-        lda #`gcUnknownF47CBD
+        lda #`acTitleSceneTilemapF47CBD
         sta $CA
         ldx #$8B88
         stx $CB
