@@ -69,7 +69,7 @@
     ObtainedItem          .word ? ; $1C
     ObtainedStealMoney    .word ? ; $1E
     ObtainedArenaMoney    .word ? ; $20
-    Unknown               .word ? ; $22 - 8 for the dance (rsActionStructDance)
+    ActionType            .word ? ; $22 - 8 for the dance (rsActionStructDance)
     TriggerableSkills     .word ? ; $24
     WeaponInventorySlot   .word ? ; $26
     WeaponID              .word ? ; $28

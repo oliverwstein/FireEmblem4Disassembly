@@ -37,8 +37,8 @@
         ; $13: VillageSnow
         ; $14: Bridge
         ; $15: Shrine
-        ; $16: Unknown16
-        ; $17: Unknown17
+        ; $16: Unused16
+        ; $17: Unused17
 
         .long g4bppcBattleBackgroundPlains, acBattleBackgroundPlainsTilemap, aBattleBackgroundPlainsPalette
         .byte 1

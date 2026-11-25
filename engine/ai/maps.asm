@@ -1241,7 +1241,7 @@
         phy
 
         jsl rlGetSelectedUnitFactionSlot
-        sta aAIAction.wUnknown7F442C
+        sta aAIAction.wTargetCount
 
         sep #$20
         lda #$7F
@@ -1545,7 +1545,7 @@
         sta lAITemp000E90,b
 
         lda wAIActiveFaction,b
-        sta aAIAction.wUnknown7F442C
+        sta aAIAction.wTargetCount
 
         sep #$20
         lda #`aAllyUnitMap

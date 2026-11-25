@@ -8,7 +8,7 @@ Rule: Every change to source, data, or assets must keep `./build.sh` byte-identi
 | Metric | Baseline (2026-11-25) | Current | Refresh Command |
 |---|---:|---:|---|
 | Unnamed RAM addresses | 1,296 (`4,727` operands) | 1,224 (`3,552` operands) | `python3 tools/name_ram.py --report 50` |
-| Distinct `*Unknown*` identifiers | 864 | 67 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
+| Distinct `*Unknown*` identifiers | 864 | 0 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
 | Compressed-only `.comp` streams | 510 (`273` `Unknown`) | 0 | `find gfx audio -name '*.comp'` (check for missing `.png` / unpacked file) |
 | Greyscale UI PNG sheets | 18 | 0 | `ls gfx/ui/*.png` (see [gfx/ui/README.md](gfx/ui/README.md)) |
 | Undecoded chapter maps / battle layouts | `aChapterMapPointers` + 120 battle layouts | 0 (`tools/chapter_maps.py`, `tools/map_battle_layouts.py`) | `find gfx/compressed -name '*MapBattle*Layout*.comp' \| wc -l` |
@@ -59,7 +59,7 @@ Workflow: inspect callers, data format, and (for unpacked streams) `.4bpp.png`/`
 - **Phase U6 — Battle scene `aUnknown*` (`202`) & `E02EBD/` `gcUnknown*` (`171` files)**
   - [x] Tackle `engine/battle_scene/` (`202` `aUnknown*`) together with `gfx/compressed/E02EBD/` (`171` `gcUnknown*` unpacked `.4bpp.png`/`.bin` streams), since battle-scene effect/spell scripts and `E02EBD/` graphics reference each other directly
 - **Phase U7 — Struct fields, constants & remaining WRAM `*Unknown*` (`135` symbols)**
-  - [ ] Remaining `wUnknown*` / `bUnknown*` / `lUnknown*` WRAM variables (`41`) — coordinate with Section 1.1 scoping rules in `tools/name_ram.py`
+  - [x] Remaining `wUnknown*` / `bUnknown*` / `lUnknown*` WRAM variables (`41`) — coordinate with Section 1.1 scoping rules in `tools/name_ram.py`
   - [x] Other `*Unknown*` struct fields, constants, and misc labels (`94`) across `include/`, `engine/`, `data/`, and `audio/`
 
 ---

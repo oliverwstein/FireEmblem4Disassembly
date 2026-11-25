@@ -1121,7 +1121,7 @@
         .autsiz
         .databank ?
 
-        ; Allocate and initialize a linked block of Unknown2 4-byte handle slots
+        ; Allocate and initialize a linked block of N 4-byte handle slots
 
         phy
         lda wR0

@@ -68,7 +68,7 @@
         sta <>aMapAction.wMapBattleStrikeDone,b
         sta <>aMapAction.wMapBattleRoundRunning,b
         sta @l $000FD7,x
-        sta aMapAction.wUnknown7F455A
+        sta aMapAction.wEffectParam
         sta aMapAction.wSideTallSprite
         sta wMapBattleMode
         sta <>wMapBattleAttackerBallista,b
@@ -762,8 +762,8 @@
         txa
         sta aMapAction.wMapBattleDefenderSpriteSlot
         lda #$0001
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0040
@@ -1163,7 +1163,7 @@
         sta <>aMapAction.wMapBattleStrikeSignal,b
         sta <>aMapAction.wMapBattleStrikeDone,b
         sta <>aMapAction.wMapBattleRoundRunning,b
-        sta aMapAction.wUnknown7F455A
+        sta aMapAction.wEffectParam
         sta aMapAction.wSideTallSprite
         sta wMapBattleMode
         sta wMapMagicStart
@@ -1753,7 +1753,7 @@
         sta aMapAction.wMapBattleStrikeSignal
         sta aMapAction.wMapBattleStrikeDone
         sta aMapAction.wMapBattleRoundRunning
-        sta aMapAction.wUnknown7F455A
+        sta aMapAction.wEffectParam
         sta aMapAction.wSideTallSprite
         sta wMapBattleMode
         sta wMapBattleStrikeDrains
@@ -2273,7 +2273,7 @@
         sta <>aMapAction.wMapBattleStrikeSignal,b
         sta <>aMapAction.wMapBattleStrikeDone,b
         sta <>aMapAction.wMapBattleRoundRunning,b
-        sta <>aMapAction.wUnknown7F455A,b
+        sta <>aMapAction.wEffectParam,b
         sta <>aMapAction.wSideTallSprite,b
         sta <>wMapBattleMode,b
         sta <>wMapBattleStrikeDrains,b
@@ -2682,9 +2682,9 @@
         txa
         sta @l $001097
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000

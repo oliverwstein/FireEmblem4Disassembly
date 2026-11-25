@@ -8,7 +8,7 @@
 
     ; Created: 0.01
     ; Updated: 0.07
-    structSpriteEntry .struct Coordinates, Unknown, Size, Index, Priority, Palette, HFlip, VFlip
+    structSpriteEntry .struct Coordinates, AttrBits, Size, Index, Priority, Palette, HFlip, VFlip
       ; size(), len() use type(gap) for fields
       .if (type(\Coordinates) == gap)
         xc := ?
@@ -27,7 +27,7 @@
       .else
         hf := int(\HFlip)
       .endif
-      X .word (\Size << 15) | (\Unknown << 9) | (xc & $1FF)
+      X .word (\Size << 15) | (\AttrBits << 9) | (xc & $1FF)
       Y .char yc
       Attr .word (vf << 15) | (hf << 14) | (\Priority << 12) | (\Palette << 9) | \Index
     .endstruct

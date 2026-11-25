@@ -209,12 +209,12 @@
 
     ; Command $18 doesn't exist
 
-    EVENT_19 .segment UnknownPointer, UnknownValue
+    EVENT_19 .segment DialoguePointer, DialogueParam
       ; Unused.
       ; Sets up dialogue values, but then calls a routine that does nothing.
       .byte $19
-      .long \UnknownPointer
-      .long \UnknownValue
+      .long \DialoguePointer
+      .long \DialogueParam
     .endsegment
 
     EVENT_1A .segment
@@ -223,11 +223,11 @@
       .byte $1A
     .endsegment
 
-    EVENT_1B .segment UnknownPointer
+    EVENT_1B .segment DataPointer
       ; Unused.
       ; Sets the pointer for EVENT_1A to DMA.
       .byte $1B
-      .long \UnknownPointer
+      .long \DataPointer
     .endsegment
 
     CHANGE_DIALOGUE .segment DialoguePointer
@@ -260,15 +260,15 @@
       .word \Size
     .endsegment
 
-    CREATE_SPRITE .segment SpritePointer, Unknown1, Unknown2
+    CREATE_SPRITE .segment SpritePointer, XPos, YPos
       ; Unused.
       .byte $21
       .long \SpritePointer
-      .word \Unknown1
-      .word \Unknown2
+      .word \XPos
+      .word \YPos
     .endsegment
 
-    MOVE_TEMPORARY_TO_COORDS .segment CharacterID, StartCoordinates, DestinationCoordinates, MovementSpeed, UnitSlot, SpriteColor, DisappearOffscreenFlag=false, UnknownFlag=false
+    MOVE_TEMPORARY_TO_COORDS .segment CharacterID, StartCoordinates, DestinationCoordinates, MovementSpeed, UnitSlot, SpriteColor, DisappearOffscreenFlag=false, HighBitFlag=false
       ; The unit specified does not need to be loaded, and wont be loaded via this.
       ; This is purely visual.
       .byte $22
@@ -277,7 +277,7 @@
       .char \StartCoordinates[1]
       .byte \DestinationCoordinates[0]
       .byte \DestinationCoordinates[1]
-      .byte (\MovementSpeed & $0F | int(\DisappearOffscreenFlag) << 4 | (\UnitSlot & $03) << 5 | int(\UnknownFlag)<<7)
+      .byte (\MovementSpeed & $0F | int(\DisappearOffscreenFlag) << 4 | (\UnitSlot & $03) << 5 | int(\HighBitFlag)<<7)
       .byte \SpriteColor
     .endsegment
 
@@ -505,12 +505,12 @@
       .byte $3D
     .endsegment
 
-    EVENT_3E .segment Unknown1, Unknown2
+    EVENT_3E .segment Param1, Param2
       ; Unused.
       ; ?
       .byte $3E
-      .word \Unknown1
-      .byte \Unknown2
+      .word \Param1
+      .byte \Param2
     .endsegment
 
     SCRIPTED_MAP_SCROLL .segment ScriptPointer, ScrollSpeed
@@ -573,19 +573,19 @@
       .byte \Timer
     .endsegment
 
-    EVENT_48 .segment Unknown1, Unknown2
+    EVENT_48 .segment MenuIndex, MenuPointer
       ; Unused.
       ; Tries to create a map menu?
       .byte $48
-      .byte \Unknown1
-      .long \Unknown2
+      .byte \MenuIndex
+      .long \MenuPointer
     .endsegment
 
-    EVENT_49 .segment Unknown
+    EVENT_49 .segment MenuIndex
       ; Unused.
       ; Tries to load created menu by EVENT_48?
       .byte $49
-      .byte \Unknown
+      .byte \MenuIndex
     .endsegment
 
     RUN_EVENT_CONDITION .segment

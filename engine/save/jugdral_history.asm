@@ -616,7 +616,7 @@
         lda #$401E
         sta aDialogue._Slot[0].wDisplayArea,b
         lda #$0003
-        sta aDialogue.wUnknown001892,b
+        sta aDialogue.wCharLimit,b
         lda #$0200
         tsb aDialogue.wStatus,b
         lda #$03FF

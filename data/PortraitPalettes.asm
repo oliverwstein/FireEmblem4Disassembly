@@ -1,7 +1,7 @@
 ; Portrait palettes, 16 colours each (BGR555), pointed at by
 ; aPortraitPalettePointers. Each is named after the first entry that uses it.
 ; Unused: palettes of entries that no character or class uses; Placeholder:
-; the two developer placeholders ($AE, $B0); Unknown (by address): palettes
+; the two developer placeholders ($AE, $B0); Unused8C* (by address): palettes
 ; that are not in the table at all.
 
 aPortraitPaletteSigurd ; 8C/A800

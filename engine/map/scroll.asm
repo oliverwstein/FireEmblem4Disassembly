@@ -281,7 +281,7 @@
         lda wR5
         sta aMovingMapSprites.wDestinationYCoordinate,b
         lda wR6
-        sta aMovingMapSprites.wUnknown001830,b
+        sta aMovingMapSprites.wQueuedMoverParam,b
         lda #1
         sta aMovingMapSprites.wState,b
 

@@ -127,7 +127,7 @@
         sta wStatusScreenStepAfterFade
         sta wStatusScreenItemSlot
         lda #$0050
-        sta wUnknown000885,b
+        sta wStatusScreenTemp0885,b
         lda #$FFFF
         sta wTempVariable1,b
         lda #$0000
@@ -836,7 +836,7 @@
         lda #$0001
         sta wStatusScreenItemSlot
         jsl rlStatusScreenDrawItemDetails
-        stz wUnknown000885,b
+        stz wStatusScreenTemp0885,b
         lda #$000A
         jsl rlPlaySoundEffect
 
@@ -1446,10 +1446,10 @@
         lda wStatusScreenItemSlot
         cmp #$0001
         beq _86D5
-        lda wUnknown000885,b
+        lda wStatusScreenTemp0885,b
         sec
         sbc #$0010
-        sta wUnknown000885,b
+        sta wStatusScreenTemp0885,b
         lda wStatusScreenItemSlot
         dec a
         sta wStatusScreenItemSlot
@@ -1466,10 +1466,10 @@
         lda wStatusScreenItemSlot
         cmp wCastleListSubCount,b
         beq _8700
-        lda wUnknown000885,b
+        lda wStatusScreenTemp0885,b
         clc
         adc #$0010
-        sta wUnknown000885,b
+        sta wStatusScreenTemp0885,b
         lda wStatusScreenItemSlot
         inc a
         sta wStatusScreenItemSlot
@@ -1934,7 +1934,7 @@
         .autsiz
         .databank ?
 
-        ; The hand cursor beside the inventory row wUnknown000885.
+        ; The hand cursor beside the inventory row wStatusScreenTemp0885.
 
         phb
         php
@@ -1943,7 +1943,7 @@
         .databank $89
         lda #$0076
         sta wR0
-        lda wUnknown000885,b
+        lda wStatusScreenTemp0885,b
         clc
         adc #$006A
         sta wR1

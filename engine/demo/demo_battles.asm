@@ -136,7 +136,7 @@
         lda #$0031
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -151,7 +151,7 @@
         lda #$002D
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -227,7 +227,7 @@
         lda #$0001
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -242,7 +242,7 @@
         lda #$0003
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -334,7 +334,7 @@
         lda #$0002
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0003
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -349,7 +349,7 @@
         lda #$001E
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -441,7 +441,7 @@
         lda #$0024
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -456,7 +456,7 @@
         lda #$0014
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -541,7 +541,7 @@
         lda #$0015
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -556,7 +556,7 @@
         lda #$002C
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -648,7 +648,7 @@
         lda #$0029
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -663,7 +663,7 @@
         lda #$0029
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -762,7 +762,7 @@
         lda #$004E
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -777,7 +777,7 @@
         lda #$003F
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -869,7 +869,7 @@
         lda #$0024
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -884,7 +884,7 @@
         lda #$0023
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -976,7 +976,7 @@
         lda #$004B
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -991,7 +991,7 @@
         lda #$0046
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -1076,7 +1076,7 @@
         lda #$0015
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0019
         sta aActionStructUnit1.CharacterID
         lda #$0000
@@ -1093,7 +1093,7 @@
         lda #$0041
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -1191,7 +1191,7 @@
         lda #$000A
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -1206,7 +1206,7 @@
         lda #$001D
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
@@ -1296,7 +1296,7 @@
         lda #$004B
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
@@ -1311,7 +1311,7 @@
         lda #$002A
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2

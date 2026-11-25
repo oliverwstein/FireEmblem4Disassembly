@@ -1148,7 +1148,7 @@
           lda aSave.wMenuOperation,b
           and #$7FFF
           dec a
-          sta aSave.wUnknown001B09,b
+          sta aSave.wSaveTemp1B09,b
           stz aSave.wMenuOperation,b
 
         _End

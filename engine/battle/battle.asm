@@ -1075,7 +1075,7 @@
           lda wR11
           sta $4F7B,b
 
-          lda aAIAction.wUnknown7F442C
+          lda aAIAction.wTargetCount
           cmp #$00FF
           beq +
 
@@ -2820,7 +2820,7 @@
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
 
-        lda structActionStructEntry.Unknown,b,x
+        lda structActionStructEntry.ActionType,b,x
         cmp #8
         bne +
 

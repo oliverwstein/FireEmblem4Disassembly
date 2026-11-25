@@ -2303,9 +2303,9 @@
         .autsiz
         .databank ?
 
-        ; Adds the 8.8 velocities in aUnknown0013C0 and aUnknown0013E0 to the sprite's X and Y (aXPosition, aYPosition), keeping the fractions in their high bytes' neighbours.
+        ; Adds the 8.8 velocities in aXVelocity and aYVelocity to the sprite's X and Y (aXPosition, aYPosition), keeping the fractions in their high bytes' neighbours.
 
-        lda aActiveSpriteSystem.aUnknown0013C0,b,x
+        lda aActiveSpriteSystem.aXVelocity,b,x
         sep #$20
         clc
         adc $11E1,b,x
@@ -2319,7 +2319,7 @@
         _89B0
         adc aActiveSpriteSystem.aXPosition,b,x
         sta aActiveSpriteSystem.aXPosition,b,x
-        lda aActiveSpriteSystem.aUnknown0013E0,b,x
+        lda aActiveSpriteSystem.aYVelocity,b,x
         sep #$20
         clc
         adc $1221,b,x

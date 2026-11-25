@@ -324,7 +324,7 @@
         sta <>aMapAction.wMapBattleStrikeSignal,b
         sta <>aMapAction.wMapBattleStrikeDone,b
         sta <>aMapAction.wMapBattleRoundRunning,b
-        sta @l aMapAction.wUnknown7F455A
+        sta @l aMapAction.wEffectParam
         sta @l aMapAction.wSideTallSprite
         sta @l wMapMagicStart
         sta @l wMapMagicDone
@@ -624,7 +624,7 @@
         lda #$FFFF
         sta aActionStructUnit1.WeaponID
         lda #$0008
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         lda #$0000
         sta aMapAction.wAttackerAllegiance
         lda #$FFFF
@@ -635,7 +635,7 @@
         sta aActionStructUnit2.XPosition
         sta aActionStructUnit2.YPosition
         sta aActionStructUnit2.WeaponID
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         lda #$0001
         sta wBattleDistance
         sep #$20
@@ -719,7 +719,7 @@
         _F11F
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         jsl rlGetSelectedUnitDeploymentOffset
         sta aActionStructUnit1
         tax
@@ -753,7 +753,7 @@
         jsl rlGetItemIDByInventorySlot
         sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta aActionStructUnit2.Unknown
+        sta aActionStructUnit2.ActionType
         jsl rlGetSelectedUnitDeploymentOffset
         sta aActionStructUnit2
         tax
@@ -887,7 +887,7 @@
         sta <>aMapAction.wMapBattleStrikeSignal,b
         sta <>aMapAction.wMapBattleStrikeDone,b
         sta <>aMapAction.wMapBattleRoundRunning,b
-        sta aMapAction.wUnknown7F455A
+        sta aMapAction.wEffectParam
         sta aMapAction.wSideTallSprite
         sta wMapMagicStart
         sta wMapMagicDone
@@ -1046,7 +1046,7 @@
         sta <>aMapAction.wMapBattleStrikeSignal,b
         sta <>aMapAction.wMapBattleStrikeDone,b
         sta <>aMapAction.wMapBattleRoundRunning,b
-        sta aMapAction.wUnknown7F455A
+        sta aMapAction.wEffectParam
         sta aMapAction.wSideTallSprite
         sta wMapMagicStart
         sta wMapMagicDone

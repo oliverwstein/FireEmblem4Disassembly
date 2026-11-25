@@ -131,7 +131,7 @@
         lda #6
         sta aDialogue.wTextSpeed,b
 
-        stz aEpilogue.wUnknown00174B,b
+        stz aEpilogue.wEpilogueDialogueFlags,b
 
         lda #DialogueStatusPreventASpeedUp
         tsb aDialogue.wStatus,b
@@ -177,7 +177,7 @@
 
         +
         sta aDialogue.wUnit2,b
-        sta aEpilogue.wUnknown00174D,b
+        sta aEpilogue.wEpilogueDialogueVar1,b
         asl a
         tax
         lda aEpilogueUnitStates,x
@@ -185,7 +185,7 @@
         beq +
 
           lda #$0001
-          tsb aEpilogue.wUnknown00174B,b
+          tsb aEpilogue.wEpilogueDialogueFlags,b
 
         +
         lda #(`dialogueEpiloge_PullDialogueStack)<<8
@@ -218,7 +218,7 @@
         ldx aEpilogue.wCurrentEpilogueID,b
         lda aEpilogueSupportingCharacters,x
         and #$00FF
-        sta aEpilogue.wUnknown00174F,b
+        sta aEpilogue.wEpilogueDialogueVar2,b
         beq +
 
           pha
@@ -269,7 +269,7 @@
         rtl
 
         _BBFD
-        lda aEpilogue.wUnknown00174B,b
+        lda aEpilogue.wEpilogueDialogueFlags,b
         bit #$0001
         beq _EndDialogue
 
@@ -592,7 +592,7 @@
         +
         pha
 
-        lda aEpilogue.wUnknown00174F,b
+        lda aEpilogue.wEpilogueDialogueVar2,b
         sta wR0
         ldx #-2
 

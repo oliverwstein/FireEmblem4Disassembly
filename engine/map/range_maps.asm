@@ -97,7 +97,7 @@
 
         +
         jsl rlGetSelectedUnitMovementCostPointer
-        sta aAIAction.wUnknown7F442C
+        sta aAIAction.wTargetCount
 
         jsl rlGetSelectedUnitTotalFieldMovement
         sta $18

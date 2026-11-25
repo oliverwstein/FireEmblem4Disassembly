@@ -137,31 +137,31 @@
 
         lda bFrameCounterByOnes,b
         and #$3F
-        sta bRNGUnknown1,b
+        sta bRNGTemp1,b
         sta aRNArray + size(aRNArray) - 1,b
 
         lda #1
-        sta bRNGUnknown2,b
+        sta bRNGTemp2,b
         ldy #20
         ldx #$36
 
           _Loop
-          lda bRNGUnknown2,b
+          lda bRNGTemp2,b
           sta aRNArray,b,y
 
-          lda bRNGUnknown1,b
+          lda bRNGTemp1,b
           sec
-          sbc bRNGUnknown2,b
+          sbc bRNGTemp2,b
           bge +
 
             clc
             adc #100
 
           +
-          sta bRNGUnknown2,b
+          sta bRNGTemp2,b
 
           lda aRNArray,b,y
-          sta bRNGUnknown1,b
+          sta bRNGTemp1,b
 
           tya
           clc
@@ -196,7 +196,7 @@
 
           _Loop
           tya
-          sta bRNGUnknown1,b
+          sta bRNGTemp1,b
           cmp #24
           bge +
 
@@ -209,12 +209,12 @@
           +
           tay
           lda aRNArray,b,y
-          sta bRNGUnknown2,b
+          sta bRNGTemp2,b
 
-          ldy bRNGUnknown1,b
+          ldy bRNGTemp1,b
           lda aRNArray,b,y
           sec
-          sbc bRNGUnknown2,b
+          sbc bRNGTemp2,b
           bge +
 
             adc #100
@@ -243,7 +243,7 @@
         jsl rlGetGameTimeHoursMinutes
         lsr a
         lsr a
-        sta bRNGUnknown1,b
+        sta bRNGTemp1,b
 
         txa
         asl a
@@ -251,7 +251,7 @@
         asl a
         asl a
         clc
-        adc bRNGUnknown1,b
+        adc bRNGTemp1,b
         sec
         sbc #80
         bcc +
@@ -266,14 +266,14 @@
         lda #0
 
         +
-        sta bRNGUnknown1,b
+        sta bRNGTemp1,b
         sep #$30
         ldy #0
         tyx
 
           _Loop
           lda aRNArray,b,y
-          cmp bRNGUnknown1,b
+          cmp bRNGTemp1,b
           bcs +
 
             txa

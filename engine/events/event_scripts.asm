@@ -433,7 +433,7 @@
           sty wActiveEventOffset,b
 
         _End
-        stz wUnknown000921,b
+        stz wMovingMapSpriteActiveMask,b
 
         plp
         plb
@@ -597,7 +597,7 @@
         rep #$30
         stz wEventEngineFlags,b
         stz wEventEngineState,b
-        stz wUnknown00171E,b
+        stz wEventEngineState171E,b
         stz wActiveEventOffset,b
         jsl rlEventEngineFreeAllProcs
         jsl rlActiveSpriteEngineClearAllSprites
@@ -1746,7 +1746,7 @@
 
         +
         plx
-        sta aMovingMapSprites.wUnknown0017CC,b,x
+        sta aMovingMapSprites.aMovingMapSpriteUnitSlot,b,x
 
         ; Grab the X coordinate
         lda wR1
@@ -1852,7 +1852,7 @@
         inc y
         lda [lR18],y
         and #$00FF
-        sta aMovingMapSprites.wUnknown001822,b
+        sta aMovingMapSprites.wLoadUnitMoverOffset,b
         sta wR7
 
         inc y
@@ -1888,7 +1888,7 @@
         inc y
         lda [lR18],y
         and #$00FF
-        sta aMovingMapSprites.wUnknown001824,b
+        sta aMovingMapSprites.wLoadUnitFlags,b
 
         inc y
         phy
@@ -1957,7 +1957,7 @@
         lda wR0
         ldx wR7
         plx
-        sta aMovingMapSprites.wUnknown0017CC,b,x
+        sta aMovingMapSprites.aMovingMapSpriteUnitSlot,b,x
 
         ply
         plx
@@ -2052,9 +2052,9 @@
         sta wR6
 
         lda wR7
-        sta aMovingMapSprites.wUnknown0017CC,b,x
+        sta aMovingMapSprites.aMovingMapSpriteUnitSlot,b,x
         lda wR8
-        sta aMovingMapSprites.wUnknown001814,b,x
+        sta aMovingMapSprites.aMovingMapSpriteClassID,b,x
         ply
         plx
         clc
@@ -2179,7 +2179,7 @@
         lda [lR18],y
         and #$003E
         xba
-        sta aMovingMapSprites.wUnknown001804,b,x
+        sta aMovingMapSprites.aMovingMapSpriteArrayOffset,b,x
         inc y
 
         lda [lR18],y
@@ -2290,8 +2290,8 @@
             bra ++
 
         +
-        inc aMovingMapSprites.wUnknown00181C,b
-        lda aMovingMapSprites.wUnknown00181C,b
+        inc aMovingMapSprites.wSoundChannelCounter,b
+        lda aMovingMapSprites.wSoundChannelCounter,b
         and #$0001
         inc a
         xba
@@ -2617,9 +2617,9 @@
           beq _Next
 
             tax
-            lda aActiveSpriteSystem.aUnknown0012E0,b,x
+            lda aActiveSpriteSystem.aFlags,b,x
             ora #$8000
-            sta aActiveSpriteSystem.aUnknown0012E0,b,x
+            sta aActiveSpriteSystem.aFlags,b,x
 
             tyx
             lda aMovingMapSprites.wMovingSound,b,x
@@ -4808,7 +4808,7 @@
           beq +
 
             tay
-            lda aActiveSpriteSystem.aUnknown0012E0,b,y
+            lda aActiveSpriteSystem.aFlags,b,y
             tsb wR7
 
           +

@@ -2413,7 +2413,7 @@
         sta aDialogue.wTextSpeed,b
         sta aDialogue.wPauseTimer,b
         lda #$000A
-        sta aDialogue.wUnknown001892,b
+        sta aDialogue.wCharLimit,b
         lda #$0200
         tsb aDialogue.wStatus,b
         lda #$0180

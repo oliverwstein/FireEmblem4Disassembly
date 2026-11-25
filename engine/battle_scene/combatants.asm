@@ -6,7 +6,7 @@
 ; knockback, the effect slots' flight (rlBattleAnimationMoveEffectSlot),
 ; afterimages and shadows, the release signals between the combatants, and the
 ; VBlank upload queue. The move routines are in animation_moves.asm. The effect
-; slots' spawn fields ($0C03-$0C30) are still Unknown.
+; slots' spawn fields ($0C03-$0C30) are still unverified.
 
 
     .section Unsorted95B184Section

@@ -62,12 +62,12 @@
         lda #0
         sta aDialogue.wSlotOffset,b
 
-        stz aDialogue.wUnknown001890,b
+        stz aDialogue.wCharCounter,b
         stz aDialogue.wGraphicBufferPixelOffset,b
         stz aDialogue.wStringPixelLength,b
 
         lda #2
-        sta aDialogue.wUnknown001892,b
+        sta aDialogue.wCharLimit,b
 
         stz aDialogue.wBaseTile,b
 
@@ -118,7 +118,7 @@
         sta aDialogue._Slot[0].wBGBufferOffset,b,x
         sta aDialogue._Slot[0].wVRAMTileOffset,b,x
         sta aDialogue._Slot[0].wScrollOffset,b,x
-        sta aDialogue.wUnknown001890,b
+        sta aDialogue.wCharCounter,b
         sta aDialogue.wGraphicBufferPixelOffset,b
         sta aDialogue.wStringPixelLength,b
         rtl
@@ -294,7 +294,7 @@
         sta aDialogue.wTextSpeed,b
         sta aDialogue.wPauseTimer,b
 
-        stz aDialogue.wUnknown001890,b
+        stz aDialogue.wCharCounter,b
         stz aDialogue.wGraphicBufferPixelOffset,b
         stz aDialogue.wStringPixelLength,b
         stz aDialogue.wFreeHDMATable,b
@@ -318,14 +318,14 @@
         php
         rep #$30
         lda #$FFFF
-        sta aDialogue._Slot[0].wUnknown0018E3,b
+        sta aDialogue._Slot[0].wPortraitSlotVar1,b
         sta aDialogue._Slot[0].wPortraitID,b
-        sta aDialogue._Slot[0].wUnknown0018E7,b
-        sta aDialogue._Slot[0].wUnknown0018E9,b
-        sta aDialogue._Slot[1].wUnknown0018E3,b
+        sta aDialogue._Slot[0].wPortraitSlotVar2,b
+        sta aDialogue._Slot[0].wMouthAnimState,b
+        sta aDialogue._Slot[1].wPortraitSlotVar1,b
         sta aDialogue._Slot[1].wPortraitID,b
-        sta aDialogue._Slot[1].wUnknown0018E7,b
-        sta aDialogue._Slot[1].wUnknown0018E9,b
+        sta aDialogue._Slot[1].wPortraitSlotVar2,b
+        sta aDialogue._Slot[1].wMouthAnimState,b
         plp
         rtl
 
@@ -365,7 +365,7 @@
           lda aDialogue.wTextSpeed,b
           sta aDialogue.wPauseTimer,b
           lda #0
-          sta aDialogue.wUnknown001890,b
+          sta aDialogue.wCharCounter,b
 
         +
         rtl
@@ -405,7 +405,7 @@
               +
               sta aDialogue.wPauseTimer,b
               lda #0
-              sta aDialogue.wUnknown001890,b
+              sta aDialogue.wCharCounter,b
 
         _End
         rtl
@@ -549,9 +549,9 @@
             jsr rsRunDialogueCommand
 
             ldx aDialogue.wSlotOffset,b
-            lda aDialogue._Slot[0].wUnknown0018D2,b,x
+            lda aDialogue._Slot[0].wHandledCharFlag,b,x
             and #~$0001
-            sta aDialogue._Slot[0].wUnknown0018D2,b,x
+            sta aDialogue._Slot[0].wHandledCharFlag,b,x
             bcc _Loop
             bra _End
 
@@ -559,9 +559,9 @@
           jsr rsDialogueHandleCharacter
 
           ldx aDialogue.wSlotOffset,b
-          lda aDialogue._Slot[0].wUnknown0018D2,b,x
+          lda aDialogue._Slot[0].wHandledCharFlag,b,x
           ora #$0001
-          sta aDialogue._Slot[0].wUnknown0018D2,b,x
+          sta aDialogue._Slot[0].wHandledCharFlag,b,x
           bcc _Loop
 
         lda aDialogue.wCurrentCharacter,b
@@ -745,7 +745,7 @@
         .autsiz
         .databank ?
 
-        ; DMAs aDialogue.lUnknown00187F to _Slot[0].wVRAMAddress
+        ; DMAs aDialogue.lFontTilesPointer to _Slot[0].wVRAMAddress
 
         lda aDialogue._Slot[0].wVRAMTileOffset,b
         asl a
@@ -755,9 +755,9 @@
         sta wR0
         lda aDialogue._Slot[0].wVRAMAddress,b
         sta wR1
-        lda aDialogue.lUnknown00187F,b
+        lda aDialogue.lFontTilesPointer,b
         sta lR18
-        lda aDialogue.lUnknown00187F+1,b
+        lda aDialogue.lFontTilesPointer+1,b
         sta lR18+1
         jsl rlDMAByPointer
         lda #$0010
@@ -772,12 +772,12 @@
         .autsiz
         .databank ?
 
-        ; Sets aDialogue.lUnknown00187F from lR18
+        ; Sets aDialogue.lFontTilesPointer from lR18
 
         lda lR18
-        sta aDialogue.lUnknown00187F,b
+        sta aDialogue.lFontTilesPointer,b
         lda lR18+1
-        sta aDialogue.lUnknown00187F+1,b
+        sta aDialogue.lFontTilesPointer+1,b
         rtl
 
         .databank 0
@@ -839,14 +839,14 @@
         bit #DialogueStatusInstantSpeedUp
         beq +
 
-          inc aDialogue.wUnknown001890,b
+          inc aDialogue.wCharCounter,b
 
-          lda aDialogue.wUnknown001890,b
-          cmp aDialogue.wUnknown001892,b
+          lda aDialogue.wCharCounter,b
+          cmp aDialogue.wCharLimit,b
           bcc _CLC
 
         +
-        stz aDialogue.wUnknown001890,b
+        stz aDialogue.wCharCounter,b
         bra _SEC
 
         _CLC
@@ -1031,7 +1031,7 @@
         lda aDialogue.wGraphicBufferPixelOffset,b
         beq _ClearBuffer
 
-          lda aDialogue.wUnknown001890,b
+          lda aDialogue.wCharCounter,b
           beq +
           brl _End
 
@@ -1801,7 +1801,7 @@
         _8921
         lda #0
         sta aDialogue.wGraphicBufferPixelOffset,b
-        sta aDialogue.wUnknown001890,b
+        sta aDialogue.wCharCounter,b
         rts
 
         .databank 0
@@ -2624,7 +2624,7 @@
 
         lda #0
         sta aDialogue.wGraphicBufferPixelOffset,b
-        sta aDialogue.wUnknown001890,b
+        sta aDialogue.wCharCounter,b
 
         inc aDialogue.lActivePointer,b
         clc
@@ -2645,7 +2645,7 @@
 
         lda #0
         sta aDialogue.wGraphicBufferPixelOffset,b
-        sta aDialogue.wUnknown001890,b
+        sta aDialogue.wCharCounter,b
         clc
         rts
 
@@ -2664,7 +2664,7 @@
 
         lda #0
         sta aDialogue.wGraphicBufferPixelOffset,b
-        sta aDialogue.wUnknown001890,b
+        sta aDialogue.wCharCounter,b
         clc
         rts
 
@@ -3652,7 +3652,7 @@
         ; Sets active slot BG3 buffer position from packed (X, Y) tile coords
 
         ldx aDialogue.wSlotOffset,b
-        sta aDialogue._Slot[0].wUnknown0018D9,b,x
+        sta aDialogue._Slot[0].wBG3TilemapPos,b,x
         sta wR1
 
         sep #$20
@@ -3862,7 +3862,7 @@
         jsr rsDialogueClearCharacterGraphicsBuffer
 
         lda #0
-        sta aDialogue._Slot[0].wUnknown0018E9,b
+        sta aDialogue._Slot[0].wMouthAnimState,b
         sta aDialogue.wSlot0MouthFrame,b
         sta aDialogue.wSlot1MouthFrame,b
         rtl
@@ -5512,7 +5512,7 @@
           tax
           lda aDialogueMouthAnimationFrames,x
           and #$00FF
-          sta aDialogue._Slot[0].wUnknown0018E9,b
+          sta aDialogue._Slot[0].wMouthAnimState,b
 
           ldx aDialogue.wSlotOffset,b
           bne +
@@ -5526,7 +5526,7 @@
 
           _989E
           lda #0
-          sta aDialogue._Slot[0].wUnknown0018E9,b
+          sta aDialogue._Slot[0].wMouthAnimState,b
           sta aDialogue.wSlot0MouthFrame,b
           sta aDialogue.wSlot1MouthFrame,b
 

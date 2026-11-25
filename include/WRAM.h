@@ -235,8 +235,8 @@
     bFrameCounterByThrees .byte ?       ; $00046A
     aRNArray .fill 55                   ; $00046B
     wRNIndex .word ?                    ; $0004A2
-    bRNGUnknown1 .byte ?                ; $0004A4
-    bRNGUnknown2 .byte ?                ; $0004A5
+    bRNGTemp1 .byte ?                ; $0004A4
+    bRNGTemp2 .byte ?                ; $0004A5
 
   .endvirtual
 
@@ -708,7 +708,7 @@
     wCastleCursorX .word ?                     ; $00087D ; castle menu cursor X
     wCastleCursorY .word ?                     ; $00087F ; castle menu cursor Y
     .fill 4                                    ; $000881
-    wUnknown000885 .word ?                     ; $000885
+    wStatusScreenTemp0885 .word ?                     ; $000885
     .fill 2                                    ; $000887
 
     wCastleListSubCount .word ?                ; $000889 ; items in the unit's inventory (0-7)
@@ -798,14 +798,14 @@
 
   .virtual $0008F1
 
-    wUnknown0008F1 .fill (size(word) * 4) ; $0008F1
+    aMovingMapSpriteAnimFrame .fill (size(word) * 4) ; $0008F1
     .fill (size(word) * 4)                ; $0008F9
-    wUnknown000901 .fill (size(word) * 4) ; $000901
+    aMovingMapSpriteAnimTimer .fill (size(word) * 4) ; $000901
     .fill (size(word) * 4)                ; $000909
-    wUnknown000911 .fill (size(word) * 4) ; $000911
+    aMovingMapSpriteFacing .fill (size(word) * 4) ; $000911
       ; Holds movement direction of a map sprite
     .fill (size(word) * 4)                ; $000919
-    wUnknown000921 .word ?                ; $000921
+    wMovingMapSpriteActiveMask .word ?                ; $000921
       ; Is a bitfield
 
   .endvirtual
@@ -1572,23 +1572,23 @@
       aFrameTimer     .fill (size(word) * 16) ; $001180
       aCodeOffset     .fill (size(word) * 16) ; $0011A0
       aFrameOffset    .fill (size(word) * 16) ; $0011C0 ; the sprite array drawn each frame (structSpriteArray), in the sprite's bank
-      aUnknown0011E0  .fill (size(word) * 16) ; $0011E0
+      aXSubpixel  .fill (size(word) * 16) ; $0011E0
       aXPosition      .fill (size(word) * 16) ; $001200 ; screen X; X at creation
-      aUnknown001220  .fill (size(word) * 16) ; $001220
+      aYSubpixel  .fill (size(word) * 16) ; $001220
       aYPosition      .fill (size(word) * 16) ; $001240 ; screen Y; Y at creation
       aTileBase       .fill (size(word) * 16) ; $001260 ; added to each entry's tile (wR4 for the renderer)
       aTileBaseHigh   .fill (size(word) * 16) ; $001280 ; tile base for tiles $40 and up with rlPushToOAMBufferDualTileBase (wR6)
       aPalette        .fill (size(word) * 16) ; $0012A0 ; OAM palette ORed into each entry (<< 9, wR5)
-      aUnknown0012C0  .fill (size(word) * 16) ; $0012C0 ; holds mover index
-      aUnknown0012E0  .fill (size(word) * 16) ; $0012E0
-      aUnknown001300  .fill (size(word) * 16) ; $001300 ; holds movement direction
-      aUnknown001320  .fill (size(word) * 16) ; $001320
-      aUnknown001340  .fill (size(word) * 16) ; $001340
-      aUnknown001360  .fill (size(word) * 16) ; $001360
-      aUnknown001380  .fill (size(word) * 16) ; $001380
-      aUnknown0013A0  .fill (size(word) * 16) ; $0013A0
-      aUnknown0013C0  .fill (size(word) * 16) ; $0013C0
-      aUnknown0013E0  .fill (size(word) * 16) ; $0013E0
+      aMoverIndex  .fill (size(word) * 16) ; $0012C0 ; holds mover index
+      aFlags  .fill (size(word) * 16) ; $0012E0
+      aDirection  .fill (size(word) * 16) ; $001300 ; holds movement direction
+      aStepCounter  .fill (size(word) * 16) ; $001320
+      aSubpixelAccum  .fill (size(word) * 16) ; $001340
+      aUserVar  .fill (size(word) * 16) ; $001360
+      aSubpixelStep  .fill (size(word) * 16) ; $001380
+      aPixelStep  .fill (size(word) * 16) ; $0013A0
+      aXVelocity  .fill (size(word) * 16) ; $0013C0
+      aYVelocity  .fill (size(word) * 16) ; $0013E0
 
     .bend
 
@@ -1705,7 +1705,7 @@
       ; map routines do nothing while it is nonzero.
     wEventEngineState .word ? ; $00171C
       ; 0 begin the script, 1 run its commands, 2 end it (aEventEngineStateRoutines).
-    wUnknown00171E .word ? ; $00171E
+    wEventEngineState171E .word ? ; $00171E
     wMapCurrentlyScrollingFlag .word ? ; $001720
     wEventUnitSlot1Pointer .word ? ; $001722
       ; The unit in the script's slot 1 (FILL_EVENT_UNIT_SLOT): its RAM pointer, or 0.
@@ -1719,7 +1719,7 @@
       ; JUMP_TRUE, JUMP_FALSE and the relative jumps.
     wEventSavedGameStateRoutine1 .word ? ; $001730
       ; wGameStateRoutine1 when the script began (rlEventEngineBeginScript); nothing reads it.
-    wUnknown001732 .word ? ; $001732
+    wEventChapterIDTemp .word ? ; $001732
 
   .endvirtual
 
@@ -1749,9 +1749,9 @@
         ; Lower byte region ID, high byte counter for how many
         ; units of that region displayed their epilogue.
       .endunion
-      wUnknown00174B .word ?            ; $00174B
-      wUnknown00174D .word ?            ; $00174D
-      wUnknown00174F .word ?            ; $00174F
+      wEpilogueDialogueFlags .word ?            ; $00174B
+      wEpilogueDialogueVar1 .word ?            ; $00174D
+      wEpilogueDialogueVar2 .word ?            ; $00174F
       wChosenDialogueID .word ?         ; $001751
     .bend
 
@@ -1773,32 +1773,32 @@
       wMapSpriteOverrideID .word ?      ; $0017C0 ; map sprite ID, if 0 use characters map sprite
       wMapSpriteFlags .word ?      ; $0017C2 ; $10 = DisappearOffscreenFlag
       wActiveSpriteOffset .fill (size(word) * 4)    ; $0017C4
-      wUnknown0017CC .fill (size(word) * 4)         ; $0017CC
+      aMovingMapSpriteUnitSlot .fill (size(word) * 4)         ; $0017CC
       wXPixelPosition .fill (size(word) * 4)        ; $0017D4
       wYPixelPosition .fill (size(word) * 4)        ; $0017DC
       wPathScriptAddress .fill (size(word) * 4)     ; $0017E4
       wPathScriptBank .fill (size(word) * 4)        ; $0017EC
       wPathScriptOffset .fill (size(word) * 4)      ; $0017F4
       wSpeed .fill (size(word) * 4)                 ; $0017FC
-      wUnknown001804 .fill (size(word) * 4)         ; $001804
+      aMovingMapSpriteArrayOffset .fill (size(word) * 4)         ; $001804
         ; Sprite color
       wMovingSound .fill (size(word) * 4)           ; $00180C
         ; Low byte is sound ID, high byte is volume?
-      wUnknown001814 .fill (size(word) * 4)         ; $001814
-      wUnknown00181C .word ?                        ; $00181C
+      aMovingMapSpriteClassID .fill (size(word) * 4)         ; $001814
+      wSoundChannelCounter .word ?                        ; $00181C
       wState .word ?                                ; $00181E
         ; 0 = nothing to do
         ; 1 = movement queued
         ; 2 = movement script done
       wEntryIndex    .word ?                        ; $001820
-      wUnknown001822 .word ?                        ; $001822
-      wUnknown001824 .word ?                        ; $001824
+      wLoadUnitMoverOffset .word ?                        ; $001822
+      wLoadUnitFlags .word ?                        ; $001824
       wCharacterID   .word ?                        ; $001826
       wSpawnXCoordinate .word ?                     ; $001828
       wSpawnYCoordinate .word ?                     ; $00182A
       wDestinationXCoordinate .word ?               ; $00182C
       wDestinationYCoordinate .word ?               ; $00182E
-      wUnknown001830 .word ?                        ; $001830 
+      wQueuedMoverParam .word ?                        ; $001830 
         ; 0 or 1?
 
     .bend
@@ -1856,10 +1856,10 @@
         ; and the original one is then pushed into the next slot.
         ; This can be done up to 6 times before the dialogue system
         ; skips commands that change the pointer further.
-      lUnknown00187F            .long ? ; $00187F
+      lFontTilesPointer            .long ? ; $00187F
       wStatus                   .word ? ; $001882
       wCommandCycle             .word ? ; $001884
-      wUnknown001886            .word ? ; $001886
+      wDialogueUnused1886            .word ? ; $001886
       wTextSpeed                .word ? ; $001888
       wPauseTimer               .word ? ; $00188A
       wSlowScrollRate           .word ? ; $00188C
@@ -1869,8 +1869,8 @@
       wSlowScrollTimer          .word ? ; $00188E
         ; Counts up to wSlowScrollRate. Bit 15 is set by a newline while
         ; DialogueStatusAutoscroll is on.
-      wUnknown001890            .word ? ; $001890
-      wUnknown001892            .word ? ; $001892
+      wCharCounter            .word ? ; $001890
+      wCharLimit            .word ? ; $001892
       bFontPage                 .byte ? ; $001894
       wCurrentCharacter         .word ? ; $001895
       wGraphicBufferPixelOffset .word ? ; $001897
@@ -1910,10 +1910,10 @@
 
       _Slot .brept 2
 
-        wUnknown0018D2        .word ? ; $0018D2 ; handled a character flag?
+        wHandledCharFlag        .word ? ; $0018D2 ; handled a character flag?
         lBGBufferPosition     .long ? ; $0018D4
         wVRAMAddress          .word ? ; $0018D7
-        wUnknown0018D9        .word ? ; $0018D9
+        wBG3TilemapPos        .word ? ; $0018D9
         .union
           wDisplayArea        .word ? ; $0018DB
           .struct
@@ -1929,10 +1929,10 @@
           ; multiple of 16, so one line takes 8 frames; the BG3 HDMA
           ; (rlDialogueUpdateHDMATable) scrolls the box by it once the text
           ; passes the box's last line. Cleared when the slot is reset.
-        wUnknown0018E3        .word ? ; $0018E3
+        wPortraitSlotVar1        .word ? ; $0018E3
         wPortraitID           .word ? ; $0018E5 ; can also be portrait RAM address?
-        wUnknown0018E7        .word ? ; $0018E7
-        wUnknown0018E9        .word ? ; $0018E9
+        wPortraitSlotVar2        .word ? ; $0018E7
+        wMouthAnimState        .word ? ; $0018E9
 
       .endrept
 
@@ -1949,7 +1949,7 @@
   .virtual $001B09
 
     aSave .block
-      wUnknown001B09 .word ?            ; $001B09
+      wSaveTemp1B09 .word ?            ; $001B09
       wMenuOperation .word ?            ; $001B0B
         ; 1 indexed
         ; $8000 flag set = load, else save
@@ -2050,20 +2050,20 @@
 
     wDebugMenuSkillCounter .word ? ; $7E2000
     aDebugMenuSkillFlags .block    ; $7E2002
-      bUnknown1     .byte ?
+      bDummy     .byte ?
       bCanto        .byte ?
       bPavise       .byte ?
       bWrath        .byte ?
       bPursuit      .byte ?
       bAdept        .byte ?
       bSteal        .byte ?
-      bUnknown2     .byte ?
+      bUnusedSkill07     .byte ?
       bDance        .byte ?
-      bUnknown3     .byte ?
-      bUnknown4     .byte ?
-      bUnknown5     .byte ?
+      bUnusedSkill09     .byte ?
+      bUnusedSkill0A     .byte ?
+      bDismount     .byte ?
       bCharm        .byte ?
-      bUnknown6     .byte ?
+      bPoW     .byte ?
       bNihil        .byte ?
       bMiracle      .byte ?
       bCritical     .byte ?
@@ -2076,10 +2076,10 @@
       bDarkness     .byte ?
       bRenewal      .byte ?
       bParagon      .byte ?
-      bUnknown7     .byte ?
-      bUnknown8     .byte ?
+      bEscape     .byte ?
+      bRecover     .byte ?
       bBargain      .byte ?
-      bUnknown9     .byte ?
+      bReturn     .byte ?
     .bend
   .endvirtual
 
@@ -2519,7 +2519,7 @@
       wDestinationXCoordinate .word ?    ; $7EC490
       wDestinationYCoordinate .word ?    ; $7EC492
         ; Coordinates where the unit is supposed to move to.
-      wUnknown7EC494 .word ?    ; $7EC494
+      wRouteParam .word ?    ; $7EC494
         ; 0 or 1?
       wStartingXCoordinate .word ?    ; $7EC496
       wStartingYCoordinate .word ?    ; $7EC498
@@ -2686,10 +2686,10 @@
       wAttackDirection .word ?                ; $7F4426
       wAdditionalAttackDirections .word ?     ; $7F4428
       wMapPointer .word ?                     ; $7F442A
-      wUnknown7F442C .word ?                  ; $7F442C ; active faction/counter/?
+      wTargetCount .word ?                  ; $7F442C ; active faction/counter/?
       wUnitFaction .word ?                    ; $7F442E
       wUnitMovementCostPointer .word ?        ; $7F4430
-      wUnknown7F4432 .word ?                  ; $7F4432
+      wAIActionUnused7F4432 .word ?                  ; $7F4432
       wBestAttackChance .word ?               ; $7F4434 ; the best score so far (rsAICheckIfNewBestTarget)
       wUnitToChosenTargetDistance .word ?     ; $7F4436
       wLeadershipPower .word ?                ; $7F4438 ; 50 + 10 x the leader's leadership stars; 100 in clever mode, 0 when berserk. A random number at or above it lets chance override the score
@@ -2799,8 +2799,8 @@
       wAttackerYTile .word ?      ; $7F4554
       wDefenderXTile .word ?      ; $7F4556
       wDefenderYTile .word ?      ; $7F4558
-      wUnknown7F455A .word ?      ; $7F455A ; written by the map action animations and cutscenes, never read
-      wUnknown7F455C .word ?      ; $7F455C
+      wEffectParam .word ?      ; $7F455A ; written by the map action animations and cutscenes, never read
+      wMapActionUnused7F455C .word ?      ; $7F455C
       wAttackerFacing .word ?     ; $7F455E ; 0-7 (rlGetMapBattleFacing), 6 with no target
       wDefenderFacing .word ?     ; $7F4560 ; the attacker's facing turned around (eor 4)
       wAttackerAllegiance .word ? ; $7F4562 ; the low 2 bits of the deployment entry; palette = allegiance + 1
@@ -3489,7 +3489,7 @@
       ; $8000 if dead
       ; $4000 if unrecruited
       ; $2000 + ora'd partners ID for selected children in _F96C (engine/epilogue/endings.asm)
-    aUnknown7FC57C .fill 25 * size(word) ; $7FC57C
+    aEpilogueGen2UnitStates .fill 25 * size(word) ; $7FC57C
       ; indexed by Gen2 IDs, same as above
 
     ; $7FC5AE

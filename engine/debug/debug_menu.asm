@@ -2285,11 +2285,11 @@
         .long aDebugSkillPursuit
         .long aDebugSkillAdept
         .long aDebugSkillSteal
-        .long 0                       ; Unknown2
+        .long 0                       ; Unused2
 
         .long aDebugSkillDance
-        .long 0                       ; Unknown3
-        .long 0                       ; Unknown4
+        .long 0                       ; Unused3
+        .long 0                       ; Unused4
         .long aDebugSkillDismount
         .long aDebugSkillCharm
         .long aDebugSkillPoW
@@ -2846,7 +2846,7 @@
         ldx #C2I((21, 15), 32) * size(word)
         jsl rlDrawMenuTextNumber
 
-        lda aActionStructUnit2.Unknown
+        lda aActionStructUnit2.ActionType
         beq +
 
           sta wR0
@@ -2862,7 +2862,7 @@
           jsl rlDrawMenuTextLine
         
         +
-        lda aActionStructUnit2.Unknown
+        lda aActionStructUnit2.ActionType
         ldx #$3920
         stx wR5
         ldx #0
@@ -2870,7 +2870,7 @@
         ldx #C2I((18, 17), 32) * size(word)
         jsl rlDrawMenuTextNumber
 
-        lda aActionStructUnit1.Unknown
+        lda aActionStructUnit1.ActionType
         beq +
 
           sta wR0
@@ -2891,7 +2891,7 @@
           jsl rlDrawMenuTextLine
 
         +
-        lda aActionStructUnit1.Unknown
+        lda aActionStructUnit1.ActionType
         ldx #$3920
         stx wR5
         ldx #0

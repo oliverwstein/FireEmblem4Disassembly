@@ -21,7 +21,7 @@
 
     BattleSceneFlagMelee          = bits($0001) ; battle distance under 2, not battle type 2
     BattleSceneFlagBattleType2    = bits($0002) ; wBattleType 2: no quotes, no foreground
-    BattleSceneFlagDance          = bits($0004) ; aActionStructUnit1.Unknown is 8, the dance: both stand at the center
+    BattleSceneFlagDance          = bits($0004) ; aActionStructUnit1.ActionType is 8, the dance: both stand at the center
     BattleSceneFlagSolo2          = bits($0008) ; the dance and Fortify (rsBattleScenePlaceTogether): both at the center, HDMA entries 3 and 6
     BattleSceneFlagSea            = bits($0010)
     BattleSceneFlagRiver          = bits($0020)

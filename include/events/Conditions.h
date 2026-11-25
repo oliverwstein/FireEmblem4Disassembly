@@ -50,12 +50,12 @@
     .endsegment
 
     ; Identifier : $05
-    EC_06 .segment Flag, Unknown1, Unknown2
+    EC_06 .segment Flag, Param1, Param2
       ; Unused. Nothing announces action $05.
       .byte $06
       .byte \Flag
-      .word \Unknown1
-      .word \Unknown2
+      .word \Param1
+      .word \Param2
     .endsegment
 
     ; Identifier : $06
@@ -68,12 +68,12 @@
     .endsegment
 
     ; Identifier : $07
-    EC_08 .segment Flag, Unknown1, Unknown2
+    EC_08 .segment Flag, Param1, Param2
       ; Unused. Nothing announces action $07.
       .byte $08
       .byte \Flag
-      .word \Unknown1
-      .word \Unknown2
+      .word \Param1
+      .word \Param2
     .endsegment
 
     ; Identifier : $08
@@ -203,8 +203,8 @@
       ; Like CHECK_CHILD_TALK but only maps the initiator to a sub?
       .byte $15
       .byte \Flag
-      .word \Unknown1
-      .word \Unknown2
+      .word \Initiator
+      .word \Target
     .endsegment
 
     ; Identifier : $0A

@@ -395,22 +395,22 @@
         sta aActiveSpriteSystem.aFrameOffset,x
 
         lda #0
-        sta aActiveSpriteSystem.aUnknown0011E0,x
-        sta aActiveSpriteSystem.aUnknown001220,x
+        sta aActiveSpriteSystem.aXSubpixel,x
+        sta aActiveSpriteSystem.aYSubpixel,x
         sta aActiveSpriteSystem.aLoopCounter,x
         sta aActiveSpriteSystem.aTileBase,x
         sta aActiveSpriteSystem.aTileBaseHigh,x
         sta aActiveSpriteSystem.aPalette,x
-        sta aActiveSpriteSystem.aUnknown0012C0,x
-        sta aActiveSpriteSystem.aUnknown0012E0,x
-        sta aActiveSpriteSystem.aUnknown001300,x
-        sta aActiveSpriteSystem.aUnknown001320,x
-        sta aActiveSpriteSystem.aUnknown001340,x
-        sta aActiveSpriteSystem.aUnknown001360,x
-        sta aActiveSpriteSystem.aUnknown001380,x
-        sta aActiveSpriteSystem.aUnknown0013A0,x
-        sta aActiveSpriteSystem.aUnknown0013C0,x
-        sta aActiveSpriteSystem.aUnknown0013E0,x
+        sta aActiveSpriteSystem.aMoverIndex,x
+        sta aActiveSpriteSystem.aFlags,x
+        sta aActiveSpriteSystem.aDirection,x
+        sta aActiveSpriteSystem.aStepCounter,x
+        sta aActiveSpriteSystem.aSubpixelAccum,x
+        sta aActiveSpriteSystem.aUserVar,x
+        sta aActiveSpriteSystem.aSubpixelStep,x
+        sta aActiveSpriteSystem.aPixelStep,x
+        sta aActiveSpriteSystem.aXVelocity,x
+        sta aActiveSpriteSystem.aYVelocity,x
 
         lda $0000,b,y
         clc
@@ -1442,11 +1442,11 @@
         .databank ?
 
         ; Not in the command table. Continues at the word stored at one of two long
-        ; addresses, by the sprite's aUnknown001320.
+        ; addresses, by the sprite's aStepCounter.
 
         phb
         phx
-        lda aActiveSpriteSystem.aUnknown001320,b,x
+        lda aActiveSpriteSystem.aStepCounter,b,x
         beq +
 
         inc y
@@ -1477,13 +1477,13 @@
         .autsiz
         .databank ?
 
-        ; Command $09: jumps to the side's round script (aMapAction.lAttackerRoundScript, lDefenderRoundScript for aUnknown001320 1).
+        ; Command $09: jumps to the side's round script (aMapAction.lAttackerRoundScript, lDefenderRoundScript for aStepCounter 1).
 
         phb
         phx
         lda aMapAction.lAttackerRoundScript
         tay
-        lda aActiveSpriteSystem.aUnknown001320,b,x
+        lda aActiveSpriteSystem.aStepCounter,b,x
         beq +
 
           lda aMapAction.lDefenderRoundScript
@@ -1508,7 +1508,7 @@
         phx
         lda aMapAction.lAttackerAuxRoundScript
         tay
-        lda aActiveSpriteSystem.aUnknown001320,b,x
+        lda aActiveSpriteSystem.aStepCounter,b,x
         beq +
 
           lda aMapAction.lDefenderAuxRoundScript
@@ -1618,14 +1618,14 @@
         .autsiz
         .databank ?
 
-        ; Command $03 (ACTIVE_SPRITE_MAP_BATTLE_FRAME): uploads frame N of the map battle side's frame tiles (aMapBattleSpriteDMATable by the sprite's aUnknown0012E0, the tall flag; the side in aUnknown0012C0) to its frame VRAM.
+        ; Command $03 (ACTIVE_SPRITE_MAP_BATTLE_FRAME): uploads frame N of the map battle side's frame tiles (aMapBattleSpriteDMATable by the sprite's aFlags, the tall flag; the side in aMoverIndex) to its frame VRAM.
 
         phy
         phx
-        lda aActiveSpriteSystem.aUnknown0012E0,b,x
+        lda aActiveSpriteSystem.aFlags,b,x
         asl a
         clc
-        adc aActiveSpriteSystem.aUnknown0012E0,b,x
+        adc aActiveSpriteSystem.aFlags,b,x
         tax
 
         lda aMapBattleSpriteDMATable,x
@@ -1641,7 +1641,7 @@
         lda [$24],y
         sta $04
         ldx aActiveSpriteSystem.wOffset,b
-        lda aActiveSpriteSystem.aUnknown0012C0,b,x
+        lda aActiveSpriteSystem.aMoverIndex,b,x
         asl a
         tax
         lda aMapBattleSideGraphicsOffsets,x
@@ -1656,11 +1656,11 @@
         sta $24
 
         ldx aActiveSpriteSystem.wOffset,b
-        lda aActiveSpriteSystem.aUnknown0012E0,b,x
+        lda aActiveSpriteSystem.aFlags,b,x
         sta $00
 
         ldx aActiveSpriteSystem.wOffset,b
-        lda aActiveSpriteSystem.aUnknown0012C0,b,x
+        lda aActiveSpriteSystem.aMoverIndex,b,x
         asl a
         tax
 
@@ -1816,7 +1816,7 @@
         lda $7F4598+1
         sta $24+1
 
-        lda aActiveSpriteSystem.aUnknown001320,b,x
+        lda aActiveSpriteSystem.aStepCounter,b,x
         beq +
 
         lda aMapAction.lDefenderSpriteData
@@ -1847,7 +1847,7 @@
         lda $7F4598+1
         sta $24+1
 
-        lda aActiveSpriteSystem.aUnknown001320,b,x
+        lda aActiveSpriteSystem.aStepCounter,b,x
         beq +
 
         lda aMapAction.lDefenderSpriteData
@@ -1896,7 +1896,7 @@
         lda $7F4598+1
         sta $24+1
         sta $28
-        lda aActiveSpriteSystem.aUnknown001320,b,x
+        lda aActiveSpriteSystem.aStepCounter,b,x
         beq +
 
           lda aMapAction.lDefenderSpriteData

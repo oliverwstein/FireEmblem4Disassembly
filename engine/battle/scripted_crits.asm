@@ -186,7 +186,7 @@
           sta wR0
           lda #$00FF
           sta aAIAction.wMapPointer
-          sta aAIAction.wUnknown7F442C
+          sta aAIAction.wTargetCount
           sta aAIAction.wUnitFaction
 
           lda #0
@@ -479,7 +479,7 @@
           inc wR12
           lda #$00FF
           sta aAIAction.wMapPointer
-          sta aAIAction.wUnknown7F442C
+          sta aAIAction.wTargetCount
           sta aAIAction.wUnitFaction
           ldx #0
           ldy wR10

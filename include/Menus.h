@@ -42,7 +42,7 @@
       ; If unset, directly DMA this.
   .endstruct
 
-  structMapMenuTilemapData .struct Width, Height, BGBuffer, Unknown1, TilesPointer
+  structMapMenuTilemapData .struct Width, Height, BGBuffer, Flags, TilesPointer
     .if (\Width === ?)
       .union
         Area        .word ?
@@ -52,13 +52,13 @@
         .endstruct
       .endunion
       BGBuffer      .long ?
-      Unknown1      .byte ?
+      Flags         .byte ?
       TilesPointer  .long ?     ; Width * Height words of tiles, or 0
     .else
       Width     .byte \Width    ; $00
       Height    .byte \Height   ; $01
       BGBuffer  .long \BGBuffer ; $02
-      Unknown1  .byte \Unknown1 ; $05
+      Flags     .byte \Flags    ; $05
       TilesPointer .long \TilesPointer ; $06
     .endif
   .endstruct

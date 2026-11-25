@@ -1118,8 +1118,8 @@
 
         lda #$2200
         sta aDialogue.wBaseTile,b,x
-        stz aDialogue._Slot[0].wUnknown0018D9,b
-        stz aDialogue._Slot[1].wUnknown0018D9,b
+        stz aDialogue._Slot[0].wBG3TilemapPos,b
+        stz aDialogue._Slot[1].wBG3TilemapPos,b
         lda #1
         sta aDialogue.wTextSound,b
         lda #(`aBG3TilemapBuffer)<<8

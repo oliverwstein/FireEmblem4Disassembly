@@ -812,7 +812,7 @@
         phy
         jsl rlFillEventMovementMoveCostMap
 
-        lda aEventMovement.wUnknown7EC494
+        lda aEventMovement.wRouteParam
         bne _B0F7
 
           lda #`aEventMovement.aTargetMap
@@ -945,8 +945,8 @@
               sta aEventMovement.wDestinationXCoordinate
               lda aMovingMapSprites.wDestinationYCoordinate,b
               sta aEventMovement.wDestinationYCoordinate
-              lda aMovingMapSprites.wUnknown001830,b
-              sta aEventMovement.wUnknown7EC494
+              lda aMovingMapSprites.wQueuedMoverParam,b
+              sta aEventMovement.wRouteParam
               lda aMovingMapSprites.wEntryIndex,b
               jsl rlEventMovementPlanRoute
               bcc +

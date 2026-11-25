@@ -7195,10 +7195,10 @@
           cmp #$0232
           bcs _SEC
 
-            sta wUnknown001732,b
+            sta wEventChapterIDTemp,b
             asl a
             clc
-            adc wUnknown001732,b
+            adc wEventChapterIDTemp,b
             tax
 
             lda aEventPointers,x
@@ -7267,9 +7267,9 @@
         jsl rlActiveSpriteEngineReset
         jsr rsEventEngineClearProcs
         stz wEventEngineState,b
-        stz wUnknown00171E,b
+        stz wEventEngineState171E,b
         stz wActiveEventOffset,b
-        stz wUnknown001732,b
+        stz wEventChapterIDTemp,b
         stz wEventEngineFlags,b
         stz aMovingMapSprites.wState,b
         stz $17BA,b

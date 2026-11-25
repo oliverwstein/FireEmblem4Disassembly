@@ -1047,7 +1047,7 @@
         sta wBattleSceneFlags
 
         _A57C
-        lda aActionStructUnit1.Unknown
+        lda aActionStructUnit1.ActionType
         cmp #$0008
         bne _A593
         lda wBattleSceneFlags

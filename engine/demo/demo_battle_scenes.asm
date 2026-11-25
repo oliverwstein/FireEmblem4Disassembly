@@ -424,7 +424,7 @@
         rep #$20
         lda #$0000
         sta $7E4ECB
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
         sta $7E4ED3
         sta $7E4ECF
         lda #$FFFF
@@ -494,7 +494,7 @@
         bit #$0080
         beq _FEC8
         lda #$0008
-        sta aActionStructUnit1.Unknown
+        sta aActionStructUnit1.ActionType
 
         _FEC8
         lda [lR18],y

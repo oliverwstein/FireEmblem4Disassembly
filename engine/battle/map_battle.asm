@@ -848,7 +848,7 @@
         lda aActionStructUnit1.WeaponID
         jsl rlGetClassMapBattleWeaponType
         bcs _845B
-        lda aActionStructUnit1.Unknown
+        lda aActionStructUnit1.ActionType
         tay
         lda aActionStructUnit1.WeaponID
         jsl rlGetMagicSwordMapEffect
@@ -901,7 +901,7 @@
         lda aActionStructUnit2.WeaponID
         jsl rlGetClassMapBattleWeaponType
         bcs _84FA
-        lda aActionStructUnit2.Unknown
+        lda aActionStructUnit2.ActionType
         tay
         lda aActionStructUnit2.WeaponID
         jsl rlGetMagicSwordMapEffect
@@ -959,7 +959,7 @@
         .autsiz
         .databank ?
 
-        ; wR0 = class: for a Dancer (class $32) dancing (aActionStructUnit1.Unknown 8) or with no target, sets aMapAction up for mode 4 (no magic effects) and returns carry set; carry clear otherwise.
+        ; wR0 = class: for a Dancer (class $32) dancing (aActionStructUnit1.ActionType 8) or with no target, sets aMapAction up for mode 4 (no magic effects) and returns carry set; carry clear otherwise.
 
         phb
         phy
@@ -972,7 +972,7 @@
         lda wR0
         cmp #$0032
         bne _8578
-        lda aActionStructUnit1.Unknown
+        lda aActionStructUnit1.ActionType
         cmp #$0008
         beq _854B
         lda aActionStructUnit2
@@ -2006,14 +2006,14 @@
         txa
         sta aMapAction.wMapBattleAttackerSpriteSlot
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
         lda aMapAction.wSideTallSprite
-        sta aActiveSpriteSystem.aUnknown0012E0,b,x
+        sta aActiveSpriteSystem.aFlags,b,x
         lda aMapAction.wAttackerAllegiance
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda aMapAction.wSideTallSprite
         bne _8AE1
         lda wMapBattleAttackerBallista
@@ -2048,7 +2048,7 @@
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
 
         _8B30
         plx
@@ -2151,14 +2151,14 @@
         lda #$0008
         sta aActiveSpriteSystem.aTileBase,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
         lda aMapAction.wSideTallSprite
-        sta aActiveSpriteSystem.aUnknown0012E0,b,x
+        sta aActiveSpriteSystem.aFlags,b,x
         lda aMapAction.wDefenderAllegiance
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda wMapBattleDefenderBallista
         bne _8C28
         lda aMapAction.wSideTallSprite
@@ -2195,7 +2195,7 @@
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
 
         _8C7D
         plx
@@ -5362,9 +5362,9 @@
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         tax
         lda wBallistaBoltXFraction
-        sta aActiveSpriteSystem.aUnknown0011E0,b,x
+        sta aActiveSpriteSystem.aXSubpixel,b,x
         lda wBallistaBoltYFraction
-        sta aActiveSpriteSystem.aUnknown001220,b,x
+        sta aActiveSpriteSystem.aYSubpixel,b,x
         lda wBallistaBoltX
         sta aActiveSpriteSystem.aXPosition,b,x
         lda wBallistaBoltY
@@ -5552,7 +5552,7 @@
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda wBallistaBoltSide
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         plx
         ply
         rtl
@@ -5608,9 +5608,9 @@
         .autsiz
         .databank ?
 
-        ; Adds the sprite's velocity (aUnknown0013C0, aUnknown0013E0: 8.8 fixed point) to the bolt's position.
+        ; Adds the sprite's velocity (aXVelocity, aYVelocity: 8.8 fixed point) to the bolt's position.
 
-        lda aActiveSpriteSystem.aUnknown0013C0,b,x
+        lda aActiveSpriteSystem.aXVelocity,b,x
         sep #$20
         clc
         adc wBallistaBoltXFraction
@@ -5624,7 +5624,7 @@
         _A53C
         adc wBallistaBoltX
         sta wBallistaBoltX
-        lda aActiveSpriteSystem.aUnknown0013E0,b,x
+        lda aActiveSpriteSystem.aYVelocity,b,x
         sep #$20
         clc
         adc wBallistaBoltYFraction
@@ -5839,7 +5839,7 @@
         inc a
 
         _A6CB
-        sta aActiveSpriteSystem.aUnknown0013C0,b,x
+        sta aActiveSpriteSystem.aXVelocity,b,x
         lda #$0000
         sta wR0
         ldx wR15,b
@@ -5871,7 +5871,7 @@
         inc a
 
         _A70C
-        sta aActiveSpriteSystem.aUnknown0013E0,b,x
+        sta aActiveSpriteSystem.aYVelocity,b,x
         plx
         ply
         rtl
@@ -10411,9 +10411,9 @@
         txa
         sta wMapBattleTemp3
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11503,8 +11503,8 @@
         txa
         sta wScriptedCritSprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11546,8 +11546,8 @@
         txa
         sta wScriptedCritPartnerSprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11681,8 +11681,8 @@
         txa
         sta wScriptedCritSprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11724,8 +11724,8 @@
         txa
         sta wScriptedCritPartnerSprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11837,7 +11837,7 @@
         asl a
         lda wR0
         ror a
-        sta aActiveSpriteSystem.aUnknown0013C0,b,x
+        sta aActiveSpriteSystem.aXVelocity,b,x
         lda wMapBattleTemp4
         sec
         sbc wR1
@@ -11847,7 +11847,7 @@
         asl a
         lda wR0
         ror a
-        sta aActiveSpriteSystem.aUnknown0013E0,b,x
+        sta aActiveSpriteSystem.aYVelocity,b,x
         rtl
 
         .databank 0
@@ -12031,8 +12031,8 @@
         txa
         sta wScriptedCritSprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12074,8 +12074,8 @@
         txa
         sta wScriptedCritPartnerSprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12117,8 +12117,8 @@
         txa
         sta wScriptedCritPartner2Sprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12391,8 +12391,8 @@
         txa
         sta wScriptedCritSprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12432,8 +12432,8 @@
         txa
         sta wScriptedCritPartnerSprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12473,8 +12473,8 @@
         txa
         sta wScriptedCritPartner2Sprite
         lda #$0000
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aActiveSpriteSystem.aStepCounter,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000

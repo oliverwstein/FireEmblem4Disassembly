@@ -1231,7 +1231,7 @@
         .autsiz
         .databank ?
 
-        ; Action 1, the dance (BattleSceneFlagDance: aActionStructUnit1.Unknown 8, both combatants at the center).
+        ; Action 1, the dance (BattleSceneFlagDance: aActionStructUnit1.ActionType 8, both combatants at the center).
 
         lda #$0001
         jsl rlBattleAnimationQueueAction
