@@ -1,8 +1,9 @@
 ; The Jugdral history (ユグドラル大陸史): the scrolling timeline shown when a new
 ; game is chosen on the title file menu (save menu steps $1C-$21), before the
 ; prologue's world map events. Each entry of aJugdralHistoryEntries is a BG2 row
-; pattern, a year (the era name for $FF) and a text; one line is drawn every 16
-; pixels of scrolling, in twelve steps (aJugdralHistoryLineSteps). Start skips it.
+; pattern, a year (the era name for $FF) and a text; BG1 scrolls 1 pixel a frame
+; while BG2, BG3, and the line counter advance 1 pixel every 2 frames, drawing one
+; line every 16 text pixels (32 frames) in twelve steps (aJugdralHistoryLineSteps). Start skips it.
 
     .section JugdralHistoryTextSection
 
@@ -271,7 +272,7 @@
         .autsiz
         .databank ?
 
-        ; Scrolls the history one pixel a frame and draws its next line every 16 pixels. Carry set when Start is pressed or the last entry has scrolled in.
+        ; Scrolls BG1 one pixel a frame and BG2/BG3 one pixel every 2 frames, drawing the next line every 16 text pixels (32 frames). Carry set when Start is pressed or the last entry has scrolled in.
 
         lda wJoy1New
         bit #$1000

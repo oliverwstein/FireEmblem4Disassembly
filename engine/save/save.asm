@@ -618,7 +618,7 @@
         sta lRAMBufferPointer+1,b
         lda #$EBBA
         sta lRAMBufferPointer,b
-        jsl rlCopySelectedUnitLoverData
+        jsl rlLoadLoverDataFromBuffer
 
         _F9CC
         ply
@@ -1916,7 +1916,7 @@
         .autsiz
         .databank ?
 
-        ; When a save is marked finished (rlSetSaveSlotCompletionFlag): keeps the game's final ranking plus 1 (rlCalculateFinalRankingScore, 1-7) in aSRAM.wRankingScore, tagged $F290, unless the kept one is lower.
+        ; When a save is marked finished (rlSetSaveSlotCompletionFlag): keeps the game's final ranking plus 1 (rlCalculateFinalRankingScore, 1-5: 1 = A .. 5 = E) in aSRAM.wRankingScore, tagged $F290, unless the kept one is lower.
 
         jsl rlCalculateFinalRankingScore
         inc a
@@ -1945,7 +1945,7 @@
         .autsiz
         .databank ?
 
-        ; Returns the ranking kept in aSRAM.wRankingScore (1-7), or 0 without the $F290 tag.
+        ; Returns the ranking kept in aSRAM.wRankingScore (1-5: 1 = A .. 5 = E, masked with &$0007), or 0 without the $F290 tag.
 
         lda aSRAM.wRankingScore
         pha
@@ -2039,7 +2039,7 @@
         asl a
         asl a
         asl a
-        sta aSave.wAvtiveSaveSlotOffset,b
+        sta aSave.wActiveSaveSlotOffset,b
         stz aSave.wCurrentBitOffset,b
         rts
 
@@ -2085,7 +2085,7 @@
           lsr a
           lsr a
           clc
-          adc aSave.wAvtiveSaveSlotOffset,b
+          adc aSave.wActiveSaveSlotOffset,b
           tax
 
           lda wR0
@@ -2128,7 +2128,7 @@
           lsr a
           lsr a
           clc
-          adc aSave.wAvtiveSaveSlotOffset,b
+          adc aSave.wActiveSaveSlotOffset,b
           tax
 
           lda aSRAM,x 

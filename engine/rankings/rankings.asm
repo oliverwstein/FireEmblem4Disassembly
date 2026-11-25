@@ -253,17 +253,4 @@
 
         ; 84/8EFB
 
-
-; 859BD1
-
-; lands at 7ffce1
-
-; .byte 8
-; .byte 10
-; .long aBG3TilemapBuffer
-; .byte
-; .long 0
-
-; size 9
-
     .endsection EvaluateSpecifiedRankingScoreSection

@@ -243,7 +243,7 @@
         .autsiz
         .databank ?
 
-        ; Builds the ranking screen: works out the four rankings and the final score, draws them, the play time, the number of times the game was finished and the 16 letters at aUnknown7FC70A.
+        ; Builds the ranking screen: works out the four rankings and the final score, draws them, the play time, the number of times the game was finished and the 16-letter pairing password (aEpiloguePairingPassword).
 
         sep #$20
         lda #$80
@@ -653,7 +653,7 @@
         .autsiz
         .databank ?
 
-        ; Draws the 16 letters at aUnknown7FC70A ('A' is tile $80) into the ranking screen's tilemap.
+        ; Draws the 16-letter pairing password at aEpiloguePairingPassword ('A' is tile $80) into the ranking screen's tilemap.
 
         ldx #$001E
 
@@ -663,7 +663,7 @@
         txa
         lsr a
         tax
-        lda aUnknown7FC70A,x
+        lda aEpiloguePairingPassword,x
         sec
         sbc #$41
         rep #$20
@@ -697,7 +697,7 @@
         .autsiz
         .databank ?
 
-        ; On the ranking screen: each new button press must match the next of aEpilogueSecretCode; after all twelve, uploads a hidden row of the screen ($7E8108 to $D580) and goes to step 18. A wrong press starts again.
+        ; On the ranking screen: each new button press must match the next of aEpilogueSecretCode; after all twelve, uploads the hidden pairing-password row ($7E8108 to $D580) and goes to step 18. A wrong press starts again.
 
         phk
         plb

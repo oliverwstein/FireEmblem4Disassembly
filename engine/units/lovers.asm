@@ -473,13 +473,13 @@
 
         .databank 0
 
-      rlCopySelectedUnitLoverData ; 87/AC8C
+      rlLoadLoverDataFromBuffer ; 87/AC8C
 
         .al
         .autsiz
         .databank ?
 
-        ; Copies the unit's 30 bytes of love data to X (in the current data bank).
+        ; Copies 30 bytes from [lRAMBufferPointer] into the selected unit's lover RAM block ($0000,b,x in the lover data bank).
 
         phb
         php

@@ -1784,7 +1784,7 @@
         ; The unit type (0 static, 1 dynamic, 2 holy, 3 enemy) of the unit
         ; rlCreateUnitFromBuffers is building.
       wCurrentBitOffset .word ?         ; $001B3B
-      wAvtiveSaveSlotOffset .word ?     ; $001B3D
+      wActiveSaveSlotOffset .word ?     ; $001B3D
       wDataBitLength .word ?            ; $001B3F
     .bend
 
@@ -3304,14 +3304,14 @@
 
   .virtual $7FC70A
 
-    aUnknown7FC70A .fill 16 * size(byte)      ; $7FC70A 
-      ; result | remainder
-    aUnknown7FC71A .fill 7 * size(byte)       ; $7FC71A
-      ; ?
-    aUnknown7FC721 .fill 9 * size(byte)       ; $7FC721
-      ; male lovers gen ids indexed by female gen ids starting with patty
-    aUnknown7FC72A .fill (8 + 1) * size(byte) ; $7FC72A
-      ; ?
+    aEpiloguePairingPassword .fill 16 * size(byte)    ; $7FC70A
+      ; 16-letter ASCII pairing password
+    aEpilogueGen1PairingNibbles .fill 7 * size(byte)  ; $7FC71A
+      ; Gen-1 mothers' (Lachesis-Brigid) 4-bit partner IDs
+    aEpilogueGen2PairingNibbles .fill 9 * size(byte)  ; $7FC721
+      ; Gen-2 women's (GenID 16..24) 4-bit partner IDs
+    aEpiloguePackedPairings .fill (8 + 1) * size(byte) ; $7FC72A
+      ; 8 packed pairing bytes + 8-bit sum checksum (then key-added)
     ; $7FC734
 
   .endvirtual

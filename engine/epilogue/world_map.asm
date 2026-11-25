@@ -2988,8 +2988,7 @@
         .autsiz
         .databank ?
 
-        ; This and the next asmc call a proc to the Aed cutscene, this one doesn't
-        ; fade out the song properly and fades in the graphics faster?
+        ; Transitions from the world map epilogue to the credits via rlStartEpilogueCreditsQuickly (when wEpilogueRecordCharacter >= $556E) without the fade sound command.
 
         lda aDialogue.lActivePointer,b
         sec
@@ -3038,8 +3037,7 @@
         .autsiz
         .databank ?
 
-        ; This and the previous asmc call a proc to the Aed cutscene, this one is the
-        ; proper one?
+        ; Transitions from the world map epilogue to the credits via rlStartEpilogueCredits (when wEpilogueRecordCharacter < $556E).
 
         lda wEpilogueRecordCharacter,b
         cmp #$556E

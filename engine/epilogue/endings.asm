@@ -538,7 +538,7 @@
         ldy #$0100
         bra rsEpiloguePriorityHandleUnprocessedCharacters
 
-      rsEpilogueSetMainCharacerOnNoPriorityIfDaughterExists ; 82/FBA3
+      rsEpilogueSetMainCharacterOnNoPriorityIfDaughterExists ; 82/FBA3
 
         .al
         .autsiz
@@ -560,7 +560,7 @@
         jsl rlGetSelectedUnitCharacterID
         sta wR0
 
-      rsEpilogueSetMainCharacerOnNoPriority ; 82/FBB8
+      rsEpilogueSetMainCharacterOnNoPriority ; 82/FBB8
 
         .al
         .autsiz
@@ -801,7 +801,7 @@
 
         .databank 0
 
-      rsEpilogueDialogueIDMaleCheckIfWithLoverAndPriotity ; 82/FCF7
+      rsEpilogueDialogueIDMaleCheckIfWithLoverAndPriority ; 82/FCF7
 
         .al
         .autsiz
@@ -842,7 +842,7 @@
         ; Y = 3; no lover, target alive
 
         jsr rsCheckIfCurrentEpilogueCharacterGetsOwnEpilogue
-        beq rsEpilogueDialogueIDMaleCheckIfWithLoverAndPriotity._End
+        beq rsEpilogueDialogueIDMaleCheckIfWithLoverAndPriority._End
 
         _CheckMarriedStateAndTarget
         jsr rsGetEpilogueCharactersMarriedState
@@ -941,8 +941,8 @@
         ; Y = 0; no epilogue (what are you even doing at that point)
         ; Y = 1; no support, julia dead
         ; Y = 2; has support, julia dead
-        ; Y = 1; no support/ has support but its julia, julia alive
-        ; Y = 2; has support, julia alive
+        ; Y = 3; no support/ has support but its julia, julia alive
+        ; Y = 4; has support, julia alive
 
         jsr rsCheckIfCurrentEpilogueCharacterGetsOwnEpilogue
         beq _End
@@ -987,8 +987,8 @@
         ; Y = 0; no epilogue
         ; Y = 1; arion dead, leif dead
         ; Y = 2; arion alive, leif dead
-        ; Y = 1; arion dead, leif alive
-        ; Y = 2; arion alive, leif alive
+        ; Y = 3; arion dead, leif alive
+        ; Y = 4; arion alive, leif alive
 
         jsr rsCheckIfCurrentEpilogueCharacterGetsOwnEpilogue
         beq _End
@@ -1141,7 +1141,7 @@
           plx
           sep #$20
           and #$0F
-          sta aUnknown7FC71A,x
+          sta aEpilogueGen1PairingNibbles,x
           rep #$20
           inc x
           cpx #7
@@ -1162,7 +1162,7 @@
           +
           sep #$20
           and #$0F
-          sta aUnknown7FC721,x
+          sta aEpilogueGen2PairingNibbles,x
           rep #$20
           inc x
           cpx #9
@@ -1182,13 +1182,13 @@
         ldx #0
 
           -
-          lda aUnknown7FC721+1,x
+          lda aEpilogueGen2PairingNibbles+1,x
           asl a
           asl a
           asl a
           asl a
-          ora aUnknown7FC71A,x
-          sta aUnknown7FC72A,x
+          ora aEpilogueGen1PairingNibbles,x
+          sta aEpiloguePackedPairings,x
           inc x
           cpx #8
           bne -
@@ -1198,19 +1198,20 @@
 
           -
           clc
-          adc aUnknown7FC72A,x
+          adc aEpiloguePackedPairings,x
           inc x
           cpx #8
           bne -
 
-        sta aUnknown7FC72A,x
+        sta aEpiloguePackedPairings,x
         rep #$20
         rts
 
         .databank 0
 
-      aUnknown82FE38 ; 82/FE38
+      aEpiloguePasswordKey ; 82/FE38
 
+        ; "FireEmblm"
         .byte $46
         .byte $69
         .byte $72
@@ -1231,51 +1232,42 @@
         ldx #0
         
           -
-          lda aUnknown7FC72A,x
+          lda aEpiloguePackedPairings,x
           clc
-          adc aUnknown82FE38,x
-          sta aUnknown7FC72A,x
+          adc aEpiloguePasswordKey,x
+          sta aEpiloguePackedPairings,x
           inc x
           cpx #9
           bne -
 
         rep #$20
         ldx #0
-        lda aUnknown7FC72A
+        lda aEpiloguePackedPairings
         jsr rsEncodeEpiloguePassword._FEAF
 
-        lda aUnknown7FC72A + 1
-        lsr a
-        jsr rsEncodeEpiloguePassword._FEAF
-
-        lda aUnknown7FC72A + 2
-        lsr a
+        lda aEpiloguePackedPairings + 1
         lsr a
         jsr rsEncodeEpiloguePassword._FEAF
 
-        lda aUnknown7FC72A + 3
-        lsr a
+        lda aEpiloguePackedPairings + 2
         lsr a
         lsr a
         jsr rsEncodeEpiloguePassword._FEAF
 
-        lda aUnknown7FC72A + 4
-        lsr a
+        lda aEpiloguePackedPairings + 3
         lsr a
         lsr a
         lsr a
         jsr rsEncodeEpiloguePassword._FEAF
 
-        lda aUnknown7FC72A + 5
-        lsr a
+        lda aEpiloguePackedPairings + 4
         lsr a
         lsr a
         lsr a
         lsr a
         jsr rsEncodeEpiloguePassword._FEAF
 
-        lda aUnknown7FC72A + 6
-        lsr a
+        lda aEpiloguePackedPairings + 5
         lsr a
         lsr a
         lsr a
@@ -1283,7 +1275,16 @@
         lsr a
         jsr rsEncodeEpiloguePassword._FEAF
 
-        lda aUnknown7FC72A + 7
+        lda aEpiloguePackedPairings + 6
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        jsr rsEncodeEpiloguePassword._FEAF
+
+        lda aEpiloguePackedPairings + 7
         lsr a
         lsr a
         lsr a
@@ -1303,12 +1304,12 @@
         lda wR13
         clc
         adc #$41
-        sta aUnknown7FC70A,x
+        sta aEpiloguePairingPassword,x
         inc x
         lda wR10
         clc
         adc #$41
-        sta aUnknown7FC70A,x
+        sta aEpiloguePairingPassword,x
         inc x
         rep #$20
         rts

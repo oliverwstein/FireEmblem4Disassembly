@@ -35,7 +35,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $36, once: builds the RAM area at $7F5709, clears $7F4400-$7F5708, turns on active sprites and, unless $08DA is 0-2, starts a fade-in; moves on to $37.
+        ; Game state routine $36, once: builds the RAM area at $7F5709, clears $7F4400-$7F5708, turns on active sprites and, unless wEpiloguePart is 0-2, starts a fade-in; moves on to $37.
 
         lda #$7F00
         sta lR18+1

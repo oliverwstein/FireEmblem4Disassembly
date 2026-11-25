@@ -43,7 +43,7 @@
     .endsegment
 
   ; A title screen sprite (aTitleSprites, 13 of them). rlStartTitleSprite sets
-  ; one up from an 11-byte definition (Script, Frames, X, Y, TileBase,
+  ; one up from a 13-byte definition (Script, Frames, X, Y, TileBase,
   ; Attributes); rlUpdateTitleSprites animates and draws the active ones each frame.
   ; The script is a list of two-byte steps: a frame number + 1 and how many
   ; frames to show it, or $80 and a count of steps to go back by.
