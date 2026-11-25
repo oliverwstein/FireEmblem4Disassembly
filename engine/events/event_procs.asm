@@ -987,7 +987,7 @@
         .autsiz
         .databank ?
 
-        ; Frees the event proc once wGameStateRoutine1 is no longer one of the battle entries ($18-$1B: the battle scene or the map battle).
+        ; Frees the event proc once wGameStateRoutine1 is outside $18-$1B: the battle scene's setup and step, and, by the range, the title screen's $1A/$1B (not a map battle: the map battle runs as a proc on the map's game state).
 
         lda wGameStateRoutine1,b
         cmp #GAMESTATE_BATTLE_SCENE_SETUP

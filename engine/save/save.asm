@@ -3831,6 +3831,10 @@
         .autsiz
         .databank ?
 
+        ; Writes the 55 entries of aRNArray and the low byte of wRNIndex into the save, 7
+        ; bits each. rsLoadRNArray restores them, so a loaded save rolls the same sequence
+        ; each time.
+
         ldx #0
 
           -

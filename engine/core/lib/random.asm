@@ -51,6 +51,10 @@
         .autsiz
         .databank ?
 
+        ; Returns the next entry of aRNArray minus 1 (0 becomes 99): a number 0-99. Every
+        ; 55 calls it reshuffles the table and checks the code checksums; when they fail,
+        ; rsRigRNArrayByPlaytime rigs the new table (../frame/anti_tamper.asm).
+
         phx
         phy
         phb
@@ -116,7 +120,12 @@
         .autsiz
         .databank ?
 
-        ; Seed 55-entry subtractive aRNArray from bFrameCounterByOnes and shuffle 3x
+        ; Fills aRNArray from the seed bFrameCounterByOnes & $3F by the subtractive method
+        ; (each entry the difference of two others, mod 100, stepping by 21), then
+        ; shuffles it three times. The only caller is rsSetupOpeningLogoScreen, at boot:
+        ; RAM has just been cleared and no VBlank has run, so the seed is always 0 and the
+        ; table starts the same at every power-on and soft reset. Saves carry the table
+        ; (rsSaveRNArray).
 
         php
         phb
@@ -226,7 +235,9 @@
         .autsiz
         .databank ?
 
-        ; Anti-tamper: zero aRNArray values below playtime-scaled threshold when checksums fail
+        ; After a failed checksum: the threshold is hours * 16 + minutes / 4 - 80 of play
+        ; time, held to 0-100, and every entry below it becomes 0, which rolls as 99.
+        ; Nothing changes before 5 hours; from 11 hours 16 minutes every roll is 99.
 
         rep #$30
         jsl rlGetGameTimeHoursMinutes
