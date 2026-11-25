@@ -1,6 +1,6 @@
 # Song scripts
 
-Made by `tools/songs.py`; do not edit. A song is a script in `aSoundScripts`
+Made by `tools/songs.py` on 2026-11-24; do not edit. A song is a script in `aSoundScripts`
 (`audio/sound_data.asm`), asked for by its number in `wMusicID`. For each number:
 where the game asks for it, its place in the debug sound test, and what the script
 does (upload lists with their chunk IDs; `@xxxx` sets the SPC address). Nothing
@@ -10,22 +10,22 @@ here names a song; it is the evidence to name them from.
 
 ## $01 (`aSoundScriptF795EA`), sound test 108
 
-- **code** (1): `rlUnknown9BFB7E` music, engine/unsorted/bank9B.asm:2772
+- **code** (1): `rlPlayTitleIntroSong` music, engine/title/title_scenes.asm:6728
 - **script**: deferred upload FD `aSoundUploadF7ACE6` (cmd B $094 $1AC $1AD @5000 $0DC $12B $108 $11A $103 $12C $337)
 
 ## $02 (`aSoundScriptF795F0`), sound test 109
 
-- **code** (1): `rlUnknown9BFB9F` music, engine/unsorted/bank9B.asm:2801
+- **code** (1): `rlPlayTitleIntroSong2` music (Song 2, at frame $10F2 of the intro.), engine/title/title_scenes.asm:6759
 - **script**: deferred upload FD `aSoundUploadF7AD02` (cmd B $095 $1AE $1AF @5000 $12D $0DC $0E3 $12E $12F $0DA $0DB indirect 3D $33B $33A)
 
 ## $03 (`aSoundScriptF795F6`), sound test 110
 
-- **code** (1): `rlUnknown9BFBA9` music, engine/unsorted/bank9B.asm:2825
+- **code** (1): `rlPlayTitleSong` music (Song 3 (rlTitleScreenShowTitle).), engine/title/title_scenes.asm:6785
 - **script**: deferred upload FD `aSoundUploadF7AD24` (cmd B $095 $1AE $1AF @5000 $12D $0DC $0E3 $12E $12F $0DA $0DB indirect 3D $33C $33A)
 
 ## $04 (`aSoundScriptF7988A`), sound test 56
 
-- **code** (1): `rsUnknown91E6D8` music, engine/unsorted/bank91.asm:4510
+- **code** (1): `rsJugdralHistorySetup` music, engine/save/jugdral_history.asm:153
 - **script**: deferred upload FD `aSoundUploadF7A68C` ($08D $196 $197 @7400 $108 $0DC cmd B); queue command (checked) $00C8
 
 ## $05 (`aSoundScriptF79588`)
@@ -60,7 +60,8 @@ here names a song; it is the evidence to name them from.
 
 ## $0B (`aSoundScriptF795FC`), sound test 120
 
-- **code** (1): `rlUnknown80EFD8` music, engine/unsorted/bank80.asm:8069
+- **dialogue** (1): Epilogue/Memorial88E9E5
+- **code** (1): `rlSetupEpilogueRankingsDisplay` music, engine/epilogue/credits.asm:861
 - **script**: deferred upload FD `aSoundUploadF7AD74` (cmd B $0D3 $1B6 $1B7 @7400 $102 $136 $116 $33D $33A)
 
 ## $0C (`aSoundScriptF79614`), sound test 123
@@ -70,12 +71,12 @@ here names a song; it is the evidence to name them from.
 
 ## $0D (`aSoundScriptF7961A`), sound test 122
 
-- **code** (1): `rlUnknown80EE37` music, engine/unsorted/bank80.asm:7874
+- **code** (1): `rlSetupEpilogueCreditsDisplay` music, engine/epilogue/credits.asm:661
 - **script**: deferred upload FD `aSoundUploadF7A76A` (cmd B $096 $1B0 $1B1 @4C00 $0DC $0E6 $125 $130 $131 $132 $133 $134 $337)
 
 ## $0E (`aSoundScriptF7960E`), sound test 124
 
-- **code** (2): `rlUnknown80EFD8` music (_F125), engine/unsorted/bank80.asm:8062 (x2)
+- **code** (2): `rlSetupEpilogueRankingsDisplay` music (_F125), engine/epilogue/credits.asm:854 (x2)
 - **script**: deferred upload FD `aSoundUploadF7A7AA` (cmd B $098 $1B4 $1B5 @5000 $135 $0DC $107 $100 $0D9 $0E1 $104 $0E8 $0E4 $0E5 $101 $33D $33A)
 
 ## $0F (`aSoundScriptF79626`) `SONG_WORLD_MAP_EPILOGUE`, sound test 121
@@ -154,7 +155,7 @@ here names a song; it is the evidence to name them from.
 ## $1D (`aSoundScriptF79672`) `SONG_ALLIED_PHASE`, sound test 25
 
 - **event** (1): EventChapter01NordionSpawn
-- **code** (1): `rsGetActiveFactionSongID`, engine/sound/music.asm:53
+- **code** (1): `rsGetActiveFactionSongID`, engine/sound/music.asm:55
 - **script**: deferred upload FD `aSoundUploadF7A14E` ($07C $174 $175 @7400 $0DC $0ED $0E9 $0EA $0F1 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $1E (`aSoundScriptF7967C`) `SONG_PLAYER_PHASE_CHAPTER8`, sound test 8
@@ -202,7 +203,7 @@ here names a song; it is the evidence to name them from.
 ## $26 (`aSoundScriptF796FE`), sound test 19
 
 - **event** (1): EventChapter06BrotherRecruitedDanannResponse
-- **table** (6): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Tirnanog, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Ganeishire, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Sofala, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Isaach, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Ribaut, `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 6
+- **table** (6): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Tirnanog, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Ganeishire, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Sofala, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Isaach, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Ribaut, `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 6
 - **script**: deferred upload FD `aSoundUploadF7A2CC` ($077 $16A $16B @7400 $0DC $0EF $11D $0FF $119 $11E $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $27 (`aSoundScriptF79708`), sound test 20
@@ -224,7 +225,7 @@ here names a song; it is the evidence to name them from.
 ## $2A (`aSoundScriptF7969A`) `SONG_NEUTRAL_PHASE`, sound test 26
 
 - **event** (1): EventChapter02InfiniBrigandsSpawn
-- **code** (1): `rsGetActiveFactionSongID`, engine/sound/music.asm:57
+- **code** (1): `rsGetActiveFactionSongID`, engine/sound/music.asm:59
 - **script**: deferred upload FD `aSoundUploadF7A1BE` ($07D $176 $177 @7400 $0ED $0F0 $0EA $0E7 $0E2 $0E4 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $2B (`aSoundScriptF796A4`) `SONG_PLAYER_PHASE_CHAPTER5`, sound test 5
@@ -259,82 +260,82 @@ here names a song; it is the evidence to name them from.
 
 ## $31 (`aSoundScriptF79764`) `SONG_BATTLE_PLAYER`, sound test 27
 
-- **code** (3): `rlGetBattleSong` battle song (Player attack), engine/battle/battle.asm:343, `rsActionStructCheckForDance`, engine/battle/battle.asm:2265, `rsSetStaffBattleSong`, engine/battle/effects.asm:463
+- **code** (3): `rlGetBattleSong` battle song (Player attack), engine/battle/battle.asm:410, `rsActionStructCheckForDance`, engine/battle/battle.asm:2342, `rsSetStaffBattleSong`, engine/battle/effects.asm:516
 - **script**: deferred upload FD `aSoundUploadF7A3AE` ($081 $17E $17F @7400 $0DC $10E $0F0 $0E1 $0E2 $10F $0E4 indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $32 (`aSoundScriptF79756`) `SONG_BATTLE_ENEMY`, sound test 28
 
-- **code** (2): `rlGetBattleSong` battle song (_EnemyAttack), engine/battle/battle.asm:347, `rsSetStaffBattleSong` battle song, engine/battle/effects.asm:467
+- **code** (2): `rlGetBattleSong` battle song (_EnemyAttack), engine/battle/battle.asm:414, `rsSetStaffBattleSong` battle song, engine/battle/effects.asm:520
 - **script**: deferred upload FD `aSoundUploadF7A38E` ($080 $17C $17D @7400 $0DC $0D8 $0F0 $10D indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $33 (`aSoundScriptF797EC`) `SONG_BATTLE_BOSS`, sound test 29
 
-- **code** (2): `rlGetBattleSong` battle song (_Boss), engine/battle/battle.asm:355, `rlActionStructBuildScriptedBattleRounds` battle song, engine/battle/battle.asm:1984
+- **code** (2): `rlGetBattleSong` battle song (_Boss), engine/battle/battle.asm:422, `rlActionStructBuildScriptedBattleRounds` battle song, engine/battle/battle.asm:2061
 - **script**: deferred upload FD `aSoundUploadF7A4FA` ($0C9 $218 $219 @7400 $0DC $0F9 $12E $0DE $0DA indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $34 (`aSoundScriptF7973A`) `SONG_BATTLE_ARVIS`, sound test 30
 
-- **code** (1): `rlGetBattleSong` battle song (_Arvis), engine/battle/battle.asm:363
+- **code** (1): `rlGetBattleSong` battle song (_Arvis), engine/battle/battle.asm:430
 - **script**: deferred upload FD `aSoundUploadF7A33C` ($088 $18C $18D @7400 $0DC $0D8 $10A $0D9 $0F5 $117 $104 $0E8 $105 indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $35 (`aSoundScriptF79748`) `SONG_BATTLE_JULIUS`, sound test 31
 
-- **code** (1): `rlGetBattleSong` battle song (_Julius), engine/battle/battle.asm:371
+- **code** (1): `rlGetBattleSong` battle song (_Julius), engine/battle/battle.asm:438
 - **script**: deferred upload FD `aSoundUploadF7A366` ($07F $17A $17B @7400 $108 $109 $10A $10B $10C $0E2 $0E8 $0E4 indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $36 (`aSoundScriptF7978E`) `SONG_BATTLE_MAJOR_BOSS`, sound test 32
 
-- **code** (1): `rlGetBattleSong` battle song (_MajorBoss), engine/battle/battle.asm:359
+- **code** (1): `rlGetBattleSong` battle song (_MajorBoss), engine/battle/battle.asm:426
 - **script**: deferred upload FD `aSoundUploadF7A414` ($084 $184 $185 @7400 $0DC $109 $10A $10C $0F8 $10F $0E4 indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $37 (`aSoundScriptF79772`), sound test 35
 
-- **code** (1): `rsUnknown84EA37` battle song, engine/battle/battle.asm:3772
+- **code** (1): `rsActionStructDance` battle song, engine/battle/battle.asm:3851
 - **script**: deferred upload FD `aSoundUploadF7A3D4` ($082 $180 $181 @7400 $110 $111 indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0001, wait 4; queue command (checked) $00C8
 
 ## $38 (`aSoundScriptF79780`) `SONG_BATTLE_DANCE`, sound test 36
 
-- **code** (1): `rsActionStructCheckForDance` battle song, engine/battle/battle.asm:2268
+- **code** (1): `rsActionStructCheckForDance` battle song, engine/battle/battle.asm:2345
 - **script**: deferred upload FD `aSoundUploadF7A3F0` ($083 $182 $183 @7400 $110 $0FC $112 $113 $114 $115 indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $39 (`aSoundScriptF797BE`), sound test 37
 
-- **code** (1): `rlUnknown96878D` music, engine/unsorted/bank96.asm:1445
+- **code** (1): `rlBattleSceneScriptSetVictoryMusic` music, engine/battle_scene/hud.asm:3057
 - **script**: deferred upload FD `aSoundUploadF7A49A` ($089 $18E $18F @7400 $108 $0DD $100 $337)
 
 ## $3A (`aSoundScriptF797D0`) `SONG_BATTLE_STAFF`, sound test 34
 
-- **code** (4): `rsActionStructStaffEffectHeal` battle song, engine/battle/battle.asm:3590, `rsActionStructStaffEffectFortify` battle song, engine/battle/battle.asm:3628, `rsActionStructStaffEffectReturn` battle song, engine/battle/battle.asm:3677, `rsActionStructStaffEffectRescue` battle song, engine/battle/effects.asm:294
+- **code** (4): `rsActionStructStaffEffectHeal` battle song, engine/battle/battle.asm:3669, `rsActionStructStaffEffectFortify` battle song, engine/battle/battle.asm:3707, `rsActionStructStaffEffectReturn` battle song, engine/battle/battle.asm:3756, `rsActionStructStaffEffectRescue` battle song, engine/battle/effects.asm:345
 - **script**: deferred upload FD `aSoundUploadF7A4C2` ($08A $190 $191 @7400 $116 indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $3B (`aSoundScriptF797DE`), sound test 40
 
-- **code** (1): `rlUnknown84B508` battle song, engine/unsorted/bank84.asm:813
+- **code** (1): `rlStartArenaBattle` battle song, engine/arena/arena.asm:1793
 - **script**: deferred upload FB `aSoundUploadF7A4DC` ($08B $192 $193 @7400 $109 $100 $10B indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $3C (`aSoundScriptF7979C`), sound test 41
 
-- **code** (1): `rlUnknown84ABB0` battle song, engine/unsorted/bank84.asm:381
+- **code** (1): `rlStartCastleClassChange` battle song, engine/castle/class_change.asm:60
 - **script**: deferred upload FD `aSoundUploadF7A43A` ($085 $34F $350 $351 $186 $187 @7400 $0F9 $0DD indirect 3E); queue command (checked) $00C8
 
 ## $3D (`aSoundScriptF797A6`) `SONG_BATTLE_VALKYRIE`, sound test 42
 
-- **code** (1): `rsActionStructStaffEffectValkyrie` battle song, engine/battle/effects.asm:384
+- **code** (1): `rsActionStructStaffEffectValkyrie` battle song, engine/battle/effects.asm:437
 - **script**: deferred upload FD `aSoundUploadF7A452` ($086 $188 $189 @7400 $0DF $116 $103 $111 indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); queue command (checked) $00C8
 
 ## $3E (`aSoundScriptF797B0`) `SONG_BATTLE_RECRUITABLE`, sound test 33
 
-- **code** (1): `rlGetBattleSong` battle song (_RecruitableEnemy), engine/battle/battle.asm:351
+- **code** (1): `rlGetBattleSong` battle song (_RecruitableEnemy), engine/battle/battle.asm:418
 - **script**: deferred upload FD `aSoundUploadF7A472` ($087 $18A $18B @7400 $10A $10E $0F0 $0E1 $0E2 $0E8 $0E4 $0DB indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C8
 
 ## $3F (`aSoundScriptF797C4`), sound test 38
 
-- **code** (1): `rlUnknown96878D` music (_87A7), engine/unsorted/bank96.asm:1450
+- **code** (1): `rlBattleSceneScriptSetVictoryMusic` music (_87A7), engine/battle_scene/hud.asm:3062
 - **script**: deferred upload FB `aSoundUploadF7A49A` ($089 $18E $18F @7400 $108 $0DD $100 $337)
 
 ## $40 (`aSoundScriptF797CA`), sound test 39
 
-- **code** (1): `rlUnknown96878D` music (_87AC), engine/unsorted/bank96.asm:1455
+- **code** (1): `rlBattleSceneScriptSetVictoryMusic` music (_87AC), engine/battle_scene/hud.asm:3067
 - **script**: deferred upload FD `aSoundUploadF7A4AE` ($089 $18E $18F @7400 $108 $0DD $100 $338)
 
 ## $41 (`aSoundScriptF79826`), sound test 43
@@ -391,7 +392,7 @@ here names a song; it is the evidence to name them from.
 
 ## $4B (`aSoundScriptF79880`), sound test 57
 
-- **code** (1): `rlUnknown8AE2F8` music, engine/unsorted/bank8A.asm:11958
+- **code** (1): `rlArenaScreenSetup` music, engine/arena/arena.asm:1574
 - **script**: deferred upload FD `aSoundUploadF7A65E` ($08C $194 $195 @4C00 $100 $0EA $0FC $0F5 $0E0 $120 $121 $122 $0D6 $352 $353 $354 $334 $335 $336 cmd F $337); queue command (checked) $00C9
 
 ## $4C (`aSoundScriptF79826`)
@@ -416,7 +417,7 @@ here names a song; it is the evidence to name them from.
 
 ## $50 (`aSoundScriptF797FA`) `SONG_BATTLE_JULIA`
 
-- **code** (1): `rlGetBattleSong` battle song (_Julia), engine/battle/battle.asm:367
+- **code** (1): `rlGetBattleSong` battle song (_Julia), engine/battle/battle.asm:434
 - **script**: deferred upload FD `aSoundUploadF7A51C` ($0A5 $1CE $1CF @7400 $0D7 $108 $12F $0DC indirect 3E cmd A indirect 03 indirect 04 indirect 01 indirect 02); battle terrain command $0000, wait 4; queue command (checked) $00C9
 
 ## $51 (`aSoundScriptF799A2`), sound test 78
@@ -443,18 +444,18 @@ here names a song; it is the evidence to name them from.
 ## $55 (`aSoundScriptF79916`), sound test 67
 
 - **event** (2): EventChapter01NordionSpawn, EventChapterFinalEnding
-- **table** (2): `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 1, `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 2
+- **table** (2): `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 1, `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 2
 - **script**: deferred upload FD `aSoundUploadF7A8A0` ($09C $1BE $1BF @7400 $0DC $0E0 $12E $139 $0E3 $0DB indirect 3C); queue command (checked) $00C8
 
 ## $56 (`aSoundScriptF79920`), sound test 68
 
 - **event** (5): EventChapter02ErinysGroupArrive, EventChapter02LewynErinysTalk, EventChapter06FeeArthurSpawn, EventChapter08FeeCedTalk, EventChapterFinalEnding
-- **table** (1): `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 4
+- **table** (1): `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 4
 - **script**: deferred upload FD `aSoundUploadF7A8BA` ($09D $1C0 $1C1 @7400 $0E0 $13A $0EA $0E6 $106 indirect 3C); queue command (checked) $00C8
 
 ## $57 (`aSoundScriptF798C6`), sound test 106
 
-- **table** (5): `aUnknown8A9D79` castle (rlUnknown8A9D39): Meath, `aUnknown8A9D79` castle (rlUnknown8A9D39): Kapathogia, `aUnknown8A9D79` castle (rlUnknown8A9D39): Luthecia, `aUnknown8A9D79` castle (rlUnknown8A9D39): Thracia, `aUnknown8A9D79` castle (rlUnknown8A9D39): Grutia
+- **table** (5): `aCastleSongs` castle (rlPlayCastleSong): Meath, `aCastleSongs` castle (rlPlayCastleSong): Kapathogia, `aCastleSongs` castle (rlPlayCastleSong): Luthecia, `aCastleSongs` castle (rlPlayCastleSong): Thracia, `aCastleSongs` castle (rlPlayCastleSong): Grutia
 - **script**: deferred upload FD `aSoundUploadF7A742` ($09E $1AA $1AB @7400 $126 $12A indirect 3C); queue command (checked) $00CB
 
 ## $58 (`aSoundScriptF7992A`), sound test 81
@@ -469,7 +470,7 @@ here names a song; it is the evidence to name them from.
 
 ## $5A (`aSoundScriptF79620`)
 
-- **code** (1): `rlUnknown80EE37` music, engine/unsorted/bank80.asm:7748
+- **code** (1): `rlSetupEpilogueCreditsDisplay` music, engine/epilogue/credits.asm:535
 - **script**: deferred upload FD `aSoundUploadF7A78A` (cmd B $096 $1B0 $1B1 @4C00 $0DC $0E6 $125 $130 $131 $132 $133 $134 $338)
 
 ## $5B (`aSoundScriptF79A10`), sound test 74
@@ -519,7 +520,7 @@ here names a song; it is the evidence to name them from.
 
 - **event** (21): EventChapter01Opening, EventChapter01VerdaneSpawn, EventChapter02AgustiSpawn, EventChapter02InfiniSpawn, EventChapter02MackilySpawn, EventChapter03Ending, EventChapter04DaccarAndreyPreparing, EventChapter04PamelaSpawn, EventChapter04ZaxonSpawn (x2), EventChapter05AidaBetrayal, EventChapter05Opening, EventChapter05PhinoraSeized, EventChapter07BramselWaiting, EventChapter07MelgenSpawn, EventChapter07Opening, EventChapter07UlsterSpawn (x2), EventChapter08FebailAsaello_Spawn, EventChapter08IshtarSpawn, EventChapterFinalYngviSpawn
 - **dialogue** (1): Chapter02/Opening2
-- **table** (2): `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 3, `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 8
+- **table** (2): `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 3, `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 8
 - **script**: deferred upload FD `aSoundUploadF7A8E8` ($0A0 $1C4 $1C5 @7400 $12E $13C $0DA $0E2 $0DB indirect 3C); queue command (checked) $00C8
 
 ## $64 (`aSoundScriptF79A9C`), sound test 80
@@ -535,7 +536,7 @@ here names a song; it is the evidence to name them from.
 ## $66 (`aSoundScriptF79AA6`), sound test 59
 
 - **event** (8): EventChapter02Opening, EventChapter03EldiganApproachesSigurd, EventChapter03LachesisEldiganTalk, EventChapter03SigurdApproachesEldigan, EventChapter03SylvaleSpawn, EventChapter05Opening, EventChapter08Opening, EventChapter10ChalphySpawn
-- **table** (1): `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 5
+- **table** (1): `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 5
 - **script**: deferred upload FD `aSoundUploadF7ABE8` ($0C3 $20C $20D @7400 $138 $0DC $0F9 $12E $0E8 indirect 3C); queue command (checked) $00C8
 
 ## $67 (`aSoundScriptF79AB0`)
@@ -562,7 +563,7 @@ here names a song; it is the evidence to name them from.
 ## $6B (`aSoundScriptF79AD8`), sound test 58
 
 - **event** (12): EventChapter02LewynSilviaSpawn, EventChapter02Opening, EventChapter03Ending, EventChapter03Opening (x2), EventChapter04AnnandPamelaCloseByTalk, EventChapter04AnnandSpawn, EventChapter04ZaxonSpawn, EventChapter05ThraciaSpawn, EventChapter06Opening, EventChapter08MeathSpawn, EventChapter10Opening
-- **table** (2): `aUnknown91F7B7` per chapter (rlUnknown91F75F): Prologue, `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 7
+- **table** (2): `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Prologue, `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 7
 - **script**: deferred upload FD `aSoundUploadF7AC54` ($0C8 $216 $217 @7400 $0F9 $0DC $12E $100 $0E7 $104 indirect 3C); queue command (checked) $00C8
 
 ## $6C (`aSoundScriptF79B28`), sound test 70
@@ -572,12 +573,12 @@ here names a song; it is the evidence to name them from.
 
 ## $6D (`aSoundScriptF798DA`), sound test 100
 
-- **table** (7): `aUnknown8A9D79` castle (rlUnknown8A9D39): Velthomer, `aUnknown8A9D79` castle (rlUnknown8A9D39): Friege, `aUnknown8A9D79` castle (rlUnknown8A9D39): Belhalla, `aUnknown8A9D79` castle (rlUnknown8A9D39): Dozel, `aUnknown8A9D79` castle (rlUnknown8A9D39): Edda, `aUnknown8A9D79` castle (rlUnknown8A9D39): Chalphy, `aUnknown8A9D79` castle (rlUnknown8A9D39): Yngvi
+- **table** (7): `aCastleSongs` castle (rlPlayCastleSong): Velthomer, `aCastleSongs` castle (rlPlayCastleSong): Friege, `aCastleSongs` castle (rlPlayCastleSong): Belhalla, `aCastleSongs` castle (rlPlayCastleSong): Dozel, `aCastleSongs` castle (rlPlayCastleSong): Edda, `aCastleSongs` castle (rlPlayCastleSong): Chalphy, `aCastleSongs` castle (rlPlayCastleSong): Yngvi
 - **script**: deferred upload FD `aSoundUploadF7A6B6` ($0CA $19C $19D @7400 $126 $0EF $127 indirect 3C); queue command (checked) $00CB
 
 ## $6E (`aSoundScriptF798E4`), sound test 101
 
-- **table** (7): `aUnknown8A9D79` castle (rlUnknown8A9D39): Madino, `aUnknown8A9D79` castle (rlUnknown8A9D39): Sylvale, `aUnknown8A9D79` castle (rlUnknown8A9D39): Infini, `aUnknown8A9D79` castle (rlUnknown8A9D39): Agusti, `aUnknown8A9D79` castle (rlUnknown8A9D39): Heirhein, `aUnknown8A9D79` castle (rlUnknown8A9D39): Mackily, `aUnknown8A9D79` castle (rlUnknown8A9D39): Nordion
+- **table** (7): `aCastleSongs` castle (rlPlayCastleSong): Madino, `aCastleSongs` castle (rlPlayCastleSong): Sylvale, `aCastleSongs` castle (rlPlayCastleSong): Infini, `aCastleSongs` castle (rlPlayCastleSong): Agusti, `aCastleSongs` castle (rlPlayCastleSong): Heirhein, `aCastleSongs` castle (rlPlayCastleSong): Mackily, `aCastleSongs` castle (rlPlayCastleSong): Nordion
 - **script**: deferred upload FD `aSoundUploadF7A6CA` ($0CB $19E $19F @7400 $126 $0E0 $128 $0FC $0E4 $0FD indirect 3C); queue command (checked) $00CB
 
 ## $6F (`aSoundScriptF799AC`), sound test 79
@@ -592,12 +593,12 @@ here names a song; it is the evidence to name them from.
 
 ## $71 (`aSoundScriptF798D0`), sound test 107
 
-- **table** (4): `aUnknown8A9D79` castle (rlUnknown8A9D39): Miletos, `aUnknown8A9D79` castle (rlUnknown8A9D39): Perlucos, `aUnknown8A9D79` castle (rlUnknown8A9D39): Chronos, `aUnknown8A9D79` castle (rlUnknown8A9D39): Rados
+- **table** (4): `aCastleSongs` castle (rlPlayCastleSong): Miletos, `aCastleSongs` castle (rlPlayCastleSong): Perlucos, `aCastleSongs` castle (rlPlayCastleSong): Chronos, `aCastleSongs` castle (rlPlayCastleSong): Rados
 - **script**: deferred upload FD `aSoundUploadF7A754` ($0C1 $1A8 $1A9 @7400 $126 $0FC $128 $0E0 indirect 3C); queue command (checked) $00CB
 
 ## $72 (`aSoundScriptF799C0`)
 
-- **code** (1): `rlUnknown87C5AA` music, engine/unsorted/bank87.asm:5910
+- **code** (1): `rlProcGameOverInit` music, engine/menus/game_over.asm:171
 - **script**: deferred upload FD `aSoundUploadF7A9FE` ($0AC $1E0 $1E1 @7400 $106 $0F9 $101 indirect 3C); queue command (checked) $00C9
 
 ## $73 (`aSoundScriptF79902`), sound test 66
@@ -640,7 +641,7 @@ here names a song; it is the evidence to name them from.
 
 - **event** (4): EventChapter03MadinoSeized, EventChapter07KutuzovFenrirFound, EventChapter07Opening, EventChapterFinalSeliphJuliaTalkManfroyAlive
 - **dialogue** (5): Chapter01/VerdaneSpawn2, Chapter02/AgustiSpawn1, Chapter05/PhinoraSpawn1, Chapter10/ChalphySpawn1, Chapter10/MiletosSpawn
-- **table** (1): `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 10
+- **table** (1): `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 10
 - **script**: deferred upload FD `aSoundUploadF7A900` ($0A1 $1C6 $1C7 @7400 $0DC $108 $12E indirect 3C); queue command (checked) $00C8
 
 ## $7B (`aSoundScriptF79948`), sound test 76
@@ -676,7 +677,7 @@ here names a song; it is the evidence to name them from.
 ## $81 (`aSoundScriptF79952`), sound test 83
 
 - **event** (6): EventChapter09AltenaRespawn, EventChapter09HannibalCharge, EventChapter09LeifAltenaTalk, EventChapter09TravantSpawnAltenaDead, EventChapter10CoirpreCharlot_AltenaTalk, EventChapterFinalAltenaArionTalk
-- **table** (1): `aUnknown91F7B7` per chapter (rlUnknown91F75F): Chapter 9
+- **table** (1): `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 9
 - **script**: deferred upload FD `aSoundUploadF7A928` ($0A3 $1CA $1CB @7400 $0F9 $0D7 $108 $138 $0DF indirect 3C); queue command (checked) $00C8
 
 ## $82 (`aSoundScriptF7995C`), sound test 94
@@ -716,27 +717,27 @@ here names a song; it is the evidence to name them from.
 ## $88 (`aSoundScriptF79894`), sound test 99
 
 - **event** (1): EventChapter02ChulainnRecruitmentEvans
-- **table** (4): `aUnknown8A9D79` castle (rlUnknown8A9D39): Verdane, `aUnknown8A9D79` castle (rlUnknown8A9D39): Evans, `aUnknown8A9D79` castle (rlUnknown8A9D39): Genoa, `aUnknown8A9D79` castle (rlUnknown8A9D39): Marpha
+- **table** (4): `aCastleSongs` castle (rlPlayCastleSong): Verdane, `aCastleSongs` castle (rlPlayCastleSong): Evans, `aCastleSongs` castle (rlPlayCastleSong): Genoa, `aCastleSongs` castle (rlPlayCastleSong): Marpha
 - **script**: deferred upload FD `aSoundUploadF7A69E` ($08F $19A $19B @7400 $126 $10E $0F0 $0F6 $0E1 indirect 3C); queue command (checked) $00CB
 
 ## $89 (`aSoundScriptF7989E`), sound test 102
 
-- **table** (5): `aUnknown8A9D79` castle (rlUnknown8A9D39): Tofa, `aUnknown8A9D79` castle (rlUnknown8A9D39): Sailane, `aUnknown8A9D79` castle (rlUnknown8A9D39): Zaxon, `aUnknown8A9D79` castle (rlUnknown8A9D39): Silesse, `aUnknown8A9D79` castle (rlUnknown8A9D39): Lubeck
+- **table** (5): `aCastleSongs` castle (rlPlayCastleSong): Tofa, `aCastleSongs` castle (rlPlayCastleSong): Sailane, `aCastleSongs` castle (rlPlayCastleSong): Zaxon, `aCastleSongs` castle (rlPlayCastleSong): Silesse, `aCastleSongs` castle (rlPlayCastleSong): Lubeck
 - **script**: deferred upload FD `aSoundUploadF7A6E4` ($090 $1A0 $1A1 @7400 $126 $0E0 $0EA $0EC $128 indirect 3C); queue command (checked) $00CB
 
 ## $8A (`aSoundScriptF798A8`), sound test 103
 
-- **table** (5): `aUnknown8A9D79` castle (rlUnknown8A9D39): Tirnanog, `aUnknown8A9D79` castle (rlUnknown8A9D39): Ganeishire, `aUnknown8A9D79` castle (rlUnknown8A9D39): Sofala, `aUnknown8A9D79` castle (rlUnknown8A9D39): Isaach, `aUnknown8A9D79` castle (rlUnknown8A9D39): Ribaut
+- **table** (5): `aCastleSongs` castle (rlPlayCastleSong): Tirnanog, `aCastleSongs` castle (rlPlayCastleSong): Ganeishire, `aCastleSongs` castle (rlPlayCastleSong): Sofala, `aCastleSongs` castle (rlPlayCastleSong): Isaach, `aCastleSongs` castle (rlPlayCastleSong): Ribaut
 - **script**: deferred upload FD `aSoundUploadF7A6FC` ($091 $1A2 $1A3 @7400 $126 $110 $119 $11C $0FF indirect 3C); queue command (checked) $00CB
 
 ## $8B (`aSoundScriptF798B2`), sound test 104
 
-- **table** (3): `aUnknown8A9D79` castle (rlUnknown8A9D39): Phinora, `aUnknown8A9D79` castle (rlUnknown8A9D39): Aed, `aUnknown8A9D79` castle (rlUnknown8A9D39): Dahna
+- **table** (3): `aCastleSongs` castle (rlPlayCastleSong): Phinora, `aCastleSongs` castle (rlPlayCastleSong): Aed, `aCastleSongs` castle (rlPlayCastleSong): Dahna
 - **script**: deferred upload FD `aSoundUploadF7A714` ($092 $1A4 $1A5 @7400 $126 $129 $10D $119 indirect 3C); queue command (checked) $00CB
 
 ## $8C (`aSoundScriptF798BC`), sound test 105
 
-- **table** (6): `aUnknown8A9D79` castle (rlUnknown8A9D39): Leonster, `aUnknown8A9D79` castle (rlUnknown8A9D39): Connacht, `aUnknown8A9D79` castle (rlUnknown8A9D39): Munster, `aUnknown8A9D79` castle (rlUnknown8A9D39): Melgen, `aUnknown8A9D79` castle (rlUnknown8A9D39): Ulster, `aUnknown8A9D79` castle (rlUnknown8A9D39): Orgahil
+- **table** (6): `aCastleSongs` castle (rlPlayCastleSong): Leonster, `aCastleSongs` castle (rlPlayCastleSong): Connacht, `aCastleSongs` castle (rlPlayCastleSong): Munster, `aCastleSongs` castle (rlPlayCastleSong): Melgen, `aCastleSongs` castle (rlPlayCastleSong): Ulster, `aCastleSongs` castle (rlPlayCastleSong): Orgahil
 - **script**: deferred upload FD `aSoundUploadF7A72A` ($093 $1A6 $1A7 @7400 $126 $0DD $127 $113 $0E2 indirect 3C); queue command (checked) $00CB
 
 ## $8D (`aSoundScriptF79602`), sound test 117

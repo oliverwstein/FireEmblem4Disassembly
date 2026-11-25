@@ -187,8 +187,8 @@ def main():
     tables = [('aPlayerPhaseChapterSongIDs', 'player phase', lambda i: CHAPTERS[i]),
               ('aChapterFirstPhaseSongIDs', 'first phase of the chapter (rsStartChapterFirstPhaseSong)', lambda i: CHAPTERS[i]),
               ('aNonPlayerFactionPhaseSongIDs', 'phase of the faction', lambda i: factions[i]),
-              ('aUnknown91F7B7', 'per chapter (rlUnknown91F75F)', lambda i: CHAPTERS[i]),
-              ('aUnknown8A9D79', 'castle (rlUnknown8A9D39)', lambda i: castles[i])]
+              ('aChapterIntroSongs', 'per chapter (rsChapterIntroBegin)', lambda i: CHAPTERS[i]),
+              ('aCastleSongs', 'castle (rlPlayCastleSong)', lambda i: castles[i])]
     for label, what, key in tables:
         vals, path = table(label)
         for i, v in enumerate(vals):
