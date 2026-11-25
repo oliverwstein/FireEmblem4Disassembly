@@ -604,7 +604,7 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80CE8E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/CE8E
-      aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $2800 ; 80/CE96
+      aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry g4bppcDebugMenuWindowTiles, $0800, $2800 ; 80/CE96
 
       .dsection Unsorted80CE9ESection
 
@@ -626,7 +626,7 @@
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/D41D
       aDecompressionDMAEntry80D425 .structDecompressionDMAEntry gcUnknownDD3CE4, $0700, $1800 ; 80/D425
-      aDecompressionDMAEntry80D42D .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $2000 ; 80/D42D
+      aDecompressionDMAEntry80D42D .structDecompressionDMAEntry g4bppcDebugMenuWindowTiles, $0800, $2000 ; 80/D42D
 
       .dsection Unsorted80D435Section
 
@@ -688,8 +688,8 @@
       .dsection Unsorted80EFD8Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80F187 .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $3000 ; 80/F187
-      aDecompressionDMAEntry80F18F .structDecompressionDMAEntry gcUnknownDD2D90, $0800, $5000 ; 80/F18F
+      aDecompressionDMAEntry80F187 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $3000 ; 80/F187
+      aDecompressionDMAEntry80F18F .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $5000 ; 80/F18F
       aDecompressionDMAEntry80F197 .structDecompressionDMAEntry gcUnknownD35EB4, $5800, $0000 ; 80/F197
       aDecompressionDMAEntry80F19F .structDecompressionDMAEntry gcUnknownD42C50, $1000, $5800 ; 80/F19F
 
@@ -718,8 +718,8 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80F42B .structDecompressionDMAEntry gcUnknownDD3FA6, $4000, $0000 ; 80/F42B
-      aDecompressionDMAEntry80F433 .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $4000 ; 80/F433
-      aDecompressionDMAEntry80F43B .structDecompressionDMAEntry gcUnknownDD2D90, $0800, $6000 ; 80/F43B
+      aDecompressionDMAEntry80F433 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $4000 ; 80/F433
+      aDecompressionDMAEntry80F43B .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $6000 ; 80/F43B
 
       .dsection Unsorted80F443Section
 

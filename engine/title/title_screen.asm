@@ -276,9 +276,9 @@
         bcc _EF12
         sep #$20
         rep #$10
-        ldx #<>gcUnknown9CBFA1
+        ldx #<>acSaveMenuPalettes
         stx DecompressionVariables
-        lda #`gcUnknown9CBFA1
+        lda #`acSaveMenuPalettes
         sta $CA
         ldx #$8B88
         stx $CB
@@ -386,9 +386,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknown9CBBB7
+        ldx #<>acSaveMenuBG1Tilemap
         stx DecompressionVariables
-        lda #`gcUnknown9CBBB7
+        lda #`acSaveMenuBG1Tilemap
         sta $CA
         ldx #$8B88
         stx $CB

@@ -421,9 +421,9 @@
 
           .structDMAToVRAM aDecompressionBuffer, $4800, $80, $A000
 
-        lda #(`gcUnknown9CCB62)<<8
+        lda #(`acAntiPiracyWarningTilemap)<<8
         sta lR18+1
-        lda #<>gcUnknown9CCB62
+        lda #<>acAntiPiracyWarningTilemap
         sta lR18
         lda #(`aBG3TilemapBuffer)<<8
         sta lR19+1
@@ -434,9 +434,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $9000
 
-        lda #(`gcUnknown9CD916)<<8
+        lda #(`acWarningScreenPalettes)<<8
         sta lR18+1
-        lda #<>gcUnknown9CD916
+        lda #<>acWarningScreenPalettes
         sta lR18
         lda #(`aBGPaletteBuffer)<<8
         sta lR19+1
@@ -490,9 +490,9 @@
 
           .structDMAToVRAM aDecompressionBuffer, $4800, $80, $A000
 
-        lda #(`gcUnknown9CD719)<<8
+        lda #(`acAbnormalityWarningTilemap)<<8
         sta lR18+1
-        lda #<>gcUnknown9CD719
+        lda #<>acAbnormalityWarningTilemap
         sta lR18
         lda #(`aBG3TilemapBuffer)<<8
         sta lR19+1
@@ -503,9 +503,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $9000
 
-        lda #(`gcUnknown9CD916)<<8
+        lda #(`acWarningScreenPalettes)<<8
         sta lR18+1
-        lda #<>gcUnknown9CD916
+        lda #<>acWarningScreenPalettes
         sta lR18
         lda #(`aBGPaletteBuffer)<<8
         sta lR19+1

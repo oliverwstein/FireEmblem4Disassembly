@@ -1364,9 +1364,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>aUnknown9CEAEE
+        ldx #<>acBattleBannerPalettes
         stx DecompressionVariables.lSource
-        lda #`aUnknown9CEAEE
+        lda #`acBattleBannerPalettes
         sta DecompressionVariables.lSource+2
         ldx #<>aDecompressionBuffer
         stx $CB

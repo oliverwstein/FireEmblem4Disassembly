@@ -7,9 +7,9 @@ end $DD6655
 
 # Genealogy wheel tiles (Project Naga GenealogyWheel.4bpp; loaded as $DD0000 in bank $89).
 gcGenealogyWheelTiles gcGenealogyWheelTiles ; 9728 bytes decompressed
-gcUnknownDD20A0 gcUnknownDD20A0 ; 4608 bytes decompressed
-gcUnknownDD2CEE gcUnknownDD2CEE ; 1792 bytes decompressed
-gcUnknownDD2D90 gcUnknownDD2D90 ; 2048 bytes decompressed
+g4bppcReviveScreenTiles g4bppcReviveScreenTiles ; 4608 bytes decompressed
+acReviveScreenBG1Tilemap acReviveScreenBG1Tilemap ; 1792 bytes decompressed
+acReviveScreenBG2Tilemap acReviveScreenBG2Tilemap ; 2048 bytes decompressed
 gcUnknownDD304B gcUnknownDD304B ; 2048 bytes decompressed
 gcUnknownDD373A gcUnknownDD373A ; 1792 bytes decompressed
 gcUnknownDD3851 gcUnknownDD3851 ; 1216 bytes decompressed
@@ -18,6 +18,6 @@ gcUnknownDD3BDE gcUnknownDD3BDE ; 1792 bytes decompressed
 gcUnknownDD3CE4 gcUnknownDD3CE4 ; 1792 bytes decompressed
 gcUnknownDD3DC0 gcUnknownDD3DC0 ; 1792 bytes decompressed
 gcUnknownDD3E96 gcUnknownDD3E96 ; 704 bytes decompressed
-gcUnknownDD3F20 gcUnknownDD3F20 ; 2048 bytes decompressed
+g4bppcDebugMenuWindowTiles g4bppcDebugMenuWindowTiles ; 2048 bytes decompressed
 gcUnknownDD3FA6 gcUnknownDD3FA6 ; 16384 bytes decompressed
-gcUnknownDD629E gcUnknownDD629E ; 2304 bytes decompressed
+g4bppcChapterIntroBannerTiles g4bppcChapterIntroBannerTiles ; 2304 bytes decompressed

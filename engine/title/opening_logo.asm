@@ -370,9 +370,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownDF30CC
+        ldx #<>acOpeningLogoSubTiles
         stx DecompressionVariables
-        lda #`gcUnknownDF30CC
+        lda #`acOpeningLogoSubTiles
         sta $CA
         ldx #$8B88
         stx $CB
@@ -386,9 +386,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknownDF30E9
+        ldx #<>acOpeningLogoTilemap
         stx DecompressionVariables
-        lda #`gcUnknownDF30E9
+        lda #`acOpeningLogoTilemap
         sta $CA
         ldx #$8B88
         stx $CB

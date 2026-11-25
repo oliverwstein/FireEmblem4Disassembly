@@ -36,8 +36,8 @@ gcTitleIntroCaption12 gcTitleIntroCaption12 ; 1248 bytes decompressed
 # Title intro caption line 13 (Project Naga's Intro_Line13); loaded by aTitleLoadList to VRAM $7800.
 gcTitleIntroCaption13 gcTitleIntroCaption13 ; 1024 bytes decompressed
 g4bppcOpeningLogoTiles g4bppcOpeningLogoTiles ; 2080 bytes decompressed
-gcUnknownDF30CC gcUnknownDF30CC ; 96 bytes decompressed
-gcUnknownDF30E9 gcUnknownDF30E9 ; 1792 bytes decompressed
+acOpeningLogoSubTiles acOpeningLogoSubTiles ; 96 bytes decompressed
+acOpeningLogoTilemap acOpeningLogoTilemap ; 1792 bytes decompressed
 g4bppcBattleBackgroundThicket g4bppcBattleBackgroundThicket ; 16384 bytes decompressed
 acBattleBackgroundUnknown17Tilemap acBattleBackgroundUnknown17Tilemap ; 4096 bytes decompressed
 # Also used as: acBattleBackgroundForestSnowTilemap.

@@ -8,8 +8,8 @@ Rule: Every change to source, data, or assets must keep `./build.sh` byte-identi
 | Metric | Baseline (2026-11-25) | Current | Refresh Command |
 |---|---:|---:|---|
 | Unnamed RAM addresses | 1,296 (`4,727` operands) | 1,224 (`3,552` operands) | `python3 tools/name_ram.py --report 50` |
-| Distinct `*Unknown*` identifiers | 864 | 863 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
-| Compressed-only `.comp` streams | 510 (`273` `Unknown`) | 233 (`233` `Unknown`) | `find gfx audio -name '*.comp'` (check for missing `.png` / unpacked file) |
+| Distinct `*Unknown*` identifiers | 864 | 846 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
+| Compressed-only `.comp` streams | 510 (`273` `Unknown`) | 169 (`169` `Unknown`) | `find gfx audio -name '*.comp'` (check for missing `.png` / unpacked file) |
 | Greyscale UI PNG sheets | 18 | 0 | `ls gfx/ui/*.png` (see [gfx/ui/README.md](gfx/ui/README.md)) |
 | Undecoded chapter maps / battle layouts | `aChapterMapPointers` + 120 battle layouts | 0 (`tools/chapter_maps.py`, `tools/map_battle_layouts.py`) | `find gfx/compressed -name '*MapBattle*Layout*.comp' \| wc -l` |
 | Raw SPC700 driver / `other` sound chunks | 5 driver blocks / 118 `other` chunks | 5 driver blocks / 118 `other` chunks | `ls audio/driver audio/chunks` |
@@ -65,8 +65,8 @@ Workflow: identify via loader routines and [gfx/compressed/CATALOG.md](gfx/compr
 
 - [ ] `gfx/compressed/E02EBD/` — 169 remaining (169 `Unknown`; 11 unpacked)
 - [x] `gfx/compressed/A08000/` — 81 total (all unpacked; 0 `Unknown`)
-- [ ] `gfx/compressed/D50000/` — 33 remaining (33 `Unknown`; 45 unpacked)
-- [ ] `gfx/compressed/D05673/` — 31 remaining (31 `Unknown`; 25 unpacked)
+- [x] `gfx/compressed/D50000/` — 78 total (all unpacked)
+- [x] `gfx/compressed/D05673/` — 56 total (all unpacked)
 - [x] `gfx/compressed/C70C80/` — 42 total (0 `Unknown`, all unpacked)
 - [x] `gfx/compressed/9C8000/` — 25 total (all unpacked)
 - [x] `gfx/compressed/DF0000/` — 18 total (all unpacked)

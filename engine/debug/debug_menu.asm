@@ -4354,7 +4354,7 @@
       aDebugMenuDD3F20DecompressionEntry ; 80/E545
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $6000
+        .structDecompressionDMAEntry g4bppcDebugMenuWindowTiles, $0800, $6000
 
       rsSetDebugMenuBGSettings ; 80/E54D
 

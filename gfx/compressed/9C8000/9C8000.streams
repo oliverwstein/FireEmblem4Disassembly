@@ -7,16 +7,16 @@ end $9CECA6
 
 g4bppcSaveMenuMainTiles g4bppcSaveMenuMainTiles ; 18432 bytes decompressed
 g4bppcSaveMenuWindowTiles g4bppcSaveMenuWindowTiles ; 2048 bytes decompressed
-gcUnknown9CBB20 gcUnknown9CBB20 ; 2048 bytes decompressed
-gcUnknown9CBBB7 gcUnknown9CBBB7 ; 2048 bytes decompressed
-gcUnknown9CBFA1 gcUnknown9CBFA1 ; 512 bytes decompressed
+acSaveMenuBG2Tilemap acSaveMenuBG2Tilemap ; 2048 bytes decompressed
+acSaveMenuBG1Tilemap acSaveMenuBG1Tilemap ; 2048 bytes decompressed
+acSaveMenuPalettes acSaveMenuPalettes ; 512 bytes decompressed
 # Anti-piracy warning text (seen in the preview); rlLoadAntiTamperScreenAgain.
 gcAntiPiracyWarningTiles gcAntiPiracyWarningTiles ; 8192 bytes decompressed
-gcUnknown9CCB62 gcUnknown9CCB62 ; 2048 bytes decompressed
+acAntiPiracyWarningTilemap acAntiPiracyWarningTilemap ; 2048 bytes decompressed
 # 'Abnormality detected' text (seen in the preview); rlLoadAntiTamperScreen.
 gcAbnormalityWarningTiles gcAbnormalityWarningTiles ; 8192 bytes decompressed
-gcUnknown9CD719 gcUnknown9CD719 ; 2048 bytes decompressed
-gcUnknown9CD916 gcUnknown9CD916 ; 512 bytes decompressed
+acAbnormalityWarningTilemap acAbnormalityWarningTilemap ; 2048 bytes decompressed
+acWarningScreenPalettes acWarningScreenPalettes ; 512 bytes decompressed
 g4bppcBattleBannerLeonster g4bppcBattleBannerLeonster ; 384 bytes decompressed
 g4bppcBattleBannerDozel g4bppcBattleBannerDozel ; 384 bytes decompressed
 g4bppcBattleBannerYngvi g4bppcBattleBannerYngvi ; 384 bytes decompressed
@@ -33,5 +33,5 @@ g4bppcBattleBannerLoptr g4bppcBattleBannerLoptr ; 384 bytes decompressed
 g4bppcBattleBannerDefault g4bppcBattleBannerDefault ; 384 bytes decompressed
 # The original notes call these two tilemaps. rlUnknown91AFC2 decompresses
 # the first along with a banner.
-aUnknown9CEAEE aUnknown9CEAEE ; 512 bytes decompressed
+acBattleBannerPalettes acBattleBannerPalettes ; 512 bytes decompressed
 acDialogueBackgroundCloisterForegroundTilemap acDialogueBackgroundCloisterForegroundTilemap ; 2048 bytes decompressed

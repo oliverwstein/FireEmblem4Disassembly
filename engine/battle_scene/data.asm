@@ -696,7 +696,7 @@
         .long g4bppcSaveMenuMainTiles, aDecompressionBuffer
         .word $2000, $4000
         .byte $00
-        .long gcUnknown9CBBB7, $7E9B88
+        .long acSaveMenuBG1Tilemap, $7E9B88
         .word $0000, $0010
         .byte $02
         .long $7F6580
@@ -715,13 +715,13 @@
         ; Read by rlRunTitleLoadList via rlStartTitleFadeOutLoadList.
 
         .byte $00
-        .long gcUnknown9CBBB7, $7F0000
+        .long acSaveMenuBG1Tilemap, $7F0000
         .word $7800, $0800
         .byte $00
         .long g4bppcSaveMenuMainTiles, $7F1000
         .word $0000, $4000
         .byte $00
-        .long gcUnknown9CBB20, aDecompressionBuffer
+        .long acSaveMenuBG2Tilemap, aDecompressionBuffer
         .word $3C00, $0800
         .byte $02
         .long $7F5000

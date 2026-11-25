@@ -53,9 +53,9 @@
         ; Decompresses 4bpp Game Over graphics to VRAM $0000
         sep #$20
         rep #$10
-        ldx #<>gcUnknownC02B6B
+        ldx #<>g4bppcGameOverTiles
         stx DecompressionVariables
-        lda #`gcUnknownC02B6B
+        lda #`g4bppcGameOverTiles
         sta $CA
         ldx #$8B88
         stx $CB
@@ -70,9 +70,9 @@
         ; Decompresses BG1 tilemap to VRAM $A000
         sep #$20
         rep #$10
-        ldx #<>gcUnknownC03455
+        ldx #<>acGameOverBG1Tilemap
         stx DecompressionVariables
-        lda #`gcUnknownC03455
+        lda #`acGameOverBG1Tilemap
         sta $CA
         ldx #$8B88
         stx $CB
@@ -87,9 +87,9 @@
         ; Decompresses BG2 tilemap to VRAM $A800
         sep #$20
         rep #$10
-        ldx #<>gcUnknownC03558
+        ldx #<>acGameOverBG2Tilemap
         stx DecompressionVariables
-        lda #`gcUnknownC03558
+        lda #`acGameOverBG2Tilemap
         sta $CA
         ldx #$8B88
         stx $CB

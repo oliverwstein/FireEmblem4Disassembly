@@ -226,17 +226,17 @@
       aReviveScreenGraphics2 ; 80/E146
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $3000
+        .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $3000
 
       aReviveScreenGraphics3 ; 80/E14E
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .structDecompressionDMAEntry gcUnknownDD2CEE, $0700, $1800
+        .structDecompressionDMAEntry acReviveScreenBG1Tilemap, $0700, $1800
 
       aReviveScreenGraphics4 ; 80/E156
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .structDecompressionDMAEntry gcUnknownDD2D90, $0800, $2000
+        .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $2000
 
       rsReviveScreenSetBGSettings ; 80/E15E
 

@@ -637,9 +637,9 @@
         sta lR19
         jsl rlAppendDecompList
 
-        lda #(`aUnknown9CEAEE)<<8
+        lda #(`acBattleBannerPalettes)<<8
         sta lR18+1
-        lda #<>aUnknown9CEAEE
+        lda #<>acBattleBannerPalettes
         sta lR18
         lda #(`$7E8C88)<<8
         sta lR19+1

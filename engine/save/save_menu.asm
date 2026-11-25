@@ -714,9 +714,9 @@
 
           .structDMAToVRAM aDecompressionBuffer, $4800, $80, $0000
 
-        lda #(`gcUnknown9CBB20)<<8
+        lda #(`acSaveMenuBG2Tilemap)<<8
         sta lR18+1
-        lda #<>gcUnknown9CBB20
+        lda #<>acSaveMenuBG2Tilemap
         sta lR18
         lda #(`aBG2TilemapBuffer)<<8
         sta lR19+1
@@ -727,9 +727,9 @@
 
           .structDMAToVRAM aBG2TilemapBuffer, $0800, $80, $7800
 
-        lda #(`gcUnknown9CBBB7)<<8
+        lda #(`acSaveMenuBG1Tilemap)<<8
         sta lR18+1
-        lda #<>gcUnknown9CBBB7
+        lda #<>acSaveMenuBG1Tilemap
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -740,9 +740,9 @@
 
           .structDMAToVRAM $7E7B88, $0800, $80, $8000
 
-        lda #(`gcUnknown9CBFA1)<<8
+        lda #(`acSaveMenuPalettes)<<8
         sta lR18+1
-        lda #<>gcUnknown9CBFA1
+        lda #<>acSaveMenuPalettes
         sta lR18
         lda #(`aBGPaletteBuffer)<<8
         sta lR19+1
@@ -3391,9 +3391,9 @@
 
           .structDMAToVRAM aDecompressionBuffer, $0800, $80, $6000
 
-        lda #(`gcUnknown9CBB20)<<8
+        lda #(`acSaveMenuBG2Tilemap)<<8
         sta lR18+1
-        lda #<>gcUnknown9CBB20
+        lda #<>acSaveMenuBG2Tilemap
         sta lR18
         lda #(`aBG2TilemapBuffer)<<8
         sta lR19+1
@@ -3422,9 +3422,9 @@
 
           .structDMAToVRAM aBG2TilemapBuffer, $0800, $80, $7800
 
-        lda #(`gcUnknown9CBBB7)<<8
+        lda #(`acSaveMenuBG1Tilemap)<<8
         sta lR18+1
-        lda #<>gcUnknown9CBBB7
+        lda #<>acSaveMenuBG1Tilemap
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -3453,9 +3453,9 @@
 
           .structDMAToVRAM $7E7B88, $0800, $80, $8000
 
-        lda #(`gcUnknown9CBFA1)<<8
+        lda #(`acSaveMenuPalettes)<<8
         sta lR18+1
-        lda #<>gcUnknown9CBFA1
+        lda #<>acSaveMenuPalettes
         sta lR18
         lda #(`aBGPaletteBuffer)<<8
         sta lR19+1

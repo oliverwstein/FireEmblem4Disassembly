@@ -99,7 +99,7 @@ def main():
                 out += [n for n in notes.get(old, []) if n not in out[-len(notes[old]):]]
                 out.append(f'{new} {new}{m.group(2)}')
                 folder = os.path.dirname(path)
-                for ext in ('.comp', '.4bpp.comp', '.4bpp.png'):
+                for ext in ('.comp', '.4bpp.comp', '.4bpp.png', '.bin.comp', '.bin'):
                     src, dst = os.path.join(folder, old + ext), os.path.join(folder, new + ext)
                     if os.path.exists(src):
                         if os.path.relpath(src, ROOT) in tracked:
