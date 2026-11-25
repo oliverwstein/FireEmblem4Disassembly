@@ -1,27 +1,11 @@
 ; Resetting hardware registers to defaults: screen, scrolling, windows, color math,
 ; mode 7, HDMA, math registers, joypad reading and memory speed.
 
-    .section HardwareResetSection
+    .section HardwareResetRegistersSection
 
-      .as
+      .al
       .xl
 
-      rsRunFrameTasks ; 80/9D4F
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Per-frame main loop helper: reset check, decompression queue, deferred sound upload
-
-        ; Run every frame
-
-        jsl rlButtonCombinationResetCheck
-        jsl rlDecompressByList
-        jsl rlRunDeferredSoundUpload ; ?
-        rts
-
-        .databank 0
 
       rlHardwareResetScreenPosMathHDMA ; 80/9D5C
 
@@ -253,7 +237,7 @@
 
         ; 80/9DD9
 
-    .endsection HardwareResetSection
+    .endsection HardwareResetRegistersSection
 
 
     .section Unsorted808C50Section

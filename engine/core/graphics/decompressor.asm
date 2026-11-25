@@ -1,4 +1,5 @@
-; The decompressor and its queue of pending decompressions.
+; The decompressor and its queue of pending decompressions, and an unused proc that
+; decompresses into aDecompressionBuffer.
 
     .section DecompressionListSection
 
@@ -881,3 +882,65 @@
     .endsection Unsorted80A9F2Section
 
 
+    .section DecompressToBufferProcSection
+
+      .al
+      .xl
+
+
+      ; 82/83B5
+
+      procDecompressToBufferUnused ; 82/83B5
+
+        ; Unreferenced: nothing creates this proc. Its init queues a
+        ; decompression of the stream at lR44 into aDecompressionBuffer; its
+        ; cycle ends the proc when the decompression list is done.
+
+        .structProcInfo "De", rlProcDecompressToBufferInit, rlProcDecompressToBufferCycle, aProcDecompressToBufferCode
+
+      rlProcDecompressToBufferInit ; 82/83BD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda lR44
+        sta lR18
+        lda lR44+1
+        sta lR18+1
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        rtl
+
+        .databank 0
+
+        ; 82/83D4
+
+      rlProcDecompressToBufferCycle ; 82/83D4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bDecompressionArrayFlag,b
+        and #$00FF
+        bne _83E0
+        jsl rlProcEngineFreeProc
+
+        _83E0
+        rtl
+
+        .databank 0
+
+        ; 82/83E1
+
+      aProcDecompressToBufferCode ; 82/83E1
+
+        PROC_HALT
+
+    .endsection DecompressToBufferProcSection

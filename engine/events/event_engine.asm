@@ -1,6 +1,8 @@
 ; The chapter event engine: chapter event RAM data, permanent and per-chapter event
 ; flags, running chapter opening and map events, and the event condition commands
-; (fights, talks, interactions and so on).
+; (fights, talks, interactions and so on). Bank $86 opens with the engine's
+; version string; the opening logo's game states that follow it are in
+; engine/title/opening_logo.asm.
 
     .section Table81B45BSection
 
@@ -45,121 +47,14 @@
         .text "VER 960402 2000"
         .byte 0
 
-      rlOpeningLogoUpkeep ; 86/8010
+    .endsection EventEngineSection
 
-        .al
-        .autsiz
-        .databank ?
 
-        ; Game state routine $01, every frame during the opening: does nothing.
+    .section ChapterEventRAMDataSection
 
-        rtl
+      .al
+      .xl
 
-        .databank 0
-
-      rlOpeningLogoSetup ; 86/8011
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Game state routine $02, once: if Start is held, resets procs and fades to rsSetupSaveSelectMenu (game state 0 meanwhile); otherwise moves on to $03 at step 0.
-
-        stz $1753,b
-
-        lda wJoy1Input
-        bit #JOY_Start
-        bne +
-
-          inc wGameStateRoutine1,b
-          stz wGameStateStep,b
-          rtl
-    
-        +
-        jsl rlProcEngineResetProcEngine
-        stz wGameStateRoutine1,b
-
-        lda #<>rsSetupSaveSelectMenu
-        sta aProcSystem.wInput0,b
-
-        lda #(`procMainLoopChangeFade)<<8
-        sta lR44+1
-        lda #<>procMainLoopChangeFade
-        sta lR44
-        jsl rlProcEngineCreateProc
-        rtl
-
-        .databank 0
-
-      rlOpeningLogoStep ; 86/803E
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Game state routine $03, every frame: runs step 0 or 1 from aOpeningLogoSteps (a higher step hangs).
-
-        lda wGameStateStep,b
-        cmp #2
-        bmi +
-        
-          -
-          bra -
-
-        +
-        asl a
-        tax
-        jsr (aOpeningLogoSteps,x)
-        rtl
-
-        .databank 0
-
-      aOpeningLogoSteps ; 86/804E
-
-        .addr rsOpeningLogoRunFlash
-        .addr rsOpeningLogoFadeToTitle
-
-      rsOpeningLogoRunFlash ; 86/8052
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Runs rlFlashToTitleScreen and advances wGameStateStep on carry set
-
-        jsl rlFlashToTitleScreen
-        bcs +
-
-          rts
-
-        +
-        inc wGameStateStep,b
-        rts
-
-        .databank 0
-
-      rsOpeningLogoFadeToTitle ; 86/805D
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Resets proc engine and fades to rsOpenTitleScreen
-
-        jsl rlProcEngineResetProcEngine
-        stz wGameStateRoutine1,b
-
-        lda #<>rsOpenTitleScreen
-        sta aProcSystem.wInput0,b
-
-        lda #(`procMainLoopChangeFade)<<8
-        sta lR44+1
-        lda #<>procMainLoopChangeFade
-        sta lR44
-        jsl rlProcEngineCreateProc
-        rts
-
-        .databank 0
 
       rlInitiateChapterEventRAMData ; 86/8079
 
@@ -6502,7 +6397,7 @@
 
       ; 86/9CCC
 
-    .endsection EventEngineSection
+    .endsection ChapterEventRAMDataSection
 
 
     .section ChapterEventDataSection

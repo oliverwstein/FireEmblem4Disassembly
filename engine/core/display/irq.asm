@@ -1,149 +1,4 @@
-; Turning the VBlank (NMI) interrupt on and off, waiting for VBlank, and turning
-; forced blanking on and off.
-
-    .section VBlankControlSection
-
-      .al
-      .xl
-
-      rlEnableVBlank ; 80/8223
-
-        .al
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda bBufferNMITIMEN
-        ora #NMITIMEN_VBlank
-        sta bBufferNMITIMEN
-        sta NMITIMEN,b
-        plp
-        rtl
-
-        .databank 0
-
-      rlDisableVBlank ; 80/8231
-
-        .al
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda bBufferNMITIMEN
-        and #~(NMITIMEN_VBlank)
-        sta bBufferNMITIMEN
-        sta NMITIMEN,b
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/823F
-
-    .endsection VBlankControlSection
-
-
-    .section EnableForcedBlankSection
-
-      .al
-      .xl
-
-      rlEnableForcedBlank ; 80/8248
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        phb
-        phk
-        plb
-        .databank $80
-        sep #$20
-        lda bBufferINIDISP
-        ora #$80
-        sta bBufferINIDISP
-        jsl rlHaltUntilVBlank
-        plb
-        .databank $80
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/825B
-
-    .endsection EnableForcedBlankSection
-
-
-    .section Unsorted80823FSection
-
-      .al
-      .xl
-
-      rlHaltUntilVBlank ; 80/823F
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Waits until wVBlankEnabledFramecount changes. FE5: rlHaltUntilVBlank.
-
-        php
-        lda wVBlankEnabledFramecount
-
-        _8242
-        cmp wVBlankEnabledFramecount
-        beq _8242
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/8248
-
-    .endsection Unsorted80823FSection
-
-
-    .section Unsorted80825BSection
-
-      .al
-      .xl
-
-      rlDisableForcedBlank ; 80/825B
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Clears the forced blank bit of bBufferINIDISP and waits for VBlank. FE5: rlDisableForcedBlank.
-
-        php
-        phb
-        phk
-        plb
-        .databank $80
-        sep #$20
-        lda bBufferINIDISP
-        and #$7F
-        sta bBufferINIDISP
-        jsl rlHaltUntilVBlank
-        plb
-        .databank $80
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/826E
-
-    .endsection Unsorted80825BSection
-
+; The IRQ engine: a sorted list of mid-frame interrupts, each with a script.
 
     .section IRQEngineCycleSection
 
@@ -167,186 +22,6 @@
         ; 80/AE68
 
     .endsection IRQEngineCycleSection
-
-
-    .section Unsorted8081B6Section
-
-      .al
-      .xl
-
-      rlVBlank ; 80/81B6
-
-        ; Found by tools/sweep.py.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Native VBlank/NMI interrupt handler ($FFE0/$FFEA), calls (wVBlankPointer) or handles lag frame
-
-        cli
-        rep #$30
-        jml _81BD
-
-
-        _81BD
-        phb
-        phd
-        pha
-        phx
-        phy
-        lda #$0000
-        tcd
-        phk
-        plb
-        .databank $80
-        lda $4210,b
-        lda wVBlankFlag
-        bmi _81E9
-        ora #$8000
-        sta wVBlankFlag
-        pea #<>(+)-1
-        jmp (wVBlankPointer)
-
-        +
-        jsl rlTickGameTimer
-        inc wVBlankEnabledFramecount
-        ply
-        plx
-        pla
-        pld
-        stz wVBlankFlag,b
-        plb
-        .databank $80
-        rti
-
-
-        _81E9
-        inc wVBlankDisabledFramecount
-        jsl rlSendSoundQueuesToAPU
-        jsl rlCopyINIDISPBuffer
-        jsl rlTickGameTimer
-        ply
-        plx
-        pla
-        pld
-        plb
-        .databank $80
-        rti
-
-        .databank 0
-
-        ; 80/81FD
-
-    .endsection Unsorted8081B6Section
-
-
-    .section Unsorted8081FDSection
-
-      .al
-      .xl
-
-      rlIRQ ; 80/81FD
-
-        ; Found through fe4.cdl.
-        .as
-        .xs
-        .autsiz
-        .databank ?
-
-        ; Native IRQ interrupt handler ($FFEE/$FFFE), checks TIMEUP and calls (wIRQPointer)
-
-        rep #$30
-        jml _8203
-
-
-        _8203
-        phb
-        phd
-        pha
-        phx
-        phy
-        phk
-        plb
-        .databank $80
-        lda #$0000
-        tcd
-        lda $4211,b
-        bit #$0080
-        beq _821C
-        pea #<>_821C - 1
-        jmp (wIRQPointer)
-
-
-        _821C
-        ply
-        plx
-        pla
-        pld
-        plb
-        .databank $80
-        rti
-
-        .databank 0
-
-        ; 80/8222
-
-      rsDefaultIRQRoutine ; 80/8222
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Default no-op RTS stub installed into wIRQPointer on boot/reset
-
-        rts
-
-        .databank 0
-
-        ; 80/8223
-
-    .endsection Unsorted8081FDSection
-
-
-    .section Unsorted809CA0Section
-
-      .al
-      .xl
-
-      rsDefaultVBlankRoutine ; 80/9CA0
-
-        ; Found by tools/sweep.py.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; The VBlank routine rlReset installs. FE5: rsDefaultVBlankRoutine.
-
-        sep #$20
-        lda #$80
-        sta $2100,b
-        rep #$20
-        jsl rlProcessDMAStructArray
-        jsl rlDMAPaletteAndOAMBuffer
-        jsl rlCopyPPURegisterBuffer
-        jsl rlSendSoundQueuesToAPU
-        jsl rlGetJoypadInput
-        jsl rlIncreaseFrameCounters
-        jsl rlClearSpriteExtBuffer
-        jsl rlRunGameStateRoutines
-        jsl rlRunVBlankHooks
-        jsl rlHideSprites
-        jsl rlUpdateSound
-        rts
-
-        .databank 0
-
-        ; 80/9CD6
-
-    .endsection Unsorted809CA0Section
-
 
     .section Unsorted82E000Section
 
@@ -407,7 +82,6 @@
 
     .endsection Unsorted82E000Section
 
-
     .section Unsorted82E028Section
 
       .al
@@ -435,7 +109,6 @@
         ; 82/E030
 
     .endsection Unsorted82E028Section
-
 
     .section Unreferenced82E030Section
 
@@ -548,6 +221,7 @@
         ; 82/E073
 
     .endsection Unreferenced82E030Section
+
     .section Unsorted82E073Section
 
       .al
@@ -586,6 +260,47 @@
 
     .endsection Unsorted82E073Section
 
+    .section Unsorted82E08DSection
+
+      .al
+      .xl
+
+      rlEnableIRQEngine ; 82/E08D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Enables HV IRQ in NMITIMEN, syncs/sorts IRQ entries, and installs rsIRQEngineCycle
+
+        sei
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        sep #$20
+        lda bBufferNMITIMEN
+        ora #$30
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$8000
+        trb $168F,b
+        jsl rlIRQEngineSyncAndSort
+        lda #<>rsIRQEngineCycle
+        sta wIRQPointer
+        plp
+        plb
+        .databank $82
+        cli
+        rtl
+
+        .databank 0
+
+        ; 82/E0AF
+
+    .endsection Unsorted82E08DSection
 
     .section Unsorted82E0AFSection
 
@@ -619,6 +334,114 @@
 
     .endsection Unsorted82E0AFSection
 
+    .section Unsorted82E0C6Section
+
+      .al
+      .xl
+
+      rlIRQEngineCreateEntry ; 82/E0C6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Adds an IRQ entry from lR44 (max 7 entries; carry set if full)
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        ldy lR44
+        sep #$20
+        lda lR44+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $1695,b
+        cmp #$0007
+        bcc _E0E2
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+
+        _E0E2
+        lda $1695,b
+        asl a
+        tax
+        tya
+        sta $169A,b,x
+        lda lR44+1
+        and #$FF00
+        xba
+        sta $16AA,b,x
+        lda #$0000
+        sta $16BA,b,x
+        lda $0000,b,y
+        sta $16CA,b,x
+        lda $0002,b,y
+        sta $16DA,b,x
+        lda $0004,b,y
+        sta $16EA,b,x
+        lda $0006,b,y
+        sta $16FA,b,x
+        lda #$0001
+        sta $170A,b,x
+        inc $1695,b
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+        .databank 0
+
+        ; 82/E120
+
+    .endsection Unsorted82E0C6Section
+
+    .section Unreferenced82E120Section
+
+      .al
+      .xl
+
+      rlIRQEngineFreeCurrentEntry ; 82/E120
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced; clears active IRQ entry $1691 and decrements count $1695
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        ldx $1691,b
+        stz $169A,b,x
+        stz $16DA,b,x
+        dec $1695,b
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E133
+
+    .endsection Unreferenced82E120Section
 
     .section Unsorted82E133Section
 
@@ -682,6 +505,185 @@
 
     .endsection Unsorted82E133Section
 
+    .section Unsorted82E147Section
+
+      .al
+      .xl
+
+      rlIRQEngineSyncAndSort ; 82/E147
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sorts IRQ entries by scanline and programs hardware HV timer for next entry
+
+        sei
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda $1695,b
+        cmp $1693,b
+        beq _E173
+        sta $1693,b
+        jsr rsIRQEngineSortEntries
+        lda $1693,b
+        beq _E16A
+        dec a
+        asl a
+        sta $1691,b
+        tax
+        jsr rsIRQEngineProgramNextEntry
+        bra _E173
+
+
+        _E16A
+        lda #$0000
+        sta $1697,b
+        sta $1698,b
+
+        _E173
+        plp
+        plb
+        .databank $82
+        cli
+        rtl
+
+        .databank 0
+
+        ; 82/E177
+
+      rsIRQEngineSortEntries ; 82/E177
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Shell-sorts active IRQ entries by V-count ($16DA)
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda $1693,b
+        cmp #$0001
+        beq _E1BA
+        bcc _E1BA
+        and #$FFFE
+        sta wR30
+
+        _E18C
+        lda $1693,b
+        asl a
+        sec
+        sbc wR30
+        sta wR32
+        stz wR31
+
+        _E197
+        lda wR30
+        clc
+        adc wR31
+        tay
+        ldx wR31
+        lda $16DA,b,x
+        cmp $16DA,b,y
+        bcs _E1AA
+        jsr rsIRQEngineSwapEntries
+
+        _E1AA
+        inc wR31
+        inc wR31
+        lda wR31
+        cmp wR32
+        bcc _E197
+        dec wR30
+        dec wR30
+        bne _E18C
+
+        _E1BA
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 82/E1BF
+
+      rsIRQEngineSwapEntries ; 82/E1BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Swaps two IRQ entries X and Y across all IRQ engine arrays
+
+        lda $169A,b,x
+        sta $16A8,b
+        lda $16AA,b,x
+        sta $16B8,b
+        lda $16BA,b,x
+        sta $16C8,b
+        lda $16CA,b,x
+        sta $16D8,b
+        lda $16DA,b,x
+        sta $16E8,b
+        lda $16EA,b,x
+        sta $16F8,b
+        lda $16FA,b,x
+        sta $1708,b
+        lda $170A,b,x
+        sta $1718,b
+        lda $169A,b,y
+        sta $169A,b,x
+        lda $16AA,b,y
+        sta $16AA,b,x
+        lda $16BA,b,y
+        sta $16BA,b,x
+        lda $16CA,b,y
+        sta $16CA,b,x
+        lda $16DA,b,y
+        sta $16DA,b,x
+        lda $16EA,b,y
+        sta $16EA,b,x
+        lda $16FA,b,y
+        sta $16FA,b,x
+        lda $170A,b,y
+        sta $170A,b,x
+        lda $16A8,b
+        sta $169A,b,y
+        lda $16B8,b
+        sta $16AA,b,y
+        lda $16C8,b
+        sta $16BA,b,y
+        lda $16D8,b
+        sta $16CA,b,y
+        lda $16E8,b
+        sta $16DA,b,y
+        lda $16F8,b
+        sta $16EA,b,y
+        lda $1708,b
+        sta $16FA,b,y
+        lda $1718,b
+        sta $170A,b,y
+        rts
+
+        .databank 0
+
+        ; 82/E250
+
+    .endsection Unsorted82E147Section
 
     .section Unsorted82E250Section
 
@@ -735,6 +737,42 @@
 
     .endsection Unsorted82E250Section
 
+    .section Unsorted82E283Section
+
+      .al
+      .xl
+
+      rsIRQEngineProgramNextEntry ; 82/E283
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Writes HTIME/VTIME ($4207-$420A) and active IRQ routine ($1697/$1698) for entry X
+
+        sep #$20
+        lda $16CB,b,x
+        sta $4208,b
+        lda $16CA,b,x
+        sta $4207,b
+        lda $16DB,b,x
+        sta $420A,b
+        lda $16DA,b,x
+        sta $4209,b
+        rep #$20
+        lda $16AA,b,x
+        xba
+        sta $1698,b
+        lda $16EA,b,x
+        sta $1697,b
+        rts
+
+        .databank 0
+
+        ; 82/E2AD
+
+    .endsection Unsorted82E283Section
 
     .section Unsorted82E2ADSection
 
@@ -806,5 +844,3 @@
         .fill 282, $00
 
     .endsection Unsorted82E2ADSection
-
-

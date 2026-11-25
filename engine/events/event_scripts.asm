@@ -1,5 +1,8 @@
 ; The event script interpreter (procs that run event scripts, the command table and
 ; command dispatch) and the event script commands themselves.
+; After the interpreter: clearing the event engine's state, procs and sprites
+; (rlResetEventAndSpriteState, the engine's end state), the unused skip routine, and
+; the list of map menus an event script opened (rlClearEventMenuWindowList).
 ; It also holds the unnamed helpers that only event commands, and procs those
 ; commands create, use.
 
@@ -510,6 +513,171 @@
         .databank 0
 
     .endsection EventScriptEngineSection
+
+
+    .section EventCleanupSection
+
+      .al
+      .xl
+
+      rsClearEventUIAndProcs ; 91/A670
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Clear fades, main-loop fade proc, unit/terrain/map windows, and dialogue HDMA.
+        ; Only rsCheckSkipActiveEventUnused calls it.
+
+        php
+        jsl rlClearAllFadeProcs
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc +
+
+          txa
+          lsr a
+          jsl rlProcEngineFreeProcByIndex
+
+        +
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlShowMapWindows
+        jsl rlClearDialogueStatusAndTimers
+        jsl rlDialogueFreeHDMA
+        plp
+        rts
+
+        .databank 0
+
+      rsCheckSkipActiveEventUnused ; 91/A69D
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Unreferenced (nothing calls it, and the CDL never ran it). On a Start press,
+        ; before the script's SKIP_POINT, clears the fades, windows and event procs and
+        ; moves the script to the offset after the skip point; returns carry set.
+
+        lda wJoy1New
+        bit #JOY_Start
+        beq _CLC
+
+          ldy wActiveEventOffset,b
+          cpy wActiveEventLength,b
+          bcs _CLC
+
+            jsr rsClearEventUIAndProcs
+            jsl rlEventEngineFreeAllProcs
+            stz wGameStateRoutine1,b
+            ldy wActiveEventLength,b
+            sty wActiveEventOffset,b
+            sec
+            rts
+
+        _CLC
+        clc
+        rts
+
+        .databank 0
+
+      rlResetEventAndSpriteState ; 91/A6C0
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Clear event flags $171A-$171E, offset, event procs, active sprites, and map sprite sound
+
+        php
+        rep #$30
+        stz wEventEngineFlags,b
+        stz wEventEngineState,b
+        stz wUnknown00171E,b
+        stz wActiveEventOffset,b
+        jsl rlEventEngineFreeAllProcs
+        jsl rlActiveSpriteEngineClearAllSprites
+        jsl rlStopMapSpriteSounds
+        plp
+        rtl
+
+        .databank 0
+
+    .endsection EventCleanupSection
+
+
+    .section EventMenuWindowListSection
+
+      .al
+      .xl
+
+
+      rlClearEventMenuWindowList ; 91/A788
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Remove open map menus tracked in 9-entry table at $7E93AA
+
+        phx
+        ldx #$0018
+
+        _Loop
+        lda $7E93AA,x
+        beq _Next
+
+          sta lMapMenuRAMEntryPointer,b
+          phx
+          jsl rlRemoveMapMenu
+          plx
+          lda #0
+          sta lMapMenuRAMEntryPointer,b,x
+
+        _Next
+        dec x
+        dec x
+        dec x
+        bpl _Loop
+
+        plx
+        rtl
+
+        .databank 0
+
+      rlZeroEventMenuWindowList ; 91/A7A8
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Zero the 27-byte 9-entry event map-menu table at $7E93AA
+
+        phb
+        phx
+
+        ldx #24
+        lda #0
+
+          -
+          sta $7E93AA,x
+          dec x
+          dec x
+          dec x
+          bpl -
+
+        plx
+        plb
+        rtl
+
+        .databank 0
+
+        ; 91/A7BC
+
+    .endsection EventMenuWindowListSection
 
 
     .section EventCommandSection
@@ -4485,389 +4653,6 @@
     .endsection EventCommandSection
 
 
-    .section Unsorted80AF9BSection
-
-      .al
-      .xl
-
-      rsResetMapGraphicsAndSystems ; 80/AF9B
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Resets screen registers, BG2/BG3 tilemaps, map window buffers, OAM, sprites, HDMA, IRQ, and map menus
-
-        jsl rlHardwareResetScreenPosMathHDMA
-        jsl rlHardwareResetScreenRegisters
-        lda #0
-        jsl rlFillBG2Page0TilemapBuffer
-        lda #$030F
-        jsl rlFillBG2Page1TilemapBuffer
-        lda #$00FF
-        jsl rlFillBG3Page0TilemapBuffer
-
-        ldx #$067E
-        lda #0
-
-          -
-          sta aMapWindowFrameBuffer,x
-          sta aMapWindowTextBuffer,x
-          dec x
-          dec x
-          bpl -
-
-        lda #$0000 >> 1
-        sta wR1
-        sta wR2
-        lda #$8000 >> 1
-        sta wR3
-        sta wR4
-        lda #$C000 >> 1
-        sta wR5
-        lda #$A000 >> 1
-        sta wR6
-        lda #$A800 >> 1
-        sta wR7
-        lda #$B000 >> 1
-        sta wR8
-        jsl rlSetLayerPositionsAndSizes
-
-        jsl rlClearSpriteExtBuffer
-        jsl rlHideSprites
-        jsl rlDMAPaletteAndOAMBuffer
-        jsl rlDMAByStruct
-          .structDMAToVRAM aBG2TilemapBuffer.Page1, $0800, $80, $A800
-
-        jsl rlDMAByStruct
-          .structDMAToVRAM aBG3TilemapBuffer.Page0, $0800, $80, $B000
-
-        jsl rlClearUnitWindowAndTerrainWindowProcs
-        jsl rlActiveSpriteEngineReset
-        jsl rlEnableActiveSpriteEngine
-        jsl rlResetHDMAEngine
-        jsl rlResetIRQEngine
-        jsl rlResetRAMStructAndAreaVariables
-        jsl rlInitMapMenus
-        jsl rlResetMenuOptionStack
-        lda #$00FF
-        sta wMapMenuTransparentTile,b
-        jsl rlEnableMapMenuUploads
-        rts
-
-        .databank 0
-
-        ; 80/B041
-
-    .endsection Unsorted80AF9BSection
-
-
-    .section Unsorted80B041Section
-
-      .as
-      .xl
-
-      rsSetMapMainLoopAndVBlank ; 80/B041
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Sets wGameStateRoutine2 to GAMESTATE_MAP_UPKEEP and installs rsMapVBlank and rsMapMainLoop
-
-        lda #GAMESTATE_MAP_UPKEEP
-        sta wGameStateRoutine2,b
-        lda #<>rsMapVBlank
-        sta wVBlankPointer
-        lda #<>rsMapMainLoop
-        sta wMainLoopPointer
-        rts
-
-        .databank 0
-
-        ; 80/B052
-
-      rsSetupMapRowUploadIRQ ; 80/B052
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Installs aMapRowUploadIRQ
-
-        lda #(`aMapRowUploadIRQ)<<8
-        sta lR44+1
-        lda #<>aMapRowUploadIRQ
-        sta lR44
-        jsl rlIRQEngineCreateEntry
-        jsl rlEnableIRQEngine
-        rts
-
-        .databank 0
-
-        ; 80/B065
-
-      rsLoadMapMenuAndFontGraphics ; 80/B065
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Decompresses map menu graphics and loads menu font, icons, and default border palette
-
-        jsl rlLoadMapMenuDecompression80B09B
-        lda #(`aDecompressionDMAEntry80B084)<<8
-        sta lR19+1
-        lda #<>aDecompressionDMAEntry80B084
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        jsl rlLoadMenuFontGraphics
-        jsl rlLoadMenuIconGraphics
-        jsl rlLoadDefaultWindowBorderPalette
-        rts
-
-        .databank 0
-
-        ; 80/B084
-
-    .endsection Unsorted80B041Section
-
-
-    .section Unsorted80B08CSection
-
-      .al
-      .xl
-
-      rlLoadMapMenuDecompression80B09B ; 80/B08C
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Runs rlHandleMapMenuDecompressionDMA for aDecompressionDMAEntry80B09B
-
-        lda #(`aDecompressionDMAEntry80B09B)<<8
-        sta lR19+1
-        lda #<>aDecompressionDMAEntry80B09B
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        rtl
-
-        .databank 0
-
-        ; 80/B09B
-
-    .endsection Unsorted80B08CSection
-
-
-    .section Unsorted80B105Section
-
-      .al
-      .xl
-
-      rsInitMapWindowRegisters ; 80/B105
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Initializes map windowing registers (TMW, WH0, WH1, W12SEL, W34SEL, TM)
-
-        sep #$20
-        lda #$17
-        sta bBufferTMW
-        lda #$08
-        sta bBufferWH0
-        lda #$F7
-        sta bBufferWH1
-        lda #$33
-        sta bBufferW12SEL
-        lda #$03
-        sta bBufferW34SEL
-        lda #$15
-        sta bBufferTM
-        rep #$20
-        rts
-
-        .databank 0
-
-        ; 80/B122
-
-    .endsection Unsorted80B105Section
-
-
-    .section Unsorted80B122Section
-
-      .al
-      .xl
-
-      rsReturnToMapMainLoop ; 80/B122
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Main loop routine that resets map graphics/systems, reloads map display, and resumes GAMESTATE_MAP_STEP
-
-        ; a MainLoop routine
-
-        php
-        sei
-        sep #$20
-        lda #INIDISP_Setting(true, 0)
-        sta bBufferINIDISP
-        sta INIDISP,b
-        rep #$20
-
-        jsl rlDisableVBlank
-        jsr rsResetMapGraphicsAndSystems
-        jsr rsSetupMapDisplayByGameMode
-        jsl rlLoadWindowGraphics
-        jsr rsLoadMapMenuAndFontGraphics
-        jsr rsInitMapWindowRegisters
-        jsr rsSetupMapRowUploadIRQ
-        jsr rsSetMapMainLoopAndVBlank
-
-        lda #GAMESTATE_MAP_STEP
-        sta wGameStateRoutine1,b
-        lda wSavedMapStep,b
-        sta wGameStateStep,b
-        jsr rsResumeMapAfterMenu
-
-        sep #$20
-        lda #INIDISP_Setting(false, 0)
-        sta bBufferINIDISP
-        sta INIDISP,b
-        rep #$20
-
-        jsl rlEnableVBlank
-        plp
-        cli
-        rts
-
-        .databank 0
-
-      rsSetupMapDisplayByGameMode ; 80/B16A
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Dispatches chapter map display setup by wMainGameMode (0-3)
-
-        lda wMainGameMode,b
-        asl a
-        tax
-        jmp (+,x)
-
-        +
-        .addr rsSetupChapterMapDisplayMode0
-        .addr rsSetupChapterMapDisplayMode1
-        .addr rsReloadChapterMapDisplay
-        .addr rsReloadChapterMapDisplay
-
-        .databank 0
-
-      rsSetupChapterMapDisplayMode0 ; 80/B17A
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Calls rlSetUpChapterMapDisplay
-
-        jsl rlSetUpChapterMapDisplay
-        rts
-
-        .databank 0
-
-      rsSetupChapterMapDisplayMode1 ; 80/B17F
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Calls rlSetUpChapterMapDisplayAllFrames
-
-        jsl rlSetUpChapterMapDisplayAllFrames
-        rts
-
-        .databank 0
-
-      rsReloadChapterMapDisplay ; 80/B184
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Loads chapter map layout, updates location events, applies active map changes, and sets up map display
-
-        jsl rlLoadChapterMapLayout
-        jsl rlUpdateAllLocationEvents
-        jsl rlApplyAllActiveMapChanges
-        jsl rlSetUpChapterMapDisplay
-        rts
-
-        .databank 0
-
-      rsResumeMapAfterMenu ; 80/B195
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Rebuilds map menu RAM area, runs upload, and handles defeated-unit/victory/phase music on return to map
-
-        lda #$0020
-        trb wChapterFlags,b
-
-        lda #(`aMapMenuRAMArea)<<8
-        sta lR18+1
-        lda #<>aMapMenuRAMArea
-        sta lR18
-        lda #1
-        sta wStructIndex,b
-        lda #size(aMapMenuRAMArea)
-        jsl rlBuildRAMAreaHeaderAndGuidingEntry
-
-        lda #11
-        sta wGameStateStep,b
-        jsl rlRunMapMenuUploadIfEnabled
-
-        lda wMainGameMode,b
-        cmp #2
-        bcc _End
-
-          jsl rlHandleDefeatedUnit
-          bcc +
-
-            jsl rlGetVictoryThemeIfAllEnemiesDead
-            bcc +
-
-              sta wPhaseSongID,b
-
-          +
-          lda wEventEngineFlags,b
-          bne _End
-
-            jsl rlResumePhaseMusic
-            jsl rlStepMusicScript
-
-        _End
-        rts
-
-        .databank 0
-
-        ; 80/B1E1
-
-    .endsection Unsorted80B122Section
-
-
     .section Unsorted80B63FSection
 
       .al
@@ -6741,377 +6526,6 @@
         ; 82/9478
 
     .endsection Unreferenced829469Section
-    .section Unsorted82E08DSection
-
-      .al
-      .xl
-
-      rlEnableIRQEngine ; 82/E08D
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Enables HV IRQ in NMITIMEN, syncs/sorts IRQ entries, and installs rsIRQEngineCycle
-
-        sei
-        phb
-        php
-        phk
-        plb
-        .databank $82
-        sep #$20
-        lda bBufferNMITIMEN
-        ora #$30
-        sta bBufferNMITIMEN
-        rep #$20
-        lda #$8000
-        trb $168F,b
-        jsl rlIRQEngineSyncAndSort
-        lda #<>rsIRQEngineCycle
-        sta wIRQPointer
-        plp
-        plb
-        .databank $82
-        cli
-        rtl
-
-        .databank 0
-
-        ; 82/E0AF
-
-    .endsection Unsorted82E08DSection
-
-
-    .section Unsorted82E0C6Section
-
-      .al
-      .xl
-
-      rlIRQEngineCreateEntry ; 82/E0C6
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Adds an IRQ entry from lR44 (max 7 entries; carry set if full)
-
-        phb
-        php
-        phk
-        plb
-        .databank $82
-        phx
-        ldy lR44
-        sep #$20
-        lda lR44+2
-        pha
-        rep #$20
-        plb
-        .databank ?
-        lda $1695,b
-        cmp #$0007
-        bcc _E0E2
-        plx
-        plp
-        plb
-        .databank ?
-        sec
-        rtl
-
-
-        _E0E2
-        lda $1695,b
-        asl a
-        tax
-        tya
-        sta $169A,b,x
-        lda lR44+1
-        and #$FF00
-        xba
-        sta $16AA,b,x
-        lda #$0000
-        sta $16BA,b,x
-        lda $0000,b,y
-        sta $16CA,b,x
-        lda $0002,b,y
-        sta $16DA,b,x
-        lda $0004,b,y
-        sta $16EA,b,x
-        lda $0006,b,y
-        sta $16FA,b,x
-        lda #$0001
-        sta $170A,b,x
-        inc $1695,b
-        plx
-        plp
-        plb
-        .databank ?
-        clc
-        rtl
-
-        .databank 0
-
-        ; 82/E120
-
-    .endsection Unsorted82E0C6Section
-
-
-    .section Unreferenced82E120Section
-
-      .al
-      .xl
-
-      rlIRQEngineFreeCurrentEntry ; 82/E120
-
-        ; Found by tools/sweep.py: nothing in the build reaches this.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Unreferenced; clears active IRQ entry $1691 and decrements count $1695
-
-        phb
-        php
-        phk
-        plb
-        .databank $82
-        ldx $1691,b
-        stz $169A,b,x
-        stz $16DA,b,x
-        dec $1695,b
-        plp
-        plb
-        .databank $82
-        rtl
-
-        .databank 0
-
-        ; 82/E133
-
-    .endsection Unreferenced82E120Section
-    .section Unsorted82E147Section
-
-      .al
-      .xl
-
-      rlIRQEngineSyncAndSort ; 82/E147
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Sorts IRQ entries by scanline and programs hardware HV timer for next entry
-
-        sei
-        phb
-        php
-        phk
-        plb
-        .databank $82
-        lda $1695,b
-        cmp $1693,b
-        beq _E173
-        sta $1693,b
-        jsr rsIRQEngineSortEntries
-        lda $1693,b
-        beq _E16A
-        dec a
-        asl a
-        sta $1691,b
-        tax
-        jsr rsIRQEngineProgramNextEntry
-        bra _E173
-
-
-        _E16A
-        lda #$0000
-        sta $1697,b
-        sta $1698,b
-
-        _E173
-        plp
-        plb
-        .databank $82
-        cli
-        rtl
-
-        .databank 0
-
-        ; 82/E177
-
-      rsIRQEngineSortEntries ; 82/E177
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Shell-sorts active IRQ entries by V-count ($16DA)
-
-        phb
-        php
-        phk
-        plb
-        .databank $82
-        phx
-        phy
-        lda $1693,b
-        cmp #$0001
-        beq _E1BA
-        bcc _E1BA
-        and #$FFFE
-        sta wR30
-
-        _E18C
-        lda $1693,b
-        asl a
-        sec
-        sbc wR30
-        sta wR32
-        stz wR31
-
-        _E197
-        lda wR30
-        clc
-        adc wR31
-        tay
-        ldx wR31
-        lda $16DA,b,x
-        cmp $16DA,b,y
-        bcs _E1AA
-        jsr rsIRQEngineSwapEntries
-
-        _E1AA
-        inc wR31
-        inc wR31
-        lda wR31
-        cmp wR32
-        bcc _E197
-        dec wR30
-        dec wR30
-        bne _E18C
-
-        _E1BA
-        ply
-        plx
-        plp
-        plb
-        .databank ?
-        rts
-
-        .databank 0
-
-        ; 82/E1BF
-
-      rsIRQEngineSwapEntries ; 82/E1BF
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Swaps two IRQ entries X and Y across all IRQ engine arrays
-
-        lda $169A,b,x
-        sta $16A8,b
-        lda $16AA,b,x
-        sta $16B8,b
-        lda $16BA,b,x
-        sta $16C8,b
-        lda $16CA,b,x
-        sta $16D8,b
-        lda $16DA,b,x
-        sta $16E8,b
-        lda $16EA,b,x
-        sta $16F8,b
-        lda $16FA,b,x
-        sta $1708,b
-        lda $170A,b,x
-        sta $1718,b
-        lda $169A,b,y
-        sta $169A,b,x
-        lda $16AA,b,y
-        sta $16AA,b,x
-        lda $16BA,b,y
-        sta $16BA,b,x
-        lda $16CA,b,y
-        sta $16CA,b,x
-        lda $16DA,b,y
-        sta $16DA,b,x
-        lda $16EA,b,y
-        sta $16EA,b,x
-        lda $16FA,b,y
-        sta $16FA,b,x
-        lda $170A,b,y
-        sta $170A,b,x
-        lda $16A8,b
-        sta $169A,b,y
-        lda $16B8,b
-        sta $16AA,b,y
-        lda $16C8,b
-        sta $16BA,b,y
-        lda $16D8,b
-        sta $16CA,b,y
-        lda $16E8,b
-        sta $16DA,b,y
-        lda $16F8,b
-        sta $16EA,b,y
-        lda $1708,b
-        sta $16FA,b,y
-        lda $1718,b
-        sta $170A,b,y
-        rts
-
-        .databank 0
-
-        ; 82/E250
-
-    .endsection Unsorted82E147Section
-
-
-    .section Unsorted82E283Section
-
-      .al
-      .xl
-
-      rsIRQEngineProgramNextEntry ; 82/E283
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Writes HTIME/VTIME ($4207-$420A) and active IRQ routine ($1697/$1698) for entry X
-
-        sep #$20
-        lda $16CB,b,x
-        sta $4208,b
-        lda $16CA,b,x
-        sta $4207,b
-        lda $16DB,b,x
-        sta $420A,b
-        lda $16DA,b,x
-        sta $4209,b
-        rep #$20
-        lda $16AA,b,x
-        xba
-        sta $1698,b
-        lda $16EA,b,x
-        sta $1697,b
-        rts
-
-        .databank 0
-
-        ; 82/E2AD
-
-    .endsection Unsorted82E283Section
-
-
     .section Unsorted858728Section
 
       .al

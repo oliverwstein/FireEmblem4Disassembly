@@ -39,15 +39,15 @@
 
   .include "include/fe4.h"
 
-  .include "engine/core/palettes.asm"
-  .include "engine/core/header.asm"
+  .include "engine/core/graphics/palettes.asm"
+  .include "engine/core/frame/header.asm"
   .include "engine/worldmap/chapter_intro.asm"
   .include "engine/epilogue/credits.asm"
   .include "engine/epilogue/epilogue_steps.asm"
   .include "engine/epilogue/records.asm"
   .include "engine/epilogue/character_endings.asm"
   .include "engine/menus/options_menu.asm"
-  .include "engine/core/unused_game_state.asm"
+  .include "engine/core/frame/unused_game_state.asm"
   .include "engine/menus/status_screen.asm"
   .include "engine/castle/castle_screen.asm"
   .include "engine/castle/courtyard.asm"
@@ -62,26 +62,30 @@
   .include "engine/castle/lover_conversation.asm"
   .include "engine/worldmap/world_map.asm"
   .include "engine/menus/game_over.asm"
-  .include "engine/core/game_states.asm"
+  .include "engine/core/frame/game_states.asm"
   .include "engine/menus/data_window.asm"
   .include "engine/menus/skill_window.asm"
   .include "engine/menus/item_window.asm"
-  .include "engine/core/ppu_buffers.asm"
-  .include "engine/core/joypad.asm"
+  .include "engine/core/frame/ppu_buffers.asm"
+  .include "engine/core/frame/joypad.asm"
   .include "engine/menus/unit_window.asm"
-  .include "engine/core/active_sprites.asm"
-  .include "engine/core/decompressor.asm"
-  .include "engine/core/dma.asm"
-  .include "engine/core/fade.asm"
-  .include "engine/core/frame.asm"
-  .include "engine/core/hardware.asm"
-  .include "engine/core/hdma.asm"
-  .include "engine/core/interrupts.asm"
-  .include "engine/core/math.asm"
-  .include "engine/core/memory.asm"
+  .include "engine/core/display/active_sprites.asm"
+  .include "engine/core/graphics/decompressor.asm"
+  .include "engine/core/frame/dma.asm"
+  .include "engine/core/graphics/fade.asm"
+  .include "engine/core/graphics/palette_fade.asm"
+  .include "engine/core/frame/frame.asm"
+  .include "engine/core/frame/hardware.asm"
+  .include "engine/core/display/hdma.asm"
+  .include "engine/core/frame/interrupts.asm"
+  .include "engine/core/display/irq.asm"
+  .include "engine/core/lib/math.asm"
+  .include "engine/core/lib/memory.asm"
   .include "engine/core/proc.asm"
-  .include "engine/core/ram_structs.asm"
-  .include "engine/core/random.asm"
+  .include "engine/core/lib/ram_structs.asm"
+  .include "engine/core/lib/ram_areas.asm"
+  .include "engine/core/lib/offset_tables.asm"
+  .include "engine/core/lib/random.asm"
   .include "engine/map/deployment.asm"
   .include "engine/map/locations.asm"
   .include "engine/map/map_display.asm"
@@ -138,9 +142,9 @@
   .include "engine/battle_scene/hud.asm"
   .include "engine/battle_scene/effects.asm"
   .include "engine/battle_scene/data.asm"
-  .include "engine/core/oam.asm"
+  .include "engine/core/display/oam.asm"
   .include "engine/core/options.asm"
-  .include "engine/core/tilemaps.asm"
+  .include "engine/core/graphics/tilemaps.asm"
   .include "engine/dialogue/death_quotes.asm"
   .include "engine/dialogue/dialogue.asm"
   .include "engine/dialogue/dialogue_box.asm"
@@ -200,9 +204,10 @@
   .include "engine/title/title_scenes.asm"
   .include "engine/title/title_timelines.asm"
   .include "engine/title/title_data.asm"
+  .include "engine/title/opening_logo.asm"
   .include "engine/map/map_loop.asm"
-  .include "engine/core/boot.asm"
-  .include "engine/core/anti_tamper.asm"
+  .include "engine/core/frame/boot.asm"
+  .include "engine/core/frame/anti_tamper.asm"
   .include "engine/sound/driver.asm"
   .include "engine/battle/map_magic_effects.asm"
 
@@ -370,7 +375,8 @@
 
       .dsection InitEngineSection
 
-      .dsection HardwareResetSection
+      .dsection RunFrameTasksSection
+      .dsection HardwareResetRegistersSection
 
       .dsection FillBG2Page0TilemapBufferSection
 
@@ -1084,6 +1090,7 @@
       .dsection ProcEngineSection
       .dsection ProcCodeSection
       .dsection FadeProcsSection
+      .dsection DecompressToBufferProcSection
 
 
       .dsection ProcScript8283E3Section
@@ -2266,6 +2273,8 @@
     .logical $868000
 
       .dsection EventEngineSection
+      .dsection OpeningLogoStatesSection
+      .dsection ChapterEventRAMDataSection
 
       .dsection Unsorted869CCCSection
 
@@ -5852,7 +5861,9 @@
       .dsection Data91A405Section
 
       .dsection EventScriptEngineSection
+      .dsection EventCleanupSection
       .dsection FadeProcClearSection
+      .dsection EventMenuWindowListSection
 
       ; 91a7bc
 
