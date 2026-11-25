@@ -686,7 +686,7 @@
 
         ; Created only by the unreferenced rlCreateProcEpilogueMoveTempToCoordsUnused. For 7 frames it
         ; runs MOVE_TEMPORARY_TO_COORDS (rlMoveTemporaryToCoords) with the arguments
-        ; at aUnknown91BD8A, then ends.
+        ; at aEpilogueMoveTempToCoordsArgsUnused, then ends.
 
         .structProcInfo "ED", rlProcEpilogueMoveTempToCoordsInit, rlProcEpilogueMoveTempToCoordsCycle, aProcEpilogueMoveTempToCoordsCode
 
@@ -718,9 +718,9 @@
         cmp #$0007
         bcs _BD85
         phx
-        lda #(`aUnknown91BD8A)<<8
+        lda #(`aEpilogueMoveTempToCoordsArgsUnused)<<8
         sta lR18+1
-        lda #<>aUnknown91BD8A
+        lda #<>aEpilogueMoveTempToCoordsArgsUnused
         sta lR18
         jsl rlMoveTemporaryToCoords
         plx
@@ -741,7 +741,7 @@
 
         ; 91/BD8A
 
-      aUnknown91BD8A ; 91/BD8A
+      aEpilogueMoveTempToCoordsArgsUnused ; 91/BD8A
 
         ; The MOVE_TEMPORARY_TO_COORDS arguments of procEpilogueMoveTempToCoordsUnused.
 

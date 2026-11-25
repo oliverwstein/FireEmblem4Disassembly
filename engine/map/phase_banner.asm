@@ -18,7 +18,7 @@
       .al
       .xl
 
-      aUnknown85ABFE ; 85/ABFE
+      aPhaseBannerData85ABFEUnused ; 85/ABFE
 
         .byte 0, 0, 0, 1
 

@@ -1605,18 +1605,18 @@
         _C8B0
         lda #$25C0
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown85C983)<<8
+        lda #(`aUnitWindowHPLabelTiles)<<8
         sta lR18+1
-        lda #<>aUnknown85C983
+        lda #<>aUnitWindowHPLabelTiles
         sta lR18
         lda aProcSystem.wInput0,b
         clc
         adc #$0301
         tax
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown85C986)<<8
+        lda #(`aUnitWindowHPSlashTiles)<<8
         sta lR18+1
-        lda #<>aUnknown85C986
+        lda #<>aUnitWindowHPSlashTiles
         sta lR18
         lda aProcSystem.wInput0,b
         clc
@@ -1650,16 +1650,16 @@
         ldx aProcSystem.wInput1,b
         lda #$85C9
         sta lR18+1
-        lda <>aUnknown85C999,b,x
+        lda <>aUnitWindowStatusTilePointers,b,x
         sta lR18
         lda aProcSystem.wInput0,b
         clc
         adc #$0301
         tax
         jsl rlDrawTileStringToTilemapEntry
-        lda #(`aUnknown85C997)<<8
+        lda #(`aUnitWindowBlankTile)<<8
         sta lR18+1
-        lda #<>aUnknown85C997
+        lda #<>aUnitWindowBlankTile
         sta lR18
         lda aProcSystem.wInput0,b
         clc
@@ -1682,9 +1682,9 @@
         bcs _C97E
         lda #$2500
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown85C997)<<8
+        lda #(`aUnitWindowBlankTile)<<8
         sta lR18+1
-        lda #<>aUnknown85C997
+        lda #<>aUnitWindowBlankTile
         sta lR18
         lda aProcSystem.wInput0,b
         clc
@@ -1709,26 +1709,26 @@
       .al
       .xl
 
-      aUnknown85C983 ; 85/C983
+      aUnitWindowHPLabelTiles ; 85/C983
         .byte $07, $0F, $00
 
-      aUnknown85C986 ; 85/C986
+      aUnitWindowHPSlashTiles ; 85/C986
         .byte $1A, $00
 
-      aUnknown85C988 ; 85/C988
+      aUnitWindowStatus4Tiles ; 85/C988
         .byte $EC, $EF, $F0, $F1, $00
 
-      aUnknown85C98D ; 85/C98D
+      aUnitWindowStatus5Tiles ; 85/C98D
         .byte $F1, $F2, $ED, $F3, $00
 
-      aUnknown85C992 ; 85/C992
+      aUnitWindowStatus6Tiles ; 85/C992
         .byte $EB, $EC, $ED, $EE, $00
 
-      aUnknown85C997 ; 85/C997
+      aUnitWindowBlankTile ; 85/C997
         .byte $FF, $00
 
-      aUnknown85C999 ; 85/C999
-        .word <>aUnknown85C988, <>aUnknown85C98D, <>aUnknown85C992
+      aUnitWindowStatusTilePointers ; 85/C999
+        .word <>aUnitWindowStatus4Tiles, <>aUnitWindowStatus5Tiles, <>aUnitWindowStatus6Tiles
 
     .endsection Table85C983Section
 

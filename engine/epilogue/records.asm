@@ -55,7 +55,7 @@
       .al
       .xl
 
-      aUnknown8DADFA .dstruct structHDMADirectEntryInfo, rlHDMAEpilogueRecordsBrightness, rlHDMAEpilogueRecordsBrightness, aUnknown8DAE30, $7F56C9, PPU_REG_BASE + $00, $00 ; 8D/ADFA
+      aEpilogueRecordsBrightnessHDMAInfo .dstruct structHDMADirectEntryInfo, rlHDMAEpilogueRecordsBrightness, rlHDMAEpilogueRecordsBrightness, aEpilogueRecordsBrightnessHDMACode, $7F56C9, PPU_REG_BASE + $00, $00 ; 8D/ADFA
 
       rlHDMAEpilogueRecordsBrightness ; 8D/AE05
 
@@ -73,7 +73,7 @@
         sep #$20
 
         _AE11
-        lda aUnknown8DAE32,y
+        lda aEpilogueRecordsBrightnessHDMATable,y
         sta $7F56C9,x
         beq _AE2D
         lda $AE33,b,y
@@ -98,10 +98,10 @@
 
         ; 8D/AE30
 
-      aUnknown8DAE30 ; 8D/AE30
+      aEpilogueRecordsBrightnessHDMACode ; 8D/AE30
         HDMA_HALT
 
-      aUnknown8DAE32 ; 8D/AE32
+      aEpilogueRecordsBrightnessHDMATable ; 8D/AE32
         .byte $24, $00, $01, $01, $02, $03, $03, $05, $04, $07, $05, $09, $06, $0B, $08, $0D
         .byte $28, $0F, $08, $0D, $08, $0B, $08, $09, $06, $07, $04, $05, $03, $03, $02, $01
         .byte $01, $00, $00, $00, $28, $00, $01, $01, $02, $03, $03, $05, $04, $07, $04, $09

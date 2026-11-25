@@ -179,7 +179,7 @@
       .xl
 
       aTitleScreenTopIRQ ; 96/80A4
-        .word $0060, $0006, <>rlTitleScreenTopIRQ, <>aUnknown9680B1
+        .word $0060, $0006, <>rlTitleScreenTopIRQ, <>aTitleScreenTopIRQCode
 
     .endsection TitleScreenIRQSection
 
@@ -1220,11 +1220,11 @@
       .al
       .xl
 
-      aUnknown9680B1 ; 96/80B1
+      aTitleScreenTopIRQCode ; 96/80B1
         .word <>rsIRQCodeHalt
 
       aTitleScreenBottomIRQ ; 96/80B3
-        .word $0060, $00BD, <>rlTitleScreenBottomIRQ, <>aUnknown9680C0
+        .word $0060, $00BD, <>rlTitleScreenBottomIRQ, <>aTitleScreenBottomIRQCode
 
     .endsection Table9680B1Section
 
@@ -1252,7 +1252,7 @@
         ; 96/80C0
 
 
-      aUnknown9680C0 ; 96/80C0
+      aTitleScreenBottomIRQCode ; 96/80C0
         .word <>rsIRQCodeHalt
 
     .endsection Unsorted9680BBSection
@@ -3294,9 +3294,9 @@
         inc x
         cpx #$001E
         bcc _F2CC
-        lda #(`aUnknown99FDDD)<<8
+        lda #(`aTitleIntroScene7DimPaletteEffect)<<8
         sta lR18+1
-        lda #<>aUnknown99FDDD
+        lda #<>aTitleIntroScene7DimPaletteEffect
         sta lR18
         lda #$0000
         sta wR0
@@ -3316,9 +3316,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown99FDE5)<<8
+        lda #(`aTitleIntroScene2FadePaletteEffect)<<8
         sta lR18+1
-        lda #<>aUnknown99FDE5
+        lda #<>aTitleIntroScene2FadePaletteEffect
         sta lR18
         lda #$0000
         sta wR0
@@ -3338,16 +3338,16 @@
         .databank ?
 
         phx
-        lda #(`aUnknown99FDEA)<<8
+        lda #(`aTitleIntroScene7SpritePaletteEffect0)<<8
         sta lR18+1
-        lda #<>aUnknown99FDEA
+        lda #<>aTitleIntroScene7SpritePaletteEffect0
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #(`aUnknown99FDF1)<<8
+        lda #(`aTitleIntroScene7SpritePaletteEffect1)<<8
         sta lR18+1
-        lda #<>aUnknown99FDF1
+        lda #<>aTitleIntroScene7SpritePaletteEffect1
         sta lR18
         lda #$0000
         sta wR0

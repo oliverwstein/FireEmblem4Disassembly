@@ -1063,7 +1063,7 @@
 
         ; 88/9AC4
 
-      aUnknown889AC4 ; 88/9AC4
+      aMinimapPaletteUnused ; 88/9AC4
 
         ; Unreferenced: 15 colours.
 
@@ -1331,7 +1331,7 @@
 
         ; 88/9C38
 
-      aUnknown889C38 ; 88/9C38
+      aMinimapTerrainColorsUnused ; 88/9C38
 
         ; Unreferenced.
 

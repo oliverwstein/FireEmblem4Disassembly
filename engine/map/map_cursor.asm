@@ -51,7 +51,7 @@
         .structSpriteEntry (  -2,   22), $00, SpriteSmall, $010, 3, 0, false, false
         .structSpriteEntry (  26,   22), $00, SpriteSmall, $011, 3, 0, false, false
 
-      aUnknown88EEAA ; 88/EEAA
+      aMapCursorSpriteUnused ; 88/EEAA
         .word 1 ; sprite count
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $080, 3, 0, false, false
 
@@ -821,16 +821,16 @@
         .autsiz
         .databank ?
 
-        ; Unreferenced: runs the entry of aUnknown88A50D for $0756.
+        ; Unreferenced: runs the entry of aCopyWindowPaletteTailJumpTableUnused for $0756.
 
         lda $0756,b
         asl a
         tax
-        jmp (aUnknown88A50D,x)
+        jmp (aCopyWindowPaletteTailJumpTableUnused,x)
 
         .databank 0
 
-      aUnknown88A50D ; 88/A50D
+      aCopyWindowPaletteTailJumpTableUnused ; 88/A50D
 
         .word <>rlCopyWindowPaletteTail2Unused
         .word <>rlCopyWindowPaletteTail4Unused
@@ -845,7 +845,7 @@
         .databank ?
 
         ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
-        ; entries of aUnknown88A50D are the same code).
+        ; entries of aCopyWindowPaletteTailJumpTableUnused are the same code).
 
         lda aWindowPalette+18
         sta $0112,b
@@ -863,7 +863,7 @@
         .databank ?
 
         ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
-        ; entries of aUnknown88A50D are the same code).
+        ; entries of aCopyWindowPaletteTailJumpTableUnused are the same code).
 
         lda aWindowPalette+18
         sta $0112,b
@@ -881,7 +881,7 @@
         .databank ?
 
         ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
-        ; entries of aUnknown88A50D are the same code).
+        ; entries of aCopyWindowPaletteTailJumpTableUnused are the same code).
 
         lda aWindowPalette+18
         sta $0112,b
@@ -899,7 +899,7 @@
         .databank ?
 
         ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
-        ; entries of aUnknown88A50D are the same code).
+        ; entries of aCopyWindowPaletteTailJumpTableUnused are the same code).
 
         lda aWindowPalette+18
         sta $0112,b
@@ -1168,7 +1168,7 @@
 
         ; 88/A6CA
 
-      aUnknown88A6CA ; 88/A6CA
+      aMapCursorTilemapEntryUnused ; 88/A6CA
 
         ; Unreferenced. The same nine bytes follow an rts at both 80/F337 and
         ; 88/A6CA; nothing reads either copy.
@@ -1834,7 +1834,7 @@
 
         ; 88/ACBB
 
-      aUnknown88ACBB ; 88/ACBB
+      aNearTargetOffsetsUnused ; 88/ACBB
 
         ; Unreferenced: signed pixel offsets, like aNearTargetOffsets after it.
 

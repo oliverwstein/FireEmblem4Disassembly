@@ -157,61 +157,61 @@
         .byte $05, $00, $4E, $00, $C8, $7D, $28, $46, $00, $C8, $7C, $28, $36, $C2, $F0, $3B
         .byte $29, $3F, $00, $C8, $7B, $28, $3E, $C2, $D0, $34, $29
 
-      aUnknown99FDB6 ; 99/FDB6
+      aTitleFlashPaletteEffect0Unused ; 99/FDB6
 
         PALETTE_EFFECT_VALUE $00, $05, $10, $61, $04
-      aUnknown99FDBB ; 99/FDBB
+      aTitleFlashPaletteEffect1Unused ; 99/FDBB
 
         PALETTE_EFFECT_VALUE $01, $05, $80, $61, $04
 
-      aUnknown99FDC0 ; 99/FDC0
+      aTitleFlashPaletteEffect2Unused ; 99/FDC0
 
         PALETTE_EFFECT_VALUE $02, $05, $F0, $01, $04
 
-      aUnknown99FDC5 ; 99/FDC5
+      aTitleIntroScene8PaletteEffect1 ; 99/FDC5
 
         PALETTE_EFFECT_VALUE_DATA $00, $07, $31, $0F, $02, aTitleScreenPalette1
 
-      aUnknown99FDCD ; 99/FDCD
+      aTitleIntroScene8FlashPaletteEffect ; 99/FDCD
 
         PALETTE_EFFECT_VALUE_DATA $00, $07, $31, $0F, $01, aTitleScreenPalette1
 
-      aUnknown99FDD5 ; 99/FDD5
+      aTitleFillBG1PaletteEffectUnused ; 99/FDD5
 
         PALETTE_EFFECT_VALUE_DATA $02, $07, $21, $0F, $03, aTitleScreenPalette3
 
-      aUnknown99FDDD ; 99/FDDD
+      aTitleIntroScene7DimPaletteEffect ; 99/FDDD
         PALETTE_EFFECT_VALUE_DATA $03, $07, $71, $0F, $10, $7FF636
 
-      aUnknown99FDE5 ; 99/FDE5
+      aTitleIntroScene2FadePaletteEffect ; 99/FDE5
         PALETTE_EFFECT_VALUE $00, $05, $15, $0B, $1E
 
-      aUnknown99FDEA ; 99/FDEA
-        PALETTE_EFFECT $00, $01, $F3, $03, aUnknown99FDF8
+      aTitleIntroScene7SpritePaletteEffect0 ; 99/FDEA
+        PALETTE_EFFECT $00, $01, $F3, $03, aTitleIntroScene7SpritePaletteScript0
 
-      aUnknown99FDF1 ; 99/FDF1
-        PALETTE_EFFECT $01, $01, $E3, $03, aUnknown99FE05
+      aTitleIntroScene7SpritePaletteEffect1 ; 99/FDF1
+        PALETTE_EFFECT $01, $01, $E3, $03, aTitleIntroScene7SpritePaletteScript1
 
-      aUnknown99FDF8 ; 99/FDF8
+      aTitleIntroScene7SpritePaletteScript0 ; 99/FDF8
 
         .byte $84, $7F, $FF, $86, $7F, $BA, $80, $7F, $FF
         .byte $84, $7F, $BA, $FE
 
-      aUnknown99FE05 ; 99/FE05
+      aTitleIntroScene7SpritePaletteScript1 ; 99/FE05
 
         .byte $85, $7F, $15, $83, $7F, $FF, $85, $7F, $BA, $82, $7F, $15
         .byte $89, $7F, $FF, $83, $7F, $BA, $FE
 
-      aUnknown99FE18 ; 99/FE18
+      aTitleLogoPaletteEffect ; 99/FE18
         PALETTE_EFFECT_VALUE_DATA $03, $07, $0D, $01, $00, aUnknownE02753
 
-      aUnknown99FE20 ; 99/FE20
+      aTitleFadeOutPaletteEffect0 ; 99/FE20
         PALETTE_EFFECT_VALUE $00, $05, $11, $38, $00
 
-      aUnknown99FE25 ; 99/FE25
+      aTitleFadeOutPaletteEffect1 ; 99/FE25
         PALETTE_EFFECT_VALUE $01, $05, $A1, $0F, $01
 
-      aUnknown99FE2A ; 99/FE2A
+      aTitleFadeOutPaletteEffect2 ; 99/FE2A
         PALETTE_EFFECT_VALUE $02, $05, $C1, $0F, $01
         ; The rest is not read as part of the entry; nothing in the build reads it.
         .byte $80, $80, $80, $80, $80, $80, $80, $01, $02, $03, $05, $07, $09, $0B, $0D, $0F

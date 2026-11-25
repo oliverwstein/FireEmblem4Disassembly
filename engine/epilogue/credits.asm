@@ -1195,7 +1195,7 @@
 
         ; 8D/A4A8
 
-      aEpilogueCreditsLayerHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueCreditsLayerHDMAInit, $A4B5, aUnknown8DA502, $0008BC, PPU_REG_BASE + $2C, $00 ; 8D/A4A8
+      aEpilogueCreditsLayerHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueCreditsLayerHDMAInit, $A4B5, aEpilogueCreditsLayerHDMACode, $0008BC, PPU_REG_BASE + $2C, $00 ; 8D/A4A8
 
     .endsection Unsorted8DA449Section
 
@@ -1255,7 +1255,7 @@
       .al
       .xl
 
-      aUnknown8DA502 ; 8D/A502
+      aEpilogueCreditsLayerHDMACode ; 8D/A502
         HDMA_HALT
 
       aEpilogueCreditsWaveHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueCreditsWaveHDMACycle, rlEpilogueCreditsWaveHDMACycle, aEpilogueCreditsWaveHDMACode, $7F56C9, PPU_REG_BASE + $0F, $02 ; 8D/A504
@@ -1441,12 +1441,12 @@
         lda wVBlankEnabledFramecount
         and #$0001
         bne _A638
-        lda aUnknown8DA73D,x
+        lda aEpilogueCreditsSpriteSpeedXEven,x
         bra _A63E
 
 
         _A638
-        lda aUnknown8DA743,x
+        lda aEpilogueCreditsSpriteSpeedXOdd,x
         bra _A63E
 
 
@@ -1455,12 +1455,12 @@
         lda wVBlankEnabledFramecount
         and #$0001
         bne _A64D
-        lda aUnknown8DA749,x
+        lda aEpilogueCreditsSpriteSpeedYEven,x
         bra _A653
 
 
         _A64D
-        lda aUnknown8DA74F,x
+        lda aEpilogueCreditsSpriteSpeedYOdd,x
         bra _A653
 
 
@@ -1497,11 +1497,11 @@
         lda aWorldMapPortrait,x
         asl a
         tax
-        lda aUnknown8DA737,x
+        lda aEpilogueCreditsSpriteAnimOffsets,x
         clc
         adc wR0
         tax
-        lda aUnknown8DCF88,x
+        lda aEpilogueCreditsSpriteAnimTable,x
         cmp #$FFFF
         bne _A6AC
         lda #$0000
@@ -1511,7 +1511,7 @@
 
         _A6AC
         sta wR0
-        lda aUnknown8DCF88+2,x
+        lda aEpilogueCreditsSpriteAnimTable+2,x
         plx
         sta $7F5410,x
         lda wR0
@@ -1554,11 +1554,11 @@
         lda aWorldMapPortrait,x
         asl a
         tax
-        lda @l aUnknown8DA737,x
+        lda @l aEpilogueCreditsSpriteAnimOffsets,x
         clc
         adc wR0
         tax
-        lda @l aUnknown8DCF9A,x
+        lda @l aEpilogueCreditsSpriteReflAnimTable,x
         tay
         plx
         lda #$0080
@@ -1591,7 +1591,7 @@
       .al
       .xl
 
-      aUnknown8DA737 ; 8D/A737
+      aEpilogueCreditsSpriteAnimOffsets ; 8D/A737
 
         ; Read by rsDrawEpilogueCreditsSprite.
 
@@ -1599,7 +1599,7 @@
 
         ; 8D/A73D
 
-      aUnknown8DA73D ; 8D/A73D
+      aEpilogueCreditsSpriteSpeedXEven ; 8D/A73D
 
         ; Read by rsDrawEpilogueCreditsSprite.
 
@@ -1607,7 +1607,7 @@
 
         ; 8D/A743
 
-      aUnknown8DA743 ; 8D/A743
+      aEpilogueCreditsSpriteSpeedXOdd ; 8D/A743
 
         ; Read by rsDrawEpilogueCreditsSprite.
 
@@ -1615,7 +1615,7 @@
 
         ; 8D/A749
 
-      aUnknown8DA749 ; 8D/A749
+      aEpilogueCreditsSpriteSpeedYEven ; 8D/A749
 
         ; Read by rsDrawEpilogueCreditsSprite.
 
@@ -1623,7 +1623,7 @@
 
         ; 8D/A74F
 
-      aUnknown8DA74F ; 8D/A74F
+      aEpilogueCreditsSpriteSpeedYOdd ; 8D/A74F
 
         ; Read by rsDrawEpilogueCreditsSprite.
 
@@ -1793,119 +1793,119 @@
       dialogueEpilogueCredits8DCC6B .include "../../text/dialogue/Epilogue/Credits8DCC6B.dialogue.txt" ; 8D/CC6B
       dialogueEpilogueCredits8DCC94 .include "../../text/dialogue/Epilogue/Credits8DCC94.dialogue.txt" ; 8D/CC94
 
-      aUnknown8DCCB0 ; 8D/CCB0
+      aEpilogueCreditsSprite0Frame0 ; 8D/CCB0
         .word 4 ; sprite count
         .structSpriteEntry (  16,   16), $21, SpriteLarge, $022, 2, 0, false, false
         .structSpriteEntry (   0,   16), $21, SpriteLarge, $020, 2, 0, false, false
         .structSpriteEntry (  16,    0), $21, SpriteLarge, $002, 2, 0, false, false
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $000, 2, 0, false, false
 
-      aUnknown8DCCC6 ; 8D/CCC6
+      aEpilogueCreditsSprite0Frame1 ; 8D/CCC6
         .word 4 ; sprite count
         .structSpriteEntry (  16,   16), $21, SpriteLarge, $026, 2, 0, false, false
         .structSpriteEntry (   0,   16), $21, SpriteLarge, $024, 2, 0, false, false
         .structSpriteEntry (  16,    0), $21, SpriteLarge, $006, 2, 0, false, false
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $004, 2, 0, false, false
 
-      aUnknown8DCCDC ; 8D/CCDC
+      aEpilogueCreditsSprite0Frame2 ; 8D/CCDC
         .word 4 ; sprite count
         .structSpriteEntry (  18,   14), $21, SpriteLarge, $02A, 2, 0, false, false
         .structSpriteEntry (   2,   14), $21, SpriteLarge, $028, 2, 0, false, false
         .structSpriteEntry (  18,   -2), $21, SpriteLarge, $00A, 2, 0, false, false
         .structSpriteEntry (   2,   -2), $21, SpriteLarge, $008, 2, 0, false, false
 
-      aUnknown8DCCF2 ; 8D/CCF2
+      aEpilogueCreditsSprite0Frame3 ; 8D/CCF2
         .word 4 ; sprite count
         .structSpriteEntry (  16,   16), $21, SpriteLarge, $02E, 2, 0, false, false
         .structSpriteEntry (   0,   16), $21, SpriteLarge, $02C, 2, 0, false, false
         .structSpriteEntry (  16,    0), $21, SpriteLarge, $00E, 2, 0, false, false
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $00C, 2, 0, false, false
 
-      aUnknown8DCD08 ; 8D/CD08
+      aEpilogueCreditsSprite0ReflFrame0 ; 8D/CD08
         .word 4 ; sprite count
         .structSpriteEntry (  16,  -32), $21, SpriteLarge, $022, 2, 4, false, true
         .structSpriteEntry (   0,  -32), $21, SpriteLarge, $020, 2, 4, false, true
         .structSpriteEntry (  16,  -16), $21, SpriteLarge, $002, 2, 4, false, true
         .structSpriteEntry (   0,  -16), $21, SpriteLarge, $000, 2, 4, false, true
 
-      aUnknown8DCD1E ; 8D/CD1E
+      aEpilogueCreditsSprite0ReflFrame1 ; 8D/CD1E
         .word 4 ; sprite count
         .structSpriteEntry (  16,  -32), $21, SpriteLarge, $026, 2, 4, false, true
         .structSpriteEntry (   0,  -32), $21, SpriteLarge, $024, 2, 4, false, true
         .structSpriteEntry (  16,  -16), $21, SpriteLarge, $006, 2, 4, false, true
         .structSpriteEntry (   0,  -16), $21, SpriteLarge, $004, 2, 4, false, true
 
-      aUnknown8DCD34 ; 8D/CD34
+      aEpilogueCreditsSprite0ReflFrame2 ; 8D/CD34
         .word 4 ; sprite count
         .structSpriteEntry (  18,  -30), $21, SpriteLarge, $02A, 2, 4, false, true
         .structSpriteEntry (   2,  -30), $21, SpriteLarge, $028, 2, 4, false, true
         .structSpriteEntry (  18,  -14), $21, SpriteLarge, $00A, 2, 4, false, true
         .structSpriteEntry (   2,  -14), $21, SpriteLarge, $008, 2, 4, false, true
 
-      aUnknown8DCD4A ; 8D/CD4A
+      aEpilogueCreditsSprite0ReflFrame3 ; 8D/CD4A
         .word 4 ; sprite count
         .structSpriteEntry (  16,  -32), $21, SpriteLarge, $02E, 2, 4, false, true
         .structSpriteEntry (   0,  -32), $21, SpriteLarge, $02C, 2, 4, false, true
         .structSpriteEntry (  16,  -16), $21, SpriteLarge, $00E, 2, 4, false, true
         .structSpriteEntry (   0,  -16), $21, SpriteLarge, $00C, 2, 4, false, true
 
-      aUnknown8DCD60 ; 8D/CD60
+      aEpilogueCreditsSprite1Frame0 ; 8D/CD60
         .word 4 ; sprite count
         .structSpriteEntry (  16,   16), $21, SpriteLarge, $022, 2, 1, false, false
         .structSpriteEntry (   0,   16), $21, SpriteLarge, $020, 2, 1, false, false
         .structSpriteEntry (  16,    0), $21, SpriteLarge, $002, 2, 1, false, false
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $000, 2, 1, false, false
 
-      aUnknown8DCD76 ; 8D/CD76
+      aEpilogueCreditsSprite1Frame1 ; 8D/CD76
         .word 4 ; sprite count
         .structSpriteEntry (  16,   16), $21, SpriteLarge, $026, 2, 1, false, false
         .structSpriteEntry (   0,   16), $21, SpriteLarge, $024, 2, 1, false, false
         .structSpriteEntry (  16,    0), $21, SpriteLarge, $006, 2, 1, false, false
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $004, 2, 1, false, false
 
-      aUnknown8DCD8C ; 8D/CD8C
+      aEpilogueCreditsSprite1Frame2 ; 8D/CD8C
         .word 4 ; sprite count
         .structSpriteEntry (  18,   14), $21, SpriteLarge, $02A, 2, 1, false, false
         .structSpriteEntry (   2,   14), $21, SpriteLarge, $028, 2, 1, false, false
         .structSpriteEntry (  18,   -2), $21, SpriteLarge, $00A, 2, 1, false, false
         .structSpriteEntry (   2,   -2), $21, SpriteLarge, $008, 2, 1, false, false
 
-      aUnknown8DCDA2 ; 8D/CDA2
+      aEpilogueCreditsSprite1Frame3 ; 8D/CDA2
         .word 4 ; sprite count
         .structSpriteEntry (  16,   16), $21, SpriteLarge, $02E, 2, 1, false, false
         .structSpriteEntry (   0,   16), $21, SpriteLarge, $02C, 2, 1, false, false
         .structSpriteEntry (  16,    0), $21, SpriteLarge, $00E, 2, 1, false, false
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $00C, 2, 1, false, false
 
-      aUnknown8DCDB8 ; 8D/CDB8
+      aEpilogueCreditsSprite1ReflFrame0 ; 8D/CDB8
         .word 4 ; sprite count
         .structSpriteEntry (  16,  -32), $21, SpriteLarge, $022, 2, 5, false, true
         .structSpriteEntry (   0,  -32), $21, SpriteLarge, $020, 2, 5, false, true
         .structSpriteEntry (  16,  -16), $21, SpriteLarge, $002, 2, 5, false, true
         .structSpriteEntry (   0,  -16), $21, SpriteLarge, $000, 2, 5, false, true
 
-      aUnknown8DCDCE ; 8D/CDCE
+      aEpilogueCreditsSprite1ReflFrame1 ; 8D/CDCE
         .word 4 ; sprite count
         .structSpriteEntry (  16,  -32), $21, SpriteLarge, $026, 2, 5, false, true
         .structSpriteEntry (   0,  -32), $21, SpriteLarge, $024, 2, 5, false, true
         .structSpriteEntry (  16,  -16), $21, SpriteLarge, $006, 2, 5, false, true
         .structSpriteEntry (   0,  -16), $21, SpriteLarge, $004, 2, 5, false, true
 
-      aUnknown8DCDE4 ; 8D/CDE4
+      aEpilogueCreditsSprite1ReflFrame2 ; 8D/CDE4
         .word 4 ; sprite count
         .structSpriteEntry (  18,  -30), $21, SpriteLarge, $02A, 2, 5, false, true
         .structSpriteEntry (   2,  -30), $21, SpriteLarge, $028, 2, 5, false, true
         .structSpriteEntry (  18,  -14), $21, SpriteLarge, $00A, 2, 5, false, true
         .structSpriteEntry (   2,  -14), $21, SpriteLarge, $008, 2, 5, false, true
 
-      aUnknown8DCDFA ; 8D/CDFA
+      aEpilogueCreditsSprite1ReflFrame3 ; 8D/CDFA
         .word 4 ; sprite count
         .structSpriteEntry (  16,  -32), $21, SpriteLarge, $02E, 2, 5, false, true
         .structSpriteEntry (   0,  -32), $21, SpriteLarge, $02C, 2, 5, false, true
         .structSpriteEntry (  16,  -16), $21, SpriteLarge, $00E, 2, 5, false, true
         .structSpriteEntry (   0,  -16), $21, SpriteLarge, $00C, 2, 5, false, true
 
-      aUnknown8DCE10 ; 8D/CE10
+      aEpilogueCreditsSprite2Frame0 ; 8D/CE10
         .word 9 ; sprite count
         .structSpriteEntry (  16,   16), $00, SpriteSmall, $062, 2, 2, false, false
         .structSpriteEntry (   8,   16), $00, SpriteSmall, $061, 2, 2, false, false
@@ -1917,7 +1917,7 @@
         .structSpriteEntry (   8,    0), $00, SpriteSmall, $041, 2, 2, false, false
         .structSpriteEntry (   0,    0), $00, SpriteSmall, $040, 2, 2, false, false
 
-      aUnknown8DCE3F ; 8D/CE3F
+      aEpilogueCreditsSprite2Frame1 ; 8D/CE3F
         .word 9 ; sprite count
         .structSpriteEntry (  16,   16), $00, SpriteSmall, $065, 2, 2, false, false
         .structSpriteEntry (   8,   16), $00, SpriteSmall, $064, 2, 2, false, false
@@ -1929,7 +1929,7 @@
         .structSpriteEntry (   8,    0), $00, SpriteSmall, $044, 2, 2, false, false
         .structSpriteEntry (   0,    0), $00, SpriteSmall, $043, 2, 2, false, false
 
-      aUnknown8DCE6E ; 8D/CE6E
+      aEpilogueCreditsSprite2Frame2 ; 8D/CE6E
         .word 9 ; sprite count
         .structSpriteEntry (  18,   14), $00, SpriteSmall, $068, 2, 2, false, false
         .structSpriteEntry (  10,   14), $00, SpriteSmall, $067, 2, 2, false, false
@@ -1941,7 +1941,7 @@
         .structSpriteEntry (  10,   -2), $00, SpriteSmall, $047, 2, 2, false, false
         .structSpriteEntry (   2,   -2), $00, SpriteSmall, $046, 2, 2, false, false
 
-      aUnknown8DCE9D ; 8D/CE9D
+      aEpilogueCreditsSprite2Frame3 ; 8D/CE9D
         .word 9 ; sprite count
         .structSpriteEntry (  16,   16), $00, SpriteSmall, $06B, 2, 2, false, false
         .structSpriteEntry (   8,   16), $00, SpriteSmall, $06A, 2, 2, false, false
@@ -1953,7 +1953,7 @@
         .structSpriteEntry (   8,    0), $00, SpriteSmall, $04A, 2, 2, false, false
         .structSpriteEntry (   0,    0), $00, SpriteSmall, $049, 2, 2, false, false
 
-      aUnknown8DCECC ; 8D/CECC
+      aEpilogueCreditsSprite2ReflFrame0 ; 8D/CECC
         .word 9 ; sprite count
         .structSpriteEntry (  16,  -24), $00, SpriteSmall, $062, 2, 6, false, true
         .structSpriteEntry (   8,  -24), $00, SpriteSmall, $061, 2, 6, false, true
@@ -1965,7 +1965,7 @@
         .structSpriteEntry (   8,   -8), $00, SpriteSmall, $041, 2, 6, false, true
         .structSpriteEntry (   0,   -8), $00, SpriteSmall, $040, 2, 6, false, true
 
-      aUnknown8DCEFB ; 8D/CEFB
+      aEpilogueCreditsSprite2ReflFrame1 ; 8D/CEFB
         .word 9 ; sprite count
         .structSpriteEntry (  16,  -24), $00, SpriteSmall, $065, 2, 6, false, true
         .structSpriteEntry (   8,  -24), $00, SpriteSmall, $064, 2, 6, false, true
@@ -1977,7 +1977,7 @@
         .structSpriteEntry (   8,   -8), $00, SpriteSmall, $044, 2, 6, false, true
         .structSpriteEntry (   0,   -8), $00, SpriteSmall, $043, 2, 6, false, true
 
-      aUnknown8DCF2A ; 8D/CF2A
+      aEpilogueCreditsSprite2ReflFrame2 ; 8D/CF2A
         .word 9 ; sprite count
         .structSpriteEntry (  18,  -26), $00, SpriteSmall, $068, 2, 6, false, true
         .structSpriteEntry (  10,  -26), $00, SpriteSmall, $067, 2, 6, false, true
@@ -1989,7 +1989,7 @@
         .structSpriteEntry (  10,  -10), $00, SpriteSmall, $047, 2, 6, false, true
         .structSpriteEntry (   2,  -10), $00, SpriteSmall, $046, 2, 6, false, true
 
-      aUnknown8DCF59 ; 8D/CF59
+      aEpilogueCreditsSprite2ReflFrame3 ; 8D/CF59
         .word 9 ; sprite count
         .structSpriteEntry (  16,  -24), $00, SpriteSmall, $06B, 2, 6, false, true
         .structSpriteEntry (   8,  -24), $00, SpriteSmall, $06A, 2, 6, false, true
@@ -2010,7 +2010,7 @@
       .al
       .xl
 
-      aUnknown8DCF88 ; 8D/CF88
+      aEpilogueCreditsSpriteAnimTable ; 8D/CF88
 
         ; Read by rsDrawEpilogueCreditsSprite.
 
@@ -2019,7 +2019,7 @@
 
         ; 8D/CF9A
 
-      aUnknown8DCF9A ; 8D/CF9A
+      aEpilogueCreditsSpriteReflAnimTable ; 8D/CF9A
 
         ; Read by rsDrawEpilogueCreditsSprite.
 

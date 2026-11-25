@@ -47,9 +47,9 @@
         jsr rsGetMovingMapSpriteStepShift
         asl a
         tax
-        lda aUnknown81890B,x
+        lda aMovingMapSpriteStepSubpixelTable,x
         sta aActiveSpriteSystem.aUnknown001380,b,y
-        lda aUnknown81891B,x
+        lda aMovingMapSpriteStepPixelTable,x
         sta aActiveSpriteSystem.aUnknown0013A0,b,y
         plx
 
@@ -67,7 +67,7 @@
 
         .databank 0
 
-      aUnknown81890B ; 81/890B
+      aMovingMapSpriteStepSubpixelTable ; 81/890B
 
         ; Indexed by the lowest byte of the bitfield in the event movement command
 
@@ -80,7 +80,7 @@
         .word $0000
         .word $0000
 
-      aUnknown81891B ; 81/891B
+      aMovingMapSpriteStepPixelTable ; 81/891B
 
         .word $0000
         .word $0000
@@ -1865,7 +1865,7 @@
         phx
         jsr rsGetMovingMapSpriteStepShift
         tax
-        lda aUnknown818B54,x
+        lda aMovingMapSpriteStepFrameCountTable,x
         and #$00FF
         xba
         ora wR0
@@ -1888,7 +1888,7 @@
 
         .databank 0
 
-      aUnknown818B54 ; 81/8B54
+      aMovingMapSpriteStepFrameCountTable ; 81/8B54
 
         .byte $80
         .byte $80
@@ -2064,9 +2064,9 @@
         lda aMovingMapSprites.wActiveSpriteOffset,b,x
         tay
         ldx wR0
-        lda aUnknown818C45,x
+        lda aScriptedMoveSpeedSubpixelTable,x
         sta aActiveSpriteSystem.aUnknown001380,b,y
-        lda aUnknown818C51,x
+        lda aScriptedMoveSpeedPixelTable,x
         sta aActiveSpriteSystem.aUnknown0013A0,b,y
         lda #9
         sta aActiveSpriteSystem.aUnknown001300,b,y
@@ -2078,7 +2078,7 @@
 
         .databank 0
 
-      aUnknown818C45 ; 81/8C45
+      aScriptedMoveSpeedSubpixelTable ; 81/8C45
 
         .word $0000
         .word $2000
@@ -2087,7 +2087,7 @@
         .word $0000
         .word $0000
 
-      aUnknown818C51 ; 81/8C51
+      aScriptedMoveSpeedPixelTable ; 81/8C51
 
         .word $0000
         .word $0000
@@ -5272,7 +5272,7 @@
       rlDrawActiveUnitOverlaySpriteUnused ; 88/DD0F
 
         ; Nothing in the build reaches this. Draws a sprite array at the active
-        ; unit (wR0 = $68, wR1 = $0885 + 6): aUnknown88DD57, or aUnknown88DD77
+        ; unit (wR0 = $68, wR1 = $0885 + 6): aActiveUnitOverlaySpriteSmallUnused, or aActiveUnitOverlaySpriteTallUnused
         ; when its map sprite has bit 15 set.
 
         .al
@@ -5304,7 +5304,7 @@
         plb
         .databank $88
         rep #$20
-        lda #<>aUnknown88DD57
+        lda #<>aActiveUnitOverlaySpriteSmallUnused
         tay
         bra _DD4E
 
@@ -5316,7 +5316,7 @@
         plb
         .databank $88
         rep #$20
-        lda #<>aUnknown88DD77
+        lda #<>aActiveUnitOverlaySpriteTallUnused
         tay
 
         _DD4E
@@ -5332,7 +5332,7 @@
 
         ; 88/DD57
 
-      aUnknown88DD57 ; 88/DD57
+      aActiveUnitOverlaySpriteSmallUnused ; 88/DD57
 
         ; Drawn by rlDrawActiveUnitOverlaySpriteUnused when the active unit's map sprite has bit 15 clear.
         _Sprites := [[(   4,    4), $21, SpriteLarge, $00E0, 3, 1, false, false]]
@@ -5342,10 +5342,10 @@
         _Sprites..= [[(  16,    0), $21, SpriteLarge, $0002, 3, 2, false, false]]
         _Sprites..= [[(   0,    0), $21, SpriteLarge, $0000, 3, 2, false, false]]
 
-        .structSpriteArray aUnknown88DD57._Sprites
+        .structSpriteArray aActiveUnitOverlaySpriteSmallUnused._Sprites
 
 
-      aUnknown88DD77 ; 88/DD77
+      aActiveUnitOverlaySpriteTallUnused ; 88/DD77
 
         ; Drawn by rlDrawActiveUnitOverlaySpriteUnused when the active unit's map sprite has bit 15 set.
         _Sprites := [[(   4,    6), $21, SpriteLarge, $00E0, 3, 1, false, false]]
@@ -5356,7 +5356,7 @@
         _Sprites..= [[(  16,    0), $21, SpriteLarge, $0002, 3, 2, false, false]]
         _Sprites..= [[(   0,    0), $21, SpriteLarge, $0000, 3, 2, false, false]]
 
-        .structSpriteArray aUnknown88DD77._Sprites
+        .structSpriteArray aActiveUnitOverlaySpriteTallUnused._Sprites
 
     .endsection Unsorted88DD0FSection
 

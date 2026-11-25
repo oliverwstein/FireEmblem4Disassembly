@@ -42,9 +42,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95EA91)<<8
+        lda #(`aTitleIntroScene1PPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95EA91
+        lda #<>aTitleIntroScene1PPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -71,7 +71,7 @@
       .al
       .xl
 
-      aUnknown95EA91 ; 95/EA91
+      aTitleIntroScene1PPUConfig ; 95/EA91
 
         WRITE_RAM_BYTE bBufferBG12NBA, $60
         WRITE_RAM_BYTE bBufferBG1SC, $32
@@ -120,9 +120,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95EB1B)<<8
+        lda #(`aTitleIntroScene2PPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95EB1B
+        lda #<>aTitleIntroScene2PPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -168,7 +168,7 @@
 
         ; 95/EB1B
 
-      aUnknown95EB1B ; 95/EB1B
+      aTitleIntroScene2PPUConfig ; 95/EB1B
 
         WRITE_RAM_BYTE bBufferBG12NBA, $40
         WRITE_RAM_BYTE bBufferBG34NBA, $02
@@ -231,9 +231,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95EB9B)<<8
+        lda #(`aTitleIntroScene3PPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95EB9B
+        lda #<>aTitleIntroScene3PPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -263,7 +263,7 @@
 
         ; 95/EB9B
 
-      aUnknown95EB9B ; 95/EB9B
+      aTitleIntroScene3PPUConfig ; 95/EB9B
 
         WRITE_RAM_BYTE bBufferBG2SC, $28
         WRITE_RAM_MASK_BYTE bBufferBG12NBA, $0F, $20
@@ -281,9 +281,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95EBF1)<<8
+        lda #(`aTitleIntroScene3bPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95EBF1
+        lda #<>aTitleIntroScene3bPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -314,7 +314,7 @@
 
         ; 95/EBF1
 
-      aUnknown95EBF1 ; 95/EBF1
+      aTitleIntroScene3bPPUConfig ; 95/EBF1
 
         WRITE_RAM_BYTE bBufferBG12NBA, $02
         WRITE_RAM_BYTE bBufferBG34NBA, $02
@@ -334,9 +334,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95EC3E)<<8
+        lda #(`aTitleIntroScene4PPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95EC3E
+        lda #<>aTitleIntroScene4PPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -361,7 +361,7 @@
 
         ; 95/EC3E
 
-      aUnknown95EC3E ; 95/EC3E
+      aTitleIntroScene4PPUConfig ; 95/EC3E
 
         WRITE_RAM_BYTE bBufferBG1SC, $2C
         WRITE_RAM_BYTE bBufferBG2SC, $28
@@ -430,9 +430,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95ECB9)<<8
+        lda #(`aTitleIntroScene5PPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95ECB9
+        lda #<>aTitleIntroScene5PPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -469,7 +469,7 @@
 
         ; 95/ECB9
 
-      aUnknown95ECB9 ; 95/ECB9
+      aTitleIntroScene5PPUConfig ; 95/ECB9
 
         WRITE_RAM_BYTE bBufferBG12NBA, $10
         WRITE_RAM_BYTE bBufferBG34NBA, $02
@@ -525,9 +525,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95ED31)<<8
+        lda #(`aTitleIntroScene6PPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95ED31
+        lda #<>aTitleIntroScene6PPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -562,7 +562,7 @@
 
         ; 95/ED31
 
-      aUnknown95ED31 ; 95/ED31
+      aTitleIntroScene6PPUConfig ; 95/ED31
 
         WRITE_RAM_BYTE bBufferBG12NBA, $44
         WRITE_RAM_BYTE bBufferBG34NBA, $00
@@ -660,9 +660,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown95EDD0)<<8
+        lda #(`aTitleIntroScene7PPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95EDD0
+        lda #<>aTitleIntroScene7PPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -714,7 +714,7 @@
       .al
       .xl
 
-      aUnknown95EDD0 ; 95/EDD0
+      aTitleIntroScene7PPUConfig ; 95/EDD0
 
         WRITE_RAM_BYTE bBufferBGMODE, $0B
         WRITE_RAM_BYTE bBufferBG12NBA, $13
@@ -778,9 +778,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown95EE58)<<8
+        lda #(`aTitleIntroScene8PPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95EE58
+        lda #<>aTitleIntroScene8PPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -828,7 +828,7 @@
       .al
       .xl
 
-      aUnknown95EE58 ; 95/EE58
+      aTitleIntroScene8PPUConfig ; 95/EE58
 
         WRITE_RAM_BYTE bBufferBGMODE, $09
         WRITE_RAM_MASK_BYTE bBufferBG12NBA, $FC, $04
@@ -1019,30 +1019,30 @@
 
         ; Nothing in the build reaches this: no title timeline names it.
 
-        lda #(`aUnknown99FDB6)<<8
+        lda #(`aTitleFlashPaletteEffect0Unused)<<8
         sta lR18+1
-        lda #<>aUnknown99FDB6
+        lda #<>aTitleFlashPaletteEffect0Unused
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #(`aUnknown99FDBB)<<8
+        lda #(`aTitleFlashPaletteEffect1Unused)<<8
         sta lR18+1
-        lda #<>aUnknown99FDBB
+        lda #<>aTitleFlashPaletteEffect1Unused
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #(`aUnknown99FDC0)<<8
+        lda #(`aTitleFlashPaletteEffect2Unused)<<8
         sta lR18+1
-        lda #<>aUnknown99FDC0
+        lda #<>aTitleFlashPaletteEffect2Unused
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #(`aUnknown95F3C5)<<8
+        lda #(`aTitleFlashPPUConfigUnused)<<8
         sta lR18+1
-        lda #<>aUnknown95F3C5
+        lda #<>aTitleFlashPPUConfigUnused
         sta lR18
         jsl rlBattleSceneWriteRAM
         rtl
@@ -1051,7 +1051,7 @@
 
         ; 95/F3C5
 
-      aUnknown95F3C5 ; 95/F3C5
+      aTitleFlashPPUConfigUnused ; 95/F3C5
 
         ; Nothing in the build reaches this: rlTitleStartFlashPaletteEffectsUnused writes it.
 
@@ -1076,9 +1076,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown99FDC5)<<8
+        lda #(`aTitleIntroScene8PaletteEffect1)<<8
         sta lR18+1
-        lda #<>aUnknown99FDC5
+        lda #<>aTitleIntroScene8PaletteEffect1
         sta lR18
         lda #$0000
         sta wR0
@@ -1107,16 +1107,16 @@
         cpx #$001E
         bcc _F3EE
         plx
-        lda #(`aUnknown99FDCD)<<8
+        lda #(`aTitleIntroScene8FlashPaletteEffect)<<8
         sta lR18+1
-        lda #<>aUnknown99FDCD
+        lda #<>aTitleIntroScene8FlashPaletteEffect
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #(`aUnknown95F41B)<<8
+        lda #(`aTitleIntroScene8RevealPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown95F41B
+        lda #<>aTitleIntroScene8RevealPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         rtl
@@ -1133,7 +1133,7 @@
       .al
       .xl
 
-      aUnknown95F41B ; 95/F41B
+      aTitleIntroScene8RevealPPUConfig ; 95/F41B
 
         WRITE_RAM_BYTE bBufferTM, $13
         WRITE_RAM_BYTE bBufferTS, $00
@@ -1158,9 +1158,9 @@
 
         lda #$5AD6
         sta $011A,b
-        lda #(`aUnknown99FE18)<<8
+        lda #(`aTitleLogoPaletteEffect)<<8
         sta lR18+1
-        lda #<>aUnknown99FE18
+        lda #<>aTitleLogoPaletteEffect
         sta lR18
         lda #$0000
         sta wR0
@@ -1179,23 +1179,23 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown99FE20)<<8
+        lda #(`aTitleFadeOutPaletteEffect0)<<8
         sta lR18+1
-        lda #<>aUnknown99FE20
+        lda #<>aTitleFadeOutPaletteEffect0
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #(`aUnknown99FE25)<<8
+        lda #(`aTitleFadeOutPaletteEffect1)<<8
         sta lR18+1
-        lda #<>aUnknown99FE25
+        lda #<>aTitleFadeOutPaletteEffect1
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #(`aUnknown99FE2A)<<8
+        lda #(`aTitleFadeOutPaletteEffect2)<<8
         sta lR18+1
-        lda #<>aUnknown99FE2A
+        lda #<>aTitleFadeOutPaletteEffect2
         sta lR18
         lda #$0000
         sta wR0
@@ -1557,7 +1557,7 @@
         clc
         jsl rlFadePaletteToBlack
 
-          .addr aUnknown95F62A
+          .addr aTitleFadeBGPal1RangeUnused
 
         bcc _F618
         sep #$20
@@ -1580,7 +1580,7 @@
 
         ; 95/F62A
 
-      aUnknown95F62A ; 95/F62A
+      aTitleFadeBGPal1RangeUnused ; 95/F62A
 
         ; Palette fade list for rlFadePaletteToBlack (rlStepTitleFadeBGPal1ToBlackUnused).
 
@@ -1639,7 +1639,7 @@
         clc
         jsl rlFadePaletteToBlack
 
-          .addr aUnknown95F681
+          .addr aTitleIntroScene3FadeBGPal34Range
 
         bcc _F66F
         sep #$20
@@ -1670,7 +1670,7 @@
       .al
       .xl
 
-      aUnknown95F681 ; 95/F681
+      aTitleIntroScene3FadeBGPal34Range ; 95/F681
 
         ; Palette fade list for rlFadePaletteToBlack (rlStepTitleIntroScene3FadeBGPal34): palette offset and colour count, $FFFF ends it.
 
@@ -1712,9 +1712,9 @@
         sta aTitleTimelineSlots.lRoutine+1,x
         lda #<>rlStepTitleFlashFadeAllPalettesUnused
         sta aTitleTimelineSlots.lRoutine,x
-        lda #(`aUnknown95F3C5)<<8
+        lda #(`aTitleFlashPPUConfigUnused)<<8
         sta lR18+1
-        lda #<>aUnknown95F3C5
+        lda #<>aTitleFlashPPUConfigUnused
         sta lR18
         jsl rlBattleSceneWriteRAM
         rtl
@@ -1723,7 +1723,7 @@
 
         ; 95/F6CE
 
-      aUnknown95F6CE ; 95/F6CE
+      aTitlePPUConfig95F6CEUnused ; 95/F6CE
 
         ; Nothing in the build reaches this.
 
@@ -1749,7 +1749,7 @@
         clc
         jsl rlFadePaletteToBlack
 
-          .addr aUnknown95F713
+          .addr aTitleFlashFadeAllPalettesRangeUnused
 
         bcc _F701
         sep #$20
@@ -1772,7 +1772,7 @@
 
         ; 95/F713
 
-      aUnknown95F713 ; 95/F713
+      aTitleFlashFadeAllPalettesRangeUnused ; 95/F713
 
         ; Palette fade list for rlFadePaletteToBlack (rlStepTitleFlashFadeAllPalettesUnused).
 
@@ -4913,9 +4913,9 @@
 
         ; Nothing in the build reaches this: no title timeline names it.
 
-        lda #(`aUnknown99FDD5)<<8
+        lda #(`aTitleFillBG1PaletteEffectUnused)<<8
         sta lR18+1
-        lda #<>aUnknown99FDD5
+        lda #<>aTitleFillBG1PaletteEffectUnused
         sta lR18
         lda #$0000
         sta wR0
@@ -4950,9 +4950,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown99FDD5)<<8
+        lda #(`aTitleFillBG1PaletteEffectUnused)<<8
         sta lR18+1
-        lda #<>aUnknown99FDD5
+        lda #<>aTitleFillBG1PaletteEffectUnused
         sta lR18
         lda #$0000
         sta wR0
@@ -5303,9 +5303,9 @@
         inc x
         cpx #$00C2
         bcc _F54F
-        lda #(`aUnknown9BF56C)<<8
+        lda #(`aTitleIntroScene7FlashWhitePPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BF56C
+        lda #<>aTitleIntroScene7FlashWhitePPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         plx
@@ -5323,7 +5323,7 @@
       .al
       .xl
 
-      aUnknown9BF56C ; 9B/F56C
+      aTitleIntroScene7FlashWhitePPUConfig ; 9B/F56C
 
         WRITE_RAM_BYTE bBufferTM, $12
         WRITE_RAM_BYTE bBufferTS, $01
@@ -5514,9 +5514,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9BF69D)<<8
+        lda #(`aTitleLogoGlintScrollPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BF69D
+        lda #<>aTitleLogoGlintScrollPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$00F8
@@ -5554,7 +5554,7 @@
       .al
       .xl
 
-      aUnknown9BF69D ; 9B/F69D
+      aTitleLogoGlintScrollPPUConfig ; 9B/F69D
 
         WRITE_RAM_BYTE bBufferBG34NBA, $05
         WRITE_RAM_BYTE bBufferBG3SC, $59
@@ -5612,9 +5612,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9BF715)<<8
+        lda #(`aTitleLogoBG3DriftPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BF715
+        lda #<>aTitleLogoBG3DriftPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -5647,7 +5647,7 @@
       .al
       .xl
 
-      aUnknown9BF715 ; 9B/F715
+      aTitleLogoBG3DriftPPUConfig ; 9B/F715
 
         WRITE_RAM_BYTE bBufferBG3SC, $0C
         WRITE_RAM_BYTE bBufferTM, $13
@@ -5776,9 +5776,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9BF7E7)<<8
+        lda #(`aTitleLogoBG2RevealPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BF7E7
+        lda #<>aTitleLogoBG2RevealPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -5817,7 +5817,7 @@
       .al
       .xl
 
-      aUnknown9BF7E7 ; 9B/F7E7
+      aTitleLogoBG2RevealPPUConfig ; 9B/F7E7
 
         WRITE_RAM_BYTE bBufferBG2SC, $00
         WRITE_RAM_MASK_BYTE bBufferBG12NBA, $0F, $20
@@ -6363,9 +6363,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9BFA69)<<8
+        lda #(`aTitleFadeOutSetBG2SCPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BFA69
+        lda #<>aTitleFadeOutSetBG2SCPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         plx
@@ -6383,7 +6383,7 @@
       .al
       .xl
 
-      aUnknown9BFA69 ; 9B/FA69
+      aTitleFadeOutSetBG2SCPPUConfig ; 9B/FA69
 
         WRITE_RAM_BYTE bBufferBG2SC, $78
         WRITE_RAM_END
@@ -6405,9 +6405,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9BFA7F)<<8
+        lda #(`aTitleFadeOutClearBG2TileBasePPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BFA7F
+        lda #<>aTitleFadeOutClearBG2TileBasePPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         plx
@@ -6425,7 +6425,7 @@
       .al
       .xl
 
-      aUnknown9BFA7F ; 9B/FA7F
+      aTitleFadeOutClearBG2TileBasePPUConfig ; 9B/FA7F
 
         WRITE_RAM_MASK_BYTE bBufferBG12NBA, $0F, $00
         WRITE_RAM_END
@@ -6447,9 +6447,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9BFA96)<<8
+        lda #(`aTitleFadeOutShowBG2OnlyPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BFA96
+        lda #<>aTitleFadeOutShowBG2OnlyPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         plx
@@ -6467,7 +6467,7 @@
       .al
       .xl
 
-      aUnknown9BFA96 ; 9B/FA96
+      aTitleFadeOutShowBG2OnlyPPUConfig ; 9B/FA96
 
         WRITE_RAM_BYTE bBufferTM, $02
         WRITE_RAM_BYTE bBufferTS, $00
@@ -6491,9 +6491,9 @@
         .databank ?
 
         phx
-        lda #(`aUnknown9BFAB2)<<8
+        lda #(`aTitleFadeOutRestoreBG2SCPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BFAB2
+        lda #<>aTitleFadeOutRestoreBG2SCPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         plx
@@ -6511,7 +6511,7 @@
       .al
       .xl
 
-      aUnknown9BFAB2 ; 9B/FAB2
+      aTitleFadeOutRestoreBG2SCPPUConfig ; 9B/FAB2
 
         WRITE_RAM_BYTE bBufferBG2SC, $40
         WRITE_RAM_END
@@ -6559,9 +6559,9 @@
         ora #$0F
         sta bBufferINIDISP
         rep #$20
-        lda #(`aUnknown9BFB46)<<8
+        lda #(`aTitleDimmingPPUConfig)<<8
         sta lR18+1
-        lda #<>aUnknown9BFB46
+        lda #<>aTitleDimmingPPUConfig
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -6622,7 +6622,7 @@
       .al
       .xl
 
-      aUnknown9BFB46 ; 9B/FB46
+      aTitleDimmingPPUConfig ; 9B/FB46
 
         WRITE_RAM_BYTE bBufferTM, $02
         WRITE_RAM_BYTE bBufferTS, $11
@@ -7042,7 +7042,7 @@
       .al
       .xl
 
-      aUnknown9BFE13 ; 9B/FE13
+      aTitleSpriteScriptsAndFramesUnused ; 9B/FE13
 
         ; Unreferenced: title sprite scripts and frames like aTitleSpriteStill00 and
         ; aTitleSpriteFrames, which nothing in the build points at.

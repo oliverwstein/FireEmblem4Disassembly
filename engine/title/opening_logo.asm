@@ -107,13 +107,13 @@
         .autsiz
         .databank ?
 
-        ; Unreferenced: queues decompression DMA entry aUnknown80AE10
+        ; Unreferenced: queues decompression DMA entry aOpeningLogoDecompDMAUnused
 
-        ; Unreferenced: queues the decompression DMA entry aUnknown80AE10.
+        ; Unreferenced: queues the decompression DMA entry aOpeningLogoDecompDMAUnused.
 
-        lda #(`aUnknown80AE10)<<8
+        lda #(`aOpeningLogoDecompDMAUnused)<<8
         sta lR19+1
-        lda #<>aUnknown80AE10
+        lda #<>aOpeningLogoDecompDMAUnused
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rtl
@@ -122,7 +122,7 @@
 
         ; 80/AE10
 
-      aUnknown80AE10 ; 80/AE10
+      aOpeningLogoDecompDMAUnused ; 80/AE10
 
         ; Read only by the unreferenced rlQueueDecompDMA80AE10Unused.
 

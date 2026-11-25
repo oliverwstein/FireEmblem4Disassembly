@@ -354,7 +354,7 @@
         .structProcInfo "PW", rlProcMapPopUpWindowInit, rlProcMapPopUpWindowCycle, aProcDialogueBoxCode
 
 
-        .long aUnknown85BB46
+        .long aMapPopUpWindowTilemapEntry
         .byte 0
 
     .endsection ProcScript85BB52Section
@@ -1153,13 +1153,13 @@
         ; 85/BB3D
 
 
-      aUnknown85BB3D ; 85/BB3D
+      aMapPopUpWindowTilemapData ; 85/BB3D
 
         .structMapMenuTilemapData 32, 4, aBG3TilemapBuffer, 0, $7FCE4A
 
-      aUnknown85BB46 ; 85/BB46
+      aMapPopUpWindowTilemapEntry ; 85/BB46
 
-        .long 0, 0, aUnknown85BB3D
+        .long 0, 0, aMapPopUpWindowTilemapData
         .byte 0, 1, 1
 
     .endsection Unsorted85BB2ESection
