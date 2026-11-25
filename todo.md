@@ -37,23 +37,30 @@ Workflow: identify usage from callers, declare in [include/WRAM.h](include/WRAM.
   - Top hotspots: `$7E4EA9` (34), `$7ECC06` (31), `$7ECC08` (25)
 - [ ] **Remaining Bank `$7F` clusters** (`$7FB000` [29 addrs / 99 refs, hotspot `$7FB010`], `$7FC000`, `$7F6000–$7FA000`, `$7F0000`, `$7F4000`) — 117 addrs, 358 refs
 
-### 1.2 `*Unknown*` Identifiers (`864` distinct symbols)
+### 1.2 `*Unknown*` Identifiers (`846` distinct symbols — Step-by-Step Plan)
 
-- **`aUnknown*` data tables, scripts, and structs (`503` distinct)**
-  - [ ] `engine/battle_scene/` (203)
-  - [ ] `engine/title/` (74)
-  - [ ] `engine/castle/` (63)
-  - [ ] `engine/battle/` (60)
-  - [ ] `engine/menus/` (51)
-  - [ ] `engine/epilogue/` (36)
-  - [ ] `engine/map/` (31)
-  - [ ] Remaining folders (`include/` 13, `engine/core/` 12, `engine/save/` 7, `events/` 7, `engine/arena/` 5, `engine/dialogue/` 3, `engine/debug/` 3, `data/palettes/` 3)
-- **Other `*Unknown*` categories**
-  - [ ] `gcUnknown*` compressed stream labels (`195` distinct — coordinate with Section 2.1 via `tools/name_streams.py`)
-  - [ ] `wUnknown*` / `bUnknown*` / `lUnknown*` WRAM variables (`48` distinct: 36 `w`, 10 `b`, 2 `l`)
-  - [ ] `aPortraitPaletteUnknown*` (`18` distinct)
-  - [ ] `aSoundUnknown*` (`11` distinct)
-  - [ ] Other `*Unknown*` struct fields, constants, and misc labels (`89` distinct)
+Workflow: inspect callers, data format, and (for unpacked streams) `.4bpp.png`/`.bin` contents; rename ROM symbols with `tools/rename.py` and compressed streams with `tools/name_streams.py`; mark genuinely unreferenced/dead blocks explicitly as unused rather than guessing; verify `./build.sh` is byte-identical and commit after each phase.
+
+- **Phase U1 — Quick-win small ROM buckets (`58` symbols)**
+  - [ ] Small `aUnknown*` folders (`29`): `events/` (7), `engine/save/` (6), `engine/arena/` (5), `engine/debug/` (3), `engine/worldmap/` (3), `include/` (2), `data/` (2), `engine/events/` (1)
+  - [ ] `aPortraitPaletteUnknown*` / `PortraitPaletteUnknown*` (`18`): match against portrait indices/palettes in `data/PortraitPalettes.asm` and `data/PortraitPalettePointers.csv` (mark unused palettes explicitly)
+  - [ ] `aSoundUnknown*` (`11`): identify `aSoundUnknownF7AD9C` (`Unknown12` in `audio/sound_data.asm`) and mark/document the 10 unreferenced sound blocks
+- **Phase U2 — Small & mid-size `aUnknown*` subsystems (`106` symbols)**
+  - [ ] `engine/map/` (`24`)
+  - [ ] `engine/epilogue/` (`36`)
+  - [ ] `engine/title/` (`46`)
+- **Phase U3 — UI & castle `aUnknown*` subsystems (`109` symbols)**
+  - [ ] `engine/menus/` (`51`)
+  - [ ] `engine/castle/` (`58`)
+- **Phase U4 — Small/medium `gcUnknown*` unpacked streams (`85` files across 7 folders)**
+  - [ ] Rename unpacked streams via `tools/name_streams.py` by caller + visual `.4bpp.png` inspection: `AFC8C0/` (1), `DF0000/` (1), `94C140/` (2), `C00A2B/` (6), `DD0000/` (9), `D05673/` (32), `D50000/` (34)
+- **Phase U5 — Map battle `aUnknown*` (`62` symbols)**
+  - [ ] `engine/battle/` (`62`): map battle tables, magic effect scripts/palettes, and action animation data
+- **Phase U6 — Battle scene `aUnknown*` (`202`) & `E02EBD/` `gcUnknown*` (`171` files)**
+  - [ ] Tackle `engine/battle_scene/` (`202` `aUnknown*`) together with `gfx/compressed/E02EBD/` (`171` `gcUnknown*` unpacked `.4bpp.png`/`.bin` streams), since battle-scene effect/spell scripts and `E02EBD/` graphics reference each other directly
+- **Phase U7 — Struct fields, constants & remaining WRAM `*Unknown*` (`135` symbols)**
+  - [ ] Remaining `wUnknown*` / `bUnknown*` / `lUnknown*` WRAM variables (`41`) — coordinate with Section 1.1 scoping rules in `tools/name_ram.py`
+  - [ ] Other `*Unknown*` struct fields, constants, and misc labels (`94`) across `include/`, `engine/`, `data/`, and `audio/`
 
 ---
 
