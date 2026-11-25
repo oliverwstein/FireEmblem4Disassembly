@@ -5,8 +5,8 @@
 start $9C8000
 end $9CECA6
 
-gcUnknown9C8000 gcUnknown9C8000 ; 18432 bytes decompressed
-gcUnknown9CB90D gcUnknown9CB90D ; 2048 bytes decompressed
+g4bppcSaveMenuMainTiles g4bppcSaveMenuMainTiles ; 18432 bytes decompressed
+g4bppcSaveMenuWindowTiles g4bppcSaveMenuWindowTiles ; 2048 bytes decompressed
 gcUnknown9CBB20 gcUnknown9CBB20 ; 2048 bytes decompressed
 gcUnknown9CBBB7 gcUnknown9CBBB7 ; 2048 bytes decompressed
 gcUnknown9CBFA1 gcUnknown9CBFA1 ; 512 bytes decompressed

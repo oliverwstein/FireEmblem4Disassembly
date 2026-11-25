@@ -505,8 +505,8 @@ g4bppcMapBattleWindMage1 g4bppcMapBattleWindMage1 ; 8192 bytes decompressed
 g4bppcMapBattleWindMage5 g4bppcMapBattleWindMage5 ; 8192 bytes decompressed
 g4bppcMapBattleWindMage6 g4bppcMapBattleWindMage6 ; 8192 bytes decompressed
 g4bppcMapBattleWindMage0 g4bppcMapBattleWindMage0 ; 8192 bytes decompressed
-gcUnknownACC8C3 gcUnknownACC8C3 ; 8192 bytes decompressed, found
-gcUnknownACCC17 gcUnknownACCC17 ; 8192 bytes decompressed
+g4bppcMapBattleSoloIcons g4bppcMapBattleSoloIcons ; 8192 bytes decompressed, found
+g4bppcMapBattleWeaponIcons g4bppcMapBattleWeaponIcons ; 8192 bytes decompressed
 aMapBattleSoldierLayout3 aMapBattleSoldierLayout3 ; 2048 bytes decompressed
 aMapBattleSoldierLayout2 aMapBattleSoldierLayout2 ; 2048 bytes decompressed
 aMapBattleSoldierLayout1 aMapBattleSoldierLayout1 ; 2048 bytes decompressed
