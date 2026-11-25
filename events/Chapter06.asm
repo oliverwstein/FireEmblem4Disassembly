@@ -284,7 +284,7 @@
 
       aChapter06EventData ; B2/82FA 
 
-        .structChapterEventData aChapter06LocationData, aChapter06MapChangeData, None, aChapter06TalkEvents, aUnknownB28461
+        .structChapterEventData aChapter06LocationData, aChapter06MapChangeData, None, aChapter06TalkEvents, aChapter06FactionPhaseFlags
 
       aChapter06LocationData ; B2/8304
 
@@ -455,7 +455,7 @@
         .structChapterTalkEventEntry Chapter06, FlagChapter06_SofalaTalkCheck, Lester, SofalaFighter
         .word $FFFF
 
-      aUnknownB28461 ; B2/8461
+      aChapter06FactionPhaseFlags ; B2/8461
 
         .word $FFFF
         .word $FFFF

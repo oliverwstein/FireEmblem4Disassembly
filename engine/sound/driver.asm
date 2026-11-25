@@ -1142,7 +1142,7 @@
 
         ; A = indirect upload ID (1-$63): returns the chunk ID to upload, the next entry
         ; of its list in aSoundUploadLists each call (bSoundIndirectStep); 1-4 pick the
-        ; list from the battle (aSoundHeader.Unknown12, aSoundTerrainUploads); 0 for
+        ; list from the battle (aSoundHeader.BattleUploads, aSoundTerrainUploads); 0 for
         ; nothing.
 
         cmp #$0005
@@ -1221,7 +1221,7 @@
         _9435
         and #$00FF
         clc
-        adc aSoundHeader.Unknown12
+        adc aSoundHeader.BattleUploads
         sta lR38
         lda [lR38],y
 
@@ -1288,7 +1288,7 @@
         lda $7E4EA9,x
         and #$007F
         clc
-        adc aSoundHeader.Unknown12
+        adc aSoundHeader.BattleUploads
         sta lR38
         lda [lR38],y
         sep #$10

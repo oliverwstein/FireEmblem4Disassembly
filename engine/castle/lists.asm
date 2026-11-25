@@ -3370,7 +3370,7 @@
       .al
       .xl
 
-      aUnknown8AB230 .dstruct structHDMADirectEntryInfo, rlHDMACastleColorMath1, rlHDMACastleColorMath1, $B261, $0008C8, PPU_REG_BASE + $31, $00 ; 8A/B230
+      aCastleColorMathHDMAInfo .dstruct structHDMADirectEntryInfo, rlHDMACastleColorMath1, rlHDMACastleColorMath1, $B261, $0008C8, PPU_REG_BASE + $31, $00 ; 8A/B230
 
     .endsection Table8AB230Section
 

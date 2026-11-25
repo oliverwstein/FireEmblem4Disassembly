@@ -8,7 +8,7 @@ Rule: Every change to source, data, or assets must keep `./build.sh` byte-identi
 | Metric | Baseline (2026-11-25) | Current | Refresh Command |
 |---|---:|---:|---|
 | Unnamed RAM addresses | 1,296 (`4,727` operands) | 1,224 (`3,552` operands) | `python3 tools/name_ram.py --report 50` |
-| Distinct `*Unknown*` identifiers | 864 | 846 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
+| Distinct `*Unknown*` identifiers | 864 | 786 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
 | Compressed-only `.comp` streams | 510 (`273` `Unknown`) | 0 | `find gfx audio -name '*.comp'` (check for missing `.png` / unpacked file) |
 | Greyscale UI PNG sheets | 18 | 0 | `ls gfx/ui/*.png` (see [gfx/ui/README.md](gfx/ui/README.md)) |
 | Undecoded chapter maps / battle layouts | `aChapterMapPointers` + 120 battle layouts | 0 (`tools/chapter_maps.py`, `tools/map_battle_layouts.py`) | `find gfx/compressed -name '*MapBattle*Layout*.comp' \| wc -l` |
@@ -42,9 +42,9 @@ Workflow: identify usage from callers, declare in [include/WRAM.h](include/WRAM.
 Workflow: inspect callers, data format, and (for unpacked streams) `.4bpp.png`/`.bin` contents; rename ROM symbols with `tools/rename.py` and compressed streams with `tools/name_streams.py`; mark genuinely unreferenced/dead blocks explicitly as unused rather than guessing; verify `./build.sh` is byte-identical and commit after each phase.
 
 - **Phase U1 — Quick-win small ROM buckets (`58` symbols)**
-  - [ ] Small `aUnknown*` folders (`29`): `events/` (7), `engine/save/` (6), `engine/arena/` (5), `engine/debug/` (3), `engine/worldmap/` (3), `include/` (2), `data/` (2), `engine/events/` (1)
-  - [ ] `aPortraitPaletteUnknown*` / `PortraitPaletteUnknown*` (`18`): match against portrait indices/palettes in `data/PortraitPalettes.asm` and `data/PortraitPalettePointers.csv` (mark unused palettes explicitly)
-  - [ ] `aSoundUnknown*` (`11`): identify `aSoundUnknownF7AD9C` (`Unknown12` in `audio/sound_data.asm`) and mark/document the 10 unreferenced sound blocks
+  - [x] Small `aUnknown*` folders (`29`): `events/` (7), `engine/save/` (6), `engine/arena/` (5), `engine/debug/` (3), `engine/worldmap/` (3), `include/` (2), `data/` (2), `engine/events/` (1)
+  - [x] `aPortraitPaletteUnknown*` / `PortraitPaletteUnknown*` (`18`): match against portrait indices/palettes in `data/PortraitPalettes.asm` and `data/PortraitPalettePointers.csv` (mark unused palettes explicitly)
+  - [x] `aSoundUnknown*` (`11`): identify `aSoundUnknownF7AD9C` (`Unknown12` in `audio/sound_data.asm`) and mark/document the 10 unreferenced sound blocks
 - **Phase U2 — Small & mid-size `aUnknown*` subsystems (`106` symbols)**
   - [ ] `engine/map/` (`24`)
   - [ ] `engine/epilogue/` (`36`)

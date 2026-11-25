@@ -282,7 +282,7 @@
 
       aChapter03EventData ; 86/D668
 
-        .structChapterEventData aChapter03LocationData, aChapter03MapChangeData, aChapter03ArenaOpponents, aChapter03TalkEvents, aUnknown86D795
+        .structChapterEventData aChapter03LocationData, aChapter03MapChangeData, aChapter03ArenaOpponents, aChapter03TalkEvents, aChapter03FactionPhaseFlags
 
       aChapter03LocationData ; 86/D672
 
@@ -458,7 +458,7 @@
         .structChapterTalkEventEntry Chapter03, FlagChapter03_SylvaleCommanderTalk, AnyCharacter, SylvaleBlockadeCommanderLanceArmor
         .word $FFFF
 
-      aUnknown86D795 ; 86/D795
+      aChapter03FactionPhaseFlags ; 86/D795
 
         .word $FFFF
         .word $0403

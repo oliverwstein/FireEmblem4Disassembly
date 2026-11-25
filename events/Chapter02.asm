@@ -409,7 +409,7 @@
 
       aChapter02EventData ; 86/D14C
 
-        .structChapterEventData aChapter02LocationData, aChapter02MapChangeData, aChapter02ArenaOpponents, aChapter02TalkEvents, aUnknown86D2E1
+        .structChapterEventData aChapter02LocationData, aChapter02MapChangeData, aChapter02ArenaOpponents, aChapter02TalkEvents, aChapter02FactionPhaseFlags
 
       aChapter02LocationData ; 86/D156
 
@@ -633,7 +633,7 @@
         .structChapterTalkEventEntry Chapter02, FlagChapter02_LewynErinysTalk, Lewyn, Erinys
         .word $FFFF
 
-      aUnknown86D2E1 ; 86/D2E1
+      aChapter02FactionPhaseFlags ; 86/D2E1
 
         .word $FFFF
         .word $FFFF

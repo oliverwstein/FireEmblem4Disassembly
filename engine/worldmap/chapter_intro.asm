@@ -77,7 +77,7 @@
 
         ; 80/F337
 
-      aUnknown80F337 ; 80/F337
+      aChapterIntroTilemapEntryUnused ; 80/F337
 
         ; Unreferenced. The same nine bytes follow an rts at both 80/F337 and
         ; 88/A6CA; nothing reads either copy.

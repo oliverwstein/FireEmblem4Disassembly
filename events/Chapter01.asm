@@ -305,7 +305,7 @@
 
       aChapter01EventData ; 86/CB59
 
-        .structChapterEventData aChapter01LocationData, aChapter01MapChangeData, aChapter01ArenaOpponents, aChapter01TalkEvents, aUnknown86CC70
+        .structChapterEventData aChapter01LocationData, aChapter01MapChangeData, aChapter01ArenaOpponents, aChapter01TalkEvents, aChapter01FactionPhaseFlags
 
       aChapter01LocationData ; 86/CB63
 
@@ -472,7 +472,7 @@
         .structChapterTalkEventEntry Chapter01, FlagChapter01_CrossKnightTalk, AnyCharacter, CrossKnightCh01Cavalier
         .word $FFFF
 
-      aUnknown86CC70 ; 86/CC70
+      aChapter01FactionPhaseFlags ; 86/CC70
 
         .word $FFFF
         .word $FFFF

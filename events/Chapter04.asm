@@ -438,7 +438,7 @@
 
       aChapter04EventData ; 86/DC79
 
-        .structChapterEventData aChapter04LocationData, aChapter04MapChangeData, aChapter04ArenaOpponents, None, aUnknown86DDA3
+        .structChapterEventData aChapter04LocationData, aChapter04MapChangeData, aChapter04ArenaOpponents, None, aChapter04FactionPhaseFlags
 
       aChapter04LocationData ; 86/DC83
 
@@ -618,7 +618,7 @@
         .long aFactionGroup19AI1
         .word $FFFF
 
-      aUnknown86DDA3 ; 86/DDA3
+      aChapter04FactionPhaseFlags ; 86/DDA3
 
         .word $FFFF
         .word $0204

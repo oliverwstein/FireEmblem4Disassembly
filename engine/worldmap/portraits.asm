@@ -936,7 +936,7 @@
         lda $7F548C
         asl a
         tay
-        lda aUnknown8B9057,y
+        lda aWorldMapHighlightFadeColors,y
         sta aBGPaletteBuffer.aPalette1+2,b
 
         lda $DB
@@ -960,7 +960,7 @@
 
         .databank 0
 
-      aUnknown8B9057 ; 8B/9057
+      aWorldMapHighlightFadeColors ; 8B/9057
 
         .word $0000, $0001, $0001, $0001, $0001, $0002, $0002, $0002
         .word $0002, $0003, $0003, $0003, $0003, $0004, $0004, $0004
@@ -1000,7 +1000,7 @@
         lda $7F548C
         asl a
         tay
-        lda aUnknown8B9057,y
+        lda aWorldMapHighlightFadeColors,y
         sta aBGPaletteBuffer.aPalette1+2,b
 
         lda $DB

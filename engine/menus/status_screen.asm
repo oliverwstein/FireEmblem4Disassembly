@@ -883,7 +883,7 @@
         ldx #$0020
 
         _82CD
-        lda aUnknownDE2CA0-2,x
+        lda aStatusScreenHolyBloodOBJPalette-2,x
         sta $02DE,b,x
         dec x
         dec x
@@ -1137,7 +1137,7 @@
         ldx #$0020
 
         _84C4
-        lda aUnknownDE2CA0-2,x
+        lda aStatusScreenHolyBloodOBJPalette-2,x
         sta $02DE,b,x
         dec x
         dec x
@@ -1307,7 +1307,7 @@
         ldx #$0020
 
         _85E7
-        lda aUnknownDE2CA0-2,x
+        lda aStatusScreenHolyBloodOBJPalette-2,x
         sta $02DE,b,x
         dec x
         dec x

@@ -1137,9 +1137,9 @@
         lda $7F840E
         beq +
 
-          lda #(`aUnknown89D15D)<<8
+          lda #(`aDebugEnemyText)<<8
           sta lR18+1
-          lda #<>aUnknown89D15D
+          lda #<>aDebugEnemyText
           sta lR18
           ldx #pack([10, 10])
           jsl rlDrawMenuTextLine
@@ -1395,7 +1395,7 @@
         ; man?
         .text "おとこ\n"
 
-      aUnknown89D15D ; 89/D15D
+      aDebugEnemyText ; 89/D15D
 
         ; enemy?
         .text "てき\n"
@@ -2263,7 +2263,7 @@
 
         .databank 0
 
-      aUnknown89D79A ; 89/D79A
+      aDebugSpecialSkillsTextUnused ; 89/D79A
 
         .word $C682
         .word $AD82
@@ -4271,7 +4271,7 @@
         .autsiz
         .databank ?
 
-        ; Initializes debug menu WRAM vars (wDebugMenuScreenIndex..$7F840E) and sets aUnknown80E422
+        ; Initializes debug menu WRAM vars (wDebugMenuScreenIndex..$7F840E) and sets aDebugMenuTilemapEntry
 
         lda $7F8183
         sta $7F8404
@@ -4284,9 +4284,9 @@
         sta $7F840C
         sta $7F8408
 
-        lda #(`aUnknown80E422)<<8
+        lda #(`aDebugMenuTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80E422
+        lda #<>aDebugMenuTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetSelectedUnitFactionSlot
         sta $7F840E

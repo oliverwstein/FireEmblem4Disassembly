@@ -2623,17 +2623,17 @@
         .autsiz
         .databank ?
 
-        ; One fade step of BG palette 1's colours 1-15 (aUnknown91E063).
+        ; One fade step of BG palette 1's colours 1-15 (aSaveMenuFadeBGPalette1Range).
 
         jsl rlFadePaletteToBlack
 
-          .word <>aUnknown91E063
+          .word <>aSaveMenuFadeBGPalette1Range
 
         rts
 
         .databank 0
 
-      aUnknown91E063 ; 91/E063
+      aSaveMenuFadeBGPalette1Range ; 91/E063
 
         .word $0022, 15
         .word $FFFF
@@ -2645,17 +2645,17 @@
         .autsiz
         .databank ?
 
-        ; One fade step of sprite palettes 0 and 1's colours 1-15 (aUnknown91E070).
+        ; One fade step of sprite palettes 0 and 1's colours 1-15 (aSaveMenuFadeOBJPalettesRange).
 
         jsl rlFadePaletteToBlack
 
-          .word <>aUnknown91E070
+          .word <>aSaveMenuFadeOBJPalettesRange
 
         rts
 
         .databank 0
 
-      aUnknown91E070 ; 91/E070
+      aSaveMenuFadeOBJPalettesRange ; 91/E070
 
         .word $0102, 15
         .word $0122, 15
@@ -2695,7 +2695,7 @@
       .al
       .xl
 
-      aSaveMenuHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlInitSaveMenuHDMA, rlSaveMenuHDMAStub, aUnknown91E09E, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $2D, $40, $85 ; 91/E089
+      aSaveMenuHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlInitSaveMenuHDMA, rlSaveMenuHDMAStub, aSaveMenuHDMACode, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $2D, $40, $85 ; 91/E089
 
     .endsection Table91E089Section
 
@@ -2741,10 +2741,10 @@
       .al
       .xl
 
-      aUnknown91E09E ; 91/E09E
+      aSaveMenuHDMACode ; 91/E09E
         HDMA_HALT
 
-      aUnknown91E0A0 ; 91/E0A0
+      aSaveMenuHDMATableUnused ; 91/E0A0
         .byte $C0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -2761,9 +2761,9 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00
 
-      aUnknown91E185 .dstruct structHDMADirectEntryInfo, rlInitSaveMenuHDMA, rlSaveMenuHDMAStub, aUnknown91E09E, aUnknown91E190, PPU_REG_BASE + $0F, $00 ; 91/E185
+      aReviveScreenBG2HOFSHDMAInfo .dstruct structHDMADirectEntryInfo, rlInitSaveMenuHDMA, rlSaveMenuHDMAStub, aSaveMenuHDMACode, aReviveScreenBG2HOFSHDMATable, PPU_REG_BASE + $0F, $00 ; 91/E185
 
-      aUnknown91E190 ; 91/E190
+      aReviveScreenBG2HOFSHDMATable ; 91/E190
         .byte $C0, $06, $06, $06, $06, $05, $05, $05, $05, $04, $04, $04, $04, $04, $04, $03
         .byte $03, $03, $03, $03, $03, $02, $02, $02, $02, $02, $01, $01, $01, $01, $00, $00
         .byte $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $02, $02, $02, $02, $02, $03
@@ -3206,7 +3206,7 @@
 
         ; 91/E4A3
 
-      aUnknown91E4A3 ; 91/E4A3
+      aSaveMenuData91E4A3Unused ; 91/E4A3
 
         ; Unreferenced.
 

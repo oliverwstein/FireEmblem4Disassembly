@@ -296,9 +296,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown91E185)<<8
+        lda #(`aReviveScreenBG2HOFSHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown91E185
+        lda #<>aReviveScreenBG2HOFSHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts
@@ -630,7 +630,7 @@
         .word $6C00, $6C40, $6C80, $6CC0, $6E00, $6E40, $6E80, $6EC0
         .word $7000, $7040, $7080, $70C0, $7200, $7240, $7280, $72C0
 
-      aUnknown80E422 ; 80/E422
+      aDebugMenuTilemapEntry ; 80/E422
 
         ; A map menu tilemap entry, as aReviveScreenMenuTilemapEntry.
         .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E

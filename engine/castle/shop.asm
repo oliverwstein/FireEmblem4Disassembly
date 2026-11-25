@@ -165,9 +165,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
 
-        lda #(`aUnknown8AB230)<<8
+        lda #(`aCastleColorMathHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown8AB230
+        lda #<>aCastleColorMathHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         lda #CASTLE_STEP_SHOP
@@ -390,9 +390,9 @@
 
 
         _BFC0
-        lda #(`aUnknown8AD08A)<<8
+        lda #(`aArenaOptions)<<8
         sta lKeeperOptionList+1
-        lda #<>aUnknown8AD08A
+        lda #<>aArenaOptions
         sta lKeeperOptionList
         bra _BFD0
 
@@ -2870,16 +2870,16 @@
       aDepotOptions ; 8A/D083
         .byte $01, $00, $00, $04, $05
 
-      aUnknown8AD088 ; 8A/D088
+      aArenaOptionCursorXPositions ; 8A/D088
         .byte $54, $8C
 
-      aUnknown8AD08A ; 8A/D08A
+      aArenaOptions ; 8A/D08A
         .byte $FF, $03
 
-      aUnknown8AD08C ; 8A/D08C
+      aArenaSubmenuCursorXPositions ; 8A/D08C
         .byte $54, $84, $BC
 
-      aUnknown8AD08F ; 8A/D08F
+      aArenaSubmenuOptions ; 8A/D08F
         .byte $FF, $FF, $FF
 
 

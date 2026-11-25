@@ -977,7 +977,7 @@
 
         .databank 0
 
-      aUnknown91BEC6 ; 91/BEC6
+      aEventScriptData91BEC6Unused ; 91/BEC6
 
         .word $2000
         .word $4000

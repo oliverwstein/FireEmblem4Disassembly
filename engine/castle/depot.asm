@@ -140,9 +140,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
 
-        lda #(`aUnknown8AB230)<<8
+        lda #(`aCastleColorMathHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown8AB230
+        lda #<>aCastleColorMathHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         lda #CASTLE_STEP_DEPOT

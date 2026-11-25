@@ -70,7 +70,7 @@
         .word $3800, $56B5, $2D6B, $1CE7, $35AD, $1CE7, $4631, $2D6B
         .word $1CE7, $56B5, $35AD, $1CE7, $3DEF, $2D6B, $1CE7, $0000
 
-      aUnknown8C9C00 ; 8C/9C00
+      aBGPalettes8C9C00Unused ; 8C/9C00
         .word $7F7F, $420F, $0043, $7BBC, $67FA, $3F30, $5355, $4B51
         .word $4B50, $432E, $472F, $42EF, $42EA, $3A8D, $3228, $25C5
         .word $3800, $2529, $2A6F, $2A4E, $220C, $1DEB, $15A9, $1168
@@ -194,7 +194,7 @@
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-      aUnknown8CA600 ; 8C/A600
+      aBGPalette8CA600Unused ; 8C/A600
         .word $0000, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
         .word $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
 

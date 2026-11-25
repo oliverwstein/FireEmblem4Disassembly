@@ -347,13 +347,13 @@
         jsl rlDrawMenuTextLine
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        lda #(`aUnknown8AD088)<<8
+        lda #(`aArenaOptionCursorXPositions)<<8
         sta lR19+1
-        lda #<>aUnknown8AD088
+        lda #<>aArenaOptionCursorXPositions
         sta lR19
-        lda #(`aUnknown8AD08A)<<8
+        lda #(`aArenaOptions)<<8
         sta lR20+1
-        lda #<>aUnknown8AD08A
+        lda #<>aArenaOptions
         sta lR20
         lda #$0002
         jsr rsCastleOptionMenuInput
@@ -690,13 +690,13 @@
         adc #$000B
         tax
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown8AD08C)<<8
+        lda #(`aArenaSubmenuCursorXPositions)<<8
         sta lR19+1
-        lda #<>aUnknown8AD08C
+        lda #<>aArenaSubmenuCursorXPositions
         sta lR19
-        lda #(`aUnknown8AD08F)<<8
+        lda #(`aArenaSubmenuOptions)<<8
         sta lR20+1
-        lda #<>aUnknown8AD08F
+        lda #<>aArenaSubmenuOptions
         sta lR20
         lda #$0003
         jsr rsCastleOptionMenuInput
@@ -842,13 +842,13 @@
         lda #<>aArenaStartQuitChangeWeaponText
         sta lR18
         jsr rsDrawArenaChoice
-        lda #(`aUnknown8AD08C)<<8
+        lda #(`aArenaSubmenuCursorXPositions)<<8
         sta lR19+1
-        lda #<>aUnknown8AD08C
+        lda #<>aArenaSubmenuCursorXPositions
         sta lR19
-        lda #(`aUnknown8AD08F)<<8
+        lda #(`aArenaSubmenuOptions)<<8
         sta lR20+1
-        lda #<>aUnknown8AD08F
+        lda #<>aArenaSubmenuOptions
         sta lR20
         lda #$0003
         jsr rsCastleOptionMenuInput
@@ -1727,9 +1727,9 @@
         jsr rsClearItemDetailsWindow
         jsr rsDrawCastleUnitMoney
         jsr rsClearCastleList
-        lda #(`aUnknown8AB230)<<8
+        lda #(`aCastleColorMathHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown8AB230
+        lda #<>aCastleColorMathHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         lda #CASTLE_STEP_ARENA

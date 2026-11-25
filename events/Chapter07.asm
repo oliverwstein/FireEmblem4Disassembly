@@ -461,7 +461,7 @@
 
       aChapter07EventData ; 86/EBD4
 
-        .structChapterEventData aChapter07LocationData, aChapter07MapChangeData, aChapter07ArenaOpponents, aChapter07TalkEvents, aUnknown86EDF0
+        .structChapterEventData aChapter07LocationData, aChapter07MapChangeData, aChapter07ArenaOpponents, aChapter07TalkEvents, aChapter07FactionPhaseFlags
 
       aChapter07LocationData ; 86/EBDE
 
@@ -735,7 +735,7 @@
         .structChapterTalkEventEntry Chapter07, FlagChapter07_DahnaArmyTalkCheck, AnyCharacter, DahnaBlockadeMyrmidon
         .word $FFFF
 
-      aUnknown86EDF0 ; 86/EDF0
+      aChapter07FactionPhaseFlags ; 86/EDF0
 
         .word $FFFF
         .word $FFFF

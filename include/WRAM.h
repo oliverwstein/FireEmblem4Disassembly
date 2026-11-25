@@ -3488,7 +3488,7 @@
       ; indexed by CharacterID
       ; $8000 if dead
       ; $4000 if unrecruited
-      ; $2000 + ora'd partners ID for selected children in aUnknown82F96C
+      ; $2000 + ora'd partners ID for selected children in _F96C (engine/epilogue/endings.asm)
     aUnknown7FC57C .fill 25 * size(word) ; $7FC57C
       ; indexed by Gen2 IDs, same as above
 

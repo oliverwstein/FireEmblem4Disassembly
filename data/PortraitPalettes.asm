@@ -116,35 +116,35 @@ aPortraitPaletteGhostDeirdre ; 8C/AB60
   .word $3800, $6AB3, $4318, $3295, $0D07, $475B, $1861, $28E5
   .word $7AD5, $3D48, $49CC, $5A50, $21CC, $1460, $0C63, $1040
 
-aPortraitPaletteUnknown8CAB80 ; 8C/AB80
+aPortraitPaletteUnused8CAB80 ; 8C/AB80
   .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
   .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-aPortraitPaletteUnknown8CABA0 ; 8C/ABA0
+aPortraitPaletteUnused8CABA0 ; 8C/ABA0
   .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
   .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-aPortraitPaletteUnknown8CABC0 ; 8C/ABC0
+aPortraitPaletteUnused8CABC0 ; 8C/ABC0
   .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
   .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-aPortraitPaletteUnknown8CABE0 ; 8C/ABE0
+aPortraitPaletteUnused8CABE0 ; 8C/ABE0
   .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
   .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
 
-aPortraitPaletteUnknown8CAC00 ; 8C/AC00
+aPortraitPaletteUnused8CAC00 ; 8C/AC00
   .word $3800, $5F9E, $42DD, $323A, $1D73, $471F, $2408, $4831
   .word $6518, $10C7, $340C, $58B5, $00EC, $717B, $3DCD, $0065
 
-aPortraitPaletteUnknown8CAC20 ; 8C/AC20
+aPortraitPaletteUnused8CAC20 ; 8C/AC20
   .word $3800, $63BF, $3EBC, $2A19, $00EC, $471F, $14E8, $4A52
   .word $001F, $0F1F, $0658, $56F8, $1551, $0191, $3DCD, $0065
 
-aPortraitPaletteUnknown8CAC40 ; 8C/AC40
+aPortraitPaletteUnused8CAC40 ; 8C/AC40
   .word $3800, $7FFF, $3A7B, $2A19, $1551, $471F, $08C7, $150D
   .word $01C3, $0246, $0140, $0879, $25B6, $6104, $3DCD, $0045
 
-aPortraitPaletteUnknown8CAC60 ; 8C/AC60
+aPortraitPaletteUnused8CAC60 ; 8C/AC60
   .word $3800, $671B, $429C, $323A, $0D0F, $471F, $28C6, $3129
   .word $181F, $458C, $59EF, $6294, $2195, $5A52, $3DCD, $0005
 
@@ -152,15 +152,15 @@ aClassCardPaletteKnightLord ; 8C/AC80
   .word $3800, $7FFF, $4F1C, $3237, $1D92, $471F, $14E9, $1044
   .word $0987, $0DA4, $1826, $246C, $34AF, $6B3F, $3460, $0421
 
-aPortraitPaletteUnknown3 ; 8C/ACA0
+aPortraitPaletteUnused3 ; 8C/ACA0
   .word $3800, $7FFF, $4F1C, $3237, $1D92, $471F, $14E9, $1044
   .word $0987, $0DA4, $1826, $246C, $34AF, $6B3F, $3460, $0421
 
-aPortraitPaletteUnknown8CACC0 ; 8C/ACC0
+aPortraitPaletteUnused8CACC0 ; 8C/ACC0
   .word $3800, $0024, $0024, $0024, $0024, $0024, $0024, $0024
   .word $0024, $0024, $0024, $0024, $0024, $0024, $0024, $0024
 
-aPortraitPaletteUnknown8CACE0 ; 8C/ACE0
+aPortraitPaletteUnused8CACE0 ; 8C/ACE0
   .word $3800, $0024, $0024, $0024, $0024, $0024, $0024, $0024
   .word $0024, $0024, $0024, $0024, $0024, $0024, $0024, $0024
 
@@ -524,11 +524,11 @@ aPortraitPaletteAnnandDialogue ; 8C/B820
   .word $3800, $77BB, $431D, $329A, $1592, $477F, $08C2, $39C9
   .word $5EF3, $1284, $0E03, $0581, $10EC, $0120, $0C63, $0481
 
-aPortraitPaletteUnknown ; 8C/B840
+aPortraitPaletteUnused1 ; 8C/B840
   .word $3800, $77BB, $431D, $329A, $1592, $477F, $08C2, $39C9
   .word $5EF3, $1284, $0E03, $0581, $10EC, $0120, $0C63, $0481
 
-aPortraitPaletteUnknown2 ; 8C/B860
+aPortraitPaletteUnused2 ; 8C/B860
   .word $3800, $77BB, $431D, $329A, $1592, $477F, $08C2, $39C9
   .word $5EF3, $1284, $0E03, $0581, $10EC, $0120, $0C63, $0481
 
@@ -688,7 +688,7 @@ aPortraitPaletteSlayder ; 8C/BD40
   .word $3800, $477F, $431D, $329A, $1592, $0D0D, $0087, $4B5A
   .word $3EF7, $2E73, $1DEF, $00E7, $0084, $0042, $0C63, $0D6B
 
-aPortraitPaletteUnknown4 ; 8C/BD60
+aPortraitPaletteUnused4 ; 8C/BD60
   .word $3800, $6FFF, $431D, $329A, $1592, $477F, $14E8, $0047
   .word $35AD, $5AD6, $0884, $4A52, $150D, $6739, $0C63, $0C41
 

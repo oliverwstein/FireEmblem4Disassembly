@@ -304,7 +304,7 @@
 
       aChapter10EventData ; B0/832F
 
-        .structChapterEventData aChapter10LocationData, aChapter10MapChangeData, aChapter10ArenaOpponents, aChapter10TalkEvents, aUnknownB0847A
+        .structChapterEventData aChapter10LocationData, aChapter10MapChangeData, aChapter10ArenaOpponents, aChapter10TalkEvents, aChapter10FactionPhaseFlags
 
       aChapter10LocationData ; B0/8339
 
@@ -502,7 +502,7 @@
         .long aFactionGroup37AI2
         .word $FFFF
 
-      aUnknownB0847A ; B0/847A
+      aChapter10FactionPhaseFlags ; B0/847A
 
         .word $FFFF
         .word $FFFF

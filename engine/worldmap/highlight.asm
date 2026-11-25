@@ -287,7 +287,7 @@
 
         ; 8B/8A58
 
-      aUnknown8B8A58 ; 8B/8A58
+      aWorldMapHighlightTableUnused ; 8B/8A58
 
         ; Unreferenced.
 

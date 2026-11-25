@@ -72,7 +72,7 @@
         .word $3800, $000D, $0132, $02BB, $620B, $5504, $1944, $2E09
         .word $6F9D, $56D7, $35EF, $08A6, $190A, $256C, $4232, $0842
 
-      aUnknownDE2CA0 ; DE/2CA0
+      aStatusScreenHolyBloodOBJPalette ; DE/2CA0
         .word $3800, $0467, $77DF, $3DEF, $294A, $03FF, $6AB4, $154F
         .word $3460, $0135, $1ACC, $5FBF, $02BB, $1944, $2E09, $14A1
 
