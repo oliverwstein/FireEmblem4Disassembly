@@ -8,7 +8,7 @@ Rule: Every change to source, data, or assets must keep `./build.sh` byte-identi
 | Metric | Baseline (2026-11-25) | Current | Refresh Command |
 |---|---:|---:|---|
 | Unnamed RAM addresses | 1,296 (`4,727` operands) | 1,224 (`3,552` operands) | `python3 tools/name_ram.py --report 50` |
-| Distinct `*Unknown*` identifiers | 864 | 552 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
+| Distinct `*Unknown*` identifiers | 864 | 502 | `grep -rIoh '\b[A-Za-z_]*Unknown[A-Za-z0-9_]*\b' engine include data events audio text --exclude='*.csv.asm' --exclude='*.dialogue.txt' \| sort -u \| wc -l` |
 | Compressed-only `.comp` streams | 510 (`273` `Unknown`) | 0 | `find gfx audio -name '*.comp'` (check for missing `.png` / unpacked file) |
 | Greyscale UI PNG sheets | 18 | 0 | `ls gfx/ui/*.png` (see [gfx/ui/README.md](gfx/ui/README.md)) |
 | Undecoded chapter maps / battle layouts | `aChapterMapPointers` + 120 battle layouts | 0 (`tools/chapter_maps.py`, `tools/map_battle_layouts.py`) | `find gfx/compressed -name '*MapBattle*Layout*.comp' \| wc -l` |
@@ -55,7 +55,7 @@ Workflow: inspect callers, data format, and (for unpacked streams) `.4bpp.png`/`
 - **Phase U4 — Small/medium `gcUnknown*` unpacked streams (`85` files across 7 folders)**
   - [x] Rename unpacked streams via `tools/name_streams.py` by caller + visual `.4bpp.png` inspection: `AFC8C0/` (1), `DF0000/` (1), `94C140/` (2), `C00A2B/` (6), `DD0000/` (9), `D05673/` (32), `D50000/` (34)
 - **Phase U5 — Map battle `aUnknown*` (`62` symbols)**
-  - [ ] `engine/battle/` (`62`): map battle tables, magic effect scripts/palettes, and action animation data
+  - [x] `engine/battle/` (`62`): map battle tables, magic effect scripts/palettes, and action animation data
 - **Phase U6 — Battle scene `aUnknown*` (`202`) & `E02EBD/` `gcUnknown*` (`171` files)**
   - [ ] Tackle `engine/battle_scene/` (`202` `aUnknown*`) together with `gfx/compressed/E02EBD/` (`171` `gcUnknown*` unpacked `.4bpp.png`/`.bin` streams), since battle-scene effect/spell scripts and `E02EBD/` graphics reference each other directly
 - **Phase U7 — Struct fields, constants & remaining WRAM `*Unknown*` (`135` symbols)**

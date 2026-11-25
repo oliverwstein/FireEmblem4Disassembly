@@ -1064,7 +1064,7 @@
           phx
           dec a
           tax
-          lda aUnknown84DAE8,x
+          lda aScriptedCritTypeFlags,x
           and #$00FF
           sta $4F77,b
 
@@ -1122,7 +1122,7 @@
 
         .databank 0
 
-      aUnknown84DAE8 ; 84/DAE8
+      aScriptedCritTypeFlags ; 84/DAE8
 
         ; scripted crit types?
 
@@ -1861,9 +1861,9 @@
 
         asl a
         tax
-        lda aUnknown84DF35,x
+        lda aBattleRoundUnitOrderTable1,x
         sta wActionStructAttacker
-        lda aUnknown84DF35+2,x
+        lda aBattleRoundUnitOrderTable1+2,x
         sta wActionStructDefender
 
         jsr rsActionStructTryProcSwordSkills
@@ -1899,7 +1899,7 @@
 
         .databank 0
 
-      aUnknown84DF35 ; 84/DF35
+      aBattleRoundUnitOrderTable1 ; 84/DF35
 
         .word <>aActionStructUnit1
         .word <>aActionStructUnit2
@@ -2024,9 +2024,9 @@
             sta wBattleAttackerIndex
             asl a
             tax
-            lda aUnknown84E033,x
+            lda aScriptedBattleRoundUnitOrderTable,x
             sta wActionStructAttacker
-            lda aUnknown84E033+2,x
+            lda aScriptedBattleRoundUnitOrderTable+2,x
             sta wActionStructDefender
 
             lda [lR18],y
@@ -2070,7 +2070,7 @@
 
         .databank 0
 
-      aUnknown84E033 ; 84/E033
+      aScriptedBattleRoundUnitOrderTable ; 84/E033
 
         .word <>aActionStructUnit1
         .word <>aActionStructUnit2
@@ -2606,9 +2606,9 @@
         sta @l wBattleTempVariable
         asl a
         tax
-        lda aUnknown84E35E,x
+        lda aBattleRoundUnitOrderTable2,x
         sta @l wActionStructAttacker
-        lda aUnknown84E35E+2,x
+        lda aBattleRoundUnitOrderTable2+2,x
         sta @l wActionStructDefender
 
         lda @l wBattleStatus
@@ -2643,7 +2643,7 @@
 
         .databank 0
 
-      aUnknown84E35E ; 84/E35E
+      aBattleRoundUnitOrderTable2 ; 84/E35E
 
         .word <>aActionStructUnit1
         .word <>aActionStructUnit2
@@ -2697,9 +2697,9 @@
           sta @l wBattleTempVariable
           asl a
           tax
-          lda aUnknown84E3F2,x
+          lda aAccostBattleRoundUnitOrderTable,x
           sta @l wActionStructAttacker
-          lda aUnknown84E3F2+2,x
+          lda aAccostBattleRoundUnitOrderTable+2,x
           sta @l wActionStructDefender
           
           lda @l wBattleStatus
@@ -2737,7 +2737,7 @@
 
         .databank 0
 
-      aUnknown84E3F2 ; 84/E3F2
+      aAccostBattleRoundUnitOrderTable ; 84/E3F2
 
         .word <>aActionStructUnit1
         .word <>aActionStructUnit2

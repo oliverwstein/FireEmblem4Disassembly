@@ -785,7 +785,7 @@
 
         ; 85/CD72
 
-      aUnknown85CD72 ; 85/CD72
+      aMapBattleHUDTileStringsUnused ; 85/CD72
 
         ; Five tile strings for rlDrawTileStringToTilemapEntry. Nothing in the build reads them.
         .byte $20, $2A, $00

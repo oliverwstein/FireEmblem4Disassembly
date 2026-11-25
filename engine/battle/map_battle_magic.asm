@@ -193,9 +193,9 @@
 
         lda aProcSystem.wInput0,b
         sta aProcSystem.aBody0,b,x
-        lda #(`aUnknown87C784)<<8
+        lda #(`aMapMagicRipplePaletteData)<<8
         sta lR19+1
-        lda #<>aUnknown87C784
+        lda #<>aMapMagicRipplePaletteData
         sta lR19
         jsl rlApplyMapMenuPaletteData
         lda #(`g4bppcMapMagicRippleTiles)<<8
@@ -210,9 +210,9 @@
         stz wMapMenuClearTile,b
         lda #$2370
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown87C7AB)<<8
+        lda #(`aMapMagicRippleTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown87C7AB
+        lda #<>aMapMagicRippleTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlClearTilemapEntryTiles
         lda aProcSystem.aBody0,b,x
@@ -251,13 +251,13 @@
       .al
       .xl
 
-      aUnknown87C784 .dstruct structMapMenuPaletteData, $0010, 0, 0, aUnknown87C78B ; 87/C784
+      aMapMagicRipplePaletteData .dstruct structMapMenuPaletteData, $0010, 0, 0, aMapMagicRipplePalette ; 87/C784
 
-      aUnknown87C78B ; 87/C78B
+      aMapMagicRipplePalette ; 87/C78B
         .word $0000, $7FFF, $6739, $41F0, $292A, $1485, $0C43, $1919
         .word $10B2, $0C49, $375F, $0000, $0000, $0000, $0000, $0000
 
-      aUnknown87C7AB ; 87/C7AB
+      aMapMagicRippleTilemapEntry ; 87/C7AB
         .byte $20, $20, $88, $7B, $7E, $00, $88, $7B, $7E
 
     .endsection Table87C784Section
@@ -304,16 +304,16 @@
 
         ; Starts the small or large BG2 ripple HDMA entry.
 
-        lda #aUnknown87C91D >> 8
+        lda #aMapMagicRippleSmallHDMAInfo >> 8
         sta lR44+1
         lda aProcSystem.aBody0,b,x
         bne _C7DE
-        lda #<>aUnknown87C91D
+        lda #<>aMapMagicRippleSmallHDMAInfo
         bra _C7E1
 
 
         _C7DE
-        lda #<>aUnknown87CB47
+        lda #<>aMapMagicRippleLargeHDMAInfo
 
         _C7E1
         sta lR44
@@ -350,9 +350,9 @@
         bit #$0001
         beq _C81E
         phx
-        lda #(`aUnknown87C7AB)<<8
+        lda #(`aMapMagicRippleTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown87C7AB
+        lda #<>aMapMagicRippleTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlClearTilemapEntryTiles
         jsl rlDMAByStruct
@@ -536,7 +536,7 @@
       aMapMagicRippleLargeTilemapRow6 ; 87/C913
         .byte $64, $65, $66, $67, $68, $69, $6A, $6B, $6C, $00
 
-      aUnknown87C91D .dstruct structHDMAIndirectEntryInfo, rsHDMAMapMagicRippleSmallInit, rsHDMAMapMagicRippleCycle, aUnknown87C9C3, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/C91D
+      aMapMagicRippleSmallHDMAInfo .dstruct structHDMAIndirectEntryInfo, rsHDMAMapMagicRippleSmallInit, rsHDMAMapMagicRippleCycle, aMapMagicRippleHDMACode, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/C91D
 
       rsHDMAMapMagicRippleSmallInit ; 87/C929
 
@@ -577,7 +577,7 @@
 
         ; 87/C96B
 
-      aUnknown87C96B ; 87/C96B
+      aMapMagicRippleSmallScript ; 87/C96B
         .byte $00, $0C, $00, $01, $00, $0A, $00, $01, $00, $08, $00, $01, $00, $06, $00, $01
         .byte $00, $04, $00, $01, $00, $02, $00, $01, $00, $01, $00, $20, $FF, $FF
 
@@ -623,9 +623,9 @@
 
         ; 87/C9C3
 
-      aUnknown87C9C3 ; 87/C9C3
+      aMapMagicRippleHDMACode ; 87/C9C3
         HDMA_SLEEP 1
-        HDMA_JUMP_IF_BITS_UNSET aUnknown87C9C3, 1
+        HDMA_JUMP_IF_BITS_UNSET aMapMagicRippleHDMACode, 1
         HDMA_END
 
       rsStepMapMagicRippleScript ; 87/C9CF
@@ -891,7 +891,7 @@
 
         ; 87/CB47
 
-      aUnknown87CB47 .dstruct structHDMAIndirectEntryInfo, rsHDMAMapMagicRippleLargeInit, rsHDMAMapMagicRippleCycle, aUnknown87C9C3, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/CB47
+      aMapMagicRippleLargeHDMAInfo .dstruct structHDMAIndirectEntryInfo, rsHDMAMapMagicRippleLargeInit, rsHDMAMapMagicRippleCycle, aMapMagicRippleHDMACode, $7EEBEC, PPU_REG_BASE + $10, $42, $7E ; 87/CB47
 
       rsHDMAMapMagicRippleLargeInit ; 87/CB53
 
@@ -935,7 +935,7 @@
 
         ; 87/CB9B
 
-      aUnknown87CB9B ; 87/CB9B
+      aMapMagicRippleLargeScript ; 87/CB9B
         .byte $00, $01, $00, $01, $00, $02, $00, $01, $00, $04, $00, $01, $00, $06, $00, $01
         .byte $00, $08, $00, $01, $00, $0A, $00, $01, $00, $0C, $00, $01, $00, $0E, $00, $01
         .byte $00, $10, $00, $01, $00, $00, $00, $27, $FF, $FF
@@ -2167,7 +2167,7 @@
       .al
       .xl
 
-      aUnknown9F88C0 ; 9F/88C0
+      aMapMagicSpritePalette9F88C0Unused ; 9F/88C0
 
         ; Unreferenced: 32 colours after the map magic sprite palettes.
         .word $2550, $39F3, $4E97, $5F3B, $73DF, $01D8, $0619, $063A

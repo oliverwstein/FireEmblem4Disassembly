@@ -421,19 +421,19 @@
         _9357
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         rts
 
@@ -1234,19 +1234,19 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
@@ -1569,23 +1569,23 @@
         jsr rsSetMapMagicLayerBlending
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         rts
 
@@ -2022,23 +2022,23 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
@@ -2246,23 +2246,23 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FA08E
+          .word <>aHDMAMapMagicFenrirBG2Scroll
 
         lda wMapMagicTargetPixel
         and #$00FF
@@ -2707,7 +2707,7 @@
 
         .structSpriteArray aMapMagicFenrirFrame09._Sprites
 
-      aUnknown9FA08E .dstruct structHDMAIndirectEntryInfo, rlMapMagicFenrirHDMAInit, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/A08E
+      aHDMAMapMagicFenrirBG2Scroll .dstruct structHDMAIndirectEntryInfo, rlMapMagicFenrirHDMAInit, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/A08E
 
         ; Part of the Fenrir effect.
       rlMapMagicFenrirHDMAInit ; 9F/A09A
@@ -2726,7 +2726,7 @@
         lda wMapMagicFlags
         and #$0400
         beq _A0BD
-        lda #<>aUnknown9FDF65
+        lda #<>aHDMAMapMagicWaveTableBottom
         sta aHDMASystem.aOffset,b,x
 
         _A0BD
@@ -3013,23 +3013,23 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         lda #<>rlMapMagicBolganoneShakeWait1
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -3394,27 +3394,27 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FE378
+          .word <>aHDMAMapMagicHelBG2HOFS
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FE2D9
+          .word <>aHDMAMapMagicScrollDownBG2
 
         lda wMapMagicTargetPixel
         and #$00FF
@@ -4381,23 +4381,23 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         ply
         rts
@@ -4646,23 +4646,23 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         lda #<>rlMapMagicLightReverseFade
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -5299,23 +5299,23 @@
         sta aActiveSpriteSystem.aUnknown001380,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         rtl
 
@@ -5714,23 +5714,23 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDCF4
+          .word <>aHDMAMapMagicMeteorBG2Scroll
 
         lda #<>rlMapMagicMeteorCreateSprite
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -6329,19 +6329,19 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
@@ -6423,23 +6423,23 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FE2E5
+          .word <>aHDMAMapMagicScrollUpBG2
 
         lda #<>rlMapMagicSleepWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -6670,23 +6670,23 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         lda #<>rlMapMagicReturnWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -6893,23 +6893,23 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FE2D9
+          .word <>aHDMAMapMagicScrollDownBG2
 
         lda #<>rlMapMagicRestoreWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -7363,23 +7363,23 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         lda #<>rlMapMagicMjolnirWaitCast
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -7819,19 +7819,19 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBF1
+          .word <>aHDMAMapMagicColorMathAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
@@ -8073,23 +8073,23 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         lda #<>rlMapMagicNosferatuWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -8794,23 +8794,23 @@
         sta aProcSystem.aBody7,b,x
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC77
+          .word <>aHDMAMapMagicCenterOnTarget
 
         lda #<>rlMapMagicSilenceWaitStrike
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -11366,19 +11366,19 @@
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDBB8
+          .word <>aHDMAMapMagicW12SEL
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDC34
+          .word <>aHDMAMapMagicColorMathHalfAdd
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB6C
+          .word <>aHDMAMapMagicWindowPos
 
         jsr rsCreateMapMagicHDMA
 
-          .word <>aUnknown9FDB7F
+          .word <>aHDMAMapMagicBG2SC
 
         jsr rsCreateMapMagicHDMA
 
@@ -12510,18 +12510,18 @@
         ; 9F/DB6A
 
 
-      aHDMAUnknown9FDB6ACode ; 9F/DB6A
+      aHDMAMapMagicSharedHaltCode ; 9F/DB6A
 
         HDMA_HALT
 
-      aUnknown9FDB6C .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicNoOp1, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDB78, PPU_REG_BASE + $28, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode1), $7F ; 9F/DB6C
+      aHDMAMapMagicWindowPos .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicNoOp1, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWindowPosTable, PPU_REG_BASE + $28, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode1), $7F ; 9F/DB6C
 
         ; Shared by 24 effects.
-      aUnknown9FDB78 ; 9F/DB78
+      aHDMAMapMagicWindowPosTable ; 9F/DB78
 
         .byte $FF, $EA, $50, $E0, $E8, $51, $00
 
-      aUnknown9FDB7F .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType1, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDBA1, PPU_REG_BASE + $08, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DB7F
+      aHDMAMapMagicBG2SC .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType1, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicBG2SCTable, PPU_REG_BASE + $08, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DB7F
 
         ; Shared by 24 effects.
     .endsection Unsorted9FDB68Section
@@ -12559,12 +12559,12 @@
         ; 9F/DBA1
 
 
-      aUnknown9FDBA1 ; 9F/DBA1
+      aHDMAMapMagicBG2SCTable ; 9F/DBA1
 
         .byte $08, $5C, $21, $54, $7F, $5C, $37, $5C, $00, $7F, $5C, $30, $5C, $22, $54, $0E
         .byte $5C, $00, $70, $5C, $70, $5C, $00
 
-      aUnknown9FDBB8 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType2, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDBDA, PPU_REG_BASE + $23, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DBB8
+      aHDMAMapMagicW12SEL .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType2, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicW12SELTable, PPU_REG_BASE + $23, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DBB8
 
         ; Shared by 24 effects.
     .endsection Unsorted9FDB8BSection
@@ -12602,12 +12602,12 @@
         ; 9F/DBDA
 
 
-      aUnknown9FDBDA ; 9F/DBDA
+      aHDMAMapMagicW12SELTable ; 9F/DBDA
 
         .byte $08, $C3, $21, $33, $7F, $C3, $37, $C3, $00, $7F, $C3, $30, $C3, $22, $33, $0E
         .byte $C3, $00, $70, $C3, $70, $C3, $00
 
-      aUnknown9FDBF1 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType3, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDC13, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DBF1
+      aHDMAMapMagicColorMathAdd .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType3, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicColorMathAddTable, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DBF1
 
         ; Shared by 9 effects.
     .endsection Unsorted9FDBC4Section
@@ -12645,13 +12645,13 @@
         ; 9F/DC13
 
 
-      aUnknown9FDC13 ; 9F/DC13
+      aHDMAMapMagicColorMathAddTable ; 9F/DC13
 
         .byte $08, $02, $02, $21, $00, $82, $7F, $02, $02, $37, $02, $02, $00, $7F, $02, $02
         .byte $30, $02, $02, $22, $00, $82, $0E, $02, $02, $00, $70, $02, $02, $70, $02, $02
         .byte $00
 
-      aUnknown9FDC34 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType4, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDC56, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DC34
+      aHDMAMapMagicColorMathHalfAdd .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType4, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicColorMathHalfAddTable, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DC34
 
         ; Shared by 15 effects.
     .endsection Unsorted9FDBFDSection
@@ -12689,13 +12689,13 @@
         ; 9F/DC56
 
 
-      aUnknown9FDC56 ; 9F/DC56
+      aHDMAMapMagicColorMathHalfAddTable ; 9F/DC56
 
         .byte $08, $02, $42, $21, $00, $82, $7F, $02, $42, $37, $02, $42, $00, $7F, $02, $42
         .byte $30, $02, $42, $22, $00, $82, $0E, $02, $42, $00, $70, $02, $42, $70, $02, $42
         .byte $00
 
-      aUnknown9FDC77 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicCenterOnTargetInit, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDCD3, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DC77
+      aHDMAMapMagicCenterOnTarget .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicCenterOnTargetInit, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicCenterOnTargetTable, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DC77
 
         ; Shared by 14 effects.
     .endsection Unsorted9FDC40Section
@@ -12753,13 +12753,13 @@
         ; 9F/DCD3
 
 
-      aUnknown9FDCD3 ; 9F/DCD3
+      aHDMAMapMagicCenterOnTargetTable ; 9F/DCD3
 
         .byte $08, $CD, $50, $21, $D1, $50, $7F, $CD, $50, $37, $CD, $50, $00, $7F, $CD, $50
         .byte $30, $CD, $50, $22, $D1, $50, $0E, $CD, $50, $00, $70, $CD, $50, $70, $CD, $50
         .byte $00
 
-      aUnknown9FDCF4 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicMeteorInit, rlHDMAMapMagicNoOp2, aHDMAUnknown9FDB6ACode, aUnknown9FDDEA, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DCF4
+      aHDMAMapMagicMeteorBG2Scroll .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicMeteorInit, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicMeteorTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DCF4
 
         ; Part of the Meteor effect.
       rlHDMAMapMagicMeteorInit ; 9F/DD00
@@ -12853,7 +12853,7 @@
         lda wMapMagicFlags
         and #$0400
         beq _DDE5
-        lda #<>aUnknown9FDDF7
+        lda #<>aHDMAMapMagicMeteorTableBottom
         sta aHDMASystem.aOffset,b,x
 
         _DDE5
@@ -12862,7 +12862,7 @@
 
         .databank 0
 
-      aUnknown9FDDEA ; 9F/DDEA
+      aHDMAMapMagicMeteorTableTop ; 9F/DDEA
 
         ; Indirect HDMA tables: a line count, then a pointer into bank $7F; $00 ends.
         .byte $08
@@ -12875,7 +12875,7 @@
         .word $50CD
         .byte $00
 
-      aUnknown9FDDF7 ; 9F/DDF7
+      aHDMAMapMagicMeteorTableBottom ; 9F/DDF7
 
         .byte $7F
         .word $50CD
@@ -12936,25 +12936,25 @@
 
         .databank 0
 
-      aMapMagicVillageFireSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed1, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE4E
+      aMapMagicVillageFireSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed1, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE4E
         .word $FDC0, $0130
 
-      aMapMagicElfireSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed2, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE5E
+      aMapMagicElfireSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveMed2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE5E
         .word $FDC0, $01C0
 
-      aMapMagicAuraSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveSmall, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE6E
+      aMapMagicAuraSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, rlHDMAMapMagicBuildWaveSmall, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE6E
         .word $FDF0, $02C0
 
-      aMapMagicValflameSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE7E
+      aMapMagicValflameSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aHDMAMapMagicWaveTableTop+26, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE7E
         .word $0240, $FCC0
 
-      aMapMagicForsetiSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicClearWaveBuffer, rlHDMAMapMagicBuildRippleWave, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE8E
+      aMapMagicForsetiSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicClearWaveBuffer, rlHDMAMapMagicBuildRippleWave, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE8E
         .word $0000, $0000
 
-      aMapMagicBlizzardSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE9E
+      aMapMagicBlizzardSpawnParams .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aHDMAMapMagicWaveTableTop+26, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE9E
         .word $0100, $FC80
 
-      aUnknown9FDEAE .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DEAE
+      aMapMagicWaveSpawnParamsUnused .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aHDMAMapMagicWaveTableTop+26, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DEAE
         .word $0000, $0030
 
       rlHDMAMapMagicClearWaveBuffer ; 9F/DEBE
@@ -13019,7 +13019,7 @@
         lda wMapMagicFlags
         and #$0400
         beq _DF2C
-        lda #<>aUnknown9FDF65
+        lda #<>aHDMAMapMagicWaveTableBottom
         sta aHDMASystem.aOffset,b,x
 
         _DF2C
@@ -13055,7 +13055,7 @@
         ; 9F/DF58
 
 
-      aUnknown9FDF58 ; 9F/DF58
+      aHDMAMapMagicWaveTableTop ; 9F/DF58
 
         ; Indirect HDMA tables: a line count, then a pointer into bank $7F; $00 ends.
         .byte $88
@@ -13068,7 +13068,7 @@
         .word $570A
         .byte $00
 
-      aUnknown9FDF65 ; 9F/DF65
+      aHDMAMapMagicWaveTableBottom ; 9F/DF65
 
         .byte $FF
         .word $546A
@@ -13418,10 +13418,10 @@
         .word $00D0, $00D2, $00D4, $00D6, $00D8, $00DA, $00DC, $00DE
         .word $00E0, $00E2, $00E4, $00E6, $00E8, $00EA, $00EC, $00EE
 
-      aUnknown9FE2D9 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicScrollDownInit, rlHDMAMapMagicStepBG2VOFS, aHDMAUnknown9FDB6ACode, aUnknown9FE357, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2D9
+      aHDMAMapMagicScrollDownBG2 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicScrollDownInit, rlHDMAMapMagicStepBG2VOFS, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicScrollTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2D9
 
         ; Shared by the Hel and Restore effects.
-      aUnknown9FE2E5 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicScrollUpInit, rlHDMAMapMagicStepBG2VOFS, aHDMAUnknown9FDB6ACode, aUnknown9FE357, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2E5
+      aHDMAMapMagicScrollUpBG2 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicScrollUpInit, rlHDMAMapMagicStepBG2VOFS, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicScrollTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2E5
 
         ; Part of the Sleep effect.
       rlHDMAMapMagicScrollUpInit ; 9F/E2F1
@@ -13462,12 +13462,12 @@
         clc
         adc #$FFFF
         sta $7F50D3
-        ldy #<>aUnknown9FE371
+        ldy #<>aHDMAMapMagicScrollTableMid
         lda wMapMagicFlags
         bmi _E33C
         and #$0400
         beq _E340
-        ldy #<>aUnknown9FE364
+        ldy #<>aHDMAMapMagicScrollTableBottom
 
         _E33C
         tya
@@ -13496,31 +13496,31 @@
 
         .databank 0
 
-      aUnknown9FE357 ; 9F/E357
+      aHDMAMapMagicScrollTableTop ; 9F/E357
 
         .byte $08, $CD, $50, $21, $D1, $50, $7F, $CD, $50, $37, $CD, $50, $00
 
-      aUnknown9FE364 ; 9F/E364
+      aHDMAMapMagicScrollTableBottom ; 9F/E364
 
         .byte $7F, $CD, $50, $30, $CD, $50, $22, $D1, $50, $0E, $CD, $50, $00
 
-      aUnknown9FE371 ; 9F/E371
+      aHDMAMapMagicScrollTableMid ; 9F/E371
 
         .byte $70, $CD, $50, $70, $CD, $50, $00
 
-      aUnknown9FE378 .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicNoOp1, rlHDMAMapMagicNoOp2, aHDMAUnknown9FE384Code, aUnknown9FE393, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode2), $9F ; 9F/E378
+      aHDMAMapMagicHelBG2HOFS .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicNoOp1, rlHDMAMapMagicNoOp2, aHDMAMapMagicHelBG2HOFSCode, aHDMAMapMagicHelBG2HOFSTable, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode2), $9F ; 9F/E378
 
         ; Part of the Hel effect.
-      aHDMAUnknown9FE384Code ; 9F/E384
+      aHDMAMapMagicHelBG2HOFSCode ; 9F/E384
 
         HDMA_SET_TABLE_BANK $9F
-        HDMA_YIELD 1, aUnknown9FE393
+        HDMA_YIELD 1, aHDMAMapMagicHelBG2HOFSTable
 
         _E38B
-        HDMA_YIELD 2, aUnknown9FE393
+        HDMA_YIELD 2, aHDMAMapMagicHelBG2HOFSTable
         HDMA_JUMP _E38B
 
-      aUnknown9FE393 ; 9F/E393
+      aHDMAMapMagicHelBG2HOFSTable ; 9F/E393
 
         .byte $01, $00, $00, $01, $00, $00, $01, $01, $00, $01, $01, $00, $01, $02, $00, $01
         .byte $02, $00, $01, $03, $00, $01, $03, $00, $01, $00, $00, $01, $00, $00, $01, $00

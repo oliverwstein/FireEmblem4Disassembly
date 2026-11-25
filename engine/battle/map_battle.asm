@@ -55,7 +55,7 @@
 
         ; 9C/FE00
 
-      aUnknown9CFE00 ; 9C/FE00
+      aSCGCADTrailer9CFE00Unused ; 9C/FE00
 
         ; S-CG-CAD trailer data.
 
@@ -12889,7 +12889,7 @@
         ACTIVE_SPRITE_TABLE_FRAME 1, 2
         ACTIVE_SPRITE_JUMP aScriptedCritTriangleScript
 
-      aUnknown9EEC08 ; 9E/EC08
+      aScriptedCritTriangleUnusedScript ; 9E/EC08
         ; Unreferenced.
 
         ACTIVE_SPRITE_TABLE_FRAME 3, 3
@@ -12921,13 +12921,13 @@
 
         .databank 0
 
-      aUnknown9EEC29 ; 9E/EC29
+      aScriptedCritUnusedFrameTable ; 9E/EC29
 
         ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
         ; the offsets of the frame list and of the first script, then the frames.
 
-        .word _Table - aUnknown9EEC29
-        .word aUnknown9EEC6C - aUnknown9EEC29
+        .word _Table - aScriptedCritUnusedFrameTable
+        .word aScriptedCritUnusedScript1 - aScriptedCritUnusedFrameTable
 
         _Frame00
           .word 1 ; sprite count
@@ -12958,23 +12958,23 @@
           .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $04C, 2, 0, false, false
 
         _Table
-          .word _Frame00 - aUnknown9EEC29
-          .word _Frame01 - aUnknown9EEC29
-          .word _Frame02 - aUnknown9EEC29
-          .word _Frame03 - aUnknown9EEC29
-          .word _Frame04 - aUnknown9EEC29
-          .word _Frame05 - aUnknown9EEC29
-          .word _Frame06 - aUnknown9EEC29
+          .word _Frame00 - aScriptedCritUnusedFrameTable
+          .word _Frame01 - aScriptedCritUnusedFrameTable
+          .word _Frame02 - aScriptedCritUnusedFrameTable
+          .word _Frame03 - aScriptedCritUnusedFrameTable
+          .word _Frame04 - aScriptedCritUnusedFrameTable
+          .word _Frame05 - aScriptedCritUnusedFrameTable
+          .word _Frame06 - aScriptedCritUnusedFrameTable
 
-      aUnknown9EEC6C ; 9E/EC6C
+      aScriptedCritUnusedScript1 ; 9E/EC6C
 
         ACTIVE_SPRITE_TABLE_FRAME 4, 0
         ACTIVE_SPRITE_TABLE_FRAME 4, 1
         ACTIVE_SPRITE_TABLE_FRAME 4, 0
         ACTIVE_SPRITE_TABLE_FRAME 4, 2
-        ACTIVE_SPRITE_JUMP aUnknown9EEC6C
+        ACTIVE_SPRITE_JUMP aScriptedCritUnusedScript1
 
-      aUnknown9EEC7B ; 9E/EC7B
+      aScriptedCritUnusedScript2 ; 9E/EC7B
         ; Unreferenced.
 
         ACTIVE_SPRITE_TABLE_FRAME 4, 3
@@ -12983,10 +12983,10 @@
         ACTIVE_SPRITE_TABLE_FRAME 4, 6
         ACTIVE_SPRITE_END
 
-      aUnknown9EEC88 .dstruct structActiveSpriteInfo, rlUnusedScriptedCritSpriteNothing, rlUnusedScriptedCritSpriteNothing, aUnknown9EEC6C ; 9E/EC88
+      aScriptedCritUnusedActiveSprite1 .dstruct structActiveSpriteInfo, rlUnusedScriptedCritSpriteNothing, rlUnusedScriptedCritSpriteNothing, aScriptedCritUnusedScript1 ; 9E/EC88
 
         ; Unreferenced.
-      aUnknown9EEC8E .dstruct structActiveSpriteInfo, rlUnusedScriptedCritSpriteNothing, rlUnusedScriptedCritSpriteNothing, aUnknown9EEC7B ; 9E/EC8E
+      aScriptedCritUnusedActiveSprite2 .dstruct structActiveSpriteInfo, rlUnusedScriptedCritSpriteNothing, rlUnusedScriptedCritSpriteNothing, aScriptedCritUnusedScript2 ; 9E/EC8E
 
       rlUnusedScriptedCritSpriteNothing ; 9E/EC94
 
