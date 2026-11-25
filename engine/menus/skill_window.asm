@@ -242,9 +242,9 @@
 
         ; The same COLDATA HDMA entry as rsItemWindowCreateHDMA ($80/D07E).
 
-        lda #(`aUnknown80D07E)<<8
+        lda #(`aMapMenuWindowCOLDATAHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown80D07E
+        lda #<>aMapMenuWindowCOLDATAHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts
@@ -325,9 +325,9 @@
         dec x
         dec x
         bne _D509
-        lda #(`aUnknown80D8F1)<<8
+        lda #(`aSkillWindowListTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80D8F1
+        lda #<>aSkillWindowListTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -439,9 +439,9 @@
         sta lR18
         ldx #$2200
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80D8E8)<<8
+        lda #(`aSkillWindowBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80D8E8
+        lda #<>aSkillWindowBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         rts
 
@@ -673,7 +673,7 @@
         lda wR15
         asl a
         tax
-        lda aUnknown8BDFBF,x
+        lda aSkillWindowSkillIDTable,x
         sta wSkillWindowSkillID
 
         _D891
@@ -737,7 +737,7 @@
       .al
       .xl
 
-      aUnknown89AC56 ; 89/AC56
+      aSkillNameTextPointers ; 89/AC56
 
         ; Read by rlSkillWindowDrawSkillName, rsStatusScreenDrawSkillDescription.
 
@@ -748,13 +748,13 @@
         .byte $AB, $89, $00, $00, $00, $00, $00, $00, $CF, $AB, $89, $DD, $AB, $89, $00, $00
         .byte $00, $00, $00, $00, $EB, $AB, $89, $00, $00, $00, $00, $00, $00
 
-      aUnknown89ACB3 ; 89/ACB3
+      aStatusScreenBG3TilemapEntry ; 89/ACB3
         .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
 
-      aUnknown89ACBC ; 89/ACBC
+      aStatusScreenItemDescTilemapEntry ; 89/ACBC
         .byte $30, $01, $00, $00, $00, $00, $50, $AF, $7F
 
-      aUnknown89ACC5 ; 89/ACC5
+      aStatusScreenSkillDescTilemapEntry ; 89/ACC5
         .byte $3C, $01, $00, $00, $00, $00, $50, $AF, $7F
 
         ; 89/ACCE
@@ -1156,22 +1156,22 @@
         lda #$0017
         ldy #$000B
         jsl rlClearTilemapRect
-        lda #(`aUnknown80D8E8)<<8
+        lda #(`aSkillWindowBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80D8E8
+        lda #<>aSkillWindowBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda wSkillWindowCurrentSkill
         asl a
         tax
-        lda aUnknown8BDFBF,x
+        lda aSkillWindowSkillIDTable,x
         sta wR0
         asl a
         clc
         adc wR0
         tax
-        lda aUnknown89AC56+1,x
+        lda aSkillNameTextPointers+1,x
         sta lR18+1
-        lda aUnknown89AC56,x
+        lda aSkillNameTextPointers,x
         sta lR18
         ldx #$0415
         jsl rlDrawMenuTextLine
@@ -1198,14 +1198,14 @@
         dec x
         dec x
         bne _D9AC
-        lda #(`aUnknown80D8FA)<<8
+        lda #(`aSkillWindowDescTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80D8FA
+        lda #<>aSkillWindowDescTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda wSkillWindowCurrentSkill
         asl a
         tax
-        lda aUnknown8BDFBF,x
+        lda aSkillWindowSkillIDTable,x
         sta wR0
         asl a
         clc
@@ -1649,7 +1649,7 @@
         lda $8185,b
         asl a
         tax
-        lda aUnknown8BDFBF,x
+        lda aSkillWindowSkillIDTable,x
         sta wSkillWindowSkillID
         ldy #$0000
         tyx
@@ -2148,7 +2148,7 @@
       .al
       .xl
 
-      aUnknown8BDFBF ; 8B/DFBF
+      aSkillWindowSkillIDTable ; 8B/DFBF
 
         ; Read by rlSkillWindowDrawSkillDescription, rlSkillWindowDrawSkillName, rsSkillWindowGetSkillHolders.
 

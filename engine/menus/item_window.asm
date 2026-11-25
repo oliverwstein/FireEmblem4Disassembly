@@ -249,9 +249,9 @@
 
         ; Creates the COLDATA HDMA entry whose header is at $80/D07E (rlMapMenuWindowCOLDATAHDMAInit, rlMapMenuWindowCOLDATAHDMACycle).
 
-        lda #(`aUnknown80D07E)<<8
+        lda #(`aMapMenuWindowCOLDATAHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown80D07E
+        lda #<>aMapMenuWindowCOLDATAHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts
@@ -275,9 +275,9 @@
         bne _CF3F
         lda #$0002
         sta wGameStateStep,b
-        lda #(`aUnknown80CD13)<<8
+        lda #(`aItemWindowBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80CD13
+        lda #<>aItemWindowBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -436,7 +436,7 @@
         .enc "none"
 
 
-      aUnknown80D07E .dstruct structHDMADirectEntryInfo, rlMapMenuWindowCOLDATAHDMAInit, rlMapMenuWindowCOLDATAHDMACycle, $D0B2, $7FB0B6, PPU_REG_BASE + $32, $00 ; 80/D07E
+      aMapMenuWindowCOLDATAHDMAInfo .dstruct structHDMADirectEntryInfo, rlMapMenuWindowCOLDATAHDMAInit, rlMapMenuWindowCOLDATAHDMACycle, $D0B2, $7FB0B6, PPU_REG_BASE + $32, $00 ; 80/D07E
 
     .endsection Table80D046Section
 
@@ -512,7 +512,7 @@
         ; 80/D0B2
 
 
-      aUnknown80D0B2 ; 80/D0B2
+      aMapMenuWindowCOLDATAHDMACode ; 80/D0B2
 
         HDMA_HALT
 
@@ -2024,7 +2024,7 @@
         stz wR1
         stz wR4
         stz wR5
-        ldy #<>aUnknown89BE50
+        ldy #<>aItemWindowWeaponBadgeSprite
         jsl rlPushToOAMBuffer
 
         _BD61
@@ -2140,14 +2140,14 @@
 
         .structSpriteArray aItemWindowSelectedItemIconSprite._Sprites
 
-      aUnknown89BE50 ; 89/BE50
+      aItemWindowWeaponBadgeSprite ; 89/BE50
 
         ; Pushed only when the selected item is a weapon (equipment type 0); one
         ; large sprite, tile $0E, at (195, 76). What it shows is not known.
 
         _Sprites := [[( 195,   76), $21, SpriteLarge, $00E, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown89BE50._Sprites
+        .structSpriteArray aItemWindowWeaponBadgeSprite._Sprites
 
     .endsection Unsorted89BD00Section
 
@@ -2436,9 +2436,9 @@
         dec x
         dec x
         bne _C027
-        lda #(`aUnknown80CD1C)<<8
+        lda #(`aItemWindowListTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80CD1C
+        lda #<>aItemWindowListTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         sta wItemWindowLoopIndex
@@ -2537,9 +2537,9 @@
 
 
         _C10C
-        lda #(`aUnknown80CD13)<<8
+        lda #(`aItemWindowBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80CD13
+        lda #<>aItemWindowBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         rtl
 
@@ -2632,9 +2632,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown80CD25)<<8
+        lda #(`aItemWindowDescTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80CD25
+        lda #<>aItemWindowDescTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -2651,9 +2651,9 @@
         sta lR18+1
         ldx #$0000
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80CD13)<<8
+        lda #(`aItemWindowBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80CD13
+        lda #<>aItemWindowBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 
@@ -2736,9 +2736,9 @@
 
         ; The same text as rsItemWindowDrawItemDescription, drawn lower in the window.
 
-        lda #(`aUnknown80CD25)<<8
+        lda #(`aItemWindowDescTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80CD25
+        lda #<>aItemWindowDescTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -2755,9 +2755,9 @@
         sta lR18+1
         ldx #$0000
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown80CD13)<<8
+        lda #(`aItemWindowBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80CD13
+        lda #<>aItemWindowBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 

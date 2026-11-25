@@ -396,24 +396,24 @@
 
         ; Sets up the HDMA that scrolls the BG layers. FE5: rlUnitWindowFE4SetHDMA.
 
-        lda #(`aUnknown80C6CD)<<8
+        lda #(`aUnitWindowBG3VOFSHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown80C6CD
+        lda #<>aUnitWindowBG3VOFSHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #(`aUnknown80C718)<<8
+        lda #(`aUnitWindowBG1VOFSHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown80C718
+        lda #<>aUnitWindowBG1VOFSHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #(`aUnknown80C762)<<8
+        lda #(`aUnitWindowCGADSUBHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown80C762
+        lda #<>aUnitWindowCGADSUBHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #(`aUnknown80C88C)<<8
+        lda #(`aUnitWindowBG2VOFSHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown80C88C
+        lda #<>aUnitWindowBG2VOFSHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts
@@ -430,7 +430,7 @@
       .al
       .xl
 
-      aUnknown80C6CD .dstruct structHDMADirectEntryInfo, rlUnitWindowBG3VOFSHDMAInit, rlUnitWindowBG3VOFSHDMACycle, aUnknown80C716, $7FB038, PPU_REG_BASE + $12, $02 ; 80/C6CD
+      aUnitWindowBG3VOFSHDMAInfo .dstruct structHDMADirectEntryInfo, rlUnitWindowBG3VOFSHDMAInit, rlUnitWindowBG3VOFSHDMACycle, aUnitWindowBG3VOFSHDMACode, $7FB038, PPU_REG_BASE + $12, $02 ; 80/C6CD
 
     .endsection Table80C6CDSection
 
@@ -502,10 +502,10 @@
       .al
       .xl
 
-      aUnknown80C716 ; 80/C716
+      aUnitWindowBG3VOFSHDMACode ; 80/C716
         HDMA_HALT
 
-      aUnknown80C718 .dstruct structHDMADirectEntryInfo, rlUnitWindowBG1VOFSHDMAInit, rlUnitWindowBG1VOFSHDMACycle, aUnknown80C760, $7FB020, PPU_REG_BASE + $0E, $02 ; 80/C718
+      aUnitWindowBG1VOFSHDMAInfo .dstruct structHDMADirectEntryInfo, rlUnitWindowBG1VOFSHDMAInit, rlUnitWindowBG1VOFSHDMACycle, aUnitWindowBG1VOFSHDMACode, $7FB020, PPU_REG_BASE + $0E, $02 ; 80/C718
 
     .endsection Table80C716Section
 
@@ -576,10 +576,10 @@
       .al
       .xl
 
-      aUnknown80C760 ; 80/C760
+      aUnitWindowBG1VOFSHDMACode ; 80/C760
         HDMA_HALT
 
-      aUnknown80C762 .dstruct structHDMADirectEntryInfo, rlUnitWindowCGADSUBHDMAInit, rlUnitWindowCGADSUBHDMACycle, aUnknown80C88A, $7FB0B6, PPU_REG_BASE + $31, $03 ; 80/C762
+      aUnitWindowCGADSUBHDMAInfo .dstruct structHDMADirectEntryInfo, rlUnitWindowCGADSUBHDMAInit, rlUnitWindowCGADSUBHDMACycle, aUnitWindowCGADSUBHDMACode, $7FB0B6, PPU_REG_BASE + $31, $03 ; 80/C762
 
     .endsection Table80C760Section
 
@@ -755,10 +755,10 @@
       .al
       .xl
 
-      aUnknown80C88A ; 80/C88A
+      aUnitWindowCGADSUBHDMACode ; 80/C88A
         HDMA_HALT
 
-      aUnknown80C88C .dstruct structHDMADirectEntryInfo, rlUnitWindowBG2VOFSHDMAInit, rlUnitWindowBG2VOFSHDMACycle, $C8D3, $7FB02C, PPU_REG_BASE + $10, $02 ; 80/C88C
+      aUnitWindowBG2VOFSHDMAInfo .dstruct structHDMADirectEntryInfo, rlUnitWindowBG2VOFSHDMAInit, rlUnitWindowBG2VOFSHDMACycle, $C8D3, $7FB02C, PPU_REG_BASE + $10, $02 ; 80/C88C
 
     .endsection Table80C88ASection
 
@@ -821,7 +821,7 @@
         ; 80/C8D3
 
 
-      aUnknown80C8D3 ; 80/C8D3
+      aUnitWindowBG2VOFSHDMACode ; 80/C8D3
 
         HDMA_HALT
 
@@ -1021,7 +1021,7 @@
       .al
       .xl
 
-      aUnknown80CA25 ; 80/CA25
+      aUnitWindowListHeaderTiles0 ; 80/CA25
 
         ; Read by rsUnitWindowBuildList.
 
@@ -1044,7 +1044,7 @@
 
         ; 80/CB25
 
-      aUnknown80CB25 ; 80/CB25
+      aUnitWindowListHeaderTiles1 ; 80/CB25
 
         ; Read by rsUnitWindowBuildList.
 
@@ -1273,13 +1273,13 @@
         .byte $C0, $05, $40, $06, $C0, $06, $40, $07, $C0, $07, $40, $08, $C0, $08, $40, $09
         .byte $C0, $09, $40, $0A, $C0, $0A, $40, $0B, $C0, $0B, $40, $0C, $C0, $0C, $40, $0D
 
-      aUnknown80CD13 ; 80/CD13
+      aItemWindowBG3TilemapEntry ; 80/CD13
         .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
 
-      aUnknown80CD1C ; 80/CD1C
+      aItemWindowListTilemapEntry ; 80/CD1C
         .byte $10, $00, $00, $00, $00, $00, $D0, $89, $7F
 
-      aUnknown80CD25 ; 80/CD25
+      aItemWindowDescTilemapEntry ; 80/CD25
         .byte $30, $01, $00, $00, $00, $00, $50, $AF, $7F
 
         ; 80/CD2E
@@ -2557,12 +2557,12 @@
         sta wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda @l aUnknown8BB70B,x
+        lda @l aUnitWindowPageCursorYPositions,x
         sta wUnitWindowCursorYCoordinate
         lda wUnitWindowScrolledLines
         asl a
         tax
-        lda @l aUnknown8BB61B,x
+        lda @l aUnitWindowRowScrollOffsets,x
         sta wUnitWindowScrollPixels
         lda wR0
         cmp wUnitWindowMaxRows
@@ -2586,7 +2586,7 @@
         lda wUnitWindowScrolledLines
         asl a
         tax
-        lda @l aUnknown8BB61B,x
+        lda @l aUnitWindowRowScrollOffsets,x
         sta wUnitWindowScrollPixels
         lda wR0
         cmp wUnitWindowMaxRows
@@ -2609,7 +2609,7 @@
       .al
       .xl
 
-      aUnknown8BB61B ; 8B/B61B
+      aUnitWindowRowScrollOffsets ; 8B/B61B
 
         ; Read by rsUnitWindowMoveToLastUnit, rsUnitWindowMoveToNextPage, rsUnitWindowMoveToPreviousPage.
 
@@ -2664,7 +2664,7 @@
         lda wUnitWindowScrolledLines
         asl a
         tax
-        lda aUnknown8BB61B,x
+        lda aUnitWindowRowScrollOffsets,x
         sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlPlaySoundEffect
@@ -2697,7 +2697,7 @@
         sta wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda aUnknown8BB70B,x
+        lda aUnitWindowPageCursorYPositions,x
         sta wUnitWindowCursorYCoordinate
         lda wR0
         cmp wUnitWindowMaxRows
@@ -2720,7 +2720,7 @@
         sta wUnitWindowScrolledLines
         asl a
         tax
-        lda aUnknown8BB61B,x
+        lda aUnitWindowRowScrollOffsets,x
         sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlPlaySoundEffect
@@ -2738,7 +2738,7 @@
       .al
       .xl
 
-      aUnknown8BB70B ; 8B/B70B
+      aUnitWindowPageCursorYPositions ; 8B/B70B
 
         ; Read by rsUnitWindowMoveToLastUnit, rsUnitWindowMoveToNextPage.
 
@@ -2844,7 +2844,7 @@
         sta wUnitWindowScrolledLines
         asl a
         tax
-        lda aUnknown8BB61B,x
+        lda aUnitWindowRowScrollOffsets,x
         sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlPlaySoundEffect
@@ -4218,7 +4218,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        lda aUnknown8BC385,x
+        lda aUnitWindowSortColumnCounts,x
         cmp wUnitWindowCurrentColumn
         bcs _C2E7
         sta wUnitWindowCurrentColumn
@@ -4259,7 +4259,7 @@
         sta wGameStateStep,b
         asl a
         tax
-        lda aUnknown8BC385,x
+        lda aUnitWindowSortColumnCounts,x
         sta wUnitWindowCurrentColumn
         jsl rlUnitWindowDrawPage
 
@@ -4353,7 +4353,7 @@
       .al
       .xl
 
-      aUnknown8BC385 ; 8B/C385
+      aUnitWindowSortColumnCounts ; 8B/C385
 
         ; Read by rsUnitWindowHandleSortSelection.
 
@@ -4532,7 +4532,7 @@
         .autsiz
         .databank ?
 
-        ; A: sprite palette. Copies aUnknownDD7FD0 (what it colours is not known) into that sprite palette of the palette buffer.
+        ; A: sprite palette. Copies aUnitWindowSpritePalette2 (what it colours is not known) into that sprite palette of the palette buffer.
 
         asl a
         tax
@@ -4541,7 +4541,7 @@
         ldx #$001E
 
         _C471
-        lda aUnknownDD7FD0,x
+        lda aUnitWindowSpritePalette2,x
         dec x
         dec x
         phx
@@ -7667,7 +7667,7 @@
         .word $3800, $7BFF, $56D7, $35EF, $0462, $02FB, $000B, $5C40
         .word $6D25, $7E0F, $0140, $1EC5, $10EA, $298F, $0487, $0134
 
-      aUnknownDD7FD0 ; DD/7FD0
+      aUnitWindowSpritePalette2 ; DD/7FD0
 
         ; Copied into a sprite palette by rlUnitWindowCopySpritePalette2; it
         ; does not colour the item icons properly, so it is for something else.

@@ -362,11 +362,11 @@
         ; 8A/EE7F
 
 
-      aUnknown8AEE7F ; 8A/EE7F
+      aClassChangeData8AEE7FUnused ; 8A/EE7F
 
         .word 0
 
-      aUnknown8AEE81 ; 8A/EE81
+      aClassChangeData8AEE81Unused ; 8A/EE81
 
         .word $001A, $0017, $001C, $001A
 
@@ -637,7 +637,7 @@
 
         ; 8A/F045
 
-      aUnknown8AF045 ; 8A/F045
+      aClassChangeCursorXPositionsUnused ; 8A/F045
 
         ; Unreferenced: three bytes after an rts.
         .byte $58, $88, $B8

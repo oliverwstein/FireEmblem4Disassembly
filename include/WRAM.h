@@ -3438,8 +3438,8 @@
     ; More of the status screen's variables; only written in its file.
 
     aStatusScreenTextBuffer .fill $C0               ; $7FAF50
-      ; Item and skill descriptions are drawn here (aUnknown89ACBC,
-      ; aUnknown89ACC5), then copied into the BG3 tilemap buffer.
+      ; Item and skill descriptions are drawn here (aStatusScreenItemDescTilemapEntry,
+      ; aStatusScreenSkillDescTilemapEntry), then copied into the BG3 tilemap buffer.
     wItemWindowLoopIndex     .word ?                ; $7FB010
     wItemWindowLoopCount     .word ?                ; $7FB012
     wItemWindowCurrentItemID .word ?                ; $7FB014

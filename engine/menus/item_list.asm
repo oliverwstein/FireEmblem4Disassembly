@@ -1089,51 +1089,51 @@
         phx
         lda #$2140
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown85996B)<<8
+        lda #(`aWeaponStatsLabel0TopTiles)<<8
         sta lR18+1
-        lda #<>aUnknown85996B
+        lda #<>aWeaponStatsLabel0TopTiles
         sta lR18
         ldx #$0102
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown85996F)<<8
+        lda #(`aWeaponStatsLabel0BottomTiles)<<8
         sta lR18+1
-        lda #<>aUnknown85996F
+        lda #<>aWeaponStatsLabel0BottomTiles
         sta lR18
         ldx #$0202
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown859953)<<8
+        lda #(`aWeaponStatsLabel1TopTiles)<<8
         sta lR18+1
-        lda #<>aUnknown859953
+        lda #<>aWeaponStatsLabel1TopTiles
         sta lR18
         ldx #$0302
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown859957)<<8
+        lda #(`aWeaponStatsLabel1BottomTiles)<<8
         sta lR18+1
-        lda #<>aUnknown859957
+        lda #<>aWeaponStatsLabel1BottomTiles
         sta lR18
         ldx #$0402
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown85995B)<<8
+        lda #(`aWeaponStatsLabel2TopTiles)<<8
         sta lR18+1
-        lda #<>aUnknown85995B
+        lda #<>aWeaponStatsLabel2TopTiles
         sta lR18
         ldx #$0502
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown85995F)<<8
+        lda #(`aWeaponStatsLabel2BottomTiles)<<8
         sta lR18+1
-        lda #<>aUnknown85995F
+        lda #<>aWeaponStatsLabel2BottomTiles
         sta lR18
         ldx #$0602
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown859963)<<8
+        lda #(`aWeaponStatsLabel3TopTiles)<<8
         sta lR18+1
-        lda #<>aUnknown859963
+        lda #<>aWeaponStatsLabel3TopTiles
         sta lR18
         ldx #$0702
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown859967)<<8
+        lda #(`aWeaponStatsLabel3BottomTiles)<<8
         sta lR18+1
-        lda #<>aUnknown859967
+        lda #<>aWeaponStatsLabel3BottomTiles
         sta lR18
         ldx #$0802
         jsl rlDrawMapMenuTileString
@@ -1152,28 +1152,28 @@
       .al
       .xl
 
-      aUnknown859953 ; 85/9953
+      aWeaponStatsLabel1TopTiles ; 85/9953
         .byte $44, $45, $46, $00
 
-      aUnknown859957 ; 85/9957
+      aWeaponStatsLabel1BottomTiles ; 85/9957
         .byte $54, $55, $56, $00
 
-      aUnknown85995B ; 85/995B
+      aWeaponStatsLabel2TopTiles ; 85/995B
         .byte $4A, $4B, $4C, $00
 
-      aUnknown85995F ; 85/995F
+      aWeaponStatsLabel2BottomTiles ; 85/995F
         .byte $5A, $5B, $5C, $00
 
-      aUnknown859963 ; 85/9963
+      aWeaponStatsLabel3TopTiles ; 85/9963
         .byte $4D, $4E, $4F, $00
 
-      aUnknown859967 ; 85/9967
+      aWeaponStatsLabel3BottomTiles ; 85/9967
         .byte $5D, $5E, $5F, $00
 
-      aUnknown85996B ; 85/996B
+      aWeaponStatsLabel0TopTiles ; 85/996B
         .byte $40, $41, $42, $00
 
-      aUnknown85996F ; 85/996F
+      aWeaponStatsLabel0BottomTiles ; 85/996F
         .byte $50, $51, $52, $00
 
     .endsection Table859953Section

@@ -772,11 +772,11 @@
         ; 8A/DB30
 
 
-      aUnknown8ADB30 ; 8A/DB30
+      aConversationLeftFrameSprite ; 8A/DB30
 
         _Sprites := [[(   0,    0), $21, SpriteLarge, $020, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown8ADB30._Sprites
+        .structSpriteArray aConversationLeftFrameSprite._Sprites
 
     .endsection Unsorted8ADB04Section
 
@@ -828,14 +828,14 @@
       .al
       .xl
 
-      aUnknown8ADB9F ; 8A/DB9F
+      aConversationData8ADB9FUnused ; 8A/DB9F
         .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
 
-      aUnknown8ADBAF ; 8A/DBAF
+      aDialogueAPressArrowFrame0Sprite ; 8A/DBAF
         .word 1 ; sprite count
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $00A, 3, 0, false, false
 
-      aUnknown8ADBB6 ; 8A/DBB6
+      aDialogueAPressArrowFrame1Sprite ; 8A/DBB6
         .word 1 ; sprite count
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $008, 3, 0, false, false
 
@@ -1198,11 +1198,11 @@
 
         ; 8A/DD98
 
-      aUnknown8ADD98 .dstruct structHDMADirectEntryInfo, rlHDMACastleConvCGADDNoOp, rlHDMACastleConvCGADDNoOp, aUnknown8ADDA4, aUnknown8ADDB4, PPU_REG_BASE + $21, $00 ; 8A/DD98
+      aCastleConvCGADDHDMAInfoUnused .dstruct structHDMADirectEntryInfo, rlHDMACastleConvCGADDNoOp, rlHDMACastleConvCGADDNoOp, aCastleConvCGADDHDMACodeUnused, aCastleConvCGADDHDMATableUnused, PPU_REG_BASE + $21, $00 ; 8A/DD98
 
         ; Unreferenced: two HDMA effects that write a colour gradient line by
-        ; line, the colour index (CGADD) from aUnknown8ADDB4 and the colour
-        ; (CGDATA) from aUnknown8ADE99.
+        ; line, the colour index (CGADD) from aCastleConvCGADDHDMATableUnused and the colour
+        ; (CGDATA) from aCastleConvCGDATAHDMATableUnused.
 
       rlHDMACastleConvCGADDNoOp ; 8A/DDA3
 
@@ -1215,11 +1215,11 @@
 
         .databank 0
 
-      aUnknown8ADDA4 ; 8A/DDA4
+      aCastleConvCGADDHDMACodeUnused ; 8A/DDA4
 
         HDMA_HALT
 
-      aUnknown8ADDA6 .dstruct structHDMADirectEntryInfo, rlHDMACastleConvCGDATANoOp, rlHDMACastleConvCGDATANoOp, aUnknown8ADDB2, aUnknown8ADE99, PPU_REG_BASE + $22, $02 ; 8A/DDA6
+      aCastleConvCGDATAHDMAInfoUnused .dstruct structHDMADirectEntryInfo, rlHDMACastleConvCGDATANoOp, rlHDMACastleConvCGDATANoOp, aCastleConvCGDATAHDMACodeUnused, aCastleConvCGDATAHDMATableUnused, PPU_REG_BASE + $22, $02 ; 8A/DDA6
 
       rlHDMACastleConvCGDATANoOp ; 8A/DDB1
 
@@ -1232,11 +1232,11 @@
 
         .databank 0
 
-      aUnknown8ADDB2 ; 8A/DDB2
+      aCastleConvCGDATAHDMACodeUnused ; 8A/DDB2
 
         HDMA_HALT
 
-      aUnknown8ADDB4 ; 8A/DDB4
+      aCastleConvCGADDHDMATableUnused ; 8A/DDB4
 
         .byte $C0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -1254,7 +1254,7 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00
 
-      aUnknown8ADE99 ; 8A/DE99
+      aCastleConvCGDATAHDMATableUnused ; 8A/DE99
 
         .byte $C0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -1344,17 +1344,17 @@
           adc #4
           sta $7F80A5
           tax
-          lda aUnknown8AE0C7+2,x
+          lda aCastleFountainAnimFrames+2,x
           bpl +
 
             lda #0
             sta $7F80A5
             tax
-            lda aUnknown8AE0C7+2,x
+            lda aCastleFountainAnimFrames+2,x
 
           +
           sta $7F80A7
-          lda aUnknown8AE0C7,x
+          lda aCastleFountainAnimFrames,x
         
         _E0A7
         sta $7F80A3
@@ -1382,7 +1382,7 @@
       .al
       .xl
 
-      aUnknown8AE0C7 ; 8A/E0C7
+      aCastleFountainAnimFrames ; 8A/E0C7
 
         ; Pairs of words, ended by $FFFF, $FFFF. Read by rsAnimateFountainBackground.
 
@@ -1406,16 +1406,16 @@
         adc #$0004
         sta $7F80A5
         tax
-        lda aUnknown8AE12F+2,x
+        lda aCastleThroneAnimFrames+2,x
         bpl _E100
         lda #$0000
         sta $7F80A5
         tax
-        lda aUnknown8AE12F+2,x
+        lda aCastleThroneAnimFrames+2,x
 
         _E100
         sta $7F80A7
-        lda aUnknown8AE12F,x
+        lda aCastleThroneAnimFrames,x
 
         _E108
         sta $7F80A3
@@ -1436,7 +1436,7 @@
 
         ; 8A/E12F
 
-      aUnknown8AE12F ; 8A/E12F
+      aCastleThroneAnimFrames ; 8A/E12F
 
         ; Pairs of words, ended by $FFFF, $FFFF; read by rsAnimateThroneBackground.
 
@@ -1707,7 +1707,7 @@
         ; 8A/E23D
 
 
-      aUnknown8AE23D ; 8A/E23D
+      aCastleConvFadeLeftPortraitRangeUnused ; 8A/E23D
 
         .word $01A2, $000F, $FFFF
 
@@ -1764,7 +1764,7 @@
         sta aPaletteFading.wMaxSteps,b
         clc
         jsl rlFadePaletteToBlack
-          .word <>aUnknown8AE297
+          .word <>aCastleConvFadeRightPortraitRange
 
         bcs +
 
@@ -1792,7 +1792,7 @@
 
         .databank 0
 
-      aUnknown8AE297 ; 8A/E297
+      aCastleConvFadeRightPortraitRange ; 8A/E297
 
         .word $0182
         .word $000F

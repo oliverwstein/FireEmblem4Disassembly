@@ -334,12 +334,12 @@
 
         .structSpriteArray aUnitPortraitSpritesFrame2._Sprites
 
-      aUnknown8A9640 ; 8A/9640
+      aUnitPortraitBottomSprites ; 8A/9640
 
         _Sprites := [[(  16,   32), $21, SpriteLarge, $07E, 3, 4, false, false]]
         _Sprites ..= [[(   0,   32), $21, SpriteLarge, $07C, 3, 4, false, false]]
 
-        .structSpriteArray aUnknown8A9640._Sprites
+        .structSpriteArray aUnitPortraitBottomSprites._Sprites
 
       aKeeperPortraitSpritesFrame0 ; 8A/964C
 
@@ -392,12 +392,12 @@
 
         .structSpriteArray aKeeperPortraitSpritesFrame2._Sprites
 
-      aUnknown8A9706 ; 8A/9706
+      aKeeperPortraitBottomSprites ; 8A/9706
 
         _Sprites := [[(  16,   32), $21, SpriteLarge, $07E, 3, 5, true, false]]
         _Sprites ..= [[(  32,   32), $21, SpriteLarge, $07C, 3, 5, true, false]]
 
-        .structSpriteArray aUnknown8A9706._Sprites
+        .structSpriteArray aKeeperPortraitBottomSprites._Sprites
 
       aCourtyardPortraitSprites ; 8A/9712
 

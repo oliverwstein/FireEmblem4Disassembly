@@ -702,7 +702,7 @@
 
         ; 8A/8682
 
-      aUnknown8A8682 ; 8A/8682
+      aCourtyardOuterColumnSlotsUnused ; 8A/8682
 
         ; Unreferenced: the courtyard grid slots of the left column (0, 4 ... 20) and
         ; the right column (3, 7 ... 23).
@@ -1784,32 +1784,32 @@
         bpl _8CC8
         jsl rlCheckUnitCanSortie
         bcs _8D06
-        lda aUnknownDA6552
+        lda aCastleSortieIconTopTiles
         and #$E3FF
         sta $7E80DA
-        lda aUnknownDA6552+2
+        lda aCastleSortieIconTopTiles+2
         and #$E3FF
         sta $7E80DC
-        lda aUnknownDA6592
+        lda aCastleSortieIconBottomTiles
         and #$E3FF
         sta $7E811A
-        lda aUnknownDA6592+2
+        lda aCastleSortieIconBottomTiles+2
         and #$E3FF
         sta $7E811C
 
         _8D06
         jsl rlCheckUnitCanGuard
         bcs _8D38
-        lda aUnknownDA655A
+        lda aCastleGuardIconTopTiles
         and #$E3FF
         sta $7E80E2
-        lda aUnknownDA655A+2
+        lda aCastleGuardIconTopTiles+2
         and #$E3FF
         sta $7E80E4
-        lda aUnknownDA659A
+        lda aCastleGuardIconBottomTiles
         and #$E3FF
         sta $7E8122
-        lda aUnknownDA659A+2
+        lda aCastleGuardIconBottomTiles+2
         and #$E3FF
         sta $7E8124
 
@@ -1817,16 +1817,16 @@
         lda wCurrentChapter,b
         cmp #$0006
         bne _8D6C
-        lda aUnknownDA6562
+        lda aCastleArenaIconTopTiles
         and #$E3FF
         sta $7E80EA
-        lda aUnknownDA6562+2
+        lda aCastleArenaIconTopTiles+2
         and #$E3FF
         sta $7E80EC
-        lda aUnknownDA65A2
+        lda aCastleArenaIconBottomTiles
         and #$E3FF
         sta $7E812A
-        lda aUnknownDA65A2+2
+        lda aCastleArenaIconBottomTiles+2
         and #$E3FF
         sta $7E812C
 
@@ -1847,16 +1847,16 @@
 
 
         _8D94
-        lda aUnknownDA656A
+        lda aCastleStaffDanceIconTopTiles
         and #$E3FF
         sta $7E80F2
-        lda aUnknownDA656A+2
+        lda aCastleStaffDanceIconTopTiles+2
         and #$E3FF
         sta $7E80F4
-        lda aUnknownDA65AA
+        lda aCastleStaffDanceIconBottomTiles
         and #$E3FF
         sta $7E8132
-        lda aUnknownDA65AA+2
+        lda aCastleStaffDanceIconBottomTiles+2
         and #$E3FF
         sta $7E8134
         bra _8DC8
@@ -1869,16 +1869,16 @@
         _8DC8
         jsl rlCheckUnitCanGive
         bcs _8DFA
-        lda aUnknownDA6572
+        lda aCastleGiveIconTopTiles
         and #$E3FF
         sta $7E80FA
-        lda aUnknownDA6572+2
+        lda aCastleGiveIconTopTiles+2
         and #$E3FF
         sta $7E80FC
-        lda aUnknownDA65B2
+        lda aCastleGiveIconBottomTiles
         and #$E3FF
         sta $7E813A
-        lda aUnknownDA65B2+2
+        lda aCastleGiveIconBottomTiles+2
         and #$E3FF
         sta $7E813C
 
@@ -3511,7 +3511,7 @@
         .byte $05, $00, $06, $00, $02, $00, $11, $00, $0A, $00, $0D, $00, $12, $00, $09, $00
         .byte $6B, $6B
 
-      aUnknown8A9C56 ; 8A/9C56
+      aCastleTownCOLDATAHDMAInfo ; 8A/9C56
         .byte $61, $9C, $61, $9C, $A8, $9C, $A3, $80, $7F, $32, $00
 
         ; 8A/9C61
@@ -3569,32 +3569,32 @@
         ; 8A/9CA8
 
 
-      aUnknown8A9CA8 ; 8A/9CA8
+      aCastleTownCOLDATAHDMACode ; 8A/9CA8
 
         HDMA_HALT
 
-      aUnknown8A9CAA ; 8A/9CAA
+      aCastleTownCOLDATATable0 ; 8A/9CAA
 
         .byte $32, $E0, $0E, $E0, $10, $E0, $10, $E0, $10, $E0, $10, $E0
         .byte $10, $E0, $10, $E1, $10, $E2, $10, $E3, $10, $E4, $10, $E6
         .byte $10, $E8
         .word 0
 
-      aUnknown8A9CC6 ; 8A/9CC6
+      aCastleTownCOLDATATable1 ; 8A/9CC6
 
         .byte $32, $E0, $0E, $E1, $10, $E2, $10, $E4, $10, $E5, $10, $E6
         .byte $10, $E8, $10, $E9, $10, $EA, $10, $EC, $10, $ED, $10, $EE
         .byte $10, $F0
         .word 0
 
-      aUnknown8A9CE2 ; 8A/9CE2
+      aCastleTownCOLDATATable2 ; 8A/9CE2
 
         .byte $32, $E0, $0E, $E1, $10, $E2, $10, $E3, $10, $E4, $10, $E5
         .byte $10, $E6, $10, $E7, $10, $E8, $10, $E9, $10, $EA, $10, $EB
         .byte $10, $EC
         .word 0
 
-      aUnknown8A9CFE ; 8A/9CFE
+      aCastleTownCOLDATATable3 ; 8A/9CFE
 
         .byte $50, $E0, $1B, $E2, $06, $E3, $0F, $E4, $0E, $E5, $09, $E6
         .byte $09, $E5, $08, $E4, $07, $E5, $09, $E6, $07, $E7, $09, $E8
@@ -3732,7 +3732,7 @@
 
         ; DA/6552
 
-      aUnknownDA6552 ; DA/6552
+      aCastleSortieIconTopTiles ; DA/6552
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3740,7 +3740,7 @@
 
         ; DA/655A
 
-      aUnknownDA655A ; DA/655A
+      aCastleGuardIconTopTiles ; DA/655A
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3748,7 +3748,7 @@
 
         ; DA/6562
 
-      aUnknownDA6562 ; DA/6562
+      aCastleArenaIconTopTiles ; DA/6562
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3756,7 +3756,7 @@
 
         ; DA/656A
 
-      aUnknownDA656A ; DA/656A
+      aCastleStaffDanceIconTopTiles ; DA/656A
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3764,7 +3764,7 @@
 
         ; DA/6572
 
-      aUnknownDA6572 ; DA/6572
+      aCastleGiveIconTopTiles ; DA/6572
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3773,7 +3773,7 @@
 
         ; DA/6592
 
-      aUnknownDA6592 ; DA/6592
+      aCastleSortieIconBottomTiles ; DA/6592
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3781,7 +3781,7 @@
 
         ; DA/659A
 
-      aUnknownDA659A ; DA/659A
+      aCastleGuardIconBottomTiles ; DA/659A
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3789,7 +3789,7 @@
 
         ; DA/65A2
 
-      aUnknownDA65A2 ; DA/65A2
+      aCastleArenaIconBottomTiles ; DA/65A2
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3797,7 +3797,7 @@
 
         ; DA/65AA
 
-      aUnknownDA65AA ; DA/65AA
+      aCastleStaffDanceIconBottomTiles ; DA/65AA
 
         ; Read by rsCastleDrawUnitCommandIcons.
 
@@ -3805,7 +3805,7 @@
 
         ; DA/65B2
 
-      aUnknownDA65B2 ; DA/65B2
+      aCastleGiveIconBottomTiles ; DA/65B2
 
         ; Read by rsCastleDrawUnitCommandIcons (continuation of $0200-byte aCastleUnitCommandIconTiles).
 

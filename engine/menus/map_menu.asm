@@ -249,7 +249,7 @@
         .long 0, 0, aUnitMenuTilemapData
         .byte 2, 4, 6
 
-      aUnknown8583AF ; 85/83AF
+      aUnitMenuUnusedOptions ; 85/83AF
 
         .word 0, 1
 
@@ -258,7 +258,7 @@
         .structProcInfo "PM", rlListMenuProcInit, rlListMenuProcSetUp, aProcListMenuCode
         .long aUnitMenuData
         .byte 1
-        .long aUnknown8583AF
+        .long aUnitMenuUnusedOptions
 
     .endsection ProcScript858398Section
 
@@ -5575,13 +5575,13 @@
         plx
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown85A284)<<8
+        lda #(`aMapMenuBlankSpaceText)<<8
         sta lR18+1
-        lda #<>aUnknown85A284
+        lda #<>aMapMenuBlankSpaceText
         sta lR18
-        lda #(`aUnknown85A284)<<8
+        lda #(`aMapMenuBlankSpaceText)<<8
         sta lR19+1
-        lda #<>aUnknown85A284
+        lda #<>aMapMenuBlankSpaceText
         sta lR19
         ldy #$8000
         pla
@@ -5590,7 +5590,7 @@
 
         .databank 0
 
-      aUnknown85A284 ; 85/A284
+      aMapMenuBlankSpaceText ; 85/A284
 
         .enc "SJIS"
         .text "　\n"

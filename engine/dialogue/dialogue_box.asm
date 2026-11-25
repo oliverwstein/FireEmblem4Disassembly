@@ -984,21 +984,21 @@
 
         _Light
         sep #$20
-        lda #`aUnknown8ADBAF
+        lda #`aDialogueAPressArrowFrame0Sprite
         pha
         plb
         rep #$20
 
-        ldy #<>aUnknown8ADBAF
+        ldy #<>aDialogueAPressArrowFrame0Sprite
         bra _Push
 
         _Dark
         sep #$20
-        lda #`aUnknown8ADBB6
+        lda #`aDialogueAPressArrowFrame1Sprite
         pha
         plb
         rep #$20
-        ldy #<>aUnknown8ADBB6
+        ldy #<>aDialogueAPressArrowFrame1Sprite
 
         _Push
         lda #0

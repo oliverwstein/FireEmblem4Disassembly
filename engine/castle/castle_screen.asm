@@ -831,9 +831,9 @@
         stz wBufferBG2VOFS
         lda #CASTLE_CURSOR_TOWN
         sta wCastleCursorState,b
-        lda #(`aUnknown8A9C56)<<8
+        lda #(`aCastleTownCOLDATAHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown8A9C56
+        lda #<>aCastleTownCOLDATAHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         jsr rsSetCastleTownBGSettings

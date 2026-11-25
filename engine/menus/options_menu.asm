@@ -2764,7 +2764,7 @@
         .byte $A8, $DC, $00, $00, $00, $00, $00, $00
         .byte $AC, $D8, $00, $00, $00, $00, $00, $00
 
-      aUnknown89F704 ; 89/F704
+      aOptionsMenuData89F704Unused ; 89/F704
 
         ; Nothing reads these eight bytes.
 

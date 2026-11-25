@@ -207,9 +207,9 @@
 
         ; Loads status screen VRAM/palettes/tilemaps, draws bank $89 UI, relation palette, portrait, 3 HDMAs
 
-        lda #(`aUnknown89ACB3)<<8
+        lda #(`aStatusScreenBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown89ACB3
+        lda #<>aStatusScreenBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0001
         sta wStatusScreenReopened
@@ -2078,7 +2078,7 @@
       .al
       .xl
 
-      aUnknown898A61 ; 89/8A61
+      aStatusScreenData898A61Unused ; 89/8A61
 
         ; Nothing reads these twelve bytes.
 
@@ -3268,7 +3268,7 @@
 
         ; 89/90D9
 
-      aUnknown8990D9 ; 89/90D9
+      aStatusScreenPadRTLUnused ; 89/90D9
 
         ; A second rtl after the routine's own; nothing reaches it.
 
@@ -3728,9 +3728,9 @@
 
         ; Draws the selected item's description into the buffer at $7FAF4E and copies its six rows over the stats.
 
-        lda #(`aUnknown89ACBC)<<8
+        lda #(`aStatusScreenItemDescTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown89ACBC
+        lda #<>aStatusScreenItemDescTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -3753,9 +3753,9 @@
         jsl rlDrawMenuTextLine
         pla
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown89ACB3)<<8
+        lda #(`aStatusScreenBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown89ACB3
+        lda #<>aStatusScreenBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 
@@ -3838,9 +3838,9 @@
 
         ; As rsStatusScreenDrawItemDescription, but copies only the first row, under a weapon's figures.
 
-        lda #(`aUnknown89ACBC)<<8
+        lda #(`aStatusScreenItemDescTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown89ACBC
+        lda #<>aStatusScreenItemDescTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -3863,9 +3863,9 @@
         jsl rlDrawMenuTextLine
         pla
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown89ACB3)<<8
+        lda #(`aStatusScreenBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown89ACB3
+        lda #<>aStatusScreenBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 
@@ -5902,15 +5902,15 @@
         clc
         adc wR0
         tax
-        lda aUnknown89AC56+1,x
+        lda aSkillNameTextPointers+1,x
         sta lR18+1
-        lda aUnknown89AC56,x
+        lda aSkillNameTextPointers,x
         sta lR18
         ldx #$1D05
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown89ACC5)<<8
+        lda #(`aStatusScreenSkillDescTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown89ACC5
+        lda #<>aStatusScreenSkillDescTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda wStatusScreenSkillCursor
         asl a
@@ -5957,9 +5957,9 @@
         dec x
         dec x
         bne _A46A
-        lda #(`aUnknown89ACB3)<<8
+        lda #(`aStatusScreenBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown89ACB3
+        lda #<>aStatusScreenBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3800
         sta aCurrentTilemapInfo,b

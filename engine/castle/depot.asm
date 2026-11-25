@@ -159,7 +159,7 @@
 
         ; 8A/F259
 
-      aUnknown8AF259 ; 8A/F259
+      aDepotData8AF259Unused ; 8A/F259
 
         ; Unreferenced.
 

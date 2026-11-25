@@ -128,39 +128,39 @@
         jsl rlDrawMapMenuTextLine
         lda #$2140
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown858EAD)<<8
+        lda #(`aBattleForecastLabel0TopTiles)<<8
         sta lR18+1
-        lda #<>aUnknown858EAD
+        lda #<>aBattleForecastLabel0TopTiles
         sta lR18
         ldx #$0B02
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown858EB1)<<8
+        lda #(`aBattleForecastLabel0BottomTiles)<<8
         sta lR18+1
-        lda #<>aUnknown858EB1
+        lda #<>aBattleForecastLabel0BottomTiles
         sta lR18
         ldx #$0C02
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown858EB5)<<8
+        lda #(`aBattleForecastLabel1TopTiles)<<8
         sta lR18+1
-        lda #<>aUnknown858EB5
+        lda #<>aBattleForecastLabel1TopTiles
         sta lR18
         ldx #$0D02
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown858EB9)<<8
+        lda #(`aBattleForecastLabel1BottomTiles)<<8
         sta lR18+1
-        lda #<>aUnknown858EB9
+        lda #<>aBattleForecastLabel1BottomTiles
         sta lR18
         ldx #$0E02
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown858EBD)<<8
+        lda #(`aBattleForecastLabel2TopTiles)<<8
         sta lR18+1
-        lda #<>aUnknown858EBD
+        lda #<>aBattleForecastLabel2TopTiles
         sta lR18
         ldx #$0F02
         jsl rlDrawMapMenuTileString
-        lda #(`aUnknown858EC1)<<8
+        lda #(`aBattleForecastLabel2BottomTiles)<<8
         sta lR18+1
-        lda #<>aUnknown858EC1
+        lda #<>aBattleForecastLabel2BottomTiles
         sta lR18
         ldx #$1002
         jsl rlDrawMapMenuTileString
@@ -213,22 +213,22 @@
         .enc "none"
 
 
-      aUnknown858EAD ; 85/8EAD
+      aBattleForecastLabel0TopTiles ; 85/8EAD
         .byte $44, $45, $46, $00
 
-      aUnknown858EB1 ; 85/8EB1
+      aBattleForecastLabel0BottomTiles ; 85/8EB1
         .byte $54, $55, $56, $00
 
-      aUnknown858EB5 ; 85/8EB5
+      aBattleForecastLabel1TopTiles ; 85/8EB5
         .byte $47, $48, $49, $00
 
-      aUnknown858EB9 ; 85/8EB9
+      aBattleForecastLabel1BottomTiles ; 85/8EB9
         .byte $57, $58, $59, $00
 
-      aUnknown858EBD ; 85/8EBD
+      aBattleForecastLabel2TopTiles ; 85/8EBD
         .byte $4A, $4B, $4C, $00
 
-      aUnknown858EC1 ; 85/8EC1
+      aBattleForecastLabel2BottomTiles ; 85/8EC1
         .byte $5A, $5B, $5C, $00
 
     .endsection Table858EA1Section

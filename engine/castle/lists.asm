@@ -417,7 +417,7 @@
       .al
       .xl
 
-      aUnknown8AA022 ; 8A/A022
+      aCastleItemDescTilemapEntry ; 8A/A022
         .byte $30, $01, $00, $00, $00, $00, $C3, $80, $7F
 
     .endsection Table8AA022Section
@@ -436,9 +436,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AA022)<<8
+        lda #(`aCastleItemDescTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown8AA022
+        lda #<>aCastleItemDescTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -633,7 +633,7 @@
         txa
         and #$000E
         tay
-        lda <>aUnknown8AA1B0,b,y
+        lda <>aCastleListItemIconTilePositions,b,y
         tax
         lda wR0
         jsl rlCopyItemIcon
@@ -648,7 +648,7 @@
 
         .databank 0
 
-      aUnknown8AA1B0 ; 8A/A1B0
+      aCastleListItemIconTilePositions ; 8A/A1B0
 
         ; Tile positions of the item icons drawn by rsCastleDrawListItemIcons, as the two tables below.
         .word $0050, $0052, $0054, $0056, $0058, $005A, $005C, $005E
@@ -670,7 +670,7 @@
         txa
         and #$000E
         tay
-        lda <>aUnknown8AA1DF,b,y
+        lda <>aCastleTopRowItemIconTiles,b,y
         tax
         lda wR0
         jsl rlCopyItemIcon
@@ -678,7 +678,7 @@
 
         .databank 0
 
-      aUnknown8AA1DF ; 8A/A1DF
+      aCastleTopRowItemIconTiles ; 8A/A1DF
 
         .word $0050, $0052, $0054, $0056, $0058, $005A, $005C, $005E
 
@@ -701,7 +701,7 @@
         txa
         and #$000E
         tay
-        lda <>aUnknown8AA212,b,y
+        lda <>aCastleBottomRowItemIconTiles,b,y
         tax
         lda wR0
         jsl rlCopyItemIcon
@@ -709,7 +709,7 @@
 
         .databank 0
 
-      aUnknown8AA212 ; 8A/A212
+      aCastleBottomRowItemIconTiles ; 8A/A212
 
         .word $0050, $0052, $0054, $0056, $0058, $005A, $005C, $005E
 
@@ -788,7 +788,7 @@
         jsl rlGetItemWeaponType
         asl a
         tay
-        lda <>aUnknown8AA2CB,b,y
+        lda <>aCastleWeaponIconTileOffsets,b,y
         clc
         adc lR18
         sta lR18
@@ -803,7 +803,7 @@
         lda #$0000
         asl a
         tay
-        lda <>aUnknown8AA2DB,b,y
+        lda <>aCastleRingIconTileOffset,b,y
         clc
         adc lR18
         sta lR18
@@ -815,7 +815,7 @@
         sta wR0
         lda wTempVariable1,b
         tay
-        lda <>aUnknown8AA2DD,b,y
+        lda <>aCastleListItemIconVRAMOffsets,b,y
         clc
         adc #$6500
         sta wR1
@@ -830,7 +830,7 @@
         sta wR0
         lda wTempVariable1,b
         tay
-        lda <>aUnknown8AA2DD,b,y
+        lda <>aCastleListItemIconVRAMOffsets,b,y
         clc
         adc #$6600
         sta wR1
@@ -846,15 +846,15 @@
         ; 8A/A2CB
 
 
-      aUnknown8AA2CB ; 8A/A2CB
+      aCastleWeaponIconTileOffsets ; 8A/A2CB
 
         .word $0000, $05C0, $0D80, $0C00, $1540, $1580, $1800, $1880
 
-      aUnknown8AA2DB ; 8A/A2DB
+      aCastleRingIconTileOffset ; 8A/A2DB
 
         .word $29C0
 
-      aUnknown8AA2DD ; 8A/A2DD
+      aCastleListItemIconVRAMOffsets ; 8A/A2DD
 
         .word $0000, $0020, $0040, $0060, $0080, $00A0, $00C0, $00E0
 
@@ -943,7 +943,7 @@
         _A37C
         lda wCastleMenuOptionIndex,b
         tax
-        lda aUnknown8AA3FC,x
+        lda aCastleOptionMenuOldCursorXPositions,x
         and #$00FF
         sec
         sbc #$000D
@@ -1014,7 +1014,7 @@
 
         ; 8A/A3FC
 
-      aUnknown8AA3FC ; 8A/A3FC
+      aCastleOptionMenuOldCursorXPositions ; 8A/A3FC
         .byte $58, $78, $98, $C8
 
     .endsection Table8AA31CSection
@@ -1113,7 +1113,7 @@
         _A47A
         lda wCastleConfirmCursorIndex,b
         tax
-        lda aUnknown8AA4C6,x
+        lda aCastleYesNoCursorXPositions,x
         and #$00FF
         sec
         sbc #$000D
@@ -1161,7 +1161,7 @@
       .al
       .xl
 
-      aUnknown8AA4C6 ; 8A/A4C6
+      aCastleYesNoCursorXPositions ; 8A/A4C6
 
         ; Read by rsCastleYesNoInput.
 
@@ -1669,7 +1669,7 @@
         .enc "none"
 
 
-      aUnknown8AA7F5 ; 8A/A7F5
+      aCastleRankStringJumpTable ; 8A/A7F5
         .word <>rsCastleSetRankStringA, <>rsCastleSetRankStringB, <>rsCastleSetRankStringC, <>rsCastleSetRankStringA
 
       rsCastleSetRankStringA ; 8A/A7FD
@@ -2169,7 +2169,7 @@
         ; 8A/AA2A
 
 
-      aUnknown8AAA2A ; 8A/AA2A
+      aCastleListRowYPositionsUnused ; 8A/AA2A
 
         .word $000A, $000C, $000E, $0010, $0012, $0014, $0016, $0018
 
@@ -2923,19 +2923,19 @@
         bcs _AFC7
         lda #$0058
         sta wR0
-        lda <>aUnknown8AAFCC,b,y
+        lda <>aCastleListSpriteYOffsets,b,y
         and #$00FF
         clc
         adc #$0050
         sta wR1
-        lda @l aUnknown8AAFD4,x
+        lda @l aCastleListSpriteTileOffsets,x
         and #$00FF
         sta wR4
         lda #$3200
         sta wR5
         phx
         phy
-        ldy #<>aUnknown8AAFE4
+        ldy #<>aCastleListItemIconSprite
         jsl rlPushToOAMBuffer
         ply
         plx
@@ -2948,14 +2948,14 @@
 
         .databank 0
 
-      aUnknown8AAFCC ; 8A/AFCC
+      aCastleListSpriteYOffsets ; 8A/AFCC
         .byte $00, $10, $20, $30, $40, $50, $60, $70
 
-      aUnknown8AAFD4 ; 8A/AFD4
+      aCastleListSpriteTileOffsets ; 8A/AFD4
         .byte $20, $22, $24, $26, $28, $2A, $2C, $2E
         .byte $20, $22, $24, $26, $28, $2A, $2C, $2E
 
-      aUnknown8AAFE4 ; 8A/AFE4
+      aCastleListItemIconSprite ; 8A/AFE4
         .byte $01, $00, $00, $C2, $00, $30, $32
 
       rsPushInventoryListSprites ; 8A/AFEB
@@ -2987,14 +2987,14 @@
         clc
         adc #$0050
         sta wR1
-        lda @l aUnknown8AB03B,x
+        lda @l aCastleInventorySpriteTileOffsets,x
         and #$00FF
         sta wR4
         lda #$3200
         sta wR5
         phx
         phy
-        ldy #<>aUnknown8AAFE4
+        ldy #<>aCastleListItemIconSprite
         jsl rlPushToOAMBuffer
         ply
         plx
@@ -3017,7 +3017,7 @@
       .al
       .xl
 
-      aUnknown8AB033 ; 8A/B033
+      aCastleInventorySpriteYOffsets ; 8A/B033
 
         ; Read by rsPushCastleListSprites.
 
@@ -3025,7 +3025,7 @@
 
         ; 8A/B03B
 
-      aUnknown8AB03B ; 8A/B03B
+      aCastleInventorySpriteTileOffsets ; 8A/B03B
 
         ; Read by rsPushCastleListSprites.
 
@@ -3192,7 +3192,7 @@
 
         ; 8A/B10A
 
-      aUnknown8AB10A ; 8A/B10A
+      aCastleListSprite8AB10AUnused ; 8A/B10A
 
         ; Unreferenced.
         .byte $01, $00, $00, $C2, $00, $0C, $30
@@ -3414,7 +3414,7 @@
 
         HDMA_HALT
 
-      aUnknown8AB263 .dstruct structHDMADirectEntryInfo, rlHDMACastleColorMath2, rlHDMACastleColorMath2, aHDMAUnknown8AB294Code, $0008C8, PPU_REG_BASE + $31, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B263
+      aCastleColorMath2HDMAInfo .dstruct structHDMADirectEntryInfo, rlHDMACastleColorMath2, rlHDMACastleColorMath2, aCastleColorMath2HDMACode, $0008C8, PPU_REG_BASE + $31, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B263
 
       rlHDMACastleColorMath2 ; 8A/B26E
 
@@ -3443,11 +3443,11 @@
 
               .databank 0
 
-      aHDMAUnknown8AB294Code ; 8A/B294
+      aCastleColorMath2HDMACode ; 8A/B294
 
         HDMA_HALT
 
-      aUnknown8AB296 .dstruct structHDMADirectEntryInfo, rlHDMACastleColorData, rlHDMACastleColorData, aHDMAUnknown8AB2C2Code, $7F80A3, PPU_REG_BASE + $32, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B296
+      aCastleColorDataHDMAInfo .dstruct structHDMADirectEntryInfo, rlHDMACastleColorData, rlHDMACastleColorData, aCastleColorDataHDMACode, $7F80A3, PPU_REG_BASE + $32, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B296
 
       rlHDMACastleColorData ; 8A/B2A1
 
@@ -3479,16 +3479,16 @@
 
               .databank 0
 
-      aHDMAUnknown8AB2C2Code ; 8A/B2C2
+      aCastleColorDataHDMACode ; 8A/B2C2
 
         HDMA_HALT
 
-      aUnknown8AB2C4 ; 8A/B2C4
+      aCastleColorDataHDMATable ; 8A/B2C4
 
         .byte $60, $E0, $10, $E1, $10, $E2, $10, $E3, $10, $E4
         .byte $10, $E6, $10, $E7, $10, $E8, $10, $EA, $00, $00
 
-      aUnknown8AB2D8 .dstruct structHDMADirectEntryInfo, rlHDMACastleSubscreenMask, rlHDMACastleSubscreenMask, aHDMAUnknown8AB315Code, $0008C8, PPU_REG_BASE + $2D, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B2D8
+      aCastleSubscreenMaskHDMAInfo .dstruct structHDMADirectEntryInfo, rlHDMACastleSubscreenMask, rlHDMACastleSubscreenMask, aCastleSubscreenMaskHDMACode, $0008C8, PPU_REG_BASE + $2D, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B2D8
 
       rlHDMACastleSubscreenMask ; 8A/B2E3
 
@@ -3523,7 +3523,7 @@
 
               .databank 0
 
-      aHDMAUnknown8AB315Code ; 8A/B315
+      aCastleSubscreenMaskHDMACode ; 8A/B315
 
         HDMA_HALT
 
