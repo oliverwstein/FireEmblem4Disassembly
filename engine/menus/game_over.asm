@@ -50,6 +50,7 @@
         jsl rlResetIRQEngine
         jsl rlResetRAMStructAndAreaVariables
         jsl rlInitMapMenus
+        ; Decompresses 4bpp Game Over graphics to VRAM $0000
         sep #$20
         rep #$10
         ldx #<>gcUnknownC02B6B
@@ -66,6 +67,7 @@
 
           .structDMAToVRAM $7E8B88, $0DC0, $80, $0000
 
+        ; Decompresses BG1 tilemap to VRAM $A000
         sep #$20
         rep #$10
         ldx #<>gcUnknownC03455
@@ -82,6 +84,7 @@
 
           .structDMAToVRAM $7E8B88, $0800, $80, $A000
 
+        ; Decompresses BG2 tilemap to VRAM $A800
         sep #$20
         rep #$10
         ldx #<>gcUnknownC03558

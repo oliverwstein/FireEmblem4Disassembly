@@ -76,10 +76,10 @@ How the game renders maps, fights, and full-screen menus onto the SNES display.
 
 | # | Chapter | Opening problem | Patterns | Source | Status |
 |---|---|---|---|---|---|
-| 22 | **A map bigger than the screen** | A 64×64-tile map, and only enough video RAM for a little of it. | Tile streaming (new rows and columns as the camera moves); terrain from tile IDs | `map/chapter_maps`, `map_tilemap`, `scroll`, `camera`, `data/terrain/` | Ready (map.md) |
-| 23 | **Two ways to show a fight** | One result, two presentations: a full battle scene or a quick one on the map. | Model and view kept apart | `battle/map_battle*`, `battle/map_magic_effects`, `battle/map_battle_hud` | Ready (map_battle.md) |
-| 24 | **The battle scene** | Backgrounds, two animated combatants, spell effects, quotes, and HP bars, in one screen. | A third bytecode (the scene script); animation frame programs; palette effects | `battle_scene/` | Ready (battle_scene.md) |
-| 25 | **Full-screen windows and the status screen** | Full-screen unit sheets, sortable overview tables, options, and the Valkyrie revive screen that take over the display and return to whatever opened them. | Shared menu VBlank (`rsRunMenuScreenVBlank`); scoped RAM reuse; caller-return pointers (`wStatusScreenCaller`); HDMA split scrolling; tile-run text drawing | `menus/status_screen`, `unit_window`, `item_window`, `skill_window`, `data_window`, `options_menu`, `revive_screen`, `game_over`, `window_graphics`, `menu_text` | Ready (menus.md) |
+| 22 | **[A map bigger than the screen](22-a-map-bigger-than-the-screen.md)** | A 64×64-tile map, and only enough video RAM for a little of it. | Tile streaming (new rows and columns as the camera moves); terrain from tile IDs | `map/chapter_maps`, `map_tilemap`, `scroll`, `camera`, `data/terrain/` | Drafted |
+| 23 | **[Two ways to show a fight](23-two-ways-to-show-a-fight.md)** | One result, two presentations: a full battle scene or a quick one on the map. | Model and view kept apart | `battle/map_battle*`, `battle/map_magic_effects`, `battle/map_battle_hud` | Drafted |
+| 24 | **[The battle scene](24-the-battle-scene.md)** | Backgrounds, two animated combatants, spell effects, quotes, and HP bars, in one screen. | A third bytecode (the scene script); animation frame programs; palette effects | `battle_scene/` | Drafted |
+| 25 | **[Full-screen windows and the status screen](25-full-screen-windows-and-the-status-screen.md)** | Full-screen unit sheets, sortable overview tables, options, and the Valkyrie revive screen that take over the display and return to whatever opened them. | Shared menu VBlank (`rsRunMenuScreenVBlank`); scoped RAM reuse; caller-return pointers (`wStatusScreenCaller`); HDMA split scrolling; tile-run text drawing | `menus/status_screen`, `unit_window`, `item_window`, `skill_window`, `data_window`, `options_menu`, `revive_screen`, `game_over`, `window_graphics`, `menu_text` | Drafted |
 
 ## Part VII: Under the hood
 

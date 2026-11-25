@@ -234,7 +234,7 @@ A on an entry acts by list. Attack and assault make it the selected slot, record
 
 With no unit picked up, Select opens the main map menu, and so does A on an empty tile other than the player's home castle (A there enters the castle screen). It has seven options: ユニット (unit list), アイテム (item list), データ (data), スキル (skills), コンフィグ (options), セーブ (save), and ターンエンド (end turn). Once any unit has finished an action this turn (bit 12 of `wChapterFlags`), the menu opens as a second proc with the same options minus Save, so the map can be saved only before the first action of a turn.
 
-Every option but end turn leaves the map: each installs a full-screen window as the main loop's routine, directly or through a fade ([Chapter 25](OUTLINE.md)), and that window returns through the map's common return path ([Chapter 8](08-the-turn.md)). End turn sets the phase-over bit in `wMapStateFlags` and saves the cursor's tile. A ロード (load) option is defined with a handler that reloads the chapter from its save, but neither template lists it.
+Every option but end turn leaves the map: each installs a full-screen window as the main loop's routine, directly or through a fade ([Chapter 25](25-full-screen-windows-and-the-status-screen.md)), and that window returns through the map's common return path ([Chapter 8](08-the-turn.md)). End turn sets the phase-over bit in `wMapStateFlags` and saves the cursor's tile. A ロード (load) option is defined with a handler that reloads the chapter from its save, but neither template lists it.
 
 ## Side windows and popups
 

@@ -5,8 +5,8 @@
 ; every frame. $FFF8-$FFFF are control commands ($FFFF ends, $FFFE stops for the
 ; frame); any other word is a command: bits 9-13 pick one of the 25 handlers in
 ; aBattleSceneCommandHandlers, bits 0-8 are its argument, and bit 14 makes the
-; script wait until it has finished. The handlers' data is in bank $97, in tables
-; not built yet.
+; script wait until it has finished. The handlers' data lives in bank $97
+; (in this file and data.asm).
 
     .section BattleSceneCommand96ABF6Section
 

@@ -6,9 +6,9 @@
 ; scripts, ballista bolts, map magic, HP changes), the death quote,
 ; experience, the level up banner and stat gains, the gold, item and broken weapon
 ; popups, and the clean-up (rlProcMapBattleEnd). Also the scripted critical's
-; effect played before such a battle (procScriptedCritEffect). The sprite and
-; palette helpers that are still Unknown are shared with
-; engine/battle/map_action_animations.asm and engine/events/cutscenes.asm.
+; effect played before such a battle (procScriptedCritEffect). Its sprite and
+; palette helpers are shared with engine/battle/map_action_animations.asm and
+; engine/events/cutscenes.asm.
 
 
     .section Data9CFC00Section

@@ -32,7 +32,7 @@
         sta lRAMBufferPointer,b
         jsl rlSaveSelectedUnitTotalStatsToBuffer
         jsl rlClearBattleData
-        ldx #$4EB5
+        ldx #$4EB5 ; aActionStructUnit1 (pre-promotion snapshot)
         jsr rsClassChangeSetUpActionStruct
         pla
         jsl rlSetSelectedUnitClass
@@ -47,15 +47,15 @@
         lda #$EBF4
         sta lRAMBufferPointer,b
         jsl rlSaveSelectedUnitTotalStatsToBuffer
-        ldx #$4F15
+        ldx #$4F15 ; aActionStructUnit2 (post-promotion snapshot)
         jsr rsClassChangeSetUpActionStruct
-        ldx #$4EF5
+        ldx #$4EF5 ; aActionStructUnit1.LevelUpData (stat gains)
         jsr rsClassChangeStoreStatGains
         lda #$FFFF
-        sta $7E4F85
+        sta $7E4F85 ; aBattleRoundsData._Entry
         sep #$20
         lda #$02
-        sta $7E4EA9
+        sta $7E4EA9 ; wBattleType
         rep #$20
         lda #$003C
         sta wBattleSong

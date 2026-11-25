@@ -263,7 +263,7 @@ Menus draw text with a different renderer and a different encoding. Menu strings
 
 These are the kanji of the menu labels ("sword", "storage", "castle", "staff", "army", …). A character missing from both tables is drawn as the window's blank tile. Every menu character is one cell wide, and the string is on screen as soon as the tilemap is uploaded.
 
-Two smaller helpers draw into BG3 directly. `rlDrawBG3TileRun` writes a run of consecutive two-row tiles, used by the full-screen windows for labels drawn as pictures ([Chapter 25](OUTLINE.md)), and `rlDrawMenuTextNumber` draws up to five digits.
+Two smaller helpers draw into BG3 directly. `rlDrawBG3TileRun` writes a run of consecutive two-row tiles, used by the full-screen windows for labels drawn as pictures ([Chapter 25](25-full-screen-windows-and-the-status-screen.md)), and `rlDrawMenuTextNumber` draws up to five digits.
 
 The menu font (`gcHiraganaFont`, `$1800` bytes) lives at VRAM `$8000`, where the map dialogue slots draw. That is why each map conversation ends by decompressing it again.
 

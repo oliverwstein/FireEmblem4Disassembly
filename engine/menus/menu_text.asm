@@ -70,8 +70,7 @@
         .autsiz
         .databank ?
 
-        ; Draws a line of menu text into the map menu's tilemap. The table at
-        ; $879471 and the one at $879D77 are not disassembled yet.
+        ; Draws a line of menu text into the map menu's tilemap using aMenuFontBankOffsets and aMenuFontKanjiOverrides.
 
         phb
         php
@@ -165,7 +164,7 @@
         sbc #$0081
         asl a
         tax
-        lda aUnknown879471,x
+        lda aMenuFontBankOffsets,x
         sta wR0
         plx
         phx
@@ -188,7 +187,7 @@
         tax
         lda @l aCurrentTilemapInfo
         clc
-        adc aUnknown879471,x
+        adc aMenuFontBankOffsets,x
         sta [lR23],y
         tya
         clc
@@ -196,7 +195,7 @@
         tay
         lda @l aCurrentTilemapInfo
         clc
-        adc aUnknown879481,x
+        adc aMenuFontBottomTiles,x
         sta [lR23],y
         ply
         plx
@@ -209,7 +208,7 @@
         ldx #$0000
 
         _9424
-        cmp aUnknown879D77,x
+        cmp aMenuFontKanjiOverrides,x
         beq _9437
         inc x
         inc x
@@ -226,7 +225,7 @@
         phy
         lda @l aCurrentTilemapInfo
         clc
-        adc aUnknown879D77+2,x
+        adc aMenuFontKanjiOverrides+2,x
         sta [lR23],y
         tya
         clc
@@ -234,7 +233,7 @@
         tay
         lda @l aCurrentTilemapInfo
         clc
-        adc aUnknown879D77+4,x
+        adc aMenuFontKanjiOverrides+4,x
         sta [lR23],y
         ply
         plx
@@ -267,13 +266,13 @@
       .al
       .xl
 
-      aUnknown879471 ; 87/9471
+      aMenuFontBankOffsets ; 87/9471
 
-        ; Read by rlDrawMenuTextLine.
+        ; Read by rlDrawMenuTextLine and rlGetMenuFontTilesForChar.
 
         .word $0006, $0306, $0606, $00FF, $00FF, $00FF, $00FF, $00FF
 
-      aUnknown879481 ; 87/9481
+      aMenuFontBottomTiles ; 87/9481
 
         .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
         .word $00CE, $00FF, $00FF, $01AF, $00CF, $00FF, $00FF, $00FF
@@ -430,9 +429,9 @@
       .al
       .xl
 
-      aUnknown879D77 ; 87/9D77
+      aMenuFontKanjiOverrides ; 87/9D77
 
-        ; Fifteen 6-byte records. Read by rlDrawMenuTextLine.
+        ; Fifteen 6-byte records (Shift-JIS char, top 8x8 tile, bottom 8x8 tile). Read by rlDrawMenuTextLine.
 
         .byte $8C, $95, $0F, $01, $1F, $01
         .byte $8C, $C9, $A1, $02, $B1, $02
@@ -476,7 +475,7 @@
         sbc #$0081
         asl a
         tax
-        lda aUnknown879471,x
+        lda aMenuFontBankOffsets,x
         sta wR10
         pla
         xba
@@ -495,9 +494,9 @@
         clc
         adc wR10
         tax
-        lda aUnknown879471,x
+        lda aMenuFontBankOffsets,x
         sta wR10
-        lda aUnknown879481,x
+        lda aMenuFontBottomTiles,x
         sta wR11
         plx
         plp

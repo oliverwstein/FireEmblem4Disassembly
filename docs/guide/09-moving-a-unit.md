@@ -149,7 +149,7 @@ The overlay is background layer 3, blended over the map with color math. Each sq
 | `$80` + n, `$FF` | 1 | a third color, different for player units and units of other armies |
 | 0 | — | blank |
 
-While a unit is picked up, the map's upkeep routine cycles all three palettes' colors by the frame counter, which makes the overlay pulse. The overlay is built and streamed a row or column at a time as the camera moves, alongside the map's own tiles ([Chapter 22](OUTLINE.md)).
+While a unit is picked up, the map's upkeep routine cycles all three palettes' colors by the frame counter, which makes the overlay pulse. The overlay is built and streamed a row or column at a time as the camera moves, alongside the map's own tiles ([Chapter 22](22-a-map-bigger-than-the-screen.md)).
 
 ## From destination to path
 

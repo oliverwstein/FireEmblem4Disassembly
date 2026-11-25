@@ -198,7 +198,7 @@ Script commands 4, 5 and 8 take an index into `aBattleSceneScriptRoutines` (72 l
 
 ## Open questions
 
-- **Battle type 2.** What it is: the scene clears the quotes and drops, has no foreground, and uses scripts `$33`/`$35`. It leaves to the castle screen like type 3.
+- **Battle type 2.** Class change (promotion): launched by `rlStartCastleClassChange` ([class_change.asm](../../engine/castle/class_change.asm)) with the old class in `aActionStructUnit1`, the promoted class in `aActionStructUnit2`, and `$FFFF` in `aBattleRoundsData._Entry`. It clears the quotes and drops, has no foreground, uses background `$17` and scripts `$33`/`$35`, and returns to the castle screen like type 3.
 - **`BattleSceneFlagSolo2`** is set for the dance and for Fortify (both combatants at the center) and turns on HDMA entries 3 and 6. What those draw is not known.
 - **`bBattleSceneRanged`.** It is never stored: `rsBattleSceneStartNextRound` loads the ranged bit into A and branches past the store.
 - **Extra tiles ID 0** copies `$C0` tiles from `$86E000` (`ANIM_NO_EXTRA_TILES_SOURCE`), event data in the released ROM. Whether that VRAM is ever shown is not known.

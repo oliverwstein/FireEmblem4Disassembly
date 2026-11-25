@@ -180,8 +180,9 @@
 
         ; One per chapter, prologue to final. Each entry has:
         ; - the layout: 64x64 words of tile IDs (compressed, to aMapData);
-        ; - TileEntries: 1,024 tilemap words (compressed, to $7F0000); how the
-        ;   map is drawn from them is not read yet;
+        ; - TileEntries: 1,024 16x16 metatiles (4,096 tilemap words / 8 KB,
+        ;   four 8x8 entries per metatile in TL, BL, TR, BR order,
+        ;   compressed to $7F0000), read by engine/map/map_tilemap.asm;
         ; - the tile graphics (compressed 4bpp, to VRAM $2800);
         ; - the palettes (BG palettes 1-7, uncompressed);
         ; - six words: wMapWidthMode, $075E, wMapMinXScroll, wMapMinYScroll,

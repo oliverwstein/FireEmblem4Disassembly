@@ -11,7 +11,7 @@
 ;
 ; FE5 kept this code, and the FE5 disassembly (github.com/ZaneAvernathy/FireEmblem5)
 ; names it UnitWindowFE4...; the routines named here were matched with it by their code.
-; Its descriptions of the FE4 behaviour are a good guide to the routines still unnamed.
+; Its descriptions of the FE4 behaviour are a good guide to these routines.
 ; rlAddToUnitJoinOrder and rlRemoveFromUnitJoinOrder sit in the middle of this code
 ; but are in engine/units/join_order.asm.
 

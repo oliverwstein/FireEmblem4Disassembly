@@ -13,8 +13,8 @@
         ; tilemap, a palette of 48 colours (the game copies 47 of them, from
         ; palette 3 colour 1), and a flag whose bit 0 is copied to bit 0 of
         ; $7FE1B3. Odd entries are the snowy versions used in chapter 4.
-        ; Entry $16 is not chosen by any terrain; entry $17 is used instead of
-        ; the terrain's when wBattleType is 2.
+        ; Entry $16 is not chosen by any terrain; entry $17 is the class change
+        ; background, used instead of the terrain's when wBattleType is 2.
         ; $00: Plains
         ; $01: PlainsSnow
         ; $02: Road

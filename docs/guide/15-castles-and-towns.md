@@ -105,7 +105,7 @@ The courtyard has 24 seats on a 4 × 6 grid, one for each **generation ID**: the
 
 The VBlank routine draws each unit at its spot as a map sprite (`rlCastleDrawCourtyardUnitSprites`), grey if it has moved this turn or is asleep. A seat whose character isn't inside is an empty spot.
 
-The cursor moves over the grid with the D-pad; L and R jump to the previous or next occupied seat, wrapping around. The bottom line shows the unit under the cursor (name and HP, or a status and its turns left) or the castle's name for an empty seat. X opens the status screen for the unit ([Chapter 25](OUTLINE.md)), which returns to the castle through `wStatusScreenCaller`. Select opens the same main menu the map opens. B leaves for the map.
+The cursor moves over the grid with the D-pad; L and R jump to the previous or next occupied seat, wrapping around. The bottom line shows the unit under the cursor (name and HP, or a status and its turns left) or the castle's name for an empty seat. X opens the status screen for the unit ([Chapter 25](25-full-screen-windows-and-the-status-screen.md)), which returns to the castle through `wStatusScreenCaller`. Select opens the same main menu the map opens. B leaves for the map.
 
 ### Commands
 
