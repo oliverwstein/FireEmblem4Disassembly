@@ -10,6 +10,9 @@
 
   ; Palette helpers
 
+    bgr555 .function r, g, b
+    .endfunction ((b & $1F) << 10) | ((g & $1F) << 5) | (r & $1F)
+
     ; Created = 0.01
     ; Updated = 0.07
     Color .struct

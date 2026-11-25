@@ -5,6 +5,22 @@
   WeaponRankC     = 2
   WeaponRankNone  = 3
 
+  MovementTypeTier1Mounted  = 0
+  MovementTypeTier2Mounted  = 1
+  MovementTypeFlying        = 2
+  MovementTypeInfantry      = 3
+  MovementTypeArmor         = 4
+  MovementTypeSoldier       = 5
+  MovementTypeHeavyInfantry = 6
+  MovementTypeBrigand       = 7
+  MovementTypePirate        = 8
+  MovementTypeLightInfantry = 9
+  MovementTypeMage          = 10
+  MovementTypeThief         = 11
+  MovementTypeCivilian      = 12
+  MovementTypeBallistician  = 13
+  MovementTypeDarkPrince    = 14
+
 
   ClassSkillCanto     = bits($0001)
   ClassSkillPavise    = bits($0002)

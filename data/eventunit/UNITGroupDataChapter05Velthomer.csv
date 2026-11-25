@@ -23,4 +23,4 @@ ID_21,FriegeCh05LanceArmor,26,45,0,1,FS_Ch05Friege,14
 ID_22,FriegeCh05LanceArmor,24,45,0,1,FS_Ch05Friege,15
 ID_23,FriegeCh05Hero,27,45,0,1,FS_Ch05Friege,16
 ID_24,FriegeCh05Hero,23,45,0,1,FS_Ch05Friege,17
-ID_25,$FFFF,0,0,0,0,0,0
+ID_25,UNITEntryEnd,0,0,0,0,0,0

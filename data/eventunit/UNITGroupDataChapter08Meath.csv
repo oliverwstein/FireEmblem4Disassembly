@@ -43,4 +43,4 @@ ID_41,MeathBallistician,34,50,0,4,FS_Ch08Meath,2
 ID_42,MeathBallistician,36,50,0,4,FS_Ch08Meath,3
 ID_43,MeathBallistician,34,49,0,4,FS_Ch08Meath,4
 ID_44,MeathBallistician,36,49,0,4,FS_Ch08Meath,5
-ID_45,$FFFF,0,0,0,0,0,0
+ID_45,UNITEntryEnd,0,0,0,0,0,0

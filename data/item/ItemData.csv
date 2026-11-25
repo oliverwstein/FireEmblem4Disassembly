@@ -14,11 +14,11 @@ SilenceSword,,SilenceSwordName,EquipTypeWeapon,50,15000,None,None,WeaponRankC,No
 SleepSword,,SleepSwordName,EquipTypeWeapon,50,15000,None,None,WeaponRankC,None,WeaponTypeSword,8,70,12,1,1,None,WeaponTraitStatusSword,StatusSleep
 SlimSword,,SlimSwordName,EquipTypeWeapon,50,3000,None,None,WeaponRankC,None,WeaponTypeSword,8,90,1,1,1,None,None,None
 Safeguard,,SafeguardName,EquipTypeWeapon,50,12000,SafeguardStatBoost,None,WeaponRankC,None,WeaponTypeSword,12,90,5,1,1,None,None,None
-FireSword,,FireSwordName,EquipTypeWeapon,50,10000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitRangedMagicSword,$3F
-EarthSword,,EarthSwordName,EquipTypeWeapon,10,10000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitPermanentMagicSword,$4E
-ThunderSword,,ThunderSwordName,EquipTypeWeapon,50,10000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitRangedMagicSword,$44
-WindSword,,WindSwordName,EquipTypeWeapon,50,10000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitRangedMagicSword,$49
-LightBrand,,LightBrandName,EquipTypeWeapon,50,12000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitRangedMagicSword,$4D
+FireSword,,FireSwordName,EquipTypeWeapon,50,10000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitRangedMagicSword,Elfire
+EarthSword,,EarthSwordName,EquipTypeWeapon,10,10000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitPermanentMagicSword,Nosferatu
+ThunderSword,,ThunderSwordName,EquipTypeWeapon,50,10000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitRangedMagicSword,Elthunder
+WindSword,,WindSwordName,EquipTypeWeapon,50,10000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitRangedMagicSword,Elwind
+LightBrand,,LightBrandName,EquipTypeWeapon,50,12000,None,None,WeaponRankC,None,WeaponTypeSword,12,70,5,1,2,None,WeaponTraitRangedMagicSword,Light
 Mystletainn,,MystletainnName,EquipTypeWeapon,50,50000,MystletainnStatBoost,None,WeaponRankHoly,ItemSkillCritical,WeaponTypeSword,30,80,5,1,1,None,None,None
 Tyrfing,,TyrfingName,EquipTypeWeapon,50,50000,TyrfingStatBoost,None,WeaponRankHoly,ItemSkillMiracle,WeaponTypeSword,30,80,7,1,1,None,None,None
 Balmung,,BalmungName,EquipTypeWeapon,50,50000,BalmungStatBoost,None,WeaponRankHoly,None,WeaponTypeSword,30,90,3,1,1,None,None,None
@@ -79,7 +79,7 @@ Blizzard,,BlizzardName,EquipTypeWeapon,50,$FFFF,None,None,WeaponRankC,None,Weapo
 Light,,LightName,EquipTypeWeapon,50,5000,None,None,WeaponRankC,None,WeaponTypeLight,14,90,5,1,2,None,None,None
 Nosferatu,,NosferatuName,EquipTypeWeapon,50,10000,None,None,WeaponRankA,None,WeaponTypeLight,14,70,12,1,2,None,WeaponTraitLifeSteal,None
 Aura,,AuraName,EquipTypeWeapon,50,15000,None,None,WeaponRankA,None,WeaponTypeLight,20,80,20,1,2,None,None,None
-Naga,,NagaName,EquipTypeWeapon,50,50000,NagaStatBoost,None,WeaponRankHoly,None,WeaponTypeLight,30,80,12,1,2,None,WeaponTraitNegateHalveAttack,$54
+Naga,,NagaName,EquipTypeWeapon,50,50000,NagaStatBoost,None,WeaponRankHoly,None,WeaponTypeLight,30,80,12,1,2,None,WeaponTraitNegateHalveAttack,Loptous
 Jormungandr,,JormungandrName,EquipTypeWeapon,50,$FFFF,None,None,WeaponRankC,None,WeaponTypeDark,20,90,12,1,2,None,None,None
 Fenrir,,FenrirName,EquipTypeWeapon,50,$FFFF,None,None,WeaponRankB,None,WeaponTypeDark,14,70,20,3,10,None,WeaponTraitUncounterable,None
 Hel,,HelName,EquipTypeWeapon,50,$FFFF,None,None,WeaponRankB,None,WeaponTypeDark,$FF,60,28,1,2,None,WeaponTraitHelEffect,None

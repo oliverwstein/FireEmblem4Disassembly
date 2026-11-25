@@ -26,4 +26,4 @@ ID_24,MiletosHero,22,39,0,1,FS_Ch10Miletos,0
 ID_25,JuliusCh10,9,29,1,6,FS_Ch10Chalphy,0
 ID_26,IshtarCh10,10,28,0,6,FS_Ch10Chalphy,0
 ID_27,Zagam,9,26,0,4,FS_Ch10Miletos,9 + $20
-ID_28,$FFFF,0,0,0,0,0,0
+ID_28,UNITEntryEnd,0,0,0,0,0,0

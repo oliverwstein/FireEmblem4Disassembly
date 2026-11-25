@@ -46,4 +46,4 @@ ID_44,ThraciaCh09DragonriderLutheciaCharge,50,42,0,3,FS_Ch09Thracia,6
 ID_45,ThraciaCh09DragonriderLutheciaCharge,47,41,0,3,FS_Ch09Thracia,7
 ID_46,ThraciaCh09DragonriderLutheciaCharge,49,41,0,3,FS_Ch09Thracia,8
 ID_47,ThraciaCh09DragonriderLutheciaCharge,48,40,0,3,FS_Ch09Thracia,9
-ID_48,$FFFF,0,0,0,0,0,0
+ID_48,UNITEntryEnd,0,0,0,0,0,0

@@ -25,4 +25,4 @@ ID_23,SylvaleLanceArmor,5,45,0,3,FS_Ch03Sylvale,7
 ID_24,SylvaleLanceArmor,9,45,0,3,FS_Ch03Sylvale,8
 ID_25,SylvaleLanceArmor,5,46,0,3,FS_Ch03Sylvale,9
 ID_26,SylvaleLanceArmor,9,46,0,3,FS_Ch03Sylvale,10
-ID_27,$FFFF,0,0,0,0,0,0
+ID_27,UNITEntryEnd,0,0,0,0,0,0

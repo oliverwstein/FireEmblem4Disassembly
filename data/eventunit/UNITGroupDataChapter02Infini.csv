@@ -23,4 +23,4 @@ ID_21,WaltzSquadFreeKnight,31,2,0,2,FS_Ch02Infini,9
 ID_22,WaltzSquadFreeKnight,40,2,0,2,FS_Ch02Infini,10
 ID_23,WaltzSquadFreeKnight,30,2,0,2,FS_Ch02Infini,11
 ID_24,Beowulf,34,1,1,5,FS_Ch02Infini,18
-ID_25,$FFFF,0,0,0,0,0,0
+ID_25,UNITEntryEnd,0,0,0,0,0,0

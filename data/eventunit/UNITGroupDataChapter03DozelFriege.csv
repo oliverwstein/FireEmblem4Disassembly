@@ -36,4 +36,4 @@ ID_34,GelbenritterCh03MageKnight,40,60,0,2,FS_Ch03DozelFriege,16
 ID_35,GelbenritterCh03MageKnight,44,60,0,2,FS_Ch03DozelFriege,17
 ID_36,GelbenritterCh03MageKnight,39,61,0,1,FS_Ch03DozelFriege,0
 ID_37,GelbenritterCh03MageKnight,39,62,0,1,FS_Ch03DozelFriege,0
-ID_38,$FFFF,0,0,0,0,0,0
+ID_38,UNITEntryEnd,0,0,0,0,0,0

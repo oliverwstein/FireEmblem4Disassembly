@@ -28,4 +28,4 @@ ID_26,BrianSquadGreatKnight,26,43,0,3,FS_ChFinalDozel,15
 ID_27,BrianSquadGreatKnight,27,44,0,3,FS_ChFinalDozel,16
 ID_28,BrianSquadGreatKnight,28,44,0,3,FS_ChFinalDozel,17
 ID_29,Dagon,31,34,1,4,FS_ChFinalDozel,0
-ID_30,$FFFF,0,0,0,0,0,0
+ID_30,UNITEntryEnd,0,0,0,0,0,0

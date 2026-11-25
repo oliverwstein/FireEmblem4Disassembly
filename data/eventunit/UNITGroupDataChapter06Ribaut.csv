@@ -11,4 +11,4 @@ ID_09,SchmidtSquad,32,61,0,1,FS_Ch06Ribaut,8
 ID_10,SchmidtSquad,32,62,0,1,FS_Ch06Ribaut,9
 ID_11,SchmidtSquad,33,61,0,1,FS_Ch06Ribaut,10
 ID_12,SchmidtSquad,33,62,0,1,FS_Ch06Ribaut,11
-ID_13,$FFFF,0,0,0,0,0,0
+ID_13,UNITEntryEnd,0,0,0,0,0,0

@@ -23,4 +23,4 @@ ID_21,LamiaSquadArcher,54,50,0,8,FS_Ch04Zaxon,6
 ID_22,LamiaSquadArcher,54,46,0,8,FS_Ch04Zaxon,7
 ID_23,LamiaSquadThunderMage,55,49,0,8,FS_Ch04Zaxon,8
 ID_24,LamiaSquadThunderMage,55,47,0,8,FS_Ch04Zaxon,9
-ID_25,$FFFF,0,0,0,0,0,0
+ID_25,UNITEntryEnd,0,0,0,0,0,0

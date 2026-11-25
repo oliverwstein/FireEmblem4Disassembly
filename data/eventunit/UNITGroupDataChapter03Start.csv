@@ -47,4 +47,4 @@ ID_45,PirateCh03,56,40,0,1,FS_Ch03Orgahil,0
 ID_46,SylvaleBlockadeCommanderLanceArmor,19,45,1,1,FS_Ch03Sylvale,0
 ID_47,SylvaleBlockadeLanceArmor,19,44,0,1,FS_Ch03Sylvale,1
 ID_48,SylvaleBlockadeLanceArmor,19,46,0,1,FS_Ch03Sylvale,2
-ID_49,$FFFF,0,0,0,0,0,0
+ID_49,UNITEntryEnd,0,0,0,0,0,0

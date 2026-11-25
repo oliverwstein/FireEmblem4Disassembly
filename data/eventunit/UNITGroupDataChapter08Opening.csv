@@ -13,4 +13,4 @@ ID_11,ConnachtGuardGeneral,50,10,0,6,FS_Ch08Connacht,3
 ID_12,BanbaCh08,46,8,1,7,FS_Ch08Connacht,0
 ID_13,FotlaCh08,46,7,0,7,FS_Ch08Connacht,1
 ID_14,EriuCh08,46,9,0,7,FS_Ch08Connacht,2
-ID_15,$FFFF,0,0,0,0,0,0
+ID_15,UNITEntryEnd,0,0,0,0,0,0

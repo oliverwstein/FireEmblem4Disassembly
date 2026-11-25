@@ -18,4 +18,4 @@ ID_16,GenoaGuardFighter,56,42,0,2,FS_Ch01Genoa,2
 ID_17,GenoaGuardFighter,58,42,0,2,FS_Ch01Genoa,3
 ID_18,GenoaGuardFighter,57,44,0,2,FS_Ch01Genoa,4
 ID_19,CrossKnightCh01Cavalier,29,10,0,1,FS_Ch01Nordion,0
-ID_20,$FFFF,0,0,0,0,0,0
+ID_20,UNITEntryEnd,0,0,0,0,0,0

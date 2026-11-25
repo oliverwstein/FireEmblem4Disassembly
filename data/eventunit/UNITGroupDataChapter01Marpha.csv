@@ -20,4 +20,4 @@ ID_18,MarphaGuardBarbarian,22,51,0,2,FS_Ch01Marpha,7
 ID_19,MarphaGuardBarbarian,26,51,0,2,FS_Ch01Marpha,8
 ID_20,MarphaGuardBarbarian,22,52,0,2,FS_Ch01Marpha,9
 ID_21,MarphaGuardBarbarian,26,52,0,2,FS_Ch01Marpha,10
-ID_22,$FFFF,0,0,0,0,0,0
+ID_22,UNITEntryEnd,0,0,0,0,0,0

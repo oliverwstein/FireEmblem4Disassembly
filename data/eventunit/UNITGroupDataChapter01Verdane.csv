@@ -22,4 +22,4 @@ ID_20,VerdaneHunter,7,26,0,2,FS_Ch01Verdane,7
 ID_21,VerdaneHunter,11,26,0,2,FS_Ch01Verdane,8
 ID_22,VerdaneFighter,7,27,0,2,FS_Ch01Verdane,9
 ID_23,VerdaneFighter,11,27,0,2,FS_Ch01Verdane,10
-ID_24,$FFFF,0,0,0,0,0,0
+ID_24,UNITEntryEnd,0,0,0,0,0,0

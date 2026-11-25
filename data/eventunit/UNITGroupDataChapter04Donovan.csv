@@ -6,4 +6,4 @@ ID_04,SilesseGuardWindMage,29,60,0,4,FS_Ch04Zaxon,3
 ID_05,SilesseWarrior,28,62,0,4,FS_Ch04Zaxon,4
 ID_06,SilesseWarrior,27,61,0,4,FS_Ch04Zaxon,5
 ID_07,SilesseWarrior,29,61,0,4,FS_Ch04Zaxon,6
-ID_08,$FFFF,0,0,0,0,0,0
+ID_08,UNITEntryEnd,0,0,0,0,0,0

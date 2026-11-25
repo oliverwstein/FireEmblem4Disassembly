@@ -42,4 +42,4 @@ ID_40,OrgahilPirateBragiTower,12,13,0,5,FS_Ch03Orgahil,0
 ID_41,OrgahilPirateBragiTower,12,16,0,5,FS_Ch03Orgahil,0
 ID_42,OrgahilPirateBragiTower,10,8,0,5,FS_Ch03Orgahil,0
 ID_43,OrgahilPiratePillager,23,2,0,6,FS_Ch03Orgahil,0
-ID_44,$FFFF,0,0,0,0,0,0
+ID_44,UNITEntryEnd,0,0,0,0,0,0

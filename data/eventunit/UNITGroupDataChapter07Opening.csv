@@ -37,4 +37,4 @@ ID_35,AedMyrmidon,17,2,0,4,FS_Ch07Aed,0
 ID_36,AedMyrmidon,18,1,0,4,FS_Ch07Aed,0
 ID_37,AedDarkMageLv1,22,8,0,4,FS_Ch07Aed,0
 ID_38,AedMyrmidon,22,9,0,4,FS_Ch07Aed,0
-ID_39,$FFFF,0,0,0,0,0,0
+ID_39,UNITEntryEnd,0,0,0,0,0,0

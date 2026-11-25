@@ -14,4 +14,4 @@ ID_12,MagornSquadDragonknight,61,61,0,1,FS_Ch05Thracia,11
 ID_13,MagornSquadDragonknight,55,60,0,1,FS_Ch05Thracia,12
 ID_14,MagornSquadDragonknight,61,60,0,1,FS_Ch05Thracia,13
 ID_15,TravantCh05,58,62,1,2,FS_Ch05Thracia,0
-ID_16,$FFFF,0,0,0,0,0,0
+ID_16,UNITEntryEnd,0,0,0,0,0,0

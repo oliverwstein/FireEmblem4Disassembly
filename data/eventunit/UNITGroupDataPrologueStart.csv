@@ -31,6 +31,6 @@ ID_29,EvansBrigand,12,12,0,8,FS_PrologueEvans,0
 ID_30,EvansBrigand,13,8,0,8,FS_PrologueEvans,0
 ID_31,EvansBrigand,35,4,0,8,FS_PrologueEvans,0
 ID_32,EvansBrigand,49,7,0,8,FS_PrologueEvans,0
-ID_33,Gerrard,5,13,$FF,7,FS_PrologueEvans,$FF
-ID_34,EvansChargeBarbarian,24,21,$FE,4,FS_PrologueEvans,$FF
-ID_35,$FFFF,0,0,0,0,0,0
+ID_33,Gerrard,5,13,$FF,7,FS_PrologueEvans,UNITFormationNone
+ID_34,EvansChargeBarbarian,24,21,$FE,4,FS_PrologueEvans,UNITFormationNone
+ID_35,UNITEntryEnd,0,0,0,0,0,0

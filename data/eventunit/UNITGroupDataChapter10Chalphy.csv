@@ -41,4 +41,4 @@ ID_39,ChalphyChildMale,37,7,0,2,FS_Ch10Civilians,2
 ID_40,ChalphyChildFemale,37,5,0,2,FS_Ch10Civilians,3
 ID_41,ChalphyChildFemale,36,6,0,2,FS_Ch10Civilians,4
 ID_42,Palmarch,35,6,0,2,FS_Ch10Civilians,0
-ID_43,$FFFF,0,0,0,0,0,0
+ID_43,UNITEntryEnd,0,0,0,0,0,0

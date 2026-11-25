@@ -17,6 +17,9 @@
   Factionless         = 7
   NoDeploymentOffset  = $FF
 
+  UNITEntryEnd        = $FFFF
+  UNITFormationNone   = $FF
+
   structFactionHeader .struct GroupID, LocationID, HostileFactions, AlliedFactions, UnitCount
     GroupID         .byte \GroupID         ; $00
     LocationID      .byte \LocationID      ; $01

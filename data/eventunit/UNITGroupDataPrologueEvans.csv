@@ -14,4 +14,4 @@ ID_12,EvansGuardBarbarian,7,12,0,1,FS_PrologueEvans,0
 ID_13,EvansGuardHunter,6,17,0,1,FS_PrologueEvans,13
 ID_14,EvansGuardHunter,6,11,0,1,FS_PrologueEvans,0
 ID_15,EvansBarbarianHandAxe,11,15,0,7,FS_PrologueEvans,0
-ID_16,$FFFF,0,0,0,0,0,0
+ID_16,UNITEntryEnd,0,0,0,0,0,0
