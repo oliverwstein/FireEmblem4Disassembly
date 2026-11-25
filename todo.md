@@ -13,6 +13,9 @@ Rule: Every change to source, data, or assets must keep `./build.sh` byte-identi
 | Greyscale UI PNG sheets | 18 | 0 | `ls gfx/ui/*.png` (see [gfx/ui/README.md](gfx/ui/README.md)) |
 | Undecoded chapter maps / battle layouts | `aChapterMapPointers` + 120 battle layouts | 0 (`tools/chapter_maps.py`, `tools/map_battle_layouts.py`) | `find gfx/compressed -name '*MapBattle*Layout*.comp' \| wc -l` |
 | Raw SPC700 driver / `other` sound chunks | 5 driver blocks / 118 `other` chunks | 5 driver blocks / 118 `other` chunks | `ls audio/driver audio/chunks` |
+| Manual offset tables (`data/offset/`) | 17 | 4 (13 auto-generated) | `ls data/offset/*.csv \| wc -l` |
+| Tracked `Unknown*` files (excl. `catalog/`) | 11 | 0 | `git ls-files '*Unknown*' \| grep -v '^gfx/compressed/catalog/' \| wc -l` |
+| Stale `gfx/compressed/catalog/` previews | 233 | 0 | `git ls-files 'gfx/compressed/catalog/*.png' \| wc -l` |
 
 ---
 
@@ -98,3 +101,32 @@ Workflow: identify via loader routines and [gfx/compressed/CATALOG.md](gfx/compr
 - [ ] Disassemble the `5` SPC700 driver IPL upload blocks in `audio/driver/` (`0200.bin`, `0660.bin`, `1BC0.bin`, `C502.bin`, `FF80.bin`) into build-time SPC700 source, documenting sequence commands (`$C0–$FF`) and instrument fields.
 - [ ] Identify and categorize the `118` unidentified `other` sound chunks in `audio/chunks/` (121 files total in directory).
 - [ ] Fix `tools/songs.py` (blocked on stale `aUnknown8A9D79`), regenerate [audio/SONGS.md](audio/SONGS.md), and finish naming `SONG_*` constants in [include/Sound.h](include/Sound.h). *(Note: `tools/songs.py` now runs cleanly and regenerated [audio/SONGS.md](audio/SONGS.md); only `SONG_*` naming remains.)*
+
+---
+
+## 3. ROM Data Organization (Moddability & Readability)
+
+### 3.1 Moddability & Build Automation
+
+- [x] **Auto-generate `data/offset/` tables (`13` of `17` CSVs):** [tools/gen_offsets.py](tools/gen_offsets.py) generates the 13 1-to-1 `.csv.asm` offset tables from their source CSVs, `ClassMapSpriteAssignment.asm`, and `text/menutext/*.asm` (wired into `build.sh` and `tablebuilder.bat`); the 4 many-to-one mapping CSVs (`CharacterNameOffsets.csv`, `ClassNameOffsets.csv`, `ItemNameOffsets.csv`, `ItemDescriptionOffsets.csv`) remain explicit.
+- [x] **Replace remaining magic numbers in CSVs with named constants:**
+  - `WeaponRank*`, `MovementType*`, and `TerrainAvoid*` in [data/class/ClassData.csv](data/class/ClassData.csv) and [include/Classes.h](include/Classes.h).
+  - Magic-sword / Naga spell IDs (`Elfire`, `Elthunder`, `Elwind`, `Light`, `Nosferatu`, `Loptous`) in [data/item/ItemData.csv](data/item/ItemData.csv).
+  - `UNITEntryEnd` (`$FFFF`) and `UNITFormationNone` (`$FF`) in `data/eventunit/*.csv` and [include/Deployment.h](include/Deployment.h).
+- [x] **Add a readable palette macro:** Added `bgr555(r, g, b)` in [include/Palettes.h](include/Palettes.h) and converted [data/palettes/](data/palettes/) and [data/portraits/PortraitPalettes.asm](data/portraits/PortraitPalettes.asm).
+- [ ] **Wire decoded map/layout tools into `build.sh`:** Invoke [tools/chapter_maps.py](tools/chapter_maps.py) and [tools/map_battle_layouts.py](tools/map_battle_layouts.py) from [build.sh](build.sh) (matching the `.png` → `.4bpp` → `.lz` pattern) so decoded chapter maps and map-battle layouts rebuild automatically on edit.
+- [x] **Document bank headroom & relocation strategies:** Added [docs/MODDING_DATA.md](docs/MODDING_DATA.md) covering Bank `$83` (~2.1 KB free), hard `end` caps in `gfx/**/*.streams`, and fixed SPC RAM sample directory addresses in `audio/directories/`.
+
+### 3.2 Cleanup & Consistency
+
+- [x] **Remove stale stream catalog & orphaned build files:** Removed [gfx/compressed/CATALOG.md](gfx/compressed/CATALOG.md), the `233` tracked PNGs in `gfx/compressed/catalog/`, and orphaned `gcUnknown*` build outputs.
+- [x] **Identify or mark the `11` remaining tracked `Unknown*` data/asset files:** Renamed [data/Unused838961.asm](data/Unused838961.asm), [gfx/map/BaseMapTileEntries.bin](gfx/map/BaseMapTileEntries.bin), [gfx/ui/tilemaps/WorldMapDataD97940.bin](gfx/ui/tilemaps/WorldMapDataD97940.bin), and the `8` unreferenced `UnusedD9*` / `UnusedDA*` files in [gfx/map/](gfx/map/) and [gfx/ui/tilemaps/](gfx/ui/tilemaps/).
+- [x] **Group loose top-level `data/` portrait files:** Moved `PortraitGraphicPointers.csv`, `PortraitPalettePointers.csv`, and `PortraitPalettes.asm` into [data/portraits/](data/portraits/).
+- [x] **Harmonize minor name label inconsistencies:** Aligned `ShannanName`, `DeimneName`, `CreidneName`, and `HerminaName` in [data/character/CharacterData.csv](data/character/CharacterData.csv), [data/offset/CharacterNameOffsets.csv](data/offset/CharacterNameOffsets.csv), and [text/menutext/CharacterNames.asm](text/menutext/CharacterNames.asm).
+
+### 3.3 Readability & Discoverability
+
+- [ ] **Organize `gfx/compressed/` by domain instead of ROM address:** Move assets out of hex-address folders (`8BE03C/`, `9C8000/`, `A08000/`, `C70C80/`, `D50000/`, `E02EBD/`, etc.) into feature folders (`gfx/menus/`, `gfx/maps/`, `gfx/battle_scene/`, `gfx/backgrounds/`, etc.) while keeping ROM bank-order placement in `*.streams` layout manifests.
+- [ ] **Clean up inline data & stale section names in `build.asm`:** Inline data definitions (`aDecompressionDMAEntry80F42B`–`80F43B`, `aMainDataEntry12Unused`, `rlSwapToMainDataBank`) moved out of [build.asm](build.asm); renaming stale `Unsorted*Section` / `Table*Section` labels remains.
+- [ ] **Audit data-heavy files in `engine/`:** Evaluate splitting large data tables out of `engine/` (notably [engine/battle_scene/script.asm](engine/battle_scene/script.asm), [data.asm](engine/battle_scene/data.asm), [animations.asm](engine/battle_scene/animations.asm), [engine/battle/map_battle.asm](engine/battle/map_battle.asm), [map_magic_effects.asm](engine/battle/map_magic_effects.asm), and [engine/dialogue/dialogue.asm](engine/dialogue/dialogue.asm)) or documenting where each subsystem's data lives.
+- [ ] **Improve `audio/` file discoverability:** Give `audio/` sequence, sample, and instrument files descriptive names (or a clear index) alongside finishing `SONG_*` naming in [include/Sound.h](include/Sound.h).

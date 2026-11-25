@@ -154,10 +154,14 @@ def render_chapter(ch, rom, labels, base_tiles, out_png):
 
     layout_raw = open(bin_path(ch['layout']), 'rb').read()
     entries_raw = open(bin_path(ch['tile_entries']), 'rb').read()
+    base_entries_raw = open(os.path.join(ROOT, 'gfx/map/BaseMapTileEntries.bin'), 'rb').read()
     layout_words = struct.unpack(f'<{len(layout_raw) // 2}H', layout_raw)
     metatiles = [struct.unpack('<4H', entries_raw[i:i + 8]) for i in range(0, len(entries_raw), 8)]
+    metatiles += [struct.unpack('<4H', base_entries_raw[i:i + 8]) for i in range(0, len(base_entries_raw), 8)]
 
-    img = Image.new('RGB', (1024, 1024))
+    words = [int(w.strip().lstrip('$'), 16) for w in ch['words'].split(',')]
+    width, height = words[4], words[5]
+    img = Image.new('RGB', (width, height))
     px = img.load()
 
     def blit_8x8(word, ox, oy):
@@ -173,10 +177,12 @@ def render_chapter(ch, rom, labels, base_tiles, out_png):
                 px[ox + x, oy + y] = pal[tile[sy * 8 + sx]]
 
     for idx, mt_word in enumerate(layout_words):
+        mx, my = (idx % 64) * 16, (idx // 64) * 16
+        if mx >= width or my >= height:
+            continue
         mt_id = mt_word & 0x3FF
         if mt_id >= len(metatiles):
             continue
-        mx, my = (idx % 64) * 16, (idx // 64) * 16
         tl, bl, tr, br = metatiles[mt_id]
         blit_8x8(tl, mx, my)
         blit_8x8(bl, mx, my + 8)
