@@ -84,9 +84,9 @@
         .byte 1
         .long g4bppcBattleBackgroundShrine, acBattleBackgroundShrineTilemap, aBattleBackgroundShrinePalette
         .byte 0
-        .long g4bppcBattleBackgroundUnknown16, acBattleBackgroundUnknown16Tilemap, aBattleBackgroundUnknown16Palette
+        .long g4bppcBattleBackgroundUnused16, acBattleBackgroundUnused16Tilemap, aBattleBackgroundUnused16Palette
         .byte 0
-        .long g4bppcBattleBackgroundUnknown17, acBattleBackgroundUnknown17Tilemap, aBattleBackgroundUnknown17Palette
+        .long g4bppcBattleBackgroundUnused17, acBattleBackgroundUnused17Tilemap, aBattleBackgroundUnused17Palette
         .byte 0
 
       aBattleBackgroundTerrainIndices ; 98/A9F0

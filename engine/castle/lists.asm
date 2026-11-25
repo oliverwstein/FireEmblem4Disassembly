@@ -3410,7 +3410,7 @@
         ; 8A/B261
 
 
-      aHDMAUnknown8AB261Code ; 8A/B261
+      aCastleColorMath1HDMACode ; 8A/B261
 
         HDMA_HALT
 

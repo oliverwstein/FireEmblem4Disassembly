@@ -75,10 +75,10 @@
         .long UnitSkill1Pursuit
         .long UnitSkill1Adept
         .long 0                               ; SkillIDSteal
-        .long 0                               ; SkillIDUnknown2
+        .long 0                               ; SkillIDUnused2
         .long 0                               ; SkillIDDance
-        .long 0                               ; SkillIDUnknown3
-        .long 0                               ; SkillIDUnknown4
+        .long 0                               ; SkillIDUnused3
+        .long 0                               ; SkillIDUnused4
         .long UnitSkill1Dismount
         .long UnitSkill1Charm
         .long UnitSkill1PoW
@@ -110,10 +110,10 @@
         .word ClassSkillPursuit
         .word ClassSkillAdept
         .word ClassSkillSteal
-        .word ClassSkillUnknown1      ; SkillIDUnknown2
+        .word ClassSkillUnused1      ; SkillIDUnused2
         .word ClassSkillDance
-        .word ClassSkillUnknown2      ; SkillIDUnknown3
-        .word ClassSkillUnknown3      ; SkillIDUnknown4
+        .word ClassSkillUnused2      ; SkillIDUnused3
+        .word ClassSkillUnused3      ; SkillIDUnused4
         .word ClassSkillDismount
         .word ClassSkillCharm
         .word 0                       ; SkillIDPoW
@@ -145,10 +145,10 @@
         .word ItemSkillPursuit
         .word 0                 ; SkillIDAdept
         .word ItemSkillSteal
-        .word 0                 ; SkillIDUnknown2
+        .word 0                 ; SkillIDUnused2
         .word 0                 ; SkillIDDance
-        .word 0                 ; SkillIDUnknown3
-        .word ItemSkillUnknown1 ; SkillIDUnknown4
+        .word 0                 ; SkillIDUnused3
+        .word ItemSkillUnused1 ; SkillIDUnused4
         .word 0                 ; SkillIDDismount
         .word 0                 ; SkillIDCharm
         .word 0                 ; SkillIDPoW

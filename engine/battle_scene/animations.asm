@@ -926,11 +926,11 @@
         .long aBattleAnimationSequencesArcherBow, aBattleAnimationFramesArcherBow
         .long aBattleAnimationSequencesPrincessStaff, aBattleAnimationFramesPrincessStaff
         .long aBattleAnimationSequencesWarMageMagic, aBattleAnimationFramesPrincessStaff
-        .long aBattleAnimationSequencesUnknown06, aBattleAnimationFramesUnknown06
-        .long aBattleAnimationSequencesUnknown07, aBattleAnimationFramesUnknown07
-        .long aBattleAnimationSequencesUnknown08, aBattleAnimationFramesUnknown07
-        .long aBattleAnimationSequencesUnknown09, aBattleAnimationFramesUnknown06
-        .long aBattleAnimationSequencesUnknown10, aBattleAnimationFramesUnknown10
+        .long aBattleAnimationSequencesUnused06, aBattleAnimationFramesUnused06
+        .long aBattleAnimationSequencesUnused07, aBattleAnimationFramesUnused07
+        .long aBattleAnimationSequencesUnused08, aBattleAnimationFramesUnused07
+        .long aBattleAnimationSequencesUnused09, aBattleAnimationFramesUnused06
+        .long aBattleAnimationSequencesUnused10, aBattleAnimationFramesUnused10
         .long aBattleAnimationSequencesDancerSword, aBattleAnimationFramesDancerSword
         .long aBattleAnimationSequencesCavalierSword, aBattleAnimationFramesCavalierSword
         .long aBattleAnimationSequencesCavalierLance, aBattleAnimationFramesCavalierLance
@@ -1248,11 +1248,11 @@
         .long aBattleAnimationMoveListsSwordmasterSword, aBattleAnimationActionsSwordmasterSword, aBattleAnimationMoveScriptsSwordmasterSword
         .long aBattleAnimationMoveListsPrincessStaff, aBattleAnimationActionsPrincessStaff, aBattleAnimationMoveScriptsPrincessStaff
         .long aBattleAnimationMoveListsWarMageMagic, aBattleAnimationActionsWarMageMagic, aBattleAnimationMoveScriptsWarMageMagic
-        .long aBattleAnimationMoveListsUnknown05, aBattleAnimationActionsUnknown05, aBattleAnimationMoveScriptsUnknown05
-        .long aBattleAnimationMoveListsUnknown06, aBattleAnimationActionsUnknown06, aBattleAnimationMoveScriptsUnknown06
-        .long aBattleAnimationMoveListsUnknown07, aBattleAnimationActionsUnknown07, aBattleAnimationMoveScriptsUnknown07
-        .long aBattleAnimationMoveListsUnknown08, aBattleAnimationActionsUnknown08, aBattleAnimationMoveScriptsUnknown08
-        .long aBattleAnimationMoveListsUnknown09, aBattleAnimationActionsUnknown09, aBattleAnimationMoveScriptsUnknown09
+        .long aBattleAnimationMoveListsUnused05, aBattleAnimationActionsUnused05, aBattleAnimationMoveScriptsUnused05
+        .long aBattleAnimationMoveListsUnused06, aBattleAnimationActionsUnused06, aBattleAnimationMoveScriptsUnused06
+        .long aBattleAnimationMoveListsUnused07, aBattleAnimationActionsUnused07, aBattleAnimationMoveScriptsUnused07
+        .long aBattleAnimationMoveListsUnused08, aBattleAnimationActionsUnused08, aBattleAnimationMoveScriptsUnused08
+        .long aBattleAnimationMoveListsUnused09, aBattleAnimationActionsUnused09, aBattleAnimationMoveScriptsUnused09
         .long aBattleAnimationMoveListsDancerSword, aBattleAnimationActionsDancerSword, aBattleAnimationMoveScriptsDancerSword
         .long aBattleAnimationMoveListsCavalierSword, aBattleAnimationActionsCavalierSword, aBattleAnimationMoveScriptsCavalierSword
         .long aBattleAnimationMoveListsCavalierLance, aBattleAnimationActionsCavalierLance, aBattleAnimationMoveScriptsCavalierLance

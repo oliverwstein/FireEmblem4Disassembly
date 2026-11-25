@@ -1517,7 +1517,7 @@
         .autsiz
         .databank ?
 
-        ; $7F5095 and $7F5097 = four HDMA line counts from aUnknown9F83E9, picked by bit 2 of wMapMagicFlags' high byte (the units near the bottom of the screen).
+        ; $7F5095 and $7F5097 = four HDMA line counts from 9F/83E9, picked by bit 2 of wMapMagicFlags' high byte (the units near the bottom of the screen).
 
         phx
         lda wMapMagicFlags+1

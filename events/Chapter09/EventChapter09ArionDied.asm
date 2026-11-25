@@ -22,14 +22,14 @@
     YIELD
 
     FILL_EVENT_UNIT_SLOT ArionCh09, EventUnitSlot1
-    RUN_ASM rlASMCUnknownB1DC2A
-    RUN_ASM rlASMCUnknownB1DC36
+    RUN_ASM rlASMCChapter09JuliusWarpInStart
+    RUN_ASM rlASMCChapter09DeployJulius
     YIELD
 
     PAUSE 2
     YIELD
 
-    RUN_ASM rlASMCUnknownB1DC3E
+    RUN_ASM rlASMCChapter09UnhideJulius
     PAUSE 10
     YIELD
 
@@ -65,7 +65,7 @@
 
     END_EVENT
 
-  rlASMCUnknownB1DC2A ; B1/DC2A
+  rlASMCChapter09JuliusWarpInStart ; B1/DC2A
 
     .al
     .autsiz
@@ -78,7 +78,7 @@
 
     .databank 0
 
-  rlASMCUnknownB1DC36 ; B1/DC36
+  rlASMCChapter09DeployJulius ; B1/DC36
 
     .al
     .autsiz
@@ -90,7 +90,7 @@
 
     .databank 0
 
-  rlASMCUnknownB1DC3E ; B1/DC3E
+  rlASMCChapter09UnhideJulius ; B1/DC3E
 
     .al
     .autsiz

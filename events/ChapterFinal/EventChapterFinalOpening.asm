@@ -38,7 +38,7 @@
     PAUSE 15
     YIELD
 
-    RUN_ASM rlASMCUnknownB1DF12
+    RUN_ASM rlASMCChapterFinalOpeningWarpAway
     YIELD
 
     PAUSE 15
@@ -172,7 +172,7 @@
 
     END_EVENT
 
-  rlASMCUnknownB1DF12 ; B1/DF12
+  rlASMCChapterFinalOpeningWarpAway ; B1/DF12
 
     .al
     .autsiz

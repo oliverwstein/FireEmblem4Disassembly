@@ -22,14 +22,14 @@
     YIELD
 
     FILL_EVENT_UNIT_SLOT IshtarCh08, EventUnitSlot1
-    RUN_ASM rlASMCUnknown8FBB85
-    RUN_ASM rlASMCUnknown8FBB91
+    RUN_ASM rlASMCChapter08JuliusWarpInStart
+    RUN_ASM rlASMCChapter08DeployJulius
     YIELD
 
     PAUSE 2
     YIELD
 
-    RUN_ASM rlASMCUnknown8FBB99
+    RUN_ASM rlASMCChapter08UnhideJulius
     PAUSE 10
     YIELD
 

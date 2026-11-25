@@ -357,11 +357,11 @@
     PAUSE 20
     YIELD
 
-    RUN_ASM rlASMCUnknownB1E7A1
+    RUN_ASM rlASMCStartEpilogue
 
     END_EVENT
 
-  rlASMCUnknownB1E7A1 ; B1/E7A1
+  rlASMCStartEpilogue ; B1/E7A1
 
     .al
     .autsiz

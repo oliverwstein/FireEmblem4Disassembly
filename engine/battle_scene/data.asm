@@ -537,7 +537,7 @@
         .long gcTitleIntroCaption03Tilemap, aDecompressionBuffer
         .word $7F20, $0080
         .byte $00
-        .long g4bppcBattleBackgroundUnknown16, aDecompressionBuffer
+        .long g4bppcBattleBackgroundUnused16, aDecompressionBuffer
         .word $0000, $4000
         .byte $00
         .long g4bppcTitleSceneTilesF5222D, aDecompressionBuffer

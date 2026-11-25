@@ -1203,7 +1203,7 @@
         .autsiz
         .databank ?
 
-        ; IRQ at line 6 (aUnknown9680A4): rlFadeTitleScreenTopEdge.
+        ; IRQ at line 6 (aTitleScreenTopIRQ): rlFadeTitleScreenTopEdge.
 
         jsl rlFadeTitleScreenTopEdge
         rtl
@@ -1242,7 +1242,7 @@
         .autsiz
         .databank ?
 
-        ; IRQ at line 189 (aUnknown9680B3): rlDrawTitleCaptionStrip.
+        ; IRQ at line 189 (aTitleScreenBottomIRQ): rlDrawTitleCaptionStrip.
 
         jsl rlDrawTitleCaptionStrip
         rtl

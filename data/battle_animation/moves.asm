@@ -663,7 +663,7 @@
       _Script07
         .char 3, 0, 0
 
-      aBattleAnimationActionsUnknown05 ; 97/CDC2
+      aBattleAnimationActionsUnused05 ; 97/CDC2
 
         ; Move program of entry 5 of aBattleAnimationPrograms; nothing selects it.
 
@@ -732,28 +732,28 @@
         ANIM_ACTION_LIST 0
         ANIM_ACTION_LIST 0
 
-      aBattleAnimationMoveListsUnknown05 ; 97/CE02
+      aBattleAnimationMoveListsUnused05 ; 97/CE02
 
-        .word _List00 - aBattleAnimationMoveListsUnknown05
-        .word _List01 - aBattleAnimationMoveListsUnknown05
-        .word _List02 - aBattleAnimationMoveListsUnknown05
-        .word _List03 - aBattleAnimationMoveListsUnknown05
-        .word _List04 - aBattleAnimationMoveListsUnknown05
-        .word _List05 - aBattleAnimationMoveListsUnknown05
-        .word _List06 - aBattleAnimationMoveListsUnknown05
-        .word _List07 - aBattleAnimationMoveListsUnknown05
-        .word _List08 - aBattleAnimationMoveListsUnknown05
-        .word _List09 - aBattleAnimationMoveListsUnknown05
-        .word _List10 - aBattleAnimationMoveListsUnknown05
-        .word _List11 - aBattleAnimationMoveListsUnknown05
-        .word _List12 - aBattleAnimationMoveListsUnknown05
-        .word _List13 - aBattleAnimationMoveListsUnknown05
-        .word _List14 - aBattleAnimationMoveListsUnknown05
-        .word _List15 - aBattleAnimationMoveListsUnknown05
-        .word _List16 - aBattleAnimationMoveListsUnknown05
-        .word _List17 - aBattleAnimationMoveListsUnknown05
-        .word _List18 - aBattleAnimationMoveListsUnknown05
-        .word _List19 - aBattleAnimationMoveListsUnknown05
+        .word _List00 - aBattleAnimationMoveListsUnused05
+        .word _List01 - aBattleAnimationMoveListsUnused05
+        .word _List02 - aBattleAnimationMoveListsUnused05
+        .word _List03 - aBattleAnimationMoveListsUnused05
+        .word _List04 - aBattleAnimationMoveListsUnused05
+        .word _List05 - aBattleAnimationMoveListsUnused05
+        .word _List06 - aBattleAnimationMoveListsUnused05
+        .word _List07 - aBattleAnimationMoveListsUnused05
+        .word _List08 - aBattleAnimationMoveListsUnused05
+        .word _List09 - aBattleAnimationMoveListsUnused05
+        .word _List10 - aBattleAnimationMoveListsUnused05
+        .word _List11 - aBattleAnimationMoveListsUnused05
+        .word _List12 - aBattleAnimationMoveListsUnused05
+        .word _List13 - aBattleAnimationMoveListsUnused05
+        .word _List14 - aBattleAnimationMoveListsUnused05
+        .word _List15 - aBattleAnimationMoveListsUnused05
+        .word _List16 - aBattleAnimationMoveListsUnused05
+        .word _List17 - aBattleAnimationMoveListsUnused05
+        .word _List18 - aBattleAnimationMoveListsUnused05
+        .word _List19 - aBattleAnimationMoveListsUnused05
 
       _List00
         ANIM_MOVE_STILL 0
@@ -844,29 +844,29 @@
         ANIM_MOVE_SCRIPT 21, 20
         ANIM_MOVE_LIST_END
 
-      aBattleAnimationMoveScriptsUnknown05 ; 97/CE78
+      aBattleAnimationMoveScriptsUnused05 ; 97/CE78
 
-        .word _Script00 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script01 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script02 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script03 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script04 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script05 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script06 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script07 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script08 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script09 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script10 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script11 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script12 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script13 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script14 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script15 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script16 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script17 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script18 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script19 - aBattleAnimationMoveScriptsUnknown05
-        .word _Script20 - aBattleAnimationMoveScriptsUnknown05
+        .word _Script00 - aBattleAnimationMoveScriptsUnused05
+        .word _Script01 - aBattleAnimationMoveScriptsUnused05
+        .word _Script02 - aBattleAnimationMoveScriptsUnused05
+        .word _Script03 - aBattleAnimationMoveScriptsUnused05
+        .word _Script04 - aBattleAnimationMoveScriptsUnused05
+        .word _Script05 - aBattleAnimationMoveScriptsUnused05
+        .word _Script06 - aBattleAnimationMoveScriptsUnused05
+        .word _Script07 - aBattleAnimationMoveScriptsUnused05
+        .word _Script08 - aBattleAnimationMoveScriptsUnused05
+        .word _Script09 - aBattleAnimationMoveScriptsUnused05
+        .word _Script10 - aBattleAnimationMoveScriptsUnused05
+        .word _Script11 - aBattleAnimationMoveScriptsUnused05
+        .word _Script12 - aBattleAnimationMoveScriptsUnused05
+        .word _Script13 - aBattleAnimationMoveScriptsUnused05
+        .word _Script14 - aBattleAnimationMoveScriptsUnused05
+        .word _Script15 - aBattleAnimationMoveScriptsUnused05
+        .word _Script16 - aBattleAnimationMoveScriptsUnused05
+        .word _Script17 - aBattleAnimationMoveScriptsUnused05
+        .word _Script18 - aBattleAnimationMoveScriptsUnused05
+        .word _Script19 - aBattleAnimationMoveScriptsUnused05
+        .word _Script20 - aBattleAnimationMoveScriptsUnused05
 
       _Script00
         .char 0, 6, 7, 0, 5
@@ -931,7 +931,7 @@
       _Script20
         .char 0, 9, 3
 
-      aBattleAnimationActionsUnknown06 ; 97/CF15
+      aBattleAnimationActionsUnused06 ; 97/CF15
 
         ; Move program of entry 6 of aBattleAnimationPrograms; nothing selects it.
 
@@ -995,19 +995,19 @@
         ANIM_ACTION_LIST 1
         ANIM_ACTION_LIST 1
 
-      aBattleAnimationMoveListsUnknown06 ; 97/CF50
+      aBattleAnimationMoveListsUnused06 ; 97/CF50
 
-        .word _List00 - aBattleAnimationMoveListsUnknown06
-        .word _List01 - aBattleAnimationMoveListsUnknown06
-        .word _List02 - aBattleAnimationMoveListsUnknown06
-        .word _List03 - aBattleAnimationMoveListsUnknown06
-        .word _List04 - aBattleAnimationMoveListsUnknown06
-        .word _List05 - aBattleAnimationMoveListsUnknown06
-        .word _List06 - aBattleAnimationMoveListsUnknown06
-        .word _List07 - aBattleAnimationMoveListsUnknown06
-        .word _List08 - aBattleAnimationMoveListsUnknown06
-        .word _List09 - aBattleAnimationMoveListsUnknown06
-        .word _List10 - aBattleAnimationMoveListsUnknown06
+        .word _List00 - aBattleAnimationMoveListsUnused06
+        .word _List01 - aBattleAnimationMoveListsUnused06
+        .word _List02 - aBattleAnimationMoveListsUnused06
+        .word _List03 - aBattleAnimationMoveListsUnused06
+        .word _List04 - aBattleAnimationMoveListsUnused06
+        .word _List05 - aBattleAnimationMoveListsUnused06
+        .word _List06 - aBattleAnimationMoveListsUnused06
+        .word _List07 - aBattleAnimationMoveListsUnused06
+        .word _List08 - aBattleAnimationMoveListsUnused06
+        .word _List09 - aBattleAnimationMoveListsUnused06
+        .word _List10 - aBattleAnimationMoveListsUnused06
 
       _List00
         ANIM_MOVE_SCRIPT 5, 4
@@ -1059,18 +1059,18 @@
         ANIM_MOVE_SCRIPT 4, 5
         ANIM_MOVE_LIST_END
 
-      aBattleAnimationMoveScriptsUnknown06 ; 97/CF93
+      aBattleAnimationMoveScriptsUnused06 ; 97/CF93
 
-        .word _Script00 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script01 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script02 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script03 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script04 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script05 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script06 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script07 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script08 - aBattleAnimationMoveScriptsUnknown06
-        .word _Script09 - aBattleAnimationMoveScriptsUnknown06
+        .word _Script00 - aBattleAnimationMoveScriptsUnused06
+        .word _Script01 - aBattleAnimationMoveScriptsUnused06
+        .word _Script02 - aBattleAnimationMoveScriptsUnused06
+        .word _Script03 - aBattleAnimationMoveScriptsUnused06
+        .word _Script04 - aBattleAnimationMoveScriptsUnused06
+        .word _Script05 - aBattleAnimationMoveScriptsUnused06
+        .word _Script06 - aBattleAnimationMoveScriptsUnused06
+        .word _Script07 - aBattleAnimationMoveScriptsUnused06
+        .word _Script08 - aBattleAnimationMoveScriptsUnused06
+        .word _Script09 - aBattleAnimationMoveScriptsUnused06
 
       _Script00
         .char 0, -1, -3, -4, -2, -2, -2, 0, 0, 0, 0
@@ -1102,7 +1102,7 @@
       _Script09
         .char 12, 1
 
-      aBattleAnimationActionsUnknown07 ; 97/CFF0
+      aBattleAnimationActionsUnused07 ; 97/CFF0
 
         ; Move program of entry 7 of aBattleAnimationPrograms; nothing selects it.
 
@@ -1154,19 +1154,19 @@
         ANIM_ACTION_LIST 8
         ANIM_ACTION_LIST 8
 
-      aBattleAnimationMoveListsUnknown07 ; 97/D01F
+      aBattleAnimationMoveListsUnused07 ; 97/D01F
 
-        .word _List00 - aBattleAnimationMoveListsUnknown07
-        .word _List01 - aBattleAnimationMoveListsUnknown07
-        .word _List02 - aBattleAnimationMoveListsUnknown07
-        .word _List03 - aBattleAnimationMoveListsUnknown07
-        .word _List04 - aBattleAnimationMoveListsUnknown07
-        .word _List05 - aBattleAnimationMoveListsUnknown07
-        .word _List06 - aBattleAnimationMoveListsUnknown07
-        .word _List07 - aBattleAnimationMoveListsUnknown07
-        .word _List08 - aBattleAnimationMoveListsUnknown07
-        .word _List09 - aBattleAnimationMoveListsUnknown07
-        .word _List10 - aBattleAnimationMoveListsUnknown07
+        .word _List00 - aBattleAnimationMoveListsUnused07
+        .word _List01 - aBattleAnimationMoveListsUnused07
+        .word _List02 - aBattleAnimationMoveListsUnused07
+        .word _List03 - aBattleAnimationMoveListsUnused07
+        .word _List04 - aBattleAnimationMoveListsUnused07
+        .word _List05 - aBattleAnimationMoveListsUnused07
+        .word _List06 - aBattleAnimationMoveListsUnused07
+        .word _List07 - aBattleAnimationMoveListsUnused07
+        .word _List08 - aBattleAnimationMoveListsUnused07
+        .word _List09 - aBattleAnimationMoveListsUnused07
+        .word _List10 - aBattleAnimationMoveListsUnused07
 
       _List00
         ANIM_MOVE_SCRIPT 5, 3
@@ -1213,14 +1213,14 @@
         ANIM_MOVE_STILL 14
         ANIM_MOVE_LIST_END
 
-      aBattleAnimationMoveScriptsUnknown07 ; 97/D058
+      aBattleAnimationMoveScriptsUnused07 ; 97/D058
 
-        .word _Script00 - aBattleAnimationMoveScriptsUnknown07
-        .word _Script01 - aBattleAnimationMoveScriptsUnknown07
-        .word _Script02 - aBattleAnimationMoveScriptsUnknown07
-        .word _Script03 - aBattleAnimationMoveScriptsUnknown07
-        .word _Script04 - aBattleAnimationMoveScriptsUnknown07
-        .word _Script05 - aBattleAnimationMoveScriptsUnknown07
+        .word _Script00 - aBattleAnimationMoveScriptsUnused07
+        .word _Script01 - aBattleAnimationMoveScriptsUnused07
+        .word _Script02 - aBattleAnimationMoveScriptsUnused07
+        .word _Script03 - aBattleAnimationMoveScriptsUnused07
+        .word _Script04 - aBattleAnimationMoveScriptsUnused07
+        .word _Script05 - aBattleAnimationMoveScriptsUnused07
 
       _Script00
         .char 0, 7, 1, 5, -14, -4, 0
@@ -1240,7 +1240,7 @@
       _Script05
         .char 0, 7, 1, 5
 
-      aBattleAnimationActionsUnknown08 ; 97/D087
+      aBattleAnimationActionsUnused08 ; 97/D087
 
         ; Move program of entry 8 of aBattleAnimationPrograms; nothing selects it.
 
@@ -1293,18 +1293,18 @@
         ANIM_ACTION_LIST 8
         ANIM_ACTION_LIST 5
 
-      aBattleAnimationMoveListsUnknown08 ; 97/D0B7
+      aBattleAnimationMoveListsUnused08 ; 97/D0B7
 
-        .word _List00 - aBattleAnimationMoveListsUnknown08
-        .word _List01 - aBattleAnimationMoveListsUnknown08
-        .word _List02 - aBattleAnimationMoveListsUnknown08
-        .word _List03 - aBattleAnimationMoveListsUnknown08
-        .word _List04 - aBattleAnimationMoveListsUnknown08
-        .word _List05 - aBattleAnimationMoveListsUnknown08
-        .word _List06 - aBattleAnimationMoveListsUnknown08
-        .word _List07 - aBattleAnimationMoveListsUnknown08
-        .word _List08 - aBattleAnimationMoveListsUnknown08
-        .word _List09 - aBattleAnimationMoveListsUnknown08
+        .word _List00 - aBattleAnimationMoveListsUnused08
+        .word _List01 - aBattleAnimationMoveListsUnused08
+        .word _List02 - aBattleAnimationMoveListsUnused08
+        .word _List03 - aBattleAnimationMoveListsUnused08
+        .word _List04 - aBattleAnimationMoveListsUnused08
+        .word _List05 - aBattleAnimationMoveListsUnused08
+        .word _List06 - aBattleAnimationMoveListsUnused08
+        .word _List07 - aBattleAnimationMoveListsUnused08
+        .word _List08 - aBattleAnimationMoveListsUnused08
+        .word _List09 - aBattleAnimationMoveListsUnused08
 
       _List00
         ANIM_MOVE_STILL 0
@@ -1352,15 +1352,15 @@
         ANIM_MOVE_SCRIPT 6, 6
         ANIM_MOVE_LIST_END
 
-      aBattleAnimationMoveScriptsUnknown08 ; 97/D0F5
+      aBattleAnimationMoveScriptsUnused08 ; 97/D0F5
 
-        .word _Script00 - aBattleAnimationMoveScriptsUnknown08
-        .word _Script01 - aBattleAnimationMoveScriptsUnknown08
-        .word _Script02 - aBattleAnimationMoveScriptsUnknown08
-        .word _Script03 - aBattleAnimationMoveScriptsUnknown08
-        .word _Script04 - aBattleAnimationMoveScriptsUnknown08
-        .word _Script05 - aBattleAnimationMoveScriptsUnknown08
-        .word _Script06 - aBattleAnimationMoveScriptsUnknown08
+        .word _Script00 - aBattleAnimationMoveScriptsUnused08
+        .word _Script01 - aBattleAnimationMoveScriptsUnused08
+        .word _Script02 - aBattleAnimationMoveScriptsUnused08
+        .word _Script03 - aBattleAnimationMoveScriptsUnused08
+        .word _Script04 - aBattleAnimationMoveScriptsUnused08
+        .word _Script05 - aBattleAnimationMoveScriptsUnused08
+        .word _Script06 - aBattleAnimationMoveScriptsUnused08
 
       _Script00
         .char 0, 0
@@ -1383,7 +1383,7 @@
       _Script06
         .char 0, 9
 
-      aBattleAnimationActionsUnknown09 ; 97/D11D
+      aBattleAnimationActionsUnused09 ; 97/D11D
 
         ; Move program of entry 9 of aBattleAnimationPrograms; nothing selects it.
 
@@ -1435,16 +1435,16 @@
         ANIM_ACTION_LIST 4
         ANIM_ACTION_LIST 4
 
-      aBattleAnimationMoveListsUnknown09 ; 97/D14C
+      aBattleAnimationMoveListsUnused09 ; 97/D14C
 
-        .word _List00 - aBattleAnimationMoveListsUnknown09
-        .word _List01 - aBattleAnimationMoveListsUnknown09
-        .word _List02 - aBattleAnimationMoveListsUnknown09
-        .word _List03 - aBattleAnimationMoveListsUnknown09
-        .word _List04 - aBattleAnimationMoveListsUnknown09
-        .word _List05 - aBattleAnimationMoveListsUnknown09
-        .word _List06 - aBattleAnimationMoveListsUnknown09
-        .word _List07 - aBattleAnimationMoveListsUnknown09
+        .word _List00 - aBattleAnimationMoveListsUnused09
+        .word _List01 - aBattleAnimationMoveListsUnused09
+        .word _List02 - aBattleAnimationMoveListsUnused09
+        .word _List03 - aBattleAnimationMoveListsUnused09
+        .word _List04 - aBattleAnimationMoveListsUnused09
+        .word _List05 - aBattleAnimationMoveListsUnused09
+        .word _List06 - aBattleAnimationMoveListsUnused09
+        .word _List07 - aBattleAnimationMoveListsUnused09
 
       _List00
         ANIM_MOVE_STILL 1
@@ -1490,10 +1490,10 @@
         ANIM_MOVE_SCRIPT 18, 1
         ANIM_MOVE_LIST_END
 
-      aBattleAnimationMoveScriptsUnknown09 ; 97/D18C
+      aBattleAnimationMoveScriptsUnused09 ; 97/D18C
 
-        .word _Script00 - aBattleAnimationMoveScriptsUnknown09
-        .word _Script01 - aBattleAnimationMoveScriptsUnknown09
+        .word _Script00 - aBattleAnimationMoveScriptsUnused09
+        .word _Script01 - aBattleAnimationMoveScriptsUnused09
 
       _Script00
         .char 4

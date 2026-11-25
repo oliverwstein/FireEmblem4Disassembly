@@ -6489,7 +6489,7 @@
         .autsiz
         .databank ?
 
-        ; Saves each listed unit's place, negated, at aUnitWindowSavedOrder by generation ID, so the list can reopen in the same order. FE5: rlUnitWindowUnknown90DF80.
+        ; Saves each listed unit's place, negated, at aUnitWindowSavedOrder by generation ID, so the list can reopen in the same order. FE5: 90/DF80.
 
         lda wSelectedUnitDataRAMPointer,b
         sta wR1

@@ -4,7 +4,7 @@
     MAP_SCROLL [34, 13], 5
     YIELD
 
-    RUN_ASM rlASMCUnknownB1E8AF
+    RUN_ASM rlASMCChapterFinalJuliusDeathCutscene
     YIELD
 
     FACTION_UNIT_DEATH FS_ChFinalBelhalla, AnyAI, JuliusChFinal
@@ -110,7 +110,7 @@
 
     END_EVENT
 
-  rlASMCUnknownB1E8AF ; B1/E8AF
+  rlASMCChapterFinalJuliusDeathCutscene ; B1/E8AF
 
     .al
     .autsiz

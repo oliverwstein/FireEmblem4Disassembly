@@ -6,10 +6,10 @@
   SkillIDPursuit    = $04
   SkillIDAdept      = $05
   SkillIDSteal      = $06
-  SkillIDUnknown2   = $07 ; valid class skill
+  SkillIDUnused2   = $07 ; valid class skill
   SkillIDDance      = $08
-  SkillIDUnknown3   = $09 ; valid class skill
-  SkillIDUnknown4   = $0A ; valid class and item skill
+  SkillIDUnused3   = $09 ; valid class skill
+  SkillIDUnused4   = $0A ; valid class and item skill
   SkillIDDismount   = $0B
   SkillIDCharm      = $0C
   SkillIDPoW        = $0D

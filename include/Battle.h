@@ -20,7 +20,7 @@
   ; Scripted Battles
 
   SB_AttackerFirst   = $01
-  SB_Unknown02       = $02
+  SB_Bit02       = $02
   SB_GuaranteedCrit  = $04
   SB_GuaranteedHit   = $08
   SB_ApplyGuarantees = $10

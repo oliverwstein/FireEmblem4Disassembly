@@ -217,7 +217,7 @@
 
     _ScriptedBattle ; B1/82B7
       SCRIPTED_BATTLE Midir, 1, Munnir, dialogueChapterPrologueMunnirMidirBattleQuote, dialogueChapterPrologueMidirCutsceneDeath
-      .byte (SB_AttackerFirst | SB_Unknown02 | SB_GuaranteedCrit | SB_GuaranteedHit)
+      .byte (SB_AttackerFirst | SB_Bit02 | SB_GuaranteedCrit | SB_GuaranteedHit)
       SB_END
 
     _ScriptedMapScroll1 ; B1/82C7

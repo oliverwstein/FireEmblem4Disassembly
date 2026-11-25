@@ -650,7 +650,7 @@
         .word $1D48, $10E5, $258D, $1D6C, $10EB, $10C9, $0CC8, $0CA8
         .word $08A7, $0486, $0885, $0443, $0021, $0400, $0000, $0461
 
-      aBattleBackgroundUnknown16Palette ; B4/8660
+      aBattleBackgroundUnused16Palette ; B4/8660
         .word $1958, $10F0, $10CD, $0CAC, $0CAA, $10AA, $0888, $0867
         .word $0C87, $0868, $0444, $0443, $0423, $0022, $0000, $0001
         .word $1958, $10F0, $150F, $10CD, $0CAB, $10AA, $0889, $0868
@@ -658,7 +658,7 @@
         .word $04AB, $0048, $0068, $0028, $0006, $0445, $0046, $0025
         .word $0024, $0024, $0003, $0000, $0000, $0001, $0000, $5294
 
-      aBattleBackgroundUnknown17Palette ; B4/86C0
+      aBattleBackgroundUnused17Palette ; B4/86C0
         .word $0000, $0004, $0046, $00A9, $00EC, $092F, $0D50, $1171
         .word $1191, $19B2, $1DD3, $21F4, $2A58, $46D9, $6EFB, $3000
         .word $3A10, $2DCD, $3271, $6318, $4B18, $3699, $2217, $1DD4

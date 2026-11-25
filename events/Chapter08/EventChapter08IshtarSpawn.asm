@@ -10,13 +10,13 @@
     PAUSE 20
     YIELD
 
-    RUN_ASM rlASMCUnknown8FBAD0
+    RUN_ASM rlASMCChapter08IshtarWarpAway
     YIELD
 
     MAP_SCROLL [41, 2], 5
     YIELD
 
-    RUN_ASM rlASMCUnknown8FBAFC
+    RUN_ASM rlASMCChapter08IshtarWarpIn
     YIELD
 
     DIALOGUE_WITH_BG dialogueChapter08IshtarSpawn, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
@@ -40,7 +40,7 @@
 
     END_EVENT
 
-  rlASMCUnknown8FBAD0 ; 8F/BAD0
+  rlASMCChapter08IshtarWarpAway ; 8F/BAD0
 
     .al
     .autsiz
@@ -62,7 +62,7 @@
 
     .databank 0
 
-  rlASMCUnknown8FBAFC ; 8F/BAFC
+  rlASMCChapter08IshtarWarpIn ; 8F/BAFC
 
     .al
     .autsiz

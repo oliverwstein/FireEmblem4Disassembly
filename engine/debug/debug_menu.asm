@@ -2637,7 +2637,7 @@
         sta aCurrentTilemapInfo.wBaseTile,b
 
         _PointerList  := [(aDebugCombatCoordinatesText, pack([1,  5]))]
-        _PointerList ..= [(aDebugCombatUnknown1Text   , pack([5,  7]))]
+        _PointerList ..= [(aDebugCombatTerrainHeaderText   , pack([5,  7]))]
         _PointerList ..= [(aDebugCombatLevelUpText    , pack([3,  9]))]
         _PointerList ..= [(aDebugCombatGainedEXPText  , pack([5, 11]))]
         _PointerList ..= [(aDebugCombatItemText       , pack([4, 13]))]
@@ -2903,7 +2903,7 @@
         .databank 0
 
       aDebugCombatCoordinatesText .text "ＭＡＰ　Ｘ／Ｙ　　Ｘ　　　Ｙ　　　　　　Ｘ　　　Ｙ\n"  ; 89/E0B4
-      aDebugCombatUnknown1Text    .text "ちけい　　　　　　　／　　　　　　　　　　／\n"         ; 89/E0E8
+      aDebugCombatTerrainHeaderText    .text "ちけい　　　　　　　／　　　　　　　　　　／\n"         ; 89/E0E8
       aDebugCombatLevelUpText     .text "ＬＶ　ＵＰ\n"                                       ; 89/E116
       aDebugCombatGainedEXPText   .text "ＥＸＰ　　　　　ＧＥＴ　　　　　　　　ＧＥＴ\n"        ; 89/E122
       aDebugCombatItemText        .text "ＩＴＥＭ　　　　　　　　　／　　　　　　　　　　／\n"   ; 89/E150

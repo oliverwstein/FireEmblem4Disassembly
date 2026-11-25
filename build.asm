@@ -3932,7 +3932,7 @@
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/EE89
       aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry g4bppcClassChangeBGTiles, $1000, $0000 ; 8A/EE91
-      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundUnknown17, $2000, $1000 ; 8A/EE99
+      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundUnused17, $2000, $1000 ; 8A/EE99
       aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry acClassChangeBGTilemap, $0800, $2800 ; 8A/EEA1
       aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/EEA9
 
@@ -7001,7 +7001,7 @@
 
       g4bppMapTiles .binary "gfx/map/MapTiles.4bpp" ; D90000
 
-      aUnknownD95000 .binary "gfx/map/UnknownD95000.bin" ; D95000
+      aMapDisplayDataD95000 .binary "gfx/map/UnknownD95000.bin" ; D95000
 
       aUnknownD96800 .binary "gfx/map/UnknownD96800.bin" ; D96800, unreferenced
 
@@ -7009,7 +7009,7 @@
 
       gUnknownD97400 .binary "gfx/ui/tilemaps/UnknownD97400.bin" ; D97400, unreferenced
 
-      gUnknownD97940 .binary "gfx/ui/tilemaps/UnknownD97940.bin" ; D97940
+      gWorldMapDataD97940 .binary "gfx/ui/tilemaps/UnknownD97940.bin" ; D97940
 
       gUnknownD97B00 .binary "gfx/ui/tilemaps/UnknownD97B00.bin" ; D97B00, unreferenced
 

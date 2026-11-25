@@ -52,10 +52,10 @@
           .structDMAToVRAM g4bppMapTiles, size(g4bppMapTiles), $80, $0000
 
         jsl rlLoadChapterMapGraphics
-        ldx #size(aUnknownD95000) - 2
+        ldx #size(aMapDisplayDataD95000) - 2
 
         _80DD
-        lda aUnknownD95000,x
+        lda aMapDisplayDataD95000,x
         sta $7F0800,x
         dec x
         dec x
@@ -423,10 +423,10 @@
           .structDMAToVRAM g4bppMapTiles, size(g4bppMapTiles), $80, $0000
 
         jsl rlLoadChapterMapGraphics
-        ldx #size(aUnknownD95000) - 2
+        ldx #size(aMapDisplayDataD95000) - 2
 
         _8266
-        lda aUnknownD95000,x
+        lda aMapDisplayDataD95000,x
         sta $7F0800,x
         dec x
         dec x

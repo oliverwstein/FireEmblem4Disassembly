@@ -18,14 +18,14 @@
     YIELD
 
     FILL_EVENT_UNIT_SLOT IshtarCh08, EventUnitSlot1
-    RUN_ASM rlASMCUnknown8FBB85
-    RUN_ASM rlASMCUnknown8FBB91
+    RUN_ASM rlASMCChapter08JuliusWarpInStart
+    RUN_ASM rlASMCChapter08DeployJulius
     YIELD
 
     PAUSE 5
     YIELD
 
-    RUN_ASM rlASMCUnknown8FBB99
+    RUN_ASM rlASMCChapter08UnhideJulius
     PAUSE 10
     YIELD
 
@@ -58,7 +58,7 @@
 
     END_EVENT
 
-  rlASMCUnknown8FBB85 ; 8F/BB85
+  rlASMCChapter08JuliusWarpInStart ; 8F/BB85
 
     .al
     .autsiz
@@ -71,7 +71,7 @@
 
     .databank 0
 
-  rlASMCUnknown8FBB91 ; 8F/BB91
+  rlASMCChapter08DeployJulius ; 8F/BB91
 
     .al
     .autsiz
@@ -83,7 +83,7 @@
 
     .databank 0
 
-  rlASMCUnknown8FBB99 ; 8F/BB99
+  rlASMCChapter08UnhideJulius ; 8F/BB99
 
     .al
     .autsiz

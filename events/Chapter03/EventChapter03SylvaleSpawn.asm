@@ -146,7 +146,7 @@
       MAP_PAUSE 20
       MAP_END
 
-    _ScriptedMovementUnknown ; 9D/8AAF
+    _ScriptedMovementSylvaleUnused ; 9D/8AAF
       MAP_PAUSE 20
       MAP_RIGHT_MULTIPLE 10
       MAP_END

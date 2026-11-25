@@ -60,7 +60,7 @@
 
 
   ItemSkillSteal    = bits($0001)
-  ItemSkillUnknown1 = bits($0002)
+  ItemSkillUnused1 = bits($0002)
   ; $0004 not assigned
   ItemSkillMiracle  = bits($0008)
   ItemSkillCritical = bits($0010)
@@ -75,10 +75,10 @@
 
   ItemStateInventory  = 1
   ItemStateSupply     = 2
-  ItemStateUnknown3   = 3
+  ItemStateUnused3   = 3
   ItemStateShop       = 4
   ItemStatePawnbroker = 5
-  ItemStateUnknown6   = 6
+  ItemStateUnused6   = 6
   ItemStateUnobtained = 7
 
 

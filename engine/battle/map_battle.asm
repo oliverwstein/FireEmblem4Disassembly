@@ -11083,7 +11083,7 @@
         .long g4bppcMapBattleCritSibling ; 1: sibling
         .long g4bppcMapBattleCritLover ; 2: lover
         .long g4bppcMapBattleCritTriangleAttack ; 3: triangle attack
-        .long g4bppcMapBattleCritUnknown4 ; 4
+        .long g4bppcMapBattleCritUnused4 ; 4
 
         ; 9E/E127
 

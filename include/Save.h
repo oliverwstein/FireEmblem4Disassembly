@@ -15,7 +15,7 @@
     .endunion
     OptionSettings .word ?                  ; $0004
       ; %00011111 11111111 11100000
-    Unknown0006 .byte ?                     ; $0006
+    Reserved0006 .byte ?                     ; $0006
       ; %00011111 11100000
     MapXOffset .word ?                      ; $0007
       ; %00011111 11111111 11000000
@@ -33,7 +33,7 @@
       ; %01111111 11110000
     TotalAlivePlayerUnitCount .byte ?       ; $0012
       ; %00001111 11000000
-    Unknown0013 .byte ?                     ; $0013
+    Reserved0013 .byte ?                     ; $0013
       ; %00111111 11000000
     DestroyedLocationsCount  .byte ?        ; $0014
       ; %00111111
@@ -73,15 +73,15 @@
     UnitJoinOrder .fill 15                  ; $00A8
       ; 24 * %00111110
     .union
-      Unknown00B7_1 .byte ?                 ; $00B7
+      Reserved00B7_1 .byte ?                 ; $00B7
         ; %00111000
-      Unknown00B7_2 .byte ?                 ; $00B7
+      Reserved00B7_2 .byte ?                 ; $00B7
         ; %00000111_11100000
     .endunion
     .union
-      Unknown00B8_1 .byte ?                 ; $00B8
+      Reserved00B8_1 .byte ?                 ; $00B8
         ; %00010000
-      Unknown00B8_2 .byte ?                 ; $00B8
+      Reserved00B8_2 .byte ?                 ; $00B8
         ; %00001100
       FactionHeaderData .fill 28            ; $00B8
         ; 7 *

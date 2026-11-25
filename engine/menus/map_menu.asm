@@ -386,7 +386,7 @@
 ; .long 0
 ; .long 0
 ; .long $859BD1
-; .byte 7 ; index for aUnknown8589B5
+; .byte 7 ; index for 85/89B5
 ; .byte 1
 ; .byte 1
 

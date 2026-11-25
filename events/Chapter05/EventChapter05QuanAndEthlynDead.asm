@@ -18,7 +18,7 @@
     RUN_EVENT_CONDITION
       macroSetFactionsEnemies [FS_Ch05Thracia, FS_Player]
 
-    RUN_ASM rlASMCUnknown9DC421
+    RUN_ASM rlASMCSetCh05EthlynDeathDelay
 
     FILL_EVENT_UNIT_SLOT TravantCh05, EventUnitSlot1
     MOVE_TEMPORARY_TO_COORDS TravantCh05, [-1, -1], [57, 63], 4, EventUnitSlot1, MAP_SPRITE_RED, true

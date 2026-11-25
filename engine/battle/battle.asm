@@ -3303,7 +3303,7 @@
         bit #SB_ApplyGuarantees
         beq ++
 
-        bit #SB_Unknown02
+        bit #SB_Bit02
         bne +
 
           jml _E82C

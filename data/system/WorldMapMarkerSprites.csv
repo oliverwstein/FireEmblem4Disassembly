@@ -28,7 +28,7 @@ WMM_UnusedMansterToMeath,aWorldMapSprite15
 WMM_UnusedThraciaCastles,aWorldMapSprite16
 WMM_Peruluke,aWorldMapSprite4
 WMM_ThraciaToPeruluke,aWorldMapSprite17
-WMM_Unknown1,aWorldMapSprite4
+WMM_Unused1,aWorldMapSprite4
 WMM_RibautCh06,aWorldMapSprite4
 WMM_Isaach,aWorldMapSprite4
 WMM_Sofala,aWorldMapSprite4
@@ -45,5 +45,5 @@ WMM_UlsterCh08,aWorldMapSprite4
 WMM_Connacht,aWorldMapSprite4
 WMM_Munster,aWorldMapSprite4
 WMM_Meath,aWorldMapSprite4
-WMM_Unknown2,aWorldMapSprite4
-WMM_Unknown3,aWorldMapSprite4
+WMM_Unused2,aWorldMapSprite4
+WMM_Unused3,aWorldMapSprite4

@@ -4911,21 +4911,21 @@
         .structSpriteEntry ( -12,  -16), $00, SpriteSmall, $04A, 2, 2, false, false
         ANIM_RECORD_END
 
-      aBattleAnimationFramesUnknown06 ; 98/EB33
+      aBattleAnimationFramesUnused06 ; 98/EB33
 
         ; Frame table of entries 6, 9: slices of the class sheet per frame.
 
-        .word _Frame00 - aBattleAnimationFramesUnknown06
-        .word _Frame01 - aBattleAnimationFramesUnknown06
-        .word _Frame02 - aBattleAnimationFramesUnknown06
-        .word _Frame03 - aBattleAnimationFramesUnknown06
-        .word _Frame04 - aBattleAnimationFramesUnknown06
-        .word _Frame05 - aBattleAnimationFramesUnknown06
-        .word _Frame06 - aBattleAnimationFramesUnknown06
-        .word _Frame07 - aBattleAnimationFramesUnknown06
-        .word _Frame08 - aBattleAnimationFramesUnknown06
-        .word _Frame09 - aBattleAnimationFramesUnknown06
-        .word _Frame10 - aBattleAnimationFramesUnknown06
+        .word _Frame00 - aBattleAnimationFramesUnused06
+        .word _Frame01 - aBattleAnimationFramesUnused06
+        .word _Frame02 - aBattleAnimationFramesUnused06
+        .word _Frame03 - aBattleAnimationFramesUnused06
+        .word _Frame04 - aBattleAnimationFramesUnused06
+        .word _Frame05 - aBattleAnimationFramesUnused06
+        .word _Frame06 - aBattleAnimationFramesUnused06
+        .word _Frame07 - aBattleAnimationFramesUnused06
+        .word _Frame08 - aBattleAnimationFramesUnused06
+        .word _Frame09 - aBattleAnimationFramesUnused06
+        .word _Frame10 - aBattleAnimationFramesUnused06
 
       _Frame00
         ANIM_TILES
@@ -4993,70 +4993,70 @@
         ANIM_TILE_ROW $1100, $0100
         ANIM_TILES_END
 
-      aBattleAnimationSequencesUnknown06 ; 98/EBAC
+      aBattleAnimationSequencesUnused06 ; 98/EBAC
 
         ; Sequence data of entry 6 of aBattleAnimationFrameTables; nothing selects it (no lookup
         ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
-        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown06.
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnused06.
 
-        .word _Index - aBattleAnimationSequencesUnknown06, _Records - aBattleAnimationSequencesUnknown06
+        .word _Index - aBattleAnimationSequencesUnused06, _Records - aBattleAnimationSequencesUnused06
 
       _Index
-        .word _Sequence00 - aBattleAnimationSequencesUnknown06
-        .word _Sequence01 - aBattleAnimationSequencesUnknown06
-        .word _Sequence02 - aBattleAnimationSequencesUnknown06
-        .word _Sequence03 - aBattleAnimationSequencesUnknown06
-        .word _Sequence04 - aBattleAnimationSequencesUnknown06
-        .word _Sequence05 - aBattleAnimationSequencesUnknown06
-        .word _Sequence06 - aBattleAnimationSequencesUnknown06
-        .word _Sequence07 - aBattleAnimationSequencesUnknown06
-        .word _Sequence08 - aBattleAnimationSequencesUnknown06
-        .word _Sequence09 - aBattleAnimationSequencesUnknown06
-        .word _Sequence10 - aBattleAnimationSequencesUnknown06
-        .word _Sequence11 - aBattleAnimationSequencesUnknown06
-        .word _Sequence12 - aBattleAnimationSequencesUnknown06
-        .word _Sequence13 - aBattleAnimationSequencesUnknown06
-        .word _Sequence14 - aBattleAnimationSequencesUnknown06
-        .word _Sequence15 - aBattleAnimationSequencesUnknown06
-        .word _Sequence16 - aBattleAnimationSequencesUnknown06
-        .word _Sequence17 - aBattleAnimationSequencesUnknown06
-        .word _Sequence18 - aBattleAnimationSequencesUnknown06
-        .word _Sequence19 - aBattleAnimationSequencesUnknown06
-        .word _Sequence20 - aBattleAnimationSequencesUnknown06
-        .word _Sequence21 - aBattleAnimationSequencesUnknown06
+        .word _Sequence00 - aBattleAnimationSequencesUnused06
+        .word _Sequence01 - aBattleAnimationSequencesUnused06
+        .word _Sequence02 - aBattleAnimationSequencesUnused06
+        .word _Sequence03 - aBattleAnimationSequencesUnused06
+        .word _Sequence04 - aBattleAnimationSequencesUnused06
+        .word _Sequence05 - aBattleAnimationSequencesUnused06
+        .word _Sequence06 - aBattleAnimationSequencesUnused06
+        .word _Sequence07 - aBattleAnimationSequencesUnused06
+        .word _Sequence08 - aBattleAnimationSequencesUnused06
+        .word _Sequence09 - aBattleAnimationSequencesUnused06
+        .word _Sequence10 - aBattleAnimationSequencesUnused06
+        .word _Sequence11 - aBattleAnimationSequencesUnused06
+        .word _Sequence12 - aBattleAnimationSequencesUnused06
+        .word _Sequence13 - aBattleAnimationSequencesUnused06
+        .word _Sequence14 - aBattleAnimationSequencesUnused06
+        .word _Sequence15 - aBattleAnimationSequencesUnused06
+        .word _Sequence16 - aBattleAnimationSequencesUnused06
+        .word _Sequence17 - aBattleAnimationSequencesUnused06
+        .word _Sequence18 - aBattleAnimationSequencesUnused06
+        .word _Sequence19 - aBattleAnimationSequencesUnused06
+        .word _Sequence20 - aBattleAnimationSequencesUnused06
+        .word _Sequence21 - aBattleAnimationSequencesUnused06
 
       _Records
-        .word aBattleAnimationSequencesUnknown09._Record00 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record01 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record02 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record03 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record04 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record05 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record06 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record07 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record08 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record09 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record10 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record11 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record12 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record13 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record14 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record15 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record16 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record17 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record18 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record19 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record20 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record21 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record22 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record23 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record24 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record25 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record26 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record27 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record28 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record29 - aBattleAnimationSequencesUnknown06
-        .word aBattleAnimationSequencesUnknown09._Record30 - aBattleAnimationSequencesUnknown06
+        .word aBattleAnimationSequencesUnused09._Record00 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record01 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record02 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record03 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record04 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record05 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record06 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record07 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record08 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record09 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record10 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record11 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record12 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record13 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record14 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record15 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record16 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record17 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record18 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record19 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record20 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record21 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record22 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record23 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record24 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record25 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record26 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record27 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record28 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record29 - aBattleAnimationSequencesUnused06
+        .word aBattleAnimationSequencesUnused09._Record30 - aBattleAnimationSequencesUnused06
 
       _Sequence00
         ANIM_CLEAR_BUSY
@@ -5276,56 +5276,56 @@
         ANIM_CLEAR_BUSY
         ANIM_HOLD
 
-      aBattleAnimationSequencesUnknown09 ; 98/ED76
+      aBattleAnimationSequencesUnused09 ; 98/ED76
 
         ; Sequence data of entry 9 of aBattleAnimationFrameTables; nothing selects it (no lookup
         ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
-        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown06.
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnused06.
 
-        .word _Index - aBattleAnimationSequencesUnknown09, _Records - aBattleAnimationSequencesUnknown09
+        .word _Index - aBattleAnimationSequencesUnused09, _Records - aBattleAnimationSequencesUnused09
 
       _Index
-        .word _Sequence00 - aBattleAnimationSequencesUnknown09
-        .word _Sequence01 - aBattleAnimationSequencesUnknown09
-        .word _Sequence02 - aBattleAnimationSequencesUnknown09
-        .word _Sequence03 - aBattleAnimationSequencesUnknown09
-        .word _Sequence04 - aBattleAnimationSequencesUnknown09
-        .word _Sequence05 - aBattleAnimationSequencesUnknown09
-        .word _Sequence06 - aBattleAnimationSequencesUnknown09
-        .word _Sequence07 - aBattleAnimationSequencesUnknown09
+        .word _Sequence00 - aBattleAnimationSequencesUnused09
+        .word _Sequence01 - aBattleAnimationSequencesUnused09
+        .word _Sequence02 - aBattleAnimationSequencesUnused09
+        .word _Sequence03 - aBattleAnimationSequencesUnused09
+        .word _Sequence04 - aBattleAnimationSequencesUnused09
+        .word _Sequence05 - aBattleAnimationSequencesUnused09
+        .word _Sequence06 - aBattleAnimationSequencesUnused09
+        .word _Sequence07 - aBattleAnimationSequencesUnused09
 
       _Records
-        .word _Record00 - aBattleAnimationSequencesUnknown09
-        .word _Record01 - aBattleAnimationSequencesUnknown09
-        .word _Record02 - aBattleAnimationSequencesUnknown09
-        .word _Record03 - aBattleAnimationSequencesUnknown09
-        .word _Record04 - aBattleAnimationSequencesUnknown09
-        .word _Record05 - aBattleAnimationSequencesUnknown09
-        .word _Record06 - aBattleAnimationSequencesUnknown09
-        .word _Record07 - aBattleAnimationSequencesUnknown09
-        .word _Record08 - aBattleAnimationSequencesUnknown09
-        .word _Record09 - aBattleAnimationSequencesUnknown09
-        .word _Record10 - aBattleAnimationSequencesUnknown09
-        .word _Record11 - aBattleAnimationSequencesUnknown09
-        .word _Record12 - aBattleAnimationSequencesUnknown09
-        .word _Record13 - aBattleAnimationSequencesUnknown09
-        .word _Record14 - aBattleAnimationSequencesUnknown09
-        .word _Record15 - aBattleAnimationSequencesUnknown09
-        .word _Record16 - aBattleAnimationSequencesUnknown09
-        .word _Record17 - aBattleAnimationSequencesUnknown09
-        .word _Record18 - aBattleAnimationSequencesUnknown09
-        .word _Record19 - aBattleAnimationSequencesUnknown09
-        .word _Record20 - aBattleAnimationSequencesUnknown09
-        .word _Record21 - aBattleAnimationSequencesUnknown09
-        .word _Record22 - aBattleAnimationSequencesUnknown09
-        .word _Record23 - aBattleAnimationSequencesUnknown09
-        .word _Record24 - aBattleAnimationSequencesUnknown09
-        .word _Record25 - aBattleAnimationSequencesUnknown09
-        .word _Record26 - aBattleAnimationSequencesUnknown09
-        .word _Record27 - aBattleAnimationSequencesUnknown09
-        .word _Record28 - aBattleAnimationSequencesUnknown09
-        .word _Record29 - aBattleAnimationSequencesUnknown09
-        .word _Record30 - aBattleAnimationSequencesUnknown09
+        .word _Record00 - aBattleAnimationSequencesUnused09
+        .word _Record01 - aBattleAnimationSequencesUnused09
+        .word _Record02 - aBattleAnimationSequencesUnused09
+        .word _Record03 - aBattleAnimationSequencesUnused09
+        .word _Record04 - aBattleAnimationSequencesUnused09
+        .word _Record05 - aBattleAnimationSequencesUnused09
+        .word _Record06 - aBattleAnimationSequencesUnused09
+        .word _Record07 - aBattleAnimationSequencesUnused09
+        .word _Record08 - aBattleAnimationSequencesUnused09
+        .word _Record09 - aBattleAnimationSequencesUnused09
+        .word _Record10 - aBattleAnimationSequencesUnused09
+        .word _Record11 - aBattleAnimationSequencesUnused09
+        .word _Record12 - aBattleAnimationSequencesUnused09
+        .word _Record13 - aBattleAnimationSequencesUnused09
+        .word _Record14 - aBattleAnimationSequencesUnused09
+        .word _Record15 - aBattleAnimationSequencesUnused09
+        .word _Record16 - aBattleAnimationSequencesUnused09
+        .word _Record17 - aBattleAnimationSequencesUnused09
+        .word _Record18 - aBattleAnimationSequencesUnused09
+        .word _Record19 - aBattleAnimationSequencesUnused09
+        .word _Record20 - aBattleAnimationSequencesUnused09
+        .word _Record21 - aBattleAnimationSequencesUnused09
+        .word _Record22 - aBattleAnimationSequencesUnused09
+        .word _Record23 - aBattleAnimationSequencesUnused09
+        .word _Record24 - aBattleAnimationSequencesUnused09
+        .word _Record25 - aBattleAnimationSequencesUnused09
+        .word _Record26 - aBattleAnimationSequencesUnused09
+        .word _Record27 - aBattleAnimationSequencesUnused09
+        .word _Record28 - aBattleAnimationSequencesUnused09
+        .word _Record29 - aBattleAnimationSequencesUnused09
+        .word _Record30 - aBattleAnimationSequencesUnused09
 
       _Sequence00
         ANIM_CLEAR_BUSY
@@ -5730,22 +5730,22 @@
         .structSpriteEntry (  -9,  -36), $21, SpriteLarge, $04C, 2, 2, true, false
         ANIM_RECORD_END
 
-      aBattleAnimationFramesUnknown07 ; 98/F2A3
+      aBattleAnimationFramesUnused07 ; 98/F2A3
 
         ; Frame table of entries 7, 8: slices of the class sheet per frame.
 
-        .word _Frame00 - aBattleAnimationFramesUnknown07
-        .word _Frame01 - aBattleAnimationFramesUnknown07
-        .word _Frame02 - aBattleAnimationFramesUnknown07
-        .word _Frame03 - aBattleAnimationFramesUnknown07
-        .word _Frame04 - aBattleAnimationFramesUnknown07
-        .word _Frame05 - aBattleAnimationFramesUnknown07
-        .word _Frame06 - aBattleAnimationFramesUnknown07
-        .word _Frame07 - aBattleAnimationFramesUnknown07
-        .word _Frame08 - aBattleAnimationFramesUnknown07
-        .word _Frame09 - aBattleAnimationFramesUnknown07
-        .word _Frame10 - aBattleAnimationFramesUnknown07
-        .word _Frame11 - aBattleAnimationFramesUnknown07
+        .word _Frame00 - aBattleAnimationFramesUnused07
+        .word _Frame01 - aBattleAnimationFramesUnused07
+        .word _Frame02 - aBattleAnimationFramesUnused07
+        .word _Frame03 - aBattleAnimationFramesUnused07
+        .word _Frame04 - aBattleAnimationFramesUnused07
+        .word _Frame05 - aBattleAnimationFramesUnused07
+        .word _Frame06 - aBattleAnimationFramesUnused07
+        .word _Frame07 - aBattleAnimationFramesUnused07
+        .word _Frame08 - aBattleAnimationFramesUnused07
+        .word _Frame09 - aBattleAnimationFramesUnused07
+        .word _Frame10 - aBattleAnimationFramesUnused07
+        .word _Frame11 - aBattleAnimationFramesUnused07
 
       _Frame00
         ANIM_TILES
@@ -5819,54 +5819,54 @@
         ANIM_TILE_ROW $1280, $0080
         ANIM_TILES_END
 
-      aBattleAnimationSequencesUnknown07 ; 98/F327
+      aBattleAnimationSequencesUnused07 ; 98/F327
 
         ; Sequence data of entry 7 of aBattleAnimationFrameTables; nothing selects it (no lookup
         ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
-        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown07.
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnused07.
 
-        .word _Index - aBattleAnimationSequencesUnknown07, _Records - aBattleAnimationSequencesUnknown07
+        .word _Index - aBattleAnimationSequencesUnused07, _Records - aBattleAnimationSequencesUnused07
 
       _Index
-        .word _Sequence00 - aBattleAnimationSequencesUnknown07
-        .word _Sequence01 - aBattleAnimationSequencesUnknown07
-        .word _Sequence02 - aBattleAnimationSequencesUnknown07
-        .word _Sequence03 - aBattleAnimationSequencesUnknown07
-        .word _Sequence04 - aBattleAnimationSequencesUnknown07
-        .word _Sequence05 - aBattleAnimationSequencesUnknown07
-        .word _Sequence06 - aBattleAnimationSequencesUnknown07
-        .word _Sequence07 - aBattleAnimationSequencesUnknown07
-        .word _Sequence08 - aBattleAnimationSequencesUnknown07
-        .word _Sequence09 - aBattleAnimationSequencesUnknown07
-        .word _Sequence10 - aBattleAnimationSequencesUnknown07
-        .word _Sequence11 - aBattleAnimationSequencesUnknown07
-        .word _Sequence12 - aBattleAnimationSequencesUnknown07
-        .word _Sequence13 - aBattleAnimationSequencesUnknown07
-        .word _Sequence14 - aBattleAnimationSequencesUnknown07
-        .word _Sequence15 - aBattleAnimationSequencesUnknown07
-        .word _Sequence16 - aBattleAnimationSequencesUnknown07
+        .word _Sequence00 - aBattleAnimationSequencesUnused07
+        .word _Sequence01 - aBattleAnimationSequencesUnused07
+        .word _Sequence02 - aBattleAnimationSequencesUnused07
+        .word _Sequence03 - aBattleAnimationSequencesUnused07
+        .word _Sequence04 - aBattleAnimationSequencesUnused07
+        .word _Sequence05 - aBattleAnimationSequencesUnused07
+        .word _Sequence06 - aBattleAnimationSequencesUnused07
+        .word _Sequence07 - aBattleAnimationSequencesUnused07
+        .word _Sequence08 - aBattleAnimationSequencesUnused07
+        .word _Sequence09 - aBattleAnimationSequencesUnused07
+        .word _Sequence10 - aBattleAnimationSequencesUnused07
+        .word _Sequence11 - aBattleAnimationSequencesUnused07
+        .word _Sequence12 - aBattleAnimationSequencesUnused07
+        .word _Sequence13 - aBattleAnimationSequencesUnused07
+        .word _Sequence14 - aBattleAnimationSequencesUnused07
+        .word _Sequence15 - aBattleAnimationSequencesUnused07
+        .word _Sequence16 - aBattleAnimationSequencesUnused07
 
       _Records
-        .word aBattleAnimationSequencesUnknown08._Record00 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record01 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record02 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record03 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record04 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record05 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record06 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record07 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record08 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record09 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record10 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record11 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record12 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record13 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record14 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record15 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record16 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record17 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record18 - aBattleAnimationSequencesUnknown07
-        .word aBattleAnimationSequencesUnknown08._Record19 - aBattleAnimationSequencesUnknown07
+        .word aBattleAnimationSequencesUnused08._Record00 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record01 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record02 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record03 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record04 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record05 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record06 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record07 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record08 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record09 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record10 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record11 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record12 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record13 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record14 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record15 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record16 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record17 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record18 - aBattleAnimationSequencesUnused07
+        .word aBattleAnimationSequencesUnused08._Record19 - aBattleAnimationSequencesUnused07
 
       _Sequence00
         ANIM_STEP 1, 2
@@ -6007,52 +6007,52 @@
         ANIM_CLEAR_BUSY
         ANIM_HOLD
 
-      aBattleAnimationSequencesUnknown08 ; 98/F447
+      aBattleAnimationSequencesUnused08 ; 98/F447
 
         ; Sequence data of entry 8 of aBattleAnimationFrameTables; nothing selects it (no lookup
         ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
-        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown07.
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnused07.
 
-        .word _Index - aBattleAnimationSequencesUnknown08, _Records - aBattleAnimationSequencesUnknown08
+        .word _Index - aBattleAnimationSequencesUnused08, _Records - aBattleAnimationSequencesUnused08
 
       _Index
-        .word _Sequence00 - aBattleAnimationSequencesUnknown08
-        .word _Sequence01 - aBattleAnimationSequencesUnknown08
-        .word _Sequence02 - aBattleAnimationSequencesUnknown08
-        .word _Sequence03 - aBattleAnimationSequencesUnknown08
-        .word _Sequence04 - aBattleAnimationSequencesUnknown08
-        .word _Sequence05 - aBattleAnimationSequencesUnknown08
-        .word _Sequence06 - aBattleAnimationSequencesUnknown08
-        .word _Sequence07 - aBattleAnimationSequencesUnknown08
-        .word _Sequence08 - aBattleAnimationSequencesUnknown08
-        .word _Sequence09 - aBattleAnimationSequencesUnknown08
-        .word _Sequence10 - aBattleAnimationSequencesUnknown08
-        .word _Sequence11 - aBattleAnimationSequencesUnknown08
-        .word _Sequence12 - aBattleAnimationSequencesUnknown08
-        .word _Sequence12 - aBattleAnimationSequencesUnknown08
-        .word _Sequence14 - aBattleAnimationSequencesUnknown08
+        .word _Sequence00 - aBattleAnimationSequencesUnused08
+        .word _Sequence01 - aBattleAnimationSequencesUnused08
+        .word _Sequence02 - aBattleAnimationSequencesUnused08
+        .word _Sequence03 - aBattleAnimationSequencesUnused08
+        .word _Sequence04 - aBattleAnimationSequencesUnused08
+        .word _Sequence05 - aBattleAnimationSequencesUnused08
+        .word _Sequence06 - aBattleAnimationSequencesUnused08
+        .word _Sequence07 - aBattleAnimationSequencesUnused08
+        .word _Sequence08 - aBattleAnimationSequencesUnused08
+        .word _Sequence09 - aBattleAnimationSequencesUnused08
+        .word _Sequence10 - aBattleAnimationSequencesUnused08
+        .word _Sequence11 - aBattleAnimationSequencesUnused08
+        .word _Sequence12 - aBattleAnimationSequencesUnused08
+        .word _Sequence12 - aBattleAnimationSequencesUnused08
+        .word _Sequence14 - aBattleAnimationSequencesUnused08
 
       _Records
-        .word _Record00 - aBattleAnimationSequencesUnknown08
-        .word _Record01 - aBattleAnimationSequencesUnknown08
-        .word _Record02 - aBattleAnimationSequencesUnknown08
-        .word _Record03 - aBattleAnimationSequencesUnknown08
-        .word _Record04 - aBattleAnimationSequencesUnknown08
-        .word _Record05 - aBattleAnimationSequencesUnknown08
-        .word _Record06 - aBattleAnimationSequencesUnknown08
-        .word _Record07 - aBattleAnimationSequencesUnknown08
-        .word _Record08 - aBattleAnimationSequencesUnknown08
-        .word _Record09 - aBattleAnimationSequencesUnknown08
-        .word _Record10 - aBattleAnimationSequencesUnknown08
-        .word _Record11 - aBattleAnimationSequencesUnknown08
-        .word _Record12 - aBattleAnimationSequencesUnknown08
-        .word _Record13 - aBattleAnimationSequencesUnknown08
-        .word _Record14 - aBattleAnimationSequencesUnknown08
-        .word _Record15 - aBattleAnimationSequencesUnknown08
-        .word _Record16 - aBattleAnimationSequencesUnknown08
-        .word _Record17 - aBattleAnimationSequencesUnknown08
-        .word _Record18 - aBattleAnimationSequencesUnknown08
-        .word _Record19 - aBattleAnimationSequencesUnknown08
+        .word _Record00 - aBattleAnimationSequencesUnused08
+        .word _Record01 - aBattleAnimationSequencesUnused08
+        .word _Record02 - aBattleAnimationSequencesUnused08
+        .word _Record03 - aBattleAnimationSequencesUnused08
+        .word _Record04 - aBattleAnimationSequencesUnused08
+        .word _Record05 - aBattleAnimationSequencesUnused08
+        .word _Record06 - aBattleAnimationSequencesUnused08
+        .word _Record07 - aBattleAnimationSequencesUnused08
+        .word _Record08 - aBattleAnimationSequencesUnused08
+        .word _Record09 - aBattleAnimationSequencesUnused08
+        .word _Record10 - aBattleAnimationSequencesUnused08
+        .word _Record11 - aBattleAnimationSequencesUnused08
+        .word _Record12 - aBattleAnimationSequencesUnused08
+        .word _Record13 - aBattleAnimationSequencesUnused08
+        .word _Record14 - aBattleAnimationSequencesUnused08
+        .word _Record15 - aBattleAnimationSequencesUnused08
+        .word _Record16 - aBattleAnimationSequencesUnused08
+        .word _Record17 - aBattleAnimationSequencesUnused08
+        .word _Record18 - aBattleAnimationSequencesUnused08
+        .word _Record19 - aBattleAnimationSequencesUnused08
 
       _Sequence00
         ANIM_CLEAR_BUSY
@@ -6457,19 +6457,19 @@
         .structSpriteEntry ( -10,  -31), $21, SpriteLarge, $002, 2, 0, false, false
         ANIM_RECORD_END
 
-      aBattleAnimationFramesUnknown10 ; 98/F9A4
+      aBattleAnimationFramesUnused10 ; 98/F9A4
 
         ; Frame table of entry 10: slices of the class sheet per frame.
 
-        .word _Frame00 - aBattleAnimationFramesUnknown10
-        .word _Frame01 - aBattleAnimationFramesUnknown10
-        .word _Frame02 - aBattleAnimationFramesUnknown10
-        .word _Frame03 - aBattleAnimationFramesUnknown10
-        .word _Frame04 - aBattleAnimationFramesUnknown10
-        .word _Frame05 - aBattleAnimationFramesUnknown10
-        .word _Frame06 - aBattleAnimationFramesUnknown10
-        .word _Frame07 - aBattleAnimationFramesUnknown10
-        .word _Frame08 - aBattleAnimationFramesUnknown10
+        .word _Frame00 - aBattleAnimationFramesUnused10
+        .word _Frame01 - aBattleAnimationFramesUnused10
+        .word _Frame02 - aBattleAnimationFramesUnused10
+        .word _Frame03 - aBattleAnimationFramesUnused10
+        .word _Frame04 - aBattleAnimationFramesUnused10
+        .word _Frame05 - aBattleAnimationFramesUnused10
+        .word _Frame06 - aBattleAnimationFramesUnused10
+        .word _Frame07 - aBattleAnimationFramesUnused10
+        .word _Frame08 - aBattleAnimationFramesUnused10
 
       _Frame00
         ANIM_TILES
@@ -6525,59 +6525,59 @@
         ANIM_TILE_ROW $0D80, $0100
         ANIM_TILES_END
 
-      aBattleAnimationSequencesUnknown10 ; 98/FA07
+      aBattleAnimationSequencesUnused10 ; 98/FA07
 
         ; Sequence data of entry 10 of aBattleAnimationFrameTables; nothing selects it (no lookup
         ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
-        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown10.
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnused10.
 
-        .word _Index - aBattleAnimationSequencesUnknown10, _Records - aBattleAnimationSequencesUnknown10
+        .word _Index - aBattleAnimationSequencesUnused10, _Records - aBattleAnimationSequencesUnused10
 
       _Index
-        .word _Sequence00 - aBattleAnimationSequencesUnknown10
-        .word _Sequence01 - aBattleAnimationSequencesUnknown10
-        .word _Sequence02 - aBattleAnimationSequencesUnknown10
-        .word _Sequence03 - aBattleAnimationSequencesUnknown10
-        .word _Sequence04 - aBattleAnimationSequencesUnknown10
-        .word _Sequence05 - aBattleAnimationSequencesUnknown10
-        .word _Sequence06 - aBattleAnimationSequencesUnknown10
-        .word _Sequence07 - aBattleAnimationSequencesUnknown10
-        .word _Sequence08 - aBattleAnimationSequencesUnknown10
-        .word _Sequence09 - aBattleAnimationSequencesUnknown10
-        .word _Sequence10 - aBattleAnimationSequencesUnknown10
-        .word _Sequence11 - aBattleAnimationSequencesUnknown10
-        .word _Sequence12 - aBattleAnimationSequencesUnknown10
-        .word _Sequence13 - aBattleAnimationSequencesUnknown10
-        .word _Sequence14 - aBattleAnimationSequencesUnknown10
-        .word _Sequence15 - aBattleAnimationSequencesUnknown10
-        .word _Sequence16 - aBattleAnimationSequencesUnknown10
-        .word _Sequence17 - aBattleAnimationSequencesUnknown10
-        .word _Sequence18 - aBattleAnimationSequencesUnknown10
-        .word _Sequence19 - aBattleAnimationSequencesUnknown10
-        .word _Sequence20 - aBattleAnimationSequencesUnknown10
-        .word _Sequence21 - aBattleAnimationSequencesUnknown10
-        .word _Sequence22 - aBattleAnimationSequencesUnknown10
-        .word _Sequence23 - aBattleAnimationSequencesUnknown10
-        .word _Sequence24 - aBattleAnimationSequencesUnknown10
+        .word _Sequence00 - aBattleAnimationSequencesUnused10
+        .word _Sequence01 - aBattleAnimationSequencesUnused10
+        .word _Sequence02 - aBattleAnimationSequencesUnused10
+        .word _Sequence03 - aBattleAnimationSequencesUnused10
+        .word _Sequence04 - aBattleAnimationSequencesUnused10
+        .word _Sequence05 - aBattleAnimationSequencesUnused10
+        .word _Sequence06 - aBattleAnimationSequencesUnused10
+        .word _Sequence07 - aBattleAnimationSequencesUnused10
+        .word _Sequence08 - aBattleAnimationSequencesUnused10
+        .word _Sequence09 - aBattleAnimationSequencesUnused10
+        .word _Sequence10 - aBattleAnimationSequencesUnused10
+        .word _Sequence11 - aBattleAnimationSequencesUnused10
+        .word _Sequence12 - aBattleAnimationSequencesUnused10
+        .word _Sequence13 - aBattleAnimationSequencesUnused10
+        .word _Sequence14 - aBattleAnimationSequencesUnused10
+        .word _Sequence15 - aBattleAnimationSequencesUnused10
+        .word _Sequence16 - aBattleAnimationSequencesUnused10
+        .word _Sequence17 - aBattleAnimationSequencesUnused10
+        .word _Sequence18 - aBattleAnimationSequencesUnused10
+        .word _Sequence19 - aBattleAnimationSequencesUnused10
+        .word _Sequence20 - aBattleAnimationSequencesUnused10
+        .word _Sequence21 - aBattleAnimationSequencesUnused10
+        .word _Sequence22 - aBattleAnimationSequencesUnused10
+        .word _Sequence23 - aBattleAnimationSequencesUnused10
+        .word _Sequence24 - aBattleAnimationSequencesUnused10
 
       _Records
-        .word _Record00 - aBattleAnimationSequencesUnknown10
-        .word _Record01 - aBattleAnimationSequencesUnknown10
-        .word _Record02 - aBattleAnimationSequencesUnknown10
-        .word _Record03 - aBattleAnimationSequencesUnknown10
-        .word _Record04 - aBattleAnimationSequencesUnknown10
-        .word _Record05 - aBattleAnimationSequencesUnknown10
-        .word _Record06 - aBattleAnimationSequencesUnknown10
-        .word _Record07 - aBattleAnimationSequencesUnknown10
-        .word _Record08 - aBattleAnimationSequencesUnknown10
-        .word _Record09 - aBattleAnimationSequencesUnknown10
-        .word _Record10 - aBattleAnimationSequencesUnknown10
-        .word _Record11 - aBattleAnimationSequencesUnknown10
-        .word _Record12 - aBattleAnimationSequencesUnknown10
-        .word _Record13 - aBattleAnimationSequencesUnknown10
-        .word _Record14 - aBattleAnimationSequencesUnknown10
-        .word _Record15 - aBattleAnimationSequencesUnknown10
-        .word _Record16 - aBattleAnimationSequencesUnknown10
+        .word _Record00 - aBattleAnimationSequencesUnused10
+        .word _Record01 - aBattleAnimationSequencesUnused10
+        .word _Record02 - aBattleAnimationSequencesUnused10
+        .word _Record03 - aBattleAnimationSequencesUnused10
+        .word _Record04 - aBattleAnimationSequencesUnused10
+        .word _Record05 - aBattleAnimationSequencesUnused10
+        .word _Record06 - aBattleAnimationSequencesUnused10
+        .word _Record07 - aBattleAnimationSequencesUnused10
+        .word _Record08 - aBattleAnimationSequencesUnused10
+        .word _Record09 - aBattleAnimationSequencesUnused10
+        .word _Record10 - aBattleAnimationSequencesUnused10
+        .word _Record11 - aBattleAnimationSequencesUnused10
+        .word _Record12 - aBattleAnimationSequencesUnused10
+        .word _Record13 - aBattleAnimationSequencesUnused10
+        .word _Record14 - aBattleAnimationSequencesUnused10
+        .word _Record15 - aBattleAnimationSequencesUnused10
+        .word _Record16 - aBattleAnimationSequencesUnused10
 
       _Sequence00
         ANIM_CLEAR_BUSY

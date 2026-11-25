@@ -185,6 +185,6 @@ g4bppcMapActionEffectGfx1 g4bppcMapActionEffectGfx1 ; 1024 bytes decompressed
 g4bppcMapActionEffectGfx2 g4bppcMapActionEffectGfx2 ; 2048 bytes decompressed
 g4bppcMapBattleCritSibling g4bppcMapBattleCritSibling ; 1024 bytes decompressed
 g4bppcMapBattleCritLover g4bppcMapBattleCritLover ; 1024 bytes decompressed
-g4bppcMapBattleCritUnknown4 g4bppcMapBattleCritUnknown4 ; 1024 bytes decompressed
+g4bppcMapBattleCritUnused4 g4bppcMapBattleCritUnused4 ; 1024 bytes decompressed
 g4bppcMapBattleCritTriangleAttack g4bppcMapBattleCritTriangleAttack ; 1024 bytes decompressed
 g4bppcMapMagicCutsceneGfx2 g4bppcMapMagicCutsceneGfx2 ; 2048 bytes decompressed
