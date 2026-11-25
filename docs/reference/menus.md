@@ -126,7 +126,7 @@ The map menu's four overview commands ([map_menu.md](map_menu.md)) open full-scr
 - **Battle** ([battle.md](routines/battle.md)): battle might, hit and avoid; drop items; the action struct for the revive staff.
 - **Unit and item windows**: the revive screen's list variables; the unit window opens the status screen and comes back.
 - **Castle** ([castle.md](castle.md)): opens the status and options screens and is returned to; reads the condition names.
-- **Core** ([core.md](core.md)): game states, the menu VBlank routine, procs and fades, HDMA, DMA, decompression, sprites.
+- **Core**: game states ([game_states.md](game_states.md)), the menu VBlank routine and the DMA queue ([frame.md](frame.md)), procs ([procs.md](procs.md)), fades and decompression ([graphics.md](graphics.md)), HDMA ([scanlines.md](scanlines.md)), sprites ([sprites.md](sprites.md)).
 
 ## Open questions
 

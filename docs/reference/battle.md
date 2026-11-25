@@ -35,7 +35,7 @@ Combat resolution, stat calculation, skills, weapon traits, staff effects, scrip
 
 - **Units** ([units.md](units.md)): `rlActionStructLevelUp`, `rlActionStructInflictDamage`, `rlHealSelectedUnitsHP`, faction/skill/weapon getters.
 - **Items** ([items.md](items.md)): weapon traits, effectiveness, durability (`rlUseInventorySlotItem`), item drops.
-- **Core** ([core.md](core.md)): `rlGetRandomNumber` / `rlCheckCodeChecksums`, `rlBuildRAMStructHeader`, `rlAppendNewStructEntry`.
+- **Core**: `rlGetRandomNumber`, `rlBuildRAMStructHeader`, `rlAppendNewStructEntry` ([allocation.md](allocation.md)); `rlCheckCodeChecksums` ([frame.md](frame.md)).
 
 ## Open questions and retail quirks
 

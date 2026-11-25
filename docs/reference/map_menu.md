@@ -42,7 +42,7 @@ Each menu on screen belongs to a proc. Its definition (`structProcInfo`) is foll
 
 ### Option list menus
 
-A list menu (`rlListMenuProcSetUp`, `rlListMenuProcHandleInput`) pushes an option list (`rlPushMenuOptionList`; a stack, see [core.md](core.md)): each option is a long pointer to a handler, a width and height, and its text. Up and Down move the hand (`aBody6`); A closes the menu and runs the option's handler; B closes it. While another list is on top (or the screen is dark) the menu ignores input (`rlCheckListMenuIdle`).
+A list menu (`rlListMenuProcSetUp`, `rlListMenuProcHandleInput`) pushes an option list (`rlPushMenuOptionList`; a stack of blocks allocated in a RAM area, each holding a struct array of options, see [allocation.md](allocation.md)): each option is a long pointer to a handler, a width and height, and its text. Up and Down move the hand (`aBody6`); A closes the menu and runs the option's handler; B closes it. While another list is on top (or the screen is dark) the menu ignores input (`rlCheckListMenuIdle`).
 
 ## The main map menu
 
@@ -105,7 +105,7 @@ The terrain window and the unit window (`procTerrainWindow`, `procUnitWindow`, "
 
 ## Depends on
 
-- **Core** ([core.md](core.md)): procs, RAM areas and the option list stack, HDMA, DMA, decompression.
+- **Core**: procs ([procs.md](procs.md)), RAM areas and struct arrays ([allocation.md](allocation.md)), HDMA ([scanlines.md](scanlines.md)), the DMA queue ([frame.md](frame.md)), decompression ([graphics.md](graphics.md)).
 - **Units** and **items**: everything the checks and windows read; `rlFindTargetsInRange` and its target filters.
 - **Map** ([map.md](map.md)): the cursor, locations, the slot lists (`rlBuildUnitMenuSlotLists`, [unit_menu_slots.asm](../../engine/menus/unit_menu_slots.asm)) and the command effects the handlers start ([map_actions.asm](../../engine/map/map_actions.asm)).
 

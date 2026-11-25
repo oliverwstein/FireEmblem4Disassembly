@@ -41,7 +41,7 @@ loop {
 
 On the SNES, the CPU has an interrupt, the **NMI**, that fires at the start of every VBlank. Games of the era split into two broad camps over how much to do inside it. Some keep the interrupt short (copy to video RAM, set registers, return) and run the game logic in the main loop, as above. Others run the *whole frame* inside the interrupt, logic included, and leave the main loop for background work. FE4 is in the second camp, and it makes deliberate use of the spare main loop.
 
-The interrupt side ([engine/core/interrupts.asm](../../engine/core/interrupts.asm), [engine/map/map_loop.asm](../../engine/map/map_loop.asm)) runs whatever routine `wVBlankPointer` names. On the chapter map that is `rsMapVBlank`, and it reads almost like a frame's to-do list:
+The interrupt side ([engine/core/frame/interrupts.asm](../../engine/core/frame/interrupts.asm), [engine/map/map_loop.asm](../../engine/map/map_loop.asm)) runs whatever routine `wVBlankPointer` names. On the chapter map that is `rsMapVBlank`, and it reads almost like a frame's to-do list:
 
 ```rust
 fn rs_map_vblank() {                    // runs 60 times a second, inside the NMI
@@ -64,7 +64,7 @@ fn rs_map_vblank() {                    // runs 60 times a second, inside the NM
 }
 ```
 
-The main-loop side ([engine/core/boot.asm](../../engine/core/boot.asm)) is a loop that runs whatever routine `wMainLoopPointer` names and then sleeps until the next interrupt. On the map that is `rsMapMainLoop`:
+The main-loop side ([engine/core/frame/boot.asm](../../engine/core/frame/boot.asm)) is a loop that runs whatever routine `wMainLoopPointer` names and then sleeps until the next interrupt. On the map that is `rsMapMainLoop`:
 
 ```rust
 fn rs_map_main_loop() {                 // runs in whatever time the interrupt leaves over
@@ -89,7 +89,7 @@ This is the *Game Loop* pattern, fitted to the hardware: the display drives the 
 
 ## Game states: which screen is up?
 
-Inside the interrupt, `rlRunGameStateRoutines` decides which screen's logic runs ([engine/core/game_states.asm](../../engine/core/game_states.asm), [include/GameStates.h](../../include/GameStates.h)). It is a finite state machine, with an unusual twist: there are *two* current states at once.
+Inside the interrupt, `rlRunGameStateRoutines` decides which screen's logic runs ([engine/core/frame/game_states.asm](../../engine/core/frame/game_states.asm), [include/GameStates.h](../../include/GameStates.h)). It is a finite state machine, with an unusual twist: there are *two* current states at once.
 
 There is a table of 56 routine pointers, `aGameStateRoutines`, and two variables index it, `wGameStateRoutine1` and `wGameStateRoutine2`. Every frame, both routines run:
 
@@ -112,7 +112,7 @@ This is a *State* machine in its most stripped-down form: no objects and no inte
 
 **What about the nested menus?** A Fire Emblem turn is a chain of choices: unit, then destination, then action, then item, then confirm, with a way back at every step. A stack is the natural way to build that. The game-state table isn't it: it holds one screen at a time, with no history. The map's menus do keep a stack of their own ([engine/menus/map_menu.asm](../../engine/menus/map_menu.asm)). Each open menu runs in its own proc; list menus push a block of RAM for a new option list onto `lMenuOptionListTop` (`rlPushMenuOptionList`) and pop it on exit (`rlPopMenuOptionList`). While another list sits on top, lower menus ignore input (`rlCheckListMenuIdle`), so pressing B pops the top list and hands control cleanly back to the menu underneath.
 
-The routines are named after their role, `rl<Screen>Upkeep`, `rl<Screen>Setup`, and `rl<Screen>Step` (the chapter map's are `rlMapUpkeep`, `rlMapSetup`, `rlMapStep`), and [include/GameStates.h](../../include/GameStates.h) gives each entry a constant such as `GAMESTATE_MAP_STEP`. A few screens break the pattern: the battle scene and the map battle have only a setup and a step, and a few full-screen windows (the unit, item, skill, and data windows) use descriptive names instead.
+The routines are named after their role, `rl<Screen>Upkeep`, `rl<Screen>Setup`, and `rl<Screen>Step` (the chapter map's are `rlMapUpkeep`, `rlMapSetup`, `rlMapStep`), and [include/GameStates.h](../../include/GameStates.h) gives each entry a constant such as `GAMESTATE_MAP_STEP`. A few screens break the pattern: the battle scene and the title screen have only a setup and a step, and a few full-screen windows (the unit, item, skill, and data windows) use descriptive names instead.
 
 ## Procs: sixteen tiny threads
 
@@ -131,7 +131,7 @@ struct ProcInfo {            // structProcInfo
 
 Up to sixteen procs can be alive at once. Every frame, `rlProcEngineMainProcLoop` walks the slots and gives each live proc its turn: run its on-cycle routine, then step its script until it yields (`PROC_YIELD n` waits n frames), halts, or ends. A fade, for instance, is a proc whose on-cycle routine nudges the screen brightness one step each frame and whose script ends when it reaches the target. Whoever started the fade doesn't wait for it; it goes on with its own work, and can ask later whether the proc has ended (`rlProcEngineCheckProcEnded`).
 
-There are about 175 proc definitions in the game, and they're the glue of the presentation layer: the map's scrolling, every screen transition, the dialogue scenes, the event scripts themselves (an event runs *inside* a proc), the castle name pop-up, and so on.
+There are about 175 proc definitions in the game, and they're the glue of the presentation layer: the map's scrolling, every screen transition, the dialogue scenes, the waits and effects of event scripts, the castle name pop-up, and so on.
 
 Procs can look like an event system, but nothing is broadcast and nothing subscribes. Two classic game-architecture patterns describe them better:
 
@@ -160,12 +160,12 @@ In Rust, either layout reads naturally: `procs[i].body3` or `system.body3[i]`, a
 
 ### Its siblings
 
-Two more engines run beside the procs as **VBlank hooks**. These are entries in `aTaskTable`, a short list of per-frame engines that `rlRunVBlankHooks` walks, set up at boot by `rlRegisterVBlankHook`:
+Four more engines run beside the procs as **VBlank hooks**. These are entries in `aTaskTable`, a short list of per-frame engines that `rlRunVBlankHooks` walks, set up at boot by `rlRegisterVBlankHook`: active sprites, HDMA, the IRQ engine and the event engine. Two of them are close cousins of the procs:
 
-- **Active sprites** ([engine/core/active_sprites.asm](../../engine/core/active_sprites.asm)): scripted, animated sprites, each with its own little animation script. The map battle's weapons and spell effects, the map's action animations, and some event effects are active sprites. The map's units and cursor are not; the map's VBlank routine draws them directly.
-- **The HDMA engine** ([engine/core/hdma.asm](../../engine/core/hdma.asm)): per-frame scanline effects, also scripted, such as the dialogue box folding, gradients, and the battle scene's wobbles.
+- **Active sprites** ([engine/core/display/active_sprites.asm](../../engine/core/display/active_sprites.asm)): scripted, animated sprites, each with its own little animation script. The map battle's weapons and spell effects, the map's action animations, and some event effects are active sprites. The map's units and cursor are not; the map's VBlank routine draws them directly.
+- **The HDMA engine** ([engine/core/display/hdma.asm](../../engine/core/display/hdma.asm)): per-frame scanline effects, also scripted, such as the dialogue box folding, gradients, and the battle scene's wobbles.
 
-All three engines share the same shape: a fixed number of slots, a definition record in ROM, an on-cycle routine, and a script.
+These share the procs' shape: a fixed number of slots, a definition record in ROM, an on-cycle routine, and a script. So does the IRQ engine, whose entries run at chosen scanlines instead of once a frame ([scanlines.md](../reference/scanlines.md)).
 
 ## The data model: a war in 128 KB
 
@@ -201,7 +201,7 @@ That's why FE4 is moddable even in its original form: changing *what happens* mo
 
 With those ideas in hand, here's the whole game as one pass from power-on to credits. Each step is a later chapter.
 
-1. **Boot** ([engine/core/boot.asm](../../engine/core/boot.asm)). The reset vector lands in `rlReset`. RAM and video RAM are cleared and the sound driver is uploaded. The three engines (procs, active sprites, and HDMA) are registered as VBlank hooks, unit and event RAM are initialized, and the game state is set to the opening logo. The checksums are a curiosity here: the game sums parts of its own code at boot and, if they've been tampered with, quietly sabotages its random number generator ([include/Checksums.h](../../include/Checksums.h)).
+1. **Boot** ([engine/core/frame/boot.asm](../../engine/core/frame/boot.asm)). The reset vector lands in `rlReset`. RAM and video RAM are cleared and the sound driver is uploaded. Five engines (procs, active sprites, HDMA, the IRQ engine and events) are registered as VBlank hooks, unit and event RAM are initialized, and the game state is set to the opening logo. The checksums are a curiosity here: the game sums parts of its own code at boot and, if they've been tampered with, quietly sabotages its random number generator ([include/Checksums.h](../../include/Checksums.h)).
 2. **Title and save select**: game states and procs drawing menus; saving and loading in [engine/save/](../../engine/save/) ([save.md](../reference/save.md)).
 3. **A chapter begins**: the world map and chapter intro ([engine/worldmap/](../../engine/worldmap/)), then the chapter's units are created from ROM tables ([engine/units/unit_creation.asm](../../engine/units/unit_creation.asm)), deployed, and the opening event script plays.
 4. **The turn cycle**: player phase, then each other faction's phase. Start-of-turn effects come first (healing, status, castles: [engine/units/turn_start.asm](../../engine/units/turn_start.asm)). In the player phase the map waits for input ([engine/map/input.asm](../../engine/map/input.asm)): move a unit, open the map menu, or enter a castle ([engine/castle/](../../engine/castle/), [castle.md](../reference/castle.md)) to send units out, shop, repair, store items, or talk. In an AI phase the main loop runs the AI engine, which builds threat and movement maps and picks actions, a few steps per frame ([engine/ai/](../../engine/ai/)).

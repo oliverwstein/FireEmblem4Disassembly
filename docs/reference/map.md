@@ -156,7 +156,7 @@ At the end of chapter 5, after Arvis attacks Sigurd, `procFirstGenerationEnding`
 
 ## Depends on
 
-- **Core** ([core.md](core.md)): procs, the HDMA and DMA engines, decompression, the game states.
+- **Core**: procs ([procs.md](procs.md)), the HDMA engine and the row-upload IRQ ([scanlines.md](scanlines.md)), the DMA queue ([frame.md](frame.md)), decompression ([graphics.md](graphics.md)), the game states ([game_states.md](game_states.md)); the map units' sprite quotas ([sprites.md](sprites.md)).
 - **Units**, **items**, **locations**: what the range maps, commands and sprites read.
 - **Map menus** ([map_menu.md](map_menu.md)): the unit menu after a move, the battle forecast, the popups.
 - **AI** ([ai.md](ai.md)): the computer phase's moves and actions.

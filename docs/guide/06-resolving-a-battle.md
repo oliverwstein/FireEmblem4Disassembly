@@ -193,7 +193,7 @@ Scripted cutscene battles build a fixed strike list whose flags force a hit or a
 
 ## The RNG and the checksum trap
 
-Every percentage roll passes through `rlRollForChance` ([engine/battle/effects.asm](../../engine/battle/effects.asm)) and `rlGetRandomNumber` ([engine/core/random.asm](../../engine/core/random.asm)). The generator is a 55-byte subtractive lagged Fibonacci table (`aRNArray` in bank `$7E`), seeded at boot from `bFrameCounterByOnes & $3F` and shuffled three times. Every 55 calls, `rsShuffleRNTable` updates each slot in place:
+Every percentage roll passes through `rlRollForChance` ([engine/battle/effects.asm](../../engine/battle/effects.asm)) and `rlGetRandomNumber` ([engine/core/lib/random.asm](../../engine/core/lib/random.asm)). The generator is a 55-byte subtractive lagged Fibonacci table (`aRNArray` in bank `$7E`), seeded at boot from `bFrameCounterByOnes & $3F` and shuffled three times. The seed is always 0 (RAM has just been cleared and no frame has been counted), so the table starts the same at every power-on; saves carry the table and its position, so a loaded save rolls the same sequence each time ([allocation.md](../reference/allocation.md)). Every 55 calls, `rsShuffleRNTable` updates each slot in place:
 
 ```rust
 fn shuffle_rn_table() {                              // rsShuffleRNTable
@@ -247,6 +247,6 @@ The hard limits built into this layout:
 - [engine/battle/battle_stats.asm](../../engine/battle/battle_stats.asm): Attack Speed, Might, Hit, Avoid, Crit, and weapon triangle lookups.
 - [engine/battle/effects.asm](../../engine/battle/effects.asm): `rlRollForChance`, `rsActionstructGetLevelUpAndDroppedItemData`, weapon traits, and staff effects.
 - [engine/battle/scripted_crits.asm](../../engine/battle/scripted_crits.asm): `rlActionStructGetScriptedCritPossibility`, sibling pairs, and triangle-attack trios.
-- [engine/core/random.asm](../../engine/core/random.asm): `rlGetRandomNumber`, `rsShuffleRNTable`, `rsRigRNArrayByPlaytime`, and `rlCheckCodeChecksums`.
+- [engine/core/lib/random.asm](../../engine/core/lib/random.asm): `rlGetRandomNumber`, `rsShuffleRNTable`, `rsRigRNArrayByPlaytime`; [engine/core/frame/anti_tamper.asm](../../engine/core/frame/anti_tamper.asm): `rlCheckCodeChecksums`.
 - [engine/units/unit_state.asm](../../engine/units/unit_state.asm): `rlActionStructInflictDamage` and `rlHealSelectedUnitsHP`.
-- [docs/reference/core.md](../reference/core.md) and [docs/reference/units.md](../reference/units.md): reference pages for RNG, checksums, and damage/healing routines.
+- [docs/reference/allocation.md](../reference/allocation.md) (the RNG), [docs/reference/frame.md](../reference/frame.md) (the checksums) and [docs/reference/units.md](../reference/units.md) (damage and healing): reference pages.

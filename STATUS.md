@@ -24,9 +24,12 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | V | 15 [Castles and towns](docs/guide/15-castles-and-towns.md), 16 [The arena](docs/guide/16-the-arena.md) | draft, not yet reviewed |
 | V | 17 [Love and lineage](docs/guide/17-love-and-lineage.md), 18 [Saving](docs/guide/18-saving.md), 19 [Between chapters](docs/guide/19-between-chapters.md), 20 [The opening](docs/guide/20-the-opening.md), 21 [Endings and scores](docs/guide/21-endings-and-scores.md) | draft, not yet reviewed |
 | VI | 22 [A map bigger than the screen](docs/guide/22-a-map-bigger-than-the-screen.md), 23 [Two ways to show a fight](docs/guide/23-two-ways-to-show-a-fight.md), 24 [The battle scene](docs/guide/24-the-battle-scene.md), 25 [Full-screen windows and the status screen](docs/guide/25-full-screen-windows-and-the-status-screen.md) | rewritten 2026-11-25 from Gemini's drafts (a211ef4) after a review; not yet reviewed |
-| VII | 26–31 | not started; OUTLINE.md marks which have a reference page |
+| VII | 26–31 | not started; 26-30 have reference pages (2026-11-25), 31 needs a sound page |
 
-**Reference pages** (`docs/reference/`): core, ai, arena, battle, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, rankings, save, title, units, worldmap. Missing: **sound** (lowest priority) and **debug**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
+**Reference pages** (`docs/reference/`): core (now an overview) with frame, game_states, procs, sprites, scanlines, graphics and allocation; ai, arena, battle, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, rankings, save, title, units, worldmap. Missing: **sound** (lowest priority) and **debug**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
+
+
+**The core** (`engine/core/`) was reorganized on 2026-11-25 (`a7af638`): `frame/` (boot, interrupts, DMA, PPU buffers, joypad, frame counters, hardware defaults, anti-tamper and checksums, game states, the header), `display/` (OAM, active sprites, HDMA, the IRQ engine), `graphics/` (decompressor, brightness fades, palette fades, shared palettes, tilemaps), `lib/` (struct arrays, RAM areas, offset tables, block copies, math, random), and `proc.asm` and `options.asm` at the top. Pieces filed elsewhere moved with it: the IRQ engine out of `event_scripts.asm`, the map's shared setup and `rsReturnToMapMainLoop` into `engine/map/map_loop.asm`, the opening logo (with its game states from `event_engine.asm`) into `engine/title/opening_logo.asm`, the event cleanup into `event_scripts.asm`. `palettes.asm` and `options.asm` stayed: no clearly better home. Each core page names its files.
 
 ## How chapters are written
 
@@ -83,6 +86,15 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `TerrainShrine` called unused; arena fighters stand on it (`rlPopulateArenaActionStruct` wrote it as `$0017`) | include/Terrain.h, unit_commands.asm | `09cd71d` |
 | Stray `.fill` bytes in `aUnused9FFACC` and `aUnknown9BFE13` overlapped Bank `$9F/FC00` (1,081 bytes) and Bank `$DC/0000` (858 bytes); 4 raw `lKeeperOptionList` pointers in `shop.asm`; 3 hardcoded `$8D00` bank loads in `save_menu.asm` | map_magic_effects.asm, title_scenes.asm, shop.asm, save_menu.asm, build.asm | `bc33371` |
 | 3 `rlUnknown8FBB*` routines in Chapter 8/9 events (`rlEventJuliusWarpInStart`, `rlEventDeployJuliusChFinal`, `rlEventUnhideJuliusChFinal`); 4 stale `Unknown` names in `battle_scene/` comments | EventChapter08IshtarLeave.asm, EventChapter09ArionDied.asm, rounds.asm, loading.asm | `6f4b491` |
+| `HDMA_SET_INDIRECT_BANK` writes the table's bank, not the indirect bank: now `HDMA_SET_TABLE_BANK` | include/HDMA.h, map_magic_effects.asm | `576dcc8` |
+| `rlActiveSpriteEngineCreateSpriteLastSlot` takes the lowest free slot from 0 (now `...LowestSlot`); the old `...LowestSlot` skips slot 0 (now `...LowestSlotAbove0`) | active_sprites.asm and 25 callers | `576dcc8` |
+| `rlPushToOAMBufferTimed` said to push only when the timer reaches the count; it draws the first `wR2` entries | oam.asm | `576dcc8` |
+| The IRQ engine's RAM (`$168F`-`$1719`), the active sprite render queue and `lActiveSpriteRenderer` (`$1400`-`$15E6`) were raw addresses; the sprite fields the engine reads were `aUnknown0012xx`, and `aUpdater` is a loop counter; `rlPushToOAMBuffer`'s address stored as `#$87C7` | include/WRAM.h, irq.asm, active_sprites.asm, map battle files, cutscenes.asm | `576dcc8` |
+| `aHeaderUnknownTimer`/`PROC_*_UNK_TIMER` are a loop counter; `aUnknownBitfield` is the bitfield as the last frame ended | include/WRAM.h, Procs.h, proc.asm, map battle files | `576dcc8` |
+| RAM area and struct headers: flag meanings were guesses ("$10 = entry just got removed?"), fields `Unknown`/`Unknown2`/`Unknown3`/`Offset` (now `Flags`, `HandlesPerBlock`, `HandleBlock`, `Size`); `rlClearRAMAreaEmptyFlag` clears the no-handles flag | include/RAMStructs.h, ram_areas.asm, ram_structs.asm | `576dcc8` |
+| Misfiled code: the IRQ engine split between `interrupts.asm` and `event_scripts.asm`; `rsReturnToMapMainLoop` and the map setup in `event_scripts.asm`; `rsRunFrameTasks` in `hardware.asm`; `rlSetMainLoopPointer` in `memory.asm`; signed 32-bit math in `tilemaps.asm` | engine/core/, event_scripts.asm, map_loop.asm | `a7af638`, `576dcc8` |
+| `rlProcEventWaitBattleSceneEndCycle` called `$1A`/`$1B` the map battle (the title screen; the map battle is a proc) | event_procs.asm | `5519e97` |
+| `event_scripts.asm`'s header said procs run event scripts (the event engine runs from its per-frame hook) | event_scripts.asm | `4f18ace` |
 
 **In the documentation** (reference pages, guide drafts):
 
@@ -113,6 +125,9 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | arena.md: "records current gold" as a wager, "yield/draw", the win event said to fire on leaving | docs/reference/arena.md | with Ch. 16 (rewritten) |
 | Ch. 11: event action `$1C` said to fire when a unit leaves the arena with winnings (after every win) | docs/guide/11 | with Ch. 16 |
 | Old turn draft: defeats said to be handled while an event runs; every handler checks for a running event | wip/the-turn-draft.md | superseded by Ch. 8 |
+| core.md: game states `$1A`/`$1B` called the map battle (the title screen); event procs said to be "a separate set" (they share the 16 slots); the third action-table routine and proc bit `$1000` left open | docs/reference/core.md | replaced by the core pages, 2026-11-25 |
+| Introduction: the map battle given a setup and step (the title screen has them); an event said to run inside a proc; "two more engines" beside the procs (four); three engines registered at boot (five) | docs/guide/00-introduction.md | 2026-11-25 |
+| Ch. 6: the random numbers said to be seeded from the frame counter; the counter is always 0 there, so the table starts the same at every boot, and saves carry it | docs/guide/06 | 2026-11-25 |
 
 ## Retail bugs and quirks found
 
@@ -178,13 +193,19 @@ Quirks that aren't bugs, recorded so they aren't rediscovered:
 - After a yield, changing weapons changes the fight's distance and the opponent window's lookup, but not the opponent already built at `$2100`: Chapter 1's level-3 Shark can be fought with a bow at two tiles, where he can't reach (Ch. 16).
 - A weapon that breaks in the arena keeps swinging for the rest of the fight: `rsCheckForWeaponInventorySlot` only rejects an empty slot there (Ch. 6, 16).
 - No condition list uses a flag byte with bit 7 ("must be set, cleared on match"), opcodes `$22`-`$24`, or any `CHILD` condition other than `CHECK_CHILD_TALK` (Ch. 11).
+- The random number table starts the same at every power-on: its only seeding is at boot, before any frame is counted (seed 0). Saves carry the table and its position, so a loaded save rolls the same sequence each time (allocation.md).
+- The IRQ engine's sort makes one pass per gap and does not order every set (two of the six orders of three entries); every set the game creates comes out right (scanlines.md).
+- A RAM area that runs out tints the screen and hits `BRK`: the handles and compaction that could make room are never used (`rlAllocateRAMAreaWithHandle` has no callers) (allocation.md).
+- The decompression queue holds five entries; the fifth's end marker shares a byte with `bFrameCounterByOnes`. The DMA queue has no overflow check either (graphics.md, frame.md).
+- The sprite buffer wraps after 128 sprites; exactly 128 leaves the offset at 0 and `rlHideSprites` hides them all (sprites.md).
+- Dead paths in the engines: the active sprite render queue (never filled), flag `$2000` (two identical flushes), nine command routines outside the table and the loop counter none of them sets; `rlSetMainLoopPointer`'s `wR26` redirect and the dispatcher's bank-`$7D` rule; proc bit `$1000`; the IRQ script commands after `Halt` (frame.md, game_states.md, procs.md, sprites.md, scanlines.md).
 
 ## Next session
 
-1. **Review Chapters 9, 10, 12, 14, 15 and 16.** Chapter 14: recheck the mode and objective tables against `aAIAttackTypeRoutines` and `aAIGroupObjectiveRoutines`, and the claim that a step can outlast a frame. Chapter 15: the shop pooling (`rlBuildStockList` never compares the owner) and the facility counts are the claims most worth a second look; the conversation scene's sections cover what Chapter 13 left to it. Chapter 16: the yield-and-switch-weapon consequence (a melee opponent fought at range 2) follows from `rlSetupArenaBattleStats` and the strike's range check, not from a test.
-2. Before the battle interlude and Part II revision: write `docs/reference/battle.md`.
-3. Then the Part IV interlude (one enemy turn) and Chapter 17 (love and lineage), from `units.md`. Chapter 15 points to Chapter 17 for generation IDs, the love table's woman's side, and the Chapter 6 item revert (`rlResetUnitsForChapter`). Chapter 13 leaves the world map's dialogue commands (bit 7) to Chapter 19.
-4. Still unnamed: the AI's event wait procs `procEventWaitFlag0E7B*` and `lAITemp*`/`wAITemp*` scratch; in the castle, `rlUnknown84D334` and `rlUnknown9EDAE7` (giving money) and what sets `wChapterFlags` `$0800` (the minimap choosing a Warp destination) for a staff used inside the castle.
+1. **Part VII, from the new core pages.** Write Chapters 26 (the frame, [frame.md](docs/reference/frame.md)) and 27 (screens, [game_states.md](docs/reference/game_states.md)) together: 27 leans on 26's two loops, and both on the same VBlank routine. Then 28 (procs), 29 (sprites and scanlines: [sprites.md](docs/reference/sprites.md), [scanlines.md](docs/reference/scanlines.md)), 30 (getting graphics in: [graphics.md](docs/reference/graphics.md)), the interlude "One frame on the map" (`rsMapVBlank` and `rsMapMainLoop` step by step, map.md and frame.md), and Chapter 31 last: it needs a sound reference page first (`engine/sound/`, `audio/`). [allocation.md](docs/reference/allocation.md) serves every chapter that touches RAM structures, math or random numbers.
+2. Check each core page's claims again as the chapter uses them; they were written in one pass. Worth a second look: the copier scan's stack check (`rlBootInitAndCheckHardware`), the map unit band quotas (`rsUpdateOAMBandSpriteLimits`, `rlPushToOAMBufferWithScanlineCulling`), and the struct array scratch entry.
+3. Still pending from before: review Chapters 9, 10, 12, 14, 15 and 16 (notes in git history of this file, `21038f1`); the Part IV interlude and Chapter 17; unnamed AI event wait procs (`procEventWaitFlag0E7B*`), `lAITemp*`/`wAITemp*`, the castle's `rlUnknown84D334` and `rlUnknown9EDAE7`, and what sets `wChapterFlags` `$0800`.
+4. Unnamed in the core: the active sprite fields each user sets (`aUnknown0011E0`-`aUnknown0013E0`), the IRQ entries' scripts (`aUnknown9680A2`...), `$1E22` (cleared by `rlInitEngineAndStartLogo`).
 
 ## Who wrote what
 

@@ -77,7 +77,7 @@ Other pieces: the weapon icon over each unit (`rlUploadMapBattleWeaponIcon`), th
 ## Depends on
 
 - **Battle** (bank `$84`): the action structs and `aBattleRoundsData`.
-- **The proc and active sprite engines** ([core.md](core.md)).
+- **The proc and active sprite engines** ([procs.md](procs.md), [sprites.md](sprites.md)).
 - **The map** ([map.md](map.md)): camera, map sprite and tile animations, deployments.
 - **Dialogue**: the quotes.
 

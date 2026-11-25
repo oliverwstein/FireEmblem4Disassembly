@@ -430,7 +430,7 @@ The limits:
 
 - [engine/events/event_scripts.asm](../../engine/events/event_scripts.asm): `rlEventEngineBeginScript`, `rlRunEventCommand`, `aEventCommandPointers` and every command handler, the event proc tables and their poll (`rsEventEnginePollBlockingProcs`), the unit move dispatch (`aEventUnitMoveHandlers`), the wait procs (`procEventWaitMapSpritesHalting`, `procEventWaitFadeToMap`, `procEventWaitFlag0E7B`), and `rsReturnToMapMainLoop`.
 - [engine/events/event_engine.asm](../../engine/events/event_engine.asm): `rlStartChapterEventByID`, `rlStartEventScript`, the per-frame hook and its state table (`rsRunEventEngineState`, `aEventEngineStateRoutines`), `rlTryRunEventConditionCommand`.
-- [engine/core/fade.asm](../../engine/core/fade.asm): `rlResetEventAndSpriteState` (state 2) and the unused skip routine.
+- [engine/events/event_scripts.asm](../../engine/events/event_scripts.asm): `rlResetEventAndSpriteState` (state 2) and the unused skip routine, after the interpreter.
 - [engine/events/event_procs.asm](../../engine/events/event_procs.asm): `procEventPause`, the timed fades, `procHaltEvent`.
 - [engine/events/event_movement.asm](../../engine/events/event_movement.asm): route planning for moving sprites (`rlEventMovementPlanRoute`, `rlPlanQueuedMapSpriteMovement`); [engine/map/scroll.asm](../../engine/map/scroll.asm): `rlSpawnMovingMapSprite` and the scroll scripts; [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): showing a loaded unit when its walk ends.
 - [engine/events/asmc.asm](../../engine/events/asmc.asm) and [engine/events/cutscenes.asm](../../engine/events/cutscenes.asm): the shared ASMCs and the scripted map-battle cutscenes.

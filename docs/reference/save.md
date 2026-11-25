@@ -10,7 +10,7 @@ The game keeps four save slots in battery-backed SRAM (`$306000`-`$307FFF`, 2 KB
 | [save_menu.asm](../../engine/save/save_menu.asm) | the save menu screen (bank `$91`): the title file menu, the map save, the slot lists, the row texts and chapter title strings |
 | [jugdral_history.asm](../../engine/save/jugdral_history.asm) | the history of Jugdral that scrolls when a new game starts |
 
-The same game state also runs the chapter intro title card ([chapter_intro.asm](../../engine/worldmap/chapter_intro.asm)). The anti-tamper screens are in [anti_tamper.asm](../../engine/core/anti_tamper.asm).
+The same game state also runs the chapter intro title card ([chapter_intro.asm](../../engine/worldmap/chapter_intro.asm)). The anti-tamper screens are in [anti_tamper.asm](../../engine/core/frame/anti_tamper.asm) ([frame.md](frame.md)).
 
 Data: the slot layout `structSaveDataEntry` and the save constants (`SAVE_MAGIC_NUMBER`, the SRAM tags) in [include/Save.h](../../include/Save.h); the SRAM map `aSRAM` in [include/SRAM.h](../../include/SRAM.h); the working block `aSave` (`$1B09`: menu operation, active slot, save data word, the four slots' data words, the timer, bit offsets) and the unit buffers (`aUnit1DataBuffer` at `$7FEB4A`) in [include/WRAM.h](../../include/WRAM.h). The bit widths of each saved field are in the `aSave...` tables in [engine/save/](../../engine/save/save.asm).
 
@@ -70,7 +70,7 @@ Choosing a slot only sets `aSave.wMenuOperation`; `rlHandleSaveFile` (run from t
 
 - **Units** ([units.md](routines/units.md)): RAM areas and allocation, unit data blocks, deployment, the getters and setters the rebuild uses.
 - **Items** ([items.md](routines/items.md)): item RAM entries, equipment from ROM, the equipped weapon's bonus.
-- **Core** ([core.md](core.md)): the interrupt handlers (timer), boot (last used options), the code checksums.
+- **Core**: the interrupt handlers (timer), boot and the code checksums ([frame.md](frame.md)), the opening logo's setup (last used options), the saved random number table ([allocation.md](allocation.md)).
 - **Rankings, arena, castle**: read the losses and the completion count.
 
 ## Open questions

@@ -143,7 +143,7 @@ Each kind of part comes from its own region of work RAM:
 | `aInventoryRAMArea` | inventories | 73 (declared as 72 + 1) | 13 + 6 |
 | `aLoverRAMArea` | love points | 9 | 30 + 6 |
 
-The `+ 6` is a block header. The pools are *RAM areas*, small heaps run by a general first-fit allocator in [engine/core/ram_structs.asm](../../engine/core/ram_structs.asm), the same one the map menus use for their variable-size option lists. `rlLoadUnit` allocates a header, appends it to `aUnitRAMPointers`, and calls `rlCreateUnit`, which reads the type byte from ROM and dispatches through `aUnitCreationRoutinesByType`:
+The `+ 6` is a block header. The pools are *RAM areas*, small heaps run by a general first-fit allocator in [engine/core/lib/ram_areas.asm](../../engine/core/lib/ram_areas.asm), the same one the map menus use for their variable-size option lists. `rlLoadUnit` allocates a header, appends it to `aUnitRAMPointers`, and calls `rlCreateUnit`, which reads the type byte from ROM and dispatches through `aUnitCreationRoutinesByType`:
 
 ```rust
 fn create_holy_unit(unit: &mut CharacterDataRAM, rom: RomPtr) {   // rsCreateHolyUnitRAMData
@@ -200,5 +200,5 @@ Its costs:
 - [engine/units/unit_data.asm](../../engine/units/unit_data.asm): the part-pointer getters and the buffer routines.
 - [engine/units/unit_info.asm](../../engine/units/unit_info.asm) and [stats.asm](../../engine/units/stats.asm): the type-switching getters.
 - [engine/battle/battle_stats.asm](../../engine/battle/battle_stats.asm): the derived enemy stats.
-- [engine/core/ram_structs.asm](../../engine/core/ram_structs.asm): the RAM area allocator.
+- [engine/core/lib/ram_areas.asm](../../engine/core/lib/ram_areas.asm): the RAM area allocator ([allocation.md](../reference/allocation.md)).
 - [docs/reference/units.md](../reference/units.md): the reference page.

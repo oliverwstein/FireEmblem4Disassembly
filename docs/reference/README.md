@@ -16,7 +16,14 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 
 ## Systems written so far
 
-- [core.md](core.md): the frame, boot, game states, the engines that run every frame, procs.
+- [core.md](core.md): an overview of the core (`engine/core/`) and its two loops, with links to:
+  - [frame.md](frame.md): reset and boot, the main loop and VBlank, the DMA queue, the PPU register buffers, the joypads, the code checksums and the anti-tamper screens.
+  - [game_states.md](game_states.md): the game state table, the opener/setup/upkeep/step pattern, changing screens, the per-frame engine table.
+  - [procs.md](procs.md): the proc engine, its script commands and event procs.
+  - [sprites.md](sprites.md): the sprite buffer, the map units' band quotas and flicker, the active sprite engine.
+  - [scanlines.md](scanlines.md): the HDMA engine and the IRQ engine.
+  - [graphics.md](graphics.md): the decompressor and its queue, brightness and palette fades, shared palettes, tilemap helpers.
+  - [allocation.md](allocation.md): struct arrays, the RAM-area heap, offset tables, block copies, math, random numbers.
 - [items.md](items.md): global item instances (`aItemRAMData`), ROM item templates, per-unit inventories, equip/range checks, pricing, broken weapons, and staff targeting/healing.
 - [battle.md](battle.md): combat setup, stat calculation, skills, weapon traits, staff effects, scripted criticals, and round resolution.
 - [units.md](units.md): unit pools, four-type ROM/RAM dispatch, classes, stats, skills, weapon ranks, Holy Blood, factions, turn-start effects, level-ups, lovers, generation transfer, and inheritance.
