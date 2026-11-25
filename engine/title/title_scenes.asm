@@ -7079,7 +7079,4 @@
         .byte $F4, $01, $F8, $B9, $3A, $04, $00, $F0, $AB, $3A, $FC, $01, $F0, $AA, $3A, $F4
         .byte $01, $F0, $A9, $3A, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
-        ; Unused: 858 zero bytes.
-        .fill 858, $00
-
     .endsection TitleData9BFE13Section

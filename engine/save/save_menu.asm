@@ -2149,7 +2149,7 @@
         sta aDialogue._Slot[0].wVRAMAddress,b
         pla
         pha
-        ldx #$8D00
+        ldx #(`aSaveMenuRowTexts)<<8
         stx lR18+1
         and #$00FF
         cmp #$000B
@@ -2217,7 +2217,7 @@
         lda #$5000
         sta aDialogue._Slot[0].wVRAMAddress,b
         pla
-        ldx #$8D00
+        ldx #(`aSaveMenuRowTexts)<<8
         stx lR18+1
         and #$00FF
         cmp #$000B
@@ -2355,7 +2355,7 @@
         .autsiz
         .databank ?
 
-        ldx #$8D00
+        ldx #(`aSaveMenuRowTexts)<<8
         stx lR18+1
         asl a
         tax

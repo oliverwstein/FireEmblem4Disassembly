@@ -270,17 +270,7 @@
 
       .dsection HideSpritesSection
 
-    .here
-
-    * = $008372
-    .logical $808372
-
       .dsection Unreferenced808372Section
-
-    .here
-
-    * = $0083C7
-    .logical $8083C7
 
       .dsection OAMUpperXBitTableSection
 
@@ -365,21 +355,11 @@
 
       .dsection Unsorted809933Section
 
-    .here
-
-    * = $009B00
-    .logical $809B00
-
       .dsection Unsorted809B00Section
 
       .dsection Unsorted809B01Section
 
       .dsection Unsorted809BEESection
-
-    .here
-
-    * = $009C3E
-    .logical $809C3E
 
       .dsection Unreferenced809C3ESection
 
@@ -394,17 +374,7 @@
 
       .dsection FillBG2Page0TilemapBufferSection
 
-    .here
-
-    * = $009FB2
-    .logical $809FB2
-
       .dsection Unreferenced809FB2Section
-
-    .here
-
-    * = $00A096
-    .logical $80A096
 
       .dsection MathSection
 
@@ -436,11 +406,6 @@
       .dsection Table80A85DSection
 
       .dsection Unsorted80A861Section
-
-    .here
-
-    * = $00A899
-    .logical $80A899
 
       .dsection RandomChanceSection
 
@@ -489,24 +454,9 @@
 
       .dsection MapMainLoopSection
 
-    .here
-
-    * = $00B316
-    .logical $80B316
-
       .dsection Unreferenced80B316Section
 
-    .here
-
-    * = $00B347
-    .logical $80B347
-
       .dsection Unsorted80B347Section
-
-    .here
-
-    * = $00B61E
-    .logical $80B61E
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80B61E .structDecompressionDMAEntry gcWorldMapTiles, $6000, $0000 ; 80/B61E
@@ -540,11 +490,6 @@
 
       .dsection Unsorted80B81BSection
 
-    .here
-
-    * = $00B99D
-    .logical $80B99D
-
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80B99D .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/B99D
       aDecompressionDMAEntry80B9A5 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 80/B9A5
@@ -558,11 +503,6 @@
       .dsection Unsorted80BA02Section
 
       .dsection Unsorted80BA52Section
-
-    .here
-
-    * = $00BB45
-    .logical $80BB45
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80BB45 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/BB45
@@ -598,17 +538,7 @@
 
       .dsection Unsorted80C1A0Section
 
-    .here
-
-    * = $00C1BA
-    .logical $80C1BA
-
       .dsection Unreferenced80C1BASection
-
-    .here
-
-    * = $00C1CA
-    .logical $80C1CA
 
       .dsection Unsorted80C1CASection
 
@@ -740,11 +670,6 @@
 
       .dsection Unsorted80EE37Section
 
-    .here
-
-    * = $00EFA8
-    .logical $80EFA8
-
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80EFA8 .structDecompressionDMAEntry g4bppcBattleBackgroundThicket, $4000, $0000 ; 80/EFA8
       aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry gcUnknownD317A0, $2000, $2000 ; 80/EFB0
@@ -754,11 +679,6 @@
       aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry gcUnknownD335B5, $1000, $5800 ; 80/EFD0
 
       .dsection Unsorted80EFD8Section
-
-    .here
-
-    * = $00F187
-    .logical $80F187
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80F187 .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $3000 ; 80/F187
@@ -814,11 +734,6 @@
 
       .fill $80FFB0 - *, 0
 
-    .here
-
-    * = $00FFB0
-    .logical $80FFB0
-
       .dsection SNESHeaderSection
 
     .here
@@ -835,11 +750,6 @@
       .dsection MapSpriteCodeSection
 
       .dsection Unsorted8189F3Section
-
-    .here
-
-    * = $018A4A
-    .logical $818A4A
 
       .dsection Unsorted818A4ASection
 
@@ -860,41 +770,16 @@
 
       .dsection CapSpawnDestinationCoordinates100Section
 
-    .here
-
-    * = $019062
-    .logical $819062
-
       .dsection Unreferenced819062Section
-
-    .here
-
-    * = $019092
-    .logical $819092
 
       .dsection FillMovingMapSpriteDataSection
 
       .dsection FillMovingMapSpriteDataPathScriptPointerSection
 
-    .here
-
-    * = $0190CC
-    .logical $8190CC
-
       .dsection Unreferenced8190CCSection
-
-    .here
-
-    * = $019166
-    .logical $819166
 
       .dsection Unsorted819166Section
       .dsection GetMapPixelScrollDistanceSection
-
-    .here
-
-    * = $01A800
-    .logical $81A800
 
       .dsection Unsorted81A800Section
 
@@ -977,11 +862,6 @@
       .dsection Table81B54ASection
 
       .fill $81C000 - *, 0
-
-    .here
-
-    * = $01C000
-    .logical $81C000
 
       aUNITGroupPointers                  .include "data/eventunit/UNITGroupPointers.csv.asm"
       aUNITGroupDataPrologueStart         .binclude "data/eventunit/UNITGroupDataPrologueStart.csv.asm"
@@ -1235,11 +1115,6 @@
 
       .dsection ProcScript828865Section
 
-    .here
-
-    * = $02886F
-    .logical $82886F
-
       .dsection Unsorted82886FSection
 
       .dsection Unsorted8288B2Section
@@ -1247,11 +1122,6 @@
       .dsection ProcScript8288E7Section
 
       .dsection ProcDialogueWithBGFromPointerSection
-
-    .here
-
-    * = $0288F3
-    .logical $8288F3
 
       .dsection Unsorted8288F3Section
 
@@ -1265,21 +1135,11 @@
 
       .dsection Unsorted828B46Section
 
-    .here
-
-    * = $028B50
-    .logical $828B50
-
       .dsection Unsorted828B50Section
 
       .dsection Unsorted828B5FSection
 
       .dsection ProcScript828B61Section
-
-    .here
-
-    * = $028B6B
-    .logical $828B6B
 
       .dsection Unsorted828B6BSection
 
@@ -1287,20 +1147,10 @@
 
       .dsection Unsorted828BA9Section
 
-    .here
-
-    * = $028BB3
-    .logical $828BB3
-
       .dsection Unsorted828BB3Section
 
       .dsection Unsorted828BC6Section
       .dsection Unsorted828BC8Section
-
-    .here
-
-    * = $028BD2
-    .logical $828BD2
 
       .dsection Unsorted828BD2Section
 
@@ -1333,17 +1183,7 @@
 
       .dsection Unsorted829391Section
 
-    .here
-
-    * = $029469
-    .logical $829469
-
       .dsection Unreferenced829469Section
-
-    .here
-
-    * = $029478
-    .logical $829478
 
       .dsection EventHaltProcSection
 
@@ -1353,43 +1193,18 @@
 
       .dsection Unsorted829496Section
 
-    .here
-
-    * = $0294B1
-    .logical $8294B1
-
       .dsection Unreferenced8294B1Section
-
-    .here
-
-    * = $0294C0
-    .logical $8294C0
 
       .dsection Unsorted8294C0Section
 
       .dsection Unsorted8294CFSection
 
-    .here
-
-    * = $02C000
-    .logical $82C000
-
       .dsection HDMAEngineSection
       .dsection HDMACodeSection
-
-    .here
-
-    * = $02E000
-    .logical $82E000
 
       .dsection Unsorted82E000Section
 
       .dsection Unsorted82E028Section
-
-    .here
-
-    * = $02E030
-    .logical $82E030
 
       .dsection Unreferenced82E030Section
 
@@ -1402,17 +1217,7 @@
 
       .dsection Unsorted82E0C6Section
 
-    .here
-
-    * = $02E120
-    .logical $82E120
-
       .dsection Unreferenced82E120Section
-
-    .here
-
-    * = $02E133
-    .logical $82E133
 
       .dsection Unsorted82E133Section
 
@@ -1423,11 +1228,6 @@
       .dsection Unsorted82E283Section
 
       .dsection Unsorted82E2ADSection
-
-    .here
-
-    * = $02E400
-    .logical $82E400
 
       .dsection Unsorted82E400Section
 
@@ -1446,11 +1246,6 @@
 
       .dsection Unsorted82EADESection
 
-    .here
-
-    * = $02EB4C
-    .logical $82EB4C
-
       .dsection Unreferenced82EB4CSection
 
 
@@ -1459,31 +1254,11 @@
 
       .dsection RAMAreaHeaderSection
 
-    .here
-
-    * = $02EDBB
-    .logical $82EDBB
-
       .dsection Unreferenced82EDBBSection
-
-    .here
-
-    * = $02EDE7
-    .logical $82EDE7
 
       .dsection RAMAreaSection
 
-    .here
-
-    * = $02F207
-    .logical $82F207
-
       .dsection Unreferenced82F207Section
-
-    .here
-
-    * = $02F211
-    .logical $82F211
 
       .dsection Unsorted82F211Section
 
@@ -1499,59 +1274,19 @@
 
       .dsection Unsorted82F4A7Section
 
-    .here
-
-    * = $02F4BF
-    .logical $82F4BF
-
       .dsection Unreferenced82F4BFSection
-
-    .here
-
-    * = $02F4DE
-    .logical $82F4DE
 
       .dsection UNITGroupPointerSection
 
-    .here
-
-    * = $02F4F9
-    .logical $82F4F9
-
       .dsection Unreferenced82F4F9Section
-
-    .here
-
-    * = $02F517
-    .logical $82F517
 
       .dsection Unsorted82F517Section
 
-    .here
-
-    * = $02F54F
-    .logical $82F54F
-
       .dsection Unreferenced82F54FSection
-
-    .here
-
-    * = $02F567
-    .logical $82F567
 
       .dsection OffsetTableSection
 
-    .here
-
-    * = $02F7A2
-    .logical $82F7A2
-
       .dsection Unreferenced82F7A2Section
-
-    .here
-
-    * = $02F866
-    .logical $82F866
 
       .dsection EpilogueEndingsSection
 
@@ -2948,11 +2683,6 @@
 
       .dsection Unsorted888082Section
 
-    .here
-
-    * = $08818A
-    .logical $88818A
-
       .dsection Unsorted88818ASection
 
       .dsection Unsorted888197Section
@@ -2967,11 +2697,6 @@
 
       .dsection Unsorted8881ECSection
 
-    .here
-
-    * = $08821A
-    .logical $88821A
-
       .dsection Unsorted88821ASection
 
       .dsection Unsorted8883C7Section
@@ -2982,17 +2707,7 @@
 
       .dsection Unsorted888560Section
 
-    .here
-
-    * = $08857E
-    .logical $88857E
-
       .dsection Unreferenced88857ESection
-
-    .here
-
-    * = $0885D3
-    .logical $8885D3
 
       .dsection Unsorted8885D3Section
 
@@ -3072,17 +2787,7 @@
 
       .dsection ProcScript889E6CSection
 
-    .here
-
-    * = $089E6E
-    .logical $889E6E
-
       .dsection Unreferenced889E6ESection
-
-    .here
-
-    * = $089FC3
-    .logical $889FC3
 
       .dsection ChapterMapsSection
 
@@ -3092,17 +2797,7 @@
 
       .dsection Unsorted88A32DSection
 
-    .here
-
-    * = $08A383
-    .logical $88A383
-
       .dsection Unreferenced88A383Section
-
-    .here
-
-    * = $08A38C
-    .logical $88A38C
 
       .dsection Unsorted88A38CSection
 
@@ -3128,17 +2823,7 @@
 
       .dsection Unsorted88A7F5Section
 
-    .here
-
-    * = $08A816
-    .logical $88A816
-
       .dsection Unreferenced88A816Section
-
-    .here
-
-    * = $08A81D
-    .logical $88A81D
 
       .dsection Unsorted88A81DSection
 
@@ -3155,17 +2840,7 @@
 
       .dsection Table88ACF1Section
 
-    .here
-
-    * = $08AD09
-    .logical $88AD09
-
       .dsection Unreferenced88AD09Section
-
-    .here
-
-    * = $08AD46
-    .logical $88AD46
 
       .dsection Unsorted88AD46Section
 
@@ -3189,17 +2864,7 @@
 
       .dsection Unsorted88B3AFSection
 
-    .here
-
-    * = $08B3C2
-    .logical $88B3C2
-
       .dsection Unreferenced88B3C2Section
-
-    .here
-
-    * = $08B3DF
-    .logical $88B3DF
 
       .dsection Unsorted88B3DFSection
 
@@ -3219,17 +2884,7 @@
 
       .dsection Unsorted88BDA1Section
 
-    .here
-
-    * = $08BEFF
-    .logical $88BEFF
-
       .dsection Unreferenced88BEFFSection
-
-    .here
-
-    * = $08BF37
-    .logical $88BF37
 
       .dsection Unsorted88BF37Section
 
@@ -3358,17 +3013,7 @@
 
       .dsection Unsorted88DF8CSection
 
-    .here
-
-    * = $08E00E
-    .logical $88E00E
-
       .dsection Unreferenced88E00ESection
-
-    .here
-
-    * = $08E02B
-    .logical $88E02B
 
       .dsection Unsorted88E02BSection
 
@@ -3847,11 +3492,6 @@
 
       .dsection Unsorted8A8E08Section
 
-    .here
-
-    * = $0A8F58
-    .logical $8A8F58
-
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8A8F58 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/8F58
       aDecompressionDMAEntry8A8F60 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 8A/8F60
@@ -3886,17 +3526,7 @@
 
       .dsection Unsorted8A94B6Section
 
-    .here
-
-    * = $0A94E2
-    .logical $8A94E2
-
       .dsection Unsorted8A94E2Section
-
-    .here
-
-    * = $0A950E
-    .logical $8A950E
 
       .dsection Unsorted8A950ESection
 
@@ -4076,11 +3706,6 @@
 
       .dsection ShopScreenSetupSection
 
-    .here
-
-    * = $0ABE4B
-    .logical $8ABE4B
-
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8ABE4B .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/BE4B
       aDecompressionDMAEntry8ABE53 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/BE53
@@ -4228,11 +3853,6 @@
 
       .dsection Unsorted8AD81BSection
 
-    .here
-
-    * = $0AD952
-    .logical $8AD952
-
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AD952 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/D952
 
@@ -4348,11 +3968,6 @@
       .dsection Unsorted8AF885Section
 
       .dsection AuguryScreenSetupSection
-
-    .here
-
-    * = $0AFA0C
-    .logical $8AFA0C
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AFA0C .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/FA0C
@@ -7305,17 +6920,7 @@
 
       .dsection Unsorted978000Section
 
-    .here
-
-    * = $178024
-    .logical $978024
-
       .dsection Unreferenced978024Section
-
-    .here
-
-    * = $17802C
-    .logical $97802C
 
       .dsection Unsorted97802CSection
 
@@ -8460,11 +8065,6 @@
 
       .dsection MapBattleMagicSpritesSection
 
-    .here
-
-    * = $1F8800
-    .logical $9F8800
-
       .dsection MapBattleMagicPalettes9F8800Section
 
       .dsection Unsorted9F88C0Section
@@ -8629,11 +8229,6 @@
       .dsection Unsorted9FFA9ASection
 
       .dsection Unsorted9FFAB4Section
-
-    .here
-
-    * = $1FFC00
-    .logical $9FFC00
 
       g4bppMapBattlePavise .binary "gfx/ui/MapBattlePavise.4bpp", 0, $0400 ; 9F/FC00
 

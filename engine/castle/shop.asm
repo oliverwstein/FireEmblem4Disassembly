@@ -314,7 +314,7 @@
         .autsiz
         .databank ?
 
-        ; Points lKeeperOptionList at keeper wKeeper's option list (aItemShopOptions and the lists after it, by raw address).
+        ; Points lKeeperOptionList at keeper wKeeper's option list (aItemShopOptions and the lists after it).
 
         lda wKeeper
         beq _BF50
@@ -350,9 +350,9 @@
 
 
         _BF70
-        lda #$8A00
+        lda #(`aSecondhandShopOptions)<<8
         sta lKeeperOptionList+1
-        lda #$D07F
+        lda #<>(aSecondhandShopOptions + 5)
         sta lKeeperOptionList
         bra _BFD0
 
@@ -366,25 +366,25 @@
 
 
         _BF90
-        lda #$8A00
+        lda #(`aDepotOptions)<<8
         sta lKeeperOptionList+1
-        lda #$D085
+        lda #<>(aDepotOptions + 2)
         sta lKeeperOptionList
         bra _BFD0
 
 
         _BFA0
-        lda #$8A00
+        lda #(`aDepotOptions)<<8
         sta lKeeperOptionList+1
-        lda #$D086
+        lda #<>(aDepotOptions + 3)
         sta lKeeperOptionList
         bra _BFD0
 
 
         _BFB0
-        lda #$8A00
+        lda #(`aDepotOptions)<<8
         sta lKeeperOptionList+1
-        lda #$D087
+        lda #<>(aDepotOptions + 4)
         sta lKeeperOptionList
         bra _BFD0
 

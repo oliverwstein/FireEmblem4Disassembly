@@ -17169,13 +17169,4 @@
         ; Unused: 308 zero bytes.
         .fill 308, $00
 
-        ; Unused: 87 zero bytes.
-        .fill 87, $00
-
-        ; Unused: 365 zero bytes.
-        .fill 365, $00
-
-        ; Unused: 629 zero bytes.
-        .fill 629, $00
-
     .endsection Unsorted9FFAB4Section
