@@ -693,7 +693,7 @@
         .long gcUnknownF57765, aDecompressionBuffer
         .word $5100, $0B00
         .byte $00
-        .long gcUnknown9C8000, aDecompressionBuffer
+        .long g4bppcSaveMenuMainTiles, aDecompressionBuffer
         .word $2000, $4000
         .byte $00
         .long gcUnknown9CBBB7, $7E9B88
@@ -718,7 +718,7 @@
         .long gcUnknown9CBBB7, $7F0000
         .word $7800, $0800
         .byte $00
-        .long gcUnknown9C8000, $7F1000
+        .long g4bppcSaveMenuMainTiles, $7F1000
         .word $0000, $4000
         .byte $00
         .long gcUnknown9CBB20, aDecompressionBuffer

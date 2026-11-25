@@ -480,9 +480,9 @@
         rep #$20
         plb
         .databank $7F
-        lda #(`gcUnknownACCC17)<<8
+        lda #(`g4bppcMapBattleWeaponIcons)<<8
         sta lR18+1
-        lda #<>gcUnknownACCC17
+        lda #<>g4bppcMapBattleWeaponIcons
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -1475,9 +1475,9 @@
         rep #$20
         plb
         .databank $7F
-        lda #(`gcUnknownACCC17)<<8
+        lda #(`g4bppcMapBattleWeaponIcons)<<8
         sta lR18+1
-        lda #<>gcUnknownACCC17
+        lda #<>g4bppcMapBattleWeaponIcons
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -2022,9 +2022,9 @@
         plb
         .databank $7F
 
-        lda #(`gcUnknownACCC17)<<8
+        lda #(`g4bppcMapBattleWeaponIcons)<<8
         sta lR18+1
-        lda #<>gcUnknownACCC17
+        lda #<>g4bppcMapBattleWeaponIcons
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

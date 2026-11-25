@@ -34,7 +34,7 @@
         tya
         sta aMovingMapSprites.wActiveSpriteOffset,b,x
 
-        lda aMovingMapSprites.wUnknown0017C2,b
+        lda aMovingMapSprites.wMapSpriteFlags,b
         ora #$8000
         sta aActiveSpriteSystem.aUnknown0012E0,b,y
 
@@ -3284,7 +3284,7 @@
 
         _CCE6
         sta wMapSpriteFrameByteOffset,b
-        sta wUnknown000790,b
+        sta wMapScratch,b
         ldx wTempVariable1,b
         ldy #$0000
 
@@ -3620,7 +3620,7 @@
 
         _CECE
         sta wMapSpriteFrameByteOffset,b
-        sta wUnknown000790,b
+        sta wMapScratch,b
         ldx wTempVariable1,b
         ldy #$0000
 

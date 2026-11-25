@@ -668,7 +668,7 @@
 
         sep #$20
         lda #$03
-        sta $7FE4C2
+        sta bBattleSceneBG3Mode
         rep #$20
         stz aBGPaletteBuffer,b
         ldx #$0000
@@ -699,7 +699,7 @@
         sep #$20
         .as
         lda #$04
-        sta $7FE4C2
+        sta bBattleSceneBG3Mode
         rep #$20
         .al
         stz aBGPaletteBuffer,b
@@ -760,7 +760,7 @@
         ; Draws message text-speed indicator tiles when $7FE4C2 == 3.
 
         phx
-        lda $7FE4C2
+        lda bBattleSceneBG3Mode
         and #$00FF
         cmp #$0003
         bne _A26D
@@ -816,9 +816,9 @@
         ; Stops the script and clears its wait count and timer.
 
         sep #$20
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         and #$7F
-        sta $7FE4B7
+        sta bBattleSceneScriptWaitFlags
         lda #$00
         sta bBattleSceneScriptWaitCount
         rep #$20
@@ -1269,9 +1269,9 @@
         lda #$0038
         jsl rlStartBattleSceneScript
         sep #$20
-        lda $7FFC5D
+        lda bBattleSceneSkillFlags
         ora #$04
-        sta $7FFC5D
+        sta bBattleSceneSkillFlags
         rep #$20
         plx
         rtl
@@ -1291,7 +1291,7 @@
 
         phx
         sep #$20
-        sta $7FFC5F
+        sta bBattleSceneSkill2
         rep #$20
         ldx #$0000
 
@@ -1322,7 +1322,7 @@
 
         phx
         sep #$20
-        sta $7FFC5F
+        sta bBattleSceneSkill2
         rep #$20
         ldx #$0000
 
@@ -1353,7 +1353,7 @@
 
         phx
         sep #$20
-        sta $7FFC5F
+        sta bBattleSceneSkill2
         rep #$20
         ldx #$0000
 
@@ -1419,10 +1419,10 @@
 
         sep #$20
         lda #$00
-        sta $7FFC5D
+        sta bBattleSceneSkillFlags
         lda #$FF
-        sta $7FFC5E
-        sta $7FFC5F
+        sta bBattleSceneSkill1
+        sta bBattleSceneSkill2
         rep #$20
         rtl
 

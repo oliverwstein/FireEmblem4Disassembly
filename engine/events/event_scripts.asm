@@ -1585,7 +1585,7 @@
         ; Sets moving-sprite mode 1 (follow) and falls through to rsEventSetupMovingSprite
 
         lda #1
-        sta aMovingMapSprites.wUnknown0017C2,b
+        sta aMovingMapSprites.wMapSpriteFlags,b
         jml +
 
       rsEventSetupMovingSprite ; 91/C0FE
@@ -1597,12 +1597,12 @@
         ; Reads 7-byte moving sprite entry from [lR18], resolves slot 1/2 coords, and spawns mover
 
         lda #0
-        sta aMovingMapSprites.wUnknown0017C2,b
+        sta aMovingMapSprites.wMapSpriteFlags,b
 
         +
         phx
         stx aMovingMapSprites.wOffset,b
-        stz aMovingMapSprites.wUnknown0017C0,b
+        stz aMovingMapSprites.wMapSpriteOverrideID,b
 
         ldy #0
         lda [lR18],y
@@ -1693,9 +1693,9 @@
 
         phx
         stx aMovingMapSprites.wOffset,b
-        stz aMovingMapSprites.wUnknown0017C0,b
+        stz aMovingMapSprites.wMapSpriteOverrideID,b
         lda #2
-        sta aMovingMapSprites.wUnknown0017C2,b
+        sta aMovingMapSprites.wMapSpriteFlags,b
 
         ldy #0
         lda [lR18],y
@@ -1839,10 +1839,10 @@
 
         phx
         stx aMovingMapSprites.wOffset,b
-        stz aMovingMapSprites.wUnknown0017C0,b
+        stz aMovingMapSprites.wMapSpriteOverrideID,b
 
         lda #4
-        sta aMovingMapSprites.wUnknown0017C2,b
+        sta aMovingMapSprites.wMapSpriteFlags,b
 
         ldy #0
         lda [lR18],y
@@ -1978,7 +1978,7 @@
         phx
         stx aMovingMapSprites.wOffset,b
         lda #8
-        sta aMovingMapSprites.wUnknown0017C2,b
+        sta aMovingMapSprites.wMapSpriteFlags,b
         ldy #0
         lda [lR18],y
         sta wR0
@@ -2022,7 +2022,7 @@
         inc y
         lda [lR18],y
         sta wR8
-        sta aMovingMapSprites.wUnknown0017C0,b
+        sta aMovingMapSprites.wMapSpriteOverrideID,b
         inc y
         inc y
         phy
@@ -2071,8 +2071,8 @@
         ; Clears moving-sprite mode/override and falls through to rsEventInitMovingSpriteCommon
 
         lda #0
-        sta aMovingMapSprites.wUnknown0017C2
-        stz aMovingMapSprites.wUnknown0017C0,b
+        sta aMovingMapSprites.wMapSpriteFlags
+        stz aMovingMapSprites.wMapSpriteOverrideID,b
 
       rsEventInitMovingSpriteCommon ; 91/C38C
 
@@ -2089,7 +2089,7 @@
         phx
         ldy #aMovingMapSpriteData[0].wCharacterID - aMovingMapSpriteData[0]
 
-        lda aMovingMapSprites.wUnknown0017C0,b
+        lda aMovingMapSprites.wMapSpriteOverrideID,b
         bne _C3CA
 
           ; Check if the character is already in RAM
@@ -2167,9 +2167,9 @@
         bit #$0010
         beq +
 
-          lda aMovingMapSprites.wUnknown0017C2
+          lda aMovingMapSprites.wMapSpriteFlags
           ora #$0010
-          sta aMovingMapSprites.wUnknown0017C2
+          sta aMovingMapSprites.wMapSpriteFlags
 
         +
         inc y

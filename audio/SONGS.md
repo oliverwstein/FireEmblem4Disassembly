@@ -1,6 +1,6 @@
 # Song scripts
 
-Made by `tools/songs.py` on 2026-11-24; do not edit. A song is a script in `aSoundScripts`
+Made by `tools/songs.py` on 2026-11-25; do not edit. A song is a script in `aSoundScripts`
 (`audio/sound_data.asm`), asked for by its number in `wMusicID`. For each number:
 where the game asks for it, its place in the debug sound test, and what the script
 does (upload lists with their chunk IDs; `@xxxx` sets the SPC address). Nothing
@@ -8,22 +8,22 @@ here names a song; it is the evidence to name them from.
 
 160 script numbers; 132 asked for somewhere in the source; 131 in the sound test.
 
-## $01 (`aSoundScriptF795EA`), sound test 108
+## $01 (`aSoundScriptF795EA`) `SONG_TITLE_INTRO_1`, sound test 108
 
 - **code** (1): `rlPlayTitleIntroSong` music, engine/title/title_scenes.asm:6728
 - **script**: deferred upload FD `aSoundUploadF7ACE6` (cmd B $094 $1AC $1AD @5000 $0DC $12B $108 $11A $103 $12C $337)
 
-## $02 (`aSoundScriptF795F0`), sound test 109
+## $02 (`aSoundScriptF795F0`) `SONG_TITLE_INTRO_2`, sound test 109
 
 - **code** (1): `rlPlayTitleIntroSong2` music (Song 2, at frame $10F2 of the intro.), engine/title/title_scenes.asm:6759
 - **script**: deferred upload FD `aSoundUploadF7AD02` (cmd B $095 $1AE $1AF @5000 $12D $0DC $0E3 $12E $12F $0DA $0DB indirect 3D $33B $33A)
 
-## $03 (`aSoundScriptF795F6`), sound test 110
+## $03 (`aSoundScriptF795F6`) `SONG_TITLE_SCREEN`, sound test 110
 
 - **code** (1): `rlPlayTitleSong` music (Song 3 (rlTitleScreenShowTitle).), engine/title/title_scenes.asm:6785
 - **script**: deferred upload FD `aSoundUploadF7AD24` (cmd B $095 $1AE $1AF @5000 $12D $0DC $0E3 $12E $12F $0DA $0DB indirect 3D $33C $33A)
 
-## $04 (`aSoundScriptF7988A`), sound test 56
+## $04 (`aSoundScriptF7988A`) `SONG_JUGDRAL_HISTORY`, sound test 56
 
 - **code** (1): `rsJugdralHistorySetup` music, engine/save/jugdral_history.asm:153
 - **script**: deferred upload FD `aSoundUploadF7A68C` ($08D $196 $197 @7400 $108 $0DC cmd B); queue command (checked) $00C8
@@ -58,7 +58,7 @@ here names a song; it is the evidence to name them from.
 - **dialogue** (1): Chapter04/LowerBridge
 - **script**: deferred upload FD `aSoundUploadF79CCA` ($226 $227 @7400 $144 indirect 3C); sound effect 2 $000D, wait 44
 
-## $0B (`aSoundScriptF795FC`), sound test 120
+## $0B (`aSoundScriptF795FC`) `SONG_EPILOGUE_MEMORIAL`, sound test 120
 
 - **dialogue** (1): Epilogue/Memorial88E9E5
 - **code** (1): `rlSetupEpilogueRankingsDisplay` music, engine/epilogue/credits.asm:861
@@ -69,12 +69,12 @@ here names a song; it is the evidence to name them from.
 - Not asked for by number anywhere in the source.
 - **script**: deferred upload FD `aSoundUploadF7A7D2` (cmd B $098 $1B4 $1B5 @5000 $135 $0DC $107 $100 $0D9 $0E1 $104 $0E8 $0E4 $0E5 $101 $33E $33A)
 
-## $0D (`aSoundScriptF7961A`), sound test 122
+## $0D (`aSoundScriptF7961A`) `SONG_EPILOGUE_CREDITS`, sound test 122
 
 - **code** (1): `rlSetupEpilogueCreditsDisplay` music, engine/epilogue/credits.asm:661
 - **script**: deferred upload FD `aSoundUploadF7A76A` (cmd B $096 $1B0 $1B1 @4C00 $0DC $0E6 $125 $130 $131 $132 $133 $134 $337)
 
-## $0E (`aSoundScriptF7960E`), sound test 124
+## $0E (`aSoundScriptF7960E`) `SONG_EPILOGUE_RANKINGS`, sound test 124
 
 - **code** (2): `rlSetupEpilogueRankingsDisplay` music (_F125), engine/epilogue/credits.asm:854 (x2)
 - **script**: deferred upload FD `aSoundUploadF7A7AA` (cmd B $098 $1B4 $1B5 @5000 $135 $0DC $107 $100 $0D9 $0E1 $104 $0E8 $0E4 $0E5 $101 $33D $33A)
@@ -120,7 +120,7 @@ here names a song; it is the evidence to name them from.
 - Not asked for by number anywhere in the source.
 - **script**: sound effect 2 $0012
 
-## $17 (`aSoundScriptF79726`), sound test 24
+## $17 (`aSoundScriptF79726`) `SONG_ENEMY_PHASE_DUKES_2`, sound test 24
 
 - **event** (2): EventChapterFinalDozelSpawn, EventChapterFinalFriegeSpawn
 - **table** (7): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Velthomer2, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Friege2, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Belhalla2, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Dozel2, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Edda2, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Chalphy2, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Yngvi2
@@ -131,7 +131,7 @@ here names a song; it is the evidence to name them from.
 - **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 7, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 7
 - **script**: deferred upload FD `aSoundUploadF7A0F4` ($06C $154 $155 @7400 $0F3 $0F4 $0E0 $0F5 $0F6 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $19 (`aSoundScriptF79730`), sound test 23
+## $19 (`aSoundScriptF79730`) `SONG_ENEMY_PHASE_DUKES_1`, sound test 23
 
 - **event** (4): EventChapter04AndreyLeave, EventChapter04AndreySpawn, EventChapter04AnnandDeathAndreyResponse, EventChapter09GrutiaSpawn
 - **table** (8): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Velthomer1, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Friege1, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Belhalla1, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Dozel1, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Edda1, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Chalphy1, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Yngvi1, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Lubeck
@@ -163,7 +163,7 @@ here names a song; it is the evidence to name them from.
 - **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 8, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 8
 - **script**: deferred upload FD `aSoundUploadF7A168` ($06D $156 $157 @7400 $0DC $0EF $0DE $0FE $0EA $0DA $0FF $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $1F (`aSoundScriptF79686`), sound test 17
+## $1F (`aSoundScriptF79686`) `SONG_ENEMY_PHASE_SILESSE`, sound test 17
 
 - **table** (4): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Tofa, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Sailane, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Zaxon, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Silesse
 - **script**: deferred upload FD `aSoundUploadF7A186` ($075 $166 $167 @7400 $0D7 $0F0 $0FB $0E6 $0EF $340 indirect 3C), wait 4; queue command (checked) $00CB
@@ -173,18 +173,18 @@ here names a song; it is the evidence to name them from.
 - Not asked for by number anywhere in the source.
 - **script**: deferred upload FD `aSoundUploadF7A1A0` ($071 $15E $15F @7400 $0F9 $0F0 $100 $0DA $0E7 $0E2 $0E4 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $21 (`aSoundScriptF796CC`), sound test 14
+## $21 (`aSoundScriptF796CC`) `SONG_ENEMY_PHASE_VERDANE`, sound test 14
 
 - **table** (4): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Verdane, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Evans, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Genoa, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Marpha
 - **script**: deferred upload FD `aSoundUploadF7A23E` ($072 $160 $161 @7400 $0DC $0F0 $0D8 $117 $118 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $22 (`aSoundScriptF796D6`), sound test 15
+## $22 (`aSoundScriptF796D6`) `SONG_ENEMY_PHASE_AGUSTRIA`, sound test 15
 
 - **event** (2): EventChapter01HeirheinSpawn, EventChapter03SylvaleSpawn
 - **table** (7): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Madino, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Sylvale, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Infini, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Agusti, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Heirhein, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Mackily, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Nordion
 - **script**: deferred upload FD `aSoundUploadF7A258` ($073 $162 $163 @7400 $0DC $0F0 $0D8 $0E7 $0F1 $10D $119 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $23 (`aSoundScriptF796E0`), sound test 16
+## $23 (`aSoundScriptF796E0`) `SONG_ENEMY_PHASE_ORGAHIL`, sound test 16
 
 - **event** (1): EventChapter03Opening
 - **table** (1): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Orgahil
@@ -195,29 +195,29 @@ here names a song; it is the evidence to name them from.
 - **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 9, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 9
 - **script**: deferred upload FD `aSoundUploadF7A292` ($06E $158 $159 @7400 $0D7 $0EA $0E4 $0FB $0E0 $0E6 $0F5 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $25 (`aSoundScriptF796F4`), sound test 18
+## $25 (`aSoundScriptF796F4`) `SONG_ENEMY_PHASE_AED`, sound test 18
 
 - **table** (3): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Phinora, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Aed, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Dahna
 - **script**: deferred upload FD `aSoundUploadF7A2B0` ($076 $168 $169 @7400 $0DC $0D8 $11A $117 $11B $11C $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $26 (`aSoundScriptF796FE`), sound test 19
+## $26 (`aSoundScriptF796FE`) `SONG_ENEMY_PHASE_ISAACH`, sound test 19
 
 - **event** (1): EventChapter06BrotherRecruitedDanannResponse
 - **table** (6): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Tirnanog, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Ganeishire, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Sofala, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Isaach, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Ribaut, `aChapterIntroSongs` per chapter (rsChapterIntroBegin): Chapter 6
 - **script**: deferred upload FD `aSoundUploadF7A2CC` ($077 $16A $16B @7400 $0DC $0EF $11D $0FF $119 $11E $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $27 (`aSoundScriptF79708`), sound test 20
+## $27 (`aSoundScriptF79708`) `SONG_ENEMY_PHASE_MUNSTER`, sound test 20
 
 - **table** (5): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Leonster, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Connacht, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Munster, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Melgen, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Ulster
 - **script**: deferred upload FD `aSoundUploadF7A2E8` ($078 $16C $16D @7400 $0DC $0E9 $0D8 $0EA $0E2 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $28 (`aSoundScriptF79712`), sound test 21
+## $28 (`aSoundScriptF79712`) `SONG_ENEMY_PHASE_THRACIA`, sound test 21
 
 - **event** (6): EventChapter03SylvaleSeized, EventChapter03ThraciaSpawn, EventChapter03TravantLeave, EventChapter08MunsterSavedMaykovReaction, EventChapter09ArionCharge, EventChapter09GrutiaSpawn
 - **table** (5): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Meath, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Kapathogia, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Luthecia, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Thracia, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Grutia
 - **script**: deferred upload FD `aSoundUploadF7A302` ($079 $16E $16F @7400 $0DC $0F0 $11F $110 $0FF $11D $0EE $0EF $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $29 (`aSoundScriptF7971C`), sound test 22
+## $29 (`aSoundScriptF7971C`) `SONG_ENEMY_PHASE_MILETOS`, sound test 22
 
 - **table** (4): `aNonPlayerFactionPhaseSongIDs` phase of the faction: Miletos, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Peruluke, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Chronos, `aNonPlayerFactionPhaseSongIDs` phase of the faction: Rados
 - **script**: deferred upload FD `aSoundUploadF7A322` ($07A $170 $171 @7400 $0DC $0E9 $0F0 $0E7 $0E2 $340 indirect 3C), wait 4; queue command (checked) $00CB
@@ -243,7 +243,7 @@ here names a song; it is the evidence to name them from.
 - **table** (1): `aPlayerPhaseChapterSongIDs` player phase: Final chapter
 - **script**: deferred upload FD `aSoundUploadF7A21A` ($070 $15C $15D @7400 $106 $0D9 $0F4 $0DF $107 $103 $0E1 $104 $0E4 $105 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
-## $2E (`aSoundScriptF796C2`), sound test 12
+## $2E (`aSoundScriptF796C2`) `SONG_FIRST_PHASE_FINAL`, sound test 12
 
 - **table** (1): `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Final chapter
 - **script**: deferred upload FD `aSoundUploadF7A21A` ($070 $15C $15D @7400 $106 $0D9 $0F4 $0DF $107 $103 $0E1 $104 $0E4 $105 $340 indirect 3C), wait 4; queue command (checked) $00CC
@@ -596,9 +596,9 @@ here names a song; it is the evidence to name them from.
 - **table** (4): `aCastleSongs` castle (rlPlayCastleSong): Miletos, `aCastleSongs` castle (rlPlayCastleSong): Perlucos, `aCastleSongs` castle (rlPlayCastleSong): Chronos, `aCastleSongs` castle (rlPlayCastleSong): Rados
 - **script**: deferred upload FD `aSoundUploadF7A754` ($0C1 $1A8 $1A9 @7400 $126 $0FC $128 $0E0 indirect 3C); queue command (checked) $00CB
 
-## $72 (`aSoundScriptF799C0`)
+## $72 (`aSoundScriptF799C0`) `SONG_GAME_OVER`
 
-- **code** (1): `rlProcGameOverInit` music, engine/menus/game_over.asm:171
+- **code** (1): `rlProcGameOverInit` music, engine/menus/game_over.asm:174
 - **script**: deferred upload FD `aSoundUploadF7A9FE` ($0AC $1E0 $1E1 @7400 $106 $0F9 $101 indirect 3C); queue command (checked) $00C9
 
 ## $73 (`aSoundScriptF79902`), sound test 66

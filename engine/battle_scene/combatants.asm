@@ -2938,7 +2938,7 @@
         sbc wBattleAnimationYFixed,b,x
         xba
         clc
-        adc $7FE19A
+        adc wBattleSceneCameraY
         and #$00FF
         sta wR1
         lda bBattleAnimationDrawOffsetY,b,x
@@ -5949,10 +5949,10 @@
         sta wR9
 
         _D412
-        lda $7FE1B4
+        lda wBattleSceneBackgroundFlags+1
         sec
         sbc wR9
-        sta $7FE1B4
+        sta wBattleSceneBackgroundFlags+1
 
         _D41D
         ply
@@ -6032,10 +6032,10 @@
         sta wR9
 
         _D48F
-        lda $7FE1B4
+        lda wBattleSceneBackgroundFlags+1
         clc
         adc wR9
-        sta $7FE1B4
+        sta wBattleSceneBackgroundFlags+1
 
         _D49A
         ply
@@ -6214,14 +6214,14 @@
 
 
         _D58D
-        lda $7FE1B4
+        lda wBattleSceneBackgroundFlags+1
         beq _D5F7
         bmi _D5C7
         cmp #$0004
         bcc _D5AC
         sec
         sbc #$0002
-        sta $7FE1B4
+        sta wBattleSceneBackgroundFlags+1
         lda wBattleSceneCameraX
         sec
         sbc #$0002
@@ -6230,7 +6230,7 @@
 
         _D5AC
         dec a
-        sta $7FE1B4
+        sta wBattleSceneBackgroundFlags+1
         lda wBattleSceneCameraX
         dec a
 
@@ -6250,7 +6250,7 @@
         bcs _D5DE
         clc
         adc #$0002
-        sta $7FE1B4
+        sta wBattleSceneBackgroundFlags+1
         lda wBattleSceneCameraX
         clc
         adc #$0002
@@ -6259,7 +6259,7 @@
 
         _D5DE
         inc a
-        sta $7FE1B4
+        sta wBattleSceneBackgroundFlags+1
         lda wBattleSceneCameraX
         inc a
 
@@ -6273,7 +6273,7 @@
         sta wBattleSceneCameraX
 
         _D5F7
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         bit #$0004
         bne _D66F
         lda wBattleSceneCameraX
@@ -6313,7 +6313,7 @@
 
         _D638
         sep #$20
-        sta $7FE19A
+        sta wBattleSceneCameraY
         eor #$FF
         inc a
         sta wBufferBG2VOFS
@@ -6338,7 +6338,7 @@
         sta wBufferBG2VOFS
         plx
         lda wBufferBG2HOFS
-        sta $7FE19B
+        sta wBattleSceneCameraY+1
         lda wBufferBG2VOFS
         sta $7FE19D
 
@@ -6360,7 +6360,7 @@
 
         phx
         phy
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         bit #$0002
         beq _D6AF
         lda wBattleSceneCameraX
@@ -6649,7 +6649,7 @@
         lda wBattleAnimationYAnchor,b,x
         xba
         clc
-        adc $7FE19A
+        adc wBattleSceneCameraY
         and #$00FF
         sta wR1
         lda wBattleAnimationBaseTile,b,x
@@ -6861,7 +6861,7 @@
         and #$FF00
         xba
         clc
-        adc $7FE19A
+        adc wBattleSceneCameraY
         and #$00FF
         sta wR1
         plx

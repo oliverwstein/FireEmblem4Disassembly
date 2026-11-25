@@ -679,9 +679,9 @@
 
         php
         jsr rsSetSaveMenuScreenRegisters
-        lda #(`gcUnknown9CB90D)<<8
+        lda #(`g4bppcSaveMenuWindowTiles)<<8
         sta lR18+1
-        lda #<>gcUnknown9CB90D
+        lda #<>g4bppcSaveMenuWindowTiles
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -701,9 +701,9 @@
 
           .structDMAToVRAM g2bppBlankTile, $0010, $80, $DFF0
 
-        lda #(`gcUnknown9C8000)<<8
+        lda #(`g4bppcSaveMenuMainTiles)<<8
         sta lR18+1
-        lda #<>gcUnknown9C8000
+        lda #<>g4bppcSaveMenuMainTiles
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -3356,9 +3356,9 @@
         lda #$02
         sta bBufferTM
         rep #$20
-        lda #(`gcUnknown9CB90D)<<8
+        lda #(`g4bppcSaveMenuWindowTiles)<<8
         sta lR18+1
-        lda #<>gcUnknown9CB90D
+        lda #<>g4bppcSaveMenuWindowTiles
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

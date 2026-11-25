@@ -354,9 +354,9 @@
         stz wBufferBG1VOFS
         sep #$20
         rep #$10
-        ldx #<>gcUnknownDF2AFE
+        ldx #<>g4bppcOpeningLogoTiles
         stx DecompressionVariables
-        lda #`gcUnknownDF2AFE
+        lda #`g4bppcOpeningLogoTiles
         sta $CA
         ldx #$8B88
         stx $CB

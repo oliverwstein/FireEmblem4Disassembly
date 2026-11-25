@@ -443,7 +443,7 @@
         bne _95A4
         lda #$01FF
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda #$0000
         bra _95C1
 
@@ -461,7 +461,7 @@
         clc
         adc #$0150
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda wR13
 
         _95C1
@@ -549,7 +549,7 @@
         bne _962A
         lda #$01FF
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda #$0000
         bra _9647
 
@@ -567,7 +567,7 @@
         clc
         adc #$0150
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda wR13
 
         _9647
@@ -610,7 +610,7 @@
         pha
         lda #$00FF
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         pla
         bra _967F
 
@@ -626,7 +626,7 @@
         clc
         adc #$0040
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda wR10
 
         _967F
@@ -635,7 +635,7 @@
         clc
         adc #$004A
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         plx
         pla
         rtl
@@ -688,7 +688,7 @@
         bne _96BC
         lda #$00FF
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda #$0000
         bra _96E5
 
@@ -706,7 +706,7 @@
         clc
         adc #$0022
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda wR10
         clc
         adc #$0032
@@ -767,7 +767,7 @@
         bne _971C
         lda #$00FF
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda #$0000
         bra _9739
 
@@ -785,7 +785,7 @@
         clc
         adc #$0040
         ora wR1
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         lda wR13
 
         _9739
@@ -857,7 +857,7 @@
         adc #$0000
         clc
         adc wR3
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         inc x
         inc x
         lda wR0
@@ -887,7 +887,7 @@
         adc #$0007
         clc
         adc wR3
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         inc x
         inc x
         lda wR0
@@ -913,7 +913,7 @@
         clc
         adc #$0010
         ora wR3
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         pla
         cmp #$0007
         bne _97F7
@@ -922,7 +922,7 @@
         lda #$0034
         clc
         adc wR3
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
 
         _97F7
         plx
@@ -976,7 +976,7 @@
         and #$00FF
         clc
         adc wR3
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         txa
         sec
         sbc #$0054
@@ -1008,7 +1008,7 @@
         adc #1,s
         clc
         adc wR3
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
         pla
         lda wR1
         sec
@@ -1039,7 +1039,7 @@
         plx
         clc
         adc wR3
-        sta $7FC800,x
+        sta aBattleSceneHUDTilemapBuffer,x
 
         _988D
         plx
@@ -2782,7 +2782,7 @@
         sta $7FE4C8
         sep #$20
         lda #$01
-        sta $7FE4C2
+        sta bBattleSceneBG3Mode
         rep #$20
         lda #$9800
         sta $7FE4D3
@@ -2973,7 +2973,7 @@
 
         sep #$20
         lda #$02
-        sta $7FE4C2
+        sta bBattleSceneBG3Mode
         rep #$20
         stz aBGPaletteBuffer,b
         lda aUnknownE000B0+12

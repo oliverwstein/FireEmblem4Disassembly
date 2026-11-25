@@ -636,20 +636,20 @@
         dec x
         bne _D149
         lda wItemWindowItemCount
-        sta $7FB012
+        sta wItemWindowLoopCount
         lda #$0000
 
         _D164
-        sta $7FB010
+        sta wItemWindowLoopIndex
         tax
         lda aItemWindowList,x
         and #$00FF
         pha
         jsl rlGetItemRAMStructEntryByPlayerItemIndex
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7FB014
+        sta wItemWindowCurrentItemID
         jsl rlGetItemDataROMPointer
-        lda $7FB014
+        lda wItemWindowCurrentItemID
         asl a
         tax
         lda aItemWindowIconIndices,x
@@ -663,9 +663,9 @@
         sta aItemWindowItemRAMPointers,x
         lda wCurrentItemDataROMPointer,b
         sta aItemWindowItemROMPointers,x
-        lda $7FB010
+        lda wItemWindowLoopIndex
         inc a
-        cmp $7FB012
+        cmp wItemWindowLoopCount
         bne _D164
         rtl
 
@@ -1803,10 +1803,10 @@
         cmp #$000D
         bpl _BC07
         lda #$0000
-        sta $7FB010
+        sta wItemWindowLoopIndex
 
         _BBC2
-        lda $7FB010
+        lda wItemWindowLoopIndex
         tax
         lda aItemWindowList,x
         and #$00FF
@@ -1819,7 +1819,7 @@
         sta wR5
         lda #$000F
         sta wR0
-        lda $7FB010
+        lda wItemWindowLoopIndex
         asl a
         tax
         lda aItemWindowRowYCoordinates,x
@@ -1831,9 +1831,9 @@
         .databank $89
         ldy #<>aItemWindowItemIconSprite
         jsl rlPushToOAMBuffer
-        lda $7FB010
+        lda wItemWindowLoopIndex
         inc a
-        sta $7FB010
+        sta wItemWindowLoopIndex
         bra _BBC2
 
 
@@ -1847,12 +1847,12 @@
         bne _BC6F
         lda wItemWindowScrollOffset
         lsr a
-        sta $7FB010
+        sta wItemWindowLoopIndex
         lda #$0000
-        sta $7FB012
+        sta wItemWindowLoopCount
 
         _BC20
-        lda $7FB010
+        lda wItemWindowLoopIndex
         tax
         lda aItemWindowList,x
         and #$00FF
@@ -1864,7 +1864,7 @@
         sta wR5
         lda #$000F
         sta wR0
-        lda $7FB012
+        lda wItemWindowLoopCount
         asl a
         tax
         lda @l aItemWindowRowYCoordinates,x
@@ -1876,12 +1876,12 @@
         .databank $89
         ldy #<>aItemWindowItemIconSprite
         jsl rlPushToOAMBuffer
-        lda $7FB010
+        lda wItemWindowLoopIndex
         inc a
-        sta $7FB010
-        lda $7FB012
+        sta wItemWindowLoopIndex
+        lda wItemWindowLoopCount
         inc a
-        sta $7FB012
+        sta wItemWindowLoopCount
         cmp #$000C
         bne _BC20
         rts
@@ -1890,12 +1890,12 @@
         _BC6F
         lda wItemWindowScrollOffset
         lsr a
-        sta $7FB010
+        sta wItemWindowLoopIndex
         lda #$0000
-        sta $7FB012
+        sta wItemWindowLoopCount
 
         _BC7F
-        lda $7FB010
+        lda wItemWindowLoopIndex
         tax
         lda aItemWindowList,x
         and #$00FF
@@ -1907,7 +1907,7 @@
         sta wR5
         lda #$000F
         sta wR0
-        lda $7FB012
+        lda wItemWindowLoopCount
         asl a
         tax
         lda @l aItemWindowIconRowY,x
@@ -1919,12 +1919,12 @@
         .databank $89
         ldy #<>aItemWindowItemIconSprite
         jsl rlPushToOAMBuffer
-        lda $7FB010
+        lda wItemWindowLoopIndex
         inc a
-        sta $7FB010
-        lda $7FB012
+        sta wItemWindowLoopIndex
+        lda wItemWindowLoopCount
         inc a
-        sta $7FB012
+        sta wItemWindowLoopCount
         cmp #$000D
         bne _BC7F
         rts
@@ -1993,7 +1993,7 @@
         cmp #$0004
         beq _BD24
         jsl rlGetItemWeaponType
-        sta $7FB010
+        sta wItemWindowLoopIndex
         jsl rlGetItemEquipmentType
         cmp #$0000
         beq _BD82
@@ -2029,7 +2029,7 @@
 
         _BD61
         jsl rlGetItemWeaponType
-        sta $7FB010
+        sta wItemWindowLoopIndex
         ldx #$0004
         jsl rlUnitWindowCopyWeaponRankIcon
         lda #$0004
@@ -2041,7 +2041,7 @@
         jsl rlPushToOAMBuffer
 
         _BD82
-        lda $7FB010
+        lda wItemWindowLoopIndex
         cmp #$0005
         bpl _BDD2
         cmp #$0003
@@ -2050,15 +2050,15 @@
 
 
         _BD94
-        lda $7FB010
+        lda wItemWindowLoopIndex
         asl a
         asl a
-        sta $7FB010
+        sta wItemWindowLoopIndex
         tax
         lda @l aItemWindowWeaponTriangleTypes,x
         ldx #$0006
         jsl rlUnitWindowCopyWeaponRankIcon
-        lda $7FB010
+        lda wItemWindowLoopIndex
         tax
         lda @l aItemWindowWeaponTriangleTypes+2,x
         ldx #$0008
@@ -2080,17 +2080,17 @@
         _BDD2
         cmp #$0008
         bpl _BE14
-        lda $7FB010
+        lda wItemWindowLoopIndex
         sec
         sbc #$0005
         asl a
         asl a
-        sta $7FB010
+        sta wItemWindowLoopIndex
         tax
         lda @l aItemWindowMagicTriangleTypes,x
         ldx #$0006
         jsl rlUnitWindowCopyWeaponRankIcon
-        lda $7FB010
+        lda wItemWindowLoopIndex
         tax
         lda @l aItemWindowMagicTriangleTypes+2,x
         ldx #$0008
@@ -2441,10 +2441,10 @@
         lda #<>aUnknown80CD1C
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
-        sta $7FB010
+        sta wItemWindowLoopIndex
 
         _C042
-        lda $7FB010
+        lda wItemWindowLoopIndex
         tax
         lda aItemWindowList,x
         and #$00FF
@@ -2464,7 +2464,7 @@
 
 
         _C072
-        lda $7FB010
+        lda wItemWindowLoopIndex
         asl a
         asl a
         asl a
@@ -2488,7 +2488,7 @@
         sta lR18+1
         lda lRoutineVariable,b
         sta lR18
-        lda $7FB010
+        lda wItemWindowLoopIndex
         asl a
         and #$00FF
         xba
@@ -2515,7 +2515,7 @@
 
         _C0DA
         jsl rlGetItemNamePointer
-        lda $7FB010
+        lda wItemWindowLoopIndex
         asl a
         and #$00FF
         xba
@@ -2528,9 +2528,9 @@
         jsl rlDrawMenuTextLine
 
         _C0F9
-        lda $7FB010
+        lda wItemWindowLoopIndex
         inc a
-        sta $7FB010
+        sta wItemWindowLoopIndex
         cmp wItemWindowItemCount
         beq _C10C
         jml _C042

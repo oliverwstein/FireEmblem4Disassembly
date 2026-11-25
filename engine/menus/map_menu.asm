@@ -1265,19 +1265,19 @@
         plb
         phx
         phy
-        lda bUnknown0536,b
+        lda bMapMenuDMABusyFlags,b
         and #$00FF
         beq _Free
 
           lda #7,s
-          cmp lUnknown0537,b
+          cmp lMapMenuDMADataPointer,b
           bne +
 
             lda #7+1,s
-            cmp lUnknown0537+1
+            cmp lMapMenuDMADataPointer+1
             bne +
 
-              lda bUnknown0536,b
+              lda bMapMenuDMABusyFlags,b
               bit #$0001
               bne _8A17
 
@@ -1296,12 +1296,12 @@
 
         _Free ; 87/89AC
         lda #7,s
-        sta lUnknown0537,b
+        sta lMapMenuDMADataPointer,b
         lda #7+1,s
-        sta lUnknown0537+1,b
-        lda bUnknown0536,b
+        sta lMapMenuDMADataPointer+1,b
+        lda bMapMenuDMABusyFlags,b
         ora #$0080
-        sta bUnknown0536,b
+        sta bMapMenuDMABusyFlags,b
 
         ldy lR19
         sep #$20
@@ -1341,9 +1341,9 @@
 
           +
           rep #$20
-          lda bUnknown0536,b
+          lda bMapMenuDMABusyFlags,b
           ora #$0001
-          sta bUnknown0536,b
+          sta bMapMenuDMABusyFlags,b
 
           _8A17
           lda bDecompressionArrayFlag,b
@@ -1413,10 +1413,10 @@
           jsl rlProcessDMAStructArray
 
         +
-        lda bUnknown0536,b
+        lda bMapMenuDMABusyFlags,b
         and #~$01
         ora #$02
-        sta bUnknown0536,b
+        sta bMapMenuDMABusyFlags,b
         rep #$20
 
         _8A98
@@ -1432,9 +1432,9 @@
           rtl
 
         _CLC
-        lda bUnknown0536,b
+        lda bMapMenuDMABusyFlags,b
         and #$FF00
-        sta bUnknown0536,b
+        sta bMapMenuDMABusyFlags,b
         ply
         plx
         plp
@@ -5336,13 +5336,13 @@
 
         phx
         lda lR18
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         lda lR18+1
-        sta $7FEAAB
+        sta lMapBattleTextBoxText1+1
         lda lR19
-        sta $7FEAAE
+        sta lMapBattleTextBoxText2
         lda lR19+1
-        sta $7FEAAF
+        sta lMapBattleTextBoxText2+1
         jsl rlStallProcUntilMapMenuDataLoaded
         lda aProcSystem.wInput1,b
         sta aProcSystem.aBody7,b,x
@@ -5386,13 +5386,13 @@
         lda aProcSystem.aBody7,b,x
         bit #$8000
         bne _A19A
-        lda $7FEAAA
+        lda lMapBattleTextBoxText1
         sta lR18
-        lda $7FEAAB
+        lda lMapBattleTextBoxText1+1
         sta lR18+1
-        lda $7FEAAE
+        lda lMapBattleTextBoxText2
         sta lR19
-        lda $7FEAAF
+        lda lMapBattleTextBoxText2+1
         sta lR19+1
         ldx #$0101
         jsl rlDrawTwoMapMenuTextLines
@@ -5672,13 +5672,13 @@
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
         lda lR18
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         lda lR18+1
-        sta $7FEAAB
+        sta lMapBattleTextBoxText1+1
         lda lR19
-        sta $7FEAAE
+        sta lMapBattleTextBoxText2
         lda lR19+1
-        sta $7FEAAF
+        sta lMapBattleTextBoxText2+1
 
         _A2FE
         rtl

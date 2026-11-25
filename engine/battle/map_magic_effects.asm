@@ -237,10 +237,10 @@
 
         jsr rsSetMapMagicLayerBlending
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         jsl rlMapMagicFireStepPaletteAnim
@@ -267,7 +267,7 @@
         .databank ?
         ; Part of the Fire effect.
 
-        lda $7ECC06
+        lda wMapMagicHitFlag
         bne _92FA
         rtl
 
@@ -289,7 +289,7 @@
         .databank ?
         ; Part of the Elfire effect.
 
-        lda $7ECC06
+        lda wMapMagicHitFlag
         bne _9309
         rtl
 
@@ -314,7 +314,7 @@
         .databank ?
         ; Part of the Elfire effect.
 
-        lda $7ECC08
+        lda wMapMagicFadeFlag
         beq rlMapMagicElfireWaitHit._9312
         jsl rlMapMagicFireStepPaletteAnim
         bcc rlMapMagicElfireWaitHit._9312
@@ -349,7 +349,7 @@
         .databank ?
         ; Part of the Fire effect.
 
-        lda $7ECC08
+        lda wMapMagicFadeFlag
         beq rlMapMagicFireDone
         lda #$0001
         sta wMapMagicDone
@@ -511,7 +511,7 @@
         .databank ?
         ; Shared by the Elfire and Fire effects.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
@@ -642,7 +642,7 @@
         cmp #$0000
         bne _94AA
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
         lda #$000D
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #<>rlMapMagicFireballSpriteSignalElfire
@@ -661,7 +661,7 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #<>rlMapMagicFireballSpriteWaitImpact
         sta aActiveSpriteSystem.aOnCycle,b,x
-        sta $7ECC06
+        sta wMapMagicHitFlag
         lda #$0002
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda wMapMagicTargetPixel
@@ -714,7 +714,7 @@
         bne _94FD
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7ECC08
+        sta wMapMagicFadeFlag
 
         _94FD
         rtl
@@ -765,7 +765,7 @@
         bne _9526
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7ECC08
+        sta wMapMagicFadeFlag
 
         _9526
         rtl
@@ -2200,10 +2200,10 @@
         jsr rsSetMapMagicLayerBlending
         jsr rsSaveMapMagicColors
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
         rtl
 
 
@@ -2283,7 +2283,7 @@
         .databank ?
         ; Part of the Fenrir effect.
 
-        lda $7ECC06
+        lda wMapMagicHitFlag
         beq _9DA2
         ldy aProcSystem.aBody7,b,x
         lda #$FFFC
@@ -2410,7 +2410,7 @@
         .databank ?
         ; Part of the Fenrir effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
@@ -2537,7 +2537,7 @@
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        sta $7ECC06
+        sta wMapMagicHitFlag
 
         _9FC1
         rtl
@@ -2736,7 +2736,7 @@
         sta $7F50DB
         lda wMapMagicTargetPixel
         and #$00FF
-        sta $7F50DF
+        sta wMapMagicOrbX
         lda wMapMagicTargetPixel
         and #$00FF
         sec
@@ -2744,10 +2744,10 @@
         eor #$FFFF
         inc a
         sta wR0
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta $7F50E1
+        sta wMapMagicOrbY
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
@@ -2755,7 +2755,7 @@
         eor #$FFFF
         inc a
         sta wR1
-        sta $7F50CF
+        sta wMapMagicEffectY
         lda #$7F54
         and #$01FF
         sta $2182,b
@@ -2813,10 +2813,10 @@
         ; Part of the Fenrir effect.
 
         jsl rlMapMagicFenrirVortexStepDMA
-        lda $7F50CD
+        lda wMapMagicEffectX
         and #$01FF
         sta wR4
-        lda $7F50CF
+        lda wMapMagicEffectY
         and #$01FF
         sta wR5
         lda #$7F54
@@ -2973,10 +2973,10 @@
         jsr rsSaveMapMagicColors
         jsl rlMapMagicBolganoneStepPaletteAnim
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
         rtl
 
 
@@ -3004,7 +3004,7 @@
         .databank ?
         ; Part of the Bolganone effect.
 
-        lda $7ECC06
+        lda wMapMagicHitFlag
         cmp #$0001
         bne rlMapMagicBolganoneTintRed._A310
         jsr rsCreateMapMagicProc
@@ -3144,7 +3144,7 @@
         plx
         stz aProcSystem.aHeaderTypeOffset,b,x
         lda #$0001
-        sta $7ECC08
+        sta wMapMagicFadeFlag
         rtl
 
         .databank 0
@@ -3186,7 +3186,7 @@
         ; Part of the Bolganone effect.
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FA536
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -3210,7 +3210,7 @@
         .autsiz
         .databank ?
         ; Part of the Bolganone effect.
-        lda $7ECC06
+        lda wMapMagicHitFlag
         cmp #$0002
         beq _A531
         rtl
@@ -3295,7 +3295,7 @@
         .databank ?
         ; Part of the Bolganone effect.
 
-        lda $7ECC08
+        lda wMapMagicFadeFlag
         beq _A596
         inc y
         inc y
@@ -3319,7 +3319,7 @@
         ; Part of the Bolganone effect.
 
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
         rtl
 
         .databank 0
@@ -3334,7 +3334,7 @@
         ; Part of the Bolganone effect.
 
         lda #$0002
-        sta $7ECC06
+        sta wMapMagicHitFlag
         rtl
 
         .databank 0
@@ -3704,7 +3704,7 @@
         .autsiz
         .databank ?
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda #$0004
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -3720,7 +3720,7 @@
         .autsiz
         .databank ?
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -4782,7 +4782,7 @@
         .databank ?
         ; Part of the Light effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -5200,7 +5200,7 @@
         .databank ?
         ; Part of the Thoron effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
@@ -5669,10 +5669,10 @@
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
         rtl
 
 
@@ -5775,7 +5775,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        lda $7ECC0C
+        lda wMapMagicSubStep
         beq _B32B
         lda #<>rlMapMagicMeteorShakeLoop
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -5874,7 +5874,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda #$00F8
         sta aActiveSpriteSystem.aXPosition,b,x
@@ -5882,7 +5882,7 @@
         sta aActiveSpriteSystem.aYPosition,b,x
         stz aActiveSpriteSystem.aUnknown0013E0,b,x
         stz aActiveSpriteSystem.aUnknown0013C0,b,x
-        lda $7ECC0A
+        lda wMapMagicStep
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
@@ -5898,14 +5898,14 @@
         ; Part of the Meteor effect.
 
         jsl rlHDMAMapMagicStepScrollY
-        lda $7F50CD
+        lda wMapMagicEffectX
         eor #$FFFF
         inc a
         clc
         adc #$0080
         and #$00FF
         sta aActiveSpriteSystem.aXPosition,b,x
-        lda $7F50CF
+        lda wMapMagicEffectY
         eor #$FFFF
         inc a
         clc
@@ -5930,7 +5930,7 @@
         lda #<>rlMapMagicMeteorSpriteWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
-        sta $7ECC0C
+        sta wMapMagicSubStep
 
         _B461
         rtl
@@ -6004,7 +6004,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B4AE
         lda #$0002
-        sta $7ECC0C
+        sta wMapMagicSubStep
         lda #<>rlMapMagicMeteorSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -6071,7 +6071,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        lda $7ECC0C
+        lda wMapMagicSubStep
         cmp #$0002
         beq _B4F6
         lda $0000,b,y
@@ -6500,7 +6500,7 @@
         lda #$0020
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7ECC08
+        sta wMapMagicFadeFlag
 
         _B6B6
         rtl
@@ -6517,7 +6517,7 @@
         dec aProcSystem.aBody0,b,x
         bne _B6C3
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
 
         _B6C3
         rtl
@@ -6539,10 +6539,10 @@
 
         jsr rsSetMapMagicLayerBlending
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         lda aMapAction.wMapBattleDefenderSpriteSlot
@@ -6764,7 +6764,7 @@
         lda #$0020
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7ECC08
+        sta wMapMagicFadeFlag
 
         _B8AA
         rtl
@@ -6781,7 +6781,7 @@
         dec aProcSystem.aBody0,b,x
         bne _B8B7
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
 
         _B8B7
         rtl
@@ -6811,10 +6811,10 @@
         adc #$FFFE
         bmi _B91B
         phx
-        lda $7ECC0A
+        lda wMapMagicStep
         clc
         adc #$0010
-        sta $7ECC0A
+        sta wMapMagicStep
         and #$FF00
         xba
         eor #$FFFF
@@ -6970,7 +6970,7 @@
         lda #$0020
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7ECC08
+        sta wMapMagicFadeFlag
 
         _BA0A
         rtl
@@ -6987,7 +6987,7 @@
         dec aProcSystem.aBody0,b,x
         bne _BA17
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
 
         _BA17
         rtl
@@ -7007,7 +7007,7 @@
         .databank ?
         ; Shared by the Restore, Return and Sleep effects.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -7027,7 +7027,7 @@
         .autsiz
         .databank ?
         ; Shared by the Restore, Return and Sleep effects.
-        lda $7ECC06
+        lda wMapMagicHitFlag
         beq _BA4E
         lda #$0001
         sta wMapMagicDone
@@ -7071,7 +7071,7 @@
         .databank ?
         ; Shared by the Restore, Return and Sleep effects.
 
-        lda $7ECC08
+        lda wMapMagicFadeFlag
         bne _BA92
         lda $0000,b,y
         tay
@@ -7338,10 +7338,10 @@
         stz aProcSystem.aBody0,b,x
         stz aProcSystem.aBody1,b,x
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
 
         _BCFC
         rtl
@@ -7445,7 +7445,7 @@
         ; Part of the Mjolnir effect.
 
         jsl rlMapMagicMjolnirStepScroll
-        lda $7ECC06
+        lda wMapMagicHitFlag
         beq _BD9E
         ldy aProcSystem.aBody7,b,x
         lda aProcSystem.aBody4,b,y
@@ -7644,7 +7644,7 @@
         .databank ?
         ; Part of the Mjolnir effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -7674,7 +7674,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _BF46
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _BF46
@@ -7708,7 +7708,7 @@
         .databank ?
         ; Part of the Mjolnir effect.
 
-        lda $7ECC08
+        lda wMapMagicFadeFlag
         bne _BF76
         lda $0000,b,y
         tay
@@ -8051,10 +8051,10 @@
 
         jsr rsSetMapMagicLayerBlending
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
         rtl
 
         .databank 0
@@ -8143,7 +8143,7 @@
         dec aProcSystem.aBody0,b,x
         bne _C219
         lda #$0001
-        sta $7ECC0C
+        sta wMapMagicSubStep
 
         _C219
         rtl
@@ -8214,7 +8214,7 @@
         lda #$0040
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7ECC0A
+        sta wMapMagicStep
         lda #$0012
 
         _C2A0
@@ -8239,7 +8239,7 @@
         lda #$0004
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7ECC0A
+        sta wMapMagicStep
 
         _C2BF
         rtl
@@ -8284,7 +8284,7 @@
         lda #$0004
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
 
         _C2F3
         rtl
@@ -8306,7 +8306,7 @@
         lda #$0040
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7ECC0A
+        sta wMapMagicStep
 
         _C30C
         rtl
@@ -8326,7 +8326,7 @@
         lda #<>rlMapMagicNosferatuOrbShrink
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7ECC0A
+        sta wMapMagicStep
 
         _C31F
         rtl
@@ -8375,27 +8375,27 @@
         .databank ?
         ; Part of the Nosferatu effect.
 
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         asl a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
         lda $1038,b,x
         and #$00FF
-        sta $7F50DF
+        sta wMapMagicOrbX
         sec
         sbc #$0080
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda $1058,b,x
         and #$00FF
-        sta $7F50E1
+        sta wMapMagicOrbY
         lda $1058,b,x
         and #$00FF
         sec
         sbc #$0070
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         phx
         phy
         lda #$7F00
@@ -8444,7 +8444,7 @@
         .databank ?
         ; Part of the Nosferatu effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
@@ -8471,7 +8471,7 @@
         lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
-        lda $7ECC06
+        lda wMapMagicHitFlag
         beq _C3EC
         lda #<>rlMapMagicNosferatuSpriteAtCaster
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -8496,7 +8496,7 @@
         lda wMapMagicCasterPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
-        lda $7ECC0C
+        lda wMapMagicSubStep
         beq _C414
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
@@ -8587,10 +8587,10 @@
         .databank ?
         ; Part of the Nosferatu effect.
 
-        lda $7ECC0A
+        lda wMapMagicStep
         beq _C4D9
         lda #$0000
-        sta $7ECC0A
+        sta wMapMagicStep
         inc y
         inc y
         rtl
@@ -8957,7 +8957,7 @@
         and #$00FF
         clc
         adc wR0
-        sta $7F50DF
+        sta wMapMagicOrbX
         lda aProcSystem.aBody7,b,x
         inc aProcSystem.aBody7,b,x
         and #$000C
@@ -8969,14 +8969,14 @@
         sbc <>aMapMagicSilenceBeamHDMASteps,b,y
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc #$0004
         clc
         adc wR1
-        sta $7F50E1
+        sta wMapMagicOrbY
         lda wMapMagicTargetPixel+1
         and #$00FF
         clc
@@ -8985,21 +8985,21 @@
         sbc #$0070
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         lda aProcSystem.aBody5,b,x
         bne _C77D
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         asl a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
         bra _C789
 
 
         _C77D
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         inc a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
 
         _C789
         phy
@@ -9096,10 +9096,10 @@
 
         jsr rsSaveMapMagicColors
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
         rtl
 
         .databank 0
@@ -9143,7 +9143,7 @@
         .databank ?
         ; Part of the Tornado effect.
 
-        lda $7ECC06
+        lda wMapMagicHitFlag
         beq _C8A1
         lda #<>rlMapMagicTornadoWaitFade
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -9215,7 +9215,7 @@
         ; Part of the Tornado effect.
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FC8CC
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
@@ -9309,7 +9309,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _C968
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _C968
@@ -9484,7 +9484,7 @@
         .databank ?
         ; Part of the Wind effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
@@ -9528,7 +9528,7 @@
         .databank ?
         ; Part of the Wind effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -9981,7 +9981,7 @@
         .databank ?
         ; Part of the Warp effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -10139,7 +10139,7 @@
         .databank ?
         ; Part of the BrokenStaff effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -10677,7 +10677,7 @@
         .databank ?
         ; Part of the Jormungandr effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
@@ -10996,7 +10996,7 @@
         .databank ?
         ; Part of the Thief effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicCasterPixel
         and #$00FF
@@ -11270,10 +11270,10 @@
 
         jsr rsSetMapMagicLayerBlending
         lda #$0000
-        sta $7ECC06
-        sta $7ECC08
-        sta $7ECC0A
-        sta $7ECC0C
+        sta wMapMagicHitFlag
+        sta wMapMagicFadeFlag
+        sta wMapMagicStep
+        sta wMapMagicSubStep
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         jsr rsSaveMapMagicColors
@@ -11519,7 +11519,7 @@
         .databank ?
         ; Part of the Valflame effect.
 
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
@@ -11542,7 +11542,7 @@
         ; Part of the Valflame effect.
 
         jsl rlMapMagicValflameStepSpritePal
-        lda $7ECC06
+        lda wMapMagicHitFlag
         beq _D60C
         lda #$0001
         sta wMapMagicDone
@@ -11590,7 +11590,7 @@
         stz wR2
 
         _D622
-        lda $7F509F
+        lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         ldy wR0
         lda <>aMapMagicValflameOrbData,b,y
@@ -11779,7 +11779,7 @@
         .databank ?
         ; Part of the Valflame effect.
 
-        lda $7ECC08
+        lda wMapMagicFadeFlag
         bne rlMapMagicValflameWaitRing._D752
         bra rlMapMagicValflameWaitRing._D74D
         .databank 0
@@ -11793,7 +11793,7 @@
         .databank ?
         ; Part of the Valflame effect.
 
-        lda $7ECC0A
+        lda wMapMagicStep
         bne _D752
 
         _D74D
@@ -11953,7 +11953,7 @@
         cmp wR0
         bmi _D852
         lda #$0001
-        sta $7ECC08
+        sta wMapMagicFadeFlag
         lda wR0
         sta aProcSystem.aBody1,b,x
         lda #$0006
@@ -12123,7 +12123,7 @@
         lda #$0006
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7ECC0A
+        sta wMapMagicStep
 
         _D960
         rtl
@@ -12202,7 +12202,7 @@
         lda #<>rlMapMagicValflameBeamDone
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7ECC06
+        sta wMapMagicHitFlag
 
       rlMapMagicValflameBeamDone ; 9F/D9DB
 
@@ -12726,14 +12726,14 @@
         sbc #$0080
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         ldy #$DCED
         lda wMapMagicFlags
         bmi _DCCE
@@ -12795,7 +12795,7 @@
         adc #$0008
         and #$00FF
         sta wR0
-        sta $7F50CD
+        sta wMapMagicEffectX
         sec
         sbc #$0080
         xba
@@ -12821,7 +12821,7 @@
         adc #$FFF8
         and #$00FF
         sta wR0
-        sta $7F50CD
+        sta wMapMagicEffectX
         sec
         sbc #$0080
         xba
@@ -12843,7 +12843,7 @@
         and #$00FF
         sta wR1
         jsl rlGetVectorLength
-        sta $7ECC0A
+        sta wMapMagicStep
         lda $7F57FF
         sta $7F50D1
         lda $7F5800
@@ -12895,7 +12895,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        lda $7ECC0C
+        lda wMapMagicSubStep
         beq _DE15
         lda #$0000
         sta $7F50D5
@@ -12916,7 +12916,7 @@
         and #$00FF
 
         _DE2D
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda $7F50DB
         clc
         adc $7F50D7
@@ -12931,7 +12931,7 @@
         and #$00FF
 
         _DE49
-        sta $7F50CF
+        sta wMapMagicEffectY
         rtl
 
         .databank 0
@@ -13023,9 +13023,9 @@
         sta aHDMASystem.aOffset,b,x
 
         _DF2C
-        lda $7F50CD
+        lda wMapMagicEffectX
         sta wR0
-        lda $7F50CF
+        lda wMapMagicEffectY
         sta wR1
         phb
         pea #$7F7F
@@ -13455,7 +13455,7 @@
         sbc #$0080
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda $7F57FF
         sta $7F50D1
         lda $7F5800
@@ -13491,7 +13491,7 @@
         sta $7F50D7
         xba
         and #$00FF
-        sta $7F50CF
+        sta wMapMagicEffectY
         rtl
 
         .databank 0
@@ -13627,15 +13627,15 @@
         sta $2182,b
         lda lR18
         sta $2181,b
-        lda $7F50DF
+        lda wMapMagicOrbX
         and #$00FF
         sta wR1
-        lda $7F50E1
+        lda wMapMagicOrbY
         sta wR2
-        lda $7F50E3
+        lda wMapMagicCircleRadius
         and #$00FF
         sta wR3
-        lda $7F50E5
+        lda wMapMagicCircleDiameter
         sta wR4
         jsr rsMapMagicLookupCircleHalfWidth
         ldy #$0000
@@ -13747,14 +13747,14 @@
         sta wR0
         tya
         sta wR5
-        lda $7F50DF,x
+        lda wMapMagicOrbX,x
         and #$00FF
         sta wR1
-        lda $7F50E1,x
+        lda wMapMagicOrbY,x
         sta wR2
-        lda $7F50E3,x
+        lda wMapMagicCircleRadius,x
         sta wR3
-        lda $7F50E5,x
+        lda wMapMagicCircleDiameter,x
         sta wR4
         phd
         pea #$0000
@@ -13764,17 +13764,17 @@
         sta $2182,b
         lda lR18
         sta $2181,b
-        lda $7F50DF,x
+        lda wMapMagicOrbX,x
         and #$00FF
         sta wR1
-        lda $7F50E1,x
+        lda wMapMagicOrbY,x
         sec
         sbc #$0010
         sta wR2
-        lda $7F50E3,x
+        lda wMapMagicCircleRadius,x
         and #$00FF
         sta wR3
-        lda $7F50E5,x
+        lda wMapMagicCircleDiameter,x
         sta wR4
         lda wR3
         jsr rsMapMagicCalcStaffCircleRow
@@ -14016,14 +14016,14 @@
         sta $2182,b
         lda lR18
         sta $2181,b
-        lda $7F50DF
+        lda wMapMagicOrbX
         and #$00FF
         sta wR1
-        lda $7F50E1
+        lda wMapMagicOrbY
         sta wR2
-        lda $7F50E3
+        lda wMapMagicCircleRadius
         sta wR3
-        lda $7F50E5
+        lda wMapMagicCircleDiameter
         sta wR4
         jsr rsMapMagicLookupCircleHalfWidth
         ldy #$0000
@@ -14504,14 +14504,14 @@
         sbc #$00F8
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0000
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         rtl
 
         .databank 0
@@ -14541,14 +14541,14 @@
         sbc #$00DC
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$FFF0
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         rtl
 
         .databank 0
@@ -14608,14 +14608,14 @@
         sbc #$0080
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         jml rlMapMagicClearWindowBuffers
 
         .databank 0
@@ -14666,26 +14666,26 @@
         and #$00FF
         clc
         adc wR0
-        sta $7F50DF
+        sta wMapMagicOrbX
         lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR1
-        sta $7F50E1
+        sta wMapMagicOrbY
         lda aProcSystem.aBody5,b,x
         bne _EE22
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         asl a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
         bra _EE2E
 
 
         _EE22
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         inc a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
 
         _EE2E
         phy
@@ -14756,40 +14756,40 @@
         and #$00FF
         clc
         adc wR0
-        sta $7F50DF
+        sta wMapMagicOrbX
         lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$0080
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR1
-        sta $7F50E1
+        sta wMapMagicOrbY
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         lda aProcSystem.aBody5,b,x
         bne _EEDA
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         asl a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
         bra _EEE6
 
 
         _EEDA
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         inc a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
 
         _EEE6
         phy
@@ -14830,7 +14830,7 @@
         dec aProcSystem.aBody6,b,x
         bne rlMapMagicMjolnirWindowShrink
         lda #$0001
-        sta $7ECC08
+        sta wMapMagicFadeFlag
         lda #<>rlMapMagicMjolnirWindowWaitHold
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0030
@@ -14900,40 +14900,40 @@
         and #$00FF
         clc
         adc wR0
-        sta $7F50DF
+        sta wMapMagicOrbX
         lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$0080
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR1
-        sta $7F50E1
+        sta wMapMagicOrbY
         lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         lda aProcSystem.aBody5,b,x
         bne _EFDD
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         asl a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
         bra _EFE9
 
 
         _EFDD
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         inc a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
 
         _EFE9
         phy
@@ -14962,16 +14962,16 @@
 
         lda #$0040
         sta wR1
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         asl a
-        sta $7F50E5
-        lda $7F50CD
+        sta wMapMagicCircleDiameter
+        lda wMapMagicEffectX
         eor #$FFFF
         inc a
         clc
         adc #$0080
-        sta $7F50DF
-        lda $7F50CF
+        sta wMapMagicOrbX
+        lda wMapMagicEffectY
         cmp #$FF98
         bpl _F02C
         lda #$0000
@@ -14985,7 +14985,7 @@
         adc #$0060
 
         _F034
-        sta $7F50E1
+        sta wMapMagicOrbY
         phy
         lda #$7F00
         sta lR18+1
@@ -15082,19 +15082,19 @@
         _F0AC
         lda wMapMagicTargetPixel
         and #$00FF
-        sta $7F50DF
+        sta wMapMagicOrbX
         lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR0
         and #$01FF
-        sta $7F50E1
+        sta wMapMagicOrbY
         lda aProcSystem.aBody3,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         phy
         lda wR1
         tay
-        lda $7F50E3
+        lda wMapMagicCircleRadius
         jsr rsMapMagicAuraDrawMask
         ply
 
@@ -15200,22 +15200,22 @@
         and #$00FF
         clc
         adc wR0
-        sta $7F50DF
+        sta wMapMagicOrbX
         lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR1
-        sta $7F50E1
+        sta wMapMagicOrbY
         lda $1038,b,x
         and #$00FF
         beq _F193
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         asl a
         sec
         sbc #$0000
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
         phy
-        lda $7F50E3
+        lda wMapMagicCircleRadius
         clc
         adc #$0000
         tay
@@ -15301,36 +15301,36 @@
         _F1EB
         lda wMapMagicTargetPixel
         and #$00FF
-        sta $7F50DF
+        sta wMapMagicOrbX
         sec
         sbc #$0080
         eor #$FFFF
         inc a
-        sta $7F50CD
+        sta wMapMagicEffectX
         lda wMapMagicTargetPixel+1
         and #$00FF
-        sta $7F50E1
+        sta wMapMagicOrbY
         sec
         sbc #$0070
         eor #$FFFF
         inc a
-        sta $7F50CF
+        sta wMapMagicEffectY
         lda aProcSystem.aBody5,b,x
         bne _F230
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         asl a
         clc
         adc #$0000
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
         bra _F23C
 
 
         _F230
         lda aProcSystem.aBody2,b,x
-        sta $7F50E3
+        sta wMapMagicCircleRadius
         inc a
-        sta $7F50E5
+        sta wMapMagicCircleDiameter
 
         _F23C
         phy

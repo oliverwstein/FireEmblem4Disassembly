@@ -38,3 +38,24 @@
   SONG_WORLD_MAP_GENERATION2  = $5C ; chapters 6 to 10
   SONG_WORLD_MAP_EPILOGUE     = $0F
   SONG_CASTLE_SEIZED          = $7C ; the castle-seized events that do not end a chapter
+
+  SONG_TITLE_INTRO_1          = $01 ; rlPlayTitleIntroSong
+  SONG_TITLE_INTRO_2          = $02 ; rlPlayTitleIntroSong2
+  SONG_TITLE_SCREEN           = $03 ; rlPlayTitleSong
+  SONG_JUGDRAL_HISTORY        = $04 ; rsJugdralHistorySetup
+  SONG_EPILOGUE_MEMORIAL      = $0B
+  SONG_EPILOGUE_CREDITS       = $0D ; rlSetupEpilogueCreditsDisplay
+  SONG_EPILOGUE_RANKINGS      = $0E ; rlSetupEpilogueRankingsDisplay
+  SONG_ENEMY_PHASE_DUKES_2    = $17 ; Velthomer2..Yngvi2
+  SONG_ENEMY_PHASE_DUKES_1    = $19 ; Velthomer1..Yngvi1, Lubeck
+  SONG_ENEMY_PHASE_SILESSE    = $1F
+  SONG_ENEMY_PHASE_VERDANE    = $21
+  SONG_ENEMY_PHASE_AGUSTRIA   = $22
+  SONG_ENEMY_PHASE_ORGAHIL    = $23
+  SONG_ENEMY_PHASE_AED        = $25
+  SONG_ENEMY_PHASE_ISAACH     = $26
+  SONG_ENEMY_PHASE_MUNSTER    = $27
+  SONG_ENEMY_PHASE_THRACIA    = $28
+  SONG_ENEMY_PHASE_MILETOS    = $29
+  SONG_FIRST_PHASE_FINAL      = $2E ; aChapterFirstPhaseSongIDs Final chapter
+  SONG_GAME_OVER              = $72 ; rlProcGameOverInit

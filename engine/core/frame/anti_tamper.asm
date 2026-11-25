@@ -395,9 +395,9 @@
 
         php
         jsr rsSetSaveMenuScreenRegisters
-        lda #(`gcUnknown9CB90D)<<8
+        lda #(`g4bppcSaveMenuWindowTiles)<<8
         sta lR18+1
-        lda #<>gcUnknown9CB90D
+        lda #<>g4bppcSaveMenuWindowTiles
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -464,9 +464,9 @@
 
         php
         jsr rsSetSaveMenuScreenRegisters
-        lda #(`gcUnknown9CB90D)<<8
+        lda #(`g4bppcSaveMenuWindowTiles)<<8
         sta lR18+1
-        lda #<>gcUnknown9CB90D
+        lda #<>g4bppcSaveMenuWindowTiles
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

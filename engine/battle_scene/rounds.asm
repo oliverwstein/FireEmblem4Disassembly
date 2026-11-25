@@ -139,10 +139,10 @@
         lda bBattleSceneCameraPan
         and #$00FF
         bne _A75F
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         bit #$0080
         bne _A75F
-        lda $7FFC5D
+        lda bBattleSceneSkillFlags
         bit #$0001
         bne _A75F
         lda bBattleSceneArenaBout
@@ -1496,7 +1496,7 @@
         _AF33
         cmp #EarthSword
         beq _AF41
-        lda $7FFC5D
+        lda bBattleSceneSkillFlags
         bit #$0004
         beq _AF45
 
@@ -1505,9 +1505,9 @@
 
         _AF45
         sep #$20
-        lda $7FFC5D
+        lda bBattleSceneSkillFlags
         and #$FB
-        sta $7FFC5D
+        sta bBattleSceneSkillFlags
         rep #$20
         plx
         rtl
@@ -1913,7 +1913,7 @@
         ; Sets bit $20 of bBattleSceneStrikeFlags if effect X ($7FEC1F) is within 10 px of defender.
 
         phx
-        lda $7FEC1D
+        lda aBattleSceneSpellWindowSlots.wFlags
         bit #$0080
         bne _B15E
         lda #$FFFF
@@ -1921,7 +1921,7 @@
 
 
         _B15E
-        lda $7FEC1F
+        lda aBattleSceneSpellWindowSlots.wX
         ldx wBattleAnimationDefenderOffset,b
         sec
         sbc wBattleAnimationX,b,x

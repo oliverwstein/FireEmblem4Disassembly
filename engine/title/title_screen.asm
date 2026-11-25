@@ -370,9 +370,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>gcUnknown9C8000
+        ldx #<>g4bppcSaveMenuMainTiles
         stx DecompressionVariables
-        lda #`gcUnknown9C8000
+        lda #`g4bppcSaveMenuMainTiles
         sta $CA
         ldx #$8B88
         stx $CB
@@ -812,7 +812,7 @@
 
         phx
         phy
-        lda $7FECF4
+        lda bBattleSceneDecompState
         and #$00FF
         sec
         bne _F298
@@ -832,12 +832,12 @@
         sta lR18
         lda $7FECF7
         sta lR18+2
-        lda $7FECF9
+        lda lBattleSceneDecompSource+1
         sta lR19+1
         jsl rlAppendDecompList
         sep #$20
         lda #$01
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         clc
 
@@ -859,7 +859,7 @@
 
         phx
         phy
-        lda $7FECF4
+        lda bBattleSceneDecompState
         and #$00FF
         sec
         bne _F2E2
@@ -869,23 +869,23 @@
 
         _F2AF
         lda [lR18],y
-        sta $7FECF8,x
+        sta lBattleSceneDecompSource,x
         inc y
         inc x
         cpx #$0007
         bne _F2AF
         rep #$20
-        lda $7FECF9
+        lda lBattleSceneDecompSource+1
         sta lR18+1
-        lda $7FECF8
+        lda lBattleSceneDecompSource
         sta lR18
-        lda $7FECFB
+        lda wBattleSceneDecompSize
         tay
-        lda $7FECFD
+        lda wBattleSceneDecompVRAM
         jsl rlBattleSceneStartLargeUpload
         sep #$20
         lda #$02
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         clc
 
@@ -915,7 +915,7 @@
 
         sep #$20
         lda #$00
-        sta $7FEC1D
+        sta aBattleSceneSpellWindowSlots.wFlags
         sta $7FEC41
         sta aUnit2DataBuffer._ROM.Skills1
         sta $7FEC50
@@ -954,7 +954,7 @@
         lda #$00
         sta $7FED5C
         sta $7FED64
-        sta $7FED6E
+        sta bBattleSceneWindowEffect2Flag
         sta $7FED8A
         sta $7FED5D
         sta $7FED65
@@ -1544,7 +1544,7 @@
         lda #$0000
         sta wBattleSceneLargeUploadSize
         sep #$20
-        sta $7FECF4
+        sta bBattleSceneDecompState
         sta bTitleLoadRequests
         sta bTitleScreenEdgeFade
         rep #$20
@@ -1788,7 +1788,7 @@
         lda #$0000
         sta wBattleSceneLargeUploadSize
         sep #$20
-        sta $7FECF4
+        sta bBattleSceneDecompState
         sta bTitleLoadRequests
         sta bTitleScreenEdgeFade
         lda #$02
@@ -3531,7 +3531,7 @@
         sta bBufferCGADSUB
         rep #$20
         lda #$0028
-        sta $7FD046
+        sta wTitleFlashX
         lda #$0084
         jsl rlPlaySoundEffect
         bra _FD43
@@ -3552,13 +3552,13 @@
 
 
         _FD01
-        lda $7FD046
+        lda wTitleFlashX
         sta wR0
         jsr rsDrawTitleFlashSprite
-        lda $7FD046
+        lda wTitleFlashX
         clc
         adc #$0005
-        sta $7FD046
+        sta wTitleFlashX
         bra _FD50
 
 

@@ -89,7 +89,7 @@
         jsl rlPlaySoundEffect
 
         lda #0
-        sta wUnknown000790,b
+        sta wMapScratch,b
         jsr rsCursorToNextReadyUnit
         rts
         
@@ -663,7 +663,7 @@
         .autsiz
         .databank ?
 
-        ; R: sends the cursor to the next unit of the active army that can still act (alive, not grayed or asleep), going through the deployment table up or down (wUnknown000790); the home castle counts as a stop while units inside it can act.
+        ; R: sends the cursor to the next unit of the active army that can still act (alive, not grayed or asleep), going through the deployment table up or down (wMapScratch); the home castle counts as a stop while units inside it can act.
 
         lda wCursorXOffset,b
         clc
@@ -684,7 +684,7 @@
         ldy #$0090
         jsr rsCheckCycleStartsAtCastle
         bcs _B561
-        lda wUnknown000790,b
+        lda wMapScratch,b
         bne _B54F
         ldx wMapPanTargetDeploymentOffset,b
         dec x
@@ -735,7 +735,7 @@
 
 
         _B5A7
-        lda wUnknown000790,b
+        lda wMapScratch,b
         bne _B5B5
         dec x
         dec x

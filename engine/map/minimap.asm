@@ -778,10 +778,10 @@
         jsl rlGetEventLocationEntryEffectiveYCoordinate
         sta wTempVariable2,b
         jsl rlGetEventLocationEntryID
-        sta wUnknown000790,b
+        sta wMapScratch,b
         lda #$0000
         jsl rlGetFactionSlotLocationID
-        cmp wUnknown000790,b
+        cmp wMapScratch,b
         beq _991E
         lda wTempVariable1,b
         sta wR0

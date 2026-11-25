@@ -4086,7 +4086,7 @@
 
           lda $0000,b,y
           and #$00FF
-          sta wUnknown000D7D,b
+          sta wDeployedUNITGroupID,b
           inc a
           jsl rlGetUNITGroupPointer
           sta lR18
@@ -4124,7 +4124,7 @@
 
           lda $0000,b,y
           and #$00FF
-          sta wUnknown000D7D,b
+          sta wDeployedUNITGroupID,b
           inc a
           jsl rlGetUNITGroupPointer
           sta lR18

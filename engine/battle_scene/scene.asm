@@ -281,7 +281,7 @@
         stz aBattleSceneCombatant2.HPSpeed,b
         lda #$0000
         sta wBattleSceneFrame
-        sta $7FE1B4
+        sta wBattleSceneBackgroundFlags+1
         sep #$20
         sta bBattleSceneCameraPan
         sta $7FE186
@@ -298,13 +298,13 @@
         sta bBufferCOLDATA_1
         sta bBufferCOLDATA_2
         sta bBufferCOLDATA_3
-        sta $7FE4C2
+        sta bBattleSceneBG3Mode
         sta $7FE4C3
         sta $7FE4DB
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         ora #$08
         and #$FB
-        sta $7FE1B3
+        sta wBattleSceneBackgroundFlags
         lda #$10
         sta $7FFC6F
         lda #$E0
@@ -639,7 +639,7 @@
         lda bBattleSceneKnockback,b
         and #$003F
         bne _8CA4
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         bit #$0080
         bne _8CA4
         sec
@@ -931,8 +931,8 @@
         sta bBattleSceneFade
         pla
         and #$0F
-        sta $7FE4DD
-        sta $7FE4D5
+        sta bBattleSceneScreenINIDISP
+        sta bBattleSceneSavedINIDISP
         rep #$20
         bra _A52C
 
@@ -975,8 +975,8 @@
         sta bBattleSceneFade
         pla
         and #$0F
-        sta $7FE4DD
-        sta $7FE4D5
+        sta bBattleSceneScreenINIDISP
+        sta bBattleSceneSavedINIDISP
         rep #$20
 
         _A52C
@@ -998,8 +998,8 @@
         sep #$20
         lda #$80
         sta bBufferINIDISP
-        sta $7FE4DD
-        sta $7FE4D5
+        sta bBattleSceneScreenINIDISP
+        sta bBattleSceneSavedINIDISP
         rep #$20
         rtl
 
@@ -1233,7 +1233,7 @@
         bne _947B
         and #$007F
         beq _947B
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         bit #$0080
         bne _9478
         lda bBattleSceneFade
@@ -1310,16 +1310,16 @@
 
         ; Once $7FE4B8 is 0, sets bBattleSceneStep to the 21 end steps and clears bit 3 of $7FE1B3.
 
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         lda bBattleSceneScriptWaitCount
         and #$00FF
         bne _94A0
         sep #$20
         lda #$95
         sta bBattleSceneStep
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         and #$F7
-        sta $7FE1B3
+        sta wBattleSceneBackgroundFlags
         rep #$20
         bra _94AD
 
@@ -1348,9 +1348,9 @@
         ; The first end step: sets bit 3 of $7FE1B3 and scrolls BG3 to (0, $1FF).
 
         sep #$20
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         ora #$08
-        sta $7FE1B3
+        sta wBattleSceneBackgroundFlags
         rep #$20
         lda #$0000
         sta wBufferBG3HOFS

@@ -71,7 +71,7 @@
 
         phx
         phy
-        lda $7FECF4
+        lda bBattleSceneDecompState
         and #$00FF
         beq _BA77
         jml _BB09
@@ -113,7 +113,7 @@
         jsl rlAppendDecompList
         sep #$20
         lda #$03
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         bra _BB04
 
@@ -133,7 +133,7 @@
         jsl rlAppendDecompList
         sep #$20
         lda #$03
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         bra _BB04
 
@@ -328,9 +328,9 @@
 
         _CDC7
         sep #$20
-        lda $7FED6E,x
+        lda bBattleSceneWindowEffect2Flag,x
         ora #$01
-        sta $7FED6E,x
+        sta bBattleSceneWindowEffect2Flag,x
         rep #$20
         tya
         bit #$0100
@@ -549,9 +549,9 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda $7FE475,x
+        lda aBattleSceneBGAnimSlots.bFlags,x
         and #$007F
-        sta $7FE475,x
+        sta aBattleSceneBGAnimSlots.bFlags,x
 
         _DFB9
         plx
@@ -813,7 +813,7 @@
         ; rsBattleSceneScriptRunCommand. Then runs rlBattleSceneScriptRunRoutine.
 
         phy
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         bit #$0080
         bne _A299
         jml _A32E
@@ -850,7 +850,7 @@
         sta lR18+1
 
         _A2D0
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         sta lR18
         ldy #$0000
         lda [lR18],y
@@ -931,9 +931,9 @@
         ; Control command $FFFF: ends the script.
 
         sep #$20
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         and #$7F
-        sta $7FE4B7
+        sta bBattleSceneScriptWaitFlags
         rep #$20
         rts
 
@@ -953,10 +953,10 @@
         lda bBattleSceneScriptWaitCount
         and #$00FF
         bne _A358
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
 
         _A358
         rts
@@ -977,10 +977,10 @@
         phx
         ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationSignalSelf
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         plx
         rts
 
@@ -1000,10 +1000,10 @@
         phx
         ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationSignalOther
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         plx
         rts
 
@@ -1021,10 +1021,10 @@
         ; Control command $FFFA: rlBattleSceneApplyStrike.
 
         jsl rlBattleSceneApplyStrike
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         rts
 
         .databank 0
@@ -1060,10 +1060,10 @@
         plx
 
         _A3B8
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         rts
 
         .databank 0
@@ -1081,10 +1081,10 @@
 
         phx
         jsl rlBattleSceneStartHeal
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         plx
         rts
 
@@ -1108,10 +1108,10 @@
         jsl rlBattleSceneStartDrain
 
         _A3E5
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         plx
         rts
 
@@ -1231,10 +1231,10 @@
         rep #$20
 
         _A48D
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         pla
         rts
 
@@ -1257,10 +1257,10 @@
         bne _A4A4
 
         _A4A4
-        lda $7FE4BC
+        lda wBattleSceneScriptOffset
         clc
         adc #$0002
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         pla
         rts
 
@@ -1289,13 +1289,13 @@
 
         phy
         pha
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         bit #$0080
         bne _A4F9
         sep #$20
-        lda $7FE4B7
+        lda bBattleSceneScriptWaitFlags
         ora #$80
-        sta $7FE4B7
+        sta bBattleSceneScriptWaitFlags
         lda #$00
         sta bBattleSceneScriptWaitCount
         rep #$20
@@ -1315,7 +1315,7 @@
         clc
         adc #$8F7D
         sta $7FE4B9
-        sta $7FE4BC
+        sta wBattleSceneScriptOffset
         bra _A4FA
 
 
@@ -1367,14 +1367,14 @@
         bit #$80
         beq _AC45
         ora #$80
-        ora $7FEC1D,x
-        sta $7FEC1D,x
+        ora aBattleSceneSpellWindowSlots.wFlags,x
+        sta aBattleSceneSpellWindowSlots.wFlags,x
         bra _AC8D
 
 
         _AC45
         ora #$80
-        sta $7FEC1D,x
+        sta aBattleSceneSpellWindowSlots.wFlags,x
         lda [lR18],y
         ora bBufferW12SEL
         sta bBufferW12SEL
@@ -1419,7 +1419,7 @@
         clc
         adc lR18
         sta aUnit2DataBuffer._ROM.DefenseGrowth,x
-        sta $7FEC29,x
+        sta aBattleSceneSpellWindowSlots.wScriptOffset,x
         jsl rlBattleSceneBuildSpellWindowHDMA
         jsr rsBattleSceneCreateSpellWindowHDMA
         ply
@@ -1451,7 +1451,7 @@
 
         phx
         phy
-        lda $7FECF4
+        lda bBattleSceneDecompState
         and #$00FF
         bne _B9A1
         lda #(`aBattleSceneDecompressToVRAMTable)<<8
@@ -1484,12 +1484,12 @@
         sta lR18
         lda $7FECF7
         sta lR18+2
-        lda $7FECF9
+        lda lBattleSceneDecompSource+1
         sta lR19+1
         jsl rlAppendDecompList
         sep #$20
         lda #$01
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         pla
         pha
@@ -1542,7 +1542,7 @@
 
         phx
         phy
-        lda $7FECF4
+        lda bBattleSceneDecompState
         and #$00FF
         bne _BA12
         lda #(`aBattleSceneDecompressTable)<<8
@@ -1574,12 +1574,12 @@
         sta lR18
         lda $7FECF7
         sta lR18+2
-        lda $7FECF9
+        lda lBattleSceneDecompSource+1
         sta lR19+1
         jsl rlAppendDecompList
         sep #$20
         lda #$03
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         pla
         pha
@@ -1607,7 +1607,7 @@
 
         phx
         phy
-        lda $7FECF4
+        lda bBattleSceneDecompState
         and #$00FF
         bne _BA65
         tya
@@ -1640,7 +1640,7 @@
         jsl rlAppendDecompList
         sep #$20
         lda #$03
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         pla
         pha
@@ -1675,7 +1675,7 @@
 
         phx
         phy
-        lda $7FECF4
+        lda bBattleSceneDecompState
         and #$00FF
         bne _BB6D
         lda #(`aBattleSceneCopyToVRAMTable)<<8
@@ -1698,23 +1698,23 @@
 
         _BB36
         lda [lR18],y
-        sta $7FECF8,x
+        sta lBattleSceneDecompSource,x
         inc y
         inc x
         cpx #$0007
         bne _BB36
         rep #$20
-        lda $7FECF9
+        lda lBattleSceneDecompSource+1
         sta lR18+1
-        lda $7FECF8
+        lda lBattleSceneDecompSource
         sta lR18
-        lda $7FECFB
+        lda wBattleSceneDecompSize
         tay
-        lda $7FECFD
+        lda wBattleSceneDecompVRAM
         jsl rlBattleSceneStartLargeUpload
         sep #$20
         lda #$02
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         pla
         pha
@@ -1804,7 +1804,7 @@
 
         phx
         phy
-        lda $7FECF4
+        lda bBattleSceneDecompState
         and #$00FF
         beq _BC49
         cmp #$0003
@@ -1821,17 +1821,17 @@
         lda bDecompressionArrayFlag,b
         and #$00FF
         bne _BC49
-        lda $7FECF9
+        lda lBattleSceneDecompSource+1
         sta lR18+1
-        lda $7FECF8
+        lda lBattleSceneDecompSource
         sta lR18
-        lda $7FECFB
+        lda wBattleSceneDecompSize
         tay
-        lda $7FECFD
+        lda wBattleSceneDecompVRAM
         jsl rlBattleSceneStartLargeUpload
         sep #$20
         lda #$02
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         bra _BC49
 
@@ -1843,7 +1843,7 @@
         _BC34
         sep #$20
         lda #$00
-        sta $7FECF4
+        sta bBattleSceneDecompState
         lda bBattleSceneScriptWaitCount
         beq _BC47
         dec a
@@ -2402,16 +2402,16 @@
         jsl rlUnsignedMultiply16By16
         ldx wR12
         sep #$20
-        lda $7FE475,x
+        lda aBattleSceneBGAnimSlots.bFlags,x
         ora #$80
-        sta $7FE475,x
+        sta aBattleSceneBGAnimSlots.bFlags,x
         rep #$20
         lda wR0
         and #$C000
         cmp #$4000
         bne _DF24
         sep #$20
-        lda $7FE475,x
+        lda aBattleSceneBGAnimSlots.bFlags,x
         ora #$20
         bra _DF2C
 
@@ -2419,20 +2419,20 @@
         _DF24
         .al
         sep #$20
-        lda $7FE475,x
+        lda aBattleSceneBGAnimSlots.bFlags,x
         and #$DF
 
         _DF2C
-        sta $7FE475,x
+        sta aBattleSceneBGAnimSlots.bFlags,x
         rep #$20
         lda [lR18],y
         and #$00FF
         sta wR0
         sep #$20
-        lda $7FE475,x
+        lda aBattleSceneBGAnimSlots.bFlags,x
         and #$E0
         ora wR0
-        sta $7FE475,x
+        sta aBattleSceneBGAnimSlots.bFlags,x
         rep #$20
         txy
         phx
@@ -7109,7 +7109,7 @@
 
         sep #$20
         lda #$00
-        sta $7FEC1D
+        sta aBattleSceneSpellWindowSlots.wFlags
         sta $7FEC41
         sta aUnit2DataBuffer._ROM.Skills1
         sta $7FEC50
@@ -7223,7 +7223,7 @@
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         sta wR1
-        lda $7FEC1F
+        lda aBattleSceneSpellWindowSlots.wX
         sta wR0
         lda wR0
         cmp wR1
@@ -7267,14 +7267,14 @@
         sta aUnit2DataBuffer._Inventory.ItemCount
         lda wR3
         bmi _B921
-        lda $7FEC1F
+        lda aBattleSceneSpellWindowSlots.wX
         clc
         adc wR2
         bra _B928
 
 
         _B921
-        lda $7FEC1F
+        lda aBattleSceneSpellWindowSlots.wX
         sec
         sbc wR2
 
@@ -7301,7 +7301,7 @@
 
         sep #$20
         lda #$00
-        sta $7FECF4
+        sta bBattleSceneDecompState
         rep #$20
         rtl
 
@@ -7439,7 +7439,7 @@
         inc y
         inc y
         lda [lR18],y
-        sta $7FED0A,x
+        sta aBattleSceneBG2ScrollHDMAStep,x
         clc
         bra _BE20
 

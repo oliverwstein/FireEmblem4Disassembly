@@ -3635,13 +3635,13 @@
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
         lda lR18
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         lda lR18+1
-        sta $7FEAAB
+        sta lMapBattleTextBoxText1+1
         lda lR19
-        sta $7FEAAE
+        sta lMapBattleTextBoxText2
         lda lR19+1
-        sta $7FEAAF
+        sta lMapBattleTextBoxText2+1
 
         _DBDC
         rtl

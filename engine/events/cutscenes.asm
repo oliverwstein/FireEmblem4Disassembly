@@ -129,7 +129,7 @@
         lda #$00FF
         sta wMapMagicCasterPixel
         lda #0
-        sta $7F509F
+        sta wMapMagicSide
         rtl
 
         .databank 0
@@ -479,9 +479,9 @@
         .databank $7F
 
         ; Load map weapon slashing graphics
-        lda #(`gcUnknownACCC17)<<8
+        lda #(`g4bppcMapBattleWeaponIcons)<<8
         sta @l lR18+1
-        lda #<>gcUnknownACCC17
+        lda #<>g4bppcMapBattleWeaponIcons
         sta @l lR18
         lda #(`aDecompressionBuffer)<<8
         sta @l lR19+1

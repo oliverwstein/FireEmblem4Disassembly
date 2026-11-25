@@ -153,10 +153,10 @@
         dec a
 
         _8022
-        sta $7F57F0
+        sta wMapBattleTemp4
         jsl rlProcEngineCreateProcByIndex
         bcc _8033
-        lda $7F57F0
+        lda wMapBattleTemp4
         dec a
         bpl _8022
 
@@ -197,10 +197,10 @@
         dec a
 
         _804B
-        sta $7F57F0
+        sta wMapBattleTemp4
         jsl rlProcEngineCreateProcByIndex
         bcc _805C
-        lda $7F57F0
+        lda wMapBattleTemp4
         dec a
         bpl _804B
 
@@ -399,11 +399,11 @@
         cmp #$FFFF
         beq _817A
         jsl rlGetItemDataROMPointer
-        sta $7F57EA
+        sta wMapBattleTemp1
         jsl rlGetItemWeaponType
         cmp #$0004
         bcs _81C5
-        lda $7F57EA
+        lda wMapBattleTemp1
         jsl rlGetItemWeaponTraits
         cmp #$0001
         beq _8171
@@ -430,11 +430,11 @@
 
         _8187
         jsl rlGetItemDataROMPointer
-        sta $7F57EA
+        sta wMapBattleTemp1
         jsl rlGetItemWeaponType
         cmp #$0004
         bcs _81C5
-        lda $7F57EA
+        lda wMapBattleTemp1
         jsl rlGetItemWeaponTraits
         cmp #$0001
         beq _81B8
@@ -1331,25 +1331,25 @@
 
         phx
         phy
-        sta $7F57EE
+        sta wMapBattleTemp3
         tya
-        sta $7F57F0
+        sta wMapBattleTemp4
         lda #$FFFF
         sta wMapBattleStatusSword
         lda #$0000
         sta wMapBattleEarthSwordMelee
-        lda $7F57EE
+        lda wMapBattleTemp3
         jsl rlGetItemDataROMPointer
-        sta $7F57EA
+        sta wMapBattleTemp1
         jsl rlGetItemWeaponType
-        sta $7F57EC
+        sta wMapBattleTemp2
         cmp #WeaponTypeSword
         beq _8705
         jml _878B
 
 
         _8705
-        lda $7F57EA
+        lda wMapBattleTemp1
         jsl rlGetItemWeaponTraits
         cmp #$0001
         beq _8726
@@ -1369,7 +1369,7 @@
         lda wBattleDistance
         dec a
         bne _873F
-        lda $7F57EE
+        lda wMapBattleTemp3
         cmp #$0010
         bne _8721
         lda #$0001
@@ -1379,7 +1379,7 @@
 
         _873F
         jsl rlSetMapMagicFlags
-        lda $7F57EE
+        lda wMapBattleTemp3
         sec
         sbc #$000F
         cmp #$0005
@@ -1394,7 +1394,7 @@
 
         _875C
         jsl rlSetMapMagicFlags
-        lda $7F57EE
+        lda wMapBattleTemp3
         sec
         sbc #$0009
         cmp #$0004
@@ -1763,7 +1763,7 @@
         .autsiz
         .databank ?
 
-        ; Queues the decompression of both sides' sprite graphics for their facing (aBattleMapSpriteData, the second pointer of the pair) to aDecompressionBuffer and + $2000, and the weapon icons (gcUnknownACCC17) to + $4000. A dance or an action without a target (wMapBattleSolo) loads gcUnknownACC8C3 instead. Pushes X and runs on into rlQueueMapBattleSpriteGraphicsBody.
+        ; Queues the decompression of both sides' sprite graphics for their facing (aBattleMapSpriteData, the second pointer of the pair) to aDecompressionBuffer and + $2000, and the weapon icons (g4bppcMapBattleWeaponIcons) to + $4000. A dance or an action without a target (wMapBattleSolo) loads g4bppcMapBattleSoloIcons instead. Pushes X and runs on into rlQueueMapBattleSpriteGraphicsBody.
 
         phx
 
@@ -1801,9 +1801,9 @@
         sta @l $000224
         lda #$0002
         sta @l $000226
-        lda #(`gcUnknownACC8C3)<<8
+        lda #(`g4bppcMapBattleSoloIcons)<<8
         sta @l lR18+1
-        lda #<>gcUnknownACC8C3
+        lda #<>g4bppcMapBattleSoloIcons
         sta @l lR18
         bra _895A
 
@@ -1890,9 +1890,9 @@
         rep #$20
         plb
         .databank $7F
-        lda #(`gcUnknownACCC17)<<8
+        lda #(`g4bppcMapBattleWeaponIcons)<<8
         sta lR18+1
-        lda #<>gcUnknownACCC17
+        lda #<>g4bppcMapBattleWeaponIcons
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -2230,7 +2230,7 @@
         ora aMapAction.wMapBattleDefenderXPixel
         sta wR1
         lda #$0000
-        sta $7F509F
+        sta wMapMagicSide
         lda aActionStructUnit2
         cmp #$FFFF
         bne _8CBE
@@ -2527,7 +2527,7 @@
         adc #$003A
 
         _8E30
-        sta $7F57EA
+        sta wMapBattleTemp1
         asl a
         tax
         lda aMapBattleWeaponIcons,x
@@ -2569,7 +2569,7 @@
         adc #$0100
         sta wR1
         jsl rlDMAByPointer
-        lda $7F57EA
+        lda wMapBattleTemp1
         asl a
         tax
         lda aMapBattleWeaponIcons,x
@@ -5484,16 +5484,16 @@
         lda wBallistaBoltSide
         asl a
         asl a
-        sta $7F57EA
+        sta wMapBattleTemp1
         eor #$0004
-        sta $7F57EC
+        sta wMapBattleTemp2
         lda wBallistaBoltSide
         asl a
         tax
         lda aMapAction.wAttackerFacing,x
         asl a
         tay
-        lda $7F57EA
+        lda wMapBattleTemp1
         tax
         lda aMapAction.wMapBattleAttackerXPixel,x
         tyx
@@ -5501,7 +5501,7 @@
         adc aBallistaBoltXOffsets,x
         sta wBallistaBoltX
         sta wR0
-        lda $7F57EA
+        lda wMapBattleTemp1
         tax
         lda aMapAction.wMapBattleAttackerYPixel,x
         sec
@@ -5534,7 +5534,7 @@
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldy aActiveSpriteSystem.wOffset,b
-        lda $7F57EA
+        lda wMapBattleTemp1
         tax
         tya
         sta aMapAction.wMapBattleAttackerAuxSpriteSlot,x
@@ -6242,7 +6242,7 @@
         beq _A91D
         lda wMapBattleRoundEntry
         and #$0001
-        sta $7F57EA
+        sta wMapBattleTemp1
         jsr rsTakeStatusSwordRound
         bcc _A91D
         lda aProcSystem.aHeaderBitfield,b,x
@@ -6305,7 +6305,7 @@
         beq _A962
         lda aBattleRoundsData._Entry[0],x
         and #$0001
-        cmp $7F57EA
+        cmp wMapBattleTemp1
         bne _A962
         lda aBattleRoundsData._Entry[0],x
         and #$0040
@@ -6407,7 +6407,7 @@
         tax
         lda aBattleRoundsData._Entry[0],x
         and #$0001
-        sta $7F57EA
+        sta wMapBattleTemp1
         asl a
         asl a
         sta wR0
@@ -6852,11 +6852,11 @@
         beq _AE58
         and #$0002
         lsr a
-        sta $7F57EA
+        sta wMapBattleTemp1
         lda wBattleStatus
         and #$0008
         asl a
-        sta $7F57EC
+        sta wMapBattleTemp2
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
@@ -6879,13 +6879,13 @@
         ; Every frame: moves the shifted combatant's sprites by the next step of aMapBattleShiftSlideOut (16 pixels in all, up or down); header bit $0004 at the end.
 
         phx
-        lda $7F57EC
+        lda wMapBattleTemp2
         tax
         lda aMapBattleShiftSlideOut,x
         sta wR0
         cmp #$8000
         beq _AEA1
-        lda $7F57EA
+        lda wMapBattleTemp1
         asl a
         asl a
         tax
@@ -6907,10 +6907,10 @@
         sta aActiveSpriteSystem.aYPosition,b,x
 
         _AE95
-        lda $7F57EC
+        lda wMapBattleTemp2
         inc a
         inc a
-        sta $7F57EC
+        sta wMapBattleTemp2
         bra _AEAD
 
 
@@ -6964,13 +6964,13 @@
         ; The same with aMapBattleShiftSlideBack, after the battle.
 
         phx
-        lda $7F57EC
+        lda wMapBattleTemp2
         tax
         lda aMapBattleShiftSlideBack,x
         sta wR0
         cmp #$8000
         beq _AF16
-        lda $7F57EA
+        lda wMapBattleTemp1
         asl a
         asl a
         tax
@@ -6992,10 +6992,10 @@
         sta aActiveSpriteSystem.aYPosition,b,x
 
         _AF0A
-        lda $7F57EC
+        lda wMapBattleTemp2
         inc a
         inc a
-        sta $7F57EC
+        sta wMapBattleTemp2
         bra _AF22
 
 
@@ -7313,11 +7313,11 @@
         phx
         jsl rlFindLocationAtTile
         jsl rlGetEventLocationEntryID
-        sta $7F57EA
+        sta wMapBattleTemp1
         lda wR2
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitHomeCastle
-        cmp $7F57EA
+        cmp wMapBattleTemp1
         beq _B08B
         sec
         plx
@@ -7625,7 +7625,7 @@
         tax
         lda aActiveSpriteSystem.aXPosition,b,x
         tay
-        lda $7F57EA
+        lda wMapBattleTemp1
         bne _B1E0
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
@@ -7634,7 +7634,7 @@
 
         _B1E0
         tya
-        sta $7F57EA
+        sta wMapBattleTemp1
         jsl rlGetSoundPanFromXPixel
         ora wR0
         jsl rlPlaySoundEffect2
@@ -7647,7 +7647,7 @@
         lda aBattleRoundsData._Entry[0],x
         bit #$0004
         beq _B211
-        lda $7F57EA
+        lda wMapBattleTemp1
         jsl rlGetSoundPanFromXPixel
         ora #$004E
         jsl rlPlaySoundEffect2
@@ -7681,7 +7681,7 @@
         tax
         lda @l $001200,x
         tay
-        lda $7F57EA
+        lda wMapBattleTemp1
         bne _B23E
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
@@ -7746,7 +7746,7 @@
         tax
         lda aActiveSpriteSystem.aXPosition,b,x
         tay
-        lda $7F57EA
+        lda wMapBattleTemp1
         bne _B2A3
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
@@ -7831,7 +7831,7 @@
         tax
         lda aActiveSpriteSystem.aXPosition,b,x
         tay
-        lda $7F57EA
+        lda wMapBattleTemp1
         bne _B390
 
         _B382
@@ -7872,7 +7872,7 @@
         tax
         lda aActiveSpriteSystem.aXPosition,b,x
         tay
-        lda $7F57EA
+        lda wMapBattleTemp1
         beq _B3B9
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
@@ -8115,7 +8115,7 @@
 
         phx
         sta wR2
-        lda $7F57EE
+        lda wMapBattleTemp3
         tax
         tay
         jsl rlGetMapBattleUnitScreenPosition
@@ -10163,7 +10163,7 @@
         lda #<>procMapBattlePavise
         sta lR44
         jsl rlProcEngineCreateProc
-        sta $7F57F0
+        sta wMapBattleTemp4
         lda #1,s
         tax
         lda aProcSystem.aHeaderBitfield,b,x
@@ -10188,7 +10188,7 @@
         ; Sets header bit $0004 once procMapBattlePavise has ended.
 
         phx
-        lda $7F57F0
+        lda wMapBattleTemp4
         jsl rlProcEngineCheckProcEnded
         bcc _D789
         lda aProcSystem.aHeaderBitfield,b,x
@@ -10366,9 +10366,9 @@
         bit #$0001
         beq _D839
         lda aMapAction.lAttackerSpriteData
-        sta $7F57EA
+        sta wMapBattleTemp1
         lda aMapAction.lAttackerSpriteData+1
-        sta $7F57EC
+        sta wMapBattleTemp2
         lda #(`aMapBattlePaviseSpriteScript)<<8
         sta aMapAction.lAttackerSpriteData+1
         lda #<>aMapBattlePaviseSpriteScript
@@ -10378,9 +10378,9 @@
 
         _D839
         lda aMapAction.lDefenderSpriteData
-        sta $7F57EA
+        sta wMapBattleTemp1
         lda aMapAction.lDefenderSpriteData+1
-        sta $7F57EC
+        sta wMapBattleTemp2
         lda #(`aMapBattlePaviseSpriteScript)<<8
         sta aMapAction.lDefenderSpriteData+1
         lda #<>aMapBattlePaviseSpriteScript
@@ -10409,7 +10409,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlotAbove0
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta $7F57EE
+        sta wMapBattleTemp3
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda aMapAction.wSide
@@ -10438,7 +10438,7 @@
         ; When the shield's sprite has ended, gives the side its own script back and sets header bit $0004.
 
         phx
-        lda $7F57EE
+        lda wMapBattleTemp3
         tax
         lda aActiveSpriteSystem.aTypeOffset,b,x
         bne _D8FE
@@ -10453,17 +10453,17 @@
         lda aBattleRoundsData._Entry[0],x
         bit #$0001
         beq _D8EE
-        lda $7F57EA
+        lda wMapBattleTemp1
         sta aMapAction.lAttackerSpriteData
-        lda $7F57EC
+        lda wMapBattleTemp2
         sta aMapAction.lAttackerSpriteData+1
         bra _D8FE
 
 
         _D8EE
-        lda $7F57EA
+        lda wMapBattleTemp1
         sta aMapAction.lDefenderSpriteData
-        lda $7F57EC
+        lda wMapBattleTemp2
         sta aMapAction.lDefenderSpriteData+1
 
         _D8FE
@@ -10726,9 +10726,9 @@
         jsl rlCreateScriptedCritEffect
         sta aProcSystem.aBody6,b,x
         lda aActionStructUnit1.XPosition
-        sta $7F57EE
+        sta wMapBattleTemp3
         lda aActionStructUnit1.YPosition
-        sta $7F57F0
+        sta wMapBattleTemp4
         lda wBattleStatus
         and #$0001
         sta wR0
@@ -10740,18 +10740,18 @@
         lsr a
         cmp wR0
         bne _DFDD
-        lda $7F57F0
+        lda wMapBattleTemp4
         inc a
-        sta $7F57F0
+        sta wMapBattleTemp4
 
         _DFDD
         lda wBattleStatus
         and #$0001
         beq _DFF6
         lda aActionStructUnit2.XPosition
-        sta $7F57EE
+        sta wMapBattleTemp3
         lda aActionStructUnit2.YPosition
-        sta $7F57F0
+        sta wMapBattleTemp4
 
         _DFF6
         rtl
@@ -11486,9 +11486,9 @@
         sta aMapAction.lAttackerSpriteData+1
         lda #<>aScriptedCritSiblingFrames
         sta aMapAction.lAttackerSpriteData
-        lda $7F57EE
+        lda wMapBattleTemp3
         tax
-        lda $7F57F0
+        lda wMapBattleTemp4
         tay
         jsl rlGetMapBattleUnitScreenPosition
         lda #(`aScriptedCritSiblingSpriteInfo)<<8
@@ -11664,9 +11664,9 @@
         sta aMapAction.lAttackerSpriteData+1
         lda #<>aScriptedCritLoverFrames
         sta aMapAction.lAttackerSpriteData
-        lda $7F57EE
+        lda wMapBattleTemp3
         tax
-        lda $7F57F0
+        lda wMapBattleTemp4
         tay
         jsl rlGetMapBattleUnitScreenPosition
         lda #(`aScriptedCritLoverSpriteInfo)<<8
@@ -11828,7 +11828,7 @@
 
         ; X = sprite, wR0/wR1 = its tile: a velocity toward the striker's tile ($7F57EE, $7F57F0), half a tile per frame per tile apart.
 
-        lda $7F57EE
+        lda wMapBattleTemp3
         sec
         sbc wR0
         and #$00FF
@@ -11838,7 +11838,7 @@
         lda wR0
         ror a
         sta aActiveSpriteSystem.aUnknown0013C0,b,x
-        lda $7F57F0
+        lda wMapBattleTemp4
         sec
         sbc wR1
         and #$00FF
@@ -12014,9 +12014,9 @@
         sta aMapAction.lAttackerSpriteData+1
         lda #<>aScriptedCritTriangleFrames
         sta aMapAction.lAttackerSpriteData
-        lda $7F57EE
+        lda wMapBattleTemp3
         tax
-        lda $7F57F0
+        lda wMapBattleTemp4
         tay
         jsl rlGetMapBattleUnitScreenPosition
         lda #(`aScriptedCritTriangleSpriteInfo)<<8
@@ -12374,9 +12374,9 @@
         sta aMapAction.lAttackerSpriteData+1
         lda #<>aScriptedCritType4Frames
         sta aMapAction.lAttackerSpriteData
-        lda $7F57EE
+        lda wMapBattleTemp3
         tax
-        lda $7F57F0
+        lda wMapBattleTemp4
         tay
         jsl rlGetMapBattleUnitScreenPosition
         lda #(`aScriptedCritType4SpriteInfo)<<8

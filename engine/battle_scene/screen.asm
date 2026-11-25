@@ -15,7 +15,7 @@
         .autsiz
         .databank ?
 
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         bit #$0004
         beq _90FF
         jml _9196
@@ -41,7 +41,7 @@
         inc x
 
         _912A
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         bit #$0001
         bne _9146
         lda #$0070
@@ -55,7 +55,7 @@
 
 
         _9146
-        lda $7FE19A
+        lda wBattleSceneCameraY
         and #$00FF
         clc
         adc #$0048
@@ -70,7 +70,7 @@
         sta $7FE1F6,x
         inc x
         inc x
-        lda $7FE19A
+        lda wBattleSceneCameraY
         and #$00FF
         cmp #$0029
         bcs _918C
@@ -109,7 +109,7 @@
 
         phx
         phy
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         bit #$0001
         beq _920D
         lda wBattleSceneCameraX
@@ -123,7 +123,7 @@
         phx
         phy
         pha
-        lda $7FE1B3
+        lda wBattleSceneBackgroundFlags
         bit #$0001
         bne _91C1
         pla
@@ -447,7 +447,7 @@
         lda #$70
         sta aBattleSceneBrightnessTableBuffer,x
         inc x
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
         bit #$80
         beq _A13E
         lda bBufferINIDISP
@@ -455,7 +455,7 @@
 
 
         _A13E
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
 
         _A142
         sta aBattleSceneBrightnessTableBuffer,x
@@ -685,7 +685,7 @@
         .autsiz
         .databank ?
 
-        lda $7FE4C2
+        lda bBattleSceneBG3Mode
         and #$00FF
         cmp #$0004
         bcs _803F
@@ -751,7 +751,7 @@
         .autsiz
         .databank ?
 
-        lda $7FE4C2
+        lda bBattleSceneBG3Mode
         and #$00FF
         cmp #$0003
         beq _806F
@@ -803,7 +803,7 @@
         .autsiz
         .databank ?
 
-        lda $7FE4C2
+        lda bBattleSceneBG3Mode
         and #$00FF
         cmp #$0001
         bne _8092
@@ -884,7 +884,7 @@
 
         sep #$20
         lda #$00
-        sta $7FE4C2
+        sta bBattleSceneBG3Mode
         rep #$20
         stz aBGPaletteBuffer,b
         jsl rlBattleSceneSetHUDColors
@@ -948,7 +948,7 @@
         bit #$40
         beq _8945
         lda #$80
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
         bit #$80
         bne _896A
 
@@ -961,7 +961,7 @@
         lda $4212,b
         bit #$40
         beq _895D
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
         bra _897C
 
 
@@ -974,7 +974,7 @@
         lda $4212,b
         bit #$40
         beq _8971
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
 
         _897C
         sta $2100,b
@@ -1061,7 +1061,7 @@
         lda $4212,b
         bit #$40
         beq _8A32
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bra _8A51
 
         .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
@@ -1134,7 +1134,7 @@
         sta $2122,b
         lda aUnknownE000B0+5
         sta $2122,b
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bit #$80
 
         _8AEA
@@ -1146,7 +1146,7 @@
         lda $4212,b
         bit #$40
         beq _8AF1
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bra _8B10
 
         .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
@@ -1216,7 +1216,7 @@
         sta $2122,b
         lda $0127,b
         sta $2122,b
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bit #$80
 
         _8B96
@@ -1228,7 +1228,7 @@
         lda $4212,b
         bit #$40
         beq _8B9D
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bra _8BBC
 
         .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
@@ -1312,7 +1312,7 @@
         rep #$20
         jsl rlBattleSceneResetColorMath
         sep #$20
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bit #$80
 
         _8C6B
@@ -1324,7 +1324,7 @@
         lda $4212,b
         bit #$40
         beq _8C72
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bra _8C91
 
         .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
@@ -1383,7 +1383,7 @@
         stz $2124,b
         stz $2131,b
         stz $2125,b
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bit #$80
 
         _8CF6
@@ -1395,7 +1395,7 @@
         lda $4212,b
         bit #$40
         beq _8CFD
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bra _8D1C
 
         .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
@@ -1453,7 +1453,7 @@
         stz $2124,b
         stz $2131,b
         stz $2125,b
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bit #$80
 
         _8D7E
@@ -1465,7 +1465,7 @@
         lda $4212,b
         bit #$40
         beq _8D85
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         bra _8DA4
 
         .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
@@ -1524,7 +1524,7 @@
 
         sep #$20
         lda #$8F
-        sta $7FE4D5
+        sta bBattleSceneSavedINIDISP
         rep #$20
         rtl
 
@@ -1540,7 +1540,7 @@
         .autsiz
         .databank ?
 
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         and #$000F
         bne _8DD7
         jsl rlBattleSceneEndScriptRoutine
@@ -1550,7 +1550,7 @@
         _8DD7
         sep #$20
         dec a
-        sta $7FE4D5
+        sta bBattleSceneSavedINIDISP
         rep #$20
 
         _8DE0
@@ -1576,7 +1576,7 @@
         .autsiz
         .databank ?
 
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         and #$000F
         bne _8DF0
         jsl rlBattleSceneEndScriptRoutine
@@ -1591,7 +1591,7 @@
         lda #$00
 
         _8DF9
-        sta $7FE4D5
+        sta bBattleSceneSavedINIDISP
         rep #$20
 
         _8DFF
@@ -1612,7 +1612,7 @@
         lda wBattleSceneFrame
         bit #$0001
         beq _8E21
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         and #$000F
         bne _8E18
         jsl rlBattleSceneEndScriptRoutine
@@ -1622,7 +1622,7 @@
         _8E18
         sep #$20
         dec a
-        sta $7FE4D5
+        sta bBattleSceneSavedINIDISP
         rep #$20
 
         _8E21
@@ -1640,15 +1640,15 @@
         .autsiz
         .databank ?
 
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         and #$000F
         cmp #$000F
         bne _8E42
         sep #$20
-        sta $7FE4D5
-        lda $7FE4B7
+        sta bBattleSceneSavedINIDISP
+        lda bBattleSceneScriptWaitFlags
         and #$FE
-        sta $7FE4B7
+        sta bBattleSceneScriptWaitFlags
         rep #$20
         bra _8E4B
 
@@ -1656,7 +1656,7 @@
         _8E42
         sep #$20
         inc a
-        sta $7FE4D5
+        sta bBattleSceneSavedINIDISP
         rep #$20
 
         _8E4B
@@ -1680,15 +1680,15 @@
         .autsiz
         .databank ?
 
-        lda $7FE4D5
+        lda bBattleSceneSavedINIDISP
         and #$000F
         cmp #$000F
         bne _8E6C
         sep #$20
-        sta $7FE4D5
-        lda $7FE4B7
+        sta bBattleSceneSavedINIDISP
+        lda bBattleSceneScriptWaitFlags
         and #$FE
-        sta $7FE4B7
+        sta bBattleSceneScriptWaitFlags
         rep #$20
         bra _8E7D
 
@@ -1702,7 +1702,7 @@
         lda #$0F
 
         _8E77
-        sta $7FE4D5
+        sta bBattleSceneSavedINIDISP
         rep #$20
 
         _8E7D
@@ -1721,7 +1721,7 @@
 
         sep #$20
         lda #$8F
-        sta $7FE4DD
+        sta bBattleSceneScreenINIDISP
         lda #$0F
         sta $7FE4DC
         rep #$20
@@ -1747,7 +1747,7 @@
         .autsiz
         .databank ?
 
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
         and #$000F
         bne _8E9E
         jsl rlBattleSceneEndScriptRoutine
@@ -1757,7 +1757,7 @@
         _8E9E
         sep #$20
         dec a
-        sta $7FE4DD
+        sta bBattleSceneScreenINIDISP
         rep #$20
 
         _8EA7
@@ -1775,7 +1775,7 @@
         .autsiz
         .databank ?
 
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
         and #$000F
         bne _8EB7
         jsl rlBattleSceneEndScriptRoutine
@@ -1790,7 +1790,7 @@
         lda #$00
 
         _8EC0
-        sta $7FE4DD
+        sta bBattleSceneScreenINIDISP
         rep #$20
 
         _8EC6
@@ -1811,7 +1811,7 @@
         lda wBattleSceneFrame
         bit #$0001
         beq _8EE8
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
         and #$000F
         bne _8EDF
         jsl rlBattleSceneEndScriptRoutine
@@ -1821,7 +1821,7 @@
         _8EDF
         sep #$20
         dec a
-        sta $7FE4DD
+        sta bBattleSceneScreenINIDISP
         rep #$20
 
         _8EE8
@@ -1839,15 +1839,15 @@
         .autsiz
         .databank ?
 
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
         and #$000F
         cmp #$000F
         bne _8F09
         sep #$20
-        sta $7FE4DD
-        lda $7FE4B7
+        sta bBattleSceneScreenINIDISP
+        lda bBattleSceneScriptWaitFlags
         and #$FE
-        sta $7FE4B7
+        sta bBattleSceneScriptWaitFlags
         rep #$20
         bra _8F12
 
@@ -1855,7 +1855,7 @@
         _8F09
         sep #$20
         inc a
-        sta $7FE4DD
+        sta bBattleSceneScreenINIDISP
         rep #$20
 
         _8F12
@@ -1873,15 +1873,15 @@
         .autsiz
         .databank ?
 
-        lda $7FE4DD
+        lda bBattleSceneScreenINIDISP
         and #$000F
         cmp #$000F
         bne _8F33
         sep #$20
-        sta $7FE4DD
-        lda $7FE4B7
+        sta bBattleSceneScreenINIDISP
+        lda bBattleSceneScriptWaitFlags
         and #$FE
-        sta $7FE4B7
+        sta bBattleSceneScriptWaitFlags
         rep #$20
         bra _8F44
 
@@ -1895,7 +1895,7 @@
         lda #$0F
 
         _8F3E
-        sta $7FE4DD
+        sta bBattleSceneScreenINIDISP
         rep #$20
 
         _8F44
@@ -1915,7 +1915,7 @@
 
         sep #$20
         lda #$0F
-        sta $7FE4DD
+        sta bBattleSceneScreenINIDISP
         rep #$20
         rtl
 
@@ -3015,16 +3015,16 @@
         sta bBufferBG12NBA
         rep #$20
         lda #$0000
-        sta $7FE486
-        sta $7FE488
+        sta aBattleSceneBGAnimSlots.wOffsetX
+        sta aBattleSceneBGAnimSlots.wOffsetY
         sep #$20
-        lda $7FE475
+        lda aBattleSceneBGAnimSlots.bFlags
         and #$7F
         ora #$40
-        sta $7FE475
+        sta aBattleSceneBGAnimSlots.bFlags
         rep #$20
         lda #$0000
-        sta $7FE476
+        sta aBattleSceneBGAnimSlots.bWait
         lda wBattleAnimation2X,b
         and #$01FF
         sec
@@ -3046,11 +3046,11 @@
         lda #$0040
 
         _A1C8
-        sta $7FE477
+        sta aBattleSceneBGAnimSlots.wX
         lda #$0000
-        sta $7FE479
+        sta aBattleSceneBGAnimSlots.bXFraction
         lda #$00F0
-        sta $7FE47A
+        sta aBattleSceneBGAnimSlots.wY
         ldx #$0000
         lda #$0000
 

@@ -37,7 +37,7 @@ SCOPED = [
     (0x7F8183, 0x7F8505, ('wDataWindow', 'aDataWindow'), ('engine/menus/data_window.asm',)),
     (0x7F8183, 0x7F83DC, ('wChapterIntro', 'aChapterIntro'), ('engine/worldmap/chapter_intro.asm',)),
     # The item window's variables; the map buffers (aTargetDistanceMap...) share the area.
-    (0x7F8467, 0x7FAF4F, ('wItemWindow', 'aItemWindow'), ('engine/menus/item_window.asm',)),
+    (0x7F8467, 0x7FB015, ('wItemWindow', 'aItemWindow'), ('engine/menus/item_window.asm',)),
     # The status screen's variables, written by the screens that open it too; the skill and data windows reuse the area.
     (0x7F8183, 0x7F82C4, ('wStatusScreen', 'aStatusScreen'),
      ('engine/menus/status_screen.asm', 'engine/menus/revive_screen.asm', 'engine/menus/unit_window.asm',
@@ -66,6 +66,11 @@ SCOPED = [
     (0x7E0ADD, 0x7E0AE8, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
     (0x7E0D44, 0x7E0D69, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
     (0x7FE000, 0x7FFFFF, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
+    (0x7FC800, 0x7FCFFF, ('aBattleScene',), BATTLE_SCENE_FILES),
+    # Map battle temp/scratch variables; share $7F554A+ with map AI buffers.
+    (0x7F57EA, 0x7F57F1, ('wMapBattleTemp',), ('engine/battle/map_battle.asm',)),
+    # Map magic effect state; battle_scene reuses $7ECC08 for saved palettes.
+    (0x7ECC06, 0x7ECC0D, ('wMapMagic',), ('engine/battle/map_magic_effects.asm',)),
 ]
 
 OPERAND = re.compile(r'^(\s+[a-z]{3} (?:@l )?)\$([0-9A-F]{4}|[0-9A-F]{6})\b((?:,b)?(?:,[xy])?)(\s*)$')

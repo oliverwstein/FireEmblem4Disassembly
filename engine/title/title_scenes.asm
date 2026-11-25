@@ -1243,7 +1243,7 @@
         .databank ?
 
         lda #$0000
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         phx
         ldx #$0000
 
@@ -1280,7 +1280,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         bne _F4DE
         lda #$0014
         sta aPaletteFading,b
@@ -1297,14 +1297,14 @@
         jsl rlTitleSetActiveSpritesHighPal
 
         _F4DE
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         inc a
         cmp #$0001
         bcc _F4EB
         lda #$0000
 
         _F4EB
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         rtl
 
         .databank 0
@@ -1327,7 +1327,7 @@
         .databank ?
 
         lda #$0000
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         phx
         ldx #$0000
 
@@ -1364,7 +1364,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         bne _F540
         lda #$0014
         sta aPaletteFading,b
@@ -1381,14 +1381,14 @@
         jsl rlTitleSetActiveSpritesHighPal
 
         _F540
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         inc a
         cmp #$0001
         bcc _F54D
         lda #$0000
 
         _F54D
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         rtl
 
         .databank 0
@@ -1411,7 +1411,7 @@
         .databank ?
 
         lda #$0000
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         phx
         ldx #$0000
 
@@ -1448,7 +1448,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         bne _F5A2
         lda #$0014
         sta aPaletteFading,b
@@ -1465,14 +1465,14 @@
         jsl rlTitleSetActiveSpritesHighPal
 
         _F5A2
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         inc a
         cmp #$0001
         bcc _F5AF
         lda #$0000
 
         _F5AF
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         rtl
 
         .databank 0
@@ -1529,7 +1529,7 @@
         ; Nothing in the build reaches this: no title timeline names it.
 
         lda #$0000
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         jsl rlStepTitleFadeBGPal1ToBlackUnused
         lda #(`rlStepTitleFadeBGPal1ToBlackUnused)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -1548,7 +1548,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         bne _F618
         lda #$0000
         sta aPaletteFading.wDesiredColor,b
@@ -1566,14 +1566,14 @@
         rep #$20
 
         _F618
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         inc a
         cmp #$0004
         bcc _F625
         lda #$0000
 
         _F625
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         rtl
 
         .databank 0
@@ -1603,7 +1603,7 @@
         .databank ?
 
         lda #$0000
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         jsl rlStepTitleIntroScene3FadeBGPal34
         lda #(`rlStepTitleIntroScene3FadeBGPal34)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -1630,7 +1630,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         bne _F66F
         lda #$0000
         sta aPaletteFading.wDesiredColor,b
@@ -1648,14 +1648,14 @@
         rep #$20
 
         _F66F
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         inc a
         cmp #$0004
         bcc _F67C
         lda #$0000
 
         _F67C
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         rtl
 
         .databank 0
@@ -1688,7 +1688,7 @@
         ; Nothing in the build reaches this: no title timeline names it.
 
         lda #$0000
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         phx
         ldx #$0000
         lda #$7FFF
@@ -1740,7 +1740,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         bne _F701
         lda #$0000
         sta aPaletteFading.wDesiredColor,b
@@ -1758,14 +1758,14 @@
         rep #$20
 
         _F701
-        lda $7FD055
+        lda wTitleFadeFrameCounter
         inc a
         cmp #$0002
         bcc _F70E
         lda #$0000
 
         _F70E
-        sta $7FD055
+        sta wTitleFadeFrameCounter
         rtl
 
         .databank 0
@@ -1813,11 +1813,11 @@
         lda #$0000
         sta aUnit2DataBuffer._ROM.StrengthGrowth
         lda #$0080
-        sta $7FEC1F
+        sta aBattleSceneSpellWindowSlots.wX
         lda #$7000
-        sta $7FEC21
+        sta aBattleSceneSpellWindowSlots.wYAnchor
         lda #$0000
-        sta $7FEC23
+        sta aBattleSceneSpellWindowSlots.wYFixed
         rtl
 
         .databank 0
@@ -1868,11 +1868,11 @@
         lda #$0000
         sta aUnit2DataBuffer._ROM.StrengthGrowth
         lda #$0080
-        sta $7FEC1F
+        sta aBattleSceneSpellWindowSlots.wX
         lda #$9800
-        sta $7FEC21
+        sta aBattleSceneSpellWindowSlots.wYAnchor
         lda #$0000
-        sta $7FEC23
+        sta aBattleSceneSpellWindowSlots.wYFixed
         rtl
 
         .databank 0
@@ -1922,7 +1922,7 @@
         jsl rlBattleSceneStartWindowEffect2
         sep #$20
         lda #$01
-        sta $7FED6E
+        sta bBattleSceneWindowEffect2Flag
         rep #$20
         lda #$0100
         sta $7FED6F
@@ -2740,7 +2740,7 @@
 
         phx
         lda #$0000
-        sta $7FD046
+        sta wTitleFlashX
         sta $7FD048
         jsl rlTitleIntroScene1Scroll
         lda #(`rlTitleIntroScene1Scroll)<<8
@@ -2761,21 +2761,21 @@
         .autsiz
         .databank ?
 
-        lda $7FD046
+        lda wTitleFlashX
         bne _FDB1
         lda wBufferBG1VOFS
         dec a
         sta wBufferBG1VOFS
 
         _FDB1
-        lda $7FD046
+        lda wTitleFlashX
         inc a
         cmp #$0006
         bcc _FDBE
         lda #$0000
 
         _FDBE
-        sta $7FD046
+        sta wTitleFlashX
         lda $7FD048
         bne _FDD2
         lda wBufferBG2HOFS
@@ -2819,7 +2819,7 @@
 
         phx
         lda #$0000
-        sta $7FD046
+        sta wTitleFlashX
         jsl rlStepTitleBG2DiagonalScrollUnused
         lda #(`rlStepTitleBG2DiagonalScrollUnused)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -2839,7 +2839,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD046
+        lda wTitleFlashX
         bne _FE10
         lda wBufferBG2HOFS
         dec a
@@ -2849,14 +2849,14 @@
         sta wBufferBG2VOFS
 
         _FE10
-        lda $7FD046
+        lda wTitleFlashX
         inc a
         cmp #$0003
         bcc _FE1D
         lda #$0000
 
         _FE1D
-        sta $7FD046
+        sta wTitleFlashX
         rtl
 
         .databank 0
@@ -2880,7 +2880,7 @@
 
         phx
         lda #$0000
-        sta $7FD046
+        sta wTitleFlashX
         sta $7FD048
         sta $7FD04A
         jsl rlTitleIntroScene2Scroll
@@ -2910,7 +2910,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD046
+        lda wTitleFlashX
         bne _FE56
         lda wBufferBG1VOFS
         dec a
@@ -2920,14 +2920,14 @@
         sta wBufferBG2VOFS
 
         _FE56
-        lda $7FD046
+        lda wTitleFlashX
         inc a
         cmp #$0006
         bcc _FE63
         lda #$0000
 
         _FE63
-        sta $7FD046
+        sta wTitleFlashX
         lda $7FD048
         bne _FE72
         lda wBufferBG3HOFS
@@ -2981,7 +2981,7 @@
 
         phx
         lda #$0000
-        sta $7FD046
+        sta wTitleFlashX
         jsl rlTitleIntroScene3Scroll
         lda #(`rlTitleIntroScene3Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -3009,21 +3009,21 @@
         .autsiz
         .databank ?
 
-        lda $7FD046
+        lda wTitleFlashX
         bne _FEC7
         lda wBufferBG3VOFS
         inc a
         sta wBufferBG3VOFS
 
         _FEC7
-        lda $7FD046
+        lda wTitleFlashX
         inc a
         cmp #$0001
         bcc _FED4
         lda #$0000
 
         _FED4
-        sta $7FD046
+        sta wTitleFlashX
         rtl
 
         .databank 0
@@ -3047,7 +3047,7 @@
 
         phx
         lda #$0000
-        sta $7FD046
+        sta wTitleFlashX
         sta $7FD048
         jsl rlTitleIntroScene5Scroll
         lda #(`rlTitleIntroScene5Scroll)<<8
@@ -3076,21 +3076,21 @@
         .autsiz
         .databank ?
 
-        lda $7FD046
+        lda wTitleFlashX
         bne _FF04
         lda wBufferBG1VOFS
         dec a
         sta wBufferBG1VOFS
 
         _FF04
-        lda $7FD046
+        lda wTitleFlashX
         inc a
         cmp #$0005
         bcc _FF11
         lda #$0000
 
         _FF11
-        sta $7FD046
+        sta wTitleFlashX
         lda $7FD048
         bne _FF23
         lda wBufferBG3VOFS
@@ -3130,7 +3130,7 @@
 
         phx
         lda #$0000
-        sta $7FD046
+        sta wTitleFlashX
         jsl rlTitleIntroScene6Scroll
         lda #(`rlTitleIntroScene6Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -3158,21 +3158,21 @@
         .autsiz
         .databank ?
 
-        lda $7FD046
+        lda wTitleFlashX
         bne _FF5C
         lda wBufferBG1VOFS
         inc a
         sta wBufferBG1VOFS
 
         _FF5C
-        lda $7FD046
+        lda wTitleFlashX
         inc a
         cmp #$0002
         bcc _FF69
         lda #$0000
 
         _FF69
-        sta $7FD046
+        sta wTitleFlashX
         rtl
 
         .databank 0

@@ -405,11 +405,11 @@
     lMapMenuRAMEntryPointer .long ?         ; $00052E
     lMapMenuTilemapRAMEntryPointer .long ?  ; $000531
     wMapMenuNewPosition .word ?             ; $000534 ; argument of rlMoveMapMenu: column, row; bit 15 hides the menu
-    bUnknown0536 .byte ?                    ; $000536
+    bMapMenuDMABusyFlags .byte ?                    ; $000536
       ; Bitfield
       ; $0001 = busy decompressing
       ; $0002 = busy dma-ing
-    lUnknown0537 .long ?                    ; $000537
+    lMapMenuDMADataPointer .long ?                    ; $000537
 
     aCurrentTilemapInfo .block 
       wBaseTile .word ?                     ; $00053A
@@ -491,6 +491,11 @@
       ; ANDed with each aMapData word to get the tile ID ($03FF on the chapter map).
     wMapScrollXPixels .word ? ; $000598
     wMapScrollYPixels .word ? ; $00059A
+    aMapColumnUploadBuffer .fill $40          ; $00059C
+    aMapRowUploadBuffer .fill $80             ; $0005DC
+    aMapSecondaryRowUploadBuffer .fill $40    ; $00065C
+    aRangeOverlayColumnUploadBuffer .fill $40 ; $00069C
+    aRangeOverlayRowUploadBuffer .fill $40    ; $0006DC
 
   .endvirtual
 
@@ -562,7 +567,7 @@
     .word ? ; $000754
     .word ? ; $000756
     wMapCursorResting .word ? ; $000758 ; set for a frame when the cursor comes to rest on a tile
-    wUnknown00075A .word ?    ; $00075A
+    wMapDisplayFlags .word ?    ; $00075A
     wMapWidthMode .word ?     ; $00075C
       ; 4: aMapData rows are 64 tiles; anything else (8): 128 tiles.
     .word ? ; $00075E
@@ -622,7 +627,7 @@
     wTempVariable2 .word ? ; $00078E
       ; Temporary values used by many unrelated routines: prices, portrait IDs,
       ; weapons and their ranges, map coordinates and more.
-    wUnknown000790 .word ? ; $000790 ; tilemap / path helper scratch
+    wMapScratch .word ? ; $000790 ; tilemap / path helper scratch
     ; Skip $000792 (multi-purposed in the map code).
 
   .endvirtual
@@ -938,6 +943,13 @@
 
     bBattleSceneCameraXFraction .byte ? ; $7FE197
     wBattleSceneCameraX         .word ? ; $7FE198 ; BG scroll: a combatant's screen X is its X minus this
+    wBattleSceneCameraY         .word ? ; $7FE19A
+
+  .endvirtual
+
+  .virtual $7FE1B3
+
+    wBattleSceneBackgroundFlags .word ? ; $7FE1B3 ; bit 0 snowy/flag, bit 1/2/3 BG1/BG2/BG3 scroll control
 
   .endvirtual
 
@@ -965,9 +977,134 @@
 
   .endvirtual
 
-  .virtual $7FE4B8
+  .virtual $7FE471
 
+    wBattleSceneBGScrollScriptOffset .word ? ; $7FE471
+
+  .endvirtual
+
+  .virtual $7FE475
+
+    aBattleSceneBGAnimSlots .block      ; $7FE475 (3 slots of $15 bytes: BG1, BG2, BG3)
+      bFlags     .byte ? ; $7FE475
+      bWait      .byte ? ; $7FE476
+      wX         .word ? ; $7FE477
+      bXFraction .byte ? ; $7FE479
+      wY         .word ? ; $7FE47A
+                 .fill $0A ; $7FE47C-$7FE485
+      wOffsetX   .word ? ; $7FE486
+      wOffsetY   .word ? ; $7FE488
+    .endblock
+    aBattleSceneBG2AnimSlot .block      ; $7FE48A
+      bFlags     .byte ? ; $7FE48A
+      bWait      .byte ? ; $7FE48B
+      wX         .word ? ; $7FE48C
+      bXFraction .byte ? ; $7FE48E
+      wY         .word ? ; $7FE48F
+                 .fill $0A ; $7FE491-$7FE49A
+      wOffsetX   .word ? ; $7FE49B
+      wOffsetY   .word ? ; $7FE49D
+    .endblock
+    aBattleSceneBG3AnimSlot .block      ; $7FE49F
+      bFlags     .byte ? ; $7FE49F
+      bWait      .byte ? ; $7FE4A0
+      wX         .word ? ; $7FE4A1
+      bXFraction .byte ? ; $7FE4A3
+      wY         .word ? ; $7FE4A4
+                 .fill $0A ; $7FE4A6-$7FE4AF
+      wOffsetX   .word ? ; $7FE4B0
+      wOffsetY   .word ? ; $7FE4B2
+    .endblock
+
+  .endvirtual
+
+  .virtual $7FE4B7
+
+    bBattleSceneScriptWaitFlags .byte ? ; $7FE4B7 ; bit 0 set while script command 5 routine is running
     bBattleSceneScriptWaitCount .byte ? ; $7FE4B8 ; things a waiting script command still waits for; each counts it down when done
+                                .fill 3 ; $7FE4B9-$7FE4BB
+    wBattleSceneScriptOffset    .word ? ; $7FE4BC
+
+  .endvirtual
+
+  .virtual $7FE4C2
+
+    bBattleSceneBG3Mode .byte ? ; $7FE4C2
+
+  .endvirtual
+
+  .virtual $7FE4D5
+
+    bBattleSceneSavedINIDISP .byte ? ; $7FE4D5
+
+  .endvirtual
+
+  .virtual $7FE4DD
+
+    bBattleSceneScreenINIDISP .byte ? ; $7FE4DD
+    aBattleSceneSpellWindowOAM .block ; $7FE4DE (2 slots of $1C bytes)
+      bX    .byte ? ; $7FE4DE
+      wY    .word ? ; $7FE4DF
+      bAttr .byte ? ; $7FE4E1
+    .endblock
+
+  .endvirtual
+
+  .virtual $7FEC1D
+
+    aBattleSceneSpellWindowSlots .block ; $7FEC1D
+      wFlags        .word ? ; $7FEC1D
+      wX            .word ? ; $7FEC1F
+      wYAnchor      .word ? ; $7FEC21
+      wYFixed       .word ? ; $7FEC23
+      wAttr         .word ? ; $7FEC25
+                    .word ? ; $7FEC27
+      wScriptOffset .word ? ; $7FEC29
+    .endblock
+
+  .endvirtual
+
+  .virtual $7FECF4
+
+    bBattleSceneDecompState  .byte ? ; $7FECF4 ; 1 decompress+upload, 2 upload, 3 decompress
+                             .fill 3
+    lBattleSceneDecompSource .long ? ; $7FECF8
+    wBattleSceneDecompSize   .word ? ; $7FECFB
+    wBattleSceneDecompVRAM   .word ? ; $7FECFD
+
+  .endvirtual
+
+  .virtual $7FC800
+
+    aBattleSceneHUDTilemapBuffer .fill $800 ; $7FC800
+
+  .endvirtual
+
+  .virtual $7FEAAA
+
+    lMapBattleTextBoxText1 .long ? ; $7FEAAA
+                           .byte ? ; $7FEAAD
+    lMapBattleTextBoxText2 .long ? ; $7FEAAE
+
+  .endvirtual
+
+  .virtual $7FED0A
+
+    aBattleSceneBG2ScrollHDMAStep .fill $10 ; $7FED0A ; step rlBattleSceneStepBG2ScrollHDMA1 stores per slot
+
+  .endvirtual
+
+  .virtual $7FED6E
+
+    bBattleSceneWindowEffect2Flag .byte ? ; $7FED6E
+
+  .endvirtual
+
+  .virtual $7FFC5D
+
+    bBattleSceneSkillFlags .byte ? ; $7FFC5D
+    bBattleSceneSkill1     .byte ? ; $7FFC5E
+    bBattleSceneSkill2     .byte ? ; $7FFC5F
 
   .endvirtual
 
@@ -1197,7 +1334,7 @@
       ; $4000 = this chapter's first phase song has played (rlStartPhaseMusic)
       ; $8000 = set with $2000 by rlCheckActiveUnitCanto and by bank $9E; cleared by rsRunActionEndedEvents
     wSavedMapStep .word ?      ; $000D7B ; saved event/turn cycle state
-    wUnknown000D7D .word ?        ; $000D7D ; set by rlRunEvents
+    wDeployedUNITGroupID .word ?        ; $000D7D ; set by rlRunEvents
 
   .endvirtual
 
@@ -1633,8 +1770,8 @@
     aMovingMapSprites .block  ; $0017BE
 
       wOffset .word ?  ; $0017BE
-      wUnknown0017C0 .word ?      ; $0017C0 ; map sprite ID, if 0 use characters map sprite
-      wUnknown0017C2 .word ?      ; $0017C2 ; $10 = DisappearOffscreenFlag
+      wMapSpriteOverrideID .word ?      ; $0017C0 ; map sprite ID, if 0 use characters map sprite
+      wMapSpriteFlags .word ?      ; $0017C2 ; $10 = DisappearOffscreenFlag
       wActiveSpriteOffset .fill (size(word) * 4)    ; $0017C4
       wUnknown0017CC .fill (size(word) * 4)         ; $0017CC
       wXPixelPosition .fill (size(word) * 4)        ; $0017D4
@@ -2488,7 +2625,7 @@
       .union
         bSpeed            .byte ? ; $04 ; lower nybble
         bFlags            .byte ? ; $04 ; upper nybble
-        ; if bit $10 set, set bit $10 of wUnknown0017C2, DisappearOffscreenFlag
+        ; if bit $10 set, set bit $10 of wMapSpriteFlags, DisappearOffscreenFlag
         ; if $80 set, check if char is dead, skip movement if so
       .endunion
       bAllegianceColor    .byte ? ; $05
@@ -2812,6 +2949,38 @@
       ; The acting unit's position on screen: X in the low byte, Y in the high.
     wMapMagicTargetPixel .word ? ; $7F509B
       ; The other unit's position, the same way (rlSetMapMagicPositions).
+    .word ? ; $7F509D
+    wMapMagicSide .word ? ; $7F509F ; which side is casting (0 attacker, 1 defender)
+
+  .endvirtual
+
+  .virtual $7F50CD
+
+    wMapMagicEffectX .word ? ; $7F50CD
+    wMapMagicEffectY .word ? ; $7F50CF
+    .fill $0E ; $7F50D1-$7F50DE
+    wMapMagicOrbX .word ? ; $7F50DF
+    wMapMagicOrbY .word ? ; $7F50E1
+    wMapMagicCircleRadius .word ? ; $7F50E3
+    wMapMagicCircleDiameter .word ? ; $7F50E5
+
+  .endvirtual
+
+  .virtual $7F57EA
+
+    wMapBattleTemp1 .word ? ; $7F57EA
+    wMapBattleTemp2 .word ? ; $7F57EC
+    wMapBattleTemp3 .word ? ; $7F57EE
+    wMapBattleTemp4 .word ? ; $7F57F0
+
+  .endvirtual
+
+  .virtual $7ECC06
+
+    wMapMagicHitFlag  .word ? ; $7ECC06
+    wMapMagicFadeFlag .word ? ; $7ECC08
+    wMapMagicStep     .word ? ; $7ECC0A
+    wMapMagicSubStep  .word ? ; $7ECC0C
 
   .endvirtual
 
@@ -3271,7 +3440,10 @@
     aStatusScreenTextBuffer .fill $C0               ; $7FAF50
       ; Item and skill descriptions are drawn here (aUnknown89ACBC,
       ; aUnknown89ACC5), then copied into the BG3 tilemap buffer.
-    .fill $A6                                       ; $7FB010
+    wItemWindowLoopIndex     .word ?                ; $7FB010
+    wItemWindowLoopCount     .word ?                ; $7FB012
+    wItemWindowCurrentItemID .word ?                ; $7FB014
+    .fill $A0                                       ; $7FB016
     aStatusScreenGradientTable .fill $AA            ; $7FB0B6
       ; The COLDATA HDMA table (rlStatusScreenSetGradient).
     aStatusScreenBG1SplitTable .fill 8              ; $7FB160
@@ -3450,6 +3622,12 @@
   .endvirtual
 
 
+  .virtual $7FD046
+
+    wTitleFlashX .word ? ; $7FD046
+
+  .endvirtual
+
   .virtual $7FD04C
 
     wTitleBrightnessStep .word ? ; $7FD04C
@@ -3463,6 +3641,7 @@
     lTitleBrightnessList .long ? ; $7FD052
       ; INIDISP values, one a frame, ended by $FF: aTitleSceneFadeInBrightness
       ; and the lists after it.
+    wTitleFadeFrameCounter .word ? ; $7FD055
 
   .endvirtual
 

@@ -50,7 +50,7 @@
         sta aProcSystem.aBody6,b,x
 
         lda #2
-        sta $7FEAAC
+        sta lMapBattleTextBoxText1+2
 
         stz $89
         stz $87
@@ -302,7 +302,7 @@
         .autsiz
         .databank ?
 
-        lda $7FEAAA
+        lda lMapBattleTextBoxText1
         cmp #$7FFF
         bne _ADA6
         lda #<>rlProcPhaseBannerWait
@@ -395,7 +395,7 @@
         .autsiz
         .databank ?
 
-        lda $7FEAAA
+        lda lMapBattleTextBoxText1
         cmp #$FFFF
         beq _AE00
         rtl
@@ -508,7 +508,7 @@
         bit #$D0C0
         beq _AEAB
         lda #$0004
-        sta $7FEAAC
+        sta lMapBattleTextBoxText1+2
         lda aProcSystem.aBody6,b,x
         sec
         sbc #$0064
@@ -568,7 +568,7 @@
         .databank ?
 
         lda #$006E
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         jsr rsPhaseBannerBuildWindowTable
         rtl
 
@@ -585,10 +585,10 @@
 
         ; Moves the window's edge (in $7FEAAA) by the speed ($7FEAAC) each frame; $7FEAAA = $7FFF when done.
 
-        lda $7FEAAA
+        lda lMapBattleTextBoxText1
         sec
-        sbc $7FEAAC
-        sta $7FEAAA
+        sbc lMapBattleTextBoxText1+2
+        sta lMapBattleTextBoxText1
         cmp #$0058
         bmi _AEE8
 
@@ -601,11 +601,11 @@
         sec
         sbc #$0058
         clc
-        adc $7FEAAC
+        adc lMapBattleTextBoxText1+2
         bmi _AEFE
         beq _AEFE
         lda #$0058
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         bra _AEE4
 
 
@@ -613,7 +613,7 @@
         lda #<>rlPhaseBannerHDMADone
         sta aHDMASystem.aOnCycle,b,x
         lda #$7FFF
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         rtl
 
         .databank 0
@@ -662,7 +662,7 @@
         .databank ?
 
         lda #$0058
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         rtl
 
         .databank 0
@@ -678,10 +678,10 @@
 
         ; Like the slide in, the other way; $7FEAAA = $FFFF when done.
 
-        lda $7FEAAA
+        lda lMapBattleTextBoxText1
         clc
-        adc $7FEAAC
-        sta $7FEAAA
+        adc lMapBattleTextBoxText1+2
+        sta lMapBattleTextBoxText1
         cmp #$0071
         bpl _AF39
 
@@ -693,10 +693,10 @@
         _AF39
         sec
         sbc #$0070
-        cmp $7FEAAC
+        cmp lMapBattleTextBoxText1+2
         bpl _AF4C
         lda #$0070
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         bra _AF35
 
 
@@ -704,7 +704,7 @@
         lda #<>rlPhaseBannerHDMADone
         sta aHDMASystem.aOnCycle,b,x
         lda #$FFFF
-        sta $7FEAAA
+        sta lMapBattleTextBoxText1
         rtl
 
         .databank 0
@@ -751,15 +751,15 @@
         .databank ?
 
         phx
-        lda $7FEAAA
+        lda lMapBattleTextBoxText1
         ldx wR4
         sep #$20
-        sta $7FEAAE,x
+        sta lMapBattleTextBoxText2,x
         rep #$20
         asl a
         sta wR0
         lda #<>aPhaseBannerWindowOn
-        sta $7FEAAF,x
+        sta lMapBattleTextBoxText2+1,x
         lda #$00E0
         sec
         sbc wR0
@@ -768,7 +768,7 @@
         rep #$20
         lda #<>aPhaseBannerWindowOff
         sta aDialogueBoxHDMAIndirectTableOdd,x
-        lda $7FEAAA
+        lda lMapBattleTextBoxText1
         dec a
         sep #$20
         sta $7FEAB4,x

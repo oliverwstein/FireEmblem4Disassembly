@@ -99,7 +99,7 @@
         ldy #$0000
 
         _8483
-        lda $05DC,b,y
+        lda aMapRowUploadBuffer,b,y
         sta aBG2TilemapBuffer,x
         inc x
         inc x
@@ -214,7 +214,7 @@
         ldy #$0000
 
         _853D
-        lda $06DC,b,y
+        lda aRangeOverlayRowUploadBuffer,b,y
         sta aBG3TilemapBuffer,x
         inc x
         inc x
@@ -527,7 +527,7 @@
         .autsiz
         .databank ?
 
-        ; Builds a row of 8x8 tilemap entries from the map tiles in aMapData (each tile is four entries at $7F0000), for a camera X on a tile boundary. wR2 picks the top or bottom half of the tiles. With bit 1 of wUnknown00075A it also builds a second row at $065C from $7F6400.
+        ; Builds a row of 8x8 tilemap entries from the map tiles in aMapData (each tile is four entries at $7F0000), for a camera X on a tile boundary. wR2 picks the top or bottom half of the tiles. With bit 1 of wMapDisplayFlags it also builds a second row at $065C from $7F6400.
 
         _Loop
         lda aMapData,x
@@ -542,13 +542,13 @@
 
         lda $7F0000,x
         and #$DFFF
-        sta $05DC,b,y
+        sta aMapRowUploadBuffer,b,y
         lda $7F0004,x
         and #$DFFF
         sta $05DE,b,y
 
         plx
-        lda wUnknown00075A,b
+        lda wMapDisplayFlags,b
         bit #$0002
         beq +
 
@@ -565,7 +565,7 @@
           lda $7F0000,x
           and #$DFFF
           ora #$2000
-          sta $065C,b,y
+          sta aMapSecondaryRowUploadBuffer,b,y
           lda $7F0004,x
           and #$DFFF
           ora #$2000
@@ -663,7 +663,7 @@
 
         _8A66
         lda #$00FF
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         sta $06DE,b,y
 
         _8A6F
@@ -719,7 +719,7 @@
         and #$0008
         bne _8AB1
         lda #$284E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         lda #$284F
         sta $06DE,b,y
         rts
@@ -727,7 +727,7 @@
 
         _8AB1
         lda #$285E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         lda #$285F
         sta $06DE,b,y
         rts
@@ -753,13 +753,13 @@
         and #$0008
         bne _8AD6
         lda #$284F
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
 
         _8AD6
         lda #$285F
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
         .databank 0
@@ -783,13 +783,13 @@
         and #$0008
         bne _8AF5
         lda #$284E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
 
         _8AF5
         lda #$285E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
         _8AFC
@@ -803,7 +803,7 @@
         and #$0008
         bne _8B1A
         lda #$244E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         lda #$244F
         sta $06DE,b,y
         rts
@@ -811,7 +811,7 @@
 
         _8B1A
         lda #$245E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         lda #$245F
         sta $06DE,b,y
         rts
@@ -827,13 +827,13 @@
         and #$0008
         bne _8B3F
         lda #$244F
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
 
         _8B3F
         lda #$245F
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
 
@@ -848,13 +848,13 @@
         and #$0008
         bne _8B5E
         lda #$244E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
 
         _8B5E
         lda #$245E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
 
@@ -863,7 +863,7 @@
         and #$0008
         bne _8B7A
         lda #$2C4E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         lda #$2C4F
         sta $06DE,b,y
         rts
@@ -871,7 +871,7 @@
 
         _8B7A
         lda #$2C5E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         lda #$2C5F
         sta $06DE,b,y
         rts
@@ -891,13 +891,13 @@
         and #$0008
         bne _8B96
         lda #$2C4F
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
 
         _8B96
         lda #$2C5F
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
         .databank 0
@@ -915,13 +915,13 @@
         and #$0008
         bne _8BAC
         lda #$2C4E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
 
         _8BAC
         lda #$2C5E
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         rts
 
         .databank 0
@@ -958,10 +958,10 @@
         tax
         lda $7F0004,x
         and #$DFFF
-        sta $05DC,b,y
+        sta aMapRowUploadBuffer,b,y
         plx
 
-        lda wUnknown00075A,b
+        lda wMapDisplayFlags,b
         bit #$0002
         beq +
 
@@ -977,7 +977,7 @@
           lda $7F0004,x
           and #$DFFF
           ora #$2000
-          sta $065C,b,y
+          sta aMapSecondaryRowUploadBuffer,b,y
           plx
 
         +
@@ -1003,10 +1003,10 @@
         tax
         lda $7F0000,x
         and #$DFFF
-        sta $05DC,b,y
+        sta aMapRowUploadBuffer,b,y
         plx
 
-        lda wUnknown00075A,b
+        lda wMapDisplayFlags,b
         bit #$0002
         beq +
 
@@ -1022,7 +1022,7 @@
           lda $7F0000,x
           and #$DFFF
           ora #$2000
-          sta $065C,b,y
+          sta aMapSecondaryRowUploadBuffer,b,y
           plx
 
         +
@@ -1130,7 +1130,7 @@
         _8CD2
         inc wTempVariable1,b
         lda #$00FF
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         inc y
         inc y
         cpy #$0040
@@ -1139,19 +1139,19 @@
         ldy #$0000
 
         _8CE8
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         bra _8CFB
 
 
         _8CED
         lda #$00FF
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
         bra _8CB1
 
 
         _8CF5
         lda #$00FF
-        sta $06DC,b,y
+        sta aRangeOverlayRowUploadBuffer,b,y
 
         _8CFB
         inc y
@@ -1195,7 +1195,7 @@
         .autsiz
         .databank ?
 
-        ; X = the aMovementMap index of tile (wTempVariable1, wTempVariable2); also keeps the row part in wUnknown000790.
+        ; X = the aMovementMap index of tile (wTempVariable1, wTempVariable2); also keeps the row part in wMapScratch.
         ; The grid has the unit at (32, 32), so the index is tile - unit + 32 in each coordinate, mod 64. Subtracting
         ; the window's right/bottom edge (unit + 32, never clamped, unlike left/top) gives the same value mod 64.
 
@@ -1214,7 +1214,7 @@
         asl a
         asl a
         asl a
-        sta wUnknown000790,b
+        sta wMapScratch,b
         clc
         adc wR0
         tax
@@ -1238,7 +1238,7 @@
         sbc wMovementMapWindowRight,b
         and #$003F
         clc
-        adc wUnknown000790,b
+        adc wMapScratch,b
         tax
         rts
 
@@ -1561,13 +1561,13 @@
           tax
           lda $7F0000,x
           and #$DFFF
-          sta $059C,b,y
+          sta aMapColumnUploadBuffer,b,y
           lda $7F0002,x
           and #$DFFF
           sta $059E,b,y
           plx
 
-          lda wUnknown00075A,b
+          lda wMapDisplayFlags,b
           bit #$0002
           beq +
 
@@ -1679,7 +1679,7 @@
 
         _8F89
         lda #$00FF
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         sta $069E,b,y
 
         _8F92
@@ -1724,7 +1724,7 @@
         and #$0008
         bne _8FCD
         lda #$284E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         lda #$285E
         sta $069E,b,y
         rts
@@ -1732,7 +1732,7 @@
 
         _8FCD
         lda #$284F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         lda #$285F
         sta $069E,b,y
         rts
@@ -1756,13 +1756,13 @@
         and #$0008
         bne _8FF2
         lda #$285E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
 
         _8FF2
         lda #$285F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
         .databank 0
@@ -1784,13 +1784,13 @@
         and #$0008
         bne _9011
         lda #$284E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
 
         _9011
         lda #$284F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
         .databank 0
@@ -1812,7 +1812,7 @@
         and #$0008
         bne _9036
         lda #$244E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         lda #$245E
         sta $069E,b,y
         rts
@@ -1820,7 +1820,7 @@
 
         _9036
         lda #$244F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         lda #$245F
         sta $069E,b,y
         rts
@@ -1844,13 +1844,13 @@
         and #$0008
         bne _905B
         lda #$245E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
 
         _905B
         lda #$245F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
         .databank 0
@@ -1872,13 +1872,13 @@
         and #$0008
         bne _907A
         lda #$244E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
 
         _907A
         lda #$244F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
         .databank 0
@@ -1894,7 +1894,7 @@
         and #$0008
         bne _9096
         lda #$2C4E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         lda #$2C5E
         sta $069E,b,y
         rts
@@ -1902,7 +1902,7 @@
 
         _9096
         lda #$2C4F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         lda #$2C5F
         sta $069E,b,y
         rts
@@ -1922,13 +1922,13 @@
         and #$0008
         bne _90B2
         lda #$2C5E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
 
         _90B2
         lda #$2C5F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
         .databank 0
@@ -1946,13 +1946,13 @@
         and #$0008
         bne _90C8
         lda #$2C4E
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
 
         _90C8
         lda #$2C4F
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         rts
 
         .databank 0
@@ -1970,7 +1970,7 @@
         sec
         sbc wMovementMapWindowRight,b
         and #$003F
-        sta wUnknown000790,b
+        sta wMapScratch,b
         lda wTempVariable2,b
         sec
         sbc wMovementMapWindowBottom,b
@@ -1982,7 +1982,7 @@
         asl a
         asl a
         clc
-        adc wUnknown000790,b
+        adc wMapScratch,b
         tax
         rts
 
@@ -2008,7 +2008,7 @@
         asl a
         asl a
         clc
-        adc wUnknown000790,b
+        adc wMapScratch,b
         tax
         rts
 
@@ -2041,9 +2041,9 @@
         tax
         lda $7F0002,x
         and #$DFFF
-        sta $059C,b,y
+        sta aMapColumnUploadBuffer,b,y
         plx
-        lda wUnknown00075A,b
+        lda wMapDisplayFlags,b
         bit #$0002
         beq _9153
         lda $7F6400,x
@@ -2086,9 +2086,9 @@
         tax
         lda $7F0000,x
         and #$DFFF
-        sta $059C,b,y
+        sta aMapColumnUploadBuffer,b,y
         plx
-        lda wUnknown00075A,b
+        lda wMapDisplayFlags,b
         bit #$0002
         beq _91A6
         lda $7F6400,x
@@ -2201,22 +2201,22 @@
         _9232
         inc wTempVariable2,b
         lda #$00FF
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         inc y
         inc y
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         bra _9250
 
 
         _9242
         lda #$00FF
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
         bra _9211
 
 
         _924A
         lda #$00FF
-        sta $069C,b,y
+        sta aRangeOverlayColumnUploadBuffer,b,y
 
         _9250
         inc y

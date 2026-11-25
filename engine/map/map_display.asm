@@ -18,10 +18,10 @@
         .autsiz
         .databank ?
 
-        ; A = wUnknown00075A and wMapTileIDMask. Loads the map's graphics, palettes and window settings, restores the camera (rlRestoreMapCamera), clears the cursor and moving unit state, draws the visible map, uploads the standing map sprites, handles the return flags and restarts the animations.
+        ; A = wMapDisplayFlags and wMapTileIDMask. Loads the map's graphics, palettes and window settings, restores the camera (rlRestoreMapCamera), clears the cursor and moving unit state, draws the visible map, uploads the standing map sprites, handles the return flags and restarts the animations.
 
         lda #$0001
-        sta wUnknown00075A,b
+        sta wMapDisplayFlags,b
         lda #$03FF
         sta wMapTileIDMask,b
         phk
@@ -396,10 +396,10 @@
         .autsiz
         .databank ?
 
-        ; Like rlSetUpChapterMapDisplay (with wUnknown00075A = 1 and the mask $03FF), but queues and uploads all 16 standing map sprite steps at once.
+        ; Like rlSetUpChapterMapDisplay (with wMapDisplayFlags = 1 and the mask $03FF), but queues and uploads all 16 standing map sprite steps at once.
 
         lda #$0001
-        sta wUnknown00075A,b
+        sta wMapDisplayFlags,b
         lda #$03FF
         sta wMapTileIDMask,b
         rep #$30
