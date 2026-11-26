@@ -2171,7 +2171,7 @@
 
       aCastleListRowYPositions ; 8A/AA2A
 
-        ; Each list row's tilemap row, by row x 2: read by the list drawers here and in augury.asm (and by code left as .byte at 8A/AAD3).
+        ; Each list row's tilemap row, by row x 2: read by the list drawers here and in augury.asm (and by unreachable code at 8A/AAD3).
         .word $000A, $000C, $000E, $0010, $0012, $0014, $0016, $0018
 
     .endsection Unsorted8AA9CESection
@@ -2290,8 +2290,24 @@
         plx
         rts
 
-        .byte $DA, $B9, $2A, $AA, $EB, $4A, $4A, $18, $69, $32, $00, $AA, $AD, $8C, $07, $4A
-        .byte $22, $11, $B1, $8A, $FA
+        _AAD3
+
+        ; Unreachable: it follows the rts, nothing branches or points here, and fe4.cdl
+        ; never ran it. Draws wTempVariable1 / 2 in the price column, the Bargain path
+        ; above without its check.
+
+        phx
+        lda <>aCastleListRowYPositions,b,y
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0032
+        tax
+        lda wTempVariable1,b
+        lsr a
+        jsl rlDrawCastleNumber
+        plx
 
 
         _AAE6

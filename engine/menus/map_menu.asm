@@ -6582,7 +6582,13 @@
         .databank ?
         rtl
 
-        .byte $22, $F8, $83, $87, $80, $00
+        _827F
+
+        ; Unreachable: it follows the rtl, nothing branches or points here, and fe4.cdl
+        ; never ran it. Redraws every map menu, then joins the upload below.
+
+        jsl rlRedrawAllMapMenus
+        bra _8283
 
 
         _8283
