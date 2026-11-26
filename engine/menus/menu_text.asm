@@ -509,7 +509,7 @@
         ldx #$0000
 
         _9E1C
-        cmp $9D77,b,x
+        cmp <>aMenuFontKanjiOverrides,b,x
         beq _9E2E
         inc x
         inc x
@@ -523,9 +523,9 @@
 
 
         _9E2E
-        lda $9D79,b,x
+        lda <>aMenuFontKanjiOverrides+2,b,x
         sta wR10
-        lda $9D7B,b,x
+        lda <>aMenuFontKanjiOverrides+4,b,x
         sta wR11
 
         _9E38

@@ -4756,10 +4756,10 @@
         clc
         adc wR3
         tay
-        lda $D4C6,b,y
+        lda <>aMapSpriteWalkOffsets,b,y
         and #$00FF
         sta wR0
-        lda $D4C7,b,y
+        lda <>aMapSpriteWalkOffsets+1,b,y
         and #$00FF
         sta wR1
         lda @l aMovingMapSpriteTileOffsets,x

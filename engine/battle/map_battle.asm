@@ -2395,7 +2395,7 @@
         lda aMapAction.wSideWeaponType
         asl a
         tay
-        lda $B4CD,b,y
+        lda <>aMapBattleWeaponTypeTileOffsets,b,y
         sta wR2
         lda aMapAction.wSide
         asl a
@@ -2405,7 +2405,7 @@
         lda #<>aDecompressionBuffer
         clc
         adc wR2
-        adc $B4C9,b,y
+        adc <>aMapBattleSideGraphicsOffsets,b,y
         sta lR18
         lda #$0400
         sta wR0

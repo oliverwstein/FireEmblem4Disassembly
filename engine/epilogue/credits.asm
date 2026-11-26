@@ -545,9 +545,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8000
+        lda #(`rlSetupEpilogueCreditsDisplay._DMAFillZero)<<8
         sta $4303,b
-        lda #$EFA7
+        lda #<>rlSetupEpilogueCreditsDisplay._DMAFillZero+1
         sta $4302,b
         lda #$4000
         sta $4305,b
@@ -685,7 +685,8 @@
 
         ; 80/EFA6
 
-        ; Unused: 2 zero bytes.
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
     .endsection Unsorted80EE37Section
@@ -718,9 +719,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8000
+        lda #(`rlSetupEpilogueRankingsDisplay._DMAFillZero)<<8
         sta $4303,b
-        lda #$F186
+        lda #<>rlSetupEpilogueRankingsDisplay._DMAFillZero+1
         sta $4302,b
         lda #$4000
         sta $4305,b
@@ -736,9 +737,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8000
+        lda #(`rlSetupEpilogueRankingsDisplay._DMAFillZero)<<8
         sta $4303,b
-        lda #$F186
+        lda #<>rlSetupEpilogueRankingsDisplay._DMAFillZero+1
         sta $4302,b
         lda #$3000
         sta $4305,b
@@ -900,7 +901,8 @@
 
         ; 80/F185
 
-        ; Unused: 2 zero bytes.
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
     .endsection Unsorted80EFD8Section

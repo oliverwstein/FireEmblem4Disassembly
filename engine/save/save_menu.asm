@@ -2608,7 +2608,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .word $AB88
+          .word <>aDecompressionBuffer+$2000
           .word $0200
           .word $0000
 
@@ -3057,15 +3057,51 @@
 
       aSaveMenuRowSprites ; 91/E397
 
-        ; Read by rlSaveMenuDrawRowSprites.
+        ; Read by rlSaveMenuDrawRowSprites: entry 1 for the rows after the first while
+        ; wSaveMenuSlotRow is set, else entry 0.
 
-        .word $E3C0, $E39B, $0007, $C3E8, $00E8, $0831, $E8C2, $3102
-        .word $C228, $02E8, $4831, $E8C2, $3102, $C268, $02E8, $8831
-        .word $E8C2, $3102, $C298, $04E8, $0431, $E000, $E8C3, $3100
-        .word $C200, $02E8, $2031, $E8C2, $3102, $C230, $04E8, $0931
-        .word $0800, $0000, $3100, $0008, $1010, $0831, $2000, $3120
-        .word $0018, $0200, $1831, $1000, $3112, $0018, $2220, $2831
-        .word $0000, $3106, $0028, $1610, $2831, $2000, $3126
+        .word <>aSaveMenuRowSprites0, <>aSaveMenuRowSprites1
+
+      aSaveMenuRowSprites1 ; 91/E39B
+
+        _Sprites := [[( -24,  -24), $21, SpriteLarge, $100, 3, 0, false, false]]
+        _Sprites ..= [[(   8,  -24), $21, SpriteLarge, $102, 3, 0, false, false]]
+        _Sprites ..= [[(  40,  -24), $21, SpriteLarge, $102, 3, 0, false, false]]
+        _Sprites ..= [[(  72,  -24), $21, SpriteLarge, $102, 3, 0, false, false]]
+        _Sprites ..= [[( 104,  -24), $21, SpriteLarge, $102, 3, 0, false, false]]
+        _Sprites ..= [[( 136,  -24), $21, SpriteLarge, $102, 3, 0, false, false]]
+        _Sprites ..= [[( 152,  -24), $21, SpriteLarge, $104, 3, 0, false, false]]
+
+        .structSpriteArray aSaveMenuRowSprites1._Sprites
+
+        ; 91/E3C0
+
+      aSaveMenuRowSprites0 ; 91/E3C0
+
+        _Sprites := [[( -32,  -24), $21, SpriteLarge, $100, 3, 0, false, false]]
+        _Sprites ..= [[(   0,  -24), $21, SpriteLarge, $102, 3, 0, false, false]]
+        _Sprites ..= [[(  32,  -24), $21, SpriteLarge, $102, 3, 0, false, false]]
+        _Sprites ..= [[(  48,  -24), $21, SpriteLarge, $104, 3, 0, false, false]]
+
+        .structSpriteArray aSaveMenuRowSprites0._Sprites
+
+        ; 91/E3D6
+
+      aSaveMenuConfirmSprites ; 91/E3D6
+
+        ; Pushed by rlSaveMenuDrawConfirmSprites.
+
+        _Sprites := [[(   8,    0), $00, SpriteSmall, $100, 3, 0, false, false]]
+        _Sprites ..= [[(   8,   16), $00, SpriteSmall, $110, 3, 0, false, false]]
+        _Sprites ..= [[(   8,   32), $00, SpriteSmall, $120, 3, 0, false, false]]
+        _Sprites ..= [[(  24,    0), $00, SpriteSmall, $102, 3, 0, false, false]]
+        _Sprites ..= [[(  24,   16), $00, SpriteSmall, $112, 3, 0, false, false]]
+        _Sprites ..= [[(  24,   32), $00, SpriteSmall, $122, 3, 0, false, false]]
+        _Sprites ..= [[(  40,    0), $00, SpriteSmall, $106, 3, 0, false, false]]
+        _Sprites ..= [[(  40,   16), $00, SpriteSmall, $116, 3, 0, false, false]]
+        _Sprites ..= [[(  40,   32), $00, SpriteSmall, $126, 3, 0, false, false]]
+
+        .structSpriteArray aSaveMenuConfirmSprites._Sprites
 
         ; 91/E405
 
@@ -3106,7 +3142,7 @@
         plb
         .databank $91
         rep #$20
-        ldy #$E3D6
+        ldy #<>aSaveMenuConfirmSprites
         lda #$00B9
         sta wR0
         lda #$0018

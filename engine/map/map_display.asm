@@ -30,9 +30,9 @@
         rep #$30
         lda #$1809
         sta $4350,b
-        lda #$8800
+        lda #(`rlSetUpChapterMapDisplay._DMAFillZero)<<8
         sta $4353,b
-        lda #$8189
+        lda #<>rlSetUpChapterMapDisplay._DMAFillZero+1
         sta $4352,b
         lda #$4000
         sta $4355,b
@@ -133,7 +133,8 @@
 
         ; 88/8188
 
-        ; Unused: 2 zero bytes.
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
     .endsection Unsorted888082Section
@@ -360,9 +361,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8800
+        lda #(`rlClearVRAM6000._DMAFillZero)<<8
         sta $4303,b
-        lda #$8219
+        lda #<>rlClearVRAM6000._DMAFillZero+1
         sta $4302,b
         lda #$4000
         sta $4305,b
@@ -378,7 +379,8 @@
 
         ; 88/8218
 
-        ; Unused: 2 zero bytes.
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
     .endsection Unsorted8881ECSection
@@ -405,9 +407,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8800
+        lda #(`rlSetUpChapterMapDisplayAllFrames._DMAFillZero)<<8
         sta $4303,b
-        lda #$83C5
+        lda #<>rlSetUpChapterMapDisplayAllFrames._DMAFillZero+1
         sta $4302,b
         lda #$2000
         sta $4305,b
@@ -554,6 +556,8 @@
         ; 88/83C4
 
 
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .byte $00, $00
         rtl
 

@@ -944,9 +944,9 @@
         ora wR0
         sta wMapMagicCasterPixel
         sta wMapMagicTargetPixel
-        lda #$8100
+        lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta @l lActiveSpriteRenderer+1
-        lda #$841B
+        lda #<>rlPushToOAMBufferDualTileBase
         sta @l lActiveSpriteRenderer
         lda @l aActiveSpriteSystem
         sta wMapBattleSavedSpriteEngineFlag
@@ -1102,9 +1102,9 @@
         ora wR0
         sta wMapMagicTargetPixel
         sta wMapMagicCasterPixel
-        lda #$8100
+        lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta @l lActiveSpriteRenderer+1
-        lda #$841B
+        lda #<>rlPushToOAMBufferDualTileBase
         sta @l lActiveSpriteRenderer
         lda @l aActiveSpriteSystem
         sta wMapBattleSavedSpriteEngineFlag

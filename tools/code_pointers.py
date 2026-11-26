@@ -148,7 +148,7 @@ def header_banks(files):
 
 
 BANK_HALF = re.compile(r'^(\s+ld([axy]) #)\$([0-9A-F]{2})00(\s*(?:;.*)?)$')
-BANK_STORE = re.compile(r'^\s+st([axy]) ([\w.]+)\+1((?:,b)?(?:,[xy])?)\s*(?:;.*)?$')
+BANK_STORE = re.compile(r'^\s+st([axy]) (?:@l )?([\w.]+)\+1((?:,b)?(?:,[xy])?)\s*(?:;.*)?$')
 ADDRESS_HALF = re.compile(r'^(\s+ld([axy]) #)(\$[0-9A-F]{4}|<>[\w.]+)(\s*(?:;.*)?)$')
 
 
@@ -162,7 +162,7 @@ def find_halves(files):
             if not (b and st and b.group(2) == st.group(1)):
                 continue
             var, suffix = st.group(2), st.group(3)
-            store = re.compile(r'^\s+st([axy]) ' + re.escape(var + suffix) + r'\s*(?:;.*)?$')
+            store = re.compile(r'^\s+st([axy]) (?:@l )?' + re.escape(var + suffix) + r'\s*(?:;.*)?$')
             near = []
             for j in range(max(0, i - 6), min(len(lines) - 1, i + 7)):
                 a, s = ADDRESS_HALF.match(lines[j]), store.match(lines[j + 1])

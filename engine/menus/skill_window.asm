@@ -1270,9 +1270,9 @@
 
         lda #$0000
         sta wSkillWindowHolderScroll
-        lda #$8000
+        lda #(`aSkillWindowBG3TilemapEntry)<<8
         sta @l lMapMenuTilemapRAMEntryPointer+1
-        lda #$D8E8
+        lda #<>aSkillWindowBG3TilemapEntry
         sta @l lMapMenuTilemapRAMEntryPointer
         lda wSkillWindowCurrentSkill
         xba
@@ -1307,9 +1307,9 @@
         _DA82
         lda wR0
         bne _DA9B
-        lda #$8B00
+        lda #(`aSkillWindowNoHoldersText)<<8
         sta @l lR18+1
-        lda #$DFA9
+        lda #<>aSkillWindowNoHoldersText
         sta @l lR18
         ldx #$1313
         jsl rlDrawMenuTextLine
@@ -2134,7 +2134,7 @@
         ; 8B/DFA9
 
 
-      aSkillWindowNoHoldersText ; 8B/DFAA?
+      aSkillWindowNoHoldersText ; 8B/DFA9
 
         .enc "SJIS"
         .text "だれももっていません\n"

@@ -2983,7 +2983,7 @@
         beq _B02E
         lda #$0058
         sta wR0
-        lda $B033,b,y
+        lda <>aCastleInventorySpriteYOffsets,b,y
         and #$00FF
         clc
         adc #$0050
@@ -3075,7 +3075,7 @@
         plb
         .databank $8A
         rep #$20
-        ldy #$B08C
+        ldy #<>aCastleHandCursorSprite
         lda #$0000
         sta wR4
         lda #$2000
@@ -3104,6 +3104,10 @@
         ; Read by rlPushCastleHandCursor.
 
         .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
+
+      aCastleHandCursorSprite ; 8A/B08C
+
+        ; A one-sprite array: the hand cursor rlPushCastleHandCursor draws.
         .byte $01, $00, $00, $C2, $00, $02, $30
 
         ; 8A/B093

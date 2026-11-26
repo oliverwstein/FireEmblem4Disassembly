@@ -1287,7 +1287,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .word $EB88, $000F, $0102 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $0102
+          .word <>aDecompressionBuffer+$6000, $000F, $0102 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $0102
 
         bcc _F4DE
         sep #$20
@@ -1371,7 +1371,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .word $EB88, $000F, $0182 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $0182
+          .word <>aDecompressionBuffer+$6000, $000F, $0182 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $0182
 
         bcc _F540
         sep #$20
@@ -1455,7 +1455,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .word $EB88, $000F, $01A2 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $01A2
+          .word <>aDecompressionBuffer+$6000, $000F, $01A2 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $01A2
 
         bcc _F5A2
         sep #$20

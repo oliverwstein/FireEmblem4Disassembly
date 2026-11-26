@@ -757,7 +757,7 @@
         plb
         .databank $8A
         rep #$20
-        ldy #$DB30
+        ldy #<>aConversationLeftFrameSprite
         lda #$0000
         sta wR4
         lda #$C000
@@ -806,7 +806,7 @@
         plb
         .databank $8A
         rep #$20
-        ldy #$DB30
+        ldy #<>aConversationLeftFrameSprite
         lda #$0000
         sta wR4
         lda #$0000
@@ -1578,7 +1578,7 @@
 
         jsl rlSavePaletteBufferColorsToRAM
 
-          .long $7E9BA8
+          .long aDecompressionBuffer+$1020
           .word len(Palette.Colors)
           .word aOAMPaletteBuffer.aPalette4 - aBGPaletteBuffer
 

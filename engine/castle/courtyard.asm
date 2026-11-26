@@ -3166,7 +3166,7 @@
         and #$0003
         asl a
         tay
-        lda $9A3B,b,y
+        lda <>aCastleCourtyardAllegiancePalettes,b,y
         sta wR5
         lda aDeploymentTable,x
         bit #$0008
@@ -3228,7 +3228,7 @@
         and #$0003
         asl a
         tay
-        lda $9A3B,b,y
+        lda <>aCastleCourtyardAllegiancePalettes,b,y
         sta wR5
         lda aDeploymentTable,x
         bit #$0008
@@ -3312,7 +3312,16 @@
         .byte $5C, $00, $58, $00, $52, $00, $5C, $00, $74, $00, $74, $00, $74, $00, $74, $00
         .byte $88, $00, $88, $00, $88, $00, $88, $00, $9C, $00, $9C, $00, $9C, $00, $9C, $00
         .byte $B0, $00, $B0, $00, $B0, $00, $B0, $00, $C4, $00, $C4, $00, $C4, $00, $C4, $00
-        .byte $00, $02, $00, $04, $00, $06, $00, $08, $01, $00, $00, $C2, $00, $80, $20, $02
+
+      aCastleCourtyardAllegiancePalettes ; 8A/9A3B
+
+        ; The OAM palette bits of each allegiance (allegiance x 2), read by rlCastleDrawCourtyardUnitSprites.
+
+        .word $0200, $0400, $0600, $0800
+
+        ; 8A/9A43: not known.
+
+        .byte $01, $00, $00, $C2, $00, $80, $20, $02
         .byte $00, $00, $C2, $00, $40, $21, $00, $C2, $F0, $42, $21
 
         ; 8A/9A56
@@ -3361,9 +3370,9 @@
         _9A8A
         asl a
         tay
-        lda $9AD4,b,y
+        lda <>aCastleCourtyardSpotX,b,y
         sta aCastleCourtyardSpriteX,x
-        lda $9B04,b,y
+        lda <>aCastleCourtyardSpotY,b,y
         sta aCastleCourtyardSpriteY,x
         lda aCastleUnitDeploymentOffsets,x
         bmi _9ACF

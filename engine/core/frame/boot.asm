@@ -303,10 +303,12 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8000
+        lda #(`rlColdResetClearMemory._DMAFillZero)<<8
         sta $4303,b
-        lda #$8E93
+        lda #<>rlColdResetClearMemory._DMAFillZero+1
         sta $4302,b
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: its operand, the zero it fills VRAM with.
         lda #$0000
         sta $4305,b
         stz $2116,b

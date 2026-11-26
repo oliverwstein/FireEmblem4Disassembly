@@ -1304,7 +1304,7 @@
         rep #$20
         lda $7F8290,x
         clc
-        adc $F9AD,b,y
+        adc <>aChapterIntroWaveOffsets,b,y
         sta $7F8290,x
         inc y
         inc y
@@ -1382,7 +1382,7 @@
         sta aChapterIntroBG1HOFSTable,x
         rep #$20
         inc x
-        lda $FA27,b,y
+        lda <>aChapterIntroTitleSlideOffsets,b,y
         sta aChapterIntroBG1HOFSTable,x
         inc x
         inc x

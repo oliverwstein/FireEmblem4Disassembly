@@ -149,9 +149,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8000
+        lda #(`rlInitWorldMapGraphics._DMAFillZero)<<8
         sta $4303,b
-        lda #$B61D
+        lda #<>rlInitWorldMapGraphics._DMAFillZero+1
         sta $4302,b
         lda #$2000
         sta $4305,b
@@ -167,9 +167,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8000
+        lda #(`rlInitWorldMapGraphics._DMAFillZero)<<8
         sta $4303,b
-        lda #$B61D
+        lda #<>rlInitWorldMapGraphics._DMAFillZero+1
         sta $4302,b
         lda #$2000
         sta $4305,b
@@ -335,7 +335,8 @@
 
         ; 80/B61C
 
-        ; Unused: 2 zero bytes.
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
     .endsection Unsorted80B347Section

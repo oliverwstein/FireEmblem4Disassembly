@@ -586,7 +586,7 @@
           clc
           jsl rlFadePaletteToColors
 
-            .word $CBA8
+            .word <>aDecompressionBuffer+$4020
             .word 5
             .word aBGPaletteBuffer.aPalette5 + $10 - aBGPaletteBuffer
 

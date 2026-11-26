@@ -6737,7 +6737,7 @@
         tay
         lda aChapterActiveMapChanges,x
         and #$00FF
-        and $C69A,b,y
+        and <>aMapChangeBitmasks,b,y
         bne _C695
         clc
         bra _C696

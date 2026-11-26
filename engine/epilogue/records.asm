@@ -76,7 +76,7 @@
         lda aEpilogueRecordsBrightnessHDMATable,y
         sta $7F56C9,x
         beq _AE2D
-        lda $AE33,b,y
+        lda <>aEpilogueRecordsBrightnessHDMATable+1,b,y
         cmp bBufferINIDISP
         bcc _AE23
         lda bBufferINIDISP

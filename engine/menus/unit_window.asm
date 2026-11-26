@@ -947,7 +947,7 @@
         ldy #$0000
 
         _C996
-        lda $CA25,b,y
+        lda <>aUnitWindowListHeaderTiles0,b,y
         sta $7E7548,x
         inc x
         inc x
@@ -962,7 +962,7 @@
         ldy #$0000
 
         _C9AD
-        lda $CB25,b,y
+        lda <>aUnitWindowListHeaderTiles1,b,y
         sta $7E7548,x
         inc x
         inc x
@@ -1108,7 +1108,7 @@
         _CBE6
         lda wUnitWindowCurrentNameLine
         tay
-        ldx $CC05,b,y
+        ldx <>aUnitWindowUnitNamePositions,b,y
         lda lRoutineVariable,b
         sta lR18
         lda lRoutineVariable+1,b
@@ -2363,7 +2363,7 @@
         phk
         plb
         .databank $8B
-        lda $B4ED,b,y
+        lda <>aUnitWindowPageSprites2,b,y
         tay
         jsl rlPushToOAMBuffer
 
@@ -3044,7 +3044,7 @@
         clc
         adc wR0
         tax
-        lda $BA81,b,x
+        lda <>aUnitWindowLineHighlightColors2+1,b,x
         phx
         pha
         lda wR4
@@ -3119,11 +3119,11 @@
 
         _B981
         phx
-        lda $B9FD,b,x
+        lda <>aUnitWindowLineHighlightColors1+1,b,x
         ldx wR0
         sta aUnitWindowHighlightColors+1,x
         plx
-        lda $B9FC,b,x
+        lda <>aUnitWindowLineHighlightColors1,b,x
         phx
         ldx wR0
         sta aUnitWindowHighlightColors,x
@@ -6070,7 +6070,7 @@
 
         _CBE4
         tay
-        lda $C66E,b,y
+        lda <>aItemTypeSortRanks,b,y
         and #$00FF
 
         _CBEB

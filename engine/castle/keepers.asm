@@ -89,14 +89,14 @@
         .autsiz
         .databank ?
 
-        ; DMAs $800 bytes from the fixed address $8A/94E1 (this routine's rtl byte, $6B) to VRAM word $2000.
+        ; DMAs $800 bytes from the fixed address $8A/94E1 (the zero at _DMAFillZero+1, after the rtl) to VRAM word $2000.
 
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8A00
+        lda #(`rlCastleFillVRAM2000._DMAFillZero)<<8
         sta $4303,b
-        lda #$94E1
+        lda #<>rlCastleFillVRAM2000._DMAFillZero+1
         sta $4302,b
         lda #$0800
         sta $4305,b
@@ -112,7 +112,8 @@
 
         ; 8A/94E0
 
-        ; Unused: 2 zero bytes.
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
     .endsection Unsorted8A94B6Section
@@ -130,14 +131,14 @@
         .autsiz
         .databank ?
 
-        ; DMAs $800 bytes from the fixed address $8A/950D (this routine's rtl byte, $6B) to VRAM word $2400.
+        ; DMAs $800 bytes from the fixed address $8A/950D (the zero at _DMAFillZero+1, after the rtl) to VRAM word $2400.
 
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8A00
+        lda #(`rlCastleFillVRAM2400._DMAFillZero)<<8
         sta $4303,b
-        lda #$950D
+        lda #<>rlCastleFillVRAM2400._DMAFillZero+1
         sta $4302,b
         lda #$0800
         sta $4305,b
@@ -153,7 +154,8 @@
 
         ; 8A/950C
 
-        ; Unused: 2 zero bytes.
+        _DMAFillZero
+        ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
     .endsection Unsorted8A94E2Section
@@ -192,7 +194,7 @@
 
 
         _952F
-        ldy #$968A
+        ldy #<>aKeeperPortraitSpritesFrame1
         bra _9534
 
 
@@ -236,7 +238,7 @@
 
 
         _9565
-        ldy #$95C4
+        ldy #<>aUnitPortraitSpritesFrame1
         bra _956A
 
 
@@ -271,7 +273,7 @@
         plb
         .databank $8A
         rep #$20
-        ldy #$9712
+        ldy #<>aCourtyardPortraitSprites
         lda #$0000
         sta wR5
         sta wR4

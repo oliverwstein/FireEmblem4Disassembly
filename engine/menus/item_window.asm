@@ -2589,7 +2589,7 @@
         phk
         plb
         .databank $89
-        lda $C181,b,y
+        lda <>aItemWindowScrollArrowSprites,b,y
         tay
         jsl rlPushToOAMBuffer
 
