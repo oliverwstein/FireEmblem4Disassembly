@@ -108,7 +108,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | `aClassChangeData8AEE7FUnused`: its second byte is the fixed DMA source `rlClassChangeScreenSetup` clears VRAM with (`lda #$EE80`); split out as `aClassChangeVRAMClearByte` | class_change.asm | `a01f460` |
 | Eight `aSoundPad*` said "nothing points here"; each follows an odd-sized chunk, and the upload sends (size + 1) / 2 words, so it reaches the APU as that chunk's last high byte | tools/sound.py, audio/sound_data.asm | `a01f460` |
 | `ClassSkillUnused3`/`SkillIDUnused4`: Troubadour's class data has the skill (nothing tests it, no window shows it). `ItemStateUnused3`: the class change lists items in state 3 (nothing found sets it). Names kept, comments added | Classes.h, Skills.h, Items.h, WRAM.h | `a01f460` |
-| `tools/battle_moves.py` and `battle_frames.py` named unselected entries `Unknown05`..., so rerunning them undid the source's names; battle_moves.py now writes `Unused` and why. `battle_frames.py --write` also deletes the battle-scene texts and demo battles that later work put in `frames_9A.asm`/`frames_9B.asm` (the build then fails): not fixed, don't run it with `--write` | tools/ | `a01f460` (moves only) |
+| `tools/battle_moves.py` and `battle_frames.py` named unselected entries `Unknown05`..., so rerunning them undid the source's names; battle_moves.py now writes `Unused` and why. `battle_frames.py --write` also deleted the battle-scene texts and demo battles placed after its section in `frames_98.asm`/`frames_9A.asm` (the build then failed), and its self-test failed because bank `$98` has 1 spare byte; it now keeps them and tests in bank `$9A` | tools/ | `a01f460`, `58231d1` |
 
 **In the documentation** (reference pages, guide drafts):
 
