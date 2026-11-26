@@ -9017,6 +9017,10 @@
         .autsiz
         .databank ?
 
+        ; On-cycle routine: waits for the decompression queue to empty
+        ; (bDecompressionArrayFlag clear), then sets the proc's bit $0001 for its script
+        ; and switches to the empty rlMapBattleDecompressionDone.
+
         lda bDecompressionArrayFlag,b
         and #$00FF
         bne rlMapBattleDecompressionDone

@@ -436,7 +436,12 @@
         .autsiz
         .databank ?
 
-        ; Interpolate one 5-bit RGB channel from X to Y at step A of wMaxSteps
+        ; One 5-bit channel, from the current value X toward the target Y, at step A of
+        ; aPaletteFading.wMaxSteps (N). Step 0 returns X and step N + 1 returns Y; step k
+        ; in between returns X + (Y - X) / (N - k + 1), in 8.8 fixed point on the hardware
+        ; divider and truncated. The callers pass the buffer's current color as X, so each
+        ; step covers an equal share of what is left: the fade is linear and step N lands
+        ; on Y.
 
         cmp #0
         bne +
