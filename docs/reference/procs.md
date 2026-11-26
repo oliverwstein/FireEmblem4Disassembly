@@ -78,6 +78,8 @@ The low bits belong to the proc. Its routines set them and its script tests them
 4. It gives the proc one step at once (the on-cycle routine, then the script, since the timer counts down to 0) and sets bit `$4000`.
 5. It returns carry clear with A = the slot index.
 
+Of the 155 calls in the source, two check the carry.
+
 Other calls:
 
 | Routine | Does |
@@ -113,7 +115,7 @@ The macros are in [Procs.h](../../include/Procs.h); the uses are counted over th
 
 | Macro | Operands | Does | Uses |
 |---|---|---|---|
-| `PROC_YIELD n` | | sleep n frames and end the step | 375 |
+| `PROC_YIELD n` | | sleep n frames and end the step | 374 |
 | `PROC_END` | | free the proc and end the step | 21 |
 | `PROC_HALT` | | stay on this command and end the step; the timer stays at 0, so the script is not read again for 65,536 frames and only the on-cycle routine runs | 88 |
 | `PROC_HALT_SLEEP` | | as `PROC_HALT` with a sleep of 1, so the halt is read again each frame | 0 |
@@ -121,13 +123,19 @@ The macros are in [Procs.h](../../include/Procs.h); the uses are counted over th
 | `PROC_CALL_ARGS r, n` | long routine, count, n bytes | call it with Y at the arguments, then skip them | 60 |
 | `PROC_SET_ONCYCLE r` | routine | change the on-cycle routine; sets `$0800` | 52 |
 | `PROC_JUMP p` | position | continue at p | 14 |
-| `PROC_SET_LOOP_COUNTER n` | word | set `aHeaderLoopCounter` | 11 |
-| `PROC_JUMP_WHILE_LOOP_COUNTER p` | position | count down; jump to p while not 0 | 11 |
+| `PROC_SET_LOOP_COUNTER n` | word | set `aHeaderLoopCounter` | 10 |
+| `PROC_JUMP_WHILE_LOOP_COUNTER p` | position | count down; jump to p while not 0 | 10 |
 | `PROC_JUMP_IF_BITS_UNSET p, b` | position, bits | jump to p if none of b is set in the bitfield | 116 |
 | `PROC_JUMP_IF_BITS_SET p, b` | position, bits | jump to p if any of b is set | 4 |
 | `PROC_CREATE_ACTIVE_SPRITE d, x, y` | long definition, X, Y | create an active sprite at (x, y) | 0 |
 
-A halted proc leaves its script only if its on-cycle routine changes `aHeaderCodeOffset` or frees the proc. Procs end themselves far more often from a routine (`rlProcEngineFreeProc`, 69 calls) than with `PROC_END` (21).
+A halted proc leaves its script only if its on-cycle routine changes `aHeaderCodeOffset` or frees the proc.
+
+**Where scripts live.** A command word is the address of its routine in bank `$82` (all at `$8000` or above), which is how the reader tells it from a sleep. The script is read through the data bank, set to the definition's bank, so a script must be in the same bank as its definition.
+
+**Freeing does not stop a step.** `rlProcEngineFreeProc` from an on-cycle routine or a `PROC_CALL` routine clears the definition, but the step goes on: the timer is counted and the script read until the next sleep or halt. Only `PROC_END` frees and stops reading at once.
+
+**Two styles.** 129 of the 177 definitions have a script that is only `PROC_HALT` (35 map magic effects share `aProcMapMagicHaltCode`, 13 dialogue boxes and pop-ups `aProcDialogueBoxCode`, 6 list menus `aProcListMenuCode`); they change stage by writing their own `aHeaderOnCycle` (275 stores in the source), for example `rlProcCastleNamePopUpCycle1`-`3`. The other 46 have real scripts, nearly all animations: the map battle and its effects, map magic, map action animations, cutscenes, the phase banner, `procCastleTakenOver`. An init can choose where its script starts by writing `aHeaderCodeOffset` and a sleep timer of 1 (`rlProcCastleTakenOverInit`). Procs end themselves far more often from a routine (`rlProcEngineFreeProc`, 69 calls) than with `PROC_END` (21).
 
 **Waiting on a bit.** A script that has to wait for something its routines will notice loops on a bit:
 
@@ -143,7 +151,7 @@ Meanwhile the on-cycle routines move on by themselves ([map_action_animations.as
 
 Event scripts start procs (fades, scrolls, the map battle) and wait for them. They use the same 16 slots. `rlEventEngineCreateProc` creates the proc with `rlProcEngineCreateProc` and records its definition under the slot's index in `wEventProcOffsets` and `wEventProcBanks` (`$FFFF` in the bank word when the slot is not an event's), and sets bit `$0004` of `wEventEngineFlags`.
 
-While that bit is set the event engine polls (`rsEventEnginePollBlockingProcs`): a recorded slot that no longer holds the same definition has ended, and its record is cleared. When no recorded proc is alive it sets bit `$0002`, and the script goes on. A proc marked with `$0200` in its bank word (`rlEventEngineMarkProcNonBlocking`) does not hold the script. `rlEventEngineFreeAllProcs` frees every recorded proc, at the start and end of a script. [events.md](events.md) has the commands that start them.
+While that bit is set the event engine polls (`rsEventEnginePollBlockingProcs`): a recorded slot that no longer holds the same definition has ended, and its record is cleared. When no recorded proc is alive it sets bit `$0002`, and the script goes on. A proc marked with `$0200` in its bank word (`rlEventEngineMarkProcNonBlocking`) does not hold the script. The poll compares definitions, so a slot freed and refilled by the same definition between polls counts as still running. `rlEventEngineCreateProc` does not check the creation's carry: with all 16 slots taken it records under the index left in A (normally slot 0's definition offset), outside the table. `rlEventEngineFreeAllProcs` frees every recorded proc, at the start and end of a script. [events.md](events.md) has the commands that start them.
 
 ## Depends on
 

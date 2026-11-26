@@ -24,8 +24,8 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | V | 15 [Castles and towns](docs/guide/15-castles-and-towns.md), 16 [The arena](docs/guide/16-the-arena.md) | draft, not yet reviewed |
 | V | 17 [Love and lineage](docs/guide/17-love-and-lineage.md), 18 [Saving](docs/guide/18-saving.md), 19 [Between chapters](docs/guide/19-between-chapters.md), 20 [The opening](docs/guide/20-the-opening.md), 21 [Endings and scores](docs/guide/21-endings-and-scores.md) | draft, not yet reviewed |
 | VI | 22 [A map bigger than the screen](docs/guide/22-a-map-bigger-than-the-screen.md), 23 [Two ways to show a fight](docs/guide/23-two-ways-to-show-a-fight.md), 24 [The battle scene](docs/guide/24-the-battle-scene.md), 25 [Full-screen windows and the status screen](docs/guide/25-full-screen-windows-and-the-status-screen.md) | rewritten 2026-11-25 from Gemini's drafts (a211ef4) after a review; not yet reviewed |
-| VII | 26 [The frame](docs/guide/26-the-frame.md), 27 [Screens](docs/guide/27-screens.md) | drafts 2026-11-26, not yet reviewed; they link ahead by planned file names (`28-procs.md`, `29-sprites-and-scanlines.md`, `30-getting-graphics-in.md`, `31-the-second-computer.md`). frame.md and game_states.md expanded with what the chapters needed |
-| VII | 28–31 | not started; 28-30 have reference pages (2026-11-25), 31 needs a sound page |
+| VII | 26 [The frame](docs/guide/26-the-frame.md), 27 [Screens](docs/guide/27-screens.md), 28 [Procs](docs/guide/28-procs.md) | drafts 2026-11-26, not yet reviewed; they link ahead by planned file names (`29-sprites-and-scanlines.md`, `30-getting-graphics-in.md`, `31-the-second-computer.md`). frame.md, game_states.md and procs.md expanded with what the chapters needed |
+| VII | 29–31 | not started; 29-30 have reference pages (2026-11-25), 31 needs a sound page |
 
 **Reference pages** (`docs/reference/`): core (now an overview) with frame, game_states, procs, sprites, scanlines, graphics and allocation; ai, arena, battle, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, rankings, save, title, units, worldmap. Missing: **sound** (lowest priority) and **debug**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
 
@@ -161,6 +161,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | Gemini's renames left 24 removed names in the hand-written reference pages, three guide chapters and gfx/ui/README.md; `tools/battle_animation.py`, `backgrounds.py` and `songs.py` read deleted offset CSVs | docs/, tools/ | `e46cc7a` |
 | Ch. 6: the random numbers said to be seeded from the frame counter; the counter is always 0 there, so the table starts the same at every boot, and saves carry it | docs/guide/06 | 2026-11-25 |
 | frame.md: `rlReset` said to reach the same place whichever way its tests go (a failed test stays in bank 0 and the bank check hangs); the random table said to be seeded from the frame counter without saying it is always 0 | docs/reference/frame.md | `3afb7a8` |
+| procs.md: `PROC_YIELD` counted 375 uses (374) and the loop counter commands 11 each (10) | docs/reference/procs.md | with Ch. 28 |
 
 ## Retail bugs and quirks found
 
@@ -168,6 +169,7 @@ Retail-ROM behavior, left as it is in the source and documented. Fix nothing her
 
 | What | Where | Effect | Written up in |
 |---|---|---|---|
+| `rlEventEngineCreateProc` ignores a failed creation: with all 16 proc slots taken it records the proc under the index left in A (normally slot 0's definition offset) | engine/events/event_scripts.asm | a stray write past `wEventProcOffsets`/`wEventProcBanks`; only if every slot is full | Ch. 28, procs.md |
 | Adjacent love points go to the wrong woman | `rsAddAdjacentLovePoints` (factions.asm) | After checking a neighboring woman it doesn't point the selected unit back, so a man found later in the scan gives his +5 to her | units.md; Ch. 1 (mention); Ch. 17 to come |
 | Weapon rank stops early | `rlGetSelectedUnitWeaponRank` (unit_info.asm) | A Minor blood that brings a rank to A returns before a Major blood of the same weapon later in the table is seen: A instead of ★ | Ch. 2, units.md |
 | Unit count check never fails | `rlDeployUnit` (deployment.asm) | `cpx #$058B` compares the count with its own address; the free-row search is the real limit | Ch. 5, source comment |
