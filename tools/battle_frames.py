@@ -60,7 +60,7 @@ FRAME_INDICES = 0x97874F         # aBattleAnimationFrameIndices
 LOOKUP = 0x9788C9                # 206 records: class, weapon category, character,
 LOOKUP_COUNT = 206               # class/gender value, four animation IDs
 ENTRIES = 47
-# rlUnknown95A3C1 replaces the lookup for a Dancer whose action is a dance
+# rlBattleAnimationCheckDance replaces the lookup for a Dancer whose action is a dance
 # (action struct field Unknown = 8, bits 2-3 of $7FFC59): IDs $5E $66 $46 $2E.
 DANCE_FIRST_ID = 0x5E
 REGIONS = [(0x98B41E, 0x98FF85), (0x998FA1, 0x99F6C1), (0x9ABA2A, 0x9AFEAA), (0x9B8000, 0x9BC16F)]
@@ -69,7 +69,7 @@ REGIONS = [(0x98B41E, 0x98FF85), (0x998FA1, 0x99F6C1), (0x9ABA2A, 0x9AFEAA), (0x
 # distinct: two sequences share the one in $9A/C88D.
 KNOWN_BAD_SEQUENCES = {(0x99D20F, 0x1AA), (0x9AC88D, 0x11E), (0x9AC88D, 0x124)}
 # Weapon categories (high nibble of the item's byte in the table at $99/83B9,
-# read by rlUnknown95A1ED): 5 is the Javelin and 6 the Hand Axe and Helswath,
+# read by rlBattleSceneGetWeaponAnimStyle): 5 is the Javelin and 6 the Hand Axe and Helswath,
 # which use them only at wBattleDistance 2 or more (else lance or axe).
 CATEGORIES = {0: 'Sword', 1: 'Lance', 2: 'Axe', 3: 'Bow', 5: 'RangedLance', 6: 'RangedAxe',
               7: 'Magic', 8: 'Staff'}
@@ -248,7 +248,7 @@ def names(d, rom):
             cls, cat = users[k][0]
             out[k] = cls + CATEGORIES.get(cat, f'Category{cat}')
         else:
-            out[k] = f'Unknown{k:02d}'
+            out[k] = f'Unused{k:02d}'
     assert len(set(out.values())) == len(out), 'names are not unique'
     return out, users
 
@@ -328,7 +328,7 @@ def emit(d, problems_bad):
                     k = ks[0]
                     us = []
                     for c, cat in users[k]:
-                        n = f'{c} (dancing, rlUnknown95A3C1)' if cat == 'Dance' else f'{c} ({CATEGORIES.get(cat, cat)})'
+                        n = f'{c} (dancing, rlBattleAnimationCheckDance)' if cat == 'Dance' else f'{c} ({CATEGORIES.get(cat, cat)})'
                         if n not in us:
                             us.append(n)
                     F = d.entries[k][1]
@@ -459,7 +459,10 @@ def self_test():
         subprocess.run(['rsync', '-a', '--exclude', '.git', '--exclude', '*.smc', '--exclude', '*.sfc',
                         './', src + '/'], cwd=ROOT, check=True)
         shutil.copy(os.path.join(ROOT, 'fe4.sfc'), os.path.join(src, 'fe4.sfc'))
-        p = os.path.join(src, 'data/battle_animation/frames_98.asm')
+        # Bank $9A: bank $98 has 1 spare byte since the demo battles were placed after the frame
+        # data, and $9A's .fill to the bank end absorbs the growth.
+        name = 'frames_9A.asm'
+        p = os.path.join(src, 'data/battle_animation', name)
         lines = open(p).read().split('\n')
         # A record in the middle of the region with at least three sprites.
         recs = [i for i, l in enumerate(lines) if l.strip().startswith('ANIM_RECORD ')]
@@ -469,7 +472,9 @@ def self_test():
         r = subprocess.run(['./build.sh'], cwd=src, capture_output=True, text=True)
         built = os.path.join(src, 'FE4Disassembly.sfc')
         if not os.path.exists(built):
-            print(r.stdout[-2000:], r.stderr[-2000:])
+            log = os.path.join(src, 'log.txt')
+            errs = [l for l in open(log).read().split('\n') if ': error:' in l] if os.path.exists(log) else []
+            print('\n'.join(errs[:10]) or r.stdout[-2000:] + r.stderr[-2000:])
             raise SystemExit('self-test: the edited copy did not build')
         lab = {}
         for line in open(os.path.join(src, 'labels.txt')):
@@ -485,7 +490,7 @@ def self_test():
                     if s != t:
                         diffs.append((k, ('sequence', 'record', 'frame')[part], j, s, t))
         moved = sum(1 for (S0, F0), (S1, F1) in zip(orig.entries, new.entries) if S0 != S1 or F0 != F1)
-        print(f'self-test: duplicated sprite at line {i + 3} of frames_98.asm; '
+        print(f'self-test: duplicated sprite at line {i + 3} of {name}; '
               f'{moved} table entries moved; content differences: {len(diffs)}')
         ok = moved > 0
         # Expected: the edited record (in every block sharing it) has one sprite more.
@@ -499,6 +504,17 @@ def self_test():
         return ok
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
+
+
+def kept_tail(old, sec):
+    """What the existing file has after this tool's section: other sections later work put in the
+    same file (the demo battles and battle scene texts in frames_98 and frames_9A), kept as they are."""
+    if old is None:
+        return ''
+    end = f'    .endsection {sec}\n'
+    if end not in old:
+        raise SystemExit(f'{sec}: no ".endsection" line in the existing file; not overwriting it')
+    return old.split(end, 1)[1]
 
 
 def main():
@@ -532,6 +548,7 @@ def main():
                 f'; formats and macros in include/BattleAnimation.h.\n\n' + '\n'.join(lines))
         path = os.path.join(ROOT, rel, f'frames_{bank:02X}.asm')
         old = open(path).read() if os.path.exists(path) else None
+        text += kept_tail(old, f'BattleAnimationFrameData{bank:02X}Section')
         if old != text:
             changed.append(path)
             if args.write:
