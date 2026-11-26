@@ -1463,8 +1463,11 @@
 
       aSoundBattleStructOffsets ; 80/95A1
 
-        ; Offsets into the battle struct at $7E4EA9 that the sound script's
-        ; indirect commands read, by command argument 1-4.
+        ; Offsets from $7E4EA9 that indirect uploads 1-4 read (rsGetIndirectSoundUpload),
+        ; landing on the action structs: 1 aActionStructUnit2.WeaponID ($94), 2
+        ; aActionStructUnit1.WeaponID ($34), 3 aActionStructUnit2.ClassID ($76), 4
+        ; aActionStructUnit1.ClassID ($16). The byte read picks an upload list from
+        ; aSoundHeader.BattleUploads (weapons) or, by terrain, aSoundTerrainUploads (classes).
         .word $0094, $0034, $0076, $0016
 
       aSoundBattleStructOffsets2 ; 80/95A9

@@ -285,7 +285,9 @@
     wMusicID .word ?              ; $0004BA
       ; The song script channel 0 plays (1-160, aSoundScripts; 0 none), set by
       ; the code that changes the music (the debug menu's sound test too).
-      ; Bit 15: upload with VBlank off.
+      ; Bit 15: upload with VBlank off. A request: rsStepSoundScript sets it back
+      ; to 0 when the script ends (the song plays on in the APU) and keeps the
+      ; number in aSoundScriptPrevious, so code waits for 0 to know a song started.
     wSoundScript1ID .word ?       ; $0004BC
       ; The same for channel 1; nothing in the build sets it.
     aSoundScriptPositions .fill 4 ; $0004BE
