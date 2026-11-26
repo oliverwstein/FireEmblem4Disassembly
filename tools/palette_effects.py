@@ -100,7 +100,7 @@ def main():
                 continue
             (macro, args, ptr), size = decode(rom, a)
             rows, k = [], i + 1
-            while k < len(lines) and lines[k] is not None and not lines[k].strip():
+            while k < len(lines) and lines[k] is not None and (not lines[k].strip() or lines[k].lstrip().startswith(';')):
                 k += 1
             if k < len(lines) and lines[k] is not None and lines[k].lstrip().startswith('PALETTE_EFFECT'):
                 already += 1
