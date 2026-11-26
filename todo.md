@@ -17,6 +17,8 @@ Rule: Every change to source, data, or assets must keep `./build.sh` byte-identi
 | Tracked `Unknown*` files (excl. `catalog/`) | 11 | 0 | `git ls-files '*Unknown*' \| grep -v '^gfx/compressed/catalog/' \| wc -l` |
 | Stale `gfx/compressed/catalog/` previews | 233 | 0 | `git ls-files 'gfx/compressed/catalog/*.png' \| wc -l` |
 
+**Review (2026-11-25, Claude).** The work through `e902eb3` was reviewed and fixed in `e46cc7a` and `c12ee3e`: three tools read the deleted offset CSVs, two RAM layouts ignored access widths, `aBattleSceneHPBarDigitOffsets` was misnamed, and the active sprite fields were named after one user. The Phase U1-U7 names were sampled, not verified, and carry almost no comments; [STATUS.md](STATUS.md) ("Next session") plans an audit by system. When naming RAM, check each access's width (`sep`/`rep`) before choosing `b`/`w` and field boundaries, and run every tool that reads a file before deleting or moving it.
+
 ---
 
 ## 1. Unnamed RAM & Data Tables
@@ -100,7 +102,8 @@ Workflow: identify via loader routines and [gfx/compressed/CATALOG.md](gfx/compr
 
 - [ ] Disassemble the `5` SPC700 driver IPL upload blocks in `audio/driver/` (`0200.bin`, `0660.bin`, `1BC0.bin`, `C502.bin`, `FF80.bin`) into build-time SPC700 source, documenting sequence commands (`$C0–$FF`) and instrument fields.
 - [ ] Identify and categorize the `118` unidentified `other` sound chunks in `audio/chunks/` (121 files total in directory).
-- [ ] Fix `tools/songs.py` (blocked on stale `aUnknown8A9D79`), regenerate [audio/SONGS.md](audio/SONGS.md), and finish naming `SONG_*` constants in [include/Sound.h](include/Sound.h). *(Note: `tools/songs.py` now runs cleanly and regenerated [audio/SONGS.md](audio/SONGS.md); only `SONG_*` naming remains.)*
+- [x] Fix `tools/songs.py` and regenerate [audio/SONGS.md](audio/SONGS.md).
+- [ ] Finish naming `SONG_*` constants in [include/Sound.h](include/Sound.h).
 
 ---
 

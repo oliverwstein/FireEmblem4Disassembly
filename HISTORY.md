@@ -13,6 +13,8 @@ Byte-identical output remains the test for every change to the original layout. 
 
 ## Where the code work stopped (2026-11-24)
 
+**Resumed 2026-11-25 by Gemini's asset and naming pass** (`f68f5c6`..`e902eb3`, tracked in [todo.md](todo.md)), reviewed and fixed the same day (`e46cc7a`, `c12ee3e`, `fd71f64`). It finished the "What's left" list below: every `*Unknown*` identifier renamed (0 left), all 510 compressed streams unpacked, the catalog removed. Its counts replace the ones below where they differ: 1,224 RAM addresses still raw (`python3 tools/name_ram.py --report 50`). The data names it gave carry almost no comments and were sampled, not checked: one in seven was wrong, as were two of its RAM layouts. STATUS.md has the fixes and the audit plan.
+
 Moved here from STATUS.md when the project turned to writing the engine guide and reference. Phase 3 naming was complete for routines; the data, table and text naming pass below was partway done, and its "what's left" list is where code work would resume.
 
 ### State of the source
@@ -53,12 +55,12 @@ What's left, easiest first:
 ### Code loose ends
 
 - Pad-test banks `$88`, `$9B`, and `$9F` (`./build.sh pad SECTION N`).
-- Fix `tools/songs.py` (stops at stale `aUnknown8A9D79`) before regenerating `audio/SONGS.md`, and investigate why `tools/stream_catalog.py` deleted catalog previews.
+- ~~Fix `tools/songs.py`~~ (runs since 2026-11-25; `audio/SONGS.md` regenerated). The catalog previews `tools/stream_catalog.py` deleted are moot: Gemini removed the catalog (`8758320`).
 - Check whether `tools/dialogue.py` decodes the Jugdral history texts (`engine/save/jugdral_history.asm`).
 
 ### Who wrote what (to 2026-11-24)
 
-Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), Wave 16 (`495d670`..`80c1e1d`), Wave 17 (`d7054ee`..`4fa5320`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and Wave 18 (`ea75480`..`0e1f146`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and the guide outline, style guide, Part I opener, items/units cleanup and their reference pages (`c377271`..`61d8290`, no trailer). Claude reviewed that last run on 2026-11-24: the code cleanup's comment fixes and the reference pages' sampled claims (jealousy bug, faction `$0080` guard, healing order and costs, inheritance formulas, staff effects, pricing) all matched the code; corrections are in `496621f` and `9da974d`. Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
+Claude's commits carry a `Co-Authored-By: Claude ...` line. Gemini also wrote the 2026-11-25 asset and naming pass (`f68f5c6`..`e902eb3`). Gemini wrote `f56d5ee`..`ef5fff9` (no `Co-Authored-By` trailer), Wave 10 (`3590264`..`ecdded8`), Waves 11–13 (`cfef06b`..`9ebe9bb`), Waves 14–15 (`1fb5962`..`ac2e45b`), Wave 16 (`495d670`..`80c1e1d`), Wave 17 (`d7054ee`..`4fa5320`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and Wave 18 (`ea75480`..`0e1f146`, with evidence bodies and `Co-Authored-By: Gemini <noreply@google.com>`), and the guide outline, style guide, Part I opener, items/units cleanup and their reference pages (`c377271`..`61d8290`, no trailer). Claude reviewed that last run on 2026-11-24: the code cleanup's comment fixes and the reference pages' sampled claims (jealousy bug, faction `$0080` guard, healing order and costs, inheritance formulas, staff effects, pricing) all matched the code; corrections are in `496621f` and `9da974d`. Its earlier Wave 1 game-state names follow a template (`…Stub/Show/RunStep/Render`) and some don't match their code (`rlCastleScreenIdle` is a compare whose result is never used).
 
 ## Overview (reviewed 2026-11-21)
 
