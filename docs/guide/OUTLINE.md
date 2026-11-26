@@ -94,7 +94,7 @@ How a program with no operating system keeps sixty frames a second, schedules co
 | 30 | **[Getting graphics in](30-getting-graphics-in.md)** | 4 MB of cartridge and 64 KB of video RAM. Graphics are compressed, and unpacking them is slow. | Compression; deferred work queue run from the main loop (`rlDecompressByList`); palettes and fades as data | `core/graphics/` (`decompressor`, `fade`, `palette_fade`, `palettes`, `tilemaps`) | Drafted |
 | 31 | **[The second computer](31-the-second-computer.md)** | A sound chip with its own CPU, reached through four one-byte ports. | Message passing; a sound command queue | `sound/`, `audio/` | Drafted (sound.md) |
 
-- **Interlude: One frame on the map** — A closing vertical slice tying the hardware stack back to a single 16.7 ms frame on the map, from NMI entry through VBlank uploads, game-state step, procs, map sprites, and leftover main-loop time.
+- **[Interlude: One frame on the map](interlude-one-frame-on-the-map.md)** — A closing vertical slice tying the hardware stack back to a single 16.7 ms frame on the map, from NMI entry through VBlank uploads, game-state step, procs, map sprites, and leftover main-loop time.
 
 ## Appendices
 
