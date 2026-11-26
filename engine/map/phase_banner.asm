@@ -20,6 +20,8 @@
 
       aPhaseBannerData85ABFEUnused ; 85/ABFE
 
+        ; Unreferenced.
+
         .byte 0, 0, 0, 1
 
     .endsection Unsorted85ABFESection

@@ -18,10 +18,13 @@ g4bppcBattleSceneDecompE03B09 g4bppcBattleSceneDecompE03B09 ; 1280 bytes decompr
 g4bppcBattleSceneHUDTilemap g4bppcBattleSceneHUDTilemap ; 960 bytes decompressed
 g4bppcBattleSceneDecompE03D3B g4bppcBattleSceneDecompE03D3B ; 640 bytes decompressed
 acBattleSceneDecompE03D7F acBattleSceneDecompE03D7F ; 512 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedE03F2B g4bppcBattleSceneUnusedE03F2B ; 640 bytes decompressed, found
 g4bppcBattleSceneDecompE04000 g4bppcBattleSceneDecompE04000 ; 640 bytes decompressed
 g4bppcBattleSceneDecompE040D3 g4bppcBattleSceneDecompE040D3 ; 640 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedE0414C g4bppcBattleSceneUnusedE0414C ; 640 bytes decompressed, found
+# Unreferenced.
 g4bppcBattleSceneUnusedE041B7 g4bppcBattleSceneUnusedE041B7 ; 640 bytes decompressed, found
 g4bppcBattleAnimationSheetJuniorLord g4bppcBattleAnimationSheetJuniorLord ; 16640 bytes decompressed
 g4bppcBattleAnimationExtraJuniorLord g4bppcBattleAnimationExtraJuniorLord ; 4096 bytes decompressed
@@ -30,14 +33,17 @@ g4bppcBattleAnimationExtraWarMage g4bppcBattleAnimationExtraWarMage ; 4096 bytes
 g4bppcBattleAnimationSheet01 g4bppcBattleAnimationSheet01 ; 7488 bytes decompressed
 g4bppcBattleAnimationExtraWarMage2 g4bppcBattleAnimationExtraWarMage2 ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetWarMageF g4bppcBattleAnimationSheetWarMageF ; 16640 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedE121ED g4bppcBattleSceneUnusedE121ED ; 4096 bytes decompressed
 g4bppcBattleAnimationSheet02 g4bppcBattleAnimationSheet02 ; 7488 bytes decompressed
 g4bppcBattleAnimationExtra03 g4bppcBattleAnimationExtra03 ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetPrince g4bppcBattleAnimationSheetPrince ; 16640 bytes decompressed
 g4bppcBattleAnimationExtraPrince g4bppcBattleAnimationExtraPrince ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetPrincess g4bppcBattleAnimationSheetPrincess ; 16640 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedE168B9 g4bppcBattleSceneUnusedE168B9 ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetPrincess2 g4bppcBattleAnimationSheetPrincess2 ; 7488 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedE171EB g4bppcBattleSceneUnusedE171EB ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetQueen g4bppcBattleAnimationSheetQueen ; 7488 bytes decompressed
 g4bppcBattleAnimationExtraQueen g4bppcBattleAnimationExtraQueen ; 4096 bytes decompressed
@@ -48,6 +54,7 @@ g4bppcBattleAnimationExtra44 g4bppcBattleAnimationExtra44 ; 4096 bytes decompres
 g4bppcBattleAnimationSheetPriest g4bppcBattleAnimationSheetPriest ; 7488 bytes decompressed
 g4bppcBattleAnimationExtraPriest g4bppcBattleAnimationExtraPriest ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetPriest2 g4bppcBattleAnimationSheetPriest2 ; 7488 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedE235E5 g4bppcBattleSceneUnusedE235E5 ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetMage g4bppcBattleAnimationSheetMage ; 7488 bytes decompressed
 g4bppcBattleAnimationExtraMage g4bppcBattleAnimationExtraMage ; 4096 bytes decompressed
@@ -68,6 +75,7 @@ g4bppcBattleAnimationExtraBishop g4bppcBattleAnimationExtraBishop ; 4096 bytes d
 g4bppcBattleAnimationSheet52 g4bppcBattleAnimationSheet52 ; 16640 bytes decompressed
 g4bppcBattleAnimationExtraBard g4bppcBattleAnimationExtraBard ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetBard g4bppcBattleAnimationSheetBard ; 7488 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedE3799A g4bppcBattleSceneUnusedE3799A ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetPriestess g4bppcBattleAnimationSheetPriestess ; 7488 bytes decompressed
 g4bppcBattleAnimationExtraPriestess g4bppcBattleAnimationExtraPriestess ; 4096 bytes decompressed
@@ -135,13 +143,18 @@ g4bppcBattleAnimationExtraBowArmor g4bppcBattleAnimationExtraBowArmor ; 4096 byt
 g4bppcBattleAnimationSheetPaladin g4bppcBattleAnimationSheetPaladin ; 8736 bytes decompressed
 g4bppcBattleAnimationExtraPaladin g4bppcBattleAnimationExtraPaladin ; 4096 bytes decompressed
 g4bppcBattleAnimationExtraPaladinF g4bppcBattleAnimationExtraPaladinF ; 4096 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEA48E1 g4bppcBattleSceneUnusedEA48E1 ; 3072 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEA4CCA g4bppcBattleSceneUnusedEA4CCA ; 6144 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEA5110 g4bppcBattleSceneUnusedEA5110 ; 10752 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEA6849 g4bppcBattleSceneUnusedEA6849 ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetSniper g4bppcBattleAnimationSheetSniper ; 4224 bytes decompressed
 g4bppcBattleAnimationExtraSniper g4bppcBattleAnimationExtraSniper ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetSniper2 g4bppcBattleAnimationSheetSniper2 ; 4224 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEA793F g4bppcBattleSceneUnusedEA793F ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetThief g4bppcBattleAnimationSheetThief ; 8896 bytes decompressed
 g4bppcBattleAnimationExtraThief g4bppcBattleAnimationExtraThief ; 4096 bytes decompressed
@@ -149,8 +162,11 @@ g4bppcBattleAnimationSheetThief2 g4bppcBattleAnimationSheetThief2 ; 8896 bytes d
 g4bppcBattleAnimationSheetRogue g4bppcBattleAnimationSheetRogue ; 8896 bytes decompressed
 g4bppcBattleAnimationExtraRogue g4bppcBattleAnimationExtraRogue ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetRogue2 g4bppcBattleAnimationSheetRogue2 ; 8896 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEB3AB5 g4bppcBattleSceneUnusedEB3AB5 ; 7488 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEB4A9D g4bppcBattleSceneUnusedEB4A9D ; 4096 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEB4ABB g4bppcBattleSceneUnusedEB4ABB ; 5408 bytes decompressed
 g4bppcBattleAnimationExtra04 g4bppcBattleAnimationExtra04 ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetCavalier g4bppcBattleAnimationSheetCavalier ; 9312 bytes decompressed
@@ -187,6 +203,7 @@ g4bppcBattleAnimationSheetGreatBallistician g4bppcBattleAnimationSheetGreatBalli
 g4bppcBattleAnimationExtraGreatBallistician g4bppcBattleAnimationExtraGreatBallistician ; 5120 bytes decompressed
 g4bppcBattleAnimationSheetDarkPrince g4bppcBattleAnimationSheetDarkPrince ; 6976 bytes decompressed
 g4bppcBattleAnimationExtraDarkPrince g4bppcBattleAnimationExtraDarkPrince ; 4096 bytes decompressed
+# Unreferenced.
 g4bppcBattleSceneUnusedEE2560 g4bppcBattleSceneUnusedEE2560 ; 8192 bytes decompressed
 g4bppcBattleWeaponIronSword g4bppcBattleWeaponIronSword ; 1024 bytes decompressed
 g4bppcBattleWeaponSteelSword g4bppcBattleWeaponSteelSword ; 1024 bytes decompressed
@@ -435,8 +452,10 @@ gcTitleIntroCaption11Tilemap gcTitleIntroCaption11Tilemap ; 128 bytes decompress
 acBattleBackgroundRiverTilemap acBattleBackgroundRiverTilemap ; 4096 bytes decompressed
 # Also used as: acBattleBackgroundCastleSnowTilemap.
 acBattleBackgroundCastleTilemap acBattleBackgroundCastleTilemap ; 4096 bytes decompressed
+# Battle background $16's tilemap; no battle picks $16.
 acBattleBackgroundUnused16Tilemap acBattleBackgroundUnused16Tilemap ; 4096 bytes decompressed
-g4bppcBattleBackgroundUnused16 g4bppcBattleBackgroundUnused16 ; 16384 bytes decompressed
+# Battle background $16's tiles; no battle picks $16, but the title intro's load list (aTitleLoadList, entry 9) decompresses them to VRAM $0000.
+g4bppcBattleBackgroundTitleIntro g4bppcBattleBackgroundTitleIntro ; 16384 bytes decompressed
 g4bppcTitleSceneTilesF676FE g4bppcTitleSceneTilesF676FE ; 16384 bytes decompressed
 # Also used as: acBattleBackgroundRoadSnowTilemap.
 acBattleBackgroundRoadTilemap acBattleBackgroundRoadTilemap ; 4096 bytes decompressed

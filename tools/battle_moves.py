@@ -197,7 +197,7 @@ def names(rom):
             c, cat = users[k][0]
             out[k] = c + ('Dance' if cat == 'Dance' else CATEGORIES.get(cat, f'Category{cat}'))
         else:
-            out[k] = f'Unknown{k:02d}'
+            out[k] = f'Unused{k:02d}'
     assert len(set(out.values())) == len(out), out
     return out, users
 
@@ -220,7 +220,9 @@ def emit(d):
                 us.append(n)
         lines += [f'      {lab[B]} ; {B >> 16:02X}/{B & 0xFFFF:04X}', '']
         text = (f'Move program of entry {k} of aBattleAnimationPrograms'
-                + (f', used by: {", ".join(us)}.' if us else '; nothing selects it.'))
+                + (f', used by: {", ".join(us)}.' if us else
+                   ': nothing selects it (no aBattleAnimationLookup record, nor the dance, has a'
+                   ' first ID that aBattleAnimationProgramIndices maps to it).'))
         if k == UNFOLLOWED:
             text += (' Its actions are all single sequences, so its list and script pointers are never'
                      ' followed; both point at the next entry\'s action table.')
@@ -231,7 +233,8 @@ def emit(d):
         lines.append('')
         if k == UNFOLLOWED:
             continue
-        lines += [f'      {lab[A]} ; {A >> 16:02X}/{A & 0xFFFF:04X}', '']
+        unused = [f'        ; Entry {k} of aBattleAnimationPrograms, which nothing selects.', ''] if not users[k] else []
+        lines += [f'      {lab[A]} ; {A >> 16:02X}/{A & 0xFFFF:04X}', ''] + unused
         first = {}
         for j, a in enumerate(d.lists[A]):
             first.setdefault(a, j)
@@ -250,7 +253,7 @@ def emit(d):
                 else:
                     lines.append(f'        ANIM_MOVE_JUMP {seq}, AnimMove{ROUTINE_NAMES[val]}, {arg & 0xFF}, {arg >> 8}')
             lines += ['        ANIM_MOVE_LIST_END', '']
-        lines += [f'      {lab[C]} ; {C >> 16:02X}/{C & 0xFFFF:04X}', '']
+        lines += [f'      {lab[C]} ; {C >> 16:02X}/{C & 0xFFFF:04X}', ''] + unused
         firsts = {}
         for j, a in enumerate(d.scripts[C]):
             firsts.setdefault(a, j)

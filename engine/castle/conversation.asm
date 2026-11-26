@@ -829,6 +829,7 @@
       .xl
 
       aConversationData8ADB9FUnused ; 8A/DB9F
+        ; Unreferenced.
         .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
 
       aDialogueAPressArrowFrame0Sprite ; 8A/DBAF
@@ -1217,9 +1218,13 @@
 
       aCastleConvCGADDHDMACodeUnused ; 8A/DDA4
 
+        ; Read only by the unreferenced aCastleConvCGADDHDMAInfoUnused.
+
         HDMA_HALT
 
       aCastleConvCGDATAHDMAInfoUnused .dstruct structHDMADirectEntryInfo, rlHDMACastleConvCGDATANoOp, rlHDMACastleConvCGDATANoOp, aCastleConvCGDATAHDMACodeUnused, aCastleConvCGDATAHDMATableUnused, PPU_REG_BASE + $22, $02 ; 8A/DDA6
+
+        ; Unreferenced (see aCastleConvCGADDHDMAInfoUnused).
 
       rlHDMACastleConvCGDATANoOp ; 8A/DDB1
 
@@ -1234,9 +1239,13 @@
 
       aCastleConvCGDATAHDMACodeUnused ; 8A/DDB2
 
+        ; Read only by the unreferenced aCastleConvCGDATAHDMAInfoUnused.
+
         HDMA_HALT
 
       aCastleConvCGADDHDMATableUnused ; 8A/DDB4
+
+        ; Read only by the unreferenced aCastleConvCGADDHDMAInfoUnused.
 
         .byte $C0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -1255,6 +1264,8 @@
         .byte $00, $00, $00, $00, $00
 
       aCastleConvCGDATAHDMATableUnused ; 8A/DE99
+
+        ; Read only by the unreferenced aCastleConvCGDATAHDMAInfoUnused.
 
         .byte $C0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -1676,7 +1687,7 @@
         clc
         jsl rlFadePaletteToBlack
 
-          .word $E23D
+          .word <>aCastleConvFadeLeftPortraitRange
 
         bcs +
 
@@ -1707,8 +1718,9 @@
         ; 8A/E23D
 
 
-      aCastleConvFadeLeftPortraitRangeUnused ; 8A/E23D
+      aCastleConvFadeLeftPortraitRange ; 8A/E23D
 
+        ; The left portrait's colours for rlFadePaletteToBlack (rlProcConversationFadeOutLeftPortraitCycle).
         .word $01A2, $000F, $FFFF
 
     .endsection Unsorted8AE1F3Section

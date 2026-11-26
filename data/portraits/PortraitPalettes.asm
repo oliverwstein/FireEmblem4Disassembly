@@ -117,34 +117,42 @@ aPortraitPaletteGhostDeirdre ; 8C/AB60
   .word bgr555(21, 22, 30), bgr555( 8, 10, 15), bgr555(12, 14, 18), bgr555(16, 18, 22), bgr555(12, 14,  8), bgr555( 0,  3,  5), bgr555( 3,  3,  3), bgr555( 0,  2,  4)
 
 aPortraitPaletteUnused8CAB80 ; 8C/AB80
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
   .word bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
 
 aPortraitPaletteUnused8CABA0 ; 8C/ABA0
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
   .word bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
 
 aPortraitPaletteUnused8CABC0 ; 8C/ABC0
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
   .word bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
 
 aPortraitPaletteUnused8CABE0 ; 8C/ABE0
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
   .word bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
 
 aPortraitPaletteUnused8CAC00 ; 8C/AC00
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555(30, 28, 23), bgr555(29, 22, 16), bgr555(26, 17, 12), bgr555(19, 11,  7), bgr555(31, 24, 17), bgr555( 8,  0,  9), bgr555(17,  1, 18)
   .word bgr555(24,  8, 25), bgr555( 7,  6,  4), bgr555(12,  0, 13), bgr555(21,  5, 22), bgr555(12,  7,  0), bgr555(27, 11, 28), bgr555(13, 14, 15), bgr555( 5,  3,  0)
 
 aPortraitPaletteUnused8CAC20 ; 8C/AC20
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555(31, 29, 24), bgr555(28, 21, 15), bgr555(25, 16, 10), bgr555(12,  7,  0), bgr555(31, 24, 17), bgr555( 8,  7,  5), bgr555(18, 18, 18)
   .word bgr555(31,  0,  0), bgr555(31, 24,  3), bgr555(24, 18,  1), bgr555(24, 23, 21), bgr555(17, 10,  5), bgr555(17, 12,  0), bgr555(13, 14, 15), bgr555( 5,  3,  0)
 
 aPortraitPaletteUnused8CAC40 ; 8C/AC40
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555(31, 31, 31), bgr555(27, 19, 14), bgr555(25, 16, 10), bgr555(17, 10,  5), bgr555(31, 24, 17), bgr555( 7,  6,  2), bgr555(13,  8,  5)
   .word bgr555( 3, 14,  0), bgr555( 6, 18,  0), bgr555( 0, 10,  0), bgr555(25,  3,  2), bgr555(22, 13,  9), bgr555( 4,  8, 24), bgr555(13, 14, 15), bgr555( 5,  2,  0)
 
 aPortraitPaletteUnused8CAC60 ; 8C/AC60
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555(27, 24, 25), bgr555(28, 20, 16), bgr555(26, 17, 12), bgr555(15,  8,  3), bgr555(31, 24, 17), bgr555( 6,  6, 10), bgr555( 9,  9, 12)
   .word bgr555(31,  0,  6), bgr555(12, 12, 17), bgr555(15, 15, 22), bgr555(20, 20, 24), bgr555(21, 12,  8), bgr555(18, 18, 22), bgr555(13, 14, 15), bgr555( 5,  0,  0)
 
@@ -153,14 +161,17 @@ aClassCardPaletteKnightLord ; 8C/AC80
   .word bgr555( 7, 12,  2), bgr555( 4, 13,  3), bgr555( 6,  1,  6), bgr555(12,  3,  9), bgr555(15,  5, 13), bgr555(31, 25, 26), bgr555( 0,  3, 13), bgr555( 1,  1,  1)
 
 aPortraitPaletteUnused3 ; 8C/ACA0
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(31, 31, 31), bgr555(28, 24, 19), bgr555(23, 17, 12), bgr555(18, 12,  7), bgr555(31, 24, 17), bgr555( 9,  7,  5), bgr555( 4,  2,  4)
   .word bgr555( 7, 12,  2), bgr555( 4, 13,  3), bgr555( 6,  1,  6), bgr555(12,  3,  9), bgr555(15,  5, 13), bgr555(31, 25, 26), bgr555( 0,  3, 13), bgr555( 1,  1,  1)
 
 aPortraitPaletteUnused8CACC0 ; 8C/ACC0
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0)
   .word bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0)
 
 aPortraitPaletteUnused8CACE0 ; 8C/ACE0
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0)
   .word bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 4,  1,  0)
 
@@ -477,6 +488,7 @@ aPortraitPaletteGraySandima ; 8C/B6A0
   .word bgr555( 4,  4,  6), bgr555( 5,  5,  7), bgr555( 3,  8, 12), bgr555( 5, 11, 15), bgr555(29, 24, 16), bgr555( 3,  3,  4), bgr555( 3,  3,  3), bgr555( 1,  1,  3)
 
 aPortraitPaletteUnusedBrian ; 8C/B6C0
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(31, 27, 17), bgr555(29, 24, 16), bgr555(26, 20, 12), bgr555(18, 12,  5), bgr555( 6,  4,  0), bgr555( 4,  3,  1), bgr555(13,  0,  6)
   .word bgr555( 8,  0,  3), bgr555( 5,  0,  2), bgr555( 9,  6,  0), bgr555(14, 11,  4), bgr555(21, 16,  5), bgr555(24, 20,  8), bgr555( 3,  3,  3), bgr555( 3,  2,  0)
 
@@ -489,6 +501,7 @@ aPortraitPaletteBramsel ; 8C/B700
   .word bgr555(31, 27, 17), bgr555(16,  0,  9), bgr555(13,  0,  6), bgr555(10,  0,  5), bgr555( 8,  0,  3), bgr555( 5,  0,  2), bgr555( 3,  3,  3), bgr555( 2,  1,  1)
 
 aPortraitPaletteUnusedSandima ; 8C/B720
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(27, 27, 27), bgr555(26, 20, 12), bgr555(18, 12,  5), bgr555(10,  6,  0), bgr555( 6,  4,  0), bgr555(20, 16,  2), bgr555(25, 23,  3)
   .word bgr555( 4,  2,  7), bgr555( 6,  4,  9), bgr555( 7,  6, 11), bgr555( 8,  7, 13), bgr555(29, 24, 16), bgr555( 3,  2,  5), bgr555( 3,  3,  3), bgr555( 1,  0,  3)
 
@@ -505,6 +518,7 @@ aPortraitPaletteLiza ; 8C/B780
   .word bgr555( 5,  0,  2), bgr555( 8,  0,  3), bgr555(15,  0,  7), bgr555(11,  0,  6), bgr555( 8,  5,  2), bgr555(31, 12,  5), bgr555( 3,  3,  3), bgr555( 6,  3,  2)
 
 aPortraitPaletteUnusedBloom ; 8C/B7A0
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(31, 31, 27), bgr555(29, 24, 16), bgr555(26, 20, 12), bgr555(18, 12,  5), bgr555(31, 27, 17), bgr555( 7,  5,  5), bgr555( 9,  7,  7)
   .word bgr555(13, 13, 13), bgr555(22, 22, 22), bgr555( 5,  3,  3), bgr555(18, 18, 18), bgr555(12,  7,  4), bgr555(12,  0,  0), bgr555( 3,  3,  3), bgr555( 1,  1,  2)
 
@@ -525,10 +539,12 @@ aPortraitPaletteAnnandDialogue ; 8C/B820
   .word bgr555(19, 23, 23), bgr555( 4, 20,  4), bgr555( 3, 16,  3), bgr555( 1, 12,  1), bgr555(12,  7,  4), bgr555( 0,  9,  0), bgr555( 3,  3,  3), bgr555( 1,  4,  1)
 
 aPortraitPaletteUnused1 ; 8C/B840
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(27, 29, 29), bgr555(29, 24, 16), bgr555(26, 20, 12), bgr555(18, 12,  5), bgr555(31, 27, 17), bgr555( 2,  6,  2), bgr555( 9, 14, 14)
   .word bgr555(19, 23, 23), bgr555( 4, 20,  4), bgr555( 3, 16,  3), bgr555( 1, 12,  1), bgr555(12,  7,  4), bgr555( 0,  9,  0), bgr555( 3,  3,  3), bgr555( 1,  4,  1)
 
 aPortraitPaletteUnused2 ; 8C/B860
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(27, 29, 29), bgr555(29, 24, 16), bgr555(26, 20, 12), bgr555(18, 12,  5), bgr555(31, 27, 17), bgr555( 2,  6,  2), bgr555( 9, 14, 14)
   .word bgr555(19, 23, 23), bgr555( 4, 20,  4), bgr555( 3, 16,  3), bgr555( 1, 12,  1), bgr555(12,  7,  4), bgr555( 0,  9,  0), bgr555( 3,  3,  3), bgr555( 1,  4,  1)
 
@@ -621,6 +637,7 @@ aPortraitPaletteJulius ; 8C/BB20
   .word bgr555(11,  1,  0), bgr555( 4,  1,  0), bgr555(28,  5,  0), bgr555( 9,  9, 12), bgr555(31, 27, 17), bgr555(31, 29, 29), bgr555( 3,  3,  3), bgr555( 2,  2,  1)
 
 aPortraitPaletteUnusedLamia8B ; 8C/BB40
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(30, 28, 23), bgr555(29, 24, 16), bgr555(26, 20, 12), bgr555(18, 12,  5), bgr555(31, 27, 17), bgr555( 3,  2,  2), bgr555( 5,  4,  4)
   .word bgr555( 2,  1,  1), bgr555(13, 11, 13), bgr555(11,  7,  5), bgr555(19,  0,  2), bgr555( 6,  5,  5), bgr555( 7,  6,  6), bgr555( 3,  3,  3), bgr555( 5,  4,  0)
 
@@ -689,6 +706,7 @@ aPortraitPaletteSlayder ; 8C/BD40
   .word bgr555(23, 23, 15), bgr555(19, 19, 11), bgr555(15, 15,  7), bgr555( 7,  7,  0), bgr555( 4,  4,  0), bgr555( 2,  2,  0), bgr555( 3,  3,  3), bgr555(11, 11,  3)
 
 aPortraitPaletteUnused4 ; 8C/BD60
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(31, 31, 27), bgr555(29, 24, 16), bgr555(26, 20, 12), bgr555(18, 12,  5), bgr555(31, 27, 17), bgr555( 8,  7,  5), bgr555( 7,  2,  0)
   .word bgr555(13, 13, 13), bgr555(22, 22, 22), bgr555( 4,  4,  2), bgr555(18, 18, 18), bgr555(13,  8,  5), bgr555(25, 25, 25), bgr555( 3,  3,  3), bgr555( 1,  2,  3)
 
@@ -725,6 +743,7 @@ aPortraitPaletteEmpty ; 8C/BE60
   .word bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0)
 
 aPortraitPaletteUnusedLamiaA5 ; 8C/BE80
+  ; An entry of aPortraitPalettePointers whose portrait data ID no character, class or dialogue uses.
   .word bgr555( 0,  0, 14), bgr555(30, 28, 23), bgr555(29, 24, 16), bgr555(26, 20, 12), bgr555(18, 12,  5), bgr555(31, 27, 17), bgr555( 3,  2,  2), bgr555( 5,  4,  4)
   .word bgr555( 2,  1,  1), bgr555(13, 11, 13), bgr555(11,  7,  5), bgr555(19,  0,  2), bgr555( 6,  5,  5), bgr555( 7,  6,  6), bgr555( 3,  3,  3), bgr555( 5,  4,  0)
 
@@ -929,5 +948,6 @@ aClassCardPaletteThief ; 8C/C4C0
   .word bgr555(12, 13, 17), bgr555(20, 21, 25), bgr555(27, 27, 27), bgr555(23, 17, 12), bgr555( 8,  8,  3), bgr555( 8,  6,  4), bgr555(25, 19,  7), bgr555( 3,  3,  3)
 
 aClassCardPaletteUnused8CC4E0 ; 8C/C4E0
+  ; Unreferenced: not in aPortraitPalettePointers.
   .word bgr555( 0,  0, 14), bgr555(24, 21, 16), bgr555(20, 16, 10), bgr555(18, 13,  6), bgr555(14,  9,  0), bgr555(24, 13, 13), bgr555(20,  9,  8), bgr555(15,  4,  4)
   .word bgr555(10,  0,  0), bgr555(20, 20, 20), bgr555(27, 27, 27), bgr555(21, 15, 10), bgr555( 5,  7,  8), bgr555( 6,  4,  3), bgr555(25, 19,  7), bgr555( 4,  4,  3)

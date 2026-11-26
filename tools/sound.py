@@ -353,7 +353,14 @@ def emit(s, gaps, tail):
             w(f'      {label} .soundBinary "{path}" ; {a >> 16:02X}/{a & 0xFFFF:04X}')
         elif kind == 'gap':
             g0, g1 = x
-            w(f'      aSoundPad{g0:06X} ; {g0 >> 16:02X}/{g0 & 0xFFFF:04X}, nothing points here')
+            # The chunk upload (driver.asm, from _9220) sends (size + 1) / 2 words, so the
+            # byte after an uncompressed chunk of odd size goes to the APU as its last high byte.
+            odd = [chunk_name[c[0]][0] for c in s.chunks if c[1] == g0 and c[2] & 1 and not c[4] & 1]
+            if odd:
+                w(f'      aSoundPad{g0:06X} ; {g0 >> 16:02X}/{g0 & 0xFFFF:04X}, no chunk starts here')
+                w(f'        ; Sent to the APU as the high byte of {odd[0]}\'s last word: uploads go by words.')
+            else:
+                w(f'      aSoundPad{g0:06X} ; {g0 >> 16:02X}/{g0 & 0xFFFF:04X}, nothing points here')
             w('        .byte ' + ', '.join(f'${c:02X}' for c in s.bytes(g0, g1 - g0)))
         else:
             w('')

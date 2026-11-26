@@ -60,7 +60,7 @@
 
 
   ItemSkillSteal    = bits($0001)
-  ItemSkillUnused1 = bits($0002)
+  ItemSkillUnused1 = bits($0002) ; no item has it
   ; $0004 not assigned
   ItemSkillMiracle  = bits($0008)
   ItemSkillCritical = bits($0010)
@@ -75,10 +75,10 @@
 
   ItemStateInventory  = 1
   ItemStateSupply     = 2
-  ItemStateUnused3   = 3
+  ItemStateUnused3   = 3 ; the class change lists items in this state (rsCastleUnitCommandClassChange), but nothing found sets it
   ItemStateShop       = 4
   ItemStatePawnbroker = 5
-  ItemStateUnused6   = 6
+  ItemStateUnused6   = 6 ; nothing found sets or lists it
   ItemStateUnobtained = 7
 
 

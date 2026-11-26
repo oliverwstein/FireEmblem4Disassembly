@@ -651,6 +651,7 @@
         .word bgr555( 7,  5,  2), bgr555( 6,  4,  1), bgr555( 5,  4,  2), bgr555( 3,  2,  1), bgr555( 1,  1,  0), bgr555( 0,  0,  1), bgr555( 0,  0,  0), bgr555( 1,  3,  1)
 
       aBattleBackgroundUnused16Palette ; B4/8660
+        ; Battle background $16's colours; no battle picks $16.
         .word bgr555(24, 10,  6), bgr555(16,  7,  4), bgr555(13,  6,  4), bgr555(12,  5,  3), bgr555(10,  5,  3), bgr555(10,  5,  4), bgr555( 8,  4,  2), bgr555( 7,  3,  2)
         .word bgr555( 7,  4,  3), bgr555( 8,  3,  2), bgr555( 4,  2,  1), bgr555( 3,  2,  1), bgr555( 3,  1,  1), bgr555( 2,  1,  0), bgr555( 0,  0,  0), bgr555( 1,  0,  0)
         .word bgr555(24, 10,  6), bgr555(16,  7,  4), bgr555(15,  8,  5), bgr555(13,  6,  4), bgr555(11,  5,  3), bgr555(10,  5,  4), bgr555( 9,  4,  2), bgr555( 8,  3,  2)
@@ -658,7 +659,8 @@
         .word bgr555(11,  5,  1), bgr555( 8,  2,  0), bgr555( 8,  3,  0), bgr555( 8,  1,  0), bgr555( 6,  0,  0), bgr555( 5,  2,  1), bgr555( 6,  2,  0), bgr555( 5,  1,  0)
         .word bgr555( 4,  1,  0), bgr555( 4,  1,  0), bgr555( 3,  0,  0), bgr555( 0,  0,  0), bgr555( 0,  0,  0), bgr555( 1,  0,  0), bgr555( 0,  0,  0), bgr555(20, 20, 20)
 
-      aBattleBackgroundUnused17Palette ; B4/86C0
+      aBattleBackgroundClassChangePalette ; B4/86C0
+        ; Battle background $17's colours: rlGetBattleBackgroundPointers picks $17 for wBattleType 2, the class change.
         .word bgr555( 0,  0,  0), bgr555( 4,  0,  0), bgr555( 6,  2,  0), bgr555( 9,  5,  0), bgr555(12,  7,  0), bgr555(15,  9,  2), bgr555(16, 10,  3), bgr555(17, 11,  4)
         .word bgr555(17, 12,  4), bgr555(18, 13,  6), bgr555(19, 14,  7), bgr555(20, 15,  8), bgr555(24, 18, 10), bgr555(25, 22, 17), bgr555(27, 23, 27), bgr555( 0,  0, 12)
         .word bgr555(16, 16, 14), bgr555(13, 14, 11), bgr555(17, 19, 12), bgr555(24, 24, 24), bgr555(24, 24, 18), bgr555(25, 20, 13), bgr555(23, 16,  8), bgr555(20, 14,  7)

@@ -21,7 +21,8 @@
       aSkillWindowDescTilemapEntry ; 80/D8FA
         .byte $28, $01, $00, $00, $00, $00, $8D, $8F, $7F
 
-      aDataWindowTilemapEntryUnused ; 80/D903
+      aSkillWindowHolderTilemapEntry ; 80/D903
+        ; The tilemap entry for aSkillWindowHolderTilemap+2, loaded by rsSkillWindowDrawAllHolderNames.
         .byte $17, $06, $00, $00, $00, $00, $8D, $90, $7F
 
     .endsection Table80D8E8Section

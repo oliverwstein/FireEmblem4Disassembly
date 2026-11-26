@@ -39,7 +39,8 @@ g4bppcOpeningLogoTiles g4bppcOpeningLogoTiles ; 2080 bytes decompressed
 acOpeningLogoSubTiles acOpeningLogoSubTiles ; 96 bytes decompressed
 acOpeningLogoTilemap acOpeningLogoTilemap ; 1792 bytes decompressed
 g4bppcBattleBackgroundThicket g4bppcBattleBackgroundThicket ; 16384 bytes decompressed
-acBattleBackgroundUnused17Tilemap acBattleBackgroundUnused17Tilemap ; 4096 bytes decompressed
+# Battle background $17's tilemap (the class change's).
+acBattleBackgroundClassChangeTilemap acBattleBackgroundClassChangeTilemap ; 4096 bytes decompressed
 # Also used as: acBattleBackgroundForestSnowTilemap.
 acBattleBackgroundForestTilemap acBattleBackgroundForestTilemap ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetHighPriest g4bppcBattleAnimationSheetHighPriest ; 7488 bytes decompressed

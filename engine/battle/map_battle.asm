@@ -12968,6 +12968,8 @@
 
       aScriptedCritUnusedScript1 ; 9E/EC6C
 
+        ; Read only by the unreferenced aScriptedCritUnusedActiveSprite1.
+
         ACTIVE_SPRITE_TABLE_FRAME 4, 0
         ACTIVE_SPRITE_TABLE_FRAME 4, 1
         ACTIVE_SPRITE_TABLE_FRAME 4, 0
@@ -12987,6 +12989,8 @@
 
         ; Unreferenced.
       aScriptedCritUnusedActiveSprite2 .dstruct structActiveSpriteInfo, rlUnusedScriptedCritSpriteNothing, rlUnusedScriptedCritSpriteNothing, aScriptedCritUnusedScript2 ; 9E/EC8E
+
+        ; Unreferenced.
 
       rlUnusedScriptedCritSpriteNothing ; 9E/EC94
 

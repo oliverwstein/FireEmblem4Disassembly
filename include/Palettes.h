@@ -3,7 +3,7 @@
 
     ; Created = 0.01
     ; Updated = 0.01
-    Color_Unused = bits(%1000000000000000)
+    Color_Unused = bits(%1000000000000000) ; bit 15, which the PPU ignores
     Color_Blue   = bits(%0111110000000000)
     Color_Green  = bits(%0000001111100000)
     Color_Red    = bits(%0000000000011111)

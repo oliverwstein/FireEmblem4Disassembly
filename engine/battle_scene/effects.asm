@@ -998,6 +998,8 @@
 
       aBattleSceneCOLDATAHDMAInfoUnused .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FE39A, PPU_REG_BASE + $32, $42, $7F ; 95/E6DE
 
+        ; Unreferenced.
+
       aBattleSceneHUDBannerHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FE3CA, PPU_REG_BASE + $32, $40, $7F ; 95/E6EA
 
       aBattleSceneBG2ScrollHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FF6B4, PPU_REG_BASE + $0D, $43, $7F ; 95/E6F6
@@ -1025,6 +1027,8 @@
       aBattleSceneBG2HShakeHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, aBattleSceneHUDShakeOffsets+54, PPU_REG_BASE + $0F, $42, $7F ; 95/E778
 
       aBattleSceneTMHDMAInfoUnused .dstruct structHDMADirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FD06B, PPU_REG_BASE + $2C, $01 ; 95/E784
+
+        ; Unreferenced.
 
       aTitleIntroBG2WaveHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlBattleSceneHDMAInitNoOp, rlBattleSceneHDMAOnCycleNoOp, aBattleSceneHDMAHaltCode, $7FD633, PPU_REG_BASE + $0F, $42, $7F ; 95/E78F
 

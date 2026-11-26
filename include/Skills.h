@@ -6,10 +6,10 @@
   SkillIDPursuit    = $04
   SkillIDAdept      = $05
   SkillIDSteal      = $06
-  SkillIDUnused2   = $07 ; valid class skill
+  SkillIDUnused2   = $07 ; valid class skill; no class has it and nothing tests it
   SkillIDDance      = $08
-  SkillIDUnused3   = $09 ; valid class skill
-  SkillIDUnused4   = $0A ; valid class and item skill
+  SkillIDUnused3   = $09 ; valid class skill; no class has it and nothing tests it
+  SkillIDUnused4   = $0A ; valid class and item skill; Troubadour has it, but nothing tests it
   SkillIDDismount   = $0B
   SkillIDCharm      = $0C
   SkillIDPoW        = $0D

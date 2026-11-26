@@ -4913,9 +4913,9 @@
 
         ; Nothing in the build reaches this: no title timeline names it.
 
-        lda #(`aTitleFillBG1PaletteEffectUnused)<<8
+        lda #(`aTitleIntroScene8PaletteEffect2)<<8
         sta lR18+1
-        lda #<>aTitleFillBG1PaletteEffectUnused
+        lda #<>aTitleIntroScene8PaletteEffect2
         sta lR18
         lda #$0000
         sta wR0
@@ -4950,9 +4950,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aTitleFillBG1PaletteEffectUnused)<<8
+        lda #(`aTitleIntroScene8PaletteEffect2)<<8
         sta lR18+1
-        lda #<>aTitleFillBG1PaletteEffectUnused
+        lda #<>aTitleIntroScene8PaletteEffect2
         sta lR18
         lda #$0000
         sta wR0

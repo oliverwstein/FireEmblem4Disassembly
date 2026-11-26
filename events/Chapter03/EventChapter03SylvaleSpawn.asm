@@ -147,6 +147,7 @@
       MAP_END
 
     _ScriptedMovementSylvaleUnused ; 9D/8AAF
+      ; Unreferenced.
       MAP_PAUSE 20
       MAP_RIGHT_MULTIPLE 10
       MAP_END

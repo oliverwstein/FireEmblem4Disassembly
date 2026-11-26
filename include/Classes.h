@@ -28,10 +28,10 @@
   ClassSkillPursuit   = bits($0008)
   ClassSkillAdept     = bits($0010)
   ClassSkillSteal     = bits($0020)
-  ClassSkillUnused1  = bits($0040)
+  ClassSkillUnused1  = bits($0040) ; no class has it
   ClassSkillDance     = bits($0080)
-  ClassSkillUnused2  = bits($0100)
-  ClassSkillUnused3  = bits($0200)
+  ClassSkillUnused2  = bits($0100) ; no class has it
+  ClassSkillUnused3  = bits($0200) ; Troubadour has it (ClassData.csv), but nothing tests SkillIDUnused4 and no window names or shows it
   ClassSkillDismount  = bits($0400)
   ClassSkillCharm     = bits($0800)
   ClassSkillCritical  = bits($1000)

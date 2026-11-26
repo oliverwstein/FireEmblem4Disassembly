@@ -665,7 +665,9 @@
 
       aBattleAnimationActionsUnused05 ; 97/CDC2
 
-        ; Move program of entry 5 of aBattleAnimationPrograms; nothing selects it.
+        ; Move program of entry 5 of aBattleAnimationPrograms: nothing selects it (no
+        ; aBattleAnimationLookup record, nor the dance, has a first ID that
+        ; aBattleAnimationProgramIndices maps to it).
 
         ANIM_ACTION_SEQUENCE 0
         ANIM_ACTION_LIST 1
@@ -733,6 +735,8 @@
         ANIM_ACTION_LIST 0
 
       aBattleAnimationMoveListsUnused05 ; 97/CE02
+
+        ; Entry 5 of aBattleAnimationPrograms, which nothing selects.
 
         .word _List00 - aBattleAnimationMoveListsUnused05
         .word _List01 - aBattleAnimationMoveListsUnused05
@@ -846,6 +850,8 @@
 
       aBattleAnimationMoveScriptsUnused05 ; 97/CE78
 
+        ; Entry 5 of aBattleAnimationPrograms, which nothing selects.
+
         .word _Script00 - aBattleAnimationMoveScriptsUnused05
         .word _Script01 - aBattleAnimationMoveScriptsUnused05
         .word _Script02 - aBattleAnimationMoveScriptsUnused05
@@ -933,7 +939,9 @@
 
       aBattleAnimationActionsUnused06 ; 97/CF15
 
-        ; Move program of entry 6 of aBattleAnimationPrograms; nothing selects it.
+        ; Move program of entry 6 of aBattleAnimationPrograms: nothing selects it (no
+        ; aBattleAnimationLookup record, nor the dance, has a first ID that
+        ; aBattleAnimationProgramIndices maps to it).
 
         ANIM_ACTION_SEQUENCE 0
         ANIM_ACTION_LIST 0
@@ -996,6 +1004,8 @@
         ANIM_ACTION_LIST 1
 
       aBattleAnimationMoveListsUnused06 ; 97/CF50
+
+        ; Entry 6 of aBattleAnimationPrograms, which nothing selects.
 
         .word _List00 - aBattleAnimationMoveListsUnused06
         .word _List01 - aBattleAnimationMoveListsUnused06
@@ -1061,6 +1071,8 @@
 
       aBattleAnimationMoveScriptsUnused06 ; 97/CF93
 
+        ; Entry 6 of aBattleAnimationPrograms, which nothing selects.
+
         .word _Script00 - aBattleAnimationMoveScriptsUnused06
         .word _Script01 - aBattleAnimationMoveScriptsUnused06
         .word _Script02 - aBattleAnimationMoveScriptsUnused06
@@ -1104,7 +1116,9 @@
 
       aBattleAnimationActionsUnused07 ; 97/CFF0
 
-        ; Move program of entry 7 of aBattleAnimationPrograms; nothing selects it.
+        ; Move program of entry 7 of aBattleAnimationPrograms: nothing selects it (no
+        ; aBattleAnimationLookup record, nor the dance, has a first ID that
+        ; aBattleAnimationProgramIndices maps to it).
 
         ANIM_ACTION_SEQUENCE 0
         ANIM_ACTION_LIST 0
@@ -1155,6 +1169,8 @@
         ANIM_ACTION_LIST 8
 
       aBattleAnimationMoveListsUnused07 ; 97/D01F
+
+        ; Entry 7 of aBattleAnimationPrograms, which nothing selects.
 
         .word _List00 - aBattleAnimationMoveListsUnused07
         .word _List01 - aBattleAnimationMoveListsUnused07
@@ -1215,6 +1231,8 @@
 
       aBattleAnimationMoveScriptsUnused07 ; 97/D058
 
+        ; Entry 7 of aBattleAnimationPrograms, which nothing selects.
+
         .word _Script00 - aBattleAnimationMoveScriptsUnused07
         .word _Script01 - aBattleAnimationMoveScriptsUnused07
         .word _Script02 - aBattleAnimationMoveScriptsUnused07
@@ -1242,7 +1260,9 @@
 
       aBattleAnimationActionsUnused08 ; 97/D087
 
-        ; Move program of entry 8 of aBattleAnimationPrograms; nothing selects it.
+        ; Move program of entry 8 of aBattleAnimationPrograms: nothing selects it (no
+        ; aBattleAnimationLookup record, nor the dance, has a first ID that
+        ; aBattleAnimationProgramIndices maps to it).
 
         ANIM_ACTION_SEQUENCE 0
         ANIM_ACTION_LIST 1
@@ -1294,6 +1314,8 @@
         ANIM_ACTION_LIST 5
 
       aBattleAnimationMoveListsUnused08 ; 97/D0B7
+
+        ; Entry 8 of aBattleAnimationPrograms, which nothing selects.
 
         .word _List00 - aBattleAnimationMoveListsUnused08
         .word _List01 - aBattleAnimationMoveListsUnused08
@@ -1354,6 +1376,8 @@
 
       aBattleAnimationMoveScriptsUnused08 ; 97/D0F5
 
+        ; Entry 8 of aBattleAnimationPrograms, which nothing selects.
+
         .word _Script00 - aBattleAnimationMoveScriptsUnused08
         .word _Script01 - aBattleAnimationMoveScriptsUnused08
         .word _Script02 - aBattleAnimationMoveScriptsUnused08
@@ -1385,7 +1409,9 @@
 
       aBattleAnimationActionsUnused09 ; 97/D11D
 
-        ; Move program of entry 9 of aBattleAnimationPrograms; nothing selects it.
+        ; Move program of entry 9 of aBattleAnimationPrograms: nothing selects it (no
+        ; aBattleAnimationLookup record, nor the dance, has a first ID that
+        ; aBattleAnimationProgramIndices maps to it).
 
         ANIM_ACTION_SEQUENCE 0
         ANIM_ACTION_LIST 0
@@ -1436,6 +1462,8 @@
         ANIM_ACTION_LIST 4
 
       aBattleAnimationMoveListsUnused09 ; 97/D14C
+
+        ; Entry 9 of aBattleAnimationPrograms, which nothing selects.
 
         .word _List00 - aBattleAnimationMoveListsUnused09
         .word _List01 - aBattleAnimationMoveListsUnused09
@@ -1491,6 +1519,8 @@
         ANIM_MOVE_LIST_END
 
       aBattleAnimationMoveScriptsUnused09 ; 97/D18C
+
+        ; Entry 9 of aBattleAnimationPrograms, which nothing selects.
 
         .word _Script00 - aBattleAnimationMoveScriptsUnused09
         .word _Script01 - aBattleAnimationMoveScriptsUnused09

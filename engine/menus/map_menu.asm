@@ -251,6 +251,9 @@
 
       aUnitMenuUnusedOptions ; 85/83AF
 
+        ; Read only by the unreferenced procUnitMenuUnused. rlLoadMapMenuData copies 15 bytes from the
+        ; 12-byte aUnitMenuData, so the first 3 land in the new menu's Next, which rlAppendMapMenuToList clears.
+
         .word 0, 1
 
       procUnitMenuUnused ; 85/83B3

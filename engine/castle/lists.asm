@@ -2155,7 +2155,7 @@
         lda #<>aCastleListBlankLineText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -2169,8 +2169,9 @@
         ; 8A/AA2A
 
 
-      aCastleListRowYPositionsUnused ; 8A/AA2A
+      aCastleListRowYPositions ; 8A/AA2A
 
+        ; Each list row's tilemap row, by row x 2: read by the list drawers here and in augury.asm (and by code left as .byte at 8A/AAD3).
         .word $000A, $000C, $000E, $0010, $0012, $0014, $0016, $0018
 
     .endsection Unsorted8AA9CESection
@@ -2193,7 +2194,7 @@
         lda #<>aStockListRowNameBlankText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -2208,7 +2209,7 @@
         lda lRoutineVariable,b
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -2277,7 +2278,7 @@
 
         _AABC
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         lsr a
         lsr a
@@ -2325,7 +2326,7 @@
         cmp #$0002
         beq _AB20
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         lsr a
         lsr a
@@ -2346,7 +2347,7 @@
         lda #<>aStockListRowDurabilityBlankText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$0015
@@ -2438,7 +2439,7 @@
         lda #<>aCastleListBlankLineText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -2471,7 +2472,7 @@
         lda #<>aInventoryRowNameBlankText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -2489,7 +2490,7 @@
         lda lRoutineVariable+1,b
         sta lR18+1
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -2551,7 +2552,7 @@
         jsl rlGetInventorySlotItemSellPrice
         sta wR0
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         lsr a
         lsr a
@@ -2572,7 +2573,7 @@
         lda #<>aCastleListBlankLineText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -2607,7 +2608,7 @@
         cmp #$0002
         beq _AC80
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         lsr a
         lsr a
@@ -2628,7 +2629,7 @@
         lda #<>aInventoryRowDurabilityBlankText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$0015
@@ -2717,7 +2718,7 @@
         lda #<>aCastleListBlankLineText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -2768,7 +2769,7 @@
 
         _AD2F
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         lsr a
         lsr a
@@ -2804,7 +2805,7 @@
         lda #<>aCastleListBlankLineText
         sta lR18
         phx
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$000D
@@ -3148,7 +3149,7 @@
         sta wR0
         lda #$0048
         sta wR1
-        ldy #$B10A
+        ldy #<>aCastleListScrollArrowSprite
         lda #$0000
         sta wR4
         lda #$A000
@@ -3174,7 +3175,7 @@
         clc
         adc #$0006
         sta wR1
-        ldy #$B10A
+        ldy #<>aCastleListScrollArrowSprite
         lda #$0000
         sta wR4
         lda #$2000
@@ -3192,9 +3193,9 @@
 
         ; 8A/B10A
 
-      aCastleListSprite8AB10AUnused ; 8A/B10A
+      aCastleListScrollArrowSprite ; 8A/B10A
 
-        ; Unreferenced.
+        ; A one-sprite array: the arrow rlPushStockListScrollArrows draws above (flipped) and below the list.
         .byte $01, $00, $00, $C2, $00, $0C, $30
 
     .endsection Unsorted8AB093Section

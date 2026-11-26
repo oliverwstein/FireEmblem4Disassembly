@@ -2811,16 +2811,20 @@
         .word <>aSoundUploadF79C76
 
       aSoundChunk337 .soundBinary "chunks/337.bin" ; F7/AF2E
-      aSoundPadF7AF2F ; F7/AF2F, nothing points here
+      aSoundPadF7AF2F ; F7/AF2F, no chunk starts here
+        ; Sent to the APU as the high byte of aSoundChunk337's last word: uploads go by words.
         .byte $00
       aSoundChunk338 .soundBinary "chunks/338.bin" ; F7/AF30
-      aSoundPadF7AF31 ; F7/AF31, nothing points here
+      aSoundPadF7AF31 ; F7/AF31, no chunk starts here
+        ; Sent to the APU as the high byte of aSoundChunk338's last word: uploads go by words.
         .byte $00
       aSoundChunk339 .soundBinary "chunks/339.bin" ; F7/AF32
-      aSoundPadF7AF33 ; F7/AF33, nothing points here
+      aSoundPadF7AF33 ; F7/AF33, no chunk starts here
+        ; Sent to the APU as the high byte of aSoundChunk339's last word: uploads go by words.
         .byte $00
       aSoundChunk33A .soundBinary "chunks/33A.bin" ; F7/AF34
-      aSoundPadF7AF35 ; F7/AF35, nothing points here
+      aSoundPadF7AF35 ; F7/AF35, no chunk starts here
+        ; Sent to the APU as the high byte of aSoundChunk33A's last word: uploads go by words.
         .byte $00
       aSoundChunk33D .soundBinary "chunks/33D.bin" ; F7/AF36
       aSoundChunk33E .soundBinary "chunks/33E.bin" ; F7/AF38
@@ -2828,13 +2832,16 @@
       aSoundChunk33B .soundBinary "chunks/33B.bin" ; F7/AF3C
       aSoundChunk33C .soundBinary "chunks/33C.bin" ; F7/AF3E
       aSoundChunk340 .soundBinary "chunks/340.bin" ; F7/AF40
-      aSoundPadF7AF41 ; F7/AF41, nothing points here
+      aSoundPadF7AF41 ; F7/AF41, no chunk starts here
+        ; Sent to the APU as the high byte of aSoundChunk340's last word: uploads go by words.
         .byte $00
       aSoundChunk341 .soundBinary "chunks/341.bin" ; F7/AF42
-      aSoundPadF7AF43 ; F7/AF43, nothing points here
+      aSoundPadF7AF43 ; F7/AF43, no chunk starts here
+        ; Sent to the APU as the high byte of aSoundChunk341's last word: uploads go by words.
         .byte $00
       aSoundChunk342 .soundBinary "chunks/342.bin" ; F7/AF44
-      aSoundPadF7AF45 ; F7/AF45, nothing points here
+      aSoundPadF7AF45 ; F7/AF45, no chunk starts here
+        ; Sent to the APU as the high byte of aSoundChunk342's last word: uploads go by words.
         .byte $00
       aSoundChunk343 .soundBinary "chunks/343.bin" ; F7/AF46
       aSoundDirectory344 .soundBinary "directories/344.bin" ; F7/AF4C
@@ -3071,7 +3078,8 @@
       aSoundSample11B .soundBinary "samples/11B.brr" ; FC/D844
       aSoundSample11C .soundBinary "samples/11C.brr" ; FC/DCC4
       aSoundSample11D .soundBinary "samples/11D.brr" ; FC/E798
-      aSoundPadFCE8AF ; FC/E8AF, nothing points here
+      aSoundPadFCE8AF ; FC/E8AF, no chunk starts here
+        ; Sent to the APU as the high byte of aSoundSample11D's last word: uploads go by words.
         .byte $00
       aSoundSample11E .soundBinary "samples/11E.brr" ; FC/E8B0
       aSoundSample11F .soundBinary "samples/11F.brr" ; FD/001A

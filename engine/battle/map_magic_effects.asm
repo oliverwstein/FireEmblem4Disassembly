@@ -12954,6 +12954,7 @@
         .word $0100, $FC80
 
       aMapMagicWaveSpawnParamsUnused .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicWaveInit, aHDMAMapMagicWaveTableTop+26, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicWaveTableTop, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DEAE
+        ; Unreferenced.
         .word $0000, $0030
 
       rlHDMAMapMagicClearWaveBuffer ; 9F/DEBE

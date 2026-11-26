@@ -37,8 +37,8 @@
         ; $13: VillageSnow
         ; $14: Bridge
         ; $15: Shrine
-        ; $16: Unused16
-        ; $17: Unused17
+        ; $16: no battle picks it (the title intro loads its tiles)
+        ; $17: ClassChange (wBattleType 2, rlGetBattleBackgroundPointers)
 
         .long g4bppcBattleBackgroundPlains, acBattleBackgroundPlainsTilemap, aBattleBackgroundPlainsPalette
         .byte 1
@@ -84,9 +84,9 @@
         .byte 1
         .long g4bppcBattleBackgroundShrine, acBattleBackgroundShrineTilemap, aBattleBackgroundShrinePalette
         .byte 0
-        .long g4bppcBattleBackgroundUnused16, acBattleBackgroundUnused16Tilemap, aBattleBackgroundUnused16Palette
+        .long g4bppcBattleBackgroundTitleIntro, acBattleBackgroundUnused16Tilemap, aBattleBackgroundUnused16Palette
         .byte 0
-        .long g4bppcBattleBackgroundUnused17, acBattleBackgroundUnused17Tilemap, aBattleBackgroundUnused17Palette
+        .long g4bppcBattleBackgroundClassChange, acBattleBackgroundClassChangeTilemap, aBattleBackgroundClassChangePalette
         .byte 0
 
       aBattleBackgroundTerrainIndices ; 98/A9F0

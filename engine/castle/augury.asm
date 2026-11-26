@@ -169,7 +169,7 @@
         txa
         asl a
         tay
-        lda $AA2A,b,y
+        lda <>aCastleListRowYPositions,b,y
         xba
         clc
         adc #$0003

@@ -20,6 +20,7 @@ aMunsterMapHighlightTilemap aMunsterMapHighlightTilemap ; 2048 bytes decompresse
 aThraciaMapHighlightTilemap aThraciaMapHighlightTilemap ; 2048 bytes decompressed
 aMiletosMapHighlightTilemap aMiletosMapHighlightTilemap ; 2048 bytes decompressed
 aGrannvaleMapHighlightTilemap aGrannvaleMapHighlightTilemap ; 2048 bytes decompressed
+# Unreferenced.
 acWorldMapHighlightTilemapUnused acWorldMapHighlightTilemapUnused ; 2048 bytes decompressed
 aWorldMapMarkerShadowTilemap aWorldMapMarkerShadowTilemap ; 2048 bytes decompressed
 g4bppcWorldMapOverlayTiles g4bppcWorldMapOverlayTiles ; 4096 bytes decompressed
@@ -40,7 +41,8 @@ g4bppcDialogueBackgroundThrone g4bppcDialogueBackgroundThrone ; 16384 bytes deco
 acDialogueBackgroundThroneForegroundTilemap acDialogueBackgroundThroneForegroundTilemap ; 2048 bytes decompressed
 acDialogueBackgroundThroneTilemap acDialogueBackgroundThroneTilemap ; 704 bytes decompressed
 g4bppcCastleArmoryBGTiles g4bppcCastleArmoryBGTiles ; 4096 bytes decompressed
-g4bppcBattleBackgroundUnused17 g4bppcBattleBackgroundUnused17 ; 8192 bytes decompressed
+# Battle background $17, the class change's (wBattleType 2); also loaded by rlClassChangeScreenSetup (aDecompressionDMAEntry8AEE99).
+g4bppcBattleBackgroundClassChange g4bppcBattleBackgroundClassChange ; 8192 bytes decompressed
 g4bppcClassChangeBGTiles g4bppcClassChangeBGTiles ; 4096 bytes decompressed
 acClassChangeBGTilemap acClassChangeBGTilemap ; 2048 bytes decompressed
 g4bppcAuguryBG2Tiles g4bppcAuguryBG2Tiles ; 8192 bytes decompressed

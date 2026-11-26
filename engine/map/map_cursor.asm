@@ -52,6 +52,7 @@
         .structSpriteEntry (  26,   22), $00, SpriteSmall, $011, 3, 0, false, false
 
       aMapCursorSpriteUnused ; 88/EEAA
+        ; Unreferenced.
         .word 1 ; sprite count
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $080, 3, 0, false, false
 
@@ -831,6 +832,8 @@
         .databank 0
 
       aCopyWindowPaletteTailJumpTableUnused ; 88/A50D
+
+        ; Read only by the unreferenced rlDispatchUnusedWindowPalette88A505.
 
         .word <>rlCopyWindowPaletteTail2Unused
         .word <>rlCopyWindowPaletteTail4Unused

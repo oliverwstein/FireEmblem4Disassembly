@@ -248,6 +248,8 @@
 
       aMainDataEntry12Unused .word 0 ; 83/D8E6
 
+        ; Entry $12 of aMainDataOffsets: every reader names its entry, and none names this one.
+
     .endsection MainDataEntry12UnusedSection
 
 

@@ -3919,7 +3919,7 @@
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/EE89
       aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry g4bppcClassChangeBGTiles, $1000, $0000 ; 8A/EE91
-      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundUnused17, $2000, $1000 ; 8A/EE99
+      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundClassChange, $2000, $1000 ; 8A/EE99
       aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry acClassChangeBGTilemap, $0800, $2800 ; 8A/EEA1
       aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/EEA9
 

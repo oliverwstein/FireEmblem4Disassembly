@@ -2745,6 +2745,7 @@
         HDMA_HALT
 
       aSaveMenuHDMATableUnused ; 91/E0A0
+        ; Unreferenced: aSaveMenuHDMAInfo's table is wDialogueBoxHDMAYPixelPosition.
         .byte $C0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00

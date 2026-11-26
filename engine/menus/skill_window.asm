@@ -1940,9 +1940,9 @@
         dec x
         dec x
         bne _DE4A
-        lda #$8000
+        lda #(`aSkillWindowHolderTilemapEntry)<<8
         sta @l lMapMenuTilemapRAMEntryPointer+1
-        lda #$D903
+        lda #<>aSkillWindowHolderTilemapEntry
         sta @l lMapMenuTilemapRAMEntryPointer
         lda wSkillWindowCurrentSkill
         xba

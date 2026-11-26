@@ -159,12 +159,18 @@
 
       aTitleFlashPaletteEffect0Unused ; 99/FDB6
 
+        ; Read only by the unreferenced rlTitleStartFlashPaletteEffectsUnused.
+
         PALETTE_EFFECT_VALUE $00, $05, $10, $61, $04
       aTitleFlashPaletteEffect1Unused ; 99/FDBB
+
+        ; Read only by the unreferenced rlTitleStartFlashPaletteEffectsUnused.
 
         PALETTE_EFFECT_VALUE $01, $05, $80, $61, $04
 
       aTitleFlashPaletteEffect2Unused ; 99/FDC0
+
+        ; Read only by the unreferenced rlTitleStartFlashPaletteEffectsUnused.
 
         PALETTE_EFFECT_VALUE $02, $05, $F0, $01, $04
 
@@ -176,8 +182,9 @@
 
         PALETTE_EFFECT_VALUE_DATA $00, $07, $31, $0F, $01, aTitleScreenPalette1
 
-      aTitleFillBG1PaletteEffectUnused ; 99/FDD5
+      aTitleIntroScene8PaletteEffect2 ; 99/FDD5
 
+        ; Started by rlTitleIntroScene8StartPaletteEffect2 (and the unreferenced rlTitleStartPaletteEffectAndFillBG1Unused).
         PALETTE_EFFECT_VALUE_DATA $02, $07, $21, $0F, $03, aTitleScreenPalette3
 
       aTitleIntroScene7DimPaletteEffect ; 99/FDDD

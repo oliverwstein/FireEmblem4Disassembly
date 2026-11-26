@@ -2265,6 +2265,8 @@
 
       aDebugSpecialSkillsTextUnused ; 89/D79A
 
+        ; Unreferenced.
+
         .word $C682
         .word $AD82
         .word $B582

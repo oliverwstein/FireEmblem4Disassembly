@@ -979,6 +979,8 @@
 
       aEventScriptData91BEC6Unused ; 91/BEC6
 
+        ; Unreferenced.
+
         .word $2000
         .word $4000
         .word $2B01

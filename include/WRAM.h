@@ -1912,7 +1912,7 @@
       lFontTilesPointer            .long ? ; $00187F
       wStatus                   .word ? ; $001882
       wCommandCycle             .word ? ; $001884
-      wDialogueUnused1886            .word ? ; $001886
+      wDialogueUnused1886            .word ? ; $001886 ; nothing reads or writes it
       wTextSpeed                .word ? ; $001888
       wPauseTimer               .word ? ; $00188A
       wSlowScrollRate           .word ? ; $00188C
@@ -2110,10 +2110,10 @@
       bPursuit      .byte ?
       bAdept        .byte ?
       bSteal        .byte ?
-      bUnusedSkill07     .byte ?
+      bUnusedSkill07     .byte ? ; never set: no class, character or item has skill $07
       bDance        .byte ?
-      bUnusedSkill09     .byte ?
-      bUnusedSkill0A     .byte ?
+      bUnusedSkill09     .byte ? ; never set: no class, character or item has skill $09
+      bUnusedSkill0A     .byte ? ; set for a Troubadour (ClassSkillUnused3); the debug menu has no name for it
       bDismount     .byte ?
       bCharm        .byte ?
       bPoW     .byte ?
@@ -2369,7 +2369,7 @@
     wBattleType .byte ? ; $7E4EA9
       ; 0 = normal
       ; 1 = arena
-      ; 2 = ? (forced anims on?)
+      ; 2 = class change (rlStartCastleClassChange; battle background $17)
       ; 3 = ?
     wBattleStatus   .byte ? ; $7E4EAA ; bit 1 the sides were swapped; bit 2 a combatant on a shared tile (UnitStateAssault) was moved a tile for the battle, bit 3 the guarding defender, moved down
       ; $40 - battle anim off
@@ -2742,7 +2742,7 @@
       wTargetCount .word ?                  ; $7F442C ; active faction/counter/?
       wUnitFaction .word ?                    ; $7F442E
       wUnitMovementCostPointer .word ?        ; $7F4430
-      wAIActionUnused7F4432 .word ?                  ; $7F4432
+      wAIActionUnused7F4432 .word ?                  ; $7F4432 ; nothing reads or writes it
       wBestAttackChance .word ?               ; $7F4434 ; the best score so far (rsAICheckIfNewBestTarget)
       wUnitToChosenTargetDistance .word ?     ; $7F4436
       wLeadershipPower .word ?                ; $7F4438 ; 50 + 10 x the leader's leadership stars; 100 in clever mode, 0 when berserk. A random number at or above it lets chance override the score
@@ -2853,7 +2853,7 @@
       wDefenderXTile .word ?      ; $7F4556
       wDefenderYTile .word ?      ; $7F4558
       wEffectParam .word ?      ; $7F455A ; written by the map action animations and cutscenes, never read
-      wMapActionUnused7F455C .word ?      ; $7F455C
+      wMapActionUnused7F455C .word ?      ; $7F455C ; nothing reads or writes it
       wAttackerFacing .word ?     ; $7F455E ; 0-7 (rlGetMapBattleFacing), 6 with no target
       wDefenderFacing .word ?     ; $7F4560 ; the attacker's facing turned around (eor 4)
       wAttackerAllegiance .word ? ; $7F4562 ; the low 2 bits of the deployment entry; palette = allegiance + 1

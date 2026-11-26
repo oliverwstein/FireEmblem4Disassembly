@@ -25,46 +25,70 @@ aMapBattlePegasusRiderLayout7 aMapBattlePegasusRiderLayout7 ; 2048 bytes decompr
 acMapBattleMagicFenrirPalette acMapBattleMagicFenrirPalette ; 512 bytes decompressed
 # Also used as: acMapBattleMagicThiefStaffPalette.
 acMapBattleMagicHelPalette acMapBattleMagicHelPalette ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD534DC acMapBattleMagicPaletteUnusedD534DC ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD53555 acMapBattleMagicPaletteUnusedD53555 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD535C4 acMapBattleMagicPaletteUnusedD535C4 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD5362F acMapBattleMagicPaletteUnusedD5362F ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD53670 acMapBattleMagicPaletteUnusedD53670 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD536B8 acMapBattleMagicPaletteUnusedD536B8 ; 512 bytes decompressed
 # Also used as: acMapBattleMagicElfirePalette.
 acMapBattleMagicFirePalette acMapBattleMagicFirePalette ; 512 bytes decompressed
 acMapBattleMagicBolganonePalette acMapBattleMagicBolganonePalette ; 512 bytes decompressed
 acMapBattleMagicValflamePalette acMapBattleMagicValflamePalette ; 512 bytes decompressed
 acMapBattleMagicMeteorPalette acMapBattleMagicMeteorPalette ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD53CFF acMapBattleMagicPaletteUnusedD53CFF ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD53D92 acMapBattleMagicPaletteUnusedD53D92 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD53DEC acMapBattleMagicPaletteUnusedD53DEC ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD53E5A acMapBattleMagicPaletteUnusedD53E5A ; 512 bytes decompressed
 acMapBattleMagicLightPalette acMapBattleMagicLightPalette ; 512 bytes decompressed
 acMapBattleMagicNosferatuPalette acMapBattleMagicNosferatuPalette ; 512 bytes decompressed
 acMapBattleMagicAuraPalette acMapBattleMagicAuraPalette ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54330 acMapBattleMagicPaletteUnusedD54330 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54378 acMapBattleMagicPaletteUnusedD54378 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54407 acMapBattleMagicPaletteUnusedD54407 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54424 acMapBattleMagicPaletteUnusedD54424 ; 512 bytes decompressed
 # Also used as: acMapBattleMagicElthunderPalette, acMapBattleMagicBoltingPalette.
 acMapBattleMagicThunderPalette acMapBattleMagicThunderPalette ; 512 bytes decompressed
 acMapBattleMagicThoronPalette acMapBattleMagicThoronPalette ; 512 bytes decompressed
 acMapBattleMagicMjolnirPalette acMapBattleMagicMjolnirPalette ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD548CE acMapBattleMagicPaletteUnusedD548CE ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54916 acMapBattleMagicPaletteUnusedD54916 ; 512 bytes decompressed
 acMapBattleMagicSilenceStaffPalette acMapBattleMagicSilenceStaffPalette ; 512 bytes decompressed
 acMapBattleMagicSleepStaffPalette acMapBattleMagicSleepStaffPalette ; 512 bytes decompressed
 acMapBattleMagicBerserkStaffPalette acMapBattleMagicBerserkStaffPalette ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54D91 acMapBattleMagicPaletteUnusedD54D91 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54DD9 acMapBattleMagicPaletteUnusedD54DD9 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54E60 acMapBattleMagicPaletteUnusedD54E60 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54EA7 acMapBattleMagicPaletteUnusedD54EA7 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54F0A acMapBattleMagicPaletteUnusedD54F0A ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54F31 acMapBattleMagicPaletteUnusedD54F31 ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD54F79 acMapBattleMagicPaletteUnusedD54F79 ; 512 bytes decompressed
 # Also used as: acMapBattleMagicElwindPalette, acMapBattleMagicTornadoPalette, acMapBattleMagicNagaPalette, acMapBattleMagicJormungandrPalette, acMapBattleMagicLoptousPalette, acMapBattleMagicBrokenFireTomeAPalette, acMapBattleMagicBrokenFireTomeBPalette, acMapBattleMagicBrokenFireTomeCPalette, acMapBattleMagicHealStaffPalette, acMapBattleMagicMendStaffPalette, acMapBattleMagicRecoverStaffPalette, acMapBattleMagicPhysicStaffPalette, acMapBattleMagicWarpStaffPalette, acMapBattleMagicRescueStaffPalette, acMapBattleMagicCharmStaffPalette, acMapBattleMagicValkyrieStaffPalette, acMapBattleMagicBrokenStaffAPalette.
 acMapBattleMagicWindPalette acMapBattleMagicWindPalette ; 512 bytes decompressed
+# Unreferenced.
 acMapBattleMagicPaletteUnusedD55131 acMapBattleMagicPaletteUnusedD55131 ; 512 bytes decompressed
 acMapBattleMagicFortifyPalette acMapBattleMagicFortifyPalette ; 512 bytes decompressed
 acMapBattleMagicReturnStaffPalette acMapBattleMagicReturnStaffPalette ; 512 bytes decompressed
@@ -94,6 +118,7 @@ g4bppcMapBattleMagicWind g4bppcMapBattleMagicWind ; 4096 bytes decompressed
 # Also used as: g4bppcMapBattleMagicPhysicStaff.
 g4bppcMapBattleMagicMendStaff g4bppcMapBattleMagicMendStaff ; 4096 bytes decompressed
 g4bppcMapBattleMagicRecoverStaff g4bppcMapBattleMagicRecoverStaff ; 4096 bytes decompressed
+# Unreferenced.
 g4bppcMapBattleMagicUnusedD57B50 g4bppcMapBattleMagicUnusedD57B50 ; 4096 bytes decompressed
 g4bppcMapBattleMagicFortify g4bppcMapBattleMagicFortify ; 4096 bytes decompressed
 g4bppcMapBattleMagicReturnStaff g4bppcMapBattleMagicReturnStaff ; 4096 bytes decompressed
@@ -125,6 +150,7 @@ acMapBattleMagicWindTilemap acMapBattleMagicWindTilemap ; 2048 bytes decompresse
 # Also used as: acMapBattleMagicPhysicStaffTilemap.
 acMapBattleMagicMendStaffTilemap acMapBattleMagicMendStaffTilemap ; 2048 bytes decompressed
 acMapBattleMagicRecoverStaffTilemap acMapBattleMagicRecoverStaffTilemap ; 2048 bytes decompressed
+# Unreferenced.
 g4bppcMapBattleMagicTilemapUnusedD629B1 g4bppcMapBattleMagicTilemapUnusedD629B1 ; 2048 bytes decompressed
 acMapBattleMagicFortifyTilemap acMapBattleMagicFortifyTilemap ; 2048 bytes decompressed
 acMapBattleMagicReturnStaffTilemap acMapBattleMagicReturnStaffTilemap ; 2048 bytes decompressed
@@ -139,6 +165,7 @@ g4bppcMapBattleMagicBolganoneSprites g4bppcMapBattleMagicBolganoneSprites ; 1024
 g4bppcMapBattleMagicValflameSprites g4bppcMapBattleMagicValflameSprites ; 1024 bytes decompressed
 g4bppcMapBattleMagicMeteorSprites g4bppcMapBattleMagicMeteorSprites ; 1024 bytes decompressed
 g4bppcMapBattleMagicLightSprites g4bppcMapBattleMagicLightSprites ; 1024 bytes decompressed
+# Unreferenced.
 g4bppcMapBattleMagicSpritesUnusedD64244 g4bppcMapBattleMagicSpritesUnusedD64244 ; 1024 bytes decompressed
 g4bppcMapBattleMagicNosferatuSprites g4bppcMapBattleMagicNosferatuSprites ; 1024 bytes decompressed
 # Also the sprites of Elthunder, Bolting.
@@ -148,11 +175,14 @@ g4bppcMapBattleMagicMjolnirSprites g4bppcMapBattleMagicMjolnirSprites ; 1024 byt
 # Also the sprites of RestoreStaff, SleepStaff.
 g4bppcMapBattleMagicReturnStaffSprites g4bppcMapBattleMagicReturnStaffSprites ; 1024 bytes decompressed
 g4bppcMapBattleMagicThiefStaffSprites g4bppcMapBattleMagicThiefStaffSprites ; 1024 bytes decompressed
+# Unreferenced.
 g4bppcMapBattleMagicSpritesUnusedD65010 g4bppcMapBattleMagicSpritesUnusedD65010 ; 1024 bytes decompressed
+# Unreferenced.
 g4bppcMapBattleMagicSpritesUnusedD65153 g4bppcMapBattleMagicSpritesUnusedD65153 ; 1024 bytes decompressed
 # Also the sprites of BrokenStaffA.
 g4bppcMapBattleMagicWarpStaffSprites g4bppcMapBattleMagicWarpStaffSprites ; 1024 bytes decompressed
 g4bppcMapBattleMagicRescueStaffSprites g4bppcMapBattleMagicRescueStaffSprites ; 1024 bytes decompressed
+# Unreferenced.
 g4bppcMapBattleMagicSpritesUnusedD6564B g4bppcMapBattleMagicSpritesUnusedD6564B ; 1024 bytes decompressed
 g4bppcMapBattleMagicWindSprites g4bppcMapBattleMagicWindSprites ; 1024 bytes decompressed
 g4bppcMapBattleMagicElwindSprites g4bppcMapBattleMagicElwindSprites ; 1024 bytes decompressed
@@ -185,6 +215,7 @@ g4bppcMapActionEffectGfx1 g4bppcMapActionEffectGfx1 ; 1024 bytes decompressed
 g4bppcMapActionEffectGfx2 g4bppcMapActionEffectGfx2 ; 2048 bytes decompressed
 g4bppcMapBattleCritSibling g4bppcMapBattleCritSibling ; 1024 bytes decompressed
 g4bppcMapBattleCritLover g4bppcMapBattleCritLover ; 1024 bytes decompressed
+# Unreferenced.
 g4bppcMapBattleCritUnused4 g4bppcMapBattleCritUnused4 ; 1024 bytes decompressed
 g4bppcMapBattleCritTriangleAttack g4bppcMapBattleCritTriangleAttack ; 1024 bytes decompressed
 g4bppcMapMagicCutsceneGfx2 g4bppcMapMagicCutsceneGfx2 ; 2048 bytes decompressed

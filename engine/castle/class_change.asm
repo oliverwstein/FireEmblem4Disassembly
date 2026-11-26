@@ -212,9 +212,9 @@
         rep #$30
         lda #$1809
         sta $4300,b
-        lda #$8A00
+        lda #(`aClassChangeVRAMClearByte)<<8
         sta $4303,b
-        lda #$EE80
+        lda #<>aClassChangeVRAMClearByte
         sta $4302,b
         lda #$0020
         sta $4305,b
@@ -364,9 +364,17 @@
 
       aClassChangeData8AEE7FUnused ; 8A/EE7F
 
-        .word 0
+        ; Unreferenced.
+        .byte 0
+
+      aClassChangeVRAMClearByte ; 8A/EE80
+
+        ; The fixed DMA source rlClassChangeScreenSetup clears 32 bytes of VRAM at word $2400 with.
+        .byte 0
 
       aClassChangeData8AEE81Unused ; 8A/EE81
+
+        ; Unreferenced.
 
         .word $001A, $0017, $001C, $001A
 
