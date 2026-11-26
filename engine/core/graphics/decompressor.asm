@@ -76,8 +76,9 @@
 
         ; Queues the decompression of the stream at lR18 to lR19, writing a 0 source after
         ; it to end the queue. The queue (aDecompressionArray, $20 bytes) holds five
-        ; entries; the fifth's end marker reaches bFrameCounterByOnes, and nothing checks
-        ; for a sixth. With the screen blanked the queue runs at once.
+        ; entries; the fifth's end marker spills onto bFrameCounterByOnes and
+        ; bFrameCounterByThrees, and nothing checks for a sixth. With the screen
+        ; blanked the queue runs at once.
 
         php
         phx

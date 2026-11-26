@@ -87,7 +87,7 @@
         .autsiz
         .databank ?
 
-        ; Compares $88/8888-$88/8907 with aSpriteExtBuffer. If any word differs (a cold start), writes the signature and returns. If all match, writes the SRAM anti-tamper mark and hangs (rlShowAntiTamperScreen); _8063 is the hang used when the mark is already there (rlShowAntiTamperScreenAgain).
+        ; Compares $88/8888-$88/8907 with $1E00-$1E7F (aSpriteExtBuffer and the 96 bytes after it). If any word differs (a normal boot), returns at once via rlWriteResetSignature._8029 (rtl) without writing. If all 128 bytes match (or when entered at _803E from rlBootInitAndCheckHardware), _803E writes the signature, clears "ELM0", checks/writes SRAM_ANTI_TAMPER_MARK, and hangs on rlShowAntiTamperScreen (or _8063 / rlShowAntiTamperScreenAgain if the mark is already set).
 
         ldx #$0000
 
@@ -216,8 +216,9 @@
 
         ; Another copy of the code checksum check (include/Checksums.h), with its
         ; sums in aCodeChecksumsCopy88. The save menu screen calls it (bank $91,
-        ; twice) and rsStartChapterMap calls into its middle (._806A). When a sum
-        ; does not match, it calls $878063 and the routines below.
+        ; twice). When a sum does not match, it calls $87/8063 (which never returns).
+        ; ._806A is a separate map-layout and animation helper called by
+        ; rsStartChapterMap that sits immediately after _8066.
 
         pha
         lda aCodeChecksumsCopy88.ChecksEnabled

@@ -532,7 +532,8 @@
         .databank ?
 
         ; When wCount has changed since the last sort: sorts the entries and programs the
-        ; IRQ of the topmost (the highest index). rsMapVBlank calls it every frame.
+        ; IRQ of the topmost (the highest index). rsMapVBlank, rsRunBattleSceneVBlank and
+        ; rsRunTitleScreenVBlank call it every frame.
 
         sei
         phb

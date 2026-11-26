@@ -236,7 +236,7 @@
     bDecompressionArrayFlag .byte ?     ; $000448
     aDecompressionArray .fill $20       ; $000449
       ; The decompression queue: 6-byte entries (source, destination), ended by a 0
-      ; source. Five fit; the fifth's end marker reaches bFrameCounterByOnes.
+      ; source. Five fit; the fifth's end marker spills onto bFrameCounterByOnes and bFrameCounterByThrees.
     bFrameCounterByOnes .byte ?         ; $000469
       ; +1 a frame (rlIncreaseFrameCounters). Its only reader is rlInitRNArray, which
       ; runs before the first VBlank, so it reads 0.

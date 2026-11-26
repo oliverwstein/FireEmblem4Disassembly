@@ -8,7 +8,7 @@
   ;            ends by adding one to wGameStateRoutine1, so that...
   ;   _STEP    runs every frame from the next one on, usually by calling the
   ;            routine for wGameStateStep from its own table.
-  ; The battle scene, the map battle and the unused screen have only a setup and
+  ; The battle scene, the title screen and the unused screen have only a setup and
   ; a step (wGameStateRoutine2 is 0). $1C-$1F point into zero padding.
 
   GAMESTATE_NONE                       = $00
