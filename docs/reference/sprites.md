@@ -27,7 +27,9 @@ Data: `aSpriteBuffer` (`$1C00`, 512 bytes), `aSpriteExtBuffer` (`$1E00`, 32 byte
 2. the game state routines and the engines push sprites from offset 0 up;
 3. at the end of the VBlank routine, `rlHideSprites` moves every entry from `wNextFreeSpriteOffset` to the end to Y = 240, below the screen, and sets the offset back to 0.
 
-Sprites pushed earlier get lower OAM numbers, and so are drawn in front of later ones. The offset wraps at 512 bytes: a 129th sprite overwrites the first, and after exactly 128 the offset is 0 again, so `rlHideSprites` hides them all. Nothing checks the count.
+Sprites pushed earlier get lower OAM numbers, and so are drawn in front of later ones. In `rsMapVBlank` the order is: the game state routines, the per-frame engines (active sprites), the moving unit (`rlDrawMovingUnitSprite`), the standing units (`rlDrawDeployedUnitMapSprites`).
+
+`rlHideSprites` hides with an unrolled run of 64 `stx` instructions (one per entry's Y byte, with the direct page set to the buffer's first or second half) and jumps into it at `wNextFreeSpriteOffset`, so it runs one store per unused entry. `rlPushToOAMBuffer` sets the extra bits through two tables indexed by the buffer offset: `aOAMSizeBitTable` (the ext byte's address and the size mask) and `aOAMUpperXBitTable` (the X bit 8 mask). The offset wraps at 512 bytes: a 129th sprite overwrites the first, and after exactly 128 the offset is 0 again, so `rlHideSprites` hides them all. Nothing checks the count.
 
 **A sprite array** (`structSpriteArray`) is a word count followed by 5-byte entries (`structSpriteEntry`):
 
@@ -41,7 +43,7 @@ Sprites pushed earlier get lower OAM numbers, and so are drawn in front of later
 
 ## Map units: band quotas and flicker
 
-The hardware shows at most 34 sprite tiles on a scanline. The map can have more units on one row than that, so `rlDrawDeployedUnitMapSprites` ([map_sprites.asm](../../engine/map/map_sprites.asm)) pushes them through a quota per 16-line band of the screen:
+The hardware shows at most 34 sprite tiles (8-pixel slices) on a scanline, so 17 sprites 16 pixels wide. The map can have more units on one row than that, so `rlDrawDeployedUnitMapSprites` ([map_sprites.asm](../../engine/map/map_sprites.asm)) pushes them through a quota per 16-line band of the screen:
 
 1. **`rlBeginOAMScanlineFrame`** counts the sprites already in the buffer on each scanline (`rsCountSpritesPerScanline`, 256 bytes at `$7FEC88`): 1 per line for an 8 × 8 sprite, 2 for a 16 × 16, which is two tiles wide.
 2. **`rsUpdateOAMBandSpriteLimits`** gives each of the 16 bands a quota of 16 × 16 sprites from its busiest line p: 17 - (p + 1) / 2, or 17 when nothing is in the buffer. A lower quota takes effect at once. A higher one waits until the band's cooldown (`aOAMStripCooldownTimers`) runs out: `wOAMStripCooldownReload` frames, 1 normally and `$30` after `rlEnableOAMScanlineFlicker`, which the map battle calls.

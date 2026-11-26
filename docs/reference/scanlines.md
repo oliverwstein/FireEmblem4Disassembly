@@ -40,7 +40,7 @@ Data: `aHDMASystem` (`$15E7`-`$168E`), `aIRQSystem` (`$168F`-`$1719`), `bHDMAPen
 
 It leaves the live channels in `bHDMAPendingChannels`.
 
-**The hand-off.** The next VBlank routine calls `rlHandlePossibleHDMA` after the DMA queue: it starts the channels in `bDMAPendingChannels`, then for each live channel writes the entry's table address, register, `DMAP` and indirect bank to the channel's registers (`rlHDMAArrayEngineProcessHDMAArray`) and enables them in `HDMAEN`. A VBlank routine that does not call it has no HDMA; `rsDefaultVBlankRoutine` does not. Since `rlProcessDMAStructArray` turns off `HDMAEN` and uses channels 0 and 1, the DMA queue has to run before the hand-off, as it does in every VBlank routine that has both.
+**The hand-off.** The next VBlank routine calls `rlHandlePossibleHDMA` after the DMA queue: it starts the channels in `bDMAPendingChannels`, then for each live channel writes the entry's table address, register, `DMAP` and indirect bank to the channel's registers (`rlHDMAArrayEngineProcessHDMAArray`) and enables them in `HDMAEN`. A VBlank routine that does not call it has no HDMA; `rsDefaultVBlankRoutine` does not. The table address is written to the channel every VBlank, so an on-cycle routine switches tables by changing `aOffset`. Since `rlProcessDMAStructArray` turns off `HDMAEN` and uses channel 1 (and `rlDMAPaletteAndOAMBuffer` channels 0 and 1), the DMA queue has to run before the hand-off, as it does in every VBlank routine that has both.
 
 **The script.** A word from `$8000` up is a command; any other word starts an `HDMA_YIELD`: a frame count and the table to use for those frames. A script of yields is an animation of tables.
 
@@ -59,6 +59,8 @@ It leaves the live channels in `bHDMAPendingChannels`.
 | `HDMA_SET_TABLE_BANK b` | set the table's bank | 1 |
 
 Most entries halt at once (`HDMA_HALT` is used 36 times, every other command once or not at all) and do their work in the on-cycle routine, rewriting their tables in RAM each frame. About 70 places create entries; the battle scene's effects (`effects.asm`, `screen.asm`, `hud.asm`, `script.asm`), the opening credits, the title, the windows and menus, the dialogue box, the phase banner and the castle's shops are the main users.
+
+**Double-buffered tables.** A table built during a frame is read during the next, since the channel is programmed at the start of VBlank. The dialogue box's unfolding and folding entries (`aDialogueBoxUnfoldingHDMA`, `aDialogueBoxFoldingHDMA`, indirect, on `BG2VOFS`) rebuild their table each frame into one of two copies, `aDialogueBoxHDMAIndirectTableEven` or `...Odd` by bit 0 of `wVBlankEnabledFramecount`, and point `aOffset` at it (`rsDialogueBoxHDMABuildTables`); the unfolding counts `wDialogueBoxHDMACycleCounter` 0-7, the folding 6-0, then each sets `wDialogueBoxHDMAStatus` to `$FFFF`.
 
 **Direct tables.** `rlBuildHDMADirectTableEntries` writes the 3-byte entries of a direct table (a line count and a word) at `lR18`. A run of `$7F` lines or more is split into `$78` lines and the rest, since a count of `$80` or more means repeat mode.
 
@@ -91,6 +93,8 @@ The engine's per-frame routine in `aTaskTable` does nothing (`rlIRQEngineStub`).
 4. it moves to the next entry down, wrapping from 0 to the topmost, and writes that entry's H and V times and routine (`rsIRQEngineProgramNextEntry`).
 
 **The order.** `rsIRQEngineSortEntries` orders the entries by V time, highest first, so index `wCount - 1` is the top of the screen and the IRQs walk down the indexes. It runs only when `wCount` has changed since the last sort (`rlIRQEngineSyncAndSort`, called by `rlEnableIRQEngine` and by `rsMapVBlank` every frame). The sort makes one compare-and-swap pass at each gap from half the count down to 1. That does not order every arrangement: two of the six orders of three entries come out unsorted, and more of larger sets. Every set the game creates is ordered by it, because they are created in order or close to it; the battle scene's (`$0E`, `$CF`, `$7E`, `$9C`, `$A1`) comes out right.
+
+**The users.** Every IRQ script in the game is a single `rsIRQCodeHalt`; the entries differ only in line and routine. The map's `aMapRowUploadIRQ` (H `$68`, line `$D7`, `rlIRQUploadMapRowAndColumn`). The world map's `aWorldMapTopIRQ`/`BottomIRQ` and the title screen's `aTitleScreenTopIRQ`/`BottomIRQ`. The battle scene's five, at H `$60`: line `$0E` writes `bBattleSceneScreenINIDISP` (the scene's step writes `INIDISP` 0 every frame, so the lines above are black), line `$CF` forces blank and turns off HDMA, and lines `$7E`, `$9C` and `$A1` switch the layers, tilemap and tile bases, scroll offsets, windows and color math for the HUD by `bBattleSceneBG3Mode`. Each battle scene handler waits for HBlank (`HVBJOY` bit 6) before writing.
 
 **The script.** A word from `$8000` up is a command (`rsIRQCode*`); any other word is a count of IRQs to sleep, followed by a new V time for the entry. So a script can move its interrupt from frame to frame; a moved entry is re-sorted only when the count changes.
 
