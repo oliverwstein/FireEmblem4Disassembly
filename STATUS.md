@@ -112,6 +112,9 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | Five event flags still `Unknown` after Gemini's pass (STATUS said none were left): now `FlagChapter03_MadinoSeizedEvent`, `...SylvaleSeizedEvent`, `FlagChapter04_Group19LeaderArrived`, `FlagChapter06_Group27Charging`, `FlagChapter08_ConnachtSeized` (the last two are set and never read) | events/Chapter03-08 | `aee1163` |
 | AI.h said the AI chapter-flag commands don't work for other chapters. The checks (`$20`/`$21`) read such a flag as unset, but the setters (`$15`/`$16`) ignore the failed lookup and change the active chapter's flag, so Chapter 6's group 27, which names Chapter01, does set its flag | include/AI.h, events/Chapter06.asm | `aee1163` |
 | `tools/palette_effects.py` reported commented labels as skipped (it stepped over blank lines only) | tools/ | `4fb0dd1` |
+| 47 raw ROM addresses in code that `raw_addresses.py` and `code_pointers.py` missed: 25 `lda $XXXX,b,y` reads in a ROM data bank, 7 `ldy #$XXXX` sprite arrays, 11 DMA sources, 4 long pointers stored with `sta @l`; plus 6 inline palette sources in `aDecompressionBuffer`. Now labels; `tools/bank_addresses.py` lists any left | engine/ (19 files) | `90a5266` |
+| Seven zero words commented "Unused: 2 zero bytes" are the fill value of fixed-source DMAs that clear VRAM (now `_DMAFillZero`); `rlCastleFillVRAM2000`/`2400` said they read their rtl byte | keepers.asm, credits.asm, map_display.asm, world_map.asm | `90a5266` |
+| Data hidden inside other labels: the save menu's "word table" `aSaveMenuRowSprites` is a pointer table and three sprite arrays; `aCastleHandCursorSprite` was the end of `aCastleHandCursorOffsets`; `aCastleCourtyardAllegiancePalettes` was `aCastleGridCursorY+48`. `aSkillWindowNoHoldersText` said `8B/DFAA?` (it is `DFA9`) | save_menu.asm, lists.asm, courtyard.asm, skill_window.asm | `90a5266` |
 
 **In the documentation** (reference pages, guide drafts):
 
