@@ -3985,7 +3985,7 @@
         clc
         adc #$0100
         sta aBattleSceneSpellWindowSlots.wX,x
-        lda aBattleSceneBGAnimSlots.bXFraction
+        lda aBattleSceneBGAnimSlots.bYFraction
         clc
         adc #$8000
         eor #$FFFF
@@ -9579,7 +9579,7 @@
         .autsiz
         .databank ?
 
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0002
         bne _DDD9
         lda aBattleSceneBGAnimSlots.bFlags
@@ -9625,7 +9625,7 @@
         sta wBufferBG1VOFS
 
         _DDD9
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0004
         beq _DDF8
         lda aBattleSceneBG2AnimSlot.wX
@@ -9638,7 +9638,7 @@
         sta wBufferBG2VOFS
 
         _DDF8
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0008
         bne _DE6E
         lda bBufferBGMODE
@@ -9824,7 +9824,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -9835,7 +9835,7 @@
         sta aBattleSceneBGAnimSlots.wX,x
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationGetHitHeight
         sec
@@ -9883,7 +9883,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -9894,7 +9894,7 @@
         sta aBattleSceneBGAnimSlots.wX,x
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationGetHitHeight
         sec
@@ -9942,7 +9942,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -9953,7 +9953,7 @@
         sta aBattleSceneBGAnimSlots.wX,x
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationGetHitHeight
         clc
@@ -10001,7 +10001,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -10012,7 +10012,7 @@
         sta aBattleSceneBGAnimSlots.wX,x
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationGetHitHeight
         clc
@@ -10060,7 +10060,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -10071,7 +10071,7 @@
         sta aBattleSceneBGAnimSlots.wX,x
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         ldx wBattleAnimationDefenderOffset,b
         jsl rlBattleAnimationGetHitHeight
         sec
@@ -10117,7 +10117,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -10128,7 +10128,7 @@
         sta aBattleSceneBGAnimSlots.wX,x
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         ldx wBattleAnimationDefenderOffset,b
         jsl rlBattleAnimationGetHitHeight
         sec
@@ -10175,11 +10175,11 @@
         sta aBattleSceneBGAnimSlots.bFlags,x
         rep #$20
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         lda #$0100
         sta aBattleSceneBGAnimSlots.wX,x
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         lda #$0048
         clc
         adc #$0080
@@ -10216,13 +10216,13 @@
         sta aBattleSceneBGAnimSlots.bFlags,x
         rep #$20
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         lda #$0100
         clc
         adc #$0080
         sta aBattleSceneBGAnimSlots.wX,x
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         lda #$0048
         clc
         adc #$0080
@@ -10259,11 +10259,11 @@
         sta aBattleSceneBGAnimSlots.bFlags,x
         rep #$20
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         lda #$0100
         sta aBattleSceneBGAnimSlots.wX,x
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         sta aBattleSceneBGAnimSlots.wY,x
         plx
         rts
@@ -10299,7 +10299,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         sec
@@ -10312,7 +10312,7 @@
         sta aBattleSceneBGAnimSlots.wX,x
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         ldx wBattleAnimationDefenderOffset,b
         sec
         sbc #$0008
@@ -10357,7 +10357,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -10367,7 +10367,7 @@
         plx
         sta aBattleSceneBGAnimSlots.wX,x
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         lda #$0064
         clc
         adc #$0080
@@ -10405,7 +10405,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -10415,7 +10415,7 @@
         plx
         sta aBattleSceneBGAnimSlots.wX,x
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         lda #$0064
         clc
         adc #$0088
@@ -10452,11 +10452,11 @@
         sta aBattleSceneBGAnimSlots.bFlags,x
         rep #$20
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         lda #$0100
         sta aBattleSceneBGAnimSlots.wX,x
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         lda #$0048
         clc
         adc #$00F0
@@ -10493,11 +10493,11 @@
         sta aBattleSceneBGAnimSlots.bFlags,x
         rep #$20
         lda bBattleSceneCameraXFraction
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         lda wBattleSceneCameraX
         sta aBattleSceneBGAnimSlots.wX,x
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         lda wBattleSceneCameraY
         sec
         sbc #$0080
@@ -10569,7 +10569,7 @@
         rep #$20
         phx
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         clc
@@ -10579,7 +10579,7 @@
         plx
         sta aBattleSceneBGAnimSlots.wX,x
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         lda #$0064
         clc
         adc #$0080
@@ -10619,12 +10619,12 @@
         rep #$20
         ldy #$0002
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         lda [lR18],y
         sta aBattleSceneBGAnimSlots.wX,x
         ldy #$0004
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         lda [lR18],y
         sta aBattleSceneBGAnimSlots.wY,x
         ply
@@ -10671,7 +10671,7 @@
         and #$00FF
         jsl rlBattleSceneCalcBGSlotVelocity
         lda #$0000
-        sta $7FE47E,x
+        sta aBattleSceneBGAnimSlots.wYVelocity,x
         ply
         plx
         rts
@@ -10953,12 +10953,12 @@
         plx
         and #$00FF
         xba
-        sta $7FE47C,x
+        sta aBattleSceneBGAnimSlots.wXVelocity,x
         inc y
         lda [lR18],y
         and #$00FF
         xba
-        sta $7FE47E,x
+        sta aBattleSceneBGAnimSlots.wYVelocity,x
         inc y
         lda [lR18],y
         sta $7FE480,x
@@ -10988,7 +10988,7 @@
         phx
         phy
         jsr rsBattleSceneSetBGSlotVelocity
-        lda aBattleSceneBGAnimSlots.bWait
+        lda aBattleSceneBGAnimSlots.bXFraction
         sta $7FE4B4
         lda aBattleSceneBGAnimSlots.wX
         clc
@@ -11020,7 +11020,7 @@
         phx
         phy
         jsr rsBattleSceneSetBGSlotVelocity
-        lda aBattleSceneBGAnimSlots.bWait
+        lda aBattleSceneBGAnimSlots.bXFraction
         sta $7FE4B4
         lda aBattleSceneBGAnimSlots.wX
         clc
@@ -11074,7 +11074,7 @@
         and #$00FF
         jsl rlBattleSceneCalcBGSlotVelocity
         lda #$0000
-        sta $7FE47E,x
+        sta aBattleSceneBGAnimSlots.wYVelocity,x
         ply
         plx
         rts
@@ -11120,7 +11120,7 @@
         xba
 
         _E67F
-        sta $7FE47C,x
+        sta aBattleSceneBGAnimSlots.wXVelocity,x
         lda #1,s
         sta wR14
         jsl rlUnsignedDivide16By16R13
@@ -11160,7 +11160,7 @@
         inc a
 
         _E6CF
-        sta $7FE47E,x
+        sta aBattleSceneBGAnimSlots.wYVelocity,x
         pla
         ply
         plx
@@ -11637,10 +11637,10 @@
         phx
         tyx
         jsr rsBattleSceneStepBGSlotMirror
-        lda $7FE47E
+        lda aBattleSceneBGAnimSlots.wYVelocity
         clc
         adc #$0010
-        sta $7FE47E
+        sta aBattleSceneBGAnimSlots.wYVelocity
         plx
         rts
 
@@ -11693,7 +11693,7 @@
         pha
         lda $7FE4B5
         pha
-        lda aBattleSceneBGAnimSlots.bWait
+        lda aBattleSceneBGAnimSlots.bXFraction
         pha
         lda aBattleSceneBGAnimSlots.wX
         sta $7FE4B5
@@ -11702,11 +11702,11 @@
         pla
         sta aBattleSceneBGAnimSlots.wX
         pla
-        sta aBattleSceneBGAnimSlots.bWait
-        lda $7FE47C
+        sta aBattleSceneBGAnimSlots.bXFraction
+        lda aBattleSceneBGAnimSlots.wXVelocity
         eor #$FFFF
         inc a
-        sta $7FE47C
+        sta aBattleSceneBGAnimSlots.wXVelocity
         sep #$20
         lda bBufferBG1SC
         eor #$08
@@ -11769,12 +11769,12 @@
         .autsiz
         .databank ?
 
-        lda $7FE47C,x
+        lda aBattleSceneBGAnimSlots.wXVelocity,x
         bmi _E9DE
-        lda aBattleSceneBGAnimSlots.bWait,x
+        lda aBattleSceneBGAnimSlots.bXFraction,x
         clc
-        adc $7FE47C,x
-        sta aBattleSceneBGAnimSlots.bWait,x
+        adc aBattleSceneBGAnimSlots.wXVelocity,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         bcc _EA00
         sep #$20
         lda aBattleSceneBGAnimSlots.wX+1,x
@@ -11789,10 +11789,10 @@
         eor #$FFFF
         inc a
         pha
-        lda aBattleSceneBGAnimSlots.bWait,x
+        lda aBattleSceneBGAnimSlots.bXFraction,x
         sec
         sbc #1,s
-        sta aBattleSceneBGAnimSlots.bWait,x
+        sta aBattleSceneBGAnimSlots.bXFraction,x
         pla
         bcs _EA00
         sep #$20
@@ -11803,16 +11803,16 @@
         rep #$20
 
         _EA00
-        lda $7FE47E,x
+        lda aBattleSceneBGAnimSlots.wYVelocity,x
         cmp #$8000
         bne _EA31
         lda wBattleSceneFrame
         bit #$0001
         beq _EA79
-        lda aBattleSceneBGAnimSlots.bXFraction,x
+        lda aBattleSceneBGAnimSlots.bYFraction,x
         sec
         sbc #$0100
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         bcs _EA79
         sep #$20
         lda aBattleSceneBGAnimSlots.wY+1,x
@@ -11824,12 +11824,12 @@
 
 
         _EA31
-        lda $7FE47E,x
+        lda aBattleSceneBGAnimSlots.wYVelocity,x
         bmi _EA57
-        lda aBattleSceneBGAnimSlots.bXFraction,x
+        lda aBattleSceneBGAnimSlots.bYFraction,x
         clc
-        adc $7FE47E,x
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        adc aBattleSceneBGAnimSlots.wYVelocity,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         bcc _EA79
         sep #$20
         lda aBattleSceneBGAnimSlots.wY+1,x
@@ -11844,10 +11844,10 @@
         eor #$FFFF
         inc a
         pha
-        lda aBattleSceneBGAnimSlots.bXFraction,x
+        lda aBattleSceneBGAnimSlots.bYFraction,x
         sec
         sbc #1,s
-        sta aBattleSceneBGAnimSlots.bXFraction,x
+        sta aBattleSceneBGAnimSlots.bYFraction,x
         pla
         bcs _EA79
         sep #$20
@@ -13702,9 +13702,9 @@
         ; Unreferenced.
 
         sep #$20
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         ora #$04
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
         lda #$0007
         jsl rlHDMAEngineFreeEntryByIndex
@@ -13725,9 +13725,9 @@
         ; Unreferenced.
 
         sep #$20
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         and #$FB
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
         jsl rlBattleSceneCreateLetterboxHDMA
         jsl rlBattleSceneEndScriptRoutine

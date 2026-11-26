@@ -10,12 +10,12 @@ These sheets are stored uncompressed and copied to VRAM whole by `.structDMAToVR
 - `MenuCursorSprites.4bpp.png`: `aWindowPalette` OAM palette 0 (`$DE/0100`)
 - `SkillIcons.4bpp.png`: `aWindowPalette` palette 6 (`$DE/00C0`)
 - `DialogueBoxFrames.4bpp.png`, `ItemStatLabels.2bpp.png`: `aDialogueBoxPalette` (`$DE/6200`)
-- `WeaponTypeIcons.4bpp.png`: `aUnknownDD7FD0` (`$DD/7FD0`, copied by `rlUnitWindowCopySpritePalette2`)
-- `StatusScreenHolyBloodIcons.4bpp.png`: `aUnknownDE2CA0` (`$DE/2CA0`, OAM palette 7 on the holy blood page)
+- `WeaponTypeIcons.4bpp.png`: `aUnitWindowSpritePalette2` (`$DD/7FD0`, copied by `rlUnitWindowCopySpritePalette2`)
+- `StatusScreenHolyBloodIcons.4bpp.png`: `aStatusScreenHolyBloodOBJPalette` (`$DE/2CA0`, OAM palette 7 on the holy blood page)
 - `ShopScreen.4bpp.png`: `aCastleCourtyardBGPalettes` BG palette 0 (`$8C/9800`)
 - `CursorSprites.4bpp.png`: `aMapAndCastleSpriteOAMPalettes` OAM palette 0 (`$8C/9D00`)
 - `ConversationSprites.4bpp.png`: `aCastleVendorOAMPalettes` OAM palette 1 (`$8C/9720`)
-- `BlankTile.2bpp.png`: `gcUnknown9CBFA1` BG palette 0 (decompressed by `rlLoadSaveMenuScreen`)
+- `BlankTile.2bpp.png`: `acSaveMenuPalettes` BG palette 0 (decompressed by `rlLoadSaveMenuScreen`)
 - `MapBattleLevelUpText.4bpp.png`, `MapBattleStatNames.4bpp.png`: `aMapBattleLevelUpPalettes + $100` (`$9C/FD00`, OAM palette 0)
 - `MapBattlePavise.4bpp.png`: `aMapBattlePaviseColors` (`$9E/D7E8`)
 - `GiveGoldSprites.4bpp.png`: `aGiveGoldCoinOAMPalette` (`$9E/DDC8`)
@@ -42,7 +42,7 @@ The names follow what the sheets show and who loads them. `StatusScreenHolyBlood
 
 ## Blocks left as labelled slices
 
-These are tilemaps, not tiles: each is copied into a layer's tilemap area in the layout in force. Most are named after the screen that loads them (`gfx/ui/tilemaps/*.bin`); `$D9/7940` stays `gUnknownD97940` because what it is (tiles or tilemap) is not settled, and the unreferenced blocks keep their addresses.
+These are tilemaps, not tiles: each is copied into a layer's tilemap area in the layout in force. Most are named after the screen that loads them (`gfx/ui/tilemaps/*.bin`); `$D9/7940` stays `gWorldMapDataD97940` because what it is (tiles or tilemap) is not settled, and the unreferenced blocks keep their addresses.
 
 | Block | Bytes | Copied to |
 |---|---|---|

@@ -82,13 +82,14 @@ def main():
     ap.add_argument('--sheet')
     args = ap.parse_args()
     from PIL import Image
+    from gen_offsets import read_csv_names
     lab = {}
     for line in open(os.path.join(ROOT, 'labels.txt')):
         p = line.split()
         if len(p) == 3 and ':' not in p[2]:
             lab.setdefault(p[2].lstrip('.'), int(p[1], 16))
     rom = Rom(args.rom)
-    classes, items = names('data/class/ClassData.csv'), names('data/offset/ItemDataOffsets.csv')
+    classes, items = names('data/class/ClassData.csv'), read_csv_names('data/item/ItemData.csv', 2)
     records = [rom.raw(lab['aBattleAnimationLookup'] + 8 * k, 8) for k in range(0x670 // 8)]
     if args.record is not None:
         k = args.record

@@ -108,7 +108,7 @@ The limits:
 
 - **16 timeline slots**, **13 title sprites**, and a **16-entry afterimage ring** per sprite.
 - **12 map-battle demos** (6 rank tiers) and **32 battle-scene demos** (16 completion tiers).
-- **Unreached title leftovers:** 13 unused slot installers/steps in [engine/title/title_scenes.asm](../../engine/title/title_scenes.asm) (such as `rlRestartTitleIntro` and `rlStopTitleSprite`) plus `aUnknown9BFE13`.
+- **Unreached title leftovers:** 13 unused slot installers/steps in [engine/title/title_scenes.asm](../../engine/title/title_scenes.asm) (such as `rlRestartTitleIntro` and `rlStopTitleSprite`) plus `aTitleSpriteScriptsAndFramesUnused`.
 
 ## Where it lives in the source
 

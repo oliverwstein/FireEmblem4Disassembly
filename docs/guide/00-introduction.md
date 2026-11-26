@@ -224,7 +224,7 @@ A few conventions make the files much easier to scan.
 | `a` | a table or block of data, in ROM or RAM | `aGameStateRoutines`, `aDeploymentTable` |
 | `w` / `b` / `l` | a RAM variable that is a word / byte / long (3 bytes) | `wGameStateStep`, `bSoundFlags` |
 | `g` / `gc` | graphics / compressed graphics | |
-| `Unknown` | not yet understood; the hex is its address | `aUnknown9BFE13` |
+| `Unused` (suffix) | nothing in the build reaches it; a hex part is its address | `aTitleSpriteScriptsAndFramesUnused`, `acDataC00000Unused` |
 
 **Each routine is in a `.section`**, which lets the assembler place it, and move it when something before it grows. The comment after a label (`; 80/9B01`) is where it sits in the original ROM. That's useful with an emulator, but nothing depends on it.
 

@@ -43,5 +43,5 @@ The ranking screen (`rlShowEpilogueRankingScreen`) shows the tactics, experience
 ## Open questions
 
 - What the hidden row revealed by the secret code (`$7E/8108` → VRAM `$D580`) displays visually on screen (the 16 letters at `aEpiloguePairingPassword` are the pairing password built by `rsCollectEpiloguePairingsForCode`, `rsPackEpiloguePairingsChecksum`, and `rsEncodeEpiloguePassword` using the 9-byte key `"FireEmblm"` at `aEpiloguePasswordKey`).
-- Three debug button handlers are unreached (`rsEpilogueDebugButtonsUnused`, `rsEpilogueDebugButtons2Unused`, and `rlSetUpEpilogueTextWindowUnused`'s caller), and `aUnknown8DADFA`'s HDMA info is unused.
+- Three debug button handlers are unreached (`rsEpilogueDebugButtonsUnused`, `rsEpilogueDebugButtons2Unused`, and `rlSetUpEpilogueTextWindowUnused`'s caller), and `aEpilogueRecordsBrightnessHDMAInfo`'s HDMA info is unused.
 - Step 5 draws three of the credits sprites during the world map event; what they are on screen.

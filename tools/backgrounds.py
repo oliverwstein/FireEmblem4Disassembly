@@ -130,7 +130,8 @@ def render(rom, labels, by_addr, out, scale):
         save(img, os.path.join(out, 'battle', f'{i:02X}_{by_addr.get(pal, "").replace("aBattleBackground", "").replace("Palette", "")}.png'))
 
     t = labels['aMapBattleMagicBackgrounds']
-    items = [l.split(',')[0] for l in open(os.path.join(ROOT, 'data', 'offset', 'ItemDataOffsets.csv')).read().split('\n')[1:] if l]
+    from gen_offsets import read_csv_names
+    items = read_csv_names('data/item/ItemData.csv', 2)  # item names in ID order
     for i in range(42):
         r = t + 9 * i
         g, m, pal = rom.long(r), rom.long(r + 3), rom.long(r + 6)

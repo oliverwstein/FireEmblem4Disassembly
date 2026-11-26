@@ -76,6 +76,6 @@ Choosing a slot only sets `aSave.wMenuOperation`; `rlHandleSaveFile` (run from t
 ## Open questions
 
 - Whether the unused row types 1 (中断から始める, resume from a suspend) and 7-9 (保存, 消す, やめる) were for; no code builds them into a menu.
-- The save menu's HDMA tables (`aUnknown91E0A0`, `aUnknown91E190`) and whether the second entry (`aUnknown91E185`) is ever created.
-- What the `Unknown` fields of `structSaveDataEntry` hold (`Unknown0006`, `Unknown0013`, the unnamed words after `UnitLosses`).
+- The save menu's HDMA tables (`aSaveMenuHDMATableUnused`, `aReviveScreenBG2HOFSHDMATable`) and whether the second entry (`aReviveScreenBG2HOFSHDMAInfo`) is ever created.
+- What the `Reserved` fields of `structSaveDataEntry` hold (`Reserved0006`, `Reserved0013`, the unnamed words after `UnitLosses`).
 - Where saves in the older format (`$1206`) came from.

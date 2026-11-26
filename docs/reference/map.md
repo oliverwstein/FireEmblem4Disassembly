@@ -168,7 +168,7 @@ At the end of chapter 5, after Arvis attacks Sigurd, `procFirstGenerationEnding`
 
 ## Open questions
 
-- `wUnknown00075A`: bit 1 adds a second layer of map tiles from `$7F6400` into `$065C`, which nothing seems to upload.
+- `wMapDisplayFlags`: bit 1 adds a second layer of map tiles from `$7F6400` into `$065C`, which nothing seems to upload.
 - `wUnitSelectedFlag` takes the values 1 and 2 in an unused routine (`rlMoveFreeMapCursorUnused`, a different cursor frame for 2); only 1 is used.
 - The help command's relocation (type 7 with `wR0` and `wR1`) and why the helper gets 100 experience.
 - What the chapter 5 flags `$14`-`$2C` record (the ending only reads them).

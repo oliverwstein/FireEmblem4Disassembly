@@ -1605,18 +1605,18 @@
         bit #$0001
         beq _8DCB
         sep #$20
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         ora #$01
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
         bra _8DD9
 
 
         _8DCB
         sep #$20
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         and #$FE
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
 
         _8DD9
@@ -1641,9 +1641,9 @@
         jsr rsBattleSceneGetForeground
         bcc _8E0C
         sep #$20
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         and #$FD
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
         sep #$20
         lda bBufferTM
@@ -1692,9 +1692,9 @@
 
         _8E4C
         sep #$20
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         ora #$02
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
         sep #$20
         lda bBufferTM
@@ -1814,9 +1814,9 @@
         cmp #$0006
         beq _8FAA
         sep #$20
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         ora #$02
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
         sep #$20
         lda bBufferTM

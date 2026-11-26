@@ -15,7 +15,7 @@
         .autsiz
         .databank ?
 
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0004
         beq _90FF
         jml _9196
@@ -41,7 +41,7 @@
         inc x
 
         _912A
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0001
         bne _9146
         lda #$0070
@@ -109,7 +109,7 @@
 
         phx
         phy
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0001
         beq _920D
         lda wBattleSceneCameraX
@@ -123,7 +123,7 @@
         phx
         phy
         pha
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0001
         bne _91C1
         pla
@@ -370,7 +370,7 @@
         stz aBattleSceneCombatant1.HPSpeed,b
         sep #$20
         lda #$10
-        sta $7FE1C0
+        sta bBattleSceneHP1FlashTimer
         rep #$20
         bra _934C
 
@@ -387,16 +387,16 @@
 
 
         _9352
-        lda $7FE1C0
+        lda bBattleSceneHP1FlashTimer
         and #$00FF
         beq _937B
         dec a
         sep #$20
-        sta $7FE1C0
+        sta bBattleSceneHP1FlashTimer
         rep #$20
         beq _9375
         tax
-        lda aBattleSceneHPBarDigitOffsets,x
+        lda aBattleSceneHPFlashPattern,x
         and #$00FF
         bne _9375
         lda #$3540
@@ -3024,7 +3024,7 @@
         sta aBattleSceneBGAnimSlots.bFlags
         rep #$20
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bWait
+        sta aBattleSceneBGAnimSlots.bXFraction
         lda wBattleAnimation2X,b
         and #$01FF
         sec
@@ -3048,7 +3048,7 @@
         _A1C8
         sta aBattleSceneBGAnimSlots.wX
         lda #$0000
-        sta aBattleSceneBGAnimSlots.bXFraction
+        sta aBattleSceneBGAnimSlots.bYFraction
         lda #$00F0
         sta aBattleSceneBGAnimSlots.wY
         ldx #$0000

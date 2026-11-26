@@ -281,7 +281,7 @@
         stz aBattleSceneCombatant2.HPSpeed,b
         lda #$0000
         sta wBattleSceneFrame
-        sta wBattleSceneBackgroundFlags+1
+        sta wBattleSceneCameraPan
         sep #$20
         sta bBattleSceneCameraPan
         sta $7FE186
@@ -301,10 +301,10 @@
         sta bBattleSceneBG3Mode
         sta $7FE4C3
         sta $7FE4DB
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         ora #$08
         and #$FB
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         lda #$10
         sta $7FFC6F
         lda #$E0
@@ -1317,9 +1317,9 @@
         sep #$20
         lda #$95
         sta bBattleSceneStep
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         and #$F7
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
         bra _94AD
 
@@ -1348,9 +1348,9 @@
         ; The first end step: sets bit 3 of $7FE1B3 and scrolls BG3 to (0, $1FF).
 
         sep #$20
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         ora #$08
-        sta wBattleSceneBackgroundFlags
+        sta bBattleSceneBackgroundFlags
         rep #$20
         lda #$0000
         sta wBufferBG3HOFS

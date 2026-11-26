@@ -129,7 +129,7 @@
         stz aBattleSceneCombatant2.HPSpeed,b
         sep #$20
         lda #$10
-        sta $7FE1C1
+        sta bBattleSceneHP2FlashTimer
         rep #$20
         bra _9446
 
@@ -144,16 +144,16 @@
         jsr rsBattleSceneDrawHP2
 
         _944A
-        lda $7FE1C1
+        lda bBattleSceneHP2FlashTimer
         and #$00FF
         beq _9473
         dec a
         sep #$20
-        sta $7FE1C1
+        sta bBattleSceneHP2FlashTimer
         rep #$20
         beq _946D
         tax
-        lda aBattleSceneHPBarDigitOffsets,x
+        lda aBattleSceneHPFlashPattern,x
         and #$00FF
         bne _946D
         lda #$3540

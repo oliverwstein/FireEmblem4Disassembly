@@ -59,9 +59,10 @@ SCRIPT_COMMANDS = {1: 'sound effect', 2: 'sound effect', 3: 'sound effect 2', 4:
                    16: 'wait for deferred upload', 17: 'queue command (checked)', 18: 'battle terrain command'}
 
 
-def names_from_csv(path):
-    rows = list(csv.reader(open(os.path.join(ROOT, path))))[1:]
-    return [r[0].removeprefix('Faction').removesuffix('Name') for r in rows]
+def names_from_menutext(path):
+    """Label names in a text/menutext file, in table order, as gen_offsets.py reads them."""
+    from gen_offsets import read_menutext_labels
+    return [n.removeprefix('Faction') for n in read_menutext_labels(path)]
 
 
 def table(label):
@@ -182,8 +183,8 @@ def main():
         for m in re.finditer(r'DIALOGUE_PLAY_SONG (SONG_\w+|\$[0-9A-Fa-f]+)', open(p, encoding='utf-8').read()):
             uses[value(m.group(1)) & 0xFF].append(('dialogue', os.path.relpath(p, os.path.join(ROOT, 'text/dialogue'))[:-4]))
 
-    factions = names_from_csv('data/offset/FactionNameOffsets.csv')
-    castles = names_from_csv('data/offset/CastleNameOffsets.csv')
+    factions = names_from_menutext('text/menutext/FactionNames.asm')
+    castles = names_from_menutext('text/menutext/CastleNames.asm')
     tables = [('aPlayerPhaseChapterSongIDs', 'player phase', lambda i: CHAPTERS[i]),
               ('aChapterFirstPhaseSongIDs', 'first phase of the chapter (rsStartChapterFirstPhaseSong)', lambda i: CHAPTERS[i]),
               ('aNonPlayerFactionPhaseSongIDs', 'phase of the faction', lambda i: factions[i]),

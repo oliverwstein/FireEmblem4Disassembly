@@ -91,7 +91,7 @@ These are the frames at which `aTitleIntroTimeline` sets up each scene.
 
 ## Not reached
 
-These routines are built, but nothing in the build reaches them. Most are slot installers and steps no timeline names, each noted "nothing in the build reaches this": `rlRestartTitleIntro`, `rlTitleFillPalettesWhiteUnused`, `rlTitleStartFlashPaletteEffectsUnused`, `rlStartTitleFadeBGPal1ToBlackUnused`, `rlStartTitleFlashFadeAllPalettesUnused`, `rlStartTitleFadeBrightnessUnused`, `rlStartTitleBG2DiagonalScrollUnused`, `rlPlayTitleSound2Unused`, `rlTitleIntroScene7EnableAllTrailsUnused`, `rlStepTitleIntroScene7FadeTrailsUnused`, `rlStartTitleBG1TableWaveHDMAUnused`, `rlTitleStartPaletteEffectAndFillBG1Unused`, `rlStopTitleSprite`. The sprite data at `$9B/FE13` (`aUnknown9BFE13`) is also unreferenced.
+These routines are built, but nothing in the build reaches them. Most are slot installers and steps no timeline names, each noted "nothing in the build reaches this": `rlRestartTitleIntro`, `rlTitleFillPalettesWhiteUnused`, `rlTitleStartFlashPaletteEffectsUnused`, `rlStartTitleFadeBGPal1ToBlackUnused`, `rlStartTitleFlashFadeAllPalettesUnused`, `rlStartTitleFadeBrightnessUnused`, `rlStartTitleBG2DiagonalScrollUnused`, `rlPlayTitleSound2Unused`, `rlTitleIntroScene7EnableAllTrailsUnused`, `rlStepTitleIntroScene7FadeTrailsUnused`, `rlStartTitleBG1TableWaveHDMAUnused`, `rlTitleStartPaletteEffectAndFillBG1Unused`, `rlStopTitleSprite`. The sprite data at `$9B/FE13` (`aTitleSpriteScriptsAndFramesUnused`) is also unreferenced.
 
 ## Depends on
 

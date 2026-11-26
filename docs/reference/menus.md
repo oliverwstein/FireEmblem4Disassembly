@@ -134,5 +134,5 @@ The map menu's four overview commands ([map_menu.md](map_menu.md)) open full-scr
 - `$7F8426` (set to `$23` as the options menu opens) and the twelve bytes at `$89/8A61` and eight at `$89/F704`: nothing found reads them.
 - What `rlGetSelectedUnitCommanderCharacterID` counts as a commander for non-player units (it calls `rlGetFactionGroupLeaderCharacterID`).
 - Which rank order `rlCalculateFinalRankingScore` uses; see [save.md](save.md).
-- The tilemap entries (`aReviveScreenMenuTilemapEntry`, `aUnknown89ACBC`...) hold long pointers to their RAM buffers as bytes; [include/Menus.h](../../include/Menus.h)'s `structMapMenuTilemapData` may describe them, but its field names do not fit these entries yet.
+- The tilemap entries (`aReviveScreenMenuTilemapEntry`, `aStatusScreenItemDescTilemapEntry`...) hold long pointers to their RAM buffers as bytes; [include/Menus.h](../../include/Menus.h)'s `structMapMenuTilemapData` may describe them, but its field names do not fit these entries yet.
 - 80 `ldy #$xxxx` immediates elsewhere in `engine/` may be raw pointers, as bank `$89`'s sprite arrays were (the item, unit and skill windows pass sprite arrays this way); `tools/sprite_arrays.py` decodes the arrays.

@@ -949,7 +949,20 @@
 
   .virtual $7FE1B3
 
-    wBattleSceneBackgroundFlags .word ? ; $7FE1B3 ; bit 0 snowy/flag, bit 1/2/3 BG1/BG2/BG3 scroll control
+    bBattleSceneBackgroundFlags .byte ? ; $7FE1B3 ; bit 0 snowy/flag, bit 1/2/3 BG1/BG2/BG3 scroll control
+      ; Every access is 8-bit (sep #$20 ... ora/and ... sta) or a 16-bit lda followed by bit.
+    wBattleSceneCameraPan .word ? ; $7FE1B4
+      ; Signed pixels the camera still has to pan: each frame wBattleSceneCameraX moves
+      ; 1 or 2 pixels toward it (clamped to $40-$C0) and this counts toward 0.
+
+  .endvirtual
+
+  .virtual $7FE1C0
+
+    bBattleSceneHP1FlashTimer .byte ? ; $7FE1C0
+    bBattleSceneHP2FlashTimer .byte ? ; $7FE1C1
+      ; Set to $10 when a combatant's shown HP reaches its target, then counted down
+      ; once a frame; aBattleSceneHPFlashPattern picks the digits' palette meanwhile.
 
   .endvirtual
 
@@ -987,31 +1000,37 @@
 
     aBattleSceneBGAnimSlots .block      ; $7FE475 (3 slots of $15 bytes: BG1, BG2, BG3)
       bFlags     .byte ? ; $7FE475
-      bWait      .byte ? ; $7FE476
+      bXFraction .byte ? ; $7FE476 ; X is 24-bit: this byte, then wX (high byte wraps 0-3)
       wX         .word ? ; $7FE477
-      bXFraction .byte ? ; $7FE479
+      bYFraction .byte ? ; $7FE479 ; Y the same way (high byte wraps 0-1)
       wY         .word ? ; $7FE47A
-                 .fill $0A ; $7FE47C-$7FE485
+      wXVelocity .word ? ; $7FE47C ; signed 1/256 pixels a frame, added to bXFraction as a word
+      wYVelocity .word ? ; $7FE47E ; the same for Y; $8000 moves up one pixel every other frame
+                 .fill 6 ; $7FE480-$7FE485
       wOffsetX   .word ? ; $7FE486
       wOffsetY   .word ? ; $7FE488
     .endblock
     aBattleSceneBG2AnimSlot .block      ; $7FE48A
       bFlags     .byte ? ; $7FE48A
-      bWait      .byte ? ; $7FE48B
+      bXFraction .byte ? ; $7FE48B ; X is 24-bit: this byte, then wX (high byte wraps 0-3)
       wX         .word ? ; $7FE48C
-      bXFraction .byte ? ; $7FE48E
+      bYFraction .byte ? ; $7FE48E ; Y the same way (high byte wraps 0-1)
       wY         .word ? ; $7FE48F
-                 .fill $0A ; $7FE491-$7FE49A
+      wXVelocity .word ? ; $7FE491 ; signed 1/256 pixels a frame, added to bXFraction as a word
+      wYVelocity .word ? ; $7FE493 ; the same for Y; $8000 moves up one pixel every other frame
+                 .fill 6 ; $7FE495-$7FE49A
       wOffsetX   .word ? ; $7FE49B
       wOffsetY   .word ? ; $7FE49D
     .endblock
     aBattleSceneBG3AnimSlot .block      ; $7FE49F
       bFlags     .byte ? ; $7FE49F
-      bWait      .byte ? ; $7FE4A0
+      bXFraction .byte ? ; $7FE4A0 ; X is 24-bit: this byte, then wX (high byte wraps 0-3)
       wX         .word ? ; $7FE4A1
-      bXFraction .byte ? ; $7FE4A3
+      bYFraction .byte ? ; $7FE4A3 ; Y the same way (high byte wraps 0-1)
       wY         .word ? ; $7FE4A4
-                 .fill $0A ; $7FE4A6-$7FE4AF
+      wXVelocity .word ? ; $7FE4A6 ; signed 1/256 pixels a frame, added to bXFraction as a word
+      wYVelocity .word ? ; $7FE4A8 ; the same for Y; $8000 moves up one pixel every other frame
+                 .fill 6 ; $7FE4AA-$7FE4AF
       wOffsetX   .word ? ; $7FE4B0
       wOffsetY   .word ? ; $7FE4B2
     .endblock

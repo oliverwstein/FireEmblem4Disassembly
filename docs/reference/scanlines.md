@@ -122,5 +122,5 @@ Nothing uses `rsIRQCodeCall` or the four after it. The IRQ scripts have no macro
 
 ## Open questions
 
-- **IRQ scripts.** The engine's scripts are raw words (`aUnknown9680A2` ...); giving them macros, as HDMA scripts have, would show what each does to its line.
+- **IRQ scripts.** The engine's scripts are raw words (`aBattleSceneIRQ1Code` ...); giving them macros, as HDMA scripts have, would show what each does to its line.
 - **`HDMA_SET_TABLE_BANK`'s one use** (`map_magic_effects.asm`) switches a table to bank `$9F`; whether any effect needed the indirect bank instead is not known.

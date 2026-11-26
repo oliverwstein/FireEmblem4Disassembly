@@ -8,11 +8,17 @@
       .al
       .xl
 
-      aBattleSceneHPBarDigitOffsets ; 95/937C
+      aBattleSceneHPFlashPattern ; 95/937C
 
-        ; Read by rsBattleSceneUpdateHP1, rsBattleSceneUpdateHP2.
+        ; Read by rsBattleSceneUpdateHP1, rsBattleSceneUpdateHP2, one byte per
+        ; value of bBattleSceneHP1FlashTimer/bBattleSceneHP2FlashTimer (1-15;
+        ; 0 is never read). Nonzero draws the HP digits with tile base $2940
+        ; (palette 2, as when the timer is 0), zero with $3540 (palette 5). So
+        ; when the HP stops changing the digits switch to palette 5 for twelve
+        ; frames, flicker twice, and return.
 
-        .word $0100, $0100, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte $00, $01, $00, $01, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00
 
         ; 95/938C
 

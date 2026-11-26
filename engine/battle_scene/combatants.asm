@@ -5949,10 +5949,10 @@
         sta wR9
 
         _D412
-        lda wBattleSceneBackgroundFlags+1
+        lda wBattleSceneCameraPan
         sec
         sbc wR9
-        sta wBattleSceneBackgroundFlags+1
+        sta wBattleSceneCameraPan
 
         _D41D
         ply
@@ -6032,10 +6032,10 @@
         sta wR9
 
         _D48F
-        lda wBattleSceneBackgroundFlags+1
+        lda wBattleSceneCameraPan
         clc
         adc wR9
-        sta wBattleSceneBackgroundFlags+1
+        sta wBattleSceneCameraPan
 
         _D49A
         ply
@@ -6205,7 +6205,7 @@
         .autsiz
         .databank ?
 
-        ; Every frame (not with bit 0 of $7FF5AF): steps the camera by $7FE1B4 (1 or 2 pixels a frame, between $40 and $C0), then, unless bit 2 of $7FE1B3, sets BG2's scroll from the camera plus $7FE19F/$7FE1A1, raising the stage as the attacker rises ($7FE19A, 0-$38 for Y $18-$50).
+        ; Every frame (not with bit 0 of $7FF5AF): steps the camera by wBattleSceneCameraPan (1 or 2 pixels a frame, between $40 and $C0), then, unless bit 2 of bBattleSceneBackgroundFlags, sets BG2's scroll from the camera plus $7FE19F/$7FE1A1, raising the stage as the attacker rises ($7FE19A, 0-$38 for Y $18-$50).
 
         lda $7FF5AF
         bit #$0001
@@ -6214,14 +6214,14 @@
 
 
         _D58D
-        lda wBattleSceneBackgroundFlags+1
+        lda wBattleSceneCameraPan
         beq _D5F7
         bmi _D5C7
         cmp #$0004
         bcc _D5AC
         sec
         sbc #$0002
-        sta wBattleSceneBackgroundFlags+1
+        sta wBattleSceneCameraPan
         lda wBattleSceneCameraX
         sec
         sbc #$0002
@@ -6230,7 +6230,7 @@
 
         _D5AC
         dec a
-        sta wBattleSceneBackgroundFlags+1
+        sta wBattleSceneCameraPan
         lda wBattleSceneCameraX
         dec a
 
@@ -6250,7 +6250,7 @@
         bcs _D5DE
         clc
         adc #$0002
-        sta wBattleSceneBackgroundFlags+1
+        sta wBattleSceneCameraPan
         lda wBattleSceneCameraX
         clc
         adc #$0002
@@ -6259,7 +6259,7 @@
 
         _D5DE
         inc a
-        sta wBattleSceneBackgroundFlags+1
+        sta wBattleSceneCameraPan
         lda wBattleSceneCameraX
         inc a
 
@@ -6273,7 +6273,7 @@
         sta wBattleSceneCameraX
 
         _D5F7
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0004
         bne _D66F
         lda wBattleSceneCameraX
@@ -6360,7 +6360,7 @@
 
         phx
         phy
-        lda wBattleSceneBackgroundFlags
+        lda bBattleSceneBackgroundFlags
         bit #$0002
         beq _D6AF
         lda wBattleSceneCameraX

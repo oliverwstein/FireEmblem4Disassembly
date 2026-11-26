@@ -175,7 +175,7 @@ The Warp staff uses the same proc to choose a destination. With bit 11 of `wChap
 - **1,024 tile IDs per chapter.** The 10-bit mask leaves the top 6 bits of each map word for area tags.
 - **Width.** `rlGetMapDataIndex` knows only 64-tile and 128-tile rows. Nothing uses the wider mode.
 - **One frame's work per strip.** A big change goes through the full redraw, which rebuilds all 32 rows in one pass and copies `$0800` bytes.
-- **An unused second layer.** With bit 1 of `wUnknown00075A`, the row and column builders also build a second strip from IDs at `$7F/6400`, with the priority bit set, into `$065C` and `$061C`. The only writes to that variable, in the two map display setups, store 1, and nothing uploads those buffers.
+- **An unused second layer.** With bit 1 of `wMapDisplayFlags`, the row and column builders also build a second strip from IDs at `$7F/6400`, with the priority bit set, into `$065C` and `$061C`. The only writes to that variable, in the two map display setups, store 1, and nothing uploads those buffers.
 
 ## Where it lives in the source
 

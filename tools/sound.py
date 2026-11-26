@@ -35,7 +35,7 @@ points at everything else, so the decoder starts there:
                   chunk), flags (bit 0 compressed, decompressed into a WRAM
                   buffer first, bit 1 picks the second buffer).
   DriverID        the driver's ID text.
-  Unknown12       byte tables rsGetIndirectSoundUpload indexes by a unit value
+  BattleUploads   byte tables rsGetIndirectSoundUpload indexes by a unit value
                   ($7E4EA9,x) for upload IDs 1-4.
   StartUpload     a word: the upload list sent after the driver (rlInitSound).
   TerrainUploads  word table of upload lists that IDs 3 and 4 index by terrain.
@@ -84,7 +84,7 @@ class Sound:
             'Scripts': self.ptr(header + 4), 'ScriptData': self.ptr(header + 6),
             'UploadLists': self.ptr(header + 8), 'UploadData': self.ptr(header + 10),
             'Chunks': self.ptr(header + 12), 'StartUpload': self.ptr(header + 14),
-            'DriverID': self.ptr(header + 16), 'Unknown12': self.ptr(header + 18),
+            'DriverID': self.ptr(header + 16), 'BattleUploads': self.ptr(header + 18),
             'TerrainUploads': self.ptr(header + 20)}
         H = self.hdr
         self.problems = []
@@ -121,8 +121,8 @@ class Sound:
         self.terrain_table = [self.ptr(H['TerrainUploads'] + 2 * i, zero=True)
                               for i in range((H['UploadData'] - H['TerrainUploads']) // 2)]
         self.upload_lists = self.lists(H['UploadData'], H['DriverID'], script=False)
-        self.driver_id = self.bytes(H['DriverID'], H['Unknown12'] - H['DriverID'])
-        self.unknown12 = self.bytes(H['Unknown12'], H['StartUpload'] - H['Unknown12'])
+        self.driver_id = self.bytes(H['DriverID'], H['BattleUploads'] - H['DriverID'])
+        self.unknown12 = self.bytes(H['BattleUploads'], H['StartUpload'] - H['BattleUploads'])
         self.start_upload = self.ptr(H['StartUpload'])
         self.tables_end = H['StartUpload'] + 2
         # Every pointer must land on a list start.
@@ -278,7 +278,7 @@ def emit(s, gaps, tail):
     w('        Chunks         .word <>aSoundChunks')
     w('        StartUpload    .word <>aSoundStartUpload')
     w('        DriverID       .word <>aSoundDriverID')
-    w('        Unknown12      .word <>aSoundUnknownF7AD9C')
+    w('        BattleUploads      .word <>aSoundBattleUploads')
     w('        TerrainUploads .word <>aSoundTerrainUploads')
     w('      .endblock')
     w('')
@@ -335,7 +335,7 @@ def emit(s, gaps, tail):
     w(f'      aSoundDriverID ; {H["DriverID"] >> 16:02X}/{H["DriverID"] & 0xFFFF:04X}')
     w(f'        .text "{text.decode()}"' + ', 0' * (len(s.driver_id) - len(text)))
     w('')
-    w(f'      aSoundUnknownF7AD9C ; {H["Unknown12"] >> 16:02X}/{H["Unknown12"] & 0xFFFF:04X}')
+    w(f'      aSoundBattleUploads ; {H["BattleUploads"] >> 16:02X}/{H["BattleUploads"] & 0xFFFF:04X}')
     w('')
     w('        ; Read by rsGetIndirectSoundUpload: from +0 for upload IDs 1 and 2, from +$140 for 3 and 4.')
     for i in range(0, len(s.unknown12), 16):
@@ -353,7 +353,7 @@ def emit(s, gaps, tail):
             w(f'      {label} .soundBinary "{path}" ; {a >> 16:02X}/{a & 0xFFFF:04X}')
         elif kind == 'gap':
             g0, g1 = x
-            w(f'      aSoundUnknown{g0:06X} ; {g0 >> 16:02X}/{g0 & 0xFFFF:04X}, nothing points here')
+            w(f'      aSoundPad{g0:06X} ; {g0 >> 16:02X}/{g0 & 0xFFFF:04X}, nothing points here')
             w('        .byte ' + ', '.join(f'${c:02X}' for c in s.bytes(g0, g1 - g0)))
         else:
             w('')
