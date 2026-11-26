@@ -25,7 +25,7 @@ A tile ID is an index into two tables the chapter loads:
                                        +------+------+
 ```
 
-- **The terrain table** `aTerrainTileset`: one byte per ID, naming one of 26 terrains (plains, forest, castle, river, and so on, listed in [include/Terrain.h](../../include/Terrain.h)). Movement costs by terrain are in [data/terrain/MovementCost.csv](../../data/terrain/MovementCost.csv) ([Chapter 9](09-moving-a-unit.md)), and avoid bonuses in [data/terrain/TerrainAvoid.csv](../../data/terrain/TerrainAvoid.csv) ([Chapter 6](06-resolving-a-battle.md)): ground units get +40 in thickets, +30 on mountains, castles, and forts, +20 in forests, villages, and shrines, and −40 on peaks and cliffs. Fliers get nothing except +20 on a shrine.
+- **The terrain table** `aTerrainTileset`: one byte per ID, naming one of 26 terrains (plains, forest, castle, river, and so on, listed in [include/Terrain.h](../../include/Terrain.h)). Movement costs by terrain are in [data/terrain/MovementCost.csv](../../data/terrain/MovementCost.csv) ([Chapter 9](09-moving-a-unit.md)), and avoid bonuses in [data/terrain/TerrainAvoid.csv](../../data/terrain/TerrainAvoid.csv) ([Chapter 6](06-resolving-a-battle.md)): for example, ground units get +40 in thickets, +30 on mountains, castles, and forts, +20 in forests, villages, and shrines, −10 to −30 on roads, bridges, desert, swamp, and water, and −40 on peaks and cliffs. Fliers get nothing except +20 on a shrine.
 
 Since both tables are keyed by the same ID, writing a new ID into `aMapData` changes both the picture and the rules on that square. That is how the chapters' map changes work: a table in the chapter data pairs an event flag with a position and a block of replacement IDs, and the event engine writes them in once the flag is set ([Chapter 11](11-the-game-is-watching.md)). A battle scene or the castle screen can overwrite `aMapData`, and the way back decompresses the layout from ROM again, so the engine marks each applied change (`aChapterActiveMapChanges`) and writes it in again after a reload (`rlApplyAllActiveMapChanges`).
 
@@ -43,7 +43,7 @@ Since both tables are keyed by the same ID, writing a new ID into `aMapData` cha
 | Map width and height in pixels | `wMapMaxXScroll`, `wMapMaxYScroll` | The loader subtracts one screen, `$0100` and `$00E0` |
 | Terrain table | `aTerrainTileset` | Compressed |
 
-Chapters 1 through Final are `$0400` pixels square, so the camera's top-left corner runs from 0 to `$0300` on both axes. The prologue is `$0400` wide and `$0200` tall (64 × 32 tiles), so its vertical range is 0 to `$0120`.
+Chapters 1 through Final are `$0400` pixels square, so the camera's top-left corner runs from 0 to `$0300` horizontally and 0 to `$0320` vertically. The prologue is `$0400` wide and `$0200` tall (64 × 32 tiles), so its vertical range is 0 to `$0120`.
 
 Two chapters borrow another's tiles. Chapter 2 has its own layout and palette but the prologue's metatiles, graphics, and terrain table; the final chapter does the same with Chapter 5's. A borrowed tile set brings its terrain table along, so the same tile ID means the same terrain in both chapters.
 
@@ -72,7 +72,7 @@ The diagonal steps do both a column and a row. Events move the camera through th
 
 ### The tilemap as a ring
 
-The map layer's tilemap is at video RAM `$5000`. Because the scroll registers wrap at 256 pixels, map pixel `(x, y)` always lands in tilemap cell `((x / 8) mod 32, (y / 8) mod 32)`, wherever the camera is. A cell that scrolls off one side is the cell that will be needed next on the opposite side, so the engine never moves anything already in the tilemap. It only overwrites the cells for the strip entering the screen:
+The map terrain draws on BG1, whose tilemap is at video RAM `$5000`. Because the scroll registers wrap at 256 pixels, map pixel `(x, y)` always lands in tilemap cell `((x / 8) mod 32, (y / 8) mod 32)`, wherever the camera is. A cell that scrolls off one side is the cell that will be needed next on the opposite side, so the engine never moves anything already in the tilemap. It only overwrites the cells for the strip entering the screen:
 
 ```
   aMapData (64 × 64 tiles, work RAM)        tilemap at $5000 (32 × 32 cells)
@@ -86,7 +86,7 @@ The map layer's tilemap is at video RAM `$5000`. Because the scroll registers wr
   +-------------------------------+         +------------------------+
 ```
 
-Vertically, the screen's 224 lines leave 32 lines of the tilemap off screen, room for the next row. Horizontally, the screen is the tilemap's full 256 pixels, so when the camera sits between two 8-pixel columns, the column leaving on the left and the column entering on the right are the same tilemap column. The map's display setup hides it: it sets window 1 to pixels 8 through 247 and masks the map layer and the sprites outside it, leaving an 8-pixel black band at each side of the screen (`rlSetUpChapterMapDisplay` in [engine/map/map_display.asm](../../engine/map/map_display.asm)).
+Vertically, the screen's 224 lines leave 32 lines of the tilemap off screen, room for the next row. Horizontally, the screen is the tilemap's full 256 pixels, so when the camera sits between two 8-pixel columns, the column leaving on the left and the column entering on the right are the same tilemap column. The map's display setup hides it: it sets window 1 to pixels 8 through 248 (`$08`–`$F8`) and masks BG1, BG3, and the sprites outside it, leaving an 8-pixel black band on the left and a 7-pixel band on the right (`rlSetUpChapterMapDisplay` in [engine/map/map_display.asm](../../engine/map/map_display.asm)).
 
 ### Building a strip
 
@@ -114,7 +114,7 @@ The buffers are `$05DC` for a row and `$059C` for a column. While a unit is pick
 
 ### Uploading at the bottom of the screen
 
-Whenever the map is up, it has one entry in the IRQ engine ([scanlines.md](../reference/scanlines.md)): `rsStartChapterMap` and `rsReturnToMapMainLoop` both install `aMapRowUploadIRQ` ([engine/map/map_loop.asm](../../engine/map/map_loop.asm)), an interrupt at scanline `$D7` (215), near the bottom of the screen. Its routine, `rlIRQUploadMapRowAndColumn`, waits for the horizontal blank, forces the display off, and runs the uploader. Video RAM can be written while the display is off, so the last lines of each frame serve as extra transfer time. When it is done it writes `INIDISP` back with only the forced-blank bit of `bBufferINIDISP`, that is with brightness 0, so the screen stays dark from that line to the bottom until the next VBlank restores the brightness.
+Whenever the map is up, it has one entry in the IRQ engine ([Chapter 29](29-sprites-and-scanlines.md)): `rsStartChapterMap` and `rsReturnToMapMainLoop` ([engine/map/map_loop.asm](../../engine/map/map_loop.asm)) both install `aMapRowUploadIRQ`, an interrupt at scanline `$D7` (215), near the bottom of the screen. Its routine, `rlIRQUploadMapRowAndColumn`, waits for the horizontal blank, forces the display off, and runs the uploader. Video RAM can be written while the display is off, so the last lines of each frame serve as extra transfer time. When it is done it writes `INIDISP` back with only the forced-blank bit of `bBufferINIDISP`, that is with brightness 0, so the screen stays dark from that line to the bottom until the next VBlank restores the brightness.
 
 The scroll step that built a strip ran earlier in the same frame, in the game state routines; the upload at line `$D7` follows it, and the next VBlank writes the new scroll registers (`rlCopyPPURegisterBuffer`). The new cells are in place before the camera moves onto them.
 
@@ -145,7 +145,7 @@ A scroll step moves at most 128 bytes, or 256 with the overlay showing, none of 
 
 ### Redrawing the whole screen
 
-When many tiles change at once (a castle taken, a map change, the return from a full-screen window), `rlRedrawVisibleMapTilemap` rebuilds the screen. It saves the camera, moves it a screen's height down, sets the scroll speed to 8, and steps it back up one row at a time, building each row in turn into `aBG2TilemapBuffer` at `$7E/7388`. The finished `$0800`-byte tilemap is then copied to `$5000` in one piece, and the camera restored. `rlRedrawRangeOverlayTilemap` does the same for the overlay.
+When many tiles change at once (a castle taken, a map change, the return from a full-screen window), `rlRedrawVisibleMapTilemap` rebuilds the screen. It saves the camera, moves it a full tilemap's height (`$0100` pixels, 32 rows) down, sets the scroll speed to 8, and steps it back up one row at a time, borrowing `aBG2TilemapBuffer` (`$7E/7388`) as a staging buffer. The finished `$0800`-byte tilemap is then copied to BG1's tilemap at `$5000` in one piece, and the camera restored. `rlRedrawRangeOverlayTilemap` builds `aBG3TilemapBuffer` the same way and marks all rows dirty (`rlMarkAllMapMenuRowsDirty`) for VBlank upload.
 
 ## Animated tiles
 
@@ -190,3 +190,7 @@ The Warp staff uses the same proc to choose a destination. With bit 11 of `wChap
 - [engine/map/minimap.asm](../../engine/map/minimap.asm): `procMinimap` and the Warp castle choice.
 - [data/terrain/](../../data/terrain/): movement costs and avoid bonuses by terrain.
 - [docs/reference/map.md](../reference/map.md): the reference page.
+
+---
+
+← Previous: [Chapter 21: Endings and Scores](21-endings-and-scores.md) | [Contents](OUTLINE.md) | Next: [Chapter 23: Two Ways to Show a Fight](23-two-ways-to-show-a-fight.md) →

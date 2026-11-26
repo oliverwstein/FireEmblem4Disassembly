@@ -29,9 +29,9 @@ A stream can cross a bank boundary. One that starts in the lower half of a bank 
 
 ## The decompressor and its queue
 
-`rlDecompressor` (`$80/AA02`) unpacks one stream from a source address to a destination address, both 24-bit, given in `DecompressionVariables`. `rlDecompressSingle` takes them in scratch registers instead, and `rlDecompressLinear`, the sound loader's entry, reads a stream that runs on from `$xx/FFFF` to the next bank's `$0000`. The code calls `rlDecompressor` directly 57 times, from screens such as the title, the world map, and the minimap.
+`rlDecompressor` (`$80/AA02`) unpacks one stream from a source address to a destination address, both 24-bit, given in `DecompressionVariables`. `rlDecompressSingle` takes them in scratch registers instead (32 calls), and `rlDecompressLinear`, the sound loader's entry, reads a stream that runs on from `$xx/FFFF` to the next bank's `$0000`. The code calls `rlDecompressor` directly 55 times, from screens such as the title, the world map, and the minimap.
 
-The other 61 calls go through a queue. `rlAppendDecompList` adds an entry, a source and a destination in `lR18` and `lR19`, to `aDecompressionArray`; `rlDecompressByList` runs the whole queue from the main loop routine (`rsRunFrameTasks`, `rsMapMainLoop`):
+The other 61 calls go through a queue (one of them in an unused proc). `rlAppendDecompList` adds an entry, a source and a destination in `lR18` and `lR19`, to `aDecompressionArray`; `rlDecompressByList` runs the whole queue from the main loop routine (`rsRunFrameTasks`, `rsMapMainLoop`):
 
 ```rust
 fn append_decomp_list(source: Addr24, dest: Addr24) {   // rlAppendDecompList
@@ -56,7 +56,7 @@ fn decompress_by_list() {                        // rlDecompressByList, in the m
 
 The main loop is interrupted by every VBlank, so a long stream simply takes several frames to unpack while the game keeps animating. `bDecompressionArrayFlag` stays set until the last entry is done, and that is how other code knows the data is ready.
 
-The queue is 32 bytes, room for five 6-byte entries. The fifth's end marker runs one byte past the array, onto `bFrameCounterByOnes`, which nothing reads after boot. Nothing checks for a sixth entry, which would be written over the frame counters and the random number table, and the reader hangs in an endless loop if it ever reads past 32 bytes.
+The queue is 32 bytes, room for five 6-byte entries. The fifth's end marker runs two bytes past the array, onto `bFrameCounterByOnes` and `bFrameCounterByThrees`, neither of which is read after boot. Nothing checks for a sixth entry, which would be written over the frame counters and the random number table, and the reader hangs in an endless loop if it ever reads past 32 bytes.
 
 ## Two ways to load
 
@@ -91,11 +91,11 @@ The fade procs wrap them:
 | `procFadeInByScreenFadingTimer`, `procFadeOutByScreenFadingTimer` | `wScreenFadingProcInput` frames a step |
 | `procMainLoopChangeFade`, `procMainLoopChangeFadeByTimer` | fade out, then install a screen opener ([Chapter 27](27-screens.md)) |
 
-Nine files create `procFadeIn`, screen setups among them, and a screen faded in that way comes up from black in 15 frames. Only `procMainLoopChangeFade` creates `procFadeOut`. The event engine has fade procs of its own. All of them share one timer (`wScreenFadingTimer` and its flag), so two fades running at once would step each other's timer; `rlClearAllFadeProcs` frees every fade proc, the events' included.
+Eight files create `procFadeIn`, screen setups among them, and a screen faded in that way comes up from black in 15 frames. Only `procMainLoopChangeFade` creates `procFadeOut`. The event engine has fade procs of its own. All of them share one timer (`wScreenFadingTimer` and its flag), so two fades running at once would step each other's timer; `rlClearAllFadeProcs` frees every fade proc, the events' included.
 
 ## Palette fades
 
-The palette fades change colors in `aBGPaletteBuffer` toward a target, one step per call ([palette_fade.asm](../../engine/core/graphics/palette_fade.asm)). The caller sets the number of steps in `aPaletteFading.wMaxSteps` and calls a fade once a frame until it returns the carry set. Each takes its arguments from the bytes after the call, as the DMA queue's struct calls do, and returns past them:
+The palette fades change colors in `aBGPaletteBuffer` (and `aOAMPaletteBuffer` immediately after it) toward a target, one step per call ([palette_fade.asm](../../engine/core/graphics/palette_fade.asm)). The caller sets the number of steps in `aPaletteFading.wMaxSteps` and calls a fade once a frame until it returns the carry set. Each takes its arguments from the bytes after the call, as the DMA queue's struct calls do, and returns past them:
 
 | Routine | Fades | Toward |
 |---|---|---|
@@ -123,7 +123,7 @@ Palette data that more than one screen uses sits in [palettes.asm](../../engine/
 
 ## Layers
 
-Each background layer reads its tiles and its tilemap from places in video RAM that the screen chooses. `rlSetLayerPositionsAndSizes` takes nine addresses in scratch registers, the four layers' tile areas, the sprites' tile area, and the four tilemaps, and writes them into the register buffers (`BG12NBA`, `BG34NBA`, `OBSEL`, `BG1SC`-`BG4SC`). It does nothing unless the screen is force-blanked, and 24 files call it, every screen opener among them. The video RAM layout of a screen is therefore a set of nine numbers in its opener. The status screen puts the BG1 and BG2 tiles at 0, BG3's at `$4000`, the sprites' at `$6000`, and its tilemaps at `$2000`, `$2800`, and `$5800`.
+Each background layer reads its tiles and its tilemap from places in video RAM that the screen chooses. `rlSetLayerPositionsAndSizes` takes nine VRAM word addresses in scratch registers, the four layers' tile areas, the sprites' tile area, and the four tilemaps, and writes them into both the hardware registers (`BG12NBA`, `BG34NBA`, `OBSEL`, `BG1SC`-`BG4SC`) and their RAM buffers. It does nothing unless the screen is force-blanked, and 24 files call it, every screen opener among them. The video RAM layout of a screen is therefore a set of nine numbers in its opener. The status screen puts the BG1 and BG2 tiles at 0, BG3's at `$4000`, the sprites' at `$6000`, and its tilemaps at `$2000`, `$2800`, and `$5800`.
 
 Three helpers fill a page of the BG2 or BG3 tilemap buffer with one tile word, the usual way to clear a layer before drawing on it.
 
@@ -139,14 +139,12 @@ NAME.4bpp.png ──(tools/gfx.py png2bpp)──► NAME.4bpp ──(tools/gfx.p
 
 - The PNG is indexed: its pixel values are the tile's color numbers, so it converts to tile data and back without loss ([tools/gfx.py](../../tools/gfx.py)). Tilemaps and other data are `.bin` files and skip this step.
 - `gfx.py lz` decompresses the committed original stream, `NAME.4bpp.comp`, and compares it with the tile data. If they match, it uses the original bytes; if the file has been edited, it compresses the new data with [tools/compress.py](../../tools/compress.py), a compressor for the same format. An unedited build is byte-identical to the original ROM, and an edited one still decompresses with the game's own routine.
-- A `.streams` list in each region of [gfx/compressed/](../../gfx/compressed/) names the streams in order between a start and an end address. [tools/stream_layout.py](../../tools/stream_layout.py) places them one after another, crossing bank halves the way the decompressor expects, and fails if an edited stream no longer fits before the region's end.
-
-[docs/AUTHORING_GRAPHICS_PLAN.md](../AUTHORING_GRAPHICS_PLAN.md) describes the work under way to put whole pictures (portraits, scenes, maps) in front of this pipeline.
+- A `.streams` list in each region of [gfx/compressed/](../../gfx/compressed/) names the streams in order between a start and an end address. [tools/stream_layout.py](../../tools/stream_layout.py) places them one after another into each region's `Layout.asm`, crossing bank halves the way the decompressor expects, and fails if an edited stream no longer fits before the region's end.
 
 ## Trade-offs and hard limits
 
 - **Unpacking is slow and unbounded.** A long stream takes several frames in the main loop. Anything that depends on the result must wait for `bDecompressionArrayFlag`, or load with the screen off.
-- **Five queued decompressions.** The queue holds five entries, unchecked, and its last end marker shares a byte with the frame counter.
+- **Five queued decompressions.** The queue holds five entries, unchecked, and its last end marker spills two bytes onto the frame counters.
 - **One fade timer.** Brightness fades share a timer; overlapping fades interfere.
 - **Layout fixed per opener.** A screen's video RAM layout is set once, with the screen off, by `rlSetLayerPositionsAndSizes`.
 - **Space per region.** An edited stream that compresses worse than the original must still fit before the end address of its `.streams` region; regions don't spill into each other.
@@ -162,3 +160,7 @@ NAME.4bpp.png ──(tools/gfx.py png2bpp)──► NAME.4bpp ──(tools/gfx.p
 - [tools/decompress.py](../../tools/decompress.py), [tools/compress.py](../../tools/compress.py), [tools/gfx.py](../../tools/gfx.py), [tools/stream_layout.py](../../tools/stream_layout.py): the format and the asset pipeline.
 - [gfx/](../../gfx/): the extracted graphics.
 - [docs/reference/graphics.md](../reference/graphics.md): the reference page.
+
+---
+
+← Previous: [Chapter 29: Sprites and Scanlines](29-sprites-and-scanlines.md) | [Contents](OUTLINE.md) | Next: [Chapter 31: The Second Computer](31-the-second-computer.md) →

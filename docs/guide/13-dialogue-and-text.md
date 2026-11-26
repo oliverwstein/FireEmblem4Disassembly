@@ -1,8 +1,8 @@
-# Chapter 13: Dialogue and text
+# Chapter 13: Dialogue and Text
 
 The game's words are 1,986 **texts**: conversations, narration, death quotes, shopkeepers' lines, and the names of characters, classes, items, and castles. Each is a byte string in a small markup language. Bytes from `$10` up are characters; bytes below `$10` are commands that end a line, switch speakers, wait for a button, load a portrait, or open a box. One interpreter, the **dialogue engine**, reads a text one step per frame and draws it a character at a time in a proportional font of 1,280 glyphs.
 
-The engine keeps its state in one block of low RAM, `aDialogue`, so only one text runs at a time. It draws into two **slots**, one per speaker, and what a slot looks like on screen depends on the **mode** the text was started in: a box over the map, a window on the full-screen conversation scene, a shopkeeper's box, or bare text on whatever screen asked for it. The engine doesn't run itself. Whatever started the text calls it once per frame, usually from a proc ([Chapter 28](OUTLINE.md)), until it reports that the text has ended.
+The engine keeps its state in one block of low RAM, `aDialogue`, so only one text runs at a time. It draws into two **slots**, one per speaker, and what a slot looks like on screen depends on the **mode** the text was started in: a box over the map, a window on the full-screen conversation scene, a shopkeeper's box, or bare text on whatever screen asked for it. The engine doesn't run itself. Whatever started the text calls it once per frame, usually from a proc ([Chapter 28](28-procs.md)), until it reports that the text has ended.
 
 Menus have a second, simpler text renderer. Menu strings are stored as Shift-JIS, every character is 8 pixels wide, and a whole string is written into a tilemap at once. This chapter covers the text format and its build, the font, how a character is drawn, pacing and buttons, lines and scrolling, the four modes and the procs that host them, portraits, inserted text, menu text, and the costs.
 
@@ -125,7 +125,7 @@ pixel   0       8       16      24      32
 cells   0       1       2       3
 ```
 
-After drawing, the engine writes tilemap entries for every cell the pen has touched into the slot's area of the BG3 tilemap buffer (`aBG3TilemapBuffer`), each cell as a tile above and the next tile below, and queues the touched part of the buffer for upload to the slot's tiles in VRAM. The upload happens during the next vertical blank ([Chapter 26](OUTLINE.md)).
+After drawing, the engine writes tilemap entries for every cell the pen has touched into the slot's area of the BG3 tilemap buffer (`aBG3TilemapBuffer`), each cell as a tile above and the next tile below, and queues the touched part of the buffer for upload to the slot's tiles in VRAM. The upload happens during the next vertical blank ([Chapter 26](26-the-frame.md)).
 
 Before the next character, the engine moves the finished cells out. If the pen has passed one or more whole cells, those cells are already in VRAM; the buffer shifts left by that many cells, the slot's tile and tilemap positions advance, and the pen keeps only its offset within the partly filled cell. The cell under the pen is uploaded again with each glyph that touches it.
 
@@ -154,13 +154,13 @@ Each frame that draws a character also plays the text sound chosen by `wTextSoun
 
 A text has two slots, `_Slot[0]` and `_Slot[1]`, and `DIALOGUE_LEFT` and `DIALOGUE_RIGHT` choose which one later characters go to. Each slot has its own tiles in VRAM, its own area of the BG3 tilemap, its own pen position, and its own portrait. On the map the two slots are the upper and lower boxes; on the conversation screen they are the left and right windows.
 
-A map box's slot is 28 cells wide and six tile rows tall: three lines of 16 pixels. Its tiles are at VRAM `$8000` for the upper box and `$9000` for the lower, and its tilemap starts at row 2 or row 20 of BG3, three columns in. With glyphs 11 to 13 pixels wide, a line holds about 18 characters.
+A map box's slot is 28 cells wide and six tile rows tall: three lines of 16 pixels. Its tiles are at VRAM `$8000` for the upper box and `$9000` for the lower (byte addresses), and its tilemap starts at row 2 or row 20 of BG3, three columns in. With glyphs 11 to 13 pixels wide, a line holds about 18 characters.
 
 ### Scrolling a line
 
 `DIALOGUE_NL` moves the slot's tilemap position to the start of the next line, which wraps around the slot's three lines, and starts a scroll. The slot's `wScrollOffset` counts pixels scrolled; the newline adds 2, and on each later frame the scroll step adds 2 more until it reaches the next multiple of 16, stopping the text meanwhile. One line takes eight frames. Near the end of the scroll the line that comes next is cleared, ready to be written.
 
-The scroll happens on screen through HDMA ([Chapter 29](OUTLINE.md)). Every frame, `rlDialogueUpdateHDMATable` rebuilds a table that sets BG3's scroll registers scanline by scanline. Rows outside the boxes get the ordinary scroll. Within a box, once `wScrollOffset` passes the box's last line, the table scrolls the box's rows up by the excess, so the text rises inside the box while the rest of BG3 stays still. The two boxes scroll independently. The engine keeps two copies of the table and alternates between them, so it never rewrites the one being displayed.
+The scroll happens on screen through HDMA ([Chapter 29](29-sprites-and-scanlines.md)). Every frame, `rlDialogueUpdateHDMATable` rebuilds a table that sets BG3's scroll registers scanline by scanline. Rows outside the boxes get the ordinary scroll. Within a box, once `wScrollOffset` passes the box's last line, the table scrolls the box's rows up by the excess, so the text rises inside the box while the rest of BG3 stays still. The two boxes scroll independently. The engine keeps two copies of the table and alternates between them, so it never rewrites the one being displayed.
 
 `DIALOGUE_SCROLL` scrolls the current slot's three lines out, one after another, and resets the slot to its first line. `DIALOGUE_SCROLL_ALL` does that to both slots. Together they appear 3,700 times, almost always right after a button wait: the player presses A, and the old lines scroll away before the next speaker begins. `DIALOGUE_CLEAR` blanks a slot at once.
 
@@ -299,3 +299,7 @@ The limits:
 - [text/dialogue/](../../text/dialogue/): every text, the font list, and the page encodings; [tools/process_dialogue.py](../../tools/process_dialogue.py): the page-command pass; [data/dialogue/](../../data/dialogue/): the width tables and the name tables; [gfx/font/](../../gfx/font/): the dialogue font.
 - [include/Dialogue.h](../../include/Dialogue.h): the commands, status bits, and modes; `aDialogue` is in [include/WRAM.h](../../include/WRAM.h).
 - [docs/reference/dialogue.md](../reference/dialogue.md): the reference page.
+
+---
+
+← Previous: [Chapter 12: Screenplays](12-screenplays.md) | [Contents](OUTLINE.md) | Next: [Chapter 14: Armies with a Mind](14-armies-with-a-mind.md) →

@@ -44,7 +44,7 @@ Four CSV-backed tables in bank `$83`—[Gen1LoveBases.csv](../../data/character/
 At the start of every player phase before turn 51 (`wCurrentTurn < 51`), `rlAddTurnStartLovePoints` in [engine/units/factions.asm](../../engine/units/factions.asm) updates love points in two passes:
 
 1. **Global per-turn growth (`rsAddLoveGrowthWithEachMan`):** `rlListFactionSlotUnitsByGenerationID` maps all `FS_Player` units into a 24-word table at `$7E/2000` indexed by `GenID - 1`. For each living woman in slots `16..24`, the routine adds her table growth against every man present in slots `1..15`.
-2. **Adjacency bonus (`rsAddAdjacentLovePoints`):** Walks `aDeploymentTable` backwards for living player women (`GenID >= $10`), scanning every living `FS_Player` unit at Manhattan distance `< 2` and adding `6 - distance` (`+5` at distance 1).
+2. **Adjacency bonus (`rsAddAdjacentLovePoints`):** Walks `aDeploymentTable` backwards for living deployed women (`GenID >= $10`), scanning every living `FS_Player` unit at Manhattan distance `< 2` and adding `6 - distance` (`+5` at distance 1).
 
 A missing register restore in `rsAddAdjacentLovePoints` creates the well-known **jealousy bug**:
 
@@ -60,6 +60,7 @@ fn add_adjacent_love_points(woman_slot: usize) {            // rsAddAdjacentLove
         let gen_id = selected_unit_generation_id();
         if gen_id >= 0x10 {
             // BUG: branches to next loop iteration WITHOUT restoring wSelectedUnitDataRAMPointer!
+            // (When neighbor == woman_slot at dist == 0, it sets the pointer back to her.)
             continue;
         }
         wSelectedUnitDataRAMPointer = saved_woman;
@@ -80,7 +81,7 @@ After Arvis attacks Sigurd at the end of Chapter 5, `procFirstGenerationEnding` 
 
 When Chapter 6 begins, `rlResetUnitsForChapter` ([engine/units/generations.asm](../../engine/units/generations.asm)) executes three steps to cross the generation boundary:
 
-1. **Snapshot parent fates (`rlSetParentsPermanentFlags`):** Before any parent is deleted, [engine/epilogue/endings.asm](../../engine/epilogue/endings.asm) records two permanent flags for every Generation 1 character (`Sigurd`..`Deirdre` before `Seliph`): flag `CharID + 40` if recruited, and flag `CharID + 64` if alive. The epilogue reads these flags later because the parent records themselves will no longer exist.
+1. **Snapshot parent fates (`rlSetParentsPermanentFlags`):** Before any parent is deleted, [engine/epilogue/endings.asm](../../engine/epilogue/endings.asm) records two permanent flags for every Generation 1 character (`Sigurd`..`Brigid`, IDs `1..24`, stopping before `Seliph`): flag `CharID + 40` if recruited, and flag `CharID + 64` if alive. The epilogue reads these flags later because the parent records themselves will no longer exist.
 2. **Replace parents with children (`rlDeleteParentsAndModifyChildrenData`):** Walks `aModifyChildrenDataList` in strict order:
    - **Mothers first** (`Deirdre`, `Ethlyn`, `Brigid`, `Edain`, `Silvia`, `Tailtiu`, `Erinys`, `Ayra`, `Lachesis`): calls `rlLoadChildUnit` (Deirdre spawns only her son `Seliph`; the other eight spawn both son and daughter), then deletes the mother. Running mothers before fathers guarantees both parent records are still intact in RAM when each child is computed.
    - **Fathers next** (`Dew`..`Sigurd`): deleted by `rsDeleteParentUnitData`, with one exception—`Finn` runs `rsTransferUnitToGen2`, which halves his gold, repoints `ConstantData` to `AdultFinn`, clears `LoverGenerationID`, re-initializes lover data, and undeploys him. If Finn married, his child already inherited his inventory during the mother's pass; if unmarried, he keeps his items.
@@ -99,7 +100,7 @@ When `rlLoadUnit` spawns a `UnitTypeDynamic` child, `rsCreateDynamicUnitRAMData`
 
 ### Major influence
 
-Each child's `structDynamicCharacterROMEntry` carries a `MajorInfluence` byte (`0` = Mother, `1` = Father) that controls both Holy Blood weighting and which parent passes down items and gold-heavy gear. Most sons follow their father (`1`) and most daughters follow their mother (`0`), with four intentional swaps:
+Each child's `structDynamicCharacterROMEntry` carries a `MajorInfluence` byte (`0` = Mother, `1` = Father) that controls both holy blood weighting and which parent passes down items and gold-heavy gear. Most sons follow their father (`1`) and most daughters follow their mother (`0`), with four intentional swaps:
 
 | Child | Gender | `MajorInfluence` | Inherits inventory from |
 |---|---|---|---|
@@ -108,11 +109,11 @@ Each child's `structDynamicCharacterROMEntry` carries a `MajorInfluence` byte (`
 | `Larcei`, `Lana`, `Fee`, `Tine`, `Lene`, `Nanna` | Female | `0` (Mother) | Mother |
 | `Altena`, `Patty` | Female | `1` (Father) | `Quan` / Father |
 
-### Growths, skills, and Holy Blood
+### Growths, skills, and holy blood
 
 - **Growths (`rsGetChildGrowthRate`):** Male children use `Father + floor(Mother / 2)`; female children use `Mother + floor(Father / 2)`.
-- **Skills (`rlFillChildsConstantData`):** Computes `(Mother.Skills | Father.Skills) & aValidInheritableSkills[CharID - Seliph]` across two overlapping 16-bit writes covering `Skills1..Skills3`. [ValidInheritableSkills.asm](../../data/character/ValidInheritableSkills.asm) strips `UnitSkill1Dismount`, `UnitSkill1PoW`, and `UnitSkill3Escape` from every child, and masks `Skills2` with `UnitSkill2NonSword` for non-sword-using classes so Astra, Luna, and Sol stay restricted to swordfighters.
-- **Holy Blood (`rsGetChildHolyBlood`):** Twelve bloods sit in `HolyBlood1` and four in `HolyBlood2` at 2 bits per blood (`0` = None, `1` = Minor, `2` = Major). The minor-influence parent's blood is downgraded (`Major → Minor`, `Minor → Minor`, `None → None`) and summed per 2-bit slot with the major-influence parent's blood:
+- **Skills (`rlFillChildsConstantData`):** Computes `(Mother.Skills | Father.Skills) & aValidInheritableSkills[CharID - Seliph]` across two overlapping 16-bit writes covering `Skills1..Skills3`. [ValidInheritableSkills.asm](../../data/character/ValidInheritableSkills.asm) strips `UnitSkill1Dismount`, `UnitSkill1PoW`, and `UnitSkill3Escape` from every child, and masks `Skills2` with `UnitSkill2NonSword` (`$07`) for every dynamic child except `Scathach`, `Larcei`, `Patty`, and `Lene`, keeping Astra, Luna, and Sol restricted to unmounted swordfighters, thieves, and dancers.
+- **Holy blood (`rsGetChildHolyBlood`):** Eight bloods sit in `HolyBlood1` and five in `HolyBlood2` (13 total, at 2 bits per blood: `0` = None, `1` = Minor, `2` = Major). The minor-influence parent's blood is downgraded (`Major → Minor`, `Minor → Minor`, `None → None`) and summed per 2-bit slot with the major-influence parent's blood:
 
 ```rust
 fn combine_holy_blood(minor_parent: u16, major_parent: u16) -> u16 { // rsGetChildHolyBlood
@@ -122,8 +123,8 @@ fn combine_holy_blood(minor_parent: u16, major_parent: u16) -> u16 { // rsGetChi
     for slot in 0..8 {
         let a = (halved >> (slot * 2)) & 0x3;
         let b = (major_parent >> (slot * 2)) & 0x3;
-        let sum = (a + b).min(3);
-        out |= sum << (slot * 2);                           // 1+1 = 2 (Major); 1+2 = 3 (read as Major)
+        let sum = if a + b >= 4 { 2 } else { a + b };     // 1+1 = 2 (Major); 1+2 = 3 (read as Major)
+        out |= sum << (slot * 2);
     }
     out
 }
@@ -151,7 +152,7 @@ HP adds `+15`, and Luck adds a random `1..10` (`rlGetRandomNumber100(10) + 1`). 
    - `Forseti`, `ValkyrieStaff`, and `Yewfelle` bypass both weapon-rank checks and the 7-item inventory cap.
    - Rings always inherit; other weapons and staves must pass `rlCheckSelectedUnitCanUseItem`. Unusable items revert to `ItemStateUnobtained`.
    - Inheritable items past the 7-slot inventory limit go to the child's `ItemStateSupply`.
-   - The highest-Might inherited item is inserted into slot 1 (`rlGivePlayerItemIDToSelectedUnitsFirstItemSlot`), and `rlEquipFirstWeaponInInventory` equips slot 1.
+   - The highest-Might inherited item is inserted into slot 1 (`rlGivePlayerItemIDToSelectedUnitsFirstItemSlot`), and `rlEquipFirstWeaponInInventory` equips the first equippable weapon in the inventory (normally slot 1).
 
 ## Trade-offs and hard limits
 
@@ -176,3 +177,7 @@ The limits:
 - [engine/events/first_generation_ending.asm](../../engine/events/first_generation_ending.asm): `procFirstGenerationEnding` (Chapter 5 memorial).
 - [data/character/](../../data/character/): `Gen1LoveBases.csv`, `Gen1LoveGrowths.csv`, `Gen2LoveBases.csv`, `Gen2LoveGrowths.csv`, `ChildrenData.csv`, and `ValidInheritableSkills.asm`.
 - [docs/reference/units.md](../reference/units.md): the reference page.
+
+---
+
+← Previous: [Chapter 16: The Arena](16-the-arena.md) | [Contents](OUTLINE.md) | Next: [Chapter 18: Saving](18-saving.md) →

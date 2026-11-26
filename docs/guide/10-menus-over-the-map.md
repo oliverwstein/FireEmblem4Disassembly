@@ -76,12 +76,12 @@ The open menus form a linked list (`lMapMenuListHead`, then each menu's `Next`),
   BG2   ┌────────┐            frames, one routine per type
         │        │ ┌──────┐
         └────────┘ │      │
-  BG3     こうげき   └──────┘   text and numbers, transparent tile skipped
+  BG3     こうげき └──────┘   text and numbers, transparent tile skipped
           たいき
                   list: main menu → forecast → item list   (last is in front)
 ```
 
-The RAM buffers are fixed by each menu's definition, with no allocator to hand them out. Menus that can't be open at once share one: the main map menu, the command menu, the item-use menu, and the item description box all keep their tiles at `$7FCD4A`, and the item list closes its description box when it opens the item-use menu.
+The RAM buffers are fixed by each menu's definition, with no allocator to hand them out. Menus that can't be open at once share one: the main map menu, the command menu, the item-use menu, and the item description box all keep their tiles at `$7F/CD4A`, and the item list closes its description box when it opens the item-use menu.
 
 ### Menus as procs
 
@@ -140,7 +140,7 @@ The two tables run in the reverse of display order, so the loop's last-to-first 
 
 ### Slot lists
 
-Before the checks run, `rlBuildUnitMenuSlotLists` sorts the unit's seven inventory slots into five lists at `$7E2000`, each a count byte and up to seven slots:
+Before the checks run, `rlBuildUnitMenuSlotLists` sorts the unit's seven inventory slots into five lists at `$7E/2000`, each a count byte and up to seven slots:
 
 | List | Holds |
 |---|---|
@@ -228,7 +228,7 @@ Attack, assault, staff, items, and equip all open the same proc, `procMapItemLis
 - For the three weapon lists, the weapon's might, hit, and avoid in the unit's hands, each with an arrow up or down against the first weapon in the list, which is the equipped one. The weapon rank icon is drawn as a sprite.
 - For staves and items, the item's description box.
 
-A on an entry acts by list. Attack and assault make it the selected slot, record the targets for its range, and start target selection. A staff closes the list and starts the staff's own target selection, which picks its filter by staff effect. Equip equips it and reopens the command menu. An item would open the use-or-discard menu, which the retail data never reaches.
+A on an entry acts by list. Attack and assault make it the selected slot, record the targets for its range, and start target selection. A staff closes the list and starts the staff's own target selection, which picks its filter by staff effect. Equip equips it and reopens the command menu. An item would open the use-or-discard menu, which the game's item data never reaches.
 
 ## The main map menu
 
@@ -279,3 +279,7 @@ The limits:
 - [engine/map/windows.asm](../../engine/map/windows.asm) and [engine/map/popups.asm](../../engine/map/popups.asm): the terrain and unit windows, the popups, and window colors by army.
 - [include/Menus.h](../../include/Menus.h): `structMapMenu`, `structMapMenuTilemapData`, `UNIT_MENU_MODE_*`; [include/Map.h](../../include/Map.h): `MAP_ACTION_*` and the cursor states; [include/WRAM.h](../../include/WRAM.h): the map menu block, the option list variables, the slot lists, `wMapStateFlags`.
 - [docs/reference/map_menu.md](../reference/map_menu.md): the reference page.
+
+---
+
+← Previous: [Chapter 9: Moving a Unit](09-moving-a-unit.md) | [Contents](OUTLINE.md) | Next: [Chapter 11: The Game Is Watching](11-the-game-is-watching.md) →

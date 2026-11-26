@@ -15,7 +15,7 @@ Every character in the ROM table `aCharacterData` ([data/character/CharacterData
 | `UnitTypeHoly` | 53 | Hand-tuned non-player characters: rulers, major bosses, Arvis, Eldigan | A ROM stat sheet, read in place |
 | `UnitTypeEnemy` | 453 | Everyone else on the other side, including ordinary bosses such as Gerrard | Computed from class and level whenever asked |
 
-The disassembly names the third type `Holy` because most of its characters carry holy blood; what defines it is the full stat sheet in ROM. That is why some appear twice: `ArvisChPrologue` and `ArvisCh10` are separate entries, because a boss who returns stronger needs a new sheet. Nothing about a `Holy` unit's stats can change at run time.
+The third type is called `Holy` because most of its characters carry holy blood; what defines it is the full stat sheet in ROM. That is why some appear twice: `ArvisChPrologue` and `ArvisCh10` are separate entries, because a boss who returns stronger needs a new sheet. Nothing about a `Holy` unit's stats can change at run time.
 
 ## The header and its parts
 
@@ -39,7 +39,7 @@ The parts group data by how often it changes:
 - **Extended** (15 bytes): the stat sheet. Max HP, seven stats, class, level, leadership stars, gold, experience, and talk target.
 - **Constant** (22 bytes): who the unit *is*. ID, name, generation ID, gender, father, eight growth rates, three skill bytes, and holy blood.
 - **Enemy ROM data**: a generic enemy's 13-byte ROM entry, pointed at just past its type byte: ID, name, class, gender, level, leadership, faction member ID, equipment, and an item to drop.
-- **Inventory** (13 bytes): a 4-byte list header (item count, capacity, entry size), eight one-byte item slots, and the equipped-weapon flags ([Chapter 3](OUTLINE.md)).
+- **Inventory** (13 bytes): the equipped-weapon flags, a 4-byte list header (item count, capacity, entry size, and flags), and eight one-byte item slots ([Chapter 3](03-every-sword-is-an-individual.md)).
 - **Lover** (30 bytes): fifteen words of love points, one per eligible man ([Chapter 17](17-love-and-lineage.md)).
 
 ## Pointing into ROM
@@ -53,7 +53,7 @@ structStaticCharacterROMEntry (bank $83)
  $0C  Money
  $0D  ┌ CharacterID Name GenerationID Gender Father ─┐        ◀── a Static or Holy unit's `constant` points here
       │ 8 growths  3 skill bytes  2 holy blood words │
- $22  └──────────────────────────────────────────────┘
+      └──────────────────────────────────────────────┘
  $23  Equipment1 Equipment2 UniqueEquipment
 ```
 
@@ -108,7 +108,7 @@ fn get_enemy_strength() -> u8 {                    // rlGetEnemyStrength
 }
 ```
 
-DiMaggio, a level 10 Fighter, works out to strength 8 + 30 × 10 / 100 = 11 and HP 35 + 100 × 10 / 100 = 45. Gerrard, a level 20 Fighter, gets 14 and 55. A player unit's strength uses a different formula ([Chapter 2](OUTLINE.md)), but the caller can't tell: `rlGetSelectedUnitTotalStrength` checks the type and picks one.
+DiMaggio, a level 10 Fighter, works out to strength 8 + 30 × 10 / 100 = 11 and HP 35 + 100 × 10 / 100 = 45. Gerrard, a level 20 Fighter, gets 14 and 55. A player unit's strength uses a different formula ([Chapter 2](02-classes-stats-skills-and-weapon-ranks.md)), but the caller can't tell: `rlGetSelectedUnitTotalStrength` checks the type and picks one.
 
 This is the *Flyweight* pattern: a Fighter's bases and growths are stored once in the class table and shared by every Fighter, and each instance keeps only its own HP, status, position, and faction. FE4 goes one step further and derives the stats from the shared data. Each query costs a multiply and a divide, made through the helper routines `rlUnsignedMultiply16By16High` and `rlUnsignedDivide16By16`, since the CPU has no multiply instruction.
 
@@ -162,9 +162,9 @@ fn create_holy_unit(unit: &mut CharacterDataRAM, rom: RomPtr) {   // rsCreateHol
 
 ## Word-wide working copies
 
-Most of the game runs with a 16-bit accumulator, so each read of a byte field ends with `and #$00FF` to discard its neighbor. Code that works through a whole unit field by field avoids that by unpacking it into `aUnit1DataBuffer` or `aUnit2DataBuffer` (bank `$7F`), where almost every field is widened to a word (`rlSave*ToBuffer`, packed back by `rlLoad*FromBuffer`). Three systems do this: building a child, with the mother in one buffer and the father in the other ([inheritance.asm](../../engine/units/inheritance.asm)); class change, which saves stats before and after promotion to show the gains ([class_change.asm](../../engine/castle/class_change.asm)); and saving, which writes each unpacked field to SRAM a few bits at a time ([save.asm](../../engine/save/save.asm)).
+Most of the game runs with a 16-bit accumulator, so each read of a byte field ends with `and #$00FF` to discard its neighbor. Code that works through a whole unit field by field avoids that by unpacking it into `aUnit1DataBuffer` or `aUnit2DataBuffer` (bank `$7F`), where almost every field is widened to a word (`rlSave*ToBuffer`, packed back by `rlLoad*FromBuffer`). Three systems do this: building a child, with the mother in one buffer and the father in the other ([engine/units/inheritance.asm](../../engine/units/inheritance.asm)); class change, which saves stats before and after promotion to show the gains ([engine/castle/class_change.asm](../../engine/castle/class_change.asm)); and saving, which writes each unpacked field to SRAM a few bits at a time ([engine/save/save.asm](../../engine/save/save.asm)).
 
-## What the split buys, and what it costs
+## Trade-offs and hard limits
 
 Per unit, the parts scheme saves memory. A generic enemy costs 65 bytes of RAM, counting header, personal part, inventory, and block headers. A playable man costs 80, a playable woman 116, and a generation-2 daughter 138. One record holding everything would be about 95 bytes.
 
@@ -183,9 +183,9 @@ Its costs:
 - **The ROM overlay is an unwritten rule.** A `Holy` unit's gold must never be read through its `extended` pointer, and only the getters enforce that.
 - **One selected unit.** The implicit `self` keeps calls cheap and invites the save-and-restore mistake.
 
-## Hard limits
+The limits:
 
-- **72 units at once:** the size of `aUnitRAMArea`, `aUnitRAMPointers`, and the deployment table ([Chapter 5](OUTLINE.md)). Chapters that bring in a new army often remove the old one first.
+- **72 units at once:** the size of `aUnitRAMArea`, `aUnitRAMPointers`, and the deployment table ([Chapter 5](05-who-stands-where.md)). Chapters that bring in a new army often remove the old one first.
 - **24 static and 17 dynamic units.** Generation 1's 24 playable characters fill the static pool exactly. In generation 2 the parents are deleted, the same 24 slots hold the non-children and substitutes, and the 17 children fill the dynamic pool.
 - **63 non-player units**, shared between `Holy` and `Enemy`, and **9 love tables**, one per playable woman of the current generation.
 - **A unit's type is fixed by its ROM entry.** A boss whose stats differ between appearances needs a second entry.
@@ -198,7 +198,11 @@ Its costs:
 - [engine/units/unit_creation.asm](../../engine/units/unit_creation.asm): `rlLoadUnit` and the four `rsCreate*UnitRAMData` routines.
 - [engine/units/units.asm](../../engine/units/units.asm): `rlCreateUnit`, `rlDeleteUnit`, and the ROM character getters.
 - [engine/units/unit_data.asm](../../engine/units/unit_data.asm): the part-pointer getters and the buffer routines.
-- [engine/units/unit_info.asm](../../engine/units/unit_info.asm) and [stats.asm](../../engine/units/stats.asm): the type-switching getters.
+- [engine/units/unit_info.asm](../../engine/units/unit_info.asm) and [engine/units/stats.asm](../../engine/units/stats.asm): the type-switching getters.
 - [engine/battle/battle_stats.asm](../../engine/battle/battle_stats.asm): the derived enemy stats.
 - [engine/core/lib/ram_areas.asm](../../engine/core/lib/ram_areas.asm): the RAM area allocator ([allocation.md](../reference/allocation.md)).
 - [docs/reference/units.md](../reference/units.md): the reference page.
+
+---
+
+← Previous: [Part I: The Pieces on the Board](part-1-the-pieces-on-the-board.md) | [Contents](OUTLINE.md) | Next: [Chapter 2: Classes, Stats, Skills, and Weapon Ranks](02-classes-stats-skills-and-weapon-ranks.md) →

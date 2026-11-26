@@ -1,8 +1,8 @@
 # Chapter 25: Full-Screen Windows and the Status Screen
 
-Eight screens take over the whole display for a while and then hand it back. The **status screen** shows one unit's full record. Four overview windows from the map menu list the army: the **unit list**, the **item window**, the **skill window**, and the **data window**. The **options menu** changes the settings, the **revive screen** chooses a dead unit for the Valkyrie Staff, and the **game over** screen ends the game. Each can be opened from the map, and most from the castle screen too, and each returns to whatever opened it.
+Seven full-screen menus take over the display for a while and hand it back to the map, the castle, or another menu; an eighth, the **game over** screen, ends the playthrough. The **status screen** shows one unit's full record. Four overview windows from the map menu list the army: the **unit list**, the **item window**, the **skill window**, and the **data window**. The **options menu** changes the settings, and the **revive screen** (opened only from the castle) chooses a dead unit for the Valkyrie Staff.
 
-These screens follow the pattern of the castle screen ([Chapter 15](15-castles-and-towns.md)): an opener replaces the frame's routines, a few game state routines run the screen, and leaving installs the next screen's opener. They share one VBlank routine, and they keep their variables in the same block of work RAM, since only one of them is ever open. A screen that opens another and expects to come back records where to return to and saves whatever it needs to restore.
+These screens follow the pattern of the castle screen ([Chapter 15](15-castles-and-towns.md)): an opener replaces the frame's routines, a few game state routines run the screen, and leaving installs the next screen's opener. The first seven share one VBlank routine and keep their variables in the same block of work RAM, since only one of them is ever open; game over installs the map's VBlank and main loop and drives itself from a proc. A screen that opens another and expects to come back records where to return to and saves whatever it needs to restore.
 
 This chapter covers the shared pattern, the status screen, the four overview windows, the options, revive, and game over screens, and how the screens pass control between them.
 
@@ -27,9 +27,9 @@ fn open_full_screen(setup: GameStateRoutine, upkeep: GameStateRoutine) {
 }
 ```
 
-Every opener resets the active sprites, the HDMA engine and the IRQ engine. Procs differ. The options menu, the revive screen and game over reset the whole proc engine (`rlProcEngineResetProcEngine`). The status screen and the four overview windows only free the map's unit and terrain window procs (`rlClearUnitWindowAndTerrainWindowProcs`); any other proc running on the map keeps running while the screen is up, since the proc engine runs from VBlank whatever the screen ([procs.md](../reference/procs.md)).
+Every opener resets the active sprites, the HDMA engine, and the IRQ engine. Procs differ. The options menu, the revive screen, and game over reset the whole proc engine (`rlProcEngineResetProcEngine`). The status screen and the four overview windows only free the map's unit and terrain window procs (`rlClearUnitWindowAndTerrainWindowProcs`); any other proc running on the map keeps running while the screen is up, since the proc engine runs from VBlank whatever the screen ([Chapter 28](28-procs.md)).
 
-`rsRunMenuScreenVBlank` ([engine/menus/status_screen.asm](../../engine/menus/status_screen.asm)) is the usual VBlank list: the queued copies to video RAM, palettes and sprites, HDMA, the buffered PPU registers, the sound queue, the joypad, the game state routines, and the menu tilemap uploads (`rlMapMenuVBlankUpload`). The main loop does only the background tasks, so the AI, which runs from the map's main loop ([Chapter 14](14-armies-with-a-mind.md)), stops while any of these screens is up.
+`rsRunMenuScreenVBlank` ([engine/menus/status_screen.asm](../../engine/menus/status_screen.asm)) is the usual VBlank list: the queued copies to video RAM, palettes and sprites, HDMA, the buffered PPU registers, the sound queue, the joypad, the per-frame engines (`rlRunVBlankHooks`, which run before the game state routines here), the game state routines, and the menu tilemap uploads (`rlMapMenuVBlankUpload`). The main loop does only the background tasks, so the AI, which runs from the map's main loop ([Chapter 14](14-armies-with-a-mind.md)), stops while any of the seven menu screens is up. (Game over installs `rsMapVBlank` and `rsMapMainLoop` with empty game-state slots and runs inside `procGameOver`.)
 
 The screens' game state routines and steps:
 
@@ -41,7 +41,7 @@ The screens' game state routines and steps:
 | Options menu | `rsOpenOptionsMenu` | `$29`–`$2B` | 4 |
 | Skill window | `rsSkillWindowOpen` | `$2C`–`$2E` | 2 |
 | Data window | `rsDataWindowOpen` | `$2F`–`$31` | 3 |
-| Revive screen | `rsReviveScreenOpen` | `$32`–`$34` | |
+| Revive screen | `rsReviveScreenOpen` | `$32`–`$34` | 5 |
 | Game over | `rsSetupGameOverScreen` | (a proc) | |
 
 ### Sharing RAM
@@ -56,11 +56,11 @@ The screens' variables overlap in bank `$7F`:
 | `$7F/8400` | Options menu |
 | `$7F/8467` | Item window |
 
-The revive screen keeps its list in the unit list's variables (`aUnitWindowDeploymentSlots`). Opening one of these screens overwrites the state of whichever screen opened it. The disassembly writes these names only inside the files that own them (`SCOPED` in [tools/name_ram.py](../../tools/name_ram.py)), because the same address means different things on different screens.
+The revive screen keeps its list in the unit list's variables (`aUnitWindowDeploymentSlots`). Opening one of these screens overwrites the state of whichever screen opened it. Because the same address means different things on different screens, each screen's file scopes its own names for that region.
 
 ### Coming back
 
-Closing a screen goes back to the map (`rsReturnToMapMainLoop`, which rebuilds the map's display), or to the castle screen when bit 5 of `wChapterFlags` says the castle is open. The status screen can be opened from four places, so it needs more: the caller stores the low word of its own opener in `wStatusScreenCaller` before opening it, and closing the status screen installs that opener again.
+Closing a screen goes back to the map (`rsReturnToMapMainLoop`, which rebuilds the map's display), or to the castle screen when bit 5 of `wChapterFlags` says the castle is open. The status screen can be opened from four places, so it needs more: the caller stores the low word of its own opener in `wStatusScreenCaller` before opening it, and closing the status screen checks `wStatusScreenCaller` to pick the matching return routine and fade speed, then installs it as the main loop routine.
 
 | Opened from | `wStatusScreenCaller` | Fade in | B returns to |
 |---|---|---|---|
@@ -97,7 +97,7 @@ The status screen shows one unit across three views:
 
 ### What it shows, and for whom
 
-Before drawing, `rsInitializeStatusScreenVariables` gathers the unit's facts into the screen's block: the 13 holy blood levels, the commander or leadership stars, the skills with icons, whether the unit is at its promotion level (a marker blinks beside the portrait), the item it drops or holds as unique (a marker beside it), and its condition (a dead, captive, moved, or sleeping unit gets the grey palette). For a unit outside the player's army the screen hides experience, item uses, kills, and the lover, and R and L do nothing. An enemy's luck shows as 0.
+Before drawing, `rsInitializeStatusScreenVariables` gathers the unit's facts into the screen's block: the 13 holy blood levels, the commander or leadership stars, the skills with icons, whether the unit is at its promotion level (a marker blinks beside the portrait), the item it drops or holds as unique (a marker beside it), and its condition (a dead, captive, moved, or sleeping unit gets the gray palette). For a unit outside the player's army the screen hides experience, item uses, kills, and the lover, and R and L do nothing. An enemy's luck shows as 0.
 
 Weapon ranks show as A, B, C, or a dash, and a star for the rank a major blood gives. The same star marks arena level 7.
 
@@ -155,7 +155,7 @@ A on a unit that is on the map closes the window with the map cursor on that uni
 
 The item window ([engine/menus/item_window.asm](../../engine/menus/item_window.asm)) lists every item carried by a living, non-captive unit of the player's army, 12 rows at a time, with the selected item's stats, rank, description, and weapon triangle. Items in storage aren't listed.
 
-Its sort panel offers three orders: by owner, by type (the game's item order, `aItemTypeSortRanks`), and by name (a table that looks like kana order). The panel's rows start from the current order. The sort moves each higher-scoring entry up and shifts the rest, as the unit list's does, so it is stable, and the previous order breaks ties: sorting by type after sorting by owner gives the items of each type in owner order. The chosen order is kept between visits. A on an item goes to the unit holding it.
+Its sort panel offers three orders: by owner, by type (the game's item order, `aItemTypeSortRanks`), and by name (a table that looks like kana order). The panel's rows start from the current order. The sort moves each higher-scoring entry up and shifts the rest, as the unit list's does, so it is stable, and the previous order breaks ties: sorting by type after sorting by owner gives the items of each type in owner order. The chosen order is kept between visits. A on an item held by a unit on the map goes to that unit; for a unit inside a castle, it fades directly to that unit's castle.
 
 ### The skill window
 
@@ -178,7 +178,7 @@ The options menu ([engine/menus/options_menu.asm](../../engine/menus/options_men
 | `OPTION_MESSAGE_SPEED` | 1–5 |
 | `OPTION_ENEMY_SPEED` | Real, fast |
 | `OPTION_SOUND` | Stereo, mono, off |
-| `OPTION_AUTO_SAVE` | Off, or a file 1–4 (stored as 0, or the file plus 1) |
+| `OPTION_AUTO_SAVE` | Off, or file 1–4 (held as 0–4 in the menu, then saved as an on/off bit plus 0-based slot 0–3) |
 | `OPTION_ENEMY_AI` | Normal, clever |
 
 The ninth option, the enemy AI, appears only once the save file has finished the game, and the menu uses a second set of row positions and HDMA lines when it does. Up and Down move between options, Left/L and Right/R change the value, Y puts back the opening values, and A or B writes the values into the settings and leaves.
@@ -193,7 +193,7 @@ The castle's Valkyrie Staff handler (`rsCastleStaffValkyrie`) installs the reviv
 
 ## Shared pieces
 
-Every screen draws its text with the menu font routines in [engine/menus/menu_text.asm](../../engine/menus/menu_text.asm): `rlDrawMenuTextLine` writes a string as pairs of 8 × 8 tiles, top and bottom, into a tilemap buffer, and `rlDrawMenuTextNumber` writes numbers of up to five digits ([Chapter 13](13-dialogue-and-text.md)). Window frames come from `rlLoadWindowGraphics` ([engine/menus/window_graphics.asm](../../engine/menus/window_graphics.asm)), which takes a style number at `$0756` but loads the same frames and palette for all four styles.
+Every screen draws its text with the menu font routines in [engine/menus/menu_text.asm](../../engine/menus/menu_text.asm): `rlDrawMenuTextLine` writes a string as pairs of 8 × 8 tiles, top and bottom, into a tilemap buffer, and `rlDrawMenuTextNumber` writes numbers of up to five digits ([Chapter 13](13-dialogue-and-text.md)). Meanwhile, the map, castle, and dialogue window frames come from `rlLoadWindowGraphics` ([engine/menus/window_graphics.asm](../../engine/menus/window_graphics.asm)), which takes a style number at `$0756` but loads the same frames and palette for all four styles.
 
 ## Trade-offs and hard limits
 
@@ -212,3 +212,7 @@ Every screen draws its text with the menu font routines in [engine/menus/menu_te
 - [engine/menus/menu_text.asm](../../engine/menus/menu_text.asm) and [window_graphics.asm](../../engine/menus/window_graphics.asm): text and window frames.
 - [include/Menus.h](../../include/Menus.h): step constants and options; [include/WRAM.h](../../include/WRAM.h): the shared block.
 - [docs/reference/menus.md](../reference/menus.md): the reference page.
+
+---
+
+← Previous: [Chapter 24: The Battle Scene](24-the-battle-scene.md) | [Contents](OUTLINE.md) | Next: [Chapter 26: The Frame](26-the-frame.md) →

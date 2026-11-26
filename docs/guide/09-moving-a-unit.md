@@ -54,7 +54,7 @@ A chapter can close parts of its map to the player. Bits 10 to 15 of each tile's
 
 A weapon's range becomes flags: range 1 sets bit 0, range 2 sets bit 1, and range 10 sets bit 2. Each weapon the unit can wield adds the flags for its minimum and its maximum range. Ranges 3 to 9 set nothing, which suits the weapons in the game: every range is 1, 2, 1–2, 1–10, or 3–10.
 
-A unit that can wield a weapon reaching 10 tiles (a ballista, or the Meteor, Bolting, Blizzard, or Fenrir tome) doesn't move. Its movement map is replaced with a diamond of radius 10 around it, red at distances 3 to 10 and at 1 or 2 only if another of its weapons covers that distance. When the player picks up one of their own units with such a weapon, its command menu opens at once, the same as for a unit with nowhere to go. Carrying such a weapon without being able to wield it (lacking the weapon rank, or silenced, for a tome) changes nothing. Ballisticians also have movement 0 and a movement type that can enter nothing.
+A unit that can wield a weapon reaching 10 tiles (a ballista, or the Meteor, Bolting, Blizzard, or Fenrir tome) doesn't move. Its movement map is replaced with a diamond of radius 10 around it, red at distances 3 to 10 and at 1 or 2 only if another of its weapons covers that distance. When the player picks up a player unit with such a weapon, its command menu opens at once, the same as for a unit with nowhere to go. Carrying such a weapon without being able to wield it (lacking the weapon rank, or silenced, for a tome) changes nothing. Ballisticians also have movement 0 and a movement type that can enter nothing.
 
 ### What the overlay shows
 
@@ -62,14 +62,14 @@ From every tile the unit can stop on, the fill marks the tiles at distance 1 and
 
 ## The range maps
 
-The fill uses two 64 × 64 byte grids in bank `$7F`. They sit in a block of such grids that the AI also uses for its own maps ([Chapter 14](OUTLINE.md)):
+The fill uses two 64 × 64 byte grids in bank `$7F`. They sit in a block of such grids that the AI also uses for its own maps ([Chapter 14](14-armies-with-a-mind.md)):
 
 ```
-  $7F654A  aRangeMap           what stands on each tile (input to the fill)
-  $7F754A  aMovementMap        movement left on each tile (the result)
-  $7F854A  aTargetDistanceMap
-  $7F894A    ├ 128 list heads  one per amount of movement left
-  $7F8A4A    └ list entries    4 bytes each: next entry, tile index
+  $7F/654A  aRangeMap           what stands on each tile (input to the fill)
+  $7F/754A  aMovementMap        movement left on each tile (the result)
+  $7F/854A  aTargetDistanceMap
+  $7F/894A    ├ 128 list heads  one per amount of movement left
+  $7F/8A4A    └ list entries    4 bytes each: next entry, tile index
 ```
 
 The grids are centered on the unit's tile, at column 32, row 32, so the unit's tile is index 32 × 64 + 32, and the four neighbors of index `i` are `i − 64`, `i − 1`, `i + 1`, and `i + 64`. Code that turns a map tile into a grid index subtracts the unit's position, adds 32, and keeps the low six bits of each coordinate. (The overlay code gets the same result by subtracting the unit's position plus 32, the right edge of its window: modulo 64, subtracting 32 and adding 32 are the same.) The grid therefore wraps around, and a window of tiles around the unit (`wMovementMapWindowLeft` to `Bottom`) decides which tiles count as inside it.
@@ -96,7 +96,7 @@ Costs vary from 7 to 50, so the route with the fewest tiles isn't always the che
 fn fill_movement_map(budget: u8) {                    // rsFloodFillMovementMap
     let start = 32 * 64 + 32;                         // the unit's tile
     aMovementMap[start] = budget;
-    lists[budget].push(start);                        // list heads at $7F894A
+    lists[budget].push(start);                        // list heads at $7F/894A
     for left in (7..=budget).rev() {                  // most movement left first
         for tile in lists[left] {
             for next in [tile - 64, tile - 1, tile + 1, tile + 64] {  // rsSpreadMovementToNeighbours
@@ -267,3 +267,7 @@ The limits:
 - [data/terrain/MovementCost.csv](../../data/terrain/MovementCost.csv): costs by movement type and terrain; [include/Terrain.h](../../include/Terrain.h): the terrain IDs.
 - [include/Map.h](../../include/Map.h): `MAP_ACTION_MODE_*` and the cursor states; [include/WRAM.h](../../include/WRAM.h): `aRangeMap`, `aMovementMap`, `aMovementPath`, `wMovementMapWindow*`, `wAreaRestrictionBitfield`, `wMapActionMode`.
 - [docs/reference/map.md](../reference/map.md): the reference page.
+
+---
+
+← Previous: [Chapter 8: The Turn](08-the-turn.md) | [Contents](OUTLINE.md) | Next: [Chapter 10: Menus over the Map](10-menus-over-the-map.md) →

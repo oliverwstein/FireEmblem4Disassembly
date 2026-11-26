@@ -18,7 +18,7 @@ This chapter covers getting into and out of the scene, how the screen is divided
 
 `rlStartBattleScene` ([engine/battle/battle.asm](../../engine/battle/battle.asm)) stops the music and leaves the map. An ordinary battle (`wBattleType` 0) closes the screen with a window wipe: an HDMA table rewrites a window's left edge on every scanline, and two 240-line buffers alternate each frame as the shape in `aBattleTransitionShape` closes in (`aBattleTransitionHDMAInfo`). Arena bouts, class changes, and fights on the castle screen fade out instead. The opening's demo goes straight in.
 
-`rsOpenBattleScene` ([engine/battle_scene/battle_screen.asm](../../engine/battle_scene/battle_screen.asm)) resets the proc, sprite, HDMA, and interrupt engines, clears the animation slots, runs `rlBattleSceneInit`, sets up five mid-frame interrupts, and installs game state `$18` with the scene's VBlank and main loop routines. State `$18` blanks the screen once and moves to state `$19`, which runs the scene's frame until the fade out ends. Then it leaves according to the fight: to the map (in mode 3 after Julius's defeat, below), back to the castle after an arena fight, to the castle screen after a class change or a castle fight, or to game state 0.
+`rsOpenBattleScene` ([engine/battle_scene/battle_screen.asm](../../engine/battle_scene/battle_screen.asm)) frees the map's unit and terrain window procs and resets the active sprite, HDMA, and interrupt engines, clears the animation slots, runs `rlBattleSceneInit`, sets up five mid-frame interrupts, and installs game state `$18` with the scene's VBlank and main loop routines. State `$18` blanks the screen once and moves to state `$19`, which runs the scene's frame until the fade out ends. Then it leaves according to the fight: to the map (in mode 3 after Julius's defeat, below), back to the arena's castle handler (`rlReturnToCastleFromArena`) after an arena fight, to the castle screen after a class change or a castle fight, or to game state 0.
 
 ## The screen
 
@@ -37,7 +37,7 @@ The combatants are built from many hardware sprites each. Their pose graphics ar
 
 ### Five interrupts per frame
 
-The bottom of the screen is a different picture from the top. The arena and the HUD use different tilemaps, tile bases, layers, and scroll positions, and the scene reprograms the PPU (the picture processor) partway down the screen to switch between them. A horizontal-blank interrupt (an IRQ, set to fire on a given scanline) stops the CPU at that line, and its handler rewrites the registers in the short gap before the next line is drawn. The scene installs five, through the IRQ engine ([Chapter 29](OUTLINE.md)):
+The bottom of the screen is a different picture from the top. The arena and the HUD use different tilemaps, tile bases, layers, and scroll positions, and the scene reprograms the PPU (the picture processor) partway down the screen to switch between them. A horizontal-blank interrupt (an IRQ, set to fire on a given scanline) stops the CPU at that line, and its handler rewrites the registers in the short gap before the next line is drawn. The scene installs five, through the IRQ engine ([Chapter 29](29-sprites-and-scanlines.md)):
 
 ```
   line   0  +--------------------------------------------+  display off: black band
@@ -45,14 +45,14 @@ The bottom of the screen is a different picture from the top. The arena and the 
             |  the arena: BG2 background, BG1 foreground |
             |  combatants, effects; scrolled by camera   |
   line 126  +--------------------------------------------+  IRQ 2: switch to the HUD's tilemaps,
-            |  HUD: names, weapons, HP, stats             |  tiles, layers, and scroll
+            |  HUD: names, weapons, HP, stats            |  tiles, layers, and scroll
   line 156  +--------------------------------------------+  IRQ 3: split within the HUD (some layouts)
   line 161  +--------------------------------------------+  IRQ 4: split within the HUD (one layout)
   line 207  +--------------------------------------------+  IRQ 5: display off: black band
   line 224  +--------------------------------------------+
 ```
 
-IRQ 2 turns the display off for an instant, switches the main screen to BG2 and BG3, points them at the HUD's tilemap and tiles, sets their scroll, rewrites a few colors, and turns the display back on. A value at `$7F/E4C2` picks one of four HUD layouts, and the later splits apply only to some of them. A critical hit shakes only the HUD: the shake changes the scroll values IRQ 2 writes (`$7F/FC73`–`$7F/FC76`, from `aBattleSceneHUDShakeOffsets`), so the arena above stays still.
+IRQ 2 turns the display off for an instant, switches the main screen to BG2 and BG3, points them at the HUD's tilemap and tiles, sets their scroll, rewrites a few colors, and turns the display back on. `bBattleSceneBG3Mode` (`$7F/E4C2`, modes 0–4+) picks one of four HUD layouts in IRQ 2, with IRQ 3 running in modes 1 and 3 and IRQ 4 only in mode 1. A critical hit shakes only the HUD: the shake changes the scroll values IRQ 2 writes (`$7F/FC73`–`$7F/FC76`, from `aBattleSceneHUDShakeOffsets`), so the arena above stays still.
 
 ### The frame
 
@@ -132,8 +132,10 @@ The round log gives no timing. The strike lands when the attacker's sequence rea
 
 ```rust
 fn apply_strike(round: RoundEntry) {                 // rlBattleSceneApplyStrike
-    defender.hp_target = defender.hp - round.damage; // falls one point a frame
-    start_damage_flash(defender, 25);                // frames
+    if round.damage > 0 {
+        defender.hp_target = defender.hp - round.damage; // falls one point a frame
+        start_damage_flash(defender, 25);            // frames
+    }
     defender.knockback = 0x0762 / class_weight(defender.class);  // aBattleSceneClassWeights
     play_hit_sound(round);                           // $91-$94, $95 for no damage; +$50 critical
     if round.critical { start_hud_shake(); }
@@ -194,7 +196,7 @@ The scene's third engine runs scripts that stage spells and every other screen e
   $FFF8-$FFFF: control words
 ```
 
-The 25 commands (`aBattleSceneCommandHandlers`) cover the stage: decompress graphics to video RAM, copy, write values into RAM, load a background, a portrait, or colors, start a palette effect, a window effect, an HDMA scroll effect, or a BG2 shake, scroll the camera to a combatant, play a sound (optionally panned to a combatant or its opponent), and wait. Three commands run routines from a table of 72 (`aBattleSceneScriptRoutines`): once, every frame until the routine reports it is done, or every frame from then on. The control words end the script (`$FFFF`), stop for the frame (`$FFFE`), release a combatant (`$FFFD`, `$FFFC`), land a strike (`$FFFA`), heal (`$FFFB`), or drain (`$FFF8`).
+The 25 commands (`aBattleSceneCommandHandlers`) cover the stage: decompress graphics to video RAM, copy, write values into RAM, load a background, a portrait, or colors, start a palette effect, a window effect, an HDMA scroll effect, or a BG2 shake, scroll the camera to a combatant, play a sound (optionally panned to a combatant or its opponent), and wait. Three commands run routines from a table of 72 (`aBattleSceneScriptRoutines`): once, every frame until the routine reports it is done, or every frame from then on. The control words end the script (`$FFFF`), stop for the frame (`$FFFE`), release a combatant (`$FFFD`, `$FFFC`), heal (`$FFFB`), land a strike (`$FFFA`), start hit-effect sprites or a dodge (`$FFF9`), or drain (`$FFF8`).
 
 ```rust
 fn run_script_word(word: u16) {                  // rlRunBattleSceneScript
@@ -204,6 +206,7 @@ fn run_script_word(word: u16) {                  // rlRunBattleSceneScript
         0xFFFD | 0xFFFC => release_combatant(word),
         0xFFFB => rlBattleSceneStartHeal(),
         0xFFFA => rlBattleSceneApplyStrike(),
+        0xFFF9 => rsBattleSceneControlDodgeIfMissed(),
         0xFFF8 => rlBattleSceneStartDrain(),
         _ => {
             let command = (word >> 9) & 0x1F;
@@ -215,7 +218,7 @@ fn run_script_word(word: u16) {                  // rlRunBattleSceneScript
 }
 ```
 
-Each frame the interpreter counts down its wait timers, holds while a command it waits on is unfinished, and then runs words until one stops for the frame. Holding A clears the skippable wait timer, so some pauses can be cut short.
+Each frame the interpreter counts down its wait timers, holds while a command it waits on is unfinished, runs any leading control words (`$FFF8`–`$FFFD`), and then runs one command (or stops on `$FFFE`/`$FFFF`). Holding A clears the skippable wait timer, so some pauses can be cut short.
 
 ### Palette effects
 
@@ -246,15 +249,17 @@ One **gauge** engine (`wBattleSceneGaugeValue` at `$7F/ED4B`) counts a number to
 
 ## The end steps
 
-When the rounds are over, `rlBattleSceneRunEndStep` ([engine/battle_scene/results.asm](../../engine/battle_scene/results.asm)) works through the 21 entries of `aBattleSceneEndSteps`, last to first, starting the next one whenever nothing else is running. Most start a scene script:
+When the rounds are over, `rlBattleSceneRunEndStep` ([engine/battle_scene/scene.asm](../../engine/battle_scene/scene.asm), dispatching handlers in [results.asm](../../engine/battle_scene/results.asm) via `aBattleSceneEndSteps` in [data.asm](../../engine/battle_scene/data.asm)) works through the 21 entries, last to first, starting the next one whenever nothing else is running. Most start a scene script:
 
 1. Show BG3.
-2. For a class change, scripts `$33` and `$35`. After a fatal strike, scripts `$34` and `$31` and the defeated unit's cry (`$89`–`$8B`, by voice).
+2. For a class change, script `$33`; after a fatal strike, script `$34`.
 3. The death quote.
-4. The experience bar, and a level up: its banner (`$3B`) and the stat gains.
-5. The message window (`$2A`), and each message: an item obtained (`$2C`), gold obtained or stolen (`$2F`), a weapon broken (`$44`). Each waits for a button (`$30`). The messages run through the dialogue engine ([Chapter 13](13-dialogue-and-text.md)), drawn into the scene's BG3.
-6. Julius's scripts when the fight ends with his defeat (`$4A`, `$4B`, `$4C`).
-7. The fade out.
+4. The defeated unit's cry (`$89`–`$8B`, by voice) and defeat script `$31`.
+5. The experience bar, and a level up: its banner (`$3B`) and the stat gains.
+6. For a class change, the closing script `$35`.
+7. The message window (`$2A`), and each message: gold obtained or stolen (`$2F`), an item obtained (`$2C`), a weapon broken (`$44`), followed by a button wait (`$30`). The messages run through the dialogue engine ([Chapter 13](13-dialogue-and-text.md)), drawn into the scene's BG3.
+8. Julius's scripts when the fight ends with his defeat (`$4B`/`$3D`, `$4C`, and his death quote `$4A`).
+9. The fade out.
 
 Julius's defeat is noticed at the moment of the strike. A fatal blow by unit 1 on `JuliusChFinal` slows the fade, fades the music, and sets the flag that returns to the map in mode 3. His death quote is shown through `rlBattleSceneShowJuliusQuote` in place of the normal one.
 
@@ -270,7 +275,7 @@ Julius's defeat is noticed at the moment of the strike. A fatal blow by unit 1 o
 
 - [engine/battle/battle.asm](../../engine/battle/battle.asm): `rlStartBattleScene`.
 - [engine/battle_scene/battle_screen.asm](../../engine/battle_scene/battle_screen.asm): `rsOpenBattleScene`, the scene's VBlank and main loop, and the window wipe.
-- [engine/battle_scene/scene.asm](../../engine/battle_scene/scene.asm): `rlBattleSceneInit`, `rsBattleSceneRunFrame`, the scene's flags, the fade, and the intro.
+- [engine/battle_scene/scene.asm](../../engine/battle_scene/scene.asm): `rlBattleSceneInit`, `rsBattleSceneRunFrame`, `rlBattleSceneRunEndStep`, the scene's flags, the fade, and the intro.
 - [engine/battle_scene/screen.asm](../../engine/battle_scene/screen.asm): the five IRQs, the HDMA tables, and the VBlank work.
 - [engine/battle_scene/loading.asm](../../engine/battle_scene/loading.asm) and [backgrounds.asm](../../engine/battle_scene/backgrounds.asm): graphics, backgrounds, foregrounds, and placement.
 - [engine/battle_scene/rounds.asm](../../engine/battle_scene/rounds.asm): reading the rounds and landing a strike.
@@ -279,3 +284,7 @@ Julius's defeat is noticed at the moment of the strike. A fatal blow by unit 1 o
 - [engine/battle_scene/hud.asm](../../engine/battle_scene/hud.asm) and [results.asm](../../engine/battle_scene/results.asm): the HUD, the gauge, and the end steps.
 - [include/BattleScene.h](../../include/BattleScene.h) and [include/BattleAnimation.h](../../include/BattleAnimation.h): structures, flags, and sequence commands.
 - [docs/reference/battle_scene.md](../reference/battle_scene.md): the reference page.
+
+---
+
+← Previous: [Chapter 23: Two Ways to Show a Fight](23-two-ways-to-show-a-fight.md) | [Contents](OUTLINE.md) | Next: [Chapter 25: Full-Screen Windows and the Status Screen](25-full-screen-windows-and-the-status-screen.md) →

@@ -42,27 +42,48 @@ Scanline
 Event commands (`WM_*`) populate three visual layers over the map:
 
 - **Markers ([engine/worldmap/markers.asm](../../engine/worldmap/markers.asm)):** `aWorldMapMarker` (`$7F/5400`) holds 8 slots of army icons drawn as OAM sprites (`rsHandleWorldMapMarkers`). Each marker also decompresses a red or blue shadow overlay (`aWorldMapMarkerShadowTilemap`, `aWorldMapMarkerShadowPalettes`) onto BG2 (`$A800`) and fades it with procs.
-- **Portraits ([engine/worldmap/portraits.asm](../../engine/worldmap/portraits.asm)):** `aWorldMapPortrait` (`$7F/5450`) holds 7 portrait slots. `rlDecompressWorldMapPortraitToSlot` unpacks a character's portrait, `rsHandleWorldMapPortraits` draws active slots as sprites, and `procFadeInWorldMapPortraitSlot` / `procFadeOutWorldMapPortraitSlot` fade them. When `wGameStateRoutine1 == 0`, `rlLoadWorldMapPortraitIntoSlot` and `rlFadeOutWorldMapPortraitSlot` divert to the Chapter 5 memorial's portrait handlers ([Chapter 17](17-love-and-lineage.md)).
+- **Portraits ([engine/worldmap/portraits.asm](../../engine/worldmap/portraits.asm)):** `aWorldMapPortrait` (`$7F/5450`) allocates 7 words, with 6 usable portrait slots (OAM palettes 2–7 and VRAM `$0800..$1C00`). Each slot unpacks a portrait, draws it as sprites, and fades it in or out with procs ([Chapter 28](28-procs.md)). When `wGameStateRoutine1 == 0`, the load and fade helpers divert to the Chapter 5 memorial's portrait handlers ([Chapter 17](17-love-and-lineage.md)).
 - **Region highlights ([engine/worldmap/highlight.asm](../../engine/worldmap/highlight.asm)):** `rlHighlightWorldMapPart` indexes 11 entries in `aWorldMapHighlights` (`WMH_Verdane` through `WMH_UnifiedThracia` in [WorldMapHighlights.csv](../../data/system/WorldMapHighlights.csv)), decompresses a 32 × 21-tile BG2 overlay to `$7E/7B88`, DMAs it to `$A800`, and starts `procWorldMapFadeInHighlightColor`.
 
 ## The chapter intro title card
 
 When the world map finishes (or is skipped with Start), `rsOpenChapterIntroScreen` ([engine/worldmap/chapter_intro.asm](../../engine/worldmap/chapter_intro.asm)) borrows the save menu's game state (`GAMESTATE_SAVE_MENU_SETUP`/`UPKEEP`/`STEP`) at steps `$24`–`$27` with `rsRunMenuScreenVBlank`.
 
-`rsLoadChapterIntroGraphics` dispatches `wCurrentChapter` (`0..11`) through `aChapterIntroTitleDMATable` to DMA that chapter's title tilemap, then `rsCreateChapterIntroHDMA` starts two HDMA channels:
+`rsLoadChapterIntroGraphics` dispatches `wCurrentChapter` (`0..11`) through `aChapterIntroTitleDMATable` to DMA that chapter's title tilemap, then `rsCreateChapterIntroHDMA` starts two HDMA channels ([Chapter 29](29-sprites-and-scanlines.md)):
 
-- **`aChapterIntroBG2VOFSHDMA` (`$7F/828F` → `BG2VOFS`):** Animates the waving background.
-- **`aChapterIntroBG1HOFSHDMA` (`$7F/838F` → `BG1HOFS`):** Slides the title card's horizontal bands into alignment.
+- **`aChapterIntroBG2VOFSHDMA` (`$7F/828F` → `BG2VOFS`):** Applies a static 24-line wave offset table over the scrolled background (`rlCycleChapterIntroBG2VOFSHDMA` is a no-op).
+- **`aChapterIntroBG1HOFSHDMA` (`$7F/838F` → `BG1HOFS`):** Actively steps the title card's alternating scanline bands toward `0` each frame until they align.
 
-The card runs through three active steps: step `$24` (`rlChapterIntroFadeInStep`) plays `aChapterIntroSongs[chapter]` (`0` for the Final Chapter), raises brightness, and fades BG palette 4 in; step `$25` (`rlChapterIntroHold`) holds for `aChapterIntroHoldFrames[chapter]` (180–210 frames); and step `$27` (`rlChapterIntroFadeOutStep`) darkens the screen and starts `rsStartChapterMap` through `procMainLoopChangeFade`. Step `$28` (`rsChapterIntroSkip`) exists in the step table, but no code selects it.
+The card runs through four active steps: step `$24` (`rsChapterIntroStart`) clears brightness and advances; step `$25` (`rlChapterIntroFadeInStep`) plays the chapter intro song (`0` for the Final Chapter), raises brightness, and fades BG palette 4 in; step `$26` (`rlChapterIntroHold`) holds for 180–210 frames; and step `$27` (`rlChapterIntroFadeOutStep`) darkens the screen and starts `rsStartChapterMap` through `procMainLoopChangeFade`. Step `$28` (`rsChapterIntroSkip`) exists in the step table, but no code selects it.
 
 ## The Jugdral history
 
 Choosing New Game on the title file menu runs the scrolling Jugdral history ([engine/save/jugdral_history.asm](../../engine/save/jugdral_history.asm)) in save menu steps `$1C`–`$21` before `rlStartNewGameSave` and the Prologue's world map.
 
-`aJugdralHistoryEntries` lists a BG2 row pattern, a year (`$FF` for the era heading), and a text pointer for each milestone. `rlScrollJugdralHistory` creates parallax by scrolling BG1 one pixel every frame while scrolling BG2 and BG3 one pixel every *two* frames (`wVBlankEnabledFramecount & 1 == 0`).
+`aJugdralHistoryEntries` lists a BG2 row pattern, a year (`$FF` for the era heading), and a text pointer for each milestone. `rlScrollJugdralHistory` creates parallax by scrolling BG1 one pixel every frame while scrolling BG2 and BG3 one pixel every *two* frames (`wVBlankEnabledFramecount & 1 == 0`), spreading each 16-pixel line's glyph rendering across twelve ticks ([Chapter 13](13-dialogue-and-text.md)):
 
-Because rendering an entire line of dialogue glyphs in one frame would blow VBlank, `rlJugdralHistoryDrawLineStep` spreads each 16-pixel line across twelve ticks (`aJugdralHistoryLineSteps`): drawing the BG2 backdrop row, uploading it, rendering the year and text across eight frames, and uploading the new row. Every 32 entries (`and #$001F`), `aDialogue._Slot[0].wVRAMTileOffset` wraps back to `$0080` so the scrolling text reuses a fixed VRAM tile ring. Pressing Start jumps straight to step `$22`.
+```rust
+fn scroll_jugdral_history() -> bool {                // rlScrollJugdralHistory
+    if joy1_new & JOY_Start != 0 { return true; }    // skip to step $22
+    wBufferBG1VOFS += 1;                             // BG1 scrolls every frame
+    if wVBlankEnabledFramecount & 1 == 0 {           // BG2/BG3 scroll every 2 frames
+        draw_line_step(wSaveMenuSlotRow & 0x0F);     // 12 ticks: BG2, year, 7× text, BG3, VRAM+=8
+        if wSaveMenuSlotRow & 0x0F == 15 {
+            if aJugdralHistoryEntries[wSaveMenuCommandRow] == 0xFFFF { return true; }
+            wSaveMenuCommandRow += 1;
+            if wSaveMenuCommandRow & 0x1F == 0 {
+                aDialogue._Slot[0].wVRAMTileOffset = 0x0080;  // wrap 32-line tile ring
+            }
+        }
+        wBufferBG2VOFS += 1;
+        wBufferBG3VOFS += 1;
+        wSaveMenuSlotRow += 1;
+    }
+    false
+}
+```
+
+Because rendering a full line of dialogue glyphs in one frame would blow VBlank, `rlJugdralHistoryDrawLineStep` steps through `aJugdralHistoryLineSteps`: copying and uploading the BG2 backdrop row (ticks 0–1), clearing and drawing the year (tick 2), running the dialogue glyph renderer across 7 ticks (3–9), uploading BG3 (tick 10), and advancing the VRAM tile offset (tick 11)—spaced across 24 of the 32 frames a 16-pixel line takes to scroll in. Pressing Start jumps straight to step `$22`.
 
 ## Trade-offs and hard limits
 
@@ -71,7 +92,7 @@ Sharing BG2 between the map overlay (`$5400`) and the narration panel (`$4C00`) 
 The limits:
 
 - **1024 × 1024-pixel world map** (`$0400 × $0400`).
-- **8 marker slots**, **7 portrait slots**, and **11 region highlights**.
+- **8 marker slots**, **6 usable portrait slots** (7 words allocated in `aWorldMapPortrait`, 6 entries in the VRAM and palette tables), and **11 region highlights**.
 - **12 chapter title slots (`0..11`):** `rsLoadChapterIntroGraphics` hangs in an infinite loop if `wCurrentChapter >= 12`.
 - **32-line wrapping tile ring** for Jugdral history text.
 - **Unreachable leftovers:** [engine/debug/world_map_test.asm](../../engine/debug/world_map_test.asm), world map step 2 (`rsWorldMapStepFadeOut`), and `procWorldMapMarkerShadow2FadeIn`.
@@ -83,3 +104,7 @@ The limits:
 - [engine/worldmap/chapter_intro.asm](../../engine/worldmap/chapter_intro.asm): `rsOpenChapterIntroScreen`, HDMA wave/slide setup, and steps `$24`–`$28`.
 - [engine/save/jugdral_history.asm](../../engine/save/jugdral_history.asm): `rsJugdralHistorySetup`, `rlScrollJugdralHistory`, and `rlJugdralHistoryDrawLineStep`.
 - [docs/reference/worldmap.md](../reference/worldmap.md) and [docs/reference/save.md](../reference/save.md): the reference pages.
+
+---
+
+← Previous: [Chapter 18: Saving](18-saving.md) | [Contents](OUTLINE.md) | Next: [Chapter 20: The Opening](20-the-opening.md) →

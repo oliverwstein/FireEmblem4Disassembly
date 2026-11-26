@@ -10,7 +10,7 @@ This chapter covers a proc's definition, its slot in RAM, creating and freeing, 
 
 A proc is created from a **definition** in ROM, a `structProcInfo` of four words ([include/Procs.h](../../include/Procs.h)):
 
-| Offset | Field | |
+| Offset | Field | Holds |
 |---|---|---|
 | +0 | name | two characters, such as `"FI"` for the fade-in |
 | +2 | init | a routine run once, when the proc is created |
@@ -56,7 +56,7 @@ Its script does nothing but halt, so the on-cycle routine does all the work: one
 | `aBody0`-`aBody7` | eight words of the proc's own data |
 | `aLastFrameBitfield` | the bitfield as the last frame ended |
 
-Five single words come first: `wFlag`, whose bit 15 is set while the engine steps the procs; `wOffset`, the index of the proc being stepped; a scratch pointer for the engine's indirect jumps; and `wInput0`-`wInput3`, through which a creator passes arguments to a proc's init routine.
+Seven header fields (15 bytes) come first: six words—`wFlag` (whose bit 15 is set while the engine steps the procs), `wOffset` (the index of the proc being stepped), and `wInput0`-`wInput3` (through which a creator passes arguments to a proc's init routine)—plus a 3-byte pointer (`lPointer`) for the engine's indirect jumps.
 
 The engine uses the bitfield's high bits:
 
@@ -107,7 +107,7 @@ The new proc gets its first step immediately, inside the creation call: its on-c
 
 ## The frame step
 
-The proc engine is the first of the five per-frame engines ([Chapter 27](27-screens.md)), so it runs inside every VBlank routine, after the game state routines. `rlProcEngineMainProcLoop` sets bit 15 of `wFlag`, steps every live slot from 15 down to 0, then clears bit `$4000` in every slot and copies each bitfield to `aLastFrameBitfield`.
+The proc engine is the first of the five per-frame engines ([Chapter 27](27-screens.md)), so it runs inside every VBlank routine except the anti-tamper screen's—usually after the game state routines, though `rsRunMenuScreenVBlank` runs the engines first. `rlProcEngineMainProcLoop` sets bit 15 of `wFlag`, steps every live slot from 15 down to 0, then clears bit `$4000` in every slot and copies each bitfield to `aLastFrameBitfield`.
 
 One step of one proc:
 
@@ -156,17 +156,17 @@ The script is read through the data bank, which the step sets to the definition'
 | `PROC_JUMP_IF_BITS_SET p, b` | jump to p if any of the bits are set | 4 |
 | `PROC_HALT_SLEEP`, `PROC_CREATE_ACTIVE_SPRITE` | a halt read every frame; create an active sprite | 0 |
 
-`PROC_HALT` leaves the script pointing at itself and doesn't set the sleep timer, which the step has just counted down to 0. The next frame's count wraps it to `$FFFF`, so a halted script isn't read again for 65,536 frames, about 18 minutes. A halted proc moves on only when its on-cycle routine frees it or writes a new `aHeaderCodeOffset`. `PROC_YIELD 0` would do the same, and no script uses it.
+`PROC_HALT` leaves the script pointing at itself and doesn't set the sleep timer, which the step has just counted down to 0. The next frame's count wraps it to `$FFFF`, so a halted script isn't read again for 65,536 frames, about 18 minutes. A halted proc moves on only when its on-cycle routine frees it or writes a new `aHeaderCodeOffset` (and resets `aHeaderSleepTimer`, e.g., to 1, to resume promptly). `PROC_YIELD 0` would do the same, and no script uses it.
 
 ## Two ways to write a proc
 
 ### Routines that replace themselves
 
-129 of the 177 definitions have a script that is a single `PROC_HALT`. Those procs are written entirely as on-cycle routines, and they move from stage to stage by storing the next routine's address in their own `aHeaderOnCycle`. The source does this 275 times. The proc is a state machine whose state is the address of its current routine. The castle-name pop-up has four stages:
+130 of the 177 definitions have a script that is a single `PROC_HALT`. Those procs are written entirely as on-cycle routines, and they move from stage to stage by storing the next routine's address in their own `aHeaderOnCycle`. The source does this 275 times. The proc is a state machine whose state is the address of its current routine. The castle-name pop-up has four stages:
 
 | Stage | Every frame |
 |---|---|
-| init | read the text, box color, display time, box size, and position from the event command that started it into the body; start rendering the text |
+| init | read the text pointer, box color, and display time from the event command into the body, and set default initial box size and position; start rendering the text |
 | `rlProcCastleNamePopUpCycle1` | run the text renderer; when the name is done, measure it, size the box to fit, and switch to Cycle2 |
 | `rlProcCastleNamePopUpCycle2` | render again into the sized box; when done, open the pop-up window and switch to Cycle3 |
 | `rlProcCastleNamePopUpCycle3` | count the display time down; at 0, close the window and switch to the dialogue proc's last stages (`rlProcDialogueCycle6` onward) |
@@ -175,7 +175,7 @@ Many procs share one halting script: 35 map magic effects point at the same `aPr
 
 ### Scripts
 
-The other 46 have real scripts, and nearly all of them are timed animations: the map battle, the map magic effects, the map action animations (a village raid, gold handed over, a unit going home), and the cutscenes. A script suits a sequence of fixed delays, where each beat is a call. The proc that plays when an army seizes a castle (`procCastleTakenOver`) is typical:
+Of the remaining 47 definitions, 45 have multi-command scripts—nearly all timed animations: the map battle, the map magic effects, the map action animations (a village raid, gold handed over, a unit going home), and the cutscenes. (The other two are a one-command `PROC_END` no-op and an unreferenced dummy pointing at a bare `rtl`.) A script suits a sequence of fixed delays, where each beat is a call. The proc that plays when an army seizes a castle (`procCastleTakenOver`) is typical:
 
 ```
 aProcCastleTakenOverCode
@@ -196,7 +196,7 @@ _C23A
   PROC_HALT
 ```
 
-The script and the routines share the work. While the script sleeps 64 frames, the on-cycle routine shows the old owner's units on odd frames and hides them on even ones. The init chooses where the script starts by writing `aHeaderCodeOffset` itself: at `_C23A` when the castle wasn't its owner's home castle, so no army falls with it, and at `_C235` when none of that army's units are on screen to blink. The last on-cycle routine frees the proc, gives the map step back its game state, which the init had set to 0, and queues the seize pop-up and the castle's event.
+The script and the routines share the work. While the script sleeps 64 frames, the on-cycle routine shows the old owner's units on odd frames and hides them on even ones. The init chooses where the script starts by writing `aHeaderCodeOffset` itself: at `_C23A` when the castle wasn't its owner's home castle, so no army falls with it, and at `_C235` when none of that army's units are on screen to blink. The last on-cycle routine frees the proc, gives the map step back its game state, which the init had set to 0, queues the seize pop-up, and runs the castle's seize event (or resumes the music).
 
 ### Waiting on a bit
 
@@ -260,3 +260,7 @@ The poll compares definitions, not the `$2000` bit, so a slot freed and taken ag
 - [engine/events/event_scripts.asm](../../engine/events/event_scripts.asm): the event procs.
 - [tools/procs.py](../../tools/procs.py): reads proc scripts out of the ROM.
 - [docs/reference/procs.md](../reference/procs.md): the reference page.
+
+---
+
+← Previous: [Chapter 27: Screens](27-screens.md) | [Contents](OUTLINE.md) | Next: [Chapter 29: Sprites and Scanlines](29-sprites-and-scanlines.md) →

@@ -12,7 +12,7 @@ The engine has a layer of code for each:
 | the HDMA engine | 8 entries, one per HDMA channel, each with a table and a script | `hdma.asm` |
 | the IRQ engine | up to 7 mid-frame interrupts, sorted by line | `irq.asm` |
 
-The last three are built like the proc engine ([Chapter 28](28-procs.md)): fixed slots stored as parallel arrays, a definition in ROM with an init routine, an on-cycle routine and a script, and a step that runs the on-cycle routine and reads the script when its sleep runs out. They are the second, third and fourth of the per-frame engines ([Chapter 27](27-screens.md)). The code is in [engine/core/display/](../../engine/core/display/).
+The active sprite and HDMA engines are built like the proc engine ([Chapter 28](28-procs.md)): fixed slots stored as parallel arrays, a definition in ROM with an init routine, an on-cycle routine, and a script, and a step that runs the on-cycle routine and reads the script when its sleep runs out. The IRQ engine shares the parallel arrays and word scripts, with no init routine, and runs its entries from the scanline interrupt instead of VBlank. Together they are the second, third, and fourth of the per-frame engines ([Chapter 27](27-screens.md)). The code is in [engine/core/display/](../../engine/core/display/).
 
 ## The sprite buffer
 
@@ -21,7 +21,7 @@ An OAM entry is four bytes: X, Y, a tile number, and an attribute byte holding t
 The buffer is refilled from scratch each frame:
 
 ```rust
-// in every VBlank routine
+// typical VBlank routine (e.g. rsMapVBlank)
 dma_palette_and_oam_buffer();        // send last frame's sprites
 clear_sprite_ext_buffer();           // rlClearSpriteExtBuffer: sizes and X bit 8 to 0
 run_game_state_routines();           // these and everything after push sprites,
@@ -30,7 +30,7 @@ run_vblank_hooks();                  //   each at wNextFreeSpriteOffset, which m
 hide_sprites();                      // rlHideSprites: the rest go off screen; offset = 0
 ```
 
-Sprites pushed earlier get lower OAM numbers, and the PPU draws a lower-numbered sprite in front of a higher one. The order of the calls in a VBlank routine is therefore the order of the sprites from front to back. On the chapter map, sprites pushed by the game state routines come first, then the active sprites (the map battle's weapons and spell effects among them), then the moving unit, then the standing units.
+Sprites pushed earlier get lower OAM numbers, and the PPU draws a lower-numbered sprite in front of a higher one. The order of the calls in a VBlank routine is therefore the order of the sprites from front to back. On the chapter map, sprites pushed by the game state routines come first, then the active sprites (the map battle's weapons and spell effects among them), then the moving unit, then the standing units. Other screens vary: `rsRunMenuScreenVBlank` (shared by the menu and intro screens) runs the VBlank hooks before the game state routines so active sprites sit in front of game-state sprites, `rsMapVBlank` skips clearing and hiding during an AI step, and `rsRunAntiTamperVBlank` skips sprite updates altogether.
 
 ### Sprite arrays
 
@@ -43,7 +43,7 @@ fn push_to_oam_buffer(array: &SpriteArray) {     // rlPushToOAMBuffer
     for s in array.entries() {
         oam[i].x = s.x + wR0;                    // set X bit 8 and the size in the ext table
         let y = s.y as i8 as i16 + wR1;
-        oam[i].y = if y + 16 > 255 { 240 } else { y };   // off the bottom: hide it
+        oam[i].y = if (y + 16) as u16 >= 256 { 240 } else { y };  // off top or bottom: hide it
         oam[i].tile_attr = (s.tile_attr + wR4) | wR5;
         i = (i + 4) & 0x1FF;                     // wraps after 128 sprites
     }
@@ -53,15 +53,15 @@ fn push_to_oam_buffer(array: &SpriteArray) {     // rlPushToOAMBuffer
 
 The tile base and attribute base let one array serve wherever its graphics are loaded in video RAM and whatever palette it should use. The ext table's two bits per sprite are set through two lookup tables indexed by the buffer offset, one giving the address of the ext byte and the other the bit mask for that sprite, so the push never computes a shift.
 
-`rlHideSprites` moves every unused entry to Y = 240, below the screen. It does it with a run of 64 store instructions, one per entry, each writing a Y byte, and jumps into the middle of the run at the first unused entry, so it executes exactly as many stores as there are entries to hide. The buffer offset wraps at 512 bytes and nothing counts the sprites: a 129th sprite overwrites the first.
+`rlHideSprites` moves every unused entry to Y = 240, below the screen. OAM's 128 entries are split into two 64-entry halves via the direct page, and `rlHideSprites` executes an unrolled run of 64 store instructions (jumping in at the first unused entry, and running through the second half when unused entries start in the first), so it executes one store per unused entry. The buffer offset wraps at 512 bytes and nothing counts the sprites: a 129th sprite overwrites the first.
 
 ## Too many sprites on a line
 
 The PPU can draw at most 34 eight-pixel slices of sprite on one scanline, and it drops the rest. A 16 × 16 sprite is two slices wide, so 17 of them on one line is the limit. A row of the chapter map can hold more units than that, and the standing units are drawn through a quota kept per 16-line band of the screen (`rlDrawDeployedUnitMapSprites`, [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm)):
 
 1. **Count what is already there.** `rlBeginOAMScanlineFrame` counts, for each scanline, the slices of the sprites already in the buffer: everything pushed before the units, such as the active sprites and the moving unit.
-2. **Set each band's quota.** For each of the 16 bands, the quota is 17 minus the busiest line's count halved: the number of 16-pixel units that still fit. A lower quota applies at once; a higher one waits for the band's cooldown, normally 1 frame and 48 frames while a map battle has turned flicker on (`rlEnableOAMScanlineFlicker`), so the counts don't swing from frame to frame.
-3. **Push the units.** Each unit goes into the list of the band it stands in. When a band is full, a unit within 16 pixels of either side of the screen is dropped. Any other unit takes the place of a sprite already in the band, which is moved off screen. The engine takes a tall unit's top half that way every frame, and other sprites only on odd frames.
+2. **Set each band's quota.** For each of the 16 bands, the quota is 17 minus half the busiest line's count, rounded up (`17 - (p + 1) / 2`): the number of 16-pixel units that still fit. A lower quota applies at once; a higher one waits for the band's cooldown, normally 1 frame and 48 frames while a map battle has turned flicker on (`rlEnableOAMScanlineFlicker`), so the counts don't swing from frame to frame.
+3. **Push the units.** Each unit goes into the list of the band it stands in. When a band is full, a unit within 16 pixels of either side of the screen is dropped; any other unit tries to take the place of the sprite at the band's read cursor, which is moved off screen. If the band still has room when a tall unit's top half or an edge unit (within 16 pixels of either side) arrives, it is tagged `$8000` so that if the band later fills up, the engine replaces it unconditionally every frame; interior units are replaced only on odd frames.
 
 In a crowded band, the units away from the screen's sides take turns being drawn, one frame in two, and those at the edges are dropped.
 
@@ -78,7 +78,7 @@ An **active sprite** is a sprite array with a position, a routine that runs ever
 | `aTileBase`, `aTileBaseHigh`, `aPalette` | passed to the renderer as the tile and attribute bases |
 | `aXVelocity`, `aYVelocity`, `aXSubpixel`, `aYSubpixel` | an 8.8 fixed-point velocity and the fractions it accumulates, for `rlMoveActiveSpriteByVelocity` |
 
-A definition (`structActiveSpriteInfo`) is three addresses in its bank: init, on-cycle, script. Four create routines differ in which slot they take (the highest free, the lowest free, or the lowest free above 0) and all take the position in the X and Y registers.
+A definition (`structActiveSpriteInfo`) is three addresses in its bank: init, on-cycle, script. Four create routines differ in which slot they take (the highest free, the highest free with relative offsets, the lowest free, or the lowest free above 0) and all take the position in the X and Y registers.
 
 Each frame, when the engine is switched on (`wFlag` bit 15, set by the screens that use it):
 
@@ -86,7 +86,7 @@ Each frame, when the engine is switched on (`wFlag` bit 15, set by the screens t
 2. every live sprite is drawn through the routine in `lActiveSpriteRenderer`, with `aFrameOffset` as the array;
 3. a render queue for extra sprites is flushed. Nothing ever adds to it.
 
-The renderer is normally `rlPushToOAMBuffer`. The map battle, the map actions and the cutscenes install `rlPushToOAMBufferDualTileBase`, which lets one array use two areas of video RAM: tiles below `$20` as they are, `$20`-`$3F` offset by `aTileBase`, `$40` and up by `aTileBaseHigh`.
+The renderer is normally `rlPushToOAMBuffer`. The map battle, the map actions, and the cutscenes install `rlPushToOAMBufferDualTileBase`, which lets one array use two areas of video RAM: tiles below `$20` as they are, `$20`–`$3F` offset by `aTileBase`, `$40` and up by `aTileBaseHigh`.
 
 ### The script
 
@@ -95,21 +95,21 @@ An active sprite's script is a byte format. Each command is one byte, an index i
 | Command | Does | Uses |
 |---|---|---|
 | `ACTIVE_SPRITE_FRAME d, f` | draw array f for d frames | 293 |
-| `ACTIVE_SPRITE_TABLE_FRAME d, i` | draw frame i of the map battle's frame table for d frames | 97 |
+| `ACTIVE_SPRITE_TABLE_FRAME d, i` | draw frame i of the map battle's frame table for d frames | 92 |
 | `ACTIVE_SPRITE_CALL r` | call a routine in the same bank | 59 |
 | `ACTIVE_SPRITE_JUMP p` | continue at p | 38 |
-| `ACTIVE_SPRITE_END` | free the sprite | 13 |
+| `ACTIVE_SPRITE_END` | free the sprite | 12 |
 | `ACTIVE_SPRITE_MOVE x, y` | move by signed bytes | 4 |
 
-Commands that show a frame, wait, or end the sprite end the step; the others read on. Sixteen commands serve the map battle and its magic: they upload frames, signal and wait for strikes, rounds and the ballista's bolt, and start and wait for map magic. The map battle's own scripts, which use them, are inside its compressed sprite data ([Chapter 23](23-two-ways-to-show-a-fight.md)), so the counts above leave them out.
+Commands that show a frame, wait, or end the sprite end the step; the others read on. Sixteen commands serve the map battle and its magic: they upload frames, signal and wait for strikes, rounds, and the ballista's bolt, and start and wait for map magic. The map battle's own scripts, which use them, are inside its compressed sprite data ([Chapter 23](23-two-ways-to-show-a-fight.md)), so the counts above leave them out.
 
 ## HDMA
 
 An HDMA channel reads a table during the picture and writes it to one PPU register, line by line. The table is a list of entries, each a line count and the value or values to write; a count below `$80` writes once and holds for that many lines, a count of `$80` or more writes on every line. In **indirect** mode, the table holds pointers to the values instead of the values. Eight channels can run at once, each on its own register. With them a game changes a scroll offset, a window edge, or a color line by line: wavy water, a gradient, a window that opens from the middle.
 
-The HDMA engine pairs each of the eight channels with an entry. `aHDMASystem` holds, per entry, the proc engine's fields plus the table's address and bank, the register it writes, the transfer mode, and an indirect table's data bank. A definition ([include/HDMA.h](../../include/HDMA.h)) is the three routines, then the table, the register and the mode. `rlHDMAEngineCreateEntry` takes the lowest free entry, so the entry number is the channel. About 70 places in the code create entries: the battle scene's effects and HUD, the title and opening, the windows and menus, the dialogue box, and the phase banner are the main users.
+The HDMA engine pairs each of the eight channels with an entry. `aHDMASystem` holds, per entry, the proc engine's fields plus the table's address and bank, the register it writes, the transfer mode, and an indirect table's data bank. A definition ([include/HDMA.h](../../include/HDMA.h)) holds the init, on-cycle, and script pointers, then the table address, the register, the transfer mode, and (for indirect entries) the indirect data bank. `rlHDMAEngineCreateEntry` takes the lowest free entry, so the entry number is the channel. About 70 places in the code create entries: the battle scene's effects and HUD, the title and opening, the windows and menus, the dialogue box, and the phase banner are the main users.
 
-Each frame, the engine steps entries 0 to 7 and collects the channels of the live ones in `bHDMAPendingChannels`. The next VBlank routine, after the DMA queue, calls `rlHandlePossibleHDMA`, which writes each live entry's table address, register and mode to its channel's registers and turns on those channels in `HDMAEN`. The table address is written every frame, so changing `aOffset` is all it takes to switch tables. The order matters because the DMA queue turns HDMA off and uses channel 1; a VBlank routine without `rlHandlePossibleHDMA`, such as the default one, has no HDMA at all.
+Each frame, the engine steps entries 0 to 7 and collects the channels of the live ones in `bHDMAPendingChannels`. The next VBlank routine, after the DMA queue, calls `rlHandlePossibleHDMA`, which writes each live entry's table address, register, and mode to its channel's registers and turns on those channels in `HDMAEN`. The table address is written every frame, so changing `aOffset` is all it takes to switch tables. The order matters because the DMA queue turns HDMA off and uses channel 1; a VBlank routine without `rlHandlePossibleHDMA`, such as the default one, has no HDMA at all.
 
 The script format is the proc engine's with one change: a word below `$8000` begins an `HDMA_YIELD`, a frame count followed by the table to use for those frames, so a script of yields is an animation of tables. Few entries use it. `HDMA_HALT` appears 36 times and every other command once or never. Most entries halt at once and rewrite their tables in RAM from the on-cycle routine.
 
@@ -165,9 +165,9 @@ A script word below `$8000` is a sleep, counted in interrupts, followed by a new
 
 - **The chapter map** has one, at line `$D7`, which uploads the map's streamed row and column with the display off for the last lines of the frame ([Chapter 22](22-a-map-bigger-than-the-screen.md)).
 - **The world map** and **the title screen** have two each.
-- **The battle scene** has five, all at H `$60`. The scene's step writes brightness 0 every frame, so the picture starts black. At line `$0E` an interrupt writes the scene's real brightness, and at line `$CF` another forces the display off: the fight is drawn in a band from line 14 to line 206. At lines `$7E`, `$9C` and `$A1`, three more switch the layer settings (the layers shown, the tilemap and tile addresses, the scroll offsets, windows and color math) for the HUD in the lower part of the screen, according to the HUD's current mode. Each handler waits for the horizontal blank before it writes, so the change lands between two lines.
+- **The battle scene** has five, all at H `$60`. The scene's step writes brightness 0 every frame, so the picture starts black. At line `$0E` an interrupt writes the scene's real brightness, and at line `$CF` another forces the display off: the fight is drawn in a band from line 14 to line 206. At lines `$7E`, `$9C`, and `$A1`, three more switch the layer settings (the layers shown, the tilemap and tile addresses, the scroll offsets, windows, and color math) for the HUD in the lower part of the screen, according to the HUD's current mode. Each handler waits for the horizontal blank before it writes, so the change lands between two lines.
 
-**Sorting.** `rlIRQEngineSyncAndSort` sorts the entries when their count has changed since the last sort; the map's and the battle scene's VBlank routines call it every frame. The sort makes one compare-and-swap pass at each gap, from half the count down to 1. One pass per gap doesn't order every arrangement (two of the six orders of three entries come out wrong), but the game creates its entries in order or close to it, and every set it creates comes out sorted.
+**Sorting.** `rlIRQEngineSyncAndSort` sorts the entries when their count has changed since the last sort; the map's, the battle scene's, and the title screen's VBlank routines call it every frame. The sort orders entries descending by line (highest scanline at index 0) using one compare-and-swap pass at each gap, from half the count down to 1. One pass per gap doesn't order every arrangement (two of the six orders of three entries come out wrong, including strictly ascending `(1, 2, 3)`), but every set the game creates—including the battle scene's `[$0E, $CF, $7E, $9C, $A1]`—comes out sorted.
 
 ## Four engines side by side
 
@@ -185,13 +185,13 @@ A script word below `$8000` is a sleep, counted in interrupts, followed by a new
 - **17 sixteen-pixel sprites per line.** The map's units are fitted to it by the band quotas; other screens don't check.
 - **16 active sprites, 8 HDMA entries, 7 IRQ entries.** Creation returns the carry set when they are full.
 - **A frame of latency for HDMA tables.** A table built in a frame is read in the next, so animated tables need two copies.
-- **One pass of sorting.** An arrangement of IRQ entries far from line order would run out of order.
+- **One pass of sorting.** Some insertion orders of three or more IRQ entries (even strictly ascending line order) come out unsorted.
 - **Unused machinery.** The active sprite render queue, nine command routines missing from the command table, and five of the IRQ engine's commands are never used.
 
 ## Where it lives in the source
 
 - [engine/core/display/oam.asm](../../engine/core/display/oam.asm): the sprite buffer, `rlPushToOAMBuffer`, `rlHideSprites`, the band quotas.
-- [engine/core/display/active_sprites.asm](../../engine/core/display/active_sprites.asm): the active sprite engine, its renderers and its commands.
+- [engine/core/display/active_sprites.asm](../../engine/core/display/active_sprites.asm): the active sprite engine, its renderers, and its commands.
 - [engine/core/display/hdma.asm](../../engine/core/display/hdma.asm): the HDMA engine, `rlHandlePossibleHDMA`, direct tables.
 - [engine/core/display/irq.asm](../../engine/core/display/irq.asm): the IRQ engine.
 - [include/Sprites.h](../../include/Sprites.h), [include/ActiveSpriteEngine.h](../../include/ActiveSpriteEngine.h), [include/HDMA.h](../../include/HDMA.h): structures and script macros.
@@ -199,3 +199,7 @@ A script word below `$8000` is a sleep, counted in interrupts, followed by a new
 - [engine/dialogue/dialogue_box.asm](../../engine/dialogue/dialogue_box.asm): the dialogue box's HDMA.
 - [engine/battle_scene/screen.asm](../../engine/battle_scene/screen.asm): the battle scene's five IRQ entries.
 - [docs/reference/sprites.md](../reference/sprites.md), [docs/reference/scanlines.md](../reference/scanlines.md): the reference pages.
+
+---
+
+← Previous: [Chapter 28: Procs](28-procs.md) | [Contents](OUTLINE.md) | Next: [Chapter 30: Getting Graphics In](30-getting-graphics-in.md) →

@@ -10,7 +10,7 @@ This chapter covers where the AI runs, the groups and the lists it works from, t
 
 ### The main loop and the interrupt
 
-Almost all of the game's per-frame work runs inside the vertical-blank interrupt: hardware uploads, the game state's step, procs, map sprites, sound ([Chapter 26](OUTLINE.md)). The main loop gets the time left over. Each screen installs its own main loop routine; the map's is `rsMapMainLoop`, and it calls `rlRunAIEngineCycle` once per pass, then waits for the next frame.
+Almost all of the game's per-frame work runs inside the vertical-blank interrupt: hardware uploads, the game state's step, procs, map sprites, sound ([Chapter 26](26-the-frame.md)). The main loop gets the time left over. Each screen installs its own main loop routine; the map's is `rsMapMainLoop`, and it calls `rlRunAIEngineCycle` once per pass, then waits for the next frame.
 
 That placement is the AI's time-slicing. A step of the AI that runs past the end of the frame is interrupted, the interrupt does the frame's work, and the step resumes where it was. The screen keeps scrolling, procs keep running, and music keeps playing. The cost is that the AI's work can collide with the interrupt's, and the engine guards the collisions with bits of `bAIEngineFlags`:
 
@@ -180,7 +180,7 @@ The **mode** (`wAIGroupMode`) is the group's attack policy, and it changes a few
 | 3 | never | takes no castles |
 | 4 | as 2, and HP − 5 + turn / 2 and ceil(damage dealt / 2) + turn / 2 are both at least the damage expected back, and 3 × HP is at least the tile's threat | no threat map |
 | 5 | only from the tile the unit stands on, with damage above 0 | no threat map; every unit guarding a castle uses 5 |
-| 6 | never | |
+| 6 | never | takes no castles |
 | 7 | as 2, but leaves foes guarding a castle alone | takes no castles |
 | 8 | as 2 | no script sets it |
 
@@ -374,3 +374,7 @@ The limits:
 - [engine/map/map_loop.asm](../../engine/map/map_loop.asm): the main loop that calls the AI and the interrupt handler that checks `bAIEngineFlags`; [engine/map/map_step.asm](../../engine/map/map_step.asm): the per-unit event (`rsRunQueuedAIUnitEvent`); [engine/map/unit_movement.asm](../../engine/map/unit_movement.asm): the computer phase's walk.
 - [include/AI.h](../../include/AI.h): the list entries and the script commands; the AI's RAM, its flags and modes are in [include/WRAM.h](../../include/WRAM.h); the scripts are in [events/](../../events/), after each chapter's faction groups.
 - [docs/reference/ai.md](../reference/ai.md): the reference page.
+
+---
+
+← Previous: [Chapter 13: Dialogue and Text](13-dialogue-and-text.md) | [Contents](OUTLINE.md) | Next: [Chapter 15: Castles and Towns](15-castles-and-towns.md) →

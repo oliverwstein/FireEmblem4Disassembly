@@ -63,7 +63,7 @@ The map installs `rsOpenCastleScreen` as the main loop routine through a fade pr
 | main loop routine | `rsMapMainLoop` | `rsRunFrameTasks` |
 | game state routines | map setup and step | `GAMESTATE_CASTLE_SCREEN_SETUP` (once), then `_UPKEEP` and the step `rlCastleScreenStep` |
 
-The castle's main loop runs only the shared background tasks (the soft-reset check, the decompression queue, and a deferred sound upload), so the AI, which runs from the map's main loop ([Chapter 14](14-armies-with-a-mind.md)), can't run while the castle is open. The castle's VBlank routine is the usual list of uploads and input reads ([Chapter 26](OUTLINE.md)), plus the courtyard's unit sprites when the courtyard is showing and a call to the dialogue engine every frame for the keepers.
+The castle's main loop runs only the shared background tasks (the soft-reset check, the decompression queue, and a deferred sound upload), so the AI, which runs from the map's main loop ([Chapter 14](14-armies-with-a-mind.md)), can't run while the castle is open. The castle's VBlank routine is the usual list of uploads and input reads ([Chapter 26](26-the-frame.md)), plus the courtyard's unit sprites when the courtyard is showing and a call to the dialogue engine every frame for the keepers.
 
 The opener also sets bit `$0020` of `wChapterFlags`, which tells code shared with the map that the castle screen is up: a unit relocation refreshes the courtyard instead of announcing an event, staff checks look for targets inside the castle, and battles started here use battle type 3.
 
@@ -87,13 +87,13 @@ Step `$14` runs the same routine as `$11`; B in the town uses it. Step `$13`, th
 
 ### Borrowed memory
 
-The castle screen keeps its tables in RAM that belongs to the map. The courtyard's tables, the list arrays, the keeper, and the cursors sit in a block at `$7F757A`–`$7F8092`, inside the map's buffers, and the courtyard's slot table is written into `aMovementMap` itself, which `rlClearMovementMapBuffer` zeroes (`$C38` bytes) each time the courtyard is built.
+The castle screen keeps its tables in RAM that belongs to the map. The courtyard's tables, the list arrays, the keeper, and the cursors sit in a block at `$7F/757A`–`$7F/8092`, inside the map's buffers, and the courtyard's slot table is written into `aMovementMap` itself, which `rlClearMovementMapBuffer` zeroes (`$C38` bytes) each time the courtyard is built.
 
 The map rebuilds its range maps when a unit is picked up, so the borrowing is safe in normal play. [Chapter 9](09-moving-a-unit.md) describes the one place it shows: undoing a guard chosen on the castle screen reads an `aMovementMap` the castle left behind.
 
 ### Leaving
 
-Step `$16` waits for the screen to be fully bright, resumes the phase music, and creates a fade proc that switches the main loop to `rsReturnToMapMainLoop` ([Chapter 27](OUTLINE.md)), which rebuilds the map's display from the unit and location data. The castle steps to `$02` and waits for the fade to take it away.
+Step `$16` waits for the screen to be fully bright, resumes the phase music, and creates a fade proc that switches the main loop to `rsReturnToMapMainLoop` ([Chapter 27](27-screens.md)), which rebuilds the map's display from the unit and location data. The castle steps to `$02` and waits for the fade to take it away.
 
 A battle scene started from the castle (a staff, a dance, or a class change) overwrites the map's graphics and much of its RAM. Coming back, `CASTLE_SCREEN_RELOAD_MAP` reloads the chapter's map layout, redraws every location for its state, reapplies the map changes ([Chapter 11](11-the-game-is-watching.md)), restarts the music, rebuilds the castle's unit list, and only then opens the courtyard.
 
@@ -103,19 +103,19 @@ A battle scene started from the castle (a staff, a dance, or a class change) ove
 
 The courtyard has 24 seats on a 4 × 6 grid, one for each **generation ID**: the 15 men's and 9 women's IDs that the love and inheritance tables are indexed by ([Chapter 17](17-love-and-lineage.md)). In generation 2 a child and the substitute who can join in its place share an ID, and so a seat. Each character's seat is fixed, by two tables per generation: `aCastleGridCharactersGen1`/`Gen2` map a grid slot to a generation ID, and `aCastleCourtyardSpotsGen1`/`Gen2` give each generation ID a spot in the courtyard picture. Chapter 6 on uses the generation 2 tables. `rlCastleBuildCourtyardTables` fills, from the unit list, a table from generation ID to unit (`aCastleUnitsByCharacter`) and each seat's sprite position, and counts the units present.
 
-The VBlank routine draws each unit at its spot as a map sprite (`rlCastleDrawCourtyardUnitSprites`), grey if it has moved this turn or is asleep. A seat whose character isn't inside is an empty spot.
+The VBlank routine draws each unit at its spot as a map sprite (`rlCastleDrawCourtyardUnitSprites`), gray if it has moved this turn or is asleep. A seat whose character isn't inside is an empty spot.
 
 The cursor moves over the grid with the D-pad; L and R jump to the previous or next occupied seat, wrapping around. The bottom line shows the unit under the cursor (name and HP, or a status and its turns left) or the castle's name for an empty seat. X opens the status screen for the unit ([Chapter 25](25-full-screen-windows-and-the-status-screen.md)), which returns to the castle through `wStatusScreenCaller`. Select opens the same main menu the map opens. B leaves for the map.
 
 ### Commands
 
-A on a unit that hasn't moved and isn't asleep opens its command bar, with the unit's portrait above it. Left and right move along six commands; the name of one the unit can't use is drawn grey, and choosing it plays the error sound.
+A on a unit that hasn't moved and isn't asleep opens its command bar, with the unit's portrait above it. Left and right move along six commands; the name of one the unit can't use is drawn gray, and choosing it plays the error sound.
 
 | Command | Allowed when | Does |
 |---|---|---|
 | まち town | always | fades out and opens the town for this unit |
 | しゅつげき sortie | not dead, moved, or fielded; the castle's gate is empty; not Deirdre from Chapter 3 on | deploys the unit on the gate and returns to the map; the cursor picks it up there ([Chapter 9](09-moving-a-unit.md)) |
-| しゅび guard | the same, and the castle has no guard yet | puts the unit on the guarding spot and returns to the map in the castle-guard mode |
+| しゅび guard | not dead, moved, or fielded; the castle has no guard yet; not Deirdre from Chapter 3 on | puts the unit on the guarding spot and returns to the map in the castle-guard mode |
 | クラスチェンジ class change | not in Chapter 6 | opens class change |
 | つえ staff, or おどる dance for a dancer | a staff with a target, or a dancer with a target | below |
 | あげる give | the unit has money and someone inside can take it | choose a unit inside; the money moves |
@@ -188,7 +188,7 @@ The keeper's lines come from one table, `aShopDialoguePointers`, of 89 long poin
 
 ### The lists
 
-The facilities' lists share one set of parallel arrays at `$7F7672`, a Structure of Arrays with one word per entry; the first five have room for 256 entries, the last for 8:
+The facilities' lists share one set of parallel arrays at `$7F/7672`, a Structure of Arrays with one word per entry; the first five have room for 256 entries, the last for 8:
 
 | Array | Holds |
 |---|---|
@@ -249,7 +249,7 @@ Nothing takes an item out of the shop state except a purchase, so the stock grow
 
 The item shop offers *buy* and *belongings*; belongings shows the unit's inventory and can't be chosen from. The secondhand shop offers *sell* and *buy*, and with nothing in stock its keeper greets the unit with a sell-only line. The repair shop goes straight to the unit's inventory and sends away a unit with no items. Prices come from the item record ([Chapter 3](03-every-sword-is-an-individual.md)); every one of them is paid from or into the visiting unit's own money.
 
-**Buying** refuses three ways. An item the unit can't use is drawn grey and plays the error sound: `rlCheckSelectedUnitCanUseItem` passes rings and other items, holy weapons, and weapons and staves whose rank the unit has, and refuses a women-only weapon to a man. A unit with seven items is told its hands are full, and a unit that can't pay is told so. Otherwise the keeper asks to confirm, and `rlBuyItemForSelectedUnit` gives the record to the unit and takes the price, halved if the unit, its class, or anything it carries has Bargain (`rlCheckUnitHasBargain`). After a purchase the stock list is rebuilt.
+**Buying** refuses three ways. An item the unit can't use is drawn gray and plays the error sound: `rlCheckSelectedUnitCanUseItem` passes rings and other items, holy weapons, and weapons and staves whose rank the unit has, and refuses a women-only weapon to a man. A unit with seven items is told its hands are full, and a unit that can't pay is told so. Otherwise the keeper asks to confirm, and `rlBuyItemForSelectedUnit` gives the record to the unit and takes the price, halved if the unit, its class, or anything it carries has Bargain (`rlCheckUnitHasBargain`). After a purchase the stock list is rebuilt.
 
 **Selling** (`rlSellInventorySlotItem`) refuses holy weapons; anything else leaves the inventory for the unit's money, and `rlMoveItemToSecondhandStock` puts the record in the pawnbroker state with the entered castle as its owner. The same record, with its kills and wear, is then on sale in every secondhand shop.
 
@@ -329,7 +329,7 @@ When the text ends, `rsConversationEnd` leaves by `wConversationExitMode`:
 
 When a unit goes into its home castle while its lover waits inside, the two have a short conversation, once per couple. After a unit goes into its home castle from the map, the map step announces event action 4, and if no event starts it tries to begin the lover conversation (an event command, `rsEventCommandLoverHomeCastle`, tries it too). It checks that the unit has a lover, that the lover is alive, a player unit, off the map, and residing in the player's home castle, and that the woman's permanent flag in `aLoverHomeCastleFlags` is clear. Then it sets the flag and opens the conversation scene with the arriving unit on the left, the fountain behind them, and exit 3. A mother and the daughter who can stand in for her ([Chapter 13](13-dialogue-and-text.md)) share a flag.
 
-The text is assembled on the way in. The builder copies the arriving unit's line from `aLoverHomeCastleArrivalLines` into RAM at `$7F8183`, then appends the waiting lover's reply from `aLoverHomeCastleReplyLines` over the first line's end code. Each table is indexed by character ID, so any arrival line can meet any reply: 63 arrival lines and 63 replies cover every couple, and four short name texts make up the 130 in the folder. Two ASMC commands in the lines insert the other person's name, adding 様 (sama) for Seliph and Leif.
+The text is assembled on the way in. The builder copies the arriving unit's line from `aLoverHomeCastleArrivalLines` into RAM at `$7F/8183`, then appends the waiting lover's reply from `aLoverHomeCastleReplyLines` over the first line's end code. Each table is indexed by character ID, so any arrival line can meet any reply: 63 arrival lines and 63 replies cover every couple, and four short name texts make up the 130 in the folder. Two ASMC commands in the lines insert the other person's name, adding 様 (sama) for Seliph and Leif.
 
 ## Trade-offs and hard limits
 
@@ -358,3 +358,7 @@ The limits:
 - [engine/units/unit_state.asm](../../engine/units/unit_state.asm): buying, selling, repairing, storing, and residing in a castle; [engine/map/locations.asm](../../engine/map/locations.asm): `rlBuildCastleUnitList` and the shop lists' setup; [engine/items/staves.asm](../../engine/items/staves.asm): the inside staff tests; [engine/battle/battle.asm](../../engine/battle/battle.asm): the castle dance; [engine/battle/map_battle.asm](../../engine/battle/map_battle.asm): `rlGetMapBattleUnitScreenPosition`.
 - [include/Castle.h](../../include/Castle.h): handlers, steps, cursor states, commands, facility bits, keepers, exits; the castle's RAM is in [include/WRAM.h](../../include/WRAM.h); each chapter's castles, facility bits, and shop list are in [events/](../../events/).
 - [docs/reference/castle.md](../reference/castle.md): the reference page.
+
+---
+
+← Previous: [Chapter 14: Armies with a Mind](14-armies-with-a-mind.md) | [Contents](OUTLINE.md) | Next: [Chapter 16: The Arena](16-the-arena.md) →

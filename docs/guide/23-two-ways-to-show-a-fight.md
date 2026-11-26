@@ -60,7 +60,7 @@ So a fight whose first side is an allied army's unit, a Civilian, or a Child is 
 
 ### A proc script that waits on bits
 
-A **proc** is a small task the engine runs once per frame alongside everything else; its **script** is a list of steps with yields between them ([Chapter 28](OUTLINE.md)). `procMapBattle`'s script, `aProcMapBattleCode` in [engine/battle/map_battle.asm](../../engine/battle/map_battle.asm), is the outline of the whole fight.
+A **proc** is a small task the engine runs once per frame alongside everything else; its **script** is a list of steps with yields between them ([Chapter 28](28-procs.md)). `procMapBattle`'s script, `aProcMapBattleCode` in [engine/battle/map_battle.asm](../../engine/battle/map_battle.asm), is the outline of the whole fight.
 
 Most steps follow one pattern. The script calls a start routine, which sets bit `$0002` of the proc's flags if there is something to do (a quote to show, a window to open). If the bit is clear, the script skips ahead. If it is set, the script yields and calls a step routine every frame until that routine sets bit `$0004`, meaning done. Optional parts of a fight are therefore one test each, and the script never counts frames for work whose length varies, such as a quote the player reads at their own speed.
 
@@ -69,11 +69,11 @@ The script, in outline:
 1. **Set up.** Pause the map's sprite and tile animations ([Chapter 22](22-a-map-bigger-than-the-screen.md)), fill `aMapAction` from the action structs, and queue the battle sprites' graphics.
 2. **Camera.** Scroll the map until both units are on screen.
 3. **Sprites.** Show the attacker's battle sprite, then twelve frames later the defender's, over their map sprites.
-4. **Battle quote**, if `wBattleQuotePointer` is set. The dialogue box overwrites battle sprite tiles in video RAM, so afterwards they are decompressed again and uploaded over three frames.
+4. **Battle quote**, if `wBattleQuotePointer` is set. The dialogue box overwrites battle sprite tiles in video RAM, so afterwards they are decompressed again and uploaded in three chunks spaced four frames apart.
 5. **Shared tile.** A unit attacking from the tile its target stands on (`wBattleStatus` bit 2) slides 16 pixels aside.
 6. **HP windows.**
-7. **Rounds**, below.
-8. **Close the HP windows**; slide the shifted unit back.
+7. **Rounds**, below (closing the HP windows when the final round finishes, before any death quote and defeat blink).
+8. **Slide** the shifted unit back.
 9. **Experience and level up.** The experience window, then the level-up banner with its jingle, then the stat gains.
 10. **Popups**, each with the music lowered and a jingle: gold obtained, gold stolen, item obtained, weapon broken.
 11. **End.** Return the camera to the cursor, restore the palettes and the units' map sprites, and check for canto.
@@ -100,7 +100,7 @@ loop {                                           // aProcMapBattleCode, from _CB
 }
 ```
 
-The skill effect whitens the side's sprites, loads the skill's colors into background palette 13, plays sound `$3D`, and runs the palette for 96 frames through `rlBattleSceneRunPaletteEffects`, the battle scene's own palette engine ([Chapter 24](24-the-battle-scene.md)). Pavise has its own shield animation. Holy weapon shine on the map is the same skill effect, started by `procHolyWeaponShine`.
+The skill effect loads the skill's colors into sprite palette 5 (CGRAM palette 13), switches the acting side's sprites to that palette, plays sound `$3D`, and rotates those colors for 96 frames through `rlBattleSceneRunPaletteEffects`, the battle scene's own palette engine ([Chapter 24](24-the-battle-scene.md)). Pavise has its own shield animation. Holy weapon shine on the map is the same skill effect, started by `procHolyWeaponShine`.
 
 The entry `$7F00` is a marker for scripted battles. When the loop reads it, it sets a bit in `wMapAnimationSignals` that an event script is waiting on, so a scene can react partway through a fight.
 
@@ -120,7 +120,7 @@ Modes 1 and 2 fill the action structs and round log themselves. In those modes t
 
 ### Sprites with scripts
 
-Each side is drawn by **active sprites**: sprites with their own little script engine, which steps a script of frames, moves, waits, and commands every frame ([Chapter 29](OUTLINE.md)). Each side has a main sprite and, for mounted and flying classes, a second **aux** sprite for the mount or the rider (`wSideTallSprite`). The engine builds their definitions in RAM at `$7E/FC88`, because their scripts live in sprite data decompressed into work RAM.
+Each side is drawn by **active sprites**: sprites with their own little script engine, which steps a script of frames, moves, waits, and commands every frame ([Chapter 29](29-sprites-and-scanlines.md)). Each side has a main sprite and, for mounted and flying classes, a second **aux** sprite for the mount or the rider (`wSideTallSprite`). The engine builds their definitions in RAM at `$7E/FC88`, because their scripts live in sprite data decompressed into work RAM.
 
 The sprite a unit uses depends on its class, its gender, and one character: `rlGetMapBattleClassSprite` gives classes listed in `aMapBattleFemaleClassSprites` a different sprite for women, and Seliph as a Knight Lord his own. A class's row in `aBattleMapSpriteData` has, for each of eight facings, pointers to the sprite data and to its graphics. The sprite data has one block per weapon type: a frame table, then pairs of scripts (main, aux) at fixed offsets:
 
@@ -145,9 +145,9 @@ The moment the blow lands is a command in the striker's sprite script. The two s
 | `$07` wait until done | Waits until `wMapBattleStrikeDone` is set |
 | `$0D` end round | Ends the round (`rlMapBattleEndRoundScripts`) |
 
-Each frame of the round, `rlMapBattleRoundStep` gives the struck side its reaction. A hit that does damage flashes the side white (`rlMapBattleRunHitFlash`), and a critical or a hit for no damage also knocks it back (`rlMapBattleRunRecoil`). The HP window starts draining at the same moment. The hit sound is `$94` for a fatal strike and `$93` for a ranged one, otherwise `$91` or `$93` by side; a critical adds sound `$4E`, and a hit for no damage plays `$95`. On a miss, a Junior Lord or Prince plays a dodge sound, `$97`. A defeated unit cries out by voice (`$21`–`$23` for adults, `$24` or `$25` for children) and blinks out.
+Each frame of the round, `rlMapBattleRoundStep` gives the struck side its reaction. A damaging hit flashes the side white (`rlMapBattleRunHitFlash`), a critical both flashes and knocks the defender back (`rlMapBattleRunRecoil`), and a hit for no damage only knocks it back. The HP window starts draining at the same moment. The hit sound is `$94` for a fatal strike and `$93` for a ranged one, otherwise `$91` or `$93` by side; a critical adds sound `$4E`, and a hit for no damage plays `$95`. On a miss, a Junior Lord or Prince plays a dodge sound, `$97`. A defeated unit cries out by voice (`$21`–`$23` for adults, `$24` or `$25` for children) and blinks out.
 
-The ballistician classes add a projectile: command `$1B` launches `procMapBattleBallistaBolt`, `$1A` advances the bolt along one of the 16-frame arcs in `aBallistaBoltArcs` (chosen by distance), and `$1C` reports it landed.
+For ballistician classes, `rlStartMapBattleBallistaBolt` starts `procMapBattleBallistaBolt` before the round. The sprite script fires it with command `$1B` (`wBallistaBoltFire`), the proc flies the bolt along one of the 16-frame arcs in `aBallistaBoltArcs` (chosen by distance), and commands `$1A` and `$1C` wait on the proc's signals until the bolt lands.
 
 ## Magic on the map
 
@@ -164,7 +164,7 @@ A magic round loads and runs the effect in steps of the battle's script:
 5. **Wait for the caster.** The caster's sprite script runs command `$10` at the moment of casting, which sets `wMapMagicStart`. The effect proc then runs the spell's starter from `aMapMagicEffectStarters` ([engine/battle/map_magic_effects.asm](../../engine/battle/map_magic_effects.asm)). The script waits at command `$11` until the effect sets `wMapMagicDone`, usually after fading the colors back.
 6. **Clean up**: free every proc and HDMA entry the effect created, tracked in `aMapMagicProcList` and `aMapMagicHDMAList`, and restore the screen registers.
 
-Effects share code where spells look alike. Heal's proc also plays for Naga, Loptous, the broken fire tomes, Charm, and Valkyrie; Mend, Recover, and Physic are the same effect with different sounds; Elthunder's serves Bolting, Wind's serves Elwind, and Warp's serves Rescue. Shared helpers in bank `$9F` ([engine/battle/map_battle_magic.asm](../../engine/battle/map_battle_magic.asm)) provide a sine table and vector math, palette darkening and tinting, background shaking, and a rippling HDMA effect on BG2 (`procMapMagicRipple`). HDMA rewrites a register on every scanline, so a table of offsets one line apart bends the layer into a wave.
+Effects share code where spells look alike. Heal's proc also plays for Naga, Loptous, the broken fire tomes, Charm, and Valkyrie; Mend, Recover, and Physic are the same effect with different sounds; Elthunder's serves Bolting, Wind's serves Elwind, and Warp's serves Rescue. Shared helpers in [engine/battle/map_battle_magic.asm](../../engine/battle/map_battle_magic.asm) (mostly bank `$9F`, with the BG2 HDMA ripple `procMapMagicRipple` in bank `$87`) provide a sine table and vector math, palette darkening and tinting, background shaking, and a rippling HDMA effect on BG2 (`procMapMagicRipple`). HDMA rewrites a register on every scanline, so a table of offsets one line apart bends the layer into a wave.
 
 ## Windows and popups
 
@@ -207,3 +207,7 @@ The map battle's sprites, magic effects, windows, and reward steps serve other a
 - [engine/battle/map_action_animations.asm](../../engine/battle/map_action_animations.asm) and [engine/events/cutscenes.asm](../../engine/events/cutscenes.asm): the other map animations.
 - [include/ActiveSpriteEngine.h](../../include/ActiveSpriteEngine.h): the active sprite commands, including the map battle's.
 - [docs/reference/map_battle.md](../reference/map_battle.md): the reference page.
+
+---
+
+← Previous: [Chapter 22: A Map Bigger than the Screen](22-a-map-bigger-than-the-screen.md) | [Contents](OUTLINE.md) | Next: [Chapter 24: The Battle Scene](24-the-battle-scene.md) →

@@ -7,27 +7,29 @@ This chapter covers the title-to-demo loop, the title screen's timeline interpre
 ## The loop between title and attract mode
 
 ```
-  Boot ──► Title Screen (GAMESTATE $1A/$1B)
-             │
-             ├─ Phase 0: Intro (aTitleIntroTimeline, ~2 min)
-             │     ├─ Start pressed ──► Phase 1: Title Logo (aTitleTimeline)
-             │     └─ Timeout ($1C9F) ─┐
-             │                         ▼
-             ├─ Phase 1: Title Logo ──► Timeout ($041E) ──► Attract Mode (aOpeningEvent)
-             │     │                                              │
-             │     └─ Start pressed ──► Phase 2: Fade Out         ├─ Start (DEMO_ALLOW_SKIP)
-             │                            │                       │    ──► Title (skip intro)
-             │                            ▼                       └─ OPEN_TITLE_SCREEN ($5E)
-             └──────────────────────► File Menu                        ──► Title (with intro)
+  Boot ──► Opening Logo (init demo indices from SRAM) ──► Title Screen (GAMESTATE $1A/$1B)
+                                                            │
+      ┌─────────────────────────────────────────────────────┘
+      ├─ Phase 0: Intro (aTitleIntroTimeline, ~2 min)
+      │     ├─ Start pressed ──────────────────► Phase 1: Title Logo (aTitleTimeline)
+      │     ├─ Frame $186D ────────────────────► Phase 1: Title Logo ──► Timeout ($1C9F) ─┐
+      │                                                                                   ▼
+      ├─ Phase 1 (from Start): Title Logo ─────► Timeout ($041E) ──────────────► Attract Mode
+      │     │                                                                    (aOpeningEvent)
+      │     └─ Start pressed ──► Phase 2: Fade Out (aTitleFadeOutTimeline)         │
+      │                            │                                               ├─ Start (DEMO_ALLOW_SKIP)
+      │                            ▼                                               │    ──► Title (skip intro)
+      └──────────────────────► File Menu                                           └─ OPEN_TITLE_SCREEN ($5E)
+                                                                                          ──► Title (with intro)
 ```
 
-In both Phase 0 and Phase 1, `rlTitleScreenIsStartPressed` and `rlTitleScreenIsStartHeld` ignore Start while `wMusicID != 0` so a song change in flight cannot be interrupted mid-transfer.
+Before the title screen opens, `rlLoadOpeningLogoScreen` ([engine/title/opening_logo.asm](../../engine/title/opening_logo.asm)) sets `wDemoIndex` and `wDemoBattlePair` from SRAM so the attract mode knows which demos are unlocked. Holding Start as the title screen opens (`bTitleScreenSkipIntro`) jumps straight to Phase 1, and Phase 2 (`aTitleFadeOutTimeline`) dims the palettes over ~50 frames and hands over to the file menu (`rlReturnToFileMenu`). In both Phase 0 and Phase 1, `rlTitleScreenIsStartPressed` and `rlTitleScreenIsStartHeld` ignore Start while `wMusicID != 0` so a song change in flight cannot be interrupted mid-transfer.
 
 ## The title screen and its timelines
 
 ### Borrowing the battle scene's engines
 
-`rlTitleScreenSetup` (`$1A`) and `rlTitleScreenStep` (`$1B`) in [engine/title/title_screen.asm](../../engine/title/title_screen.asm) borrow the battle scene's palette-effect, window-effect, and screen-register engines (banks `$95`/`$96`) as well as its `$7F/D000` RAM block.
+`rlTitleScreenSetup` (`$1A`) and `rlTitleScreenStep` (`$1B`) in [engine/title/title_screen.asm](../../engine/title/title_screen.asm) borrow the battle scene's palette-effect, window-effect, and screen-register engines ([Chapter 24](24-the-battle-scene.md), banks `$95`/`$96`) as well as its `$7F/D000` RAM block.
 
 ### The timeline interpreter
 
@@ -35,7 +37,7 @@ Three timelines in [engine/title/title_timelines.asm](../../engine/title/title_t
 
 ```rust
 fn run_title_timeline() {                                   // rsRunTitleTimeline
-    while timeline.peek_frame() <= wTitleScreenFrame {
+    if timeline.peek_frame() <= wTitleScreenFrame {         // at most one entry per frame
         timeline.advance_u16();
         loop {
             let cmd = timeline.read_u8();
@@ -67,18 +69,18 @@ The eight illustrated scenes cannot be decompressed in a single blanked frame wi
 ### Scenes, captions, edge fade, and title sprites
 
 - **Eight intro scenes (`$0001`–`$1719`):** Scene 7 pre-interpolates 33 palettes into `$7F/8000` at setup (`rlBuildTitleIntroScene7PaletteTable`); Scene 8 animates a moving sprite with an afterimage; at frame `$186D`, `rlEnterTitlePhase` enters Phase 1 and spawns the 11 title logo sprites (`$1873`–`$1889`).
-- **Two IRQs:** Line 6 (`rlFadeTitleScreenTopEdge`) fades the top edge when `bTitleScreenEdgeFade` is set; line 189 (`rlDrawTitleCaptionStrip`) switches the PPU below scanline 189 to BG1 alone at `bTitleCaptionBrightness` to show pre-rendered graphic captions scrolled via `aTitleCaptionScrolls` (not encoded dialogue text).
+- **Two IRQs ([Chapter 29](29-sprites-and-scanlines.md)):** Line 6 (`rlFadeTitleScreenTopEdge`) fades the top edge when `bTitleScreenEdgeFade` is set; line 189 (`rlDrawTitleCaptionStrip`) switches the PPU below scanline 189 to BG1 alone at `bTitleCaptionBrightness` to show pre-rendered graphic captions scrolled via `aTitleCaptionScrolls` (not encoded dialogue text).
 - **Title sprites (`aTitleSprites`):** 13 entries of `structTitleSprite`, each initialized from a 13-byte `TITLE_SPRITE` definition (`rlStartTitleSprite`) and animated by 2-byte step scripts (`frame + 1, duration`, or `$80, back_count` to loop). Each sprite also keeps a 16-entry position/frame ring (`TrailX`/`TrailY`/`TrailFrame`) for drawing afterimages (`rlDrawTitleSpriteAfterimage`).
 
 ## The attract mode as an event script
 
 When a title timeline reaches `rlEndTitleScreen`, `rlStartOpeningEvent` launches `aOpeningEvent` in [engine/demo/opening.asm](../../engine/demo/opening.asm) (bank `$90`). It is a standard event script ([Chapter 12](12-screenplays.md)) with two demo-only opcodes: `DEMO_ALLOW_SKIP` (`$5D`), which enables `procDemoSkipFadeOut` on Start, and `OPEN_TITLE_SCREEN` (`$5E`), which flashes white with sound `$84` (`rlFlashToTitleScreen`).
 
-The script plays eight beats in sequence:
+The script plays seven beats in sequence:
 
 1. Chapter 9's map under two drifting sky layers (`procOpeningSkyScroll`) as Annand's pegasus squad flies across (`MOVE_TEMPORARY_BY_SCRIPT`).
-2. Staff credits pages 1–2, full-screen battle scene #1, page 3, and the Shannan–Ayra conversation (`DIALOGUE_WITH_BG`).
-3. **Map scene #1** (`wDemoIndex` forced odd by `rlASMCSetDemoIndexOdd`) and its scripted map battle.
+2. Credits page 1, full-screen battle scene #1, page 2, the Shannan–Ayra conversation (`DIALOGUE_WITH_BG`), and page 3.
+3. **Map scene #1** (`wDemoIndex` forced odd by `rlASMCSetDemoIndexOdd`) and its scripted map battle ([Chapter 23](23-two-ways-to-show-a-fight.md)).
 4. Credits page 4, the Eldigan–Lachesis conversation, page 5, battle scene #2, and page 6.
 5. **Map scene #2** (the even `wDemoIndex` below it) and its scripted map battle.
 6. Credits page 7, followed by Arvis ordering the final attack on Chapter 11's map (`MOVE_TEMPORARY_TO_COORDS_CLASS`).
@@ -112,8 +114,12 @@ The limits:
 
 ## Where it lives in the source
 
-- [engine/title/title_screen.asm](../../engine/title/title_screen.asm): `rlTitleScreenSetup`, `rlTitleScreenStep`, `rsRunTitleTimeline`, `rlRunTitleLoadList`, `rlUpdateTitleSprites`, and the top/bottom IRQs.
+- [engine/title/opening_logo.asm](../../engine/title/opening_logo.asm) and [engine/title/title_screen.asm](../../engine/title/title_screen.asm): `rlLoadOpeningLogoScreen`, `rlTitleScreenSetup`, `rlTitleScreenStep`, `rsRunTitleTimeline`, `rlRunTitleLoadList`, `rlUpdateTitleSprites`, and the top/bottom IRQs.
 - [engine/title/title_scenes.asm](../../engine/title/title_scenes.asm), [title_timelines.asm](../../engine/title/title_timelines.asm), [title_data.asm](../../engine/title/title_data.asm), and [include/TitleScreen.h](../../include/TitleScreen.h): the three timelines, scene setups, and sprite scripts.
 - [engine/demo/opening.asm](../../engine/demo/opening.asm) and [opening_credits.asm](../../engine/demo/opening_credits.asm): `aOpeningEvent` and the 8 staff credit pages.
 - [engine/demo/demo_battles.asm](../../engine/demo/demo_battles.asm) and [demo_battle_scenes.asm](../../engine/demo/demo_battle_scenes.asm): `rlSetDemoIndexFromRanking`, `aDemoBattleSetups`, and `aDemoBattlesPointerTable`.
 - [docs/reference/title.md](../reference/title.md) and [docs/reference/demo.md](../reference/demo.md): the reference pages.
+
+---
+
+← Previous: [Chapter 19: Between Chapters](19-between-chapters.md) | [Contents](OUTLINE.md) | Next: [Chapter 21: Endings and Scores](21-endings-and-scores.md) →

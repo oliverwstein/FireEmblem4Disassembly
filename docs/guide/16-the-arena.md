@@ -8,9 +8,9 @@ This chapter covers the ladder and how an opponent is chosen, the menu, a fight 
 
 ### Arena level
 
-The arena level is the low three bits of a unit's states (`UnitStateArenaLevelMask`, read by `rlGetSelectedUnitArenaLevel`). It starts at 0 for every unit, rises by one with each win, and stops at 7. A unit at level 7 is turned away at the door with a line saying no opponents are left. The level belongs to the unit, so each unit climbs its own ladder, and it is saved with the rest of the unit's states ([Chapter 18](18-saving.md)). The unit window can sort by it.
+The arena level is the low three bits of a unit's states (`UnitStateArenaLevelMask`, read by `rlGetSelectedUnitArenaLevel`). It starts at 0 for every unit, rises by one with each win, and stops at 7. A unit at level 7 is turned away at the door with a line saying no opponents are left. The level belongs to the unit, so each unit climbs its own ladder, and it is saved with the rest of the unit's states ([Chapter 18](18-saving.md)). At the start of each new chapter, `rlResetUnitsForChapter` resets every unit's arena level back to `0`.
 
-The level picks an opponent from the current chapter's lists. A unit at level 3 in Chapter 1 meets Chapter 1's fourth opponent; the same unit, still at level 3 in Chapter 4, meets Chapter 4's.
+The level picks an opponent from the current chapter's lists. A unit at level 3 in Chapter 1 meets Chapter 1's fourth opponent; once the unit reaches level 7 it finishes Chapter 1's arena, and when Chapter 2 begins its level resets to 0 so it climbs Chapter 2's ladder from the bottom.
 
 ### Opponent lists
 
@@ -48,7 +48,7 @@ fn arena_opponent(unit: &Unit) -> Option<CharacterId> {     // rlGetArenaOpponen
 
 The skip at the end lets a list hold a character who may join the army. Chapter 2's melee list has eight entries: Chulainn at level 6, and after him Keimos, a Hero at level 23. Until Chulainn joins, he is the seventh opponent; beating him there sets a chapter flag, and the next town any unit enters in five of the chapter's castles starts his recruitment ([Chapter 15](15-castles-and-towns.md)). Once he is in the army, a unit with that ID exists, and the lookup takes the next entry instead.
 
-The lookup ignores the opponent of a fight in progress. That unit is built at a fixed header address, `$2100`, that is in no army's list, so `rlGetUnitRAMDataPointerByID` doesn't find it.
+The lookup ignores the opponent of a fight in progress. That unit is built at a fixed header address in bank `$7E`, `$7E/2100`, that is in no army's list, so `rlGetUnitRAMDataPointerByID` doesn't find it.
 
 ## The menu
 
@@ -184,7 +184,7 @@ The opponent is built from the character table, so a chapter's ladder is plain d
 
 The limits:
 
-- **Seven wins per unit**, three bits; level 7 ends the unit's arena career, across all chapters.
+- **Seven wins per unit per chapter**, three bits; reaching level 7 ends the unit's arena run until the next chapter resets it to 0.
 - **Two lists per chapter**, chosen only by the weapon's minimum range.
 - **One opponent at a time**, at the fixed address `$2100`.
 - **Prizes from 1,000 to 4,000**, under the 50,000 money cap.
@@ -199,3 +199,7 @@ The limits:
 - [engine/units/unit_state.asm](../../engine/units/unit_state.asm): `rlActionStructArenaWinResults`, `aArenaMoneyRewards`, and `rlActionStructHandleArenaDefeat`; [engine/events/event_engine.asm](../../engine/events/event_engine.asm): `rlHandleArenaExitEvent`.
 - [events/](../../events/): each chapter's opponent tables (e.g. `aChapter01ArenaOpponents`); the arena RAM and the battle type are in [include/WRAM.h](../../include/WRAM.h).
 - [docs/reference/arena.md](../reference/arena.md): the reference page.
+
+---
+
+← Previous: [Chapter 15: Castles and Towns](15-castles-and-towns.md) | [Contents](OUTLINE.md) | Next: [Chapter 17: Love and Lineage](17-love-and-lineage.md) →

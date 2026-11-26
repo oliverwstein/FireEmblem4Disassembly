@@ -6,7 +6,7 @@ Because relations live at the faction-pair level, two computer-controlled armies
 
 ## Groups and slots
 
-An army comes in two halves. The **faction group** is its ROM template (`structFactionGroupData`, [include/Deployment.h](../../include/Deployment.h)): a name, a battle HUD color, a battle banner, a list of units, a list of castles, and the AI scripts for its groups of units ([Chapter 14](OUTLINE.md)). The **faction slot** is a running instance of a group in the current chapter. There are seven slots, numbered 0 to 6; slot 0, `FS_Player`, is always Sigurd's or Seliph's army, and the value 7, `Factionless`, marks a unit that belongs to none.
+An army comes in two halves. The **faction group** is its ROM template (`structFactionGroupData`, [include/Deployment.h](../../include/Deployment.h)): a name, a battle HUD color, a battle banner, a list of units, a list of castles, and the AI scripts for its groups of units ([Chapter 14](14-armies-with-a-mind.md)). The **faction slot** is a running instance of a group in the current chapter. There are seven slots, numbered 0 to 6; slot 0, `FS_Player`, is always Sigurd's or Seliph's army, and the value 7, `Factionless`, marks a unit that belongs to none.
 
 Slot numbers mean different things in different chapters, so each chapter's script gives them its own names:
 
@@ -87,7 +87,7 @@ When Heirhein arrives, the script loads it into slot 5 and writes five more pair
 
 ## A cache for the player's view
 
-One relation is asked far more often than the others: how each unit's army regards the player. The map draws every unit in a color that says so, map battles pick palettes by it, and the victory theme waits for the last enemy of the player to fall (`rlGetVictoryThemeIfAllEnemiesDead`). So each unit's entry in the deployment table ([Chapter 5](OUTLINE.md)) keeps that one relation in its two low bits (`DeploymentAllegianceMask`).
+One relation is asked far more often than the others: how each unit's army regards the player. The map draws every unit in a color that says so, map battles pick palettes by it, and the victory theme waits for the last enemy of the player to fall (`rlGetVictoryThemeIfAllEnemiesDead`). So each unit's entry in the deployment table ([Chapter 5](05-who-stands-where.md)) keeps that one relation in its two low bits (`DeploymentAllegianceMask`).
 
 Whenever a script changes a relation involving slot 0, the setter also rewrites those bits for every unit of the other army (`rsSetFactionSlotAllegiance`). When Nordion turns allied, every Nordion unit's two bits change at once, and the map recolors them on the next frame.
 
@@ -116,7 +116,7 @@ When a script unloads an army (`rlUnloadFactionSlot`), its units are deleted, ex
 >
 > On a unit's status screen, L and R step through the player's other units. Holding Select while pressing them also shows the dead.
 >
-> A player unit that dies is not deleted. `rlActionStructHandleUnitDeath` marks its deployment entry defeated and sets `UnitStateDead`, but the unit keeps its header, its parts, and its place in slot 0's list. The status screen's cycling (`rsStatusScreenNextUnit` and `rsStatusScreenPreviousUnit` in [status_screen.asm](../../engine/menus/status_screen.asm)) walks generation IDs 1 to 24 and looks each one up in slot 0 with `rlFindGenerationIDInFactionSlotData`, so it finds dead units like any other. It then skips any unit that is dead or captive, unless Select is held:
+> A player unit that dies is not deleted. `rlActionStructHandleUnitDeath` marks its deployment entry defeated and sets `UnitStateDead`, but the unit keeps its header, its parts, and its place in slot 0's list. The status screen's cycling (`rsStatusScreenNextUnit` and `rsStatusScreenPreviousUnit` in [engine/menus/status_screen.asm](../../engine/menus/status_screen.asm)) walks generation IDs 1 to 24 and looks each one up in slot 0 with `rlFindGenerationIDInFactionSlotData`, so it finds dead units like any other. It then skips any unit that is dead or captive, unless Select is held:
 >
 > ```rust
 > if !joypad.held(JOY_Select) {
@@ -124,11 +124,11 @@ When a script unloads an army (`rlUnloadFactionSlot`), its units are deleted, ex
 > }
 > ```
 >
-> With the check skipped, every unit still in the player's army comes up. That includes captives: Deirdre and Julia carry a skill the source calls `PoW` (prisoner of war), which makes a defeated unit captured (`StatusCaptive`) instead of killed, except in chapter 11. A unit with the `Escape` skill (Finn, Quan, Ethlyn) is removed from its army when defeated, so it doesn't appear.
+> With the check skipped, every unit still in the player's army comes up. That includes captives: Deirdre and Julia carry the `PoW` (prisoner of war) skill, which makes a defeated unit captured (`StatusCaptive`) instead of killed, except in Chapter 11. A unit with the `Escape` skill (generation-1 Finn, Quan, and Ethlyn) is removed from its army when defeated, so it doesn't appear.
 
 ## Castles
 
-Each location records the faction slot that owns it (`rlSetLocationFactionSlotOwner`), and an army's home is the castle in its header's `location_id`, where `rlSetUnitResidingInCastle` keeps units that haven't been sent out. Seizing a castle changes its owner slot ([Chapter 5](OUTLINE.md)).
+Each location records the faction slot that owns it (`rlSetLocationFactionSlotOwner`), and an army's home is the castle in its header's `location_id`, where `rlSetUnitResidingInCastle` keeps units that haven't been sent out. Seizing a castle changes its owner slot ([Chapter 5](05-who-stands-where.md)).
 
 Castle income is paid at the end of a chapter, by the ending event's `ADD_CASTLE_MONEY` command. `rlAddCastleMoneyToAllUnitsInFaction` counts the castles held by the player or the player's allies (it measures every castle's owner against slot 0, whichever army is being paid), subtracts two, and gives each living unit of the army that many thousand gold.
 
@@ -154,3 +154,7 @@ The limits:
 - [engine/events/event_engine.asm](../../engine/events/event_engine.asm): the `LOAD_FACTION_GROUP`, `SET_FACTION_HOSTILITY`, and `ADD_CASTLE_MONEY` commands.
 - [events/Chapter01.asm](../../events/Chapter01.asm): a chapter's faction setup, start to finish.
 - [docs/reference/units.md](../reference/units.md): the reference page.
+
+---
+
+← Previous: [Chapter 3: Every Sword Is an Individual](03-every-sword-is-an-individual.md) | [Contents](OUTLINE.md) | Next: [Chapter 5: Who Stands Where](05-who-stands-where.md) →

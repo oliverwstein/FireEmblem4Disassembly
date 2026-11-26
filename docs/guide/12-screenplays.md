@@ -1,8 +1,8 @@
 # Chapter 12: Screenplays
 
-Every scene in the game is an **event script**: a sequence of commands in ROM, run by a small interpreter in the event engine. A command does one concrete thing. It plays a song, opens a conversation, scrolls the camera, walks a unit across the map, waits a number of frames, or sets a flag. The language has 93 commands (opcodes `$00` to `$5F`, with three gaps), and the game's scripts use 56 of them. One script runs at a time.
+Every scene in the game is an **event script**: a sequence of commands in ROM, run by a small interpreter in the event engine. A command does one concrete thing. It plays a song, opens a conversation, scrolls the camera, walks a unit across the map, waits a number of frames, or sets a flag. The language has 93 commands (`$00` to `$5E` with gaps at `$18` and `$1E`, plus a null `$5F` slot); retail scripts use 55 of them, one more appears only in a debug script, and 37 never run. One script runs at a time.
 
-The interpreter runs once per frame. Some commands finish at once, and the interpreter moves on to the next. Others start a proc ([Chapter 28](OUTLINE.md)) that takes many frames: a conversation, a fade, a pause, a scroll. The script doesn't stop at such a command. It runs on to the next `YIELD`, which ends its work for the frame, and on every later frame the interpreter checks whether the procs the script started have ended before it reads another command. A scene is written as a list of things to start and places to wait for them.
+The interpreter runs once per frame. Some commands finish at once, and the interpreter moves on to the next. Others start a proc ([Chapter 28](28-procs.md)) that takes many frames: a conversation, a fade, a pause, a scroll. The script doesn't stop at such a command. It runs on to the next `YIELD`, which ends its work for the frame, and on every later frame the interpreter checks whether the procs the script started have ended before it reads another command. A scene is written as a list of things to start and places to wait for them.
 
 Scripts also have two ways out of the language. `RUN_EVENT_CONDITION` runs one command of the condition-list language ([Chapter 11](11-the-game-is-watching.md)) inline, and every change to the game's state (deploying an army, giving an item, raising a stat, removing a unit) goes through it. `RUN_ASM` calls a hand-written routine. This is the Bytecode pattern with its usual escape hatch, and a second hatch into a sibling language. This chapter covers how a script starts and ends, the interpreter and its three ways of waiting, the commands, branches, moving units, the two escapes, scripts outside the chapters, and the costs.
 
@@ -27,7 +27,7 @@ fn start_event_script(script: Ptr) {                   // rlStartEventScript
 }
 ```
 
-Starting a script only records it. The work happens in the event engine, one of the five per-frame engines registered at boot ([Chapter 26](OUTLINE.md)). Each frame, after the procs have run, `rlEventEngineMainLoop` checks bit 0 of `wEventEngineFlags` and, if it is set, calls the routine for `wEventEngineState`:
+Starting a script only records it. The work happens in the event engine, one of the five per-frame engines registered at boot ([Chapter 26](26-the-frame.md)). Each frame, after the procs have run, `rlEventEngineMainLoop` checks bit 0 of `wEventEngineFlags` and, if it is set, calls the routine for `wEventEngineState`:
 
 | State | Routine | Does |
 |---|---|---|
@@ -69,7 +69,7 @@ fn run_event_commands() {                              // rlRunEventCommand
 }
 ```
 
-Nothing limits how many commands run in one frame. A script with no `YIELD` and nothing to wait for would run to its end in a single frame, and in practice the scripts are full of yields: 3,354 of them, against about 7,100 other commands (these counts include `END_EVENT`).
+Nothing limits how many commands run in one frame. A script with no `YIELD` and nothing to wait for would run to its end in a single frame, and in practice the scripts are full of yields: 3,474 of them, against about 7,460 other commands (including `END_EVENT` and macro expansions).
 
 ## Three ways to wait
 
@@ -84,7 +84,7 @@ fn event_procs_done() -> bool {                        // rsEventEngineCheckProc
     if wEventEngineFlags & 0x0004 == 0 { return true; }   // nothing started
     let mut done = true;                               // rsEventEnginePollBlockingProcs
     for slot in 0..16 {
-        let Some(entry) = wEventProcs[slot] else { continue };
+        let Some(entry) = wEventProcs[slot] else { continue }; // wEventProcBanks / wEventProcOffsets
         if entry.non_blocking { continue; }
         if aProcSystem.definition(slot) == entry.definition {
             done = false;                              // still running
@@ -97,7 +97,7 @@ fn event_procs_done() -> bool {                        // rsEventEngineCheckProc
 }
 ```
 
-A proc counts as ended when its slot no longer holds the same definition, either because it freed itself or because something else took the slot. A proc can be marked non-blocking (bit `$0200` of its bank entry); the script then doesn't wait for it. Only the attract mode's opening does that, so that its script can carry on while a conversation is still on screen (`rlASMCContinueDuringDialogue`).
+A proc counts as ended when its slot no longer holds the same definition, either because it freed itself or because something else took the slot. A proc can be marked non-blocking (bit `$0200` of its bank entry); the script then doesn't wait for it. Among the game's scripts, only the attract mode's opening uses non-blocking procs: for its Start-button watcher (`procDemoSkipFadeOut`, started by `DEMO_ALLOW_SKIP`) and to let the script carry on while a conversation is still on screen (`rlASMCContinueDuringDialogue`).
 
 Most of these procs read their parameters straight from the script. A proc's init routine runs as soon as it is created, while `wActiveEventOffset` still points at the command's parameters, and reads them from there. `PAUSE`'s handler does no more than create `procEventPause` and step over the two-byte timer:
 
@@ -124,7 +124,7 @@ SET_CAMERA_POSITION [48, 34]
 YIELD
 ```
 
-`DIALOGUE_WITH_BG` leaves the map for a full-screen conversation scene. Its proc's init routine saves the map's camera position (`wMapXOffset`, `wMapYOffset`), from which the map is rebuilt when the scene ends, and starts the fade. `SET_CAMERA_POSITION`, run in the same frame, overwrites that saved position, so the map comes back with the camera at Genoa. The chapter's opening starts a castle name banner, releases the moving units, and opens a conversation before one `YIELD`, and the script waits until both the banner and the conversation are gone.
+`DIALOGUE_WITH_BG` leaves the map for a full-screen conversation scene ([Chapter 13](13-dialogue-and-text.md)). Its proc's init routine saves the map's camera position (`wMapXOffset`, `wMapYOffset`), from which the map is rebuilt when the scene ends, and starts the fade. `SET_CAMERA_POSITION`, run in the same frame, overwrites that saved position, so the map comes back with the camera at Genoa. The chapter's opening starts a castle name banner, releases the moving units, and opens a conversation before one `YIELD`, and the script waits until both the banner and the conversation are gone.
 
 ### Commands that retry
 
@@ -138,8 +138,8 @@ The commands fall into a few families. The counts are uses across all of the gam
 
 | Family | Commands (uses) | Waits |
 |---|---|---|
-| Conversation | `DIALOGUE` (293), `DIALOGUE_WITH_BG` (206), `CASTLE_NAME` (55) | proc until it closes |
-| Sound | `PLAY_SFX_WORD` (674), `PLAY_SONG` (392), `RESTORE_PHASE_MUSIC` (298), `PLAY_SFX_BYTE` (6) | the two music commands, during a map battle |
+| Conversation | `DIALOGUE` (413), `DIALOGUE_WITH_BG` (206), `CASTLE_NAME` (55) | proc until it closes |
+| Sound | `PLAY_SFX_WORD` (914), `PLAY_SONG` (392), `RESTORE_PHASE_MUSIC` (298), `PLAY_SFX_BYTE` (6) | the two music commands, during a map battle |
 | Time and screen | `PAUSE` (1,153), `FADE_OUT_BY_TIMER` (97), `FADE_IN_BY_TIMER` (28), `RELOAD_MAP_SCREEN` (38) | proc |
 | Camera and cursor | `MAP_SCROLL` (149), `MAP_SCROLL_TO_EVENT_UNIT_SLOT_1` (80), `SET_CAMERA_POSITION` (79), `SET_CURSOR_TO_EVENT_UNIT_SLOT_1` (19), `SCRIPTED_MAP_SCROLL` (15) | the scrolls, proc |
 | Units | `WAIT_UNIT_SPRITE_DECOMPRESSED` (391), `WAIT_UNTIL_MAP_SPRITES_HALTING` (251), `LOAD_UNIT_BY_GROUP` (196), `MOVE_TEMPORARY_BY_SCRIPT` (104), `LOAD_UNIT_BY_GROUP_SILENT` (46), `LOAD_UNIT_DIRECT` (45), `CONTINUE_FORM_MAP_SPRITE_HALT` (34), `MOVE_TEMPORARY_TO_COORDS_CLASS` (15), `MOVE_TEMPORARY_TO_COORDS` (9), `FACTION_UNIT_DEATH` (8), `MOVE_TEMPORARY_TO_COORDS_FOLLOW` (2), `BERSERK_CAST` (1) | retry, or proc |
@@ -149,11 +149,11 @@ The commands fall into a few families. The counts are uses across all of the gam
 | World map | `WM_DIALOGUE` (50), `WM_CLEAR_DIALOGUE` (41), `WM_SCROLL` (40), `WM_FADE_IN` (13), `WM_FADE_OUT` (12), `WM_FADE_OUT_PORTRAIT` (10), and six more used once to three times | proc |
 | Attract mode | `DEMO_ALLOW_SKIP` (1), `OPEN_TITLE_SCREEN` (1) | — |
 
-Sound commands are the most common. The pair `PLAY_SFX_WORD $00E0` and `PAUSE 35` appears 572 times; `$E0` is a command to the sound driver that the game also sends before the phase music changes ([Chapter 31](OUTLINE.md)).
+Sound commands are the most common. The pair `PLAY_SFX_WORD $00E0` and `PAUSE 35` appears 574 times across the scripts; `$E0` fades the music out ([Chapter 31](31-the-second-computer.md)), and the 35-frame pause gives the fade time to finish.
 
-`RELOAD_MAP_SCREEN` fades the screen out and rebuilds the map display through the main-loop routine that the full-screen windows and the battle scene use to return to the map (`rsReturnToMapMainLoop`). Its parameter holds the fade time in the low six bits and two mode bits. With bit 7 set the script carries on once the map is rebuilt and still dark, ready for a `FADE_IN_BY_TIMER`; otherwise it waits until the map has faded in. Every chapter's opening script starts with it: after registering map sprites (in most chapters) and setting the camera position, it rebuilds the map with `RELOAD_MAP_SCREEN $80` and fades in.
+`RELOAD_MAP_SCREEN` fades the screen out and rebuilds the map display through the main-loop routine that the full-screen windows and the battle scene use to return to the map (`rsReturnToMapMainLoop`, [Chapter 27](27-screens.md)). Its parameter holds the fade time in the low six bits and two mode bits. With bit 7 set the script carries on once the map is rebuilt and still dark, ready for a `FADE_IN_BY_TIMER`; otherwise it waits until the map has faded in. Every chapter's opening script starts with it: after registering map sprites (in most chapters) and setting the camera position, it rebuilds the map with `RELOAD_MAP_SCREEN $80` and fades in.
 
-The other 37 commands appear in no script. They include palette changes and cycles, HDMA and sprite creation, a raw word store, a button wait with and without a timeout, two menu commands, a forced lover conversation, and several commands that do nothing. One of them, `EVENT_0A`, appears in a single debug script.
+The other 37 commands appear in no script, and one more, `EVENT_0A`, appears only in a single debug script. The unused commands include palette changes and cycles, HDMA and sprite creation, a raw word store, a button wait with and without a timeout, two menu commands, a forced lover conversation, and several commands that do nothing.
 
 ## Branches
 
@@ -226,11 +226,11 @@ The unit commands differ in where the movement script comes from and whether a r
 
 - `MOVE_TEMPORARY_BY_SCRIPT` draws a character's sprite at a tile and runs a hand-written movement script. Nothing in the unit pools changes.
 - `MOVE_TEMPORARY_TO_COORDS` draws a sprite and walks it to a destination along a route the game plans. It also changes nothing; if the character is a unit on the map, the script deals with that unit separately.
-- `LOAD_UNIT_BY_GROUP` and `LOAD_UNIT_DIRECT` load a real unit into its army, hidden, and walk its sprite from a starting tile; the unit appears when the walk ends. A group unit walks to its own tile in the unit group; a direct unit takes its character, army slot, destination, AI setting, and leader bit from the command. `LOAD_UNIT_BY_GROUP_SILENT` loads a group unit and shows it at once, with no walk.
+- `LOAD_UNIT_BY_GROUP` and `LOAD_UNIT_DIRECT` load a real unit into its army, hidden, before its sprite begins walking, and show it when the walk ends. A group unit walks to its own tile in the unit group; a direct unit takes its character, army slot, destination, AI setting, and leader bit from the command. `LOAD_UNIT_BY_GROUP_SILENT` loads a group unit and shows it at once, with no walk.
 
-A unit command first checks that no decompression is queued, that the route planner is idle, and that one of the four slots is free. If not, it steps back and retries next frame.
+A moving-unit command first checks that no decompression is queued, that the route planner is idle, and that one of the four slots is free. If not, it steps back and retries next frame.
 
-A planned route takes longer than the frame's interrupt time allows. The command fills in the request and sets `aMovingMapSprites.wState` to 1, and the map's main loop, which runs in the time left over between frames ([Chapter 26](OUTLINE.md)), finds the request:
+A planned route takes longer than the frame's interrupt time allows. The command fills in the request and sets `aMovingMapSprites.wState` to 1, and the map's main loop, which runs in the time left over between frames ([Chapter 26](26-the-frame.md)), finds the request:
 
 ```rust
 fn plan_queued_map_sprite_movement() {                 // rlPlanQueuedMapSpriteMovement (main loop)
@@ -248,7 +248,7 @@ fn plan_queued_map_sprite_movement() {                 // rlPlanQueuedMapSpriteM
 }
 ```
 
-The route is built over the movement cost table of the character's class, the same costs the player's moves use ([Chapter 9](09-moving-a-unit.md)). A starting tile of -1 means the unit's current tile. The state stays at 2 for one pass of the main loop before it returns to 0. `WAIT_UNIT_SPRITE_DECOMPRESSED` waits until the state is 0 and no decompression is pending, and all 371 unit commands in the scripts are followed by one. If no route exists, the planner executes `brk` and the game stops; a unit load that fails does the same.
+The route is built over the movement cost table of the character's class, the same costs the player's moves use ([Chapter 9](09-moving-a-unit.md)). The route planner itself treats a negative starting X coordinate as the unit's current tile, while `MOVE_TEMPORARY_TO_COORDS` supplies that tile through `EventUnitSlot1` (below). The state stays at 2 for one pass of the main loop before it returns to 0. `WAIT_UNIT_SPRITE_DECOMPRESSED` waits until the state is 0 and no decompression is pending, and all 371 moving-unit commands in the scripts are followed by one. If no route exists, the planner executes `brk` and the game stops; a unit load that fails does the same.
 
 ### Halts as a barrier
 
@@ -328,7 +328,7 @@ The sprite starts on Elliot's tile (slot 1) and walks to the top edge of the map
 
 None of these has a counterpart in the script language. The game has one implementation of each state change, reachable from a condition list and from a script alike.
 
-`RUN_EVENT_CONDITION_AND_WAIT` runs a condition command and then waits until bit 0 of `bAIEngineFlags` is clear, and four frames more. The prologue uses it twice, with `SET_SCRIPTED_ACTION`, which starts a map action for a unit (the same machinery the AI drives its units with) and sets that bit; the battle scene clears it when the scripted fight ends.
+`RUN_EVENT_CONDITION_AND_WAIT` runs a condition command and then waits until bit 0 of `bAIEngineFlags` is clear, and four frames more. The prologue uses it twice, with `SET_SCRIPTED_ACTION`, which starts a map action for a unit (the same machinery the AI drives its units with, [Chapter 14](14-armies-with-a-mind.md)) and sets that bit; the battle scene clears it when the scripted fight ends.
 
 ### Into assembly
 
@@ -401,11 +401,11 @@ aSongAndDialogueEventTemplate
   END_EVENT
 ```
 
-An absolute `JUMP` here would name an address in the template's ROM bank, which means nothing once the script runs from RAM. The relative jumps measure from the command itself and work in any copy. This template holds the only relative jump in the game. The ASMC before it sets the truth flag from a bit of `wBattleStatus`, and the script brings back the phase music only when that bit is set. Its last command starts the combat animation that the battle code held back when the conversation began ([Chapter 11](11-the-game-is-watching.md)).
+An absolute `JUMP` here would name an address in the template's ROM bank, which means nothing once the script runs from RAM. The relative jumps measure from the command itself and work in any copy. This template holds the only relative jump in the game. The ASMC before it sets the truth flag when battle animations are off (`wBattleStatus` bit `$0040`), so the script restores the phase music before a map battle (a full battle scene handles its own music). Its last command starts the combat animation that the battle code held back when the conversation began ([Chapter 11](11-the-game-is-watching.md)).
 
 ## Skip points
 
-When a script begins, `rsGetEventLength` scans it for the word `$FEFE` and records the offset just after it in `wActiveEventLength`. The interpreter steps over the marker. A routine in the event code, `rsCheckSkipActiveEventUnused`, would use the offset: on a Start press before the marker, it clears the fades, the map windows, and the event procs, and moves the script to just past the marker. Nothing calls it, and a code-data log recorded over a playthrough of the prologue shows it never ran.
+When a script begins, `rsGetEventLength` scans it for the word `$FEFE` and records the offset just after it in `wActiveEventLength`. The interpreter steps over the marker. A routine in the event code, `rsCheckSkipActiveEventUnused`, would use the offset: on a Start press before the marker, it clears the fades, the map windows, and the event procs, and moves the script to just past the marker. Nothing calls it.
 
 The nine markers in the game are all in chapter openings, just before each opening's closing setup: a fade-out, in most chapters the deployment of the player's army, the camera position, and `RELOAD_MAP_SCREEN`. A skipped opening would still have ended with the army on the map and the screen rebuilt. No chapter script can be skipped with Start. The attract mode's opening has its own way out (`DEMO_ALLOW_SKIP`).
 
@@ -423,18 +423,21 @@ The limits:
 - **Four moving map sprites** at once; a unit command waits for a free slot.
 - **One condition register** (the truth flag), two event unit slots, and the event flags; no variables, counters, or subroutine calls in the script language.
 - **Jumps within a bank**: a script must fit in one ROM bank.
-- **No route, no game**: a planned walk with no path, or a unit load that fails, executes `brk`.
+- **Failed routes or loads halt the game**: a planned walk with no path, or a unit load that fails, executes `brk`.
 - **No skipping**: the skip point is recorded and never used; only the attract mode's opening ends on Start.
 
 ## Where it lives in the source
 
-- [engine/events/event_scripts.asm](../../engine/events/event_scripts.asm): `rlEventEngineBeginScript`, `rlRunEventCommand`, `aEventCommandPointers` and every command handler, the event proc tables and their poll (`rsEventEnginePollBlockingProcs`), the unit move dispatch (`aEventUnitMoveHandlers`), the wait procs (`procEventWaitMapSpritesHalting`, `procEventWaitFadeToMap`, `procEventWaitFlag0E7B`), and `rsReturnToMapMainLoop`.
+- [engine/events/event_scripts.asm](../../engine/events/event_scripts.asm): `rlEventEngineBeginScript`, `rlRunEventCommand`, `rlResetEventAndSpriteState` (state 2), `aEventCommandPointers` and every command handler, the event proc tables and their poll (`rsEventEnginePollBlockingProcs`), the unit move dispatch (`aEventUnitMoveHandlers`), the wait procs (`procEventWaitMapSpritesHalting`, `procEventWaitFadeToMap`, `procEventWaitFlag0E7B`), `rsReturnToMapMainLoop`, and the unused skip routine.
 - [engine/events/event_engine.asm](../../engine/events/event_engine.asm): `rlStartChapterEventByID`, `rlStartEventScript`, the per-frame hook and its state table (`rsRunEventEngineState`, `aEventEngineStateRoutines`), `rlTryRunEventConditionCommand`.
-- [engine/events/event_scripts.asm](../../engine/events/event_scripts.asm): `rlResetEventAndSpriteState` (state 2) and the unused skip routine, after the interpreter.
 - [engine/events/event_procs.asm](../../engine/events/event_procs.asm): `procEventPause`, the timed fades, `procHaltEvent`.
 - [engine/events/event_movement.asm](../../engine/events/event_movement.asm): route planning for moving sprites (`rlEventMovementPlanRoute`, `rlPlanQueuedMapSpriteMovement`); [engine/map/scroll.asm](../../engine/map/scroll.asm): `rlSpawnMovingMapSprite` and the scroll scripts; [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): showing a loaded unit when its walk ends.
 - [engine/events/asmc.asm](../../engine/events/asmc.asm) and [engine/events/cutscenes.asm](../../engine/events/cutscenes.asm): the shared ASMCs and the scripted map-battle cutscenes.
 - [engine/dialogue/death_quotes.asm](../../engine/dialogue/death_quotes.asm): the RAM templates for pre-combat conversations.
-- [events/](../../events/): every chapter's scripts, one file each; [data/chapter/EventPointers.csv](../../data/chapter/EventPointers.csv): the event ID table.
+- [events/](../../events/): every script, one file each, organized in per-chapter directories; [data/chapter/EventPointers.csv](../../data/chapter/EventPointers.csv): the event ID table.
 - [include/events/Main.h](../../include/events/Main.h): every script command; [include/events/Helpers.h](../../include/events/Helpers.h): the movement script commands, sprite colors, and dialogue backgrounds.
 - [docs/reference/events.md](../reference/events.md): the reference page.
+
+---
+
+← Previous: [Chapter 11: The Game Is Watching](11-the-game-is-watching.md) | [Contents](OUTLINE.md) | Next: [Chapter 13: Dialogue and Text](13-dialogue-and-text.md) →

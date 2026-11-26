@@ -65,11 +65,11 @@ defeated                (as it was)        defeated            hidden on the map
 A chapter's castles and villages are its **locations**. Each chapter lists up to 16 of them in ROM: a table of pointers in [data/chapter/](../../data/chapter/) to entries in the chapter's event file, here [events/Chapter01.asm](../../events/Chapter01.asm). Chapter 1's are Evans, Nordion, Genoa, Marpha, and Verdane castles and three villages:
 
 ```
-.structChapterCastleLocationEntry  Ch01_Evans, EvansName, [46, 11], $FC, aChapter01ShopData
+.structChapterCastleLocationEntry  Ch01_Evans, EvansName, [46, 11], CastleFacilityAll, aChapter01ShopData
 .structChapterVillageLocationEntry Ch01_Village1, [47, 31]
 ```
 
-Each entry gives an ID (0 to 15), a type, and a tile; a castle adds its name and its shop list ([Chapter 3](03-every-sword-is-an-individual.md)). The type indexes a table of type data (`aEventLocationTypeOffsets`): starting gold, and offsets from the location's tile to where its graphics start, where a unit stands to enter it, and which tiles change when it is destroyed. Seven types exist in that table, but the chapters use only two: 59 castles (type 0) and 73 villages (type 2).
+Each entry gives an ID (0 to 15), a type, and a tile; a castle adds its name, its facilities bitfield, and its shop list ([Chapter 3](03-every-sword-is-an-individual.md)). The type indexes a table of type data (`aEventLocationTypeOffsets`): starting gold, and offsets from the location's tile to where its graphics start, where a unit stands to enter it, and which tiles change when it is destroyed. Seven types exist in that table, but the chapters use only two: 59 castles (type 0) and 73 villages (type 2).
 
 What changes during play is held in two arrays indexed by location ID. `aChapterLocationRAMData` has one byte per location:
 
@@ -78,7 +78,7 @@ What changes during play is held in two arrays indexed by location ID. `aChapter
 | `$07` | owning faction slot (`LocationFactionSlotOwnerMask`) |
 | `$08` | destroyed (`LocationDestroyed`) |
 | `$20` | village visited and closed (`VillageClosed`) |
-| `$40` | set when an army seizes a castle (`LocationState40`); no routine reads it, and its check routine, `rlCheckLocationState40`, has no callers |
+| `$40` | set when the player's army seizes a castle (`LocationState40`); no routine reads it, and its check routine, `rlCheckLocationState40`, has no callers |
 | `$80` | a unit is guarding the castle (`CastleGuarded`) |
 
 `aChapterLocationMoneyRewards` holds a word per location: the gold it still has. `rlInitLocation` sets it from the type's starting gold (5,000 for a village, 0 for a castle), and for a castle, moves its shop's unobtained items into the shop.
@@ -101,7 +101,7 @@ CHECK_UNIT_IN_AREA FlagChapter01_LexOnPeninsula, Lex, pack([28, 37]), pack([28, 
   EVENT FlagChapter01_LexBraveAxe, EventChapter01LexBraveAxe
 ```
 
-Nothing searches the map for Lex. Every way a unit's action can end (waiting, attacking, visiting, seizing) goes through `rlFinishUnitAction`, which grays the unit and leaves its deployment offset in `wActionEndedDeploymentOffset`. On a later frame, once any battle, popup, or Canto move has finished, the turn loop ([Chapter 8](OUTLINE.md)) reads that note and announces the unit's arrival to the event system:
+Nothing searches the map for Lex. Every way a unit's action can end (waiting, attacking, visiting, seizing) goes through `rlFinishUnitAction`, which grays the unit and leaves its deployment offset in `wActionEndedDeploymentOffset`. On a later frame, once any battle, popup, or Canto move has finished, the turn loop ([Chapter 8](08-the-turn.md)) reads that note and announces the unit's arrival to the event system:
 
 ```rust
 fn run_action_ended_events() {                       // rsRunActionEndedEvents
@@ -141,5 +141,9 @@ The limits:
 - [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): drawing and animating the map sprites.
 - [engine/map/locations.asm](../../engine/map/locations.asm): location data, owners, gold, and tile changes.
 - [engine/map/map_actions.asm](../../engine/map/map_actions.asm): visit, raid, seize, guard, and depart.
-- [engine/units/unit_state.asm](../../engine/units/unit_state.asm) and [level_up.asm](../../engine/units/level_up.asm): `rlSetUnitResidingInCastle` and `rlDeploySelectedUnit`.
+- [engine/units/unit_state.asm](../../engine/units/unit_state.asm) and [engine/units/level_up.asm](../../engine/units/level_up.asm): `rlSetUnitResidingInCastle` and `rlDeploySelectedUnit`.
 - [docs/reference/map.md](../reference/map.md): the reference page.
+
+---
+
+← Previous: [Chapter 4: Armies and Allegiance](04-armies-and-allegiance.md) | [Contents](OUTLINE.md) | Next: [Chapter 6: Resolving a Battle](06-resolving-a-battle.md) →

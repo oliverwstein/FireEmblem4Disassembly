@@ -59,7 +59,7 @@ The `state` field says where a record is, and the `owner` field says whose it is
 | `ItemStatePawnbroker` | 5 | a castle | sold there, for anyone to buy back |
 | `ItemStateUnobtained` | 7 | none | not yet in the game |
 
-Values 3 and 6 are never used. Only one of these places has a list of its own, the unit's eight-slot inventory, which keeps the order the player sees. Every other place is a *query*. The depot, the shop, and the pawn shop are built by walking the table and keeping the records in the right state. The depot also checks the owner:
+Nothing ever places an item in states 3 or 6. Only one of these places has a list of its own, the unit's eight-slot inventory, which keeps the order the player sees. Every other place is a *query*. The depot, the shop, and the pawn shop are built by walking the table and keeping the records in the right state. The depot also checks the owner:
 
 ```rust
 fn stored_items(unit: UnitPointer) -> Vec<PlayerItemIndex> {   // rlBuildUnitStoredItemList
@@ -117,14 +117,14 @@ A sword at 100 kills adds 50 to its wielder's crit rate, on top of making crits 
 Because each record knows its own wear, prices come from the record rather than the item type ([engine/items/items.asm](../../engine/items/items.asm)):
 
 - **Sell price** (`rlGetItemSellPrice`): half the ROM cost, scaled by uses left: `cost / 2 × durability / max_durability`.
-- **Buy price** (`rlGetItemBuyPrice`): the full cost for an unused or unbreakable item, twice the sell price for a used one, and a flat 1,000 gold for a broken one, so a broken holy weapon in a pawn shop is a bargain.
+- **Buy price** (`rlGetItemBuyPrice`): the full cost for an unused or unbreakable item, twice the sell price for a used one, and a flat 1,000 gold for a broken one, so passing a broken high-value weapon or staff through the pawn shop costs little up front (though repairing it afterward still costs the full price).
 - **Repair cost** (`rlGetItemRepairCost`): the cost of the missing uses, `cost × (max − current) / max`.
 
-The Bargain skill halves the buy and repair prices; the shop code applies it, not the price routines.
+The Bargain skill halves the buy and repair prices; the transaction and shop routines apply it, not the price routines.
 
 ## Inventories and inheritance
 
-The per-unit list, `structInventoryDataRAM`, holds the eight indices, a small list header with the item count, and an *equipped-weapon* byte with one bit per slot. The player's menus allow seven items. The eighth slot exists so that a gift or a purchase can always succeed: when a unit reaches eight items, `rlGiveItemToUnitCheckEncumbered` flags it, and the next thing the player sees is the screen that makes them give one up.
+The per-unit list, `structInventoryDataRAM`, holds the eight indices, a small list header with the item count, and an *equipped-weapon* byte with one bit per slot. The player's menus allow seven items. The eighth slot exists so that a gift or a purchase can always succeed: when a unit reaches eight items, `rlGiveItemToUnitCheckEncumbered` flags it, and the next thing the player sees is the screen that makes the player send one item to storage or discard it.
 
 Inheritance ([Chapter 17](17-love-and-lineage.md)) is where the handles pay off most. When a child joins in generation 2, `rlInheritInventoryToChild` moves records from the parent to the child: the owner field changes and the indices move into the child's list. The swords are the same records, with the same kills and the same wear. When a parent is deleted at the generation change, anything left in their hands or storage is reverted to unobtained with full durability (`rlRevertItemAcquirement`), and shop and pawn shop stock go back too.
 
@@ -152,3 +152,7 @@ The limits:
 - [engine/save/save.asm](../../engine/save/save.asm): the 25-bit item record in the save file.
 - [data/item/](../../data/item/): `ItemData.csv`, `PlayerItemTable.csv`, and the broken weapon tables.
 - [docs/reference/items.md](../reference/items.md): the reference page.
+
+---
+
+← Previous: [Chapter 2: Classes, Stats, Skills, and Weapon Ranks](02-classes-stats-skills-and-weapon-ranks.md) | [Contents](OUTLINE.md) | Next: [Chapter 4: Armies and Allegiance](04-armies-and-allegiance.md) →

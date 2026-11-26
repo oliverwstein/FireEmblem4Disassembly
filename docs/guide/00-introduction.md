@@ -10,11 +10,11 @@ None of it requires reading 65816 assembly. Where code helps, it appears as Rust
 
 A little hardware goes a long way toward explaining why the code looks the way it does.
 
-**The CPU (the 65816)** is a 16-bit descendant of the 6502 in the NES and the Apple II. It has three registers that matter: an accumulator `A` and two index registers, `X` and `Y` (see the sidebar below). It can switch each between 8-bit and 16-bit mode at any moment, which is why the source is full of `.al`/`.as` (16-bit/8-bit accumulator) and `.xl`/`.xs` markers. Addresses are 24 bits wide: a *bank* byte and a 16-bit offset, written `$80/9B01` in this project ("bank `$80`, offset `$9B01`"). The cartridge is mapped into banks `$80`-`$FF`. Work RAM is banks `$7E`-`$7F`, and its first 8 KB is also visible in banks `$00`-`$3F` and `$80`-`$BF`, where nearly all the code runs, which makes it the cheapest memory to reach.
+**The CPU (the 65816)** is a 16-bit descendant of the 6502 in the NES and the Apple II. It has three registers that matter: an accumulator `A` and two index registers, `X` and `Y` (see the sidebar below). It can switch each between 8-bit and 16-bit mode at any moment, which is why the source is full of `.al`/`.as` (16-bit/8-bit accumulator) and `.xl`/`.xs` markers. Addresses are 24 bits wide: a *bank* byte and a 16-bit offset, written `$80/9B01` in this project ("bank `$80`, offset `$9B01`"). The cartridge is mapped into banks `$80`–`$FF`. Work RAM is banks `$7E`–`$7F`, and its first 8 KB is also visible in banks `$00`–`$3F` and `$80`–`$BF`, where nearly all the code runs, which makes it the cheapest memory to reach.
 
 **The PPU (the picture processor)** draws the screen from video RAM: up to four *background layers* made of 8×8 tiles, plus up to 128 *sprites*. It isn't programmable the way a modern GPU is. It draws whatever video RAM and its registers describe, and nothing else. The CPU cannot touch video RAM while the screen is being drawn. It gets a window of about 2,300 microseconds per frame, the **vertical blank** (VBlank), after the last line is drawn and before the next frame starts. Everything that changes on screen has to be squeezed through that window, usually by **DMA**, a hardware copier much faster than the CPU. **HDMA** is DMA that fires once per scanline, which lets the game change a register partway down the screen. That's how it gets wavy water, gradients, and the dialogue box folding open.
 
-**The sound chip (the SPC700)** is a separate computer with its own CPU and 64 KB of RAM. The game uploads a sound driver and samples to it, then sends it short commands through four one-byte ports. Sound gets its own chapter; for now it is a peripheral that receives requests by mail.
+**The sound chip (the SPC700)** is a separate computer with its own CPU and 64 KB of RAM. The game uploads a sound driver and samples to it, then sends it short commands through four one-byte ports. Sound gets its own chapter ([Chapter 31](31-the-second-computer.md)); for now it is a peripheral that receives requests by mail.
 
 Those four constraints—a slow CPU, tight RAM, a short VBlank, and a pipe to a second computer—drive nearly every design decision in the codebase.
 
@@ -71,7 +71,8 @@ fn rs_map_main_loop() {                 // runs in whatever time the interrupt l
     check_soft_reset_buttons();         // rlButtonCombinationResetCheck
     decompress_by_list();               // rlDecompressByList: unpack queued graphics
     run_ai_engine_cycle();              // rlRunAIEngineCycle: the enemy thinks
-    run_deferred_sound_upload();
+    run_deferred_sound_upload();        // rlRunDeferredSoundUpload
+    plan_queued_map_sprite_movement();  // rlPlanQueuedMapSpriteMovement
 }
 ```
 
@@ -95,8 +96,8 @@ There is a table of 56 routine pointers, `aGameStateRoutines`, and two variables
 
 ```rust
 fn rl_run_game_state_routines() {
-    AGAME_STATE_ROUTINES[wGameStateRoutine1]();   // the screen's logic: set up, then step
-    AGAME_STATE_ROUTINES[wGameStateRoutine2]();   // the screen's every-frame upkeep
+    GAME_STATE_ROUTINES[wGameStateRoutine1]();   // the screen's logic: set up, then step
+    GAME_STATE_ROUTINES[wGameStateRoutine2]();   // the screen's every-frame upkeep
 }
 ```
 
@@ -154,13 +155,13 @@ let procs: [Proc; 16];                      header: [u16; 16],
                                         // system.body3[i]
 ```
 
-Today this is called *structure of arrays*, and associated with cache-friendly, data-oriented engines. On the 65816 the reason is the one in the sidebar. With the proc's slot number (times two, since each field is a two-byte word) in `X`, the instructions `lda aBody0,x`, `lda aBody3,x` and `sta aBody5,x` each reach a different field of the same proc in one instruction, with no multiply anywhere. Every field is an array the CPU can index directly. The deployment table, the active sprites and the AI's unit lists are built the same way.
+Today this is called *structure of arrays*, and associated with cache-friendly, data-oriented engines. On the 65816 the reason is the one in the sidebar. With the proc's slot number (times two, since each field is a two-byte word) in `X`, the instructions `lda aBody0,x`, `lda aBody3,x`, and `sta aBody5,x` each reach a different field of the same proc in one instruction, with no multiply anywhere. Every field is an array the CPU can index directly. The deployment table, the active sprites, and the AI's unit lists are built the same way.
 
 In Rust, either layout reads naturally: `procs[i].body3` or `system.body3[i]`, and the compiler handles the arithmetic. The layout only becomes a design decision when the programmer *is* the compiler.
 
 ### Its siblings
 
-Four more engines run beside the procs as **VBlank hooks**. These are entries in `aTaskTable`, a short list of per-frame engines that `rlRunVBlankHooks` walks, set up at boot by `rlRegisterVBlankHook`: active sprites, HDMA, the IRQ engine and the event engine. Two of them are close cousins of the procs:
+Four more engines run beside the procs as **VBlank hooks**. These are entries in `aTaskTable`, a short list of per-frame engines that `rlRunVBlankHooks` walks, set up at boot by `rlRegisterVBlankHook`: active sprites, HDMA, the IRQ engine, and the event engine. Two of them are close cousins of the procs:
 
 - **Active sprites** ([engine/core/display/active_sprites.asm](../../engine/core/display/active_sprites.asm)): scripted, animated sprites, each with its own little animation script. The map battle's weapons and spell effects, the map's action animations, and some event effects are active sprites. The map's units and cursor are not; the map's VBlank routine draws them directly.
 - **The HDMA engine** ([engine/core/display/hdma.asm](../../engine/core/display/hdma.asm)): per-frame scanline effects, also scripted, such as the dialogue box folding, gradients, and the battle scene's wobbles.
@@ -201,14 +202,14 @@ That's why FE4 is moddable even in its original form: changing *what happens* mo
 
 With those ideas in hand, here's the whole game as one pass from power-on to credits. Each step is a later chapter.
 
-1. **Boot** ([engine/core/frame/boot.asm](../../engine/core/frame/boot.asm)). The reset vector lands in `rlReset`. RAM and video RAM are cleared and the sound driver is uploaded. Five engines (procs, active sprites, HDMA, the IRQ engine and events) are registered as VBlank hooks, unit and event RAM are initialized, and the game state is set to the opening logo. The checksums are a curiosity here: the game sums parts of its own code at boot and, if they've been tampered with, quietly sabotages its random number generator ([include/Checksums.h](../../include/Checksums.h)).
-2. **Title and save select**: game states and procs drawing menus; saving and loading in [engine/save/](../../engine/save/) ([save.md](../reference/save.md)).
-3. **A chapter begins**: the world map and chapter intro ([engine/worldmap/](../../engine/worldmap/)), then the chapter's units are created from ROM tables ([engine/units/unit_creation.asm](../../engine/units/unit_creation.asm)), deployed, and the opening event script plays.
-4. **The turn cycle**: player phase, then each other faction's phase. Start-of-turn effects come first (healing, status, castles: [engine/units/turn_start.asm](../../engine/units/turn_start.asm)). In the player phase the map waits for input ([engine/map/input.asm](../../engine/map/input.asm)): move a unit, open the map menu, or enter a castle ([engine/castle/](../../engine/castle/), [castle.md](../reference/castle.md)) to send units out, shop, repair, store items, or talk. In an AI phase the main loop runs the AI engine, which builds threat and movement maps and picks actions, a few steps per frame ([engine/ai/](../../engine/ai/)).
-5. **Combat**: choosing a target ([engine/battle/](../../engine/battle/)), building the *battle rounds* (who strikes, in what order, with which skills), resolving each strike (hit, crit, damage, durability, life-steal, and experience), then showing it either as a full battle scene or as a quick map battle ([engine/battle_scene/](../../engine/battle_scene/)). Level-ups roll growths ([engine/units/level_up.asm](../../engine/units/level_up.asm)).
-6. **Events fire throughout**: a castle seized, a talk, a death, a turn count. Each runs its script, which can create units, move them, change factions, give items, and play dialogue.
-7. **Between generations**: love points accumulate turn by turn ([engine/units/lovers.asm](../../engine/units/lovers.asm)). At the end of chapter 5 the game removes the parents and builds their children ([engine/units/generations.asm](../../engine/units/generations.asm), [engine/units/inheritance.asm](../../engine/units/inheritance.asm)): growths, holy blood, skills, items, and money, all derived from who married whom.
-8. **The end**: the epilogue chooses each region's and each character's ending from parents, lovers, and survivors ([engine/epilogue/](../../engine/epilogue/)), then the rankings score the play ([engine/rankings/](../../engine/rankings/)).
+1. **Boot** ([engine/core/frame/boot.asm](../../engine/core/frame/boot.asm), [Chapter 26](26-the-frame.md)). The reset vector lands in `rlReset`. RAM and video RAM are cleared and the sound driver is uploaded. Five engines (procs, active sprites, HDMA, the IRQ engine, and events) are registered as VBlank hooks, and boot hands off to the opening-logo setup ([engine/title/opening_logo.asm](../../engine/title/opening_logo.asm)), which initializes unit, event, AI, and RNG RAM and sets the opening-logo game states. The checksums are a curiosity here: at boot and on the save menu, tampering triggers an anti-tamper hang, while in mid-game a failed check quietly sabotages the random number generator ([Chapter 6](06-resolving-a-battle.md), [include/Checksums.h](../../include/Checksums.h)).
+2. **Title and save select** ([Chapter 20](20-the-opening.md), [Chapter 18](18-saving.md)): game states and procs drawing menus; saving and loading in [engine/save/](../../engine/save/) ([save.md](../reference/save.md)).
+3. **A chapter begins** ([Chapter 19](19-between-chapters.md)): the world map and chapter intro ([engine/worldmap/](../../engine/worldmap/)), then the chapter's units are created from ROM tables ([engine/units/unit_creation.asm](../../engine/units/unit_creation.asm)), deployed, and the opening event script plays.
+4. **The turn cycle** ([Chapter 8](08-the-turn.md), [Chapter 9](09-moving-a-unit.md), [Chapter 10](10-menus-over-the-map.md)): player phase, then each other faction's phase. Start-of-turn effects come first (healing, status, castles: [engine/units/turn_start.asm](../../engine/units/turn_start.asm)). In the player phase the map waits for input ([engine/map/input.asm](../../engine/map/input.asm)): move a unit, open the map menu, or enter a castle ([Chapter 15](15-castles-and-towns.md), [castle.md](../reference/castle.md)) to send units out, shop, repair, store items, or talk. In an AI phase ([Chapter 14](14-armies-with-a-mind.md)) the main loop runs the AI engine, which builds threat and movement maps and picks actions, a few steps per frame ([engine/ai/](../../engine/ai/)).
+5. **Combat** ([Chapter 6](06-resolving-a-battle.md), [Chapter 7](07-growing-stronger.md), [Chapter 23](23-two-ways-to-show-a-fight.md), [Chapter 24](24-the-battle-scene.md)): choosing a target ([engine/battle/](../../engine/battle/)), building the *battle rounds* (who strikes, in what order, with which skills), resolving each strike (hit, crit, damage, durability, life-steal, and experience), then showing it either as a full battle scene or as a quick map battle ([engine/battle_scene/](../../engine/battle_scene/)). Level-ups roll growths ([engine/units/level_up.asm](../../engine/units/level_up.asm)).
+6. **Events fire throughout** ([Chapter 11](11-the-game-is-watching.md), [Chapter 12](12-screenplays.md), [Chapter 13](13-dialogue-and-text.md)): a castle seized, a talk, a death, a turn count. Each runs its script, which can create units, move them, change factions, give items, and play dialogue.
+7. **Between generations** ([Chapter 17](17-love-and-lineage.md)): love points accumulate turn by turn ([engine/units/lovers.asm](../../engine/units/lovers.asm)). At the end of Chapter 5 the game removes the parents and builds their children ([engine/units/generations.asm](../../engine/units/generations.asm), [engine/units/inheritance.asm](../../engine/units/inheritance.asm)): growths, holy blood, skills, items, and money, all derived from who married whom.
+8. **The end** ([Chapter 21](21-endings-and-scores.md)): the epilogue chooses each region's and each character's ending from parents, lovers, and survivors ([engine/epilogue/](../../engine/epilogue/)), then the rankings score the play ([engine/rankings/](../../engine/rankings/)).
 
 ## How to read the source
 
@@ -223,19 +224,23 @@ A few conventions make the files much easier to scan.
 | `proc` | a proc definition | `procMainLoopChangeFade` |
 | `a` | a table or block of data, in ROM or RAM | `aGameStateRoutines`, `aDeploymentTable` |
 | `w` / `b` / `l` | a RAM variable that is a word / byte / long (3 bytes) | `wGameStateStep`, `bSoundFlags` |
-| `g` / `gc` | graphics / compressed graphics | |
+| `g` / `gc` | graphics / compressed graphics | `g4bppCursorSprites`, `gcWorldMapTileset` |
 | `Unused` (suffix) | nothing in the build reaches it; a hex part is its address | `aTitleSpriteScriptsAndFramesUnused`, `acDataC00000Unused` |
 
 **Each routine is in a `.section`**, which lets the assembler place it, and move it when something before it grows. The comment after a label (`; 80/9B01`) is where it sits in the original ROM. That's useful with an emulator, but nothing depends on it.
 
-**Folders follow game systems**: `engine/core/` (the machine and the three engines), `units/`, `items/`, `battle/`, `battle_scene/`, `map/`, `ai/`, `events/`, `dialogue/`, `menus/`, `worldmap/`, `castle/`, `arena/`, `title/`, `demo/`, `debug/`, `save/`, `sound/`, `epilogue/`, `rankings/`. Every routine sits in its system's folder; leftovers nothing reaches are filed with the system they belong to, or in `debug/`. `include/` holds the shapes: RAM layout (`WRAM.h`), structs, constants, and script macros. `data/`, `events/`, `text/`, `gfx/`, and `audio/` hold the content.
+**Folders follow game systems**: `engine/core/` (the machine, graphics, libraries, and the four core per-frame engines), `units/`, `items/`, `battle/`, `battle_scene/`, `map/`, `ai/`, `events/`, `dialogue/`, `menus/`, `worldmap/`, `castle/`, `arena/`, `title/`, `demo/`, `debug/`, `save/`, `sound/`, `epilogue/`, `rankings/`. Every routine sits in its system's folder; leftovers nothing reaches are filed with the system they belong to, or in `debug/`. `include/` holds the shapes: RAM layout (`WRAM.h`), structs, constants, and script macros. `data/`, `events/`, `text/`, `gfx/`, and `audio/` hold the content.
 
 ## What comes next
 
-The chapters after this one go system by system, in an order designed so that each provides what the next needs, and each is written once its system is fully understood. Alongside them is the reference set in `docs/reference/`: every routine, structure and RAM variable, documented for lookup rather than for reading straight through.
+The chapters after this one move system by system, from structured data through combat, turns, stories, and rendering down to the hardware. Alongside them is the reference set in `docs/reference/`: every routine, structure, and RAM variable, documented for lookup rather than for reading straight through.
 
 Three files reward a slow read after this chapter:
 
 - [engine/core/proc.asm](../../engine/core/proc.asm): the proc engine is short, and everything in the presentation layer uses it;
 - [events/ChapterPrologue/EventPrologueEdainAbduction.asm](../../events/ChapterPrologue/EventPrologueEdainAbduction.asm): an event script that reads almost like a screenplay;
 - [include/Characters.h](../../include/Characters.h): the parts a unit is built from.
+
+---
+
+[Contents](OUTLINE.md) | Next: [Part I: The Pieces on the Board](part-1-the-pieces-on-the-board.md) →

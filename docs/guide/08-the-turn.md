@@ -47,7 +47,7 @@ Separately, at the start of every turn, every unit in all seven faction slots ha
 
 On the player's phase, before turn 51, each woman in the army gains love points with each man in it, and more with each man standing next to her ([Chapter 17](17-love-and-lineage.md)). On the frame after the last healing window opens, while the windows may still be up, the cursor moves to the army's first unit on turn 1 or with the Auto-Cursor option on; with Auto-Cursor off, it returns to the tile where the player chose End Turn. From turn 2, with the Auto-Save option on, the save prompt opens once every healing window has closed and the cursor has stopped.
 
-A phase ends when the player chooses End Turn or, for a computer army, when no AI group has anything left to do ([Chapter 14](OUTLINE.md)). Each army's units are un-grayed as soon as its own phase ends.
+A phase ends when the player chooses End Turn or, for a computer army, when no AI group has anything left to do ([Chapter 14](14-armies-with-a-mind.md)). Each army's units are un-grayed as soon as its own phase ends.
 
 ### Music
 
@@ -97,7 +97,7 @@ Steps 0, 2, 4, and 12 also return without advancing while an event is running, s
 
 ### Pausing the map step from a proc
 
-The phase banner needs about two seconds on screen with the turn loop held still, and its proc does the holding itself. The proc ([engine/map/phase_banner.asm](../../engine/map/phase_banner.asm)) saves the current game-state routine in its own RAM and sets `wGameStateRoutine1` to zero, which selects `rlGameStateNone`. Procs run in the interrupt independently of the game state, so the banner slides in, holds for 120 frames, and slides out while `rlMapStep` doesn't run at all. Its last act restores the saved routine, and the map step resumes at step 3. Pressing A, B, X, Y, or Start cuts the hold by 100 frames and speeds up the slide.
+The phase banner needs about two seconds on screen with the turn loop held still, and its proc does the holding itself. The proc ([engine/map/phase_banner.asm](../../engine/map/phase_banner.asm)) saves the current game-state routine in its own RAM and sets `wGameStateRoutine1` to zero, which selects `rlGameStateNone`. Procs run in VBlank independently of the game state, so the banner slides in, holds for 120 frames, and slides out while `rlMapStep` doesn't run at all. Its last act restores the saved routine, and the map step resumes at step 3. Pressing A, B, X, Y, or Start cuts the hold by 100 frames and speeds up the slide.
 
 The map battle uses the same trick: `procMapBattle` saves and zeroes the game-state routine when it starts and restores it when the fight's animation ends. The AI engine also stops during the pause, since it runs only while the game-state routine is the map step.
 
@@ -115,7 +115,7 @@ A command or a battle doesn't carry out its own consequences. It writes a note i
 
 | Note | Left by | Resolved by | Ends the frame |
 |---|---|---|---|
-| a deployment state buffer and chapter flag `$0004` | staff effects and status changes during a battle | copying every row's buffered state over its state (not at step 11) | no |
+| a deployment state buffer and chapter flag `$0004` | staff effects, status changes, and un-graying | copying every row's buffered state over its state (not at step 11) | no |
 | the defeated unit's row | a unit dying in battle | hiding it (unless it stays on the map) and running event action `$17`; a fallen lord starts the game-over event | yes |
 | a relocation type and row | Warp, Rescue, escapes, captures, entering or leaving a castle, the seize popup, the chapter-end save prompt, Help, the item popup | one of ten relocation routines | yes |
 | bit 15 of `wMapStateFlags` | commands that reopen the unit menu | opening the unit menu | yes, except at step 11 |
@@ -192,8 +192,12 @@ The limits:
 - [engine/units/turn_start.asm](../../engine/units/turn_start.asm): turn-start effects by status, healing sources and costs, status countdowns, and un-graying an army.
 - [engine/map/phase_banner.asm](../../engine/map/phase_banner.asm): `procPhaseBanner` and its pause of the game state.
 - [engine/sound/music.asm](../../engine/sound/music.asm): phase songs, the chapter's first-phase song, and the victory theme.
-- [engine/events/event_scripts.asm](../../engine/events/event_scripts.asm): `rsReturnToMapMainLoop` and `rsResumeMapAfterMenu`, the return to the map.
+- [engine/map/map_loop.asm](../../engine/map/map_loop.asm): `rsReturnToMapMainLoop` and `rsResumeMapAfterMenu`, the return to the map.
 - [engine/units/factions.asm](../../engine/units/factions.asm): `rlAddTurnStartLovePoints`.
 - [include/Map.h](../../include/Map.h): `MAP_STEP_*` and `UNIT_RELOCATION_*`.
 - [include/WRAM.h](../../include/WRAM.h): `wGameStateStep`, `wSavedMapStep`, `wCurrentTurn`, `wActiveFactionSlot`, `wChapterFlags`, `wMapStateFlags`, the note variables, and the turn-start healing list.
 - [docs/reference/map.md](../reference/map.md): the reference page.
+
+---
+
+← Previous: [Chapter 7: Growing Stronger](07-growing-stronger.md) | [Contents](OUTLINE.md) | Next: [Chapter 9: Moving a Unit](09-moving-a-unit.md) →

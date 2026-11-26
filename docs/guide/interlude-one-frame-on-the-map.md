@@ -10,14 +10,14 @@ The PPU finishes drawing the picture and raises the NMI. The CPU stops whatever 
 
 ## In the blank: last frame's work goes out
 
-The first half of `rsMapVBlank` sends what the previous frame prepared. The screen is force-blanked while it does so.
+The first half of `rsMapVBlank` sends what the previous frame prepared. The screen is force-blanked through step 5, while video memory and the PPU registers are written.
 
 1. **Sprites and palettes.** `rlDMAPaletteAndOAMBuffer` sends the 544-byte sprite buffer and the 512-byte palette buffer. The sprites are where last frame's logic put them: the cursor, the standing units.
 2. **Animated tiles or standing sprite frames.** If nothing is waiting in the DMA queue, `rlUploadMapAnimations` runs; if last frame queued something, these uploads wait a frame. On two frames of every eight it uploads the next frame of the water and other animated tiles; on the other six, the next frames of the standing units' sprites ([Chapter 22](22-a-map-bigger-than-the-screen.md)).
-3. **The DMA queue.** Anything queued last frame. On a quiet frame that is usually nothing; when a window has changed, it is that window's rows of the BG3 menu layer.
+3. **The DMA queue.** Anything queued last frame. On a quiet frame that is usually nothing; when a window has changed, it is that window's rows of the BG2 and BG3 menu layers.
 4. **HDMA.** `rlHandlePossibleHDMA` programs the channels of the live HDMA entries and turns them on.
 5. **The register buffers.** `rlCopyPPURegisterBuffer` writes 33 PPU registers, among them `BG1HOFS` with the camera position last frame's logic left in the buffer, and `INIDISP`, which ends the forced blank at the map's full brightness.
-6. **Sound.** `rlSendSoundQueuesToAPU` checks whether the APU has echoed the last value on port 0 and sends the next one waiting, if any ([Chapter 31](31-the-second-computer.md)).
+6. **Sound.** `rlSendSoundQueuesToAPU` checks whether the APU has echoed the last values on ports 0 and 2, sends the next waiting entries if any, and refreshes the status bytes ([Chapter 31](31-the-second-computer.md)).
 7. **Input and counters.** `rlGetJoypadInput` reads the pads: Right is held. `rlIncreaseFrameCounters` counts the frame.
 8. **The IRQ list.** `rlIRQEngineSyncAndSort` finds the number of IRQ entries unchanged, one, the map's row upload at line `$D7`, and does nothing.
 
@@ -29,12 +29,12 @@ Everything from here on runs while the next picture is being drawn, and none of 
 
 **Slot 1, `rlMapStep`.** The chain of checks for queued consequences finds nothing: no defeated unit, no relocation, no queued menu or pop-up, no canto, no action-ended event. It runs step 7, the phase, from `aMapStepRoutines`, and step 7 calls two routines:
 
-- `rlMapCursorStep` updates `wMapSystemFlags`, sees that it is the player's phase and that the cursor is free, and reads the D-pad. Right is held and the cursor is at the margin, so the camera moves instead of the cursor. The cursor pushes its own sprite into the buffer at once, which makes it the frontmost sprite of the frame ([Chapter 29](29-sprites-and-scanlines.md)).
-- `rlContinueMapScroll` takes one scroll step: the camera moves 4 pixels right and the new position goes into the BG1 scroll buffer. Then the step builds the column of tilemap cells at the right-hand edge. It does this on every step, with no check for an 8-pixel boundary, so at 4 pixels a frame each column is built and sent twice. It reads 16 map tiles from `aMapData`, looks up each one's quarters in the metatile table, writes 32 cells into the column buffer at `$059C`, and sets `wMapColumnUploadFlag` with the column's place in the tilemap ([Chapter 22](22-a-map-bigger-than-the-screen.md)).
+- `rlMapCursorStep` updates `wMapSystemFlags`, sees that it is the player's phase and that the cursor is free, and reads the D-pad. Right is held and the cursor is at the margin, so the camera moves instead of the cursor (on the first frame of a 16-pixel step, it also queues the cursor-move sound `$06`). The cursor pushes its own sprite into the buffer at once, which makes it the frontmost sprite of the frame ([Chapter 29](29-sprites-and-scanlines.md)).
+- `rlContinueMapScroll` takes one scroll step: the camera moves 4 pixels right and the new position goes into the BG1 scroll buffer. Then the step builds the column of tilemap cells at the right-hand edge. It does this on every step, with no check for an 8-pixel boundary, so at 4 pixels a frame each column is built and sent twice. It reads 16 map tiles from `aMapData`, looks up each one's quarters in the metatile table, writes 32 cells into the column buffer at `$059C`, writes the column's tilemap offset to `wMapColumnUploadVRAMOffset`, and sets `wMapColumnUploadFlag` to 1 ([Chapter 22](22-a-map-bigger-than-the-screen.md)).
 
 Step 7 sees that the phase isn't over and returns. `rlMapStep` saves the step in `wSavedMapStep`.
 
-**Slot 2, `rlMapUpkeep`.** It queues the standing units' sprite frames for this point in their animation, pulses the range overlay's colors, and copies the camera into `wBufferBG1HOFS` and `wBufferBG1VOFS`. The new camera position is now in the buffer, waiting for the next VBlank.
+**Slot 2, `rlMapUpkeep`.** It queues the standing units' sprite frames for this point in their animation, pulses the range overlay's colors, and copies the camera into `wBufferBG1HOFS` and `wBufferBG1VOFS` (keeping them in sync even when the camera moved without a scroll step). The new camera position sits in the buffer, waiting for the next VBlank.
 
 **The per-frame engines** run in registration order ([Chapter 28](28-procs.md), [Chapter 29](29-sprites-and-scanlines.md)):
 
@@ -44,7 +44,7 @@ Step 7 sees that the phase isn't over and returns. `rlMapStep` saves the step in
 4. **IRQ.** The stub does nothing; the IRQ engine's work happens at its line.
 5. **Events.** No script is running.
 
-**The map's own drawing.** `rlRedrawDialogueBoxTilemaps` finds no dialogue box has moved. `rlRunMapMenuUploadIfEnabled` queues any rows of the BG3 menu buffer that changed onto the DMA queue for the next VBlank. No unit is moving, so `rlDrawMovingUnitSprite` draws nothing. `rlDrawDeployedUnitMapSprites` pushes the standing units through the band quotas: each 16-line band of the screen has room for what is left of the hardware's 17 sixteen-pixel sprites per line after the cursor ([Chapter 29](29-sprites-and-scanlines.md)). `rlHideSprites` moves the unused entries below the screen, and `rlUpdateSound` finds no song request in `wMusicID`.
+**The map's own drawing.** `rlRedrawDialogueBoxTilemaps` finds no dialogue box has moved. `rlRunMapMenuUploadIfEnabled` queues any rows of the BG2 frame and BG3 text menu buffers that changed onto the DMA queue for the next VBlank. No unit is moving, so `rlDrawMovingUnitSprite` draws nothing. `rlDrawDeployedUnitMapSprites` pushes the standing units through the band quotas: each 16-line band of the screen has room for what is left of the hardware's 17 sixteen-pixel sprites per line after the cursor ([Chapter 29](29-sprites-and-scanlines.md)). `rlHideSprites` moves the unused entries below the screen, and `rlUpdateSound` finds no song request in `wMusicID`.
 
 `rsMapVBlank` returns. `rlVBlank` ticks the play timer, adds 1 to `wVBlankEnabledFramecount`, clears `wVBlankFlag`, and returns from the interrupt.
 
@@ -54,7 +54,7 @@ The CPU goes back to where the NMI found it: `rlHaltUntilVBlank`, which has been
 
 | Call | On this frame |
 |---|---|
-| `rlButtonCombinationResetCheck` | Select, L, and R aren't held |
+| `rlButtonCombinationResetCheck` | Start, Select, L, and R aren't pressed |
 | `rlDecompressByList` | the queue is empty |
 | `rlRunAIEngineCycle` | the AI's cycle is off in the player's phase |
 | `rlRunDeferredSoundUpload` | nothing is waiting |
@@ -74,16 +74,16 @@ The next NMI arrives and `rsMapVBlank` begins again with the first half above. T
 
 ```
           frame N                                          frame N + 1
- line: 225 ───────────── 261 │ 0 ─────────────────── 215 ── 224 │ 225 ...
-       │ VBlank             │  picture                │IRQ│dark  │ VBlank
-       │                    │                         │   │      │
+ line: 225 ──────────── 261 │ 0 ──────────────────── 215 ── 224 │ 225 ...
+       │ VBlank             │  picture                  │IRQ│dark│ VBlank
+       │                    │                           │   │    │
  NMI ─►[send last frame's   ][ logic: map step, scroll step builds column,
         buffers, read pads ]   upkeep, engines, units drawn ]
                                          [ main loop: nothing to do ... ]
                                                       [ column → VRAM ]
                                                                    ─► [ BG1HOFS = new camera,
                                                                          new sprites sent ]
-                                                                        picture N + 2 shows it
+                                                                        picture N + 1 shows it
 ```
 
 A press of Right is read in one VBlank, changes the buffers during the picture that follows, and appears on screen in the picture after the next VBlank.
@@ -92,7 +92,7 @@ A press of Right is read in one VBlank, changes the buffers during the picture t
 
 On a computer army's phase, the shape of the frame stays the same, but the main loop has work to do. `rlMapCursorStep` hands the cursor to the AI's movement (`rlMapAIMoveStep`), and in the main loop `rlRunAIEngineCycle` runs one step of the AI's cycle ([Chapter 14](14-armies-with-a-mind.md)): building a threat map, choosing a target, planning a route. A step can take longer than the time left in the frame. The NMI interrupts it at line 225 like anything else, the VBlank routine runs, and the AI step picks up where it was when the interrupt returns.
 
-While a step is in progress, the AI sets bit `$0010` of `bAIEngineFlags`, because its working maps share RAM with the moving map sprites' buffers. `rsMapVBlank` sees the bit and skips the units' sprites: it doesn't clear the size bits, draw the moving or standing units, or hide the unused entries. The sprite buffer keeps the units as the last frame left them. The tile animations still upload in the blank and the music plays on, and the units are redrawn on the first frame after the step ends.
+While a step is in progress, the AI sets bit `$10` of `bAIEngineFlags`, because its working maps share RAM with the moving map sprites' buffers. `rsMapVBlank` sees the bit and skips the units' sprites: it doesn't clear the size bits, draw the moving or standing units, or hide the unused entries. The sprite buffer keeps the units as the last frame left them. The tile animations still upload in the blank and the music plays on, and the units are redrawn on the first frame after the step ends.
 
 ## Where it lives in the source
 
@@ -102,3 +102,7 @@ While a step is in progress, the AI sets bit `$0010` of `bAIEngineFlags`, becaus
 - [engine/map/map_cursor.asm](../../engine/map/map_cursor.asm), [engine/map/scroll.asm](../../engine/map/scroll.asm), [engine/map/map_tilemap.asm](../../engine/map/map_tilemap.asm): the cursor, the scroll step, the column and its upload.
 - [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm): the units' sprites and the animation uploads.
 - [docs/reference/map.md](../reference/map.md), [docs/reference/frame.md](../reference/frame.md).
+
+---
+
+← Previous: [Chapter 31: The Second Computer](31-the-second-computer.md) | [Contents](OUTLINE.md)

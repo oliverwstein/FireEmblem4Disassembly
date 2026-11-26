@@ -1,8 +1,8 @@
 # Chapter 7: Growing Stronger
 
-A unit in *Genealogy of the Holy War* grows in two ways: level-ups, earned from combat and staves up to level 30, and class promotion in a castle from level 20. Effective stats are assembled on demand from layers ([Chapter 2](02-classes-stats-skills-and-weapon-ranks.md)), and the two paths touch different layers: a level-up adds to the personal stats in RAM, while a promotion changes only the class ID. Both still need a screen that shows eight stats before and after.
+A unit in *Genealogy of the Holy War* grows in two ways: level-ups, earned from combat, staves, Dance, and Help up to level 30, and class promotion in a castle from level 20. Effective stats are assembled on demand from layers ([Chapter 2](02-classes-stats-skills-and-weapon-ranks.md)), and the two paths touch different layers: a level-up adds to the personal stats in RAM, while a promotion changes only the class ID. Both still need a screen that shows eight stats before and after.
 
-The engine records both in the same 32-byte result structure and shows both in the same battle-scene window. This chapter covers the progression rules first, then the shared record, level-up rolling, and castle promotion.
+The engine records both in the same 32-byte result structure and displays them with the same layout on the battle scene (and on the map when animations are off). This chapter covers the progression rules first, then the shared record, level-up rolling, and castle promotion.
 
 ## How progression works
 
@@ -10,11 +10,13 @@ The engine records both in the same 32-byte result structure and shows both in t
 
 Only living player units (`Static` and `Dynamic`, in faction slot 0) below level 30 can earn experience. Enemies, `Holy` bosses, and dead units exit the experience check with zero gain.
 
-Experience comes from three sources:
+Experience comes from five sources:
 
 - **Combat hits:** `10 + (DefenderLevel - AttackerLevel)`.
 - **Combat kills:** `30 + 2 * (DefenderLevel - AttackerLevel)`.
 - **Staves:** `item_cost / max_durability / 20 + 10`, clamped to `100` (or `10` for an empty slot).
+- **Dance:** a flat `10`.
+- **Help:** a flat `100` ([Chapter 10](10-menus-over-the-map.md)).
 
 In combat, each connecting hit replaces the value left by the one before, so the last connecting hit decides the battle's experience ([Chapter 6](06-resolving-a-battle.md)). Two hits earn one hit's worth; a hit followed by a killing blow earns the kill's.
 
@@ -22,7 +24,7 @@ If the unit has `Paragon`—from personal skills, class skills, or an inventory 
 
 ### Growth rolls and stat caps
 
-Every level-up rolls all eight stats against the unit's total growth rate (personal growth plus Holy Blood bonuses, [Chapter 2](02-classes-stats-skills-and-weapon-ranks.md)). When a growth rate is `100%` or higher, the roll grants a guaranteed `+1`, subtracts `100` once, and rolls the remaining percentage for a second point. A stat can therefore gain `+0`, `+1`, or `+2` on a level-up, never `+3`.
+Every level-up rolls all eight stats against the unit's total growth rate (personal growth plus holy blood bonuses, [Chapter 2](02-classes-stats-skills-and-weapon-ranks.md)). When a growth rate is `100%` or higher, the roll grants a guaranteed `+1`, subtracts `100` once, and rolls the remaining percentage for a second point. A stat can therefore gain `+0`, `+1`, or `+2` on a level-up, never `+3`.
 
 Gains are added to the unit's personal stats in RAM, each bounded by its own cap:
 
@@ -49,10 +51,11 @@ Both level-ups and class promotion write into `structLevelUpStats` ([include/Cha
 ```
 structLevelUpStats (32 bytes, 16-bit words)
 ┌──────────────────────────────────────────────────────────────────────┐
-│ $00–$0E  Before: HP, Strength, Magic, Skill, Speed, Def, Res, Luck   │
+│ $00–$0E  Before: HP, Strength, Magic, Skill, Speed,                  │
+│                  Defense, Resistance, Luck                           │
 ├──────────────────────────────────────────────────────────────────────┤
-│ $10–$1E  Gains:  HPGain, StrGain, MagGain, SklGain, SpdGain,         │
-│                  DefGain, ResGain, LuckGain                          │
+│ $10–$1E  Gains:  HPGain, StrengthGain, MagicGain, SkillGain,         │
+│                  SpeedGain, DefenseGain, ResistanceGain, LuckGain    │
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -60,7 +63,7 @@ In combat, `rsActionstructGetLevelUpAndDroppedItemData` ([engine/battle/effects.
 
 ### Rolling a level-up
 
-When accumulated EXP reaches `100`, `rlActionStructLevelUp` keeps the remainder and calls `rlGetLevelUpStats`, which increments the level, snapshots the pre-level-up totals, and rolls each stat:
+When accumulated EXP reaches `100`, `rlActionStructLevelUp` keeps the remainder and calls `rlGetLevelUpStats`, which increments the level, snapshots the pre-level-up base stats (class plus personal, without weapon or ring bonuses), and rolls each stat:
 
 ```rust
 fn apply_level_up(unit: &mut Unit, gained_exp: &mut u8, out: &mut LevelUpStats) -> u8 { // rlActionStructLevelUp
@@ -115,7 +118,7 @@ Because `aActionStructUnit1` holds the old class, `aActionStructUnit2` holds the
 
 ### Displaying results
 
-In [engine/battle_scene/results.asm](../../engine/battle_scene/results.asm) ([battle_scene.md](../reference/battle_scene.md)), the battle scene animates the EXP gauge from `wBattleSceneExperience` to `wBattleSceneExperience + wBattleSceneExperienceGained`, wrapping past `100` on a level-up. When a level-up or promotion occurred, it draws nine gauges—`Level` plus the eight stats in `structLevelUpStats` (using an 80-point bar for HP and 30-point bars for the rest)—and animates each stat rising by its recorded gain.
+In [engine/battle_scene/hud.asm](../../engine/battle_scene/hud.asm), [engine/battle_scene/results.asm](../../engine/battle_scene/results.asm), and [engine/battle_scene/data.asm](../../engine/battle_scene/data.asm) ([battle_scene.md](../reference/battle_scene.md)), the battle scene animates the EXP gauge from `wBattleSceneExperience` to `wBattleSceneExperience + wBattleSceneExperienceGained`, wrapping past `100` on a level-up. When a level-up or promotion occurred, it draws nine gauges (Level as a two-digit counter, HP as an 80-point bar, and the other seven stats as 30-point bars) and animates each stat rising by its recorded gain. When animations are off—or after Help, Dance, or map-mode staves—[engine/battle/map_battle_hud.asm](../../engine/battle/map_battle_hud.asm) displays the same `structLevelUpStats` block on the map; promotion always enters the battle scene.
 
 ## Trade-offs and hard limits
 
@@ -136,6 +139,10 @@ The hard limits built into progression:
 - [data/character/PromotionTable.asm](../../data/character/PromotionTable.asm): 63-entry per-character promotion table (`aPromotionTable`).
 - [engine/castle/class_change.asm](../../engine/castle/class_change.asm): `rlStartCastleClassChange` and `rsClassChangeStoreStatGains`.
 - [engine/battle/effects.asm](../../engine/battle/effects.asm) and [engine/battle/battle_stats.asm](../../engine/battle/battle_stats.asm): `rsActionstructGetLevelUpAndDroppedItemData` and `rlGetInventorySlotStaffCostValue` (staff EXP).
-- [engine/battle_scene/results.asm](../../engine/battle_scene/results.asm): EXP bar and level-up/promotion stat-gain display.
+- [engine/battle_scene/hud.asm](../../engine/battle_scene/hud.asm), [engine/battle_scene/data.asm](../../engine/battle_scene/data.asm), [engine/battle_scene/results.asm](../../engine/battle_scene/results.asm), and [engine/battle/map_battle_hud.asm](../../engine/battle/map_battle_hud.asm): EXP bar and level-up/promotion stat-gain display.
 - [include/Characters.h](../../include/Characters.h) and [include/Battle.h](../../include/Battle.h): `structLevelUpStats` and `structActionStructEntry`.
-- [docs/reference/units.md](../reference/units.md) and [docs/reference/battle_scene.md](../reference/battle_scene.md): reference pages for level-ups, promotion, and battle-scene results.
+- [docs/reference/units.md](../reference/units.md), [docs/reference/battle.md](../reference/battle.md), and [docs/reference/battle_scene.md](../reference/battle_scene.md): reference pages for level-ups, promotion, and battle-scene results.
+
+---
+
+← Previous: [Chapter 6: Resolving a Battle](06-resolving-a-battle.md) | [Contents](OUTLINE.md) | Next: [Chapter 8: The Turn](08-the-turn.md) →

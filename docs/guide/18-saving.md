@@ -1,6 +1,6 @@
 # Chapter 18: Saving
 
-*Genealogy of the Holy War* lets the player save at the start of every turn, between castles, and between chapters, while tracking up to 72 live units, 144 unique item instances, 7 factions, locations, permanent flags, chapter event flags, win counts, turn counts, and the 56-entry RNG table. All of that state must fit into 2 KB per slot inside an 8 KB battery-backed SRAM chip (`$30/6000`–`$30/7FFF`), alongside a handful of counters—unit losses, the game timer, the best final ranking, and an anti-tamper mark—that must persist immediately when they happen rather than waiting for the next manual save.
+*Genealogy of the Holy War* lets the player save at the start of every turn, between castles, and between chapters, while tracking up to 72 live units, 144 item slots (the 140 defined player items plus four spare slots), 7 factions, locations, permanent flags, chapter event flags, win counts, turn counts, and the 56-entry RNG table. All of that state must fit into 2 KB per slot inside an 8 KB battery-backed SRAM chip (`$30/6000`–`$30/7FFF`), alongside a handful of counters—unit losses, the game timer, the best final ranking, and an anti-tamper mark—that must persist immediately when they happen rather than waiting for the next manual save.
 
 This chapter covers the 8 KB SRAM layout, bitpacked serialization and unit reconstruction on load, the counters written in place as events occur, the save menu screen, and the hard limits.
 
@@ -61,7 +61,7 @@ fn write_bitpacked(val: u16, bits: u16) {                  // rsWriteBitpackedSa
 }
 ```
 
-Both save and load walk identical `aSave...` descriptor tables of `(bit_length, RAM_address)` pairs, with `LoadAsByteFlag` (`$80`) marking 8-bit targets so loading never overwrites an adjacent byte. After packing every section, `rsSaveSaveFileBody` writes `SAVE_MAGIC_NUMBER` (`$9207`), computes the checksum, and asserts `wCurrentBitOffset < structSaveDataEntry.Checksum * 8` (trapping with `brk` on overflow).
+Both save and load walk identical descriptor tables in two formats: absolute-address lists of `(bit_length | flag, 24-bit RAM_address)` pairs (for global state and deployment headers) and struct-offset tables of `(struct_offset, bit_length | flag)` relative to a base pointer (for per-unit and per-item records), with `LoadAsByteFlag` (`$80`) marking 8-bit targets so loading never overwrites an adjacent byte. After packing every section, `rsSaveSaveFileBody` writes `SAVE_MAGIC_NUMBER` (`$9207`), computes the checksum, and asserts `wCurrentBitOffset < structSaveDataEntry.Checksum * 8` (trapping with `brk` on overflow).
 
 ### Pointer-free items and type-dispatched units
 
@@ -69,16 +69,16 @@ In RAM, each `aItemRAMData` entry holds a 16-bit pointer into `aUnitRAMArea` tha
 
 Units vary in size by type ([Chapter 1](01-a-unit-is-made-of-parts.md)). `rsSaveSpecifiedUnitsData` copies the unit into `aUnit1DataBuffer`, writes a 26-bit deployment header (`aSaveCharacterDeploymentData`: 9-bit `CharacterID`, 5-bit deployment state, 6-bit `X`, 6-bit `Y`), and dispatches by `UnitType`:
 
-- **`UnitTypeStatic` and `UnitTypeDynamic`:** Pack compacted personal and extended personal data (`rlCompactStaticDynamicUnitBuffer1UnitStates`..), plus `ConstantData` (for dynamic children) and the 15-word `LoverData` block (for female units).
+- **`UnitTypeStatic` and `UnitTypeDynamic`:** Pack compacted personal and extended personal data, the 7-bit equipped-weapon bitfield (`EquippedWeaponBitfield >> 1`), `ConstantData` (for dynamic children), and 15 × 9-bit `LoverData` entries (for female units, truncating `$FFFF` to `$01FF` on save and expanding it back on load, [Chapter 17](17-love-and-lineage.md)).
 - **`UnitTypeHoly` and `UnitTypeEnemy`:** Pack only compacted personal data; their ROM templates already supply everything else.
 
 ### Rebuilding on load and the leadership star quirk
 
 `rlLoadFromSaveSlot` resets map and unit pools (`rlClearMapRAM`, `rlInitializeUnitRAM`) and unpacks the stream in the exact order it was written. For each unit, `rlCreateUnitFromBuffers` (bank `$87`) allocates fresh blocks in `aStaticUnitRAMArea`, `aDynamicUnitRAMArea`, `aHolyAndEnemyRAMArea`, `aInventoryRAMArea`, and `aLoverRAMArea`, unpacks the buffers, and runs `rsRestore*` helpers to reconstruct fields the save omits:
 
-- `rsRestorePersonalData` recomputes `LoveDataID` from `CharacterID`, clears Canto and temporary ring/weapon bonuses, clears `LoverGenerationID` on holy/enemy units, and refreshes `ClassMoney`.
+- `rsRestorePersonalData` recomputes `LoveDataID` from `CharacterID`, clears Canto and temporary ring/weapon bonuses, clears `LoverGenerationID` on holy/enemy units, and restores default `ClassMoney` only when the 1-bit saved flag is `1` (preserving stolen `0` gold).
 - `rsRestoreDynamicConstantData` copies the 6 unchanging ROM bytes for dynamic children from bank `$83`.
-- `rsGatherUnitItems` and `rsCreateUnitInventory` scan `aItemRAMData` for items tagged with the unit's `CharacterID` and slot, rewrite their owner pointers to the newly allocated unit header, rebuild the inventory list, and reapply the equipped weapon's stat bonus.
+- `rsGatherUnitItems` and `rsCreateUnitInventory` scan `aItemRAMData` for items tagged with the unit's `CharacterID` and slot, rewrite their owner pointers to the newly allocated unit header, rebuild the inventory list, and reapply both the equipped weapon's stat bonus and any inventory ring bonuses (`rlAddItemStatBonusIfRingByItemRAMStructEntry`).
 - `rsRestoreLeadershipStars` (`$87/F80F`) restores leadership stars from a hardcoded character check rather than SRAM: `Sigurd` and `Quan` get `2`, `Seliph` and `Altena` get `3`, `Hannibal` gets `5`, and everyone else gets `0`. Because `rsOverwriteSeliphUnitData` ([Chapter 17](17-love-and-lineage.md)) initializes Seliph with `2` stars at the start of Chapter 6, saving and reloading bumps Seliph from `2` to `3` leadership stars.
 
 ### Checksums and erasing
@@ -94,11 +94,13 @@ Keeping `UnitLossesCount` and `GameTimerLow`/`High` after `Checksum` allows the 
 - **Unit losses (`rlRecordUnitLoss`, `$91/EB0F`):** Increments `aUnitLossesCount[index]` (0–23 for Generation 1, 24–47 for Generation 2, capped at `255`) in RAM and immediately in every SRAM slot whose `SaveData & $7F` and `CurrentChapter` match the active game. Resetting after a unit falls does not erase the loss from the Combat ranking or augury.
 - **Game timer (`rlTickGameTimer`, `$91/EB76`):** Runs once a frame from the interrupt handler while `aSave.wActiveSaveData != 0`. Every `$800` frames (2,048 frames, about 34 seconds), it flushes the 32-bit timer to every SRAM slot sharing the active Save ID.
 - **Completion flag and kept ranking (`rlSetSaveSlotCompletionFlag`, `rsKeepFinalRanking`):** When the game finishes, sets bit 7 (`+$80`) on `SaveData` in every matching slot and adds `$80` to each slot's checksum in place. It then stores `rlCalculateFinalRankingScore() + 1` (`1` = A .. `5` = E; [Chapter 21](21-endings-and-scores.md)) in `aSRAM.wRankingScore` (tagged `SRAM_RANKING_TAG = $F290`) unless a lower nonzero rank is already recorded.
-- **Anti-tamper mark and last saved slot:** `rlSetAntiTamperMark` writes `SRAM_ANTI_TAMPER_MARK` (`$6A19`) on the first boot checksum failure ([Chapter 6](06-resolving-a-battle.md), [Chapter 26](OUTLINE.md)); `rlSetLastSavedSlot` writes `SRAM_LAST_SAVED_SLOT_TAG | slot` (`$D8C0 | slot`) so the Load cursor starts on the most recent file.
+- **Anti-tamper mark and last saved slot:** `rlSetAntiTamperMark` writes `SRAM_ANTI_TAMPER_MARK` (`$6A19`) on the first copier, bank-0, or reset-signature anti-tamper hang ([Chapter 6](06-resolving-a-battle.md), [Chapter 26](26-the-frame.md)); `rlSetLastSavedSlot` writes `SRAM_LAST_SAVED_SLOT_TAG | slot` (`$D8C0 | slot`) so the Load cursor starts on the most recent file.
 
 ## The save menu screen
 
-One game state (`rlSaveMenuStep`, routine `$06`, dispatching through `aSaveMenuSteps`) serves the title file menu (step 0), map save (step 2), erase (step `$0B`), the Jugdral history scroll (steps `$1C`–`$21`), the chapter-to-chapter world map transition (step `$23`), and the chapter intro title card (steps `$24`–`$27`; [Chapter 19](19-between-chapters.md)).
+One game state (`rlSaveMenuStep`, routine `$06`, dispatching through `aSaveMenuSteps`) serves the title file menu (step 0), map save (step 2), erase (step `$0B`), the Jugdral history scroll (steps `$1C`–`$21`), starting a new game (step `$22`), the chapter-to-chapter world map transition (steps `$23` and `$29`), and the chapter intro title card (steps `$24`–`$27`; [Chapter 19](19-between-chapters.md)).
+
+When a new game starts, `rsGetNewUniqueSaveID` scans the four slots for an unused 3-bit Save ID (`1..7`) and carries forward `highest_completion_count + 1` (up to `15`) whenever any finished slot (bit 7 set) exists in SRAM—which drives the battle-scene demo unlocks ([Chapter 20](20-the-opening.md)) and the epilogue's completion counter ([Chapter 21](21-endings-and-scores.md)).
 
 To keep row drawing fast, [engine/save/save_menu.asm](../../engine/save/save_menu.asm) pre-renders every row type's text into VRAM tiles once on screen open (`rlStartTextToTiles`), including each used slot's chapter number, turn count, and chapter title; `rsSaveMenuDrawRowTiles` then only updates tilemap entries, using a distinct palette for the designated auto-save slot. Confirming a slot sets `aSave.wMenuOperation` (`1..4`, with bit 15 set for load), and `rlHandleSaveFile` executes the actual SRAM read or write from the main loop.
 
@@ -121,3 +123,7 @@ The limits:
 - [include/Save.h](../../include/Save.h) and [include/SRAM.h](../../include/SRAM.h): `structSaveDataEntry`, `aSRAM`, magic numbers, and SRAM tags.
 - [include/Checksums.h](../../include/Checksums.h): anti-tamper mark constants.
 - [docs/reference/save.md](../reference/save.md): the reference page.
+
+---
+
+← Previous: [Chapter 17: Love and Lineage](17-love-and-lineage.md) | [Contents](OUTLINE.md) | Next: [Chapter 19: Between Chapters](19-between-chapters.md) →

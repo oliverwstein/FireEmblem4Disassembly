@@ -14,7 +14,7 @@ Every combatant enters a fight with five derived numbers built from its unit sta
 - **Might** is `WeaponMight + Strength` for physical weapons, or `WeaponMight + Magic` for tomes (`WeaponTypeFire` and above). At distance 2 or greater, ranged magic swords switch to their secondary spell, using Magic and targeting Resistance.
 - **Hit** is `WeaponAccuracy + Skill * 2`.
 - **Avoid** is `AttackSpeed * 2 + Luck + TerrainAvoid`.
-- **Crit** starts at `0`. A player weapon with 50 or more kills unlocks `kills - 50` crit, while the `Critical` skill or a killer weapon's item skill unlocks `0` base crit; once unlocked, `Skill` is added on top.
+- **Crit** starts at `0`. A player weapon with 50 or more kills unlocks `kills - 50` crit, while the `Critical` skill or a weapon with the `Critical` item skill (such as Mystletainn or the Killer Bow) unlocks `0` base crit; once unlocked, `Skill` is added on top.
 
 Four battlefield modifiers adjust those numbers before any dice roll:
 
@@ -23,7 +23,7 @@ Four battlefield modifiers adjust those numbers before any dice roll:
 - **Effectiveness and halving:** When a weapon's effectiveness matches the target's class weakness, the attacker's Crit is set to `100%`; Might is unchanged. When the defender's equipped weapon halves attack (the Loptous tome), the attacker's Might is halved unless the attacker's own weapon names that tome as the one it negates (Naga).
 - **Scripted criticals:** If the initiator has an adjacent lover or an adjacent partner from one of 17 sibling pairs, it gains `+20%` Crit. If one of three enemy triangle-attack trios surrounds a target at range 1, the initiator gains `+100%` Crit. Both apply even without the `Critical` skill.
 
-The chance to hit is `Hit - OpponentAvoid`, clamped to `0..100`; the forecast shows this number. `Miracle` (below) can lower it further when the roll is made. The chance to crit is `Crit` itself.
+The chance to hit is `Hit - OpponentAvoid`, clamped to `0..100`; the forecast shows this number. `Miracle` (below) is subtracted from `Hit - OpponentAvoid` before clamping when the roll is made. The chance to crit is `Crit` itself.
 
 ### Combat skills
 
@@ -42,7 +42,7 @@ These skills intervene at specific points in the fight (`Brave` is a weapon trai
 | `Accost` | End of round | `HP >= 25`; `(HP / 2 + AS - OppAS)`% | Repeats the entire round (non-arena) |
 | `Miracle` | Hit check | `CurrentHP < 11` (armed after a hit) | Reduces enemy Hit by `(11 - HP) * 10` |
 | `Pavise` | Defense | `DefenderLevel`% roll | Negates the hit completely; costs no durability |
-| `Critical` | Crit check | Personal, class, or item skill | Unlocks `Skill`% base critical rate |
+| `Critical` | Crit check | Personal, class, or weapon's item skill | Unlocks `Skill`% base critical rate |
 | `Wrath` | Crit check | `CurrentHP <= MaxHP / 2 + 1` | Forces `100%` Crit |
 | `Nihil` | Crit / sword skills | Personal, class, or item skill | Blocks enemy criticals (including effectiveness); blocks enemy sword skills only as a personal or class skill |
 | `Steal` | On hit | Non-staff contact | Steals the defender's gold |
@@ -83,12 +83,14 @@ All of this state lives in a 380-byte block of bank `$7E` (`$7E/4EA9` to `$7E/50
 Battle RAM ($7E/4EA9–$7E/5024)
 ┌──────────────────────────────────────────────────────────────────────┐
 │ wBattleType, wBattleStatus, wBattleDistance, wBattleSong,            │
-│ wBattleCriticalType, quote pointers                                  │
+│ quote pointers                                                       │
 ├──────────────────────────────────┬───────────────────────────────────┤
 │ aActionStructUnit1 ($7E/4EB5)    │ aActionStructUnit2 ($7E/4F15)     │
 │   96-byte structActionStructEntry│   96-byte structActionStructEntry │
 │   player / allied side           │   enemy / neutral side            │
 ├──────────────────────────────────┴───────────────────────────────────┤
+│ wBattleCriticalType ($7E/4F75) and crit/warp scratch words           │
+├──────────────────────────────────────────────────────────────────────┤
 │ aBattleRoundsData ($7E/4F81)                                         │
 │   4-byte header + up to 80 two-byte entries (flags byte + damage/HP) │
 └──────────────────────────────────────────────────────────────────────┘
@@ -96,7 +98,7 @@ Battle RAM ($7E/4EA9–$7E/5024)
 
 Player and allied units always go into `aActionStructUnit1`, while enemy and neutral units go into `aActionStructUnit2`. Bit 0 of `wBattleStatus` records which side actually initiated (`0` for `Unit1`, `1` for `Unit2`); other bits track swapped sides (`$02`), defeat (`$10`, plus `$20` for `Unit2`), and disabled animations (`$40`). Each 96-byte `structActionStructEntry` ([include/Battle.h](../../include/Battle.h)) holds the unit's deployment offset, coordinates, RAM pointer, HP, level, experience, equipped weapon, computed battle stats, a 16-bit `TriggerableSkills` mask, and a `LevelUpData` block for [Chapter 7](07-growing-stronger.md).
 
-Each two-byte entry in `aBattleRoundsData` pairs a flags byte (`bBattleRoundFlags`, `$7ECCDE`) with a high byte carrying the damage dealt (or the target's max HP for Valkyrie):
+Each two-byte entry in `aBattleRoundsData` pairs a flags byte (`bBattleRoundFlags`, `$7E/CCDE`) with a high byte carrying the damage dealt (or the target's max HP for Valkyrie):
 
 | Bit / sentinel | Meaning |
 |---|---|
@@ -158,7 +160,7 @@ fn build_battle_rounds() {                           // rlActionStructBuildBattl
 
 Details of the round builder:
 
-- **Vantage tie-breaking:** `Unit1` is checked before `Unit2`, so if both sides qualify for `Vantage`, `Unit1` always strikes first.
+- **Vantage tie-breaking and skill checks:** `Unit1` is checked before `Unit2`, so if both sides qualify for `Vantage`, `Unit1` always strikes first. Although `TriggerableSkills` gathers item skills too, `Vantage`, `Wrath`, and the five sword skills test personal and class skills directly rather than `TriggerableSkills`.
 - **Sword skills are rolled per set of swings, for both sides.** Every call to `rsActionStructAddStrikes` rerolls sword skills for both combatants. `Astra`, `Luna`, and `Sol` take effect only for the side about to swing; `Holy` and `Darkness` apply to whichever side rolls them, raising its attack and its defense until the next reroll.
 - **Sword skills vs. Adept vs. Brave:** Sword skills are tested in priority order (`Astra → Luna → Sol → Holy → Darkness`), stopping at the first proc. If `Astra` triggers, strike count becomes `5` and execution falls through to the `WeaponTraitBrave` check—so a Brave Sword Astra produces **10** swings. `Adept` doubles `1` to `2` and returns immediately, skipping the Brave check, so the two never stack.
 - **Broken weapons:** When `rlUseInventorySlotItem` reduces durability to `0`, the battle engine sets bit 15 (`$8000`) on `WeaponInventorySlot`. Outside the arena, `rsCheckForWeaponInventorySlot` rejects negative slots, halting any further swings for that side.
@@ -187,9 +189,9 @@ fn resolve_normal_strike(atk: &mut ActionStruct, def: &mut ActionStruct) { // rs
 }
 ```
 
-Damage and healing are both clamped to `80` ([engine/units/unit_state.asm](../../engine/units/unit_state.asm)). A hit that leaves the defender with `1..10` HP arms its `Miracle` for later swings. A hit that brings it to `0` sets the fatal flag, unless the defender carries the stay-on-map bit; the bit is ignored in the arena and against the final Julius. Event scripts set it with `COMBATANTS_STAY_ON_MAP` for bosses who retreat instead of dying, such as Elliot in Chapter 1 ([events/Chapter01.asm](../../events/Chapter01.asm)). A kill also adds a win to the unit and to its weapon, records any item drop, and sends a defender with captive status to a castle.
+Damage and healing are both clamped to `80` ([engine/units/unit_state.asm](../../engine/units/unit_state.asm)). A hit that leaves the defender with `1..10` HP arms its `Miracle` for later swings. A hit that brings it to `0` sets the fatal flag, unless the defender carries the stay-on-map bit; the bit is ignored in the arena and against the final Julius. Event scripts set it with `COMBATANTS_STAY_ON_MAP` for bosses who retreat instead of dying, such as Elliot in Chapter 1 ([events/Chapter01.asm](../../events/Chapter01.asm)). Outside the arena, a kill also adds a win to the unit and to its weapon, records any item drop, and sends a defender with captive status to a castle.
 
-Scripted cutscene battles build a fixed strike list whose flags force a hit or a crit (`SB_GuaranteedHit`, `SB_GuaranteedCrit`) and run it through the same strike resolver. After the rounds, the round builder rolls level-ups and item drops ([Chapter 7](07-growing-stronger.md)), starts Canto or ends the unit's action, runs battle events, and starts either a map battle or a battle scene. Valkyrie, Naga, Loptous, and the special crits always get a battle scene.
+Scripted cutscene battles build a fixed strike list whose flags force a hit or a crit (`SB_GuaranteedHit`, `SB_GuaranteedCrit`) and run it through the same strike resolver. After the rounds, the round builder rolls level-ups and awards dropped items ([Chapter 7](07-growing-stronger.md)), starts Canto or ends the unit's action, runs battle events, and starts either a map battle or a battle scene. Valkyrie, Naga, and Loptous always use the battle scene; special crits play a map-level intro effect first and then follow the battle animation setting.
 
 ## The RNG and the checksum trap
 
@@ -249,4 +251,8 @@ The hard limits built into this layout:
 - [engine/battle/scripted_crits.asm](../../engine/battle/scripted_crits.asm): `rlActionStructGetScriptedCritPossibility`, sibling pairs, and triangle-attack trios.
 - [engine/core/lib/random.asm](../../engine/core/lib/random.asm): `rlGetRandomNumber`, `rsShuffleRNTable`, `rsRigRNArrayByPlaytime`; [engine/core/frame/anti_tamper.asm](../../engine/core/frame/anti_tamper.asm): `rlCheckCodeChecksums`.
 - [engine/units/unit_state.asm](../../engine/units/unit_state.asm): `rlActionStructInflictDamage` and `rlHealSelectedUnitsHP`.
-- [docs/reference/allocation.md](../reference/allocation.md) (the RNG), [docs/reference/frame.md](../reference/frame.md) (the checksums) and [docs/reference/units.md](../reference/units.md) (damage and healing): reference pages.
+- [docs/reference/battle.md](../reference/battle.md), [docs/reference/allocation.md](../reference/allocation.md) (the RNG), [docs/reference/frame.md](../reference/frame.md) (the checksums), and [docs/reference/units.md](../reference/units.md) (damage and healing): reference pages.
+
+---
+
+← Previous: [Chapter 5: Who Stands Where](05-who-stands-where.md) | [Contents](OUTLINE.md) | Next: [Chapter 7: Growing Stronger](07-growing-stronger.md) →

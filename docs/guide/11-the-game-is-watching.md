@@ -154,7 +154,7 @@ fn evaluate_action_condition(action: u8, flag: u8, test: fn() -> bool) {   // rs
 }
 ```
 
-The parameter test compares each parameter with the matching argument, and a negative parameter (`AnyCharacter`, `AnyFactionSlot`, `AnyLocation`, and `AnyTurn` are all -1) matches anything. A few conditions do more. `CHECK_UNITS_FIGHTING` matches its two units in either order, so a quote for Midir against Munnir plays whoever attacks. `CHECK_UNITS_FIGHTING_1TO2RANGE` also needs the battle distance to be under 3. `CHECK_UNIT_IN_AREA` tests that the tile lies inside a rectangle ([Chapter 5](05-who-stands-where.md)). `CHECK_UNITS_WITHIN_DISTANCE` finds both units on the map and compares their distance. Most conditions also record the units involved in `wEventUnit1Pointer` (and, for a talk, `wEventUnit2Pointer`), for commands that act on "the event's unit": a talk, a village visit, a castle entry, a rescue, an area, an arena win. Chapter 2's Armorslayer village gives its item with `GIVE_UNIT_PID AnyCharacter`, and a character of -1 means that unit.
+The parameter test compares each parameter with the matching argument, and a negative parameter (`AnyCharacter`, `AnyFactionSlot`, `AnyLocation`, and `AnyTurn` are all -1) matches anything. A few conditions do more. `CHECK_UNITS_FIGHTING` matches its two units in either order, so a quote for Midir against Munnir plays whoever attacks. `CHECK_UNITS_FIGHTING_1TO2RANGE` also needs the battle distance to be under 3. `CHECK_UNIT_IN_AREA` tests that the tile lies inside a rectangle ([Chapter 5](05-who-stands-where.md)). `CHECK_UNITS_WITHIN_DISTANCE` finds both units on the map and compares their distance. Most conditions also record the units involved in `wEventUnit1Pointer` (and, for a talk, `wEventUnit2Pointer`), for commands that act on "the event's unit": a talk, a village visit, a castle entry, a rescue, an area check, an arena win. Chapter 2's Armorslayer village gives its item with `GIVE_UNIT_PID AnyCharacter`, and a character of -1 means that unit.
 
 A flag byte with bit 7 set turns the flag into a precondition that the match consumes. No chapter uses that form; every flag in the retail lists is either `FlagAlways` or a once-only flag.
 
@@ -180,7 +180,7 @@ CHECK_TURN_PHASE_AI_ACTOR AnyTurn, FS_Ch01Verdane, 4, AnyCharacter
 BREAK_TURN_EVENT_CHECKS
 ```
 
-The first runs at the start of the player's phase on turn 2. The second runs before each unit of Verdane's AI group 4 acts, and starts its scene once `FlagChapter01_FoesNearGenoa` is set, a flag that the group's own AI script sets (`AI_SET_CHAPTER_EVENT_FLAG`) on one branch of its decision.
+The first runs at the start of the player's phase on turn 2. The second runs before each unit of Verdane's AI group 4 acts, and starts its scene once `FlagChapter01_FoesNearGenoa` is set, a flag that the group's own AI script sets (`AI_SET_CHAPTER_EVENT_FLAG`, [Chapter 14](14-armies-with-a-mind.md)) on one branch of its decision.
 
 Three more turn-check opcodes (`$22`–`$24`) skip to the turn break unless the action is `$20`, `$25`, or `$26`. No chapter uses them.
 
@@ -233,7 +233,7 @@ Chapter 1's map list has 141 commands: 38 action conditions with their bodies, 1
 
 Each chapter's **event flags** are 80 bits in its RAM entry, numbered 0 to 79. `rlSetEventFlag`, `rlUnsetEventFlag`, and `rlCheckEventFlagSet` turn a number into a byte (number ÷ 8) and a bit (from an eight-entry mask table) and ignore any number from 80 up, which is how `FlagAlways` (`$FF`) passes through them untouched. Each chapter's file names its own flags (`FlagChapter01_GenoaSeized = 0`, and so on); numbers are reused from chapter to chapter.
 
-The 256 **permanent flags** (`aPermanentEventFlags`, 32 bytes at `$7E5297`) last from a new game to the ending and are named in [include/PermanentFlags.h](../../include/PermanentFlags.h). They record who was recruited, who lived through generation 1, which generation 2 substitutes exist, which lovers visited a home castle, and whether any player unit has died in generation 2. Condition lists use them rarely: six `SET_PERMANENT_FLAG` and one `CHECK_PERMANENT_FLAG_UNSET` in all the chapters. Engine code reads them more: the endings, the generation change, death quotes, and lover conversations.
+The 256 **permanent flags** (`aPermanentEventFlags`, 32 bytes at `$7E/5297`) last from a new game to the ending and are named in [include/PermanentFlags.h](../../include/PermanentFlags.h). They record who was recruited, who lived through generation 1, which generation 2 substitutes exist, which lovers visited a home castle, and whether any player unit has died in generation 2. Condition lists use them rarely: six `SET_PERMANENT_FLAG` and one `CHECK_PERMANENT_FLAG_UNSET` in all the chapters. Engine code reads them more: the endings, the generation change, death quotes, and lover conversations.
 
 Both sets are written by the condition lists, by scene scripts (`SET_FLAG_IF_IN_CHAPTER` and its relatives), and by AI scripts (`AI_SET_CHAPTER_EVENT_FLAG`). They are read by the condition lists, the scripts, and three tables in the chapter's data: talks, map changes, and the phase flags of [Chapter 8](08-the-turn.md).
 
@@ -299,7 +299,7 @@ A chapter's event state is one `structChapterEventRAMEntry`, 17 bytes:
 | `$05` | `Counter1`, `Counter2` | the two counters |
 | `$07` | `TemporaryEventFlags` | 80 flags in 10 bytes |
 
-The entries live in `aChapterEventRAMData` at `$7E52B7`, a pool with room for three, managed by the generic RAM struct routines (`rlAppendNewStructEntry` and its relatives). Starting a chapter appends an entry and runs its opening list. The chapter's ending script removes it with `REMOVE_CHAPTER_STRUCT`, so the next chapter starts with an empty pool and only one entry exists during play.
+The entries live in `aChapterEventRAMData` at `$7E/52B7`, a pool with room for three, managed by the generic RAM struct routines (`rlAppendNewStructEntry` and its relatives). Starting a chapter appends an entry and runs its opening list. The chapter's ending script removes it with `REMOVE_CHAPTER_STRUCT`, so the next chapter starts with an empty pool and only one entry exists during play.
 
 The pool and the lookup routines were written for more than one chapter. `rlCheckIfEventFlagOfSpecifiedChapterSet` and the `..._IF_IN_CHAPTER` script commands take a chapter number. But the lookup returns a match only for the current chapter's entry; for any other chapter the flag reads as clear and a write does nothing.
 
@@ -307,7 +307,7 @@ Saving writes the permanent flags and the whole pool. Loading reads them back an
 
 ## Characters across generations
 
-Fourteen of the generation 2 children have a substitute who joins in the child's place when the child doesn't exist ([Chapter 17](17-love-and-lineage.md)): Dalvin for Scathach, Asaello for Febail, Creidne for Larcei, and so on. A talk written for one should usually work for the other. The `CHECK_CHILD_` conditions map every character ID from Seliph's onward through `aEventsUnifiedGen2CharacterIds`, which sends each child to its substitute and every other character (the substitutes included) to itself, and compare the mapped IDs. A `CHECK_CHILD_TALK` written for Creidne and Iucharba therefore matches a talk started by Creidne or by Larcei. Chapters 6 to 10 and the final chapter use `CHECK_CHILD_TALK` 38 times; the other `CHILD` variants exist and no chapter uses them.
+Fourteen of the generation 2 children have a substitute who joins in the child's place when the child doesn't exist ([Chapter 17](17-love-and-lineage.md)): Dalvin for Scathach, Asaello for Febail, Creidne for Larcei, and so on. A talk written for one should usually work for the other. The `CHECK_CHILD_` conditions map every character ID from Seliph's onward through `aEventsUnifiedGen2CharacterIds`, which sends each child to its substitute and every other character (the substitutes included) to itself, and compare the mapped IDs. A `CHECK_CHILD_TALK` written for Creidne and Iucharba therefore matches a talk started by Creidne or by Larcei. Chapters 6 to 10 and the final chapter use `CHECK_CHILD_TALK` 38 times; the other `CHILD` variants exist, but no chapter uses them.
 
 ## Conditions that change a battle
 
@@ -356,8 +356,12 @@ The limits:
 - [engine/events/event_engine.asm](../../engine/events/event_engine.asm): the chapter entry pool, both flag sets and the counters, `rlGetAndRunChapterMapEventConditions`, the list runner, `aChapterEventConditionCommands` and all 121 handlers, `rsEvaluateEventCondition`, the parameter tests, the break scans, the generation 2 ID table, map changes, the arena exit announcement, `rlStartChapterEventByID`.
 - [engine/events/chapter_data.asm](../../engine/events/chapter_data.asm): the chapter data getters (locations, map changes, talks, phase flags).
 - [engine/events/talk_events.asm](../../engine/events/talk_events.asm): `rlCheckTalkEventEntryAvailable` and the money rule.
-- The announcers: [engine/map/map_step.asm](../../engine/map/map_step.asm) (`$03`, `$04`, `$17`, `$20`, `$21`), [engine/map/map_actions.asm](../../engine/map/map_actions.asm) (`$02`, `$08`, `$09`, `$0A`, `$1A`, `$1B`), [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm) (`$01`), [engine/battle/battle.asm](../../engine/battle/battle.asm) (`$14`, `$1D`), [engine/units/unit_state.asm](../../engine/units/unit_state.asm) (`$18`), [engine/units/lovers.asm](../../engine/units/lovers.asm) (`$11`), [engine/castle/castle_screen.asm](../../engine/castle/castle_screen.asm) and [engine/castle/courtyard.asm](../../engine/castle/courtyard.asm) (`$06`).
+- The announcers: [engine/map/map_step.asm](../../engine/map/map_step.asm) (`$03`, `$04`, `$17`, `$20`, `$21`), [engine/map/map_actions.asm](../../engine/map/map_actions.asm) (`$02`, `$08`, `$09`, `$0A`, `$1A`, `$1B`), [engine/map/map_sprites.asm](../../engine/map/map_sprites.asm) (`$01`), [engine/battle/battle.asm](../../engine/battle/battle.asm) (`$14`, `$1D`), [engine/units/unit_state.asm](../../engine/units/unit_state.asm) (`$18`), [engine/units/lovers.asm](../../engine/units/lovers.asm) (`$11`), [engine/castle/castle_screen.asm](../../engine/castle/castle_screen.asm) and [engine/castle/courtyard.asm](../../engine/castle/courtyard.asm) (`$06`), and [engine/ai/threat.asm](../../engine/ai/threat.asm) (`$0A`).
 - [engine/dialogue/death_quotes.asm](../../engine/dialogue/death_quotes.asm): the pre-combat dialogue script built in RAM.
 - [events/](../../events/): each chapter's flag names, header, opening list, map list, and chapter data (`Chapter01.asm` and so on).
 - [include/events/Conditions.h](../../include/events/Conditions.h): every condition-list command; [include/events/Helpers.h](../../include/events/Helpers.h): `FlagAlways` and the `Any` values; [include/Chapters.h](../../include/Chapters.h): `structChapterEventHeader`, `structChapterEventRAMEntry`, the talk and map-change entries; [include/PermanentFlags.h](../../include/PermanentFlags.h); [include/WRAM.h](../../include/WRAM.h): `bEventStatus`, `bEventActionIdentifier`, the arguments, `wEventEngineFlags`.
 - [docs/reference/events.md](../reference/events.md): the reference page.
+
+---
+
+← Previous: [Chapter 10: Menus over the Map](10-menus-over-the-map.md) | [Contents](OUTLINE.md) | Next: [Chapter 12: Screenplays](12-screenplays.md) →

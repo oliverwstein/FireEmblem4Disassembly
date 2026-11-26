@@ -40,15 +40,15 @@ Most screens own three consecutive entries, named after the screen:
 
 | Entry | Kind | Runs |
 |---|---|---|
-| 3k + 1 | **upkeep** (`rl<Screen>Upkeep`), in slot 2 | every frame for as long as the screen is up: sprites, scroll registers, blinking arrows, sometimes input |
-| 3k + 2 | **setup** (`rl<Screen>Setup`), in slot 1 | once: turns on the sprite engine, starts a fade-in, creates the screen's procs, picks the first step, and adds 1 to `wGameStateRoutine1` |
-| 3k + 3 | **step** (`rl<Screen>Step`), in slot 1 after the setup | every frame from then on: runs the routine for `wGameStateStep` |
+| `base + 0` | **upkeep** (`rl<Screen>Upkeep`), in slot 2 | every frame for as long as the screen is up: sprites, scroll registers, blinking arrows, sometimes input |
+| `base + 1` | **setup** (`rl<Screen>Setup`), in slot 1 | once: turns on the sprite engine, starts a fade-in, creates the screen's procs, picks the first step, and adds 1 to `wGameStateRoutine1` |
+| `base + 2` | **step** (`rl<Screen>Step`), in slot 1 after the setup | every frame from then on: runs the routine for `wGameStateStep` |
 
-The opener writes the setup's number into slot 1 and the upkeep's into slot 2. On the first frame both run; the setup ends by incrementing slot 1 (18 setups do this), so from the second frame on, slot 1 runs the step. The game state numbers have constants in [include/GameStates.h](../../include/GameStates.h): the chapter map's are `GAMESTATE_MAP_UPKEEP` (`$10`), `GAMESTATE_MAP_SETUP` (`$11`), and `GAMESTATE_MAP_STEP` (`$12`).
+The opener writes the setup's number into slot 1 and the upkeep's into slot 2. On the first frame both run; the setup ends by incrementing slot 1 (all 17 setups do this, and the castle opener `rlResumeCastleTown` also increments it once to skip setup when entering a castle triggers an event), so from the second frame on, slot 1 runs the step. The game state numbers have constants in [include/GameStates.h](../../include/GameStates.h): the chapter map's are `GAMESTATE_MAP_UPKEEP` (`$10`), `GAMESTATE_MAP_SETUP` (`$11`), and `GAMESTATE_MAP_STEP` (`$12`).
 
 | Entries | Screen | Chapter |
 |---|---|---|
-| `$01`-`$03` | the opening logo | [20](20-the-opening.md) |
+| `$01`-`$03` | the opening logo ([opening_logo.asm](../../engine/title/opening_logo.asm)) | |
 | `$04`-`$06` | the save menu screen, which also runs the Jugdral history, the chapter intro card, and the step between chapters that starts the world map events | [18](18-saving.md), [19](19-between-chapters.md) |
 | `$07`-`$09` | the status screen | [25](25-full-screen-windows-and-the-status-screen.md) |
 | `$0A`-`$0C` | the castle | [15](15-castles-and-towns.md) |
@@ -78,9 +78,10 @@ Most step routines are a second dispatcher. `wGameStateStep` indexes a table of 
 
 ```rust
 fn map_step() {                                  // rlMapStep, game state $12
-    // a chain of checks for queued consequences, each of which may end the frame
+    apply_buffered_deployment_states();          // rlApplyBufferedDeploymentStates
+    // a chain of checks for queued consequences; six of them may end the frame
     if handle_defeated_unit() { return; }
-    /* ... relocations, queued menus, gold pop-ups, canto, action-ended events ... */
+    /* ... relocations, unit menu, gold pop-up, inventory-full menu, canto; then action-ended events ... */
     if wGameStateStep >= MAP_STEP_COUNT { loop {} }
     aMapStepRoutines[wGameStateStep]();
     wSavedMapStep = wGameStateStep;
@@ -147,9 +148,9 @@ An opener resets the engines it won't share with the screen before it. The statu
 
 A screen leaves by installing the next screen's opener in `wMainLoopPointer`. There are three ways to do it:
 
-- **After a fade.** `procMainLoopChangeFade` (41 places in the code) takes the opener's address as its input. Its init starts a fade-out proc unless the screen is already blank or dark. Its on-cycle routine waits for brightness 0, installs the opener with `rlSetMainLoopPointer`, turns off the scanline timer interrupts, and ends. `procMainLoopChangeFadeByTimer` (9 places) does the same with a fade speed given by the caller. While the fade runs, the old screen is still up and its game states still run.
-- **At once.** A store to `wMainLoopPointer` (44 places), for screens that blank the display themselves, such as the battle scene's exit, or for an opener installing its own screen's main loop routine.
-- **Through `rlSetMainLoopPointer`** directly (3 places). It has a second path that would park the routine in a scratch register for the event engine, behind an event flag that nothing sets.
+- **After a fade.** `procMainLoopChangeFade` (41 places in the code) takes the opener's address as its input. Its init starts a fade-out proc unless the screen is already blank or dark. Its on-cycle routine waits for forced blank or brightness 0, installs the opener with `rlSetMainLoopPointer`, turns off the scanline timer interrupts, and ends. `procMainLoopChangeFadeByTimer` (9 places) does the same with a fade speed given by the caller. While the fade runs, the old screen is still up and its game states still run.
+- **At once.** A store to `wMainLoopPointer` (43 places outside `rlSetMainLoopPointer`), for screens that blank the display themselves, such as the battle scene's exit, or for an opener installing its own screen's main loop routine.
+- **Through `rlSetMainLoopPointer`** directly (1 place, `rlFlashToTitleScreen`; the other two calls are inside the fade procs). It has a second path that would park the routine in a scratch register for the event engine, behind an event flag that nothing sets.
 
 The map of who opens whom:
 
@@ -158,39 +159,39 @@ The map of who opens whom:
                                                  |                                 |
                                          new game: history                         |
                                                  |                                 v
-   save menu (step $23) --> world map events --> world map --> chapter intro --> chapter map
-          ^                                                                        |
-          +------------------------- end of chapter -------------------------------+
+   save menu (step $23) -----------------> world map events --> world map --> chapter intro --> chapter map
+          ^                                                                                          |
+          +------------------------------------- end of chapter -------------------------------------+
 
    chapter map <--> castle screen, battle scene, status screen, unit / item / skill /
                     data windows, options, map save
    chapter map ---> game over (ends in a soft reset)
    castle screen <--> status screen, conversations, revive screen, the arena's battle scene
-   final chapter --> epilogue --> title screen
+   final chapter --> epilogue (ends on the ranking screen)
 ```
 
 Every screen reached from the map returns to it the same way, through `rsReturnToMapMainLoop`. The castle screen opens further screens of its own (the status screen, conversations, the Valkyrie Staff's revive screen, the arena's battle scene), which return to it ([Chapter 15](15-castles-and-towns.md), [Chapter 25](25-full-screen-windows-and-the-status-screen.md)).
 
 ## Returning to the map
 
-The chapter map has two openers. `rsStartChapterMap` starts a chapter or resumes a saved one: it loads the chapter's layout and events, resets the units for a new chapter (or restores the music and map changes for a resumed one), and selects `GAMESTATE_MAP_SETUP`, whose setup starts the map step at `wSavedMapStep`. A resumed chapter sets that to 7, the phase itself; a new chapter sets 0, the start of the first turn.
+The chapter map has two openers. `rsStartChapterMap` starts a chapter or resumes a saved one: it loads the chapter's layout and events, resets the units for a new chapter (or restores the music and map changes for a resumed one), and selects `GAMESTATE_MAP_SETUP`, whose setup starts the map step at `wSavedMapStep` (unless `wChapterFlags` bit `$0020` says the save was made inside a castle, in which case it clears slot 1 and opens the castle via `rlEnterCastleAtLocation`). A resumed chapter sets `wSavedMapStep` to 7, the phase itself; a new chapter sets 0, the start of the first turn.
 
 `rsReturnToMapMainLoop` comes back from another screen. Both share most of their work: reset the screen registers, the BG2 and BG3 tilemaps, the sprites, and the active sprite, HDMA, and IRQ engines; set up the map display; load the window and font graphics; set the window registers; install the row-upload IRQ ([Chapter 22](22-a-map-bigger-than-the-screen.md)); install `rsMapVBlank`, `rsMapMainLoop`, and `GAMESTATE_MAP_UPKEEP`. The return then selects `GAMESTATE_MAP_STEP` directly, skipping the setup, and sets the step to 11, which handles the return and then restores `wSavedMapStep`.
 
 How much it rebuilds depends on `wMainGameMode`, which the screen being left sets before it hands over:
 
-| Mode | Set by | The map display | Step 11 shows it |
+| Mode | Set by | The map display and return work | Step 11 shows it |
 |---|---|---|---|
 | 0 | the castle screen and its conversations, the map menu, the options, the skill and data windows | redrawn from `aMapData` | with a fade-in |
-| 1 | the status screen, the unit and item windows | redrawn, with all 16 frames of the standing map sprites uploaded at once | at full brightness at once |
-| 2 | the battle scene, the save menu, the opening demo, the epilogue | the layout reloaded from ROM and the active map changes written in again | with a fade-in; then a defeated unit is handled and the phase music resumes |
-| 3 | a battle scene that asks for it, the event command `RELOAD_MAP_SCREEN` with bit 7 | as 2 | left dark, for the caller to fade in |
+| 1 | the status screen, the unit and item windows | redrawn, with all 16 steps of the standing map sprite uploads at once | at full brightness at once |
+| 2 | the battle scene, the save menu, the opening demo, the epilogue, `RELOAD_MAP_SCREEN` (bit 7 clear) | the layout reloaded from ROM and the active map changes written in again; defeated-unit handling and (unless an event is running) phase-music resumption run inside `rsReturnToMapMainLoop` | with a fade-in |
+| 3 | a battle scene that asks for it, the event command `RELOAD_MAP_SCREEN` with bit 7 | as 2 (including defeated-unit handling and music resumption) | left dark, for the caller to fade in |
 
 Step 11 (`rsMapStepResume`) creates the unit and terrain window procs again, fades in by the mode, gives the active unit its canto move if it has one, and sets `wGameStateStep` back to `wSavedMapStep`. The map carries on from the step it was in when it left. A second variable, `wMapReturnFlags`, carries what the map should do next, such as centering the cursor on the active unit after the status screen, or starting the target selection for a staff chosen in the castle ([Chapter 15](15-castles-and-towns.md)).
 
 ## The per-frame engines
 
-After the game state routines, every VBlank routine calls `rlRunVBlankHooks`. It runs each routine in `aTaskTable`, a table of 16 long pointers. Boot fills five slots, and nothing changes them afterwards ([Chapter 26](26-the-frame.md)):
+Most VBlank routines call `rlRunVBlankHooks` after the game state routines, though `rsRunMenuScreenVBlank` (shared by the eight menu and intro screens) runs `rlRunVBlankHooks` before the game state routines, and `rsRunAntiTamperVBlank` runs neither. `rlRunVBlankHooks` runs each routine in `aTaskTable`, a table of 16 long pointers. Boot fills five slots, and nothing changes them afterwards ([Chapter 26](26-the-frame.md)):
 
 | Order | Engine | Per frame | Chapter |
 |---|---|---|---|
@@ -200,13 +201,13 @@ After the game state routines, every VBlank routine calls `rlRunVBlankHooks`. It
 | 4 | IRQ | `rlIRQEngineStub`, which does nothing; the engine runs from the IRQ | [29](29-sprites-and-scanlines.md) |
 | 5 | events | `rlEventEngineMainLoop` | [12](12-screenplays.md) |
 
-`rlRegisterVBlankHook` takes a pointer to an engine's **action table**, three words in one bank: an init routine, which it calls at once; the per-frame routine, which it stores in the highest free slot; and a third routine that only an unused lookup reads. Slots fill from 15 down and run from 15 down, so the engines run in the order they were registered. That order matters inside a frame: a proc that creates an active sprite, an HDMA effect, or an event proc sees it stepped later in the same frame.
+`rlRegisterVBlankHook` takes a pointer to an engine's **action table**, three words in one bank: an init routine, which it calls at once; the per-frame routine, which it stores in the highest free slot; and a third routine that only an unused lookup reads. Slots fill from 15 down and run from 15 down, so the engines run in the order they were registered. That order matters inside a frame: a proc that creates an active sprite, an HDMA effect, or an event sees it stepped later in the same frame.
 
 The table is not how screens control the engines. Screens call an engine's reset routine directly (`rlResetHDMAEngine`, `rlActiveSpriteEngineReset`, `rlProcEngineResetProcEngine`), and the engine's per-frame routine keeps running with nothing to do. Every screen gets the same five engines in the same order.
 
 ## Trade-offs and hard limits
 
-- **56 game state entries, 17 screens.** Two of the screens (the unused one and the debug menu) are never opened, and seven entries point at do-nothing routines or padding.
+- **56 game state entries, 17 screens.** Two of the screens (the unused one and the debug menu) are never opened, and seven unused entries point at do-nothing routines or padding (plus entry 0, `rlGameStateNone`).
 - **Two slots.** A screen has one foreground routine and one background routine. Anything more runs as procs.
 - **One screen at a time.** The table keeps no history. A screen that expects to come back to its caller records where it came from itself (`wStatusScreenCaller`, [Chapter 25](25-full-screen-windows-and-the-status-screen.md)), and the map keeps its own step in `wSavedMapStep`.
 - **Openers decide what carries over.** Each opener resets its own list of engines and RAM, so a proc or HDMA effect from the old screen survives into the new one unless that opener clears it.
@@ -223,3 +224,7 @@ The table is not how screens control the engines. Screens call an engine's reset
 - [engine/core/frame/unused_game_state.asm](../../engine/core/frame/unused_game_state.asm): the screen nothing opens.
 - [include/WRAM.h](../../include/WRAM.h): `wGameStateRoutine1`, `wGameStateRoutine2`, `wGameStateStep`, `aTaskTable`, `wMainGameMode`, `wSavedMapStep`.
 - [docs/reference/game_states.md](../reference/game_states.md): the reference page.
+
+---
+
+← Previous: [Chapter 26: The Frame](26-the-frame.md) | [Contents](OUTLINE.md) | Next: [Chapter 28: Procs](28-procs.md) →

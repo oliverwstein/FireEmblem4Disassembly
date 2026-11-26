@@ -94,8 +94,8 @@ fn weapon_rank(kind: WeaponType) -> (Rank, bool) {  // rlGetSelectedUnitWeaponRa
     for blood in (0..13).rev() {
         if holy_blood(blood) == None || HOLY_BLOOD[blood].weapon_type != kind { continue; }
         if holy_blood(blood) == Major { return (A, true); }   // ★: carry set
-        rank -= 1;                                   // Minor: C → B → A
-        if rank <= A { return (A, false); }
+        if rank <= B { return (A, false); }                  // Minor: B or A → A (early exit)
+        rank -= 1;                                           // C → B
     }
     (rank, false)
 }
@@ -103,7 +103,7 @@ fn weapon_rank(kind: WeaponType) -> (Rank, bool) {  // rlGetSelectedUnitWeaponRa
 
 The `★` doesn't fit in the rank byte, so it travels in the CPU's carry flag: the routine returns `A` with carry set. Sigurd's Knight Lord class has Sword A and Lance B, and his Major Baldr blood turns Sword A into `★`, which is what lets him wield Tyrfing. A Minor blood can raise a rank by one step, and two Minor bloods for the same weapon can raise C to A. Neither can grant a weapon the class can't use: a Major-blooded unit in a class with no swords still can't hold its family's sword.
 
-The loop has one quirk. It returns as soon as a Minor blood brings the rank to A, so a unit holding a Minor and a Major blood for the same weapon type gets A instead of `★` if the Minor blood comes later in the table. Three bloods share swords (Baldr, Od, and Hothr), so the order matters.
+The loop has one quirk. It returns as soon as a Minor blood reaches or starts at rank A, so a unit holding a Minor and a Major blood for the same weapon type gets A instead of `★` if the Minor blood comes later in the table (including a promoted unit whose class already has rank A). Three bloods share swords (Baldr, Od, and Hothr), so the order matters.
 
 ## Skills: one ID, three encodings
 
@@ -161,3 +161,7 @@ The limits:
 - [include/Characters.h](../../include/Characters.h): the personal skill bits (`UnitSkill1*`–`UnitSkill3*`) and the holy blood bits (`Minor*Blood`, `Major*Blood`).
 - [data/class/ClassData.csv](../../data/class/ClassData.csv) and [data/item/HolyBloodData.csv](../../data/item/HolyBloodData.csv): the tables themselves.
 - [docs/reference/units.md](../reference/units.md): the reference page.
+
+---
+
+← Previous: [Chapter 1: A Unit Is Made of Parts](01-a-unit-is-made-of-parts.md) | [Contents](OUTLINE.md) | Next: [Chapter 3: Every Sword Is an Individual](03-every-sword-is-an-individual.md) →
