@@ -95,6 +95,12 @@
         .autsiz
         .databank ?
 
+        ; Creates the proc at lR44 (rlProcEngineCreateProc) and records its definition
+        ; under its slot in wEventProcOffsets/wEventProcBanks, so the event engine can
+        ; wait for it (rsEventEnginePollBlockingProcs), and sets wEventEngineFlags $0004.
+        ; The carry is not checked: with all 16 slots taken, the record goes under the index
+        ; left in A (normally the definition offset in slot 0), outside the table.
+
         php
         lda lR44
         pha
@@ -129,6 +135,8 @@
         .al
         .autsiz
         .databank ?
+
+        ; Frees the running proc (aProcSystem.wOffset).
 
         php
         ldx aProcSystem.wOffset,b

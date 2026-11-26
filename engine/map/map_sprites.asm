@@ -776,6 +776,11 @@
         .autsiz
         .databank ?
 
+        ; procCastleTakenOver's on-cycle routine for its 64-frame flicker: shows the old
+        ; owner's units (aBody1) on odd frames and hides them on even ones, by bit 0 of
+        ; wVBlankEnabledFramecount. Leaves the faction slot in wInput0, which the script's
+        ; PROC_CALL rlHideUnitsOfFactionSlot then reads.
+
         ; Input:
         ; aProcSystem.aBody1 = FactionSlot
 
@@ -802,6 +807,10 @@
         .al
         .autsiz
         .databank ?
+
+        ; procCastleTakenOver's last on-cycle routine: frees the proc, gives the map step
+        ; back its game state (GAMESTATE_MAP_STEP, which the init set to 0), queues the seize
+        ; pop-up and runs the castle's seize event or resumes the music.
 
         jsl rlProcEngineFreeProc
         lda #GAMESTATE_MAP_STEP
@@ -1094,6 +1103,11 @@
 
 
       aProcCastleTakenOverCode ; 87/C21D
+
+        ; Wait, play the sound, flicker the old owner's units for 64 frames, hide them,
+        ; unload the army if its home castle fell (_C235), redraw the map (_C23A) and
+        ; finish in rlProcCastleTakenOverCycle3. The init enters at _C235 when no unit
+        ; needs to fade, and at _C23A when the castle was not a home castle.
 
         PROC_YIELD 32
         PROC_CALL rlPlayCastleTakenOverSound
@@ -2414,6 +2428,9 @@
         .al
         .autsiz
         .databank ?
+
+        ; procCastleTakenOver's on-cycle routine between its other stages: does nothing.
+        ; The script does the work while it runs.
 
         rtl
 
