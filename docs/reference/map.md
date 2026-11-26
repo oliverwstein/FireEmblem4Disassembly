@@ -29,7 +29,7 @@ Data: [include/Map.h](../../include/Map.h) (`MAP_CURSOR_*`, `MAP_AI_*`, `MAP_RET
 
 ## Positions
 
-Everything on the map is placed in **tiles** of 16x16 pixels. `aMapData` holds one word per tile (the map is 64 tiles wide, or 128 when `wMapWidthMode` is 8); the low bits (`wMapTileIDMask`) are a tile ID, and each tile ID is four 8x8 tilemap entries in a table at `$7F0000`. `aTerrainTileset` gives each tile ID its terrain.
+Everything on the map is placed in **tiles** of 16x16 pixels. `aMapData` holds one word per tile (the map is 64 tiles wide, or 128 when `wMapWidthMode` is 8); the low bits (`wMapTileIDMask`) are a tile ID, and each tile ID is four 8x8 tilemap entries in a table at `$7F0000`. `aTerrainTileset` gives each tile ID its terrain. Each chapter's layout, tile entries (IDs 0-255; IDs 256-1023 are `aBaseMapTileEntries`, copied to `$7F0800`) and terrain are compressed streams written as CSV source in `gfx/compressed/C70C80/` and built by [tools/chapter_maps.py](../../tools/chapter_maps.py), whose docstring gives the formats.
 
 The **camera** is `wMapScrollXPixels`/`YPixels`, the map pixel at the top left of the screen, kept between `wMapMinXScroll` and `wMapMaxXScroll` (and Y), which come from the chapter's map data. `wMapXOffset`/`YOffset` save it while the map is left. The **cursor** is `wCursorXOffset`/`YOffset`, a position on the screen, so the cursor's tile is (camera + cursor) / 16. It stays 48 pixels from each edge of the screen (its top left at X `$30`-`$C0`, Y `$30`-`$A0`, or 16 pixels when the camera is against the map's edge); a move past that scrolls the map instead (`rsMoveMapCursorLeft`...). Events test a looser box (`rlCheckPointInScreenMargins`: X `$30`-`$C7`, Y `$28`-`$A7`). [camera.asm](../../engine/map/camera.asm) has the conversions.
 
@@ -175,3 +175,4 @@ At the end of chapter 5, after Arvis attacks Sigurd, `procFirstGenerationEnding`
 - `rlDrawActiveUnitOverlaySpriteUnused` and its two sprite arrays: nothing reaches it.
 - What `$70` means to `rsOpenQueuedInventoryFullMenu`.
 - The `CharacterID` of `MOVE_TEMPORARY_TO_COORDS_CLASS` and the help command's relocation (type 7: the target leaves the map with a scene).
+- Terrain values `$1A` and up in the chapter terrain tables (up to `$35`; 26 values have names in `include/Terrain.h` and columns in `MovementCost.csv`): what reads them.

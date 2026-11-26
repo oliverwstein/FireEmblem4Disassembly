@@ -127,7 +127,7 @@ All 145 stream PNGs renamed in `1961416`..`e902eb3` were checked against their l
   - Magic-sword / Naga spell IDs (`Elfire`, `Elthunder`, `Elwind`, `Light`, `Nosferatu`, `Loptous`) in [data/item/ItemData.csv](data/item/ItemData.csv).
   - `UNITEntryEnd` (`$FFFF`) and `UNITFormationNone` (`$FF`) in `data/eventunit/*.csv` and [include/Deployment.h](include/Deployment.h).
 - [x] **Add a readable palette macro:** Added `bgr555(r, g, b)` in [include/Palettes.h](include/Palettes.h) and converted [data/palettes/](data/palettes/) and [data/portraits/PortraitPalettes.asm](data/portraits/PortraitPalettes.asm).
-- [ ] **Wire decoded map/layout tools into `build.sh`:** Invoke [tools/chapter_maps.py](tools/chapter_maps.py) and [tools/map_battle_layouts.py](tools/map_battle_layouts.py) from [build.sh](build.sh) (matching the `.png` → `.4bpp` → `.lz` pattern) so decoded chapter maps and map-battle layouts rebuild automatically on edit.
+- [x] **Wire decoded map/layout tools into `build.sh`:** Invoke [tools/chapter_maps.py](tools/chapter_maps.py) and [tools/map_battle_layouts.py](tools/map_battle_layouts.py) from [build.sh](build.sh) (matching the `.png` → `.4bpp` → `.lz` pattern) so decoded chapter maps and map-battle layouts rebuild automatically on edit.
 - [x] **Document bank headroom & relocation strategies:** Added [docs/MODDING_DATA.md](docs/MODDING_DATA.md) covering Bank `$83` (~2.1 KB free), hard `end` caps in `gfx/**/*.streams`, and fixed SPC RAM sample directory addresses in `audio/directories/`.
 
 ### 3.2 Cleanup & Consistency

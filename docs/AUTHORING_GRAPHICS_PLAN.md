@@ -41,13 +41,13 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 ## Phased Rollout Plan (Ordered by Cost and Readiness)
 
-### Phase 1 — Wire the existing map decoders into the build (`12` chapter maps, `120` map-battle layouts)
-*Both tools already round-trip; this is the open item in [todo.md](../todo.md) ("Wire decoded map/layout tools into `build.sh`").*
+### Phase 1 — Wire the map decoders into the build (`12` chapter maps, `120` map-battle sprite data streams) — **done (2026-11-26)**
 
-- **Current state:** the chapter map streams are committed as raw binaries in [gfx/compressed/C70C80/](../gfx/compressed/C70C80/) (`acChapterMap*Layout.bin`, `*TileEntries.bin`, `*Terrain.bin`, and `g4bppcChapterMap*.4bpp.png` for the tiles), listed in `C70C80.streams` and compressed by build.sh. [tools/chapter_maps.py](../tools/chapter_maps.py) decodes them to `layout.csv`, `metatiles.json` and `terrain.json`, encodes them back, and renders previews with [gfx/map/BaseMapTileEntries.bin](../gfx/map/BaseMapTileEntries.bin); `--self-test` passes 12/12. [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) does the same for the 120 `aMapBattle*Layout*.bin` OAM tables. Neither is called from build.sh, so the `.bin` files are still the source.
-- **Step 1 (wiring):** commit the decoded files as source, have build.sh run `encode` to write the `.bin` files before `gfx.py lz`, gitignore those `.bin` files, and keep the `.comp` files for the fallback.
-- **Step 2 (optional editor format):** export **Tiled `.tmj` maps** (a shared `BaseMapTileset.tsx` plus one tileset per chapter) with a visual layer of 16×16 metatiles (`64×32` for the Prologue, `64×64` for Chapters 1–Final) and a terrain layer, and import them back to the same CSV/JSON. This is a layer on top of Step 1 and can come later.
-- **Risk:** Low. The round-trip is already proven.
+- **Chapter maps:** each of the 32 streams in [gfx/compressed/C70C80/](../gfx/compressed/C70C80/) now has one CSV source beside it, and `tools/chapter_maps.py build` (run by build.sh) writes the `.bin` that `gfx.py lz` compresses. `acChapterMap*Layout.csv` is the 64×64 grid of map words in hex (bits 0–9 tile ID, bits 10–15 the area a chapter can close). `*TileEntries.csv` is one row per tile ID 0–255, with four entries written `TILE:PALETTE` plus `p`/`h`/`v`; IDs 256–1023 are `aBaseMapTileEntries`. `*Terrain.csv` is one row per tile ID, named from `include/Terrain.h`. Values `$1A`–`$35` have no name and stay hex (open question in [map.md](reference/map.md)).
+- **Map-battle sprite data:** the earlier JSON format guessed structure from byte ranges and could not change size. It was replaced by assembly source (`gfx/compressed/*/aMapBattle*Layout*.asm`) in the style of `aGiveGoldCoinSpriteData`, decoded along what the code reads. That means five block offsets by weapon type; blocks of a frame table, two unread words and (main, aux) script pairs; frames as `.structSpriteEntry` arrays; scripts as `ACTIVE_SPRITE_*` commands; and every offset a label difference. `tools/map_battle_layouts.py build` assembles each with 64tass. `MAP_BATTLE_SPRITE_DATA_END` pads to the original size and fails past `$880` bytes, the distance between the two sides' buffers. The format is in the tool's docstring and [map_battle.md](reference/map_battle.md).
+- **Proved:** both self-tests round-trip every stream from its `.comp` and check the committed sources. The sprite data test adds a sprite to a frame and checks that the rest moves while every frame and script parses the same. A clean build is byte-identical. An edited sprite frame and terrain entry built with `./build.sh mod` reached the ROM, and the following streams moved and still decompress correctly. The generated `.bin` files are gitignored and removed by `./build.sh clean`.
+- **Left for later:** the Tiled export (Step 2 below) and a sprite data preview (Phase 5).
+- **Step 2 (optional editor format):** export **Tiled `.tmj` maps** (a shared `BaseMapTileset.tsx` plus one tileset per chapter) with a visual layer of 16×16 tiles (`64×32` for the Prologue, `64×64` for Chapters 1–Final), a terrain layer and an area layer (bits 10–15), and import them back to the same CSVs.
 
 ---
 
@@ -105,11 +105,11 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 - **Current state:**
   - `gfx/MapMovementSprites/*.4bpp.png` and `StandingMapSprites1–2.4bpp.png` are already editable sprite sheets (just in compact VRAM tile order).
-  - Map-battle animations have `557` tile sheets and `120` `aMapBattle*Layout*.bin` OAM frame tables; [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) decodes/encodes all 120 layouts to JSON and renders assembled frame strips (wired into the build in Phase 1).
+  - Map-battle animations have `557` tile sheets and `120` sprite data streams, assembly source since Phase 1 ([tools/map_battle_layouts.py](../tools/map_battle_layouts.py)). There is no preview yet. A frame does not hold its own picture: its tiles from `$20` (`$28` for side 1) are the graphics frame the script last uploaded with command `$03`, from the paired `g4bppcMapBattle*` stream through `aMapBattleSpriteDMATable`, and the rest depend on each sprite's tile base. A preview therefore has to step a script, as `tools/battle_animation.py` does for battle scenes.
 - **Author-facing object:**
   - **Map sprites:** Standard frame-grid PNGs (e.g., 4 directions × N frames at `16×16` / `16×24` per cell) that slice deterministically back to VRAM order.
   - **Map-battle animations:**
-    - **Level A:** the JSON layouts from Phase 1 plus the `.4bpp.png` sheets, with rendered preview strips for verification.
+    - **Level A:** the sprite data sources from Phase 1 plus the `.4bpp.png` sheets, with a preview that steps each script (frame uploads by `$03`, frames by `$0E`) into strips or GIFs.
     - **Level B (optional, full artist workflow):** Per-animation **assembled frame strip PNG** (`frame_0.png`, `frame_1.png`, …) + an OAM packer that greedily covers non-transparent regions with 8×8 and 16×16 SNES OAM sprites, deduplicates tiles, and emits both the `.4bpp` sheet and `aMapBattle*Layout*.bin`.
 
 ---
@@ -135,7 +135,7 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 | Phase | Asset Class | Count | Round-Trip Complexity | Existing Foundation |
 |---|---|---:|---|---|
-| **1** | Chapter maps, map-battle layouts (build wiring) | 12 maps, 120 layouts | **Easy** (already round-trips) | [tools/chapter_maps.py](../tools/chapter_maps.py) (12/12), [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) (120/120) |
+| **1** ✓ | Chapter maps, map-battle sprite data (source + build wiring) | 32 map streams, 120 sprite data | Done | [tools/chapter_maps.py](../tools/chapter_maps.py) (CSV), [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) (assembly) |
 | **2** | Portraits | 152 graphics, 248 entries | **Easy** for the face; frames blocked on code | [tools/portraits.py](../tools/portraits.py) (export only) |
 | **3** | Backgrounds & full-screen scenes | ~78 scenes | **Medium** (seeded tile matching + sub-palette) | [tools/gfx.py](../tools/gfx.py), [tools/backgrounds.py](../tools/backgrounds.py), `data/palettes/` |
 | **4** | UI tilemaps, icons, fonts | ~80 assets | **Medium** (fixed-sheet tilemap match) | `tools/scene_pack.py` from Phase 3 |
