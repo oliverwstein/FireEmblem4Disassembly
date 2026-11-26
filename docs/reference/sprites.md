@@ -68,7 +68,8 @@ An active sprite is a sprite array with a position, a routine run every frame an
 | `aTileBase`, `aTileBaseHigh` | added to the array's tiles (`wR4`, `wR6` for the renderer) |
 | `aPalette` | the palette, ORed into the attributes (`wR5` = it << 9) |
 | `aLoopCounter` | the counter of command `$02` |
-| the rest (`aXSubpixel`...`aYVelocity`) | the user's: velocities, the map battle's side (`aStepCounter`), a mover index (`aMoverIndex`) |
+| `aXSubpixel`, `aYSubpixel`, `aXVelocity`, `aYVelocity` | the fractions (high bytes) and 8.8 velocities `rlMoveActiveSpriteByVelocity` uses |
+| `aBody0`-`aBody7` | the user's own: event movers, the map battle and the magic effects each name them after the block in [WRAM.h](../../include/WRAM.h) (`aMoverSpriteStepTimer`, `aMapBattleSpriteSide`, `aMapMagicSpriteTimer` and so on) |
 
 `wFlag` holds the engine's switches ([ActiveSpriteEngine.h](../../include/ActiveSpriteEngine.h)):
 
@@ -149,4 +150,4 @@ Nine more command routines in the bank are in no table and unreachable: a wait t
 ## Open questions
 
 - **Flag `$2000`.** It chooses between two flushes that are the same routine; perhaps the sorted flush once sat behind it.
-- **`aXSubpixel`-`aYVelocity`.** The engine clears them at creation and never reads them; each user (map battle, magic effects, cutscenes) gives them its own meaning, so their names fit only some users: the map battle keeps its side in `aStepCounter`.
+- **The magic effects' `aBody3`-`aBody6`.** Each effect uses them its own way (a flag its script waits for, palette animation timers, a proc offset), so they have no shared names; per-effect names would need each effect read through.

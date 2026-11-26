@@ -484,15 +484,15 @@
         .databank ?
         ; Shared by 8 effects.
 
-        lda aActiveSpriteSystem.aFlags,b,x
+        lda aMapMagicSpriteAngle,b,x
         sta wR0
-        lda aActiveSpriteSystem.aDirection,b,x
+        lda aMapMagicSpriteSpeed,b,x
         jsl rlMultiplyByNegSin._8B84
         ldx aActiveSpriteSystem.wOffset,b
         sta aActiveSpriteSystem.aXVelocity,b,x
-        lda aActiveSpriteSystem.aFlags,b,x
+        lda aMapMagicSpriteAngle,b,x
         sta wR0
-        lda aActiveSpriteSystem.aDirection,b,x
+        lda aMapMagicSpriteSpeed,b,x
         jsl rlMultiplyByNegSin
         ldx aActiveSpriteSystem.wOffset,b
         sta aActiveSpriteSystem.aYVelocity,b,x
@@ -533,7 +533,7 @@
 
         _93DB
         tya
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -554,12 +554,12 @@
         sbc #$0050
         sta aActiveSpriteSystem.aYVelocity,b,x
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _9405
         lda #$0001
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         lda #$000E
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicFireballSpriteDecelAndAim
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -587,7 +587,7 @@
         _9412
         sta aActiveSpriteSystem.aYVelocity,b,x
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _944E
         lda wMapMagicTargetPixel
         and #$00FF
@@ -600,9 +600,9 @@
         sbc aActiveSpriteSystem.aYPosition,b,x
         sta wR1
         jsl rlGetVectorAngle
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapMagicSpriteAngle,b,x
         lda #$0100
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda #<>rlMapMagicFireballSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -622,10 +622,10 @@
         .databank ?
         ; Shared by the Elfire and Fire effects.
 
-        lda aActiveSpriteSystem.aDirection,b,x
+        lda aMapMagicSpriteSpeed,b,x
         clc
         adc #$0040
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         jsl rlMoveActiveSpriteByVelocity
         lda wMapMagicTargetPixel
@@ -643,7 +643,7 @@
         lda #$0001
         sta wMapMagicHitFlag
         lda #$000D
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicFireballSpriteSignalElfire
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda wMapMagicTargetPixel
@@ -657,12 +657,12 @@
 
         _94AA
         lda #$002D
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicFireballSpriteWaitImpact
         sta aActiveSpriteSystem.aOnCycle,b,x
         sta wMapMagicHitFlag
         lda #$0002
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aXPosition,b,x
@@ -685,10 +685,10 @@
         .databank ?
         ; Shared by the Elfire and Fire effects.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _94ED
         lda #$0008
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicFireballSpriteEndFire
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
@@ -709,7 +709,7 @@
         .databank ?
         ; Shared by the Elfire and Fire effects.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _94FD
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
@@ -738,14 +738,14 @@
         .databank ?
         ; Shared by the Elfire and Fire effects.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicFireballSpriteEndElfire._9526
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlMapMagicFireballSpriteEndElfire
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0020
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -760,7 +760,7 @@
         .databank ?
         ; Shared by the Elfire and Fire effects.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _9526
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
@@ -923,7 +923,7 @@
         .databank ?
         ; Shared by the Elfire and Fire effects.
 
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         cmp #$0001
         bne _95EC
         inc y
@@ -947,7 +947,7 @@
         .databank ?
         ; Shared by the Elfire and Fire effects.
 
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         cmp #$0002
         bne _95FC
         inc y
@@ -2418,7 +2418,7 @@
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0040
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
@@ -2436,7 +2436,7 @@
         .databank ?
         ; Part of the Fenrir effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicFenrirSpriteNoOp
         lda #<>rlMapMagicFenrirSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -2457,11 +2457,11 @@
         lda #$0002
 
         _9F68
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda wR0
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapMagicSpriteAngle,b,x
         lda #$0400
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
 
         .databank 0
@@ -2485,13 +2485,13 @@
         ; Part of the Fenrir effect.
 
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _9F92
         lda #<>rlMapMagicFenrirSpriteWaitImpact
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapMagicSpriteTimer,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
 
         _9F92
         rtl
@@ -2507,14 +2507,14 @@
         .databank ?
         ; Part of the Fenrir effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _9FAB
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlMapMagicFenrirSpriteSignalHit
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0008
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
 
         _9FAB
         rtl
@@ -2530,12 +2530,12 @@
         .databank ?
         ; Part of the Fenrir effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _9FC1
         lda #<>rlMapMagicFenrirSpriteWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         sta wMapMagicHitFlag
 
         _9FC1
@@ -2552,7 +2552,7 @@
         .databank ?
         ; Part of the Fenrir effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _9FCD
         lda #<>rlMapMagicFenrirSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -2612,7 +2612,7 @@
         .databank ?
         ; Part of the Fenrir effect.
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         bne _A018
         lda $0000,b,y
         tay
@@ -3706,7 +3706,7 @@
         lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda #$0004
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -3727,8 +3727,8 @@
         lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
-        stz aActiveSpriteSystem.aStepCounter,b,x
-        stz aActiveSpriteSystem.aSubpixelAccum,b,x
+        stz aActiveSpriteSystem.aBody3,b,x
+        stz aActiveSpriteSystem.aBody4,b,x
         rtl
 
         .databank 0
@@ -3744,7 +3744,7 @@
         jsl rlMapMagicThunderStepPaletteAnim
         bcc rlMapMagicThunderFadeBack._A779
         lda #$000C
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicThunderWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
@@ -3759,7 +3759,7 @@
         .autsiz
         .databank ?
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicThunderFadeBack._A779
         lda #<>rlMapMagicThunderFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -3795,14 +3795,14 @@
         .databank ?
         ; Part of the Elthunder effect.
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         beq rlMapMagicElthunderCasterBoltEnd._A79A
-        stz aActiveSpriteSystem.aStepCounter,b,x
+        stz aActiveSpriteSystem.aBody3,b,x
         jsr rsMapMagicElthunderSpawnNextBolt
         lda #<>rlMapMagicElthunderCasterBoltEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0040
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -3816,7 +3816,7 @@
         .databank ?
         ; Part of the Elthunder effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _A79A
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
@@ -3833,13 +3833,13 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         beq rlMapMagicElthunderMidBoltEnd._A7BB
-        stz aActiveSpriteSystem.aStepCounter,b,x
+        stz aActiveSpriteSystem.aBody3,b,x
         lda #<>rlMapMagicElthunderMidBoltEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0040
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -3852,7 +3852,7 @@
         .autsiz
         .databank ?
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _A7BB
         jsr rsMapMagicElthunderSpawnImpact1
         stz aActiveSpriteSystem.aTypeOffset,b,x
@@ -3870,14 +3870,14 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         beq rlMapMagicElthunderLowBoltEnd._A7F5
-        stz aActiveSpriteSystem.aStepCounter,b,x
+        stz aActiveSpriteSystem.aBody3,b,x
         jsr rsMapMagicElthunderSpawnImpact2
         lda #<>rlMapMagicElthunderLowBoltSignal
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$003C
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -3890,14 +3890,14 @@
         .autsiz
         .databank ?
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _A7EC
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlMapMagicElthunderLowBoltEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0004
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
 
         _A7EC
         rtl
@@ -3912,7 +3912,7 @@
         .autsiz
         .databank ?
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _A7F5
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
@@ -4096,7 +4096,7 @@
         .databank ?
 
         lda #$0001
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
         rtl
 
         .databank 0
@@ -4114,7 +4114,7 @@
         cmp #$000A
         bpl rlMapMagicThunderSpriteDummy
         lda #$0001
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aXPosition,b,x
@@ -4156,11 +4156,11 @@
           .byte $55
 
         lda #$0020
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #$0002
-        sta aActiveSpriteSystem.aPixelStep,b,x
-        stz aActiveSpriteSystem.aStepCounter,b,x
-        stz aActiveSpriteSystem.aSubpixelAccum,b,x
+        sta aMapMagicSpritePhase,b,x
+        stz aActiveSpriteSystem.aBody3,b,x
+        stz aActiveSpriteSystem.aBody4,b,x
         lda #<>rlMapMagicThunderImpactWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
@@ -4176,7 +4176,7 @@
         .databank ?
         ; Part of the Thunder effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicThunderImpactWaitAnim
         lda #<>rlMapMagicThunderImpactWaitAnim
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -4318,7 +4318,7 @@
         .databank ?
         ; Part of the Thunder effect.
 
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         cmp #$0001
         bne rlMapMagicThunderWaitPhase2._AA0D
         inc y
@@ -4335,7 +4335,7 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         cmp #$0002
         bne _AA0D
         inc y
@@ -4359,7 +4359,7 @@
         .databank ?
         ; Part of the Thunder effect.
 
-        stz aActiveSpriteSystem.aPixelStep,b,x
+        stz aMapMagicSpritePhase,b,x
         rtl
 
         .databank 0
@@ -4507,10 +4507,10 @@
         .databank ?
         ; Part of the Thunder effect.
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         beq _AAD7
         dec a
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
 
         _AAD5
         clc
@@ -4520,9 +4520,9 @@
         _AAD7
         txy
         phx
-        lda aActiveSpriteSystem.aSubpixelAccum,b,x
+        lda aActiveSpriteSystem.aBody4,b,x
         inc a
-        sta aActiveSpriteSystem.aSubpixelAccum,b,x
+        sta aActiveSpriteSystem.aBody4,b,x
         dec a
         asl a
         asl a
@@ -4532,7 +4532,7 @@
         lda <>aMapMagicThunderPaletteAnim,b,x
         cmp #$FFFF
         beq _AB26
-        sta aActiveSpriteSystem.aStepCounter,b,y
+        sta aActiveSpriteSystem.aBody3,b,y
         inc x
         inc x
         lda <>aMapMagicThunderPaletteAnim,b,x
@@ -4792,7 +4792,7 @@
         stz aActiveSpriteSystem.aYVelocity,b,x
         stz aActiveSpriteSystem.aXVelocity,b,x
         lda #$0028
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         jml rlMapMagicLightStepSpritePaletteAnim
 
         .databank 0
@@ -4807,12 +4807,12 @@
         ; Part of the Light effect.
 
         jsl rlMapMagicLightStepSpritePaletteAnim
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicLightSpriteFadeBack._AE18
         lda #<>rlMapMagicLightSpriteWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0020
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -4827,14 +4827,14 @@
         ; Part of the Light effect.
 
         jsl rlMapMagicLightStepSpritePaletteAnim
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicLightSpriteFadeBack._AE18
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlMapMagicLightSpriteWaitFlash
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0018
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -4849,14 +4849,14 @@
         ; Part of the Light effect.
 
         jsl rlMapMagicLightStepSpritePaletteAnim
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicLightSpriteFadeBack._AE18
         lda #$0001
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         lda #<>rlMapMagicLightSpriteWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0028
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -4871,7 +4871,7 @@
         ; Part of the Light effect.
 
         jsl rlMapMagicLightStepSpritePaletteAnim
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicLightSpriteFadeBack._AE18
         lda #<>rlMapMagicLightSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -4910,21 +4910,21 @@
         .databank ?
         ; Part of the Light effect.
 
-        lda aActiveSpriteSystem.aUserVar,b,x
+        lda aActiveSpriteSystem.aBody5,b,x
         beq _AE23
         dec a
-        sta aActiveSpriteSystem.aUserVar,b,x
+        sta aActiveSpriteSystem.aBody5,b,x
         rtl
 
 
         _AE23
         lda #$0002
-        sta aActiveSpriteSystem.aUserVar,b,x
+        sta aActiveSpriteSystem.aBody5,b,x
         phx
-        lda aActiveSpriteSystem.aSubpixelStep,b,x
+        lda aActiveSpriteSystem.aBody6,b,x
         inc a
         and #$000F
-        sta aActiveSpriteSystem.aSubpixelStep,b,x
+        sta aActiveSpriteSystem.aBody6,b,x
         asl a
         tax
         lda <>aMapMagicLightSpritePaletteAnim,b,x
@@ -4987,7 +4987,7 @@
         .databank ?
         ; Part of the Light effect.
 
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         bne _AEE2
         lda $0000,b,y
         tay
@@ -4995,7 +4995,7 @@
 
 
         _AEE2
-        stz aActiveSpriteSystem.aPixelStep,b,x
+        stz aMapMagicSpritePhase,b,x
         inc y
         inc y
         rtl
@@ -5210,7 +5210,7 @@
         adc #$FFF8
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0002
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda $7F50C9
         asl a
         tay
@@ -5229,7 +5229,7 @@
         .databank ?
         ; Part of the Thoron effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _B052
         lda #<>rlMapMagicThoronSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -5250,11 +5250,11 @@
         lda #$0002
 
         _B041
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda wR0
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapMagicSpriteAngle,b,x
         lda #$0400
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
 
         _B052
@@ -5272,7 +5272,7 @@
         ; Part of the Thoron effect.
 
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicThoronSpriteAim._B052
         lda wMapMagicTargetPixel
         and #$00FF
@@ -5281,11 +5281,11 @@
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0001
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         lda #<>rlMapMagicThoronSpriteWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0032
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
@@ -5295,7 +5295,7 @@
 
           .word <>procMapMagicThoronWindow
 
-        sta aActiveSpriteSystem.aSubpixelStep,b,x
+        sta aActiveSpriteSystem.aBody6,b,x
         jsr rsCreateMapMagicHDMA
 
           .word <>aHDMAMapMagicW12SEL
@@ -5329,14 +5329,14 @@
         .databank ?
         ; Part of the Thoron effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicThoronSpriteReverseFade._B0E4
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlMapMagicThoronSpriteReverseFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$000A
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -5350,17 +5350,17 @@
         .databank ?
         ; Part of the Thoron effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _B0E4
-        ldy aActiveSpriteSystem.aSubpixelStep,b,x
+        ldy aActiveSpriteSystem.aBody6,b,x
         lda #$FFFD
         sta aProcSystem.aBody4,b,y
         lda #$0001
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         lda #<>rlMapMagicThoronSpriteWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
 
         _B0E4
         rtl
@@ -5376,7 +5376,7 @@
         .databank ?
         ; Part of the Thoron effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _B0F0
         lda #<>rlMapMagicThoronSpriteFadeBack
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -5510,9 +5510,9 @@
         .databank ?
         ; Part of the Thoron effect.
 
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         beq _B1D9
-        stz aActiveSpriteSystem.aPixelStep,b,x
+        stz aMapMagicSpritePhase,b,x
         lda $0000,b,y
         tay
         rtl
@@ -5882,7 +5882,7 @@
         stz aActiveSpriteSystem.aYVelocity,b,x
         stz aActiveSpriteSystem.aXVelocity,b,x
         lda wMapMagicStep
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -5925,7 +5925,7 @@
           .byte $5F
 
         lda #$000C
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicMeteorSpriteWaitStrike
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
@@ -5945,7 +5945,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _B474
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
@@ -5978,7 +5978,7 @@
         lda #<>rlMapMagicMeteorSpriteWaitFade
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$000E
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
 
         _B495
         rtl
@@ -6000,7 +6000,7 @@
         .databank ?
         ; Part of the Meteor effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _B4AE
         lda #$0002
         sta wMapMagicSubStep
@@ -7652,7 +7652,7 @@
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0060
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
 
@@ -7670,7 +7670,7 @@
         .databank ?
         ; Part of the Mjolnir effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _BF46
         lda #$0001
         sta wMapMagicHitFlag
@@ -8515,8 +8515,8 @@
         ; Part of the Nosferatu effect.
 
         phx
-        inc aActiveSpriteSystem.aDirection,b,x
-        lda aActiveSpriteSystem.aDirection,b,x
+        inc aActiveSpriteSystem.aBody2,b,x
+        lda aActiveSpriteSystem.aBody2,b,x
         and #$001F
         asl a
         tay
@@ -9227,7 +9227,7 @@
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0030
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         jml rlMapMagicTornadoStepSpritePal
 
         .databank 0
@@ -9241,7 +9241,7 @@
         ; Part of the Tornado effect.
 
         jsl rlMapMagicTornadoStepSpritePal
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _C933
         lda wMapMagicTargetPixel
         and #$00FF
@@ -9258,11 +9258,11 @@
         lda #$0008
 
         _C91C
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda wR0
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapMagicSpriteAngle,b,x
         lda #$0100
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda #<>rlMapMagicTornadoSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -9282,12 +9282,12 @@
 
         jsl rlMapMagicTornadoStepSpritePal
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _C954
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
         lda #$0020
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicTornadoSpriteEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -9305,7 +9305,7 @@
         ; Part of the Tornado effect.
 
         jsl rlMapMagicTornadoStepSpritePal
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _C968
         lda #$0001
         sta wMapMagicHitFlag
@@ -9375,23 +9375,23 @@
         .databank ?
         ; Part of the Tornado effect.
 
-        lda aActiveSpriteSystem.aUserVar,b,x
+        lda aActiveSpriteSystem.aBody5,b,x
         beq _C9F2
 
         _C9ED
         dec a
-        sta aActiveSpriteSystem.aUserVar,b,x
+        sta aActiveSpriteSystem.aBody5,b,x
         rtl
 
 
         _C9F2
         lda #$0002
-        sta aActiveSpriteSystem.aUserVar,b,x
+        sta aActiveSpriteSystem.aBody5,b,x
         phx
-        lda aActiveSpriteSystem.aSubpixelStep,b,x
+        lda aActiveSpriteSystem.aBody6,b,x
         inc a
         and #$000F
-        sta aActiveSpriteSystem.aSubpixelStep,b,x
+        sta aActiveSpriteSystem.aBody6,b,x
         asl a
         tax
         lda <>aMapMagicTornadoSpritePalettes,b,x
@@ -9492,7 +9492,7 @@
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0001
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda $7F50C9
         asl a
         tay
@@ -9530,7 +9530,7 @@
         lda wMapMagicSide
         sta aActiveSpriteSystem.aTileBase,b,x
         lda #$0001
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda $7F50C9
         asl a
         tay
@@ -9548,7 +9548,7 @@
         .databank ?
         ; Part of the Wind effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _CAFF
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
@@ -9565,7 +9565,7 @@
         .databank ?
         ; Part of the Wind effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _CB41
         lda wMapMagicTargetPixel
         and #$00FF
@@ -9584,11 +9584,11 @@
         lda #$0002
 
         _CB2A
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda wR0
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapMagicSpriteAngle,b,x
         lda #$0400
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda #<>rlMapMagicWindFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -9613,13 +9613,13 @@
 
         _CB4E
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicWindAim._CB41
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
         lda #$0020
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicWindDissipate
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
@@ -9634,20 +9634,20 @@
         .databank ?
         ; Part of the Wind effect.
 
-        lda aActiveSpriteSystem.aDirection,b,x
+        lda aMapMagicSpriteSpeed,b,x
         sec
         sbc #$00C0
         bcs _CB7A
         lda #$0000
 
         _CB7A
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicWindAim._CB41
         lda #$0010
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicWindWaitEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
@@ -9662,7 +9662,7 @@
         .databank ?
         ; Part of the Wind effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicWindAim._CB41
         lda #$0001
         sta wMapMagicDone
@@ -9989,7 +9989,7 @@
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0001
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -10002,7 +10002,7 @@
         .databank ?
         ; Part of the Warp effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicWarpSpriteNoOp
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
@@ -10030,9 +10030,9 @@
         ; Part of the Warp effect.
 
         jsl rlMoveActiveSpriteByVelocity
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         beq _CDCC
-        stz aActiveSpriteSystem.aPixelStep,b,x
+        stz aMapMagicSpritePhase,b,x
         lda wMapMagicEffect
         cmp #$0020
         bne _CDCD
@@ -10052,7 +10052,7 @@
         lda #<>rlMapMagicWarpSpriteWaitFall
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0018
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #$0800
         sta aActiveSpriteSystem.aYVelocity,b,x
         stz aActiveSpriteSystem.aXSubpixel,b,x
@@ -10073,7 +10073,7 @@
         .databank ?
         ; Part of the Warp effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _CE0D
         lda #<>rlMapMagicWarpSpriteDescend
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -10102,11 +10102,11 @@
 
         _CE21
         lda #$0001
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         lda #<>rlMapMagicWarpSpriteEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0030
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -10119,7 +10119,7 @@
         .databank ?
         ; Part of the Warp effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _CE43
         lda #$0001
         sta wMapMagicDone
@@ -10146,7 +10146,7 @@
         and #$FFF8
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$0001
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -10162,7 +10162,7 @@
         lda #<>rlMapMagicBrokenStaffWaitFall
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0018
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #$0800
         sta aActiveSpriteSystem.aYVelocity,b,x
         stz aActiveSpriteSystem.aXSubpixel,b,x
@@ -10184,7 +10184,7 @@
         .databank ?
         ; Part of the BrokenStaff effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _CE96
         lda #<>rlMapMagicBrokenStaffDescend
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -10213,11 +10213,11 @@
 
         _CEAA
         lda #$0001
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         lda #<>rlMapMagicBrokenStaffEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0030
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         jsl rlUnfreezeWarpAttackerSprites
         rtl
 
@@ -10231,7 +10231,7 @@
         .databank ?
         ; Part of the BrokenStaff effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _CED0
         lda #$0001
         sta wMapMagicDone
@@ -10315,7 +10315,7 @@
         inc y
         inc y
         lda #$0001
-        sta aActiveSpriteSystem.aPixelStep,b,x
+        sta aMapMagicSpritePhase,b,x
         rtl
 
         .databank 0
@@ -10430,7 +10430,7 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         beq _CFFF
         inc y
         inc y
@@ -10524,7 +10524,7 @@
         .databank ?
         ; Part of the BrokenStaff effect.
 
-        lda aActiveSpriteSystem.aPixelStep,b,x
+        lda aMapMagicSpritePhase,b,x
         beq _D090
         inc y
         inc y
@@ -11004,7 +11004,7 @@
         and #$00FF
         sta aActiveSpriteSystem.aYPosition,b,x
         lda #$000A
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         rtl
 
         .databank 0
@@ -11017,7 +11017,7 @@
         .databank ?
         ; Part of the Thief effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _D340
         lda wMapMagicTargetPixel
         and #$00FF
@@ -11036,11 +11036,11 @@
         lda #$0002
 
         _D329
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda wR0
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapMagicSpriteAngle,b,x
         lda #$0400
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda #<>rlMapMagicThiefSpriteFlyToTarget
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -11059,13 +11059,13 @@
         ; Part of the Thief effect.
 
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicThiefSpriteAim._D340
         lda #$0001
         sta aMapAction.wMapBattleStrikeSignal
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
         lda #$0020
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicThiefSpriteDissipate
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
@@ -11080,20 +11080,20 @@
         .databank ?
         ; Part of the Thief effect.
 
-        lda aActiveSpriteSystem.aDirection,b,x
+        lda aMapMagicSpriteSpeed,b,x
         sec
         sbc #$00C0
         bcs _D36D
         lda #$0000
 
         _D36D
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicThiefSpriteAim._D340
         lda #$0010
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicThiefSpriteWaitEnd
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
@@ -11108,7 +11108,7 @@
         .databank ?
         ; Part of the Thief effect.
 
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne rlMapMagicThiefSpriteAim._D340
         lda #$0001
         sta wMapMagicDone
@@ -11151,7 +11151,7 @@
         .databank ?
         ; Part of the Thief effect.
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         bne _D3DF
         lda $0000,b,y
         tay
@@ -11457,22 +11457,22 @@
         .databank ?
         ; Part of the Valflame effect.
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         beq _D54F
         dec a
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
         rtl
 
 
         _D54F
         lda #$0003
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
         phx
-        lda aActiveSpriteSystem.aSubpixelAccum,b,x
-        inc aActiveSpriteSystem.aSubpixelAccum,b,x
+        lda aActiveSpriteSystem.aBody4,b,x
+        inc aActiveSpriteSystem.aBody4,b,x
         cmp #$0010
         bmi _D564
-        stz aActiveSpriteSystem.aSubpixelAccum,b,x
+        stz aActiveSpriteSystem.aBody4,b,x
 
         _D564
         asl a
@@ -11621,11 +11621,11 @@
         lda #$0002
 
         _D664
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda wR0
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapMagicSpriteAngle,b,x
         lda #$0400
-        sta aActiveSpriteSystem.aDirection,b,x
+        sta aMapMagicSpriteSpeed,b,x
         jsr rsMapMagicCalcSpriteVelocityFromAngle
         lda aActiveSpriteSystem.aXPosition,b,x
         jsr rsPlayMapMagicSound
@@ -11651,12 +11651,12 @@
         ; Part of the Valflame effect.
 
         jsl rlMoveActiveSpriteByVelocity
-        dec aActiveSpriteSystem.aMoverIndex,b,x
+        dec aMapMagicSpriteTimer,b,x
         bne _D6B8
         lda #$0001
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
         lda #$0020
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapMagicSpriteTimer,b,x
         lda #<>rlMapMagicValflameOrbDone
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -11696,7 +11696,7 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         cmp #$0001
         beq _D6E1
         lda $0000,b,y
@@ -11733,7 +11733,7 @@
         .databank ?
         ; Part of the Valflame effect.
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aActiveSpriteSystem.aBody3,b,x
         cmp #$0001
         beq _D70B
         lda $0000,b,y
@@ -16508,7 +16508,7 @@
         lda #$0005
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
         lda #(`aDecompressionBuffer)<<8
         sta lR18+1
         lda #<>aDecompressionBuffer
@@ -16547,7 +16547,7 @@
         lda #$0005
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aActiveSpriteSystem.aBody3,b,x
         plx
         ply
         rtl

@@ -2006,14 +2006,14 @@
         txa
         sta aMapAction.wMapBattleAttackerSpriteSlot
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
         lda aMapAction.wSideTallSprite
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapBattleSpriteTall,b,x
         lda aMapAction.wAttackerAllegiance
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteSide,b,x
         lda aMapAction.wSideTallSprite
         bne _8AE1
         lda wMapBattleAttackerBallista
@@ -2048,7 +2048,7 @@
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteSide,b,x
 
         _8B30
         plx
@@ -2151,14 +2151,14 @@
         lda #$0008
         sta aActiveSpriteSystem.aTileBase,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
         lda aMapAction.wSideTallSprite
-        sta aActiveSpriteSystem.aFlags,b,x
+        sta aMapBattleSpriteTall,b,x
         lda aMapAction.wDefenderAllegiance
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteSide,b,x
         lda wMapBattleDefenderBallista
         bne _8C28
         lda aMapAction.wSideTallSprite
@@ -2195,7 +2195,7 @@
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteSide,b,x
 
         _8C7D
         plx
@@ -2907,8 +2907,8 @@
         sta wR1
         ldx <>aMapAction.wMapBattleAttackerSpriteSlot,b,y
         clc
-        adc @l $001200,x
-        sta @l $001200,x
+        adc @l aActiveSpriteSystem.aXPosition,x
+        sta @l aActiveSpriteSystem.aXPosition,x
         inc y
         inc y
         ldx <>aMapAction.wMapBattleAttackerSpriteSlot,b,y
@@ -2916,8 +2916,8 @@
         beq _9100
         lda wR1
         clc
-        adc @l $001200,x
-        sta @l $001200,x
+        adc @l aActiveSpriteSystem.aXPosition,x
+        sta @l aActiveSpriteSystem.aXPosition,x
 
         _9100
         inc <>aMapAction.wMapBattleRecoilStep,b
@@ -3062,20 +3062,20 @@
         lda @l aMapAction.wAttackerAllegiance
         inc a
         ldx <>aMapAction.wMapBattleAttackerSpriteSlot,b
-        sta @l $0012A0,x
+        sta @l aActiveSpriteSystem.aPalette,x
         ldx <>aMapAction.wMapBattleAttackerAuxSpriteSlot,b
         bmi _91B3
-        sta @l $0012A0,x
+        sta @l aActiveSpriteSystem.aPalette,x
 
         _91B3
         lda @l aMapAction.wDefenderAllegiance
         inc a
         ldx <>aMapAction.wMapBattleDefenderSpriteSlot,b
         bmi _91CA
-        sta @l $0012A0,x
+        sta @l aActiveSpriteSystem.aPalette,x
         ldx <>aMapAction.wMapBattleDefenderAuxSpriteSlot,b
         bmi _91CA
-        sta @l $0012A0,x
+        sta @l aActiveSpriteSystem.aPalette,x
 
         _91CA
         plp
@@ -5552,7 +5552,7 @@
         inc a
         sta aActiveSpriteSystem.aPalette,b,x
         lda wBallistaBoltSide
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteSide,b,x
         plx
         ply
         rtl
@@ -7679,13 +7679,13 @@
         sta wR0
         lda aMapAction.wMapBattleDefenderSpriteSlot
         tax
-        lda @l $001200,x
+        lda @l aActiveSpriteSystem.aXPosition,x
         tay
         lda wMapBattleTemp1
         bne _B23E
         lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda @l $001200,x
+        lda @l aActiveSpriteSystem.aXPosition,x
         tay
 
         _B23E
@@ -10411,9 +10411,9 @@
         txa
         sta wMapBattleTemp3
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
         lda aMapAction.wSide
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11503,8 +11503,8 @@
         txa
         sta wScriptedCritSprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11546,8 +11546,8 @@
         txa
         sta wScriptedCritPartnerSprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11681,8 +11681,8 @@
         txa
         sta wScriptedCritSprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -11724,8 +11724,8 @@
         txa
         sta wScriptedCritPartnerSprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12031,8 +12031,8 @@
         txa
         sta wScriptedCritSprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12074,8 +12074,8 @@
         txa
         sta wScriptedCritPartnerSprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12117,8 +12117,8 @@
         txa
         sta wScriptedCritPartner2Sprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12391,8 +12391,8 @@
         txa
         sta wScriptedCritSprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12432,8 +12432,8 @@
         txa
         sta wScriptedCritPartnerSprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000
@@ -12473,8 +12473,8 @@
         txa
         sta wScriptedCritPartner2Sprite
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000

@@ -30,27 +30,27 @@
         txy
         lda aMovingMapSprites.wOffset,b
         tax
-        sta aActiveSpriteSystem.aMoverIndex,b,y
+        sta aMoverSpriteSlot,b,y
         tya
         sta aMovingMapSprites.wActiveSpriteOffset,b,x
 
         lda aMovingMapSprites.wMapSpriteFlags,b
         ora #$8000
-        sta aActiveSpriteSystem.aFlags,b,y
+        sta aMoverSpriteFlags,b,y
 
         lda #0
-        sta aActiveSpriteSystem.aStepCounter,b,y
-        sta aActiveSpriteSystem.aSubpixelAccum,b,y
-        sta aActiveSpriteSystem.aDirection,b,y
+        sta aMoverSpriteStepTimer,b,y
+        sta aMoverSpriteSubpixelAccum,b,y
+        sta aMoverSpriteDirection,b,y
 
         phx
         jsr rsGetMovingMapSpriteStepShift
         asl a
         tax
         lda aMovingMapSpriteStepSubpixelTable,x
-        sta aActiveSpriteSystem.aSubpixelStep,b,y
+        sta aMoverSpriteSubpixelStep,b,y
         lda aMovingMapSpriteStepPixelTable,x
-        sta aActiveSpriteSystem.aPixelStep,b,y
+        sta aMoverSpritePixelStep,b,y
         plx
 
         lda #0
@@ -60,9 +60,9 @@
         lda #0
         sta aMovingMapSpriteAnimTimer,x
 
-        lda aActiveSpriteSystem.aFlags,b,y
+        lda aMoverSpriteFlags,b,y
         and #~$4000
-        sta aActiveSpriteSystem.aFlags,b,y
+        sta aMoverSpriteFlags,b,y
         rtl
 
         .databank 0
@@ -112,7 +112,7 @@
         cmp #0
         beq _89A8
 
-          lda aActiveSpriteSystem.aMoverIndex,b,y
+          lda aMoverSpriteSlot,b,y
           lsr a
           cmp aMovingMapSprites.wEntryIndex,b
           bne _89A8
@@ -127,7 +127,7 @@
               tax
               lda aMovingMapSprites.wActiveSpriteOffset,x
               tax
-              lda aActiveSpriteSystem.aFlags,x
+              lda aMoverSpriteFlags,x
               bit #$0004
               beq _89A7
 
@@ -174,9 +174,9 @@
         lda #$0008
         tsb $4C07,b
 
-        lda aActiveSpriteSystem.aFlags,b,y
+        lda aMoverSpriteFlags,b,y
         ora #$4000
-        sta aActiveSpriteSystem.aFlags,b,y
+        sta aMoverSpriteFlags,b,y
 
         lda #<>rlASMapSpriteCycle2
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -193,13 +193,13 @@
         .databank ?
 
         txy
-        lda aActiveSpriteSystem.aMoverIndex,b,y
+        lda aMoverSpriteSlot,b,y
         tax
         stx aMovingMapSprites.wOffset,b
         cpx #$FFFF
         beq _End
 
-          lda aActiveSpriteSystem.aFlags,b,y
+          lda aMoverSpriteFlags,b,y
           bit #$8000
           beq _End
 
@@ -357,7 +357,7 @@
         lda wR5
         sta wMapPixelScrollDistance,b
         sta wMapScrollSpeed,b
-        lda aActiveSpriteSystem.aDirection,b,y
+        lda aMoverSpriteDirection,b,y
         jsr rsGetMapScrollDirectionIdentifierFromCommand
         jsr rsCheckMovingMapSpriteInsideMargins
         bcs +
@@ -378,7 +378,7 @@
         ; Returns SEC when the camera need not follow the event mover: it is off screen, or it has not yet reached the margin it is heading for (direction A in joypad bits: $0100 right, $0200 left, $0400 down, $0800 up).
 
         pha
-        lda aActiveSpriteSystem.aMoverIndex,b,y
+        lda aMoverSpriteSlot,b,y
         tax
         lda aMovingMapSprites.wXPixelPosition,b,x
         sec
@@ -1701,7 +1701,7 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aDirection,b,y
+        lda aMoverSpriteDirection,b,y
         cmp #9
         bne +
 
@@ -1731,7 +1731,7 @@
 
         ; Reads scripted movement paths
 
-        lda aActiveSpriteSystem.aFlags,b,y
+        lda aMoverSpriteFlags,b,y
         bit #$0010
         beq +
 
@@ -1747,7 +1747,7 @@
         +
         jsr rsUpdateMovingMapSpriteSoundPan
 
-        lda aActiveSpriteSystem.aStepCounter,b,y
+        lda aMoverSpriteStepTimer,b,y
         beq +
 
           clc
@@ -1840,7 +1840,7 @@
         cmp #9
         beq +
 
-          cmp aActiveSpriteSystem.aDirection,b,y
+          cmp aMoverSpriteDirection,b,y
           beq +
 
             pha
@@ -1856,7 +1856,7 @@
             pla
 
         +
-        sta aActiveSpriteSystem.aDirection,b,y
+        sta aMoverSpriteDirection,b,y
 
         lda aMovingMapSprites.wPathScriptOffset,b,x
         inc a
@@ -1870,10 +1870,10 @@
         xba
         ora wR0
         jsl rlUnsignedMultiply8By8
-        sta aActiveSpriteSystem.aStepCounter,b,y
+        sta aMoverSpriteStepTimer,b,y
         plx
 
-        lda aActiveSpriteSystem.aDirection,b,y
+        lda aMoverSpriteDirection,b,y
         cmp #4
         beq +
 
@@ -1882,7 +1882,7 @@
 
         +
         lda #0
-        sta aActiveSpriteSystem.aSubpixelAccum,b,y
+        sta aMoverSpriteSubpixelAccum,b,y
         clc
         rts
 
@@ -1913,9 +1913,9 @@
         lda aMovingMapSprites.wActiveSpriteOffset,b,x
         tay
 
-        lda aActiveSpriteSystem.aFlags,b,y
+        lda aMoverSpriteFlags,b,y
         and #~$8000
-        sta aActiveSpriteSystem.aFlags,b,y
+        sta aMoverSpriteFlags,b,y
 
         jsl rlStopMovingMapSpriteSound
         ply
@@ -1954,7 +1954,7 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aFlags,b,y
+        lda aMoverSpriteFlags,b,y
         bit #$000E
         beq _8BEF
 
@@ -2065,11 +2065,11 @@
         tay
         ldx wR0
         lda aScriptedMoveSpeedSubpixelTable,x
-        sta aActiveSpriteSystem.aSubpixelStep,b,y
+        sta aMoverSpriteSubpixelStep,b,y
         lda aScriptedMoveSpeedPixelTable,x
-        sta aActiveSpriteSystem.aPixelStep,b,y
+        sta aMoverSpritePixelStep,b,y
         lda #9
-        sta aActiveSpriteSystem.aDirection,b,y
+        sta aMoverSpriteDirection,b,y
         plx
         lda aMovingMapSprites.wPathScriptOffset,b,x
         tay
@@ -2162,7 +2162,7 @@
         sta aMovingMapSpriteAnimTimer,x
 
         pla
-        sta aActiveSpriteSystem.aDirection,b,y
+        sta aMoverSpriteDirection,b,y
         sec
         rtl
 
@@ -5892,7 +5892,7 @@
         ; Active sprite command $0F's callback for map sprites: when bit 14 of the sprite's flags is set, animates the event mover in aMovingMapSprites.wOffset and, if it is on screen, adds its position less the camera to wR0/wR1 and pushes its sprite array (aMovingMapSpriteArrayOffset) to OAM.
 
         phb
-        lda aActiveSpriteSystem.aFlags,b,x
+        lda aMoverSpriteFlags,b,x
         bit #$4000
         beq _End
 
@@ -6053,29 +6053,29 @@
 
         ; One frame of an event mover's walk (sprite Y): counts down its step timer, adds its speed (whole and fractional parts) and moves it in its direction (aMovingMapSpritePositionRoutines); with bit 0 of its flags set the camera follows (rsCameraFollowMovingMapSprite).
 
-        lda aActiveSpriteSystem.aStepCounter,b,y
+        lda aMoverSpriteStepTimer,b,y
         dec a
-        sta aActiveSpriteSystem.aStepCounter,b,y
+        sta aMoverSpriteStepTimer,b,y
 
-        lda aActiveSpriteSystem.aSubpixelStep,b,y
-        ora aActiveSpriteSystem.aPixelStep,b,y
+        lda aMoverSpriteSubpixelStep,b,y
+        ora aMoverSpritePixelStep,b,y
         beq _End2
 
           phx
-          lda aActiveSpriteSystem.aSubpixelAccum,b,y
+          lda aMoverSpriteSubpixelAccum,b,y
           clc
-          adc aActiveSpriteSystem.aSubpixelStep,b,y
-          sta aActiveSpriteSystem.aSubpixelAccum,b,y
+          adc aMoverSpriteSubpixelStep,b,y
+          sta aMoverSpriteSubpixelAccum,b,y
           rol a
           and #$0001
           sta wR5
           ror a
           clc
-          lda aActiveSpriteSystem.aPixelStep,b,y
+          lda aMoverSpritePixelStep,b,y
           adc wR5
           sta wR5
 
-          lda aActiveSpriteSystem.aDirection,b,y
+          lda aMoverSpriteDirection,b,y
           bit #$0080
           bne _End
 
@@ -6094,7 +6094,7 @@
             tax
             jsr (aMovingMapSpritePositionRoutines,x)
 
-            lda aActiveSpriteSystem.aFlags,b,y
+            lda aMoverSpriteFlags,b,y
             bit #$0001
             beq _End
 

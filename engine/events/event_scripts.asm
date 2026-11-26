@@ -2617,9 +2617,9 @@
           beq _Next
 
             tax
-            lda aActiveSpriteSystem.aFlags,b,x
+            lda aMoverSpriteFlags,b,x
             ora #$8000
-            sta aActiveSpriteSystem.aFlags,b,x
+            sta aMoverSpriteFlags,b,x
 
             tyx
             lda aMovingMapSprites.wMovingSound,b,x
@@ -4808,7 +4808,7 @@
           beq +
 
             tay
-            lda aActiveSpriteSystem.aFlags,b,y
+            lda aMoverSpriteFlags,b,y
             tsb wR7
 
           +

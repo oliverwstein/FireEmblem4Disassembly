@@ -762,8 +762,8 @@
         txa
         sta aMapAction.wMapBattleDefenderSpriteSlot
         lda #$0001
-        sta aActiveSpriteSystem.aMoverIndex,b,x
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0040
@@ -2682,9 +2682,9 @@
         txa
         sta @l $001097
         lda #$0000
-        sta aActiveSpriteSystem.aMoverIndex,b,x
+        sta aMapBattleSpriteGraphicsSide,b,x
         lda #$0000
-        sta aActiveSpriteSystem.aStepCounter,b,x
+        sta aMapBattleSpriteSide,b,x
         lda #$0006
         sta aActiveSpriteSystem.aPalette,b,x
         lda #$0000

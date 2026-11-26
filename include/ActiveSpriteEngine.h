@@ -79,7 +79,7 @@
     ACTIVE_SPRITE_ROUND_SCRIPT .segment
       ; $09 (map battle): jump to the side's round script
       ; (aMapAction.lAttackerRoundScript, or lDefenderRoundScript when the
-      ; sprite's aStepCounter is set), chosen by rsGetMapBattleRoundScripts.
+      ; sprite's aMapBattleSpriteSide is set), chosen by rsGetMapBattleRoundScripts.
       .byte $09
     .endsegment
 
@@ -106,7 +106,7 @@
 
     ACTIVE_SPRITE_TABLE_FRAME .segment Duration, Index
       ; $0E: draw frame Index of the frame table at $7F4598 ($7F459B when
-      ; the sprite's aStepCounter is set) for Duration frames. A frame
+      ; the sprite's aMapBattleSpriteSide is set) for Duration frames. A frame
       ; table starts with the offset of its list of frame offsets; all
       ; offsets count from the table's start.
       .byte $0E, \Duration, \Index

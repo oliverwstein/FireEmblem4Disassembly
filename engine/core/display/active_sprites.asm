@@ -401,14 +401,14 @@
         sta aActiveSpriteSystem.aTileBase,x
         sta aActiveSpriteSystem.aTileBaseHigh,x
         sta aActiveSpriteSystem.aPalette,x
-        sta aActiveSpriteSystem.aMoverIndex,x
-        sta aActiveSpriteSystem.aFlags,x
-        sta aActiveSpriteSystem.aDirection,x
-        sta aActiveSpriteSystem.aStepCounter,x
-        sta aActiveSpriteSystem.aSubpixelAccum,x
-        sta aActiveSpriteSystem.aUserVar,x
-        sta aActiveSpriteSystem.aSubpixelStep,x
-        sta aActiveSpriteSystem.aPixelStep,x
+        sta aActiveSpriteSystem.aBody0,x
+        sta aActiveSpriteSystem.aBody1,x
+        sta aActiveSpriteSystem.aBody2,x
+        sta aActiveSpriteSystem.aBody3,x
+        sta aActiveSpriteSystem.aBody4,x
+        sta aActiveSpriteSystem.aBody5,x
+        sta aActiveSpriteSystem.aBody6,x
+        sta aActiveSpriteSystem.aBody7,x
         sta aActiveSpriteSystem.aXVelocity,x
         sta aActiveSpriteSystem.aYVelocity,x
 
@@ -1442,11 +1442,11 @@
         .databank ?
 
         ; Not in the command table. Continues at the word stored at one of two long
-        ; addresses, by the sprite's aStepCounter.
+        ; addresses, by the sprite's aMapBattleSpriteSide.
 
         phb
         phx
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aMapBattleSpriteSide,b,x
         beq +
 
         inc y
@@ -1477,13 +1477,13 @@
         .autsiz
         .databank ?
 
-        ; Command $09: jumps to the side's round script (aMapAction.lAttackerRoundScript, lDefenderRoundScript for aStepCounter 1).
+        ; Command $09: jumps to the side's round script (aMapAction.lAttackerRoundScript, lDefenderRoundScript for aMapBattleSpriteSide 1).
 
         phb
         phx
         lda aMapAction.lAttackerRoundScript
         tay
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aMapBattleSpriteSide,b,x
         beq +
 
           lda aMapAction.lDefenderRoundScript
@@ -1508,7 +1508,7 @@
         phx
         lda aMapAction.lAttackerAuxRoundScript
         tay
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aMapBattleSpriteSide,b,x
         beq +
 
           lda aMapAction.lDefenderAuxRoundScript
@@ -1618,14 +1618,14 @@
         .autsiz
         .databank ?
 
-        ; Command $03 (ACTIVE_SPRITE_MAP_BATTLE_FRAME): uploads frame N of the map battle side's frame tiles (aMapBattleSpriteDMATable by the sprite's aFlags, the tall flag; the side in aMoverIndex) to its frame VRAM.
+        ; Command $03 (ACTIVE_SPRITE_MAP_BATTLE_FRAME): uploads frame N of the map battle side's frame tiles (aMapBattleSpriteDMATable by the sprite's aMapBattleSpriteTall; the side in aMapBattleSpriteGraphicsSide) to its frame VRAM.
 
         phy
         phx
-        lda aActiveSpriteSystem.aFlags,b,x
+        lda aMapBattleSpriteTall,b,x
         asl a
         clc
-        adc aActiveSpriteSystem.aFlags,b,x
+        adc aMapBattleSpriteTall,b,x
         tax
 
         lda aMapBattleSpriteDMATable,x
@@ -1641,7 +1641,7 @@
         lda [$24],y
         sta $04
         ldx aActiveSpriteSystem.wOffset,b
-        lda aActiveSpriteSystem.aMoverIndex,b,x
+        lda aMapBattleSpriteGraphicsSide,b,x
         asl a
         tax
         lda aMapBattleSideGraphicsOffsets,x
@@ -1656,11 +1656,11 @@
         sta $24
 
         ldx aActiveSpriteSystem.wOffset,b
-        lda aActiveSpriteSystem.aFlags,b,x
+        lda aMapBattleSpriteTall,b,x
         sta $00
 
         ldx aActiveSpriteSystem.wOffset,b
-        lda aActiveSpriteSystem.aMoverIndex,b,x
+        lda aMapBattleSpriteGraphicsSide,b,x
         asl a
         tax
 
@@ -1816,7 +1816,7 @@
         lda $7F4598+1
         sta $24+1
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aMapBattleSpriteSide,b,x
         beq +
 
         lda aMapAction.lDefenderSpriteData
@@ -1847,7 +1847,7 @@
         lda $7F4598+1
         sta $24+1
 
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aMapBattleSpriteSide,b,x
         beq +
 
         lda aMapAction.lDefenderSpriteData
@@ -1896,7 +1896,7 @@
         lda $7F4598+1
         sta $24+1
         sta $28
-        lda aActiveSpriteSystem.aStepCounter,b,x
+        lda aMapBattleSpriteSide,b,x
         beq +
 
           lda aMapAction.lDefenderSpriteData

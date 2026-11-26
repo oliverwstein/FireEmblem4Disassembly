@@ -2303,13 +2303,13 @@
         .autsiz
         .databank ?
 
-        ; Adds the 8.8 velocities in aXVelocity and aYVelocity to the sprite's X and Y (aXPosition, aYPosition), keeping the fractions in their high bytes' neighbours.
+        ; Adds the 8.8 velocities in aXVelocity and aYVelocity to the sprite's X and Y (aXPosition, aYPosition), keeping the fractions in the high bytes of aXSubpixel and aYSubpixel.
 
         lda aActiveSpriteSystem.aXVelocity,b,x
         sep #$20
         clc
-        adc $11E1,b,x
-        sta $11E1,b,x
+        adc aActiveSpriteSystem.aXSubpixel+1,b,x
+        sta aActiveSpriteSystem.aXSubpixel+1,b,x
         rep #$20
         and #$FF00
         xba
@@ -2322,8 +2322,8 @@
         lda aActiveSpriteSystem.aYVelocity,b,x
         sep #$20
         clc
-        adc $1221,b,x
-        sta $1221,b,x
+        adc aActiveSpriteSystem.aYSubpixel+1,b,x
+        sta aActiveSpriteSystem.aYSubpixel+1,b,x
         rep #$20
         and #$FF00
         xba

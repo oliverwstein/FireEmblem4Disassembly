@@ -29,11 +29,11 @@ SIZES = {0x00: 3, 0x01: 0, 0x02: 2, 0x03: 1, 0x04: 0, 0x05: 0, 0x06: 0, 0x07: 0,
 # Routines that load the word at Y into Y are found by reads_jump() anyway;
 # these are the ones checked by hand.
 CALL_ARGS = {
-    0x9FA00E: 'jump',  # jumps when aUnknown001320 is 0, else skips the word
+    0x9FA00E: 'jump',  # jumps when aActiveSpriteSystem.aBody3 is 0, else skips the word
     0x9FA9C1: 'jump',  # moves the sprite down; jumps once it has reached its Y
-    0x9FA9F7: 'jump',  # skips the word when aUnknown0013A0 is 1, else jumps
-    0x9FAA02: 'jump',  # skips the word when aUnknown0013A0 is 2, else jumps
-    0x9FB1CC: 'jump',  # jumps (and clears it) when aUnknown0013A0 is set
+    0x9FA9F7: 'jump',  # skips the word when aMapMagicSpritePhase is 1, else jumps
+    0x9FAA02: 'jump',  # skips the word when aMapMagicSpritePhase is 2, else jumps
+    0x9FB1CC: 'jump',  # jumps (and clears it) when aMapMagicSpritePhase is set
     0x9FB4E8: 'jump',  # skips the word when $7ECC0C is 2, else jumps
 }
 # Commands after which the script does not run on.

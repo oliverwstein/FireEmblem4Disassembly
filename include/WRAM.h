@@ -1591,25 +1591,57 @@
       aFrameTimer     .fill (size(word) * 16) ; $001180
       aCodeOffset     .fill (size(word) * 16) ; $0011A0
       aFrameOffset    .fill (size(word) * 16) ; $0011C0 ; the sprite array drawn each frame (structSpriteArray), in the sprite's bank
-      aXSubpixel  .fill (size(word) * 16) ; $0011E0
+      aXSubpixel      .fill (size(word) * 16) ; $0011E0 ; high byte: X's fraction (rlMoveActiveSpriteByVelocity)
       aXPosition      .fill (size(word) * 16) ; $001200 ; screen X; X at creation
-      aYSubpixel  .fill (size(word) * 16) ; $001220
+      aYSubpixel      .fill (size(word) * 16) ; $001220 ; high byte: Y's fraction
       aYPosition      .fill (size(word) * 16) ; $001240 ; screen Y; Y at creation
       aTileBase       .fill (size(word) * 16) ; $001260 ; added to each entry's tile (wR4 for the renderer)
       aTileBaseHigh   .fill (size(word) * 16) ; $001280 ; tile base for tiles $40 and up with rlPushToOAMBufferDualTileBase (wR6)
       aPalette        .fill (size(word) * 16) ; $0012A0 ; OAM palette ORed into each entry (<< 9, wR5)
-      aMoverIndex  .fill (size(word) * 16) ; $0012C0 ; holds mover index
-      aFlags  .fill (size(word) * 16) ; $0012E0
-      aDirection  .fill (size(word) * 16) ; $001300 ; holds movement direction
-      aStepCounter  .fill (size(word) * 16) ; $001320
-      aSubpixelAccum  .fill (size(word) * 16) ; $001340
-      aUserVar  .fill (size(word) * 16) ; $001360
-      aSubpixelStep  .fill (size(word) * 16) ; $001380
-      aPixelStep  .fill (size(word) * 16) ; $0013A0
-      aXVelocity  .fill (size(word) * 16) ; $0013C0
-      aYVelocity  .fill (size(word) * 16) ; $0013E0
+      ; aBody0-aBody7 belong to whoever made the sprite: the engine clears them at
+      ; creation and its own code never reads them, except the map battle's script
+      ; commands. Each user's names for them follow the block.
+      aBody0          .fill (size(word) * 16) ; $0012C0
+      aBody1          .fill (size(word) * 16) ; $0012E0
+      aBody2          .fill (size(word) * 16) ; $001300
+      aBody3          .fill (size(word) * 16) ; $001320
+      aBody4          .fill (size(word) * 16) ; $001340
+      aBody5          .fill (size(word) * 16) ; $001360
+      aBody6          .fill (size(word) * 16) ; $001380
+      aBody7          .fill (size(word) * 16) ; $0013A0
+      aXVelocity      .fill (size(word) * 16) ; $0013C0 ; signed 8.8 pixels a frame, added by rlMoveActiveSpriteByVelocity
+      aYVelocity      .fill (size(word) * 16) ; $0013E0
 
     .bend
+
+    ; What each user keeps in aActiveSpriteSystem's body. A slot left out here
+    ; means different things in different routines of that user (or is unused),
+    ; and the code names it aActiveSpriteSystem.aBodyN.
+
+    ; Event movers (engine/map/map_sprites.asm, rsStepMovingMapSprite and the
+    ; event script commands that wait for movers to halt).
+    aMoverSpriteSlot           = aActiveSpriteSystem.aBody0 ; the mover's offset in aMovingMapSprites
+    aMoverSpriteFlags          = aActiveSpriteSystem.aBody1 ; wMapSpriteFlags | $8000; $0001 the camera follows
+    aMoverSpriteDirection      = aActiveSpriteSystem.aBody2 ; the move (1-10, indexes aMovingMapSpritePositionRoutines); bit 7 set: no position change
+    aMoverSpriteStepTimer      = aActiveSpriteSystem.aBody3 ; frames left in the current move
+    aMoverSpriteSubpixelAccum  = aActiveSpriteSystem.aBody4 ; fraction of a pixel carried between frames
+    aMoverSpriteSubpixelStep   = aActiveSpriteSystem.aBody6 ; speed: fraction of a pixel a frame
+    aMoverSpritePixelStep      = aActiveSpriteSystem.aBody7 ; speed: whole pixels a frame
+
+    ; Map battle combatants and their extra sprites (engine/battle/map_battle.asm,
+    ; map_action_animations.asm, and active sprite commands $03, $09-$0C and $0E).
+    aMapBattleSpriteGraphicsSide = aActiveSpriteSystem.aBody0 ; whose frame tiles command $03 uploads, and where (0 or 1)
+    aMapBattleSpriteTall         = aActiveSpriteSystem.aBody1 ; aMapAction.wSideTallSprite: which frame DMA table command $03 uses
+    aMapBattleSpriteSide         = aActiveSpriteSystem.aBody3 ; 0 attacker, 1 defender: whose scripts the side commands jump to
+
+    ; Map magic effect sprites (engine/battle/map_magic_effects.asm). aBody3-aBody6
+    ; vary by effect: a flag the sprite's script waits for (Fenrir, Thief, Wind,
+    ; Valflame orbs, Elthunder's ready flag), palette animation timers and steps
+    ; (Thunder, Light, Tornado, Valflame), a proc offset (Thoron).
+    aMapMagicSpriteTimer = aActiveSpriteSystem.aBody0 ; frames left in the current stage, counted down by its on-cycle routine
+    aMapMagicSpriteAngle = aActiveSpriteSystem.aBody1 ; direction for rsMapMagicCalcSpriteVelocityFromAngle (256 steps)
+    aMapMagicSpriteSpeed = aActiveSpriteSystem.aBody2 ; magnitude for the same (Nosferatu uses aBody2 as a palette step)
+    aMapMagicSpritePhase = aActiveSpriteSystem.aBody7 ; set to 1 or 2 as a stage ends; the effect's script waits for it
 
     aActiveSpriteOAMQueue .fill (40 * 12) ; $001400
       ; A deferred render queue: 12-byte entries (sprite array, X, Y, tile base,
