@@ -24,7 +24,8 @@ The build is byte-identical and checksums verify. Code changes made while writin
 | V | 15 [Castles and towns](docs/guide/15-castles-and-towns.md), 16 [The arena](docs/guide/16-the-arena.md) | draft, not yet reviewed |
 | V | 17 [Love and lineage](docs/guide/17-love-and-lineage.md), 18 [Saving](docs/guide/18-saving.md), 19 [Between chapters](docs/guide/19-between-chapters.md), 20 [The opening](docs/guide/20-the-opening.md), 21 [Endings and scores](docs/guide/21-endings-and-scores.md) | draft, not yet reviewed |
 | VI | 22 [A map bigger than the screen](docs/guide/22-a-map-bigger-than-the-screen.md), 23 [Two ways to show a fight](docs/guide/23-two-ways-to-show-a-fight.md), 24 [The battle scene](docs/guide/24-the-battle-scene.md), 25 [Full-screen windows and the status screen](docs/guide/25-full-screen-windows-and-the-status-screen.md) | rewritten 2026-11-25 from Gemini's drafts (a211ef4) after a review; not yet reviewed |
-| VII | 26–31 | not started; 26-30 have reference pages (2026-11-25), 31 needs a sound page |
+| VII | 26 [The frame](docs/guide/26-the-frame.md) | draft 2026-11-26, not yet reviewed; links ahead to 27–31 by their planned file names (`27-screens.md`, `28-procs.md`, `29-sprites-and-scanlines.md`, `30-getting-graphics-in.md`, `31-the-second-computer.md`) |
+| VII | 27–31 | not started; 27-30 have reference pages (2026-11-25), 31 needs a sound page |
 
 **Reference pages** (`docs/reference/`): core (now an overview) with frame, game_states, procs, sprites, scanlines, graphics and allocation; ai, arena, battle, battle_scene, castle, demo, dialogue, epilogue, events, items, map_battle, map_menu, map, menus, rankings, save, title, units, worldmap. Missing: **sound** (lowest priority) and **debug**. `tools/reference.py` output (routines/, INDEX.md, ram.md, constants.md) is generated and gitignored. It takes a routine's comment from the block right after its label, a RAM name's from its line and the comment lines indented under it, and a constant's from its line, the lines under it, and the comment block directly above its group.
 
@@ -120,6 +121,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | 15 more tilemap streams unpacked as 4bpp tiles (`acChapterIntroBannerTilemaps`, `acMenuWindowBackgroundTilemap`—was `g4bppcDebugMenuWindowTiles`, shared by item/skill/debug menus—`acBattleSceneHUDWindowTilemap`, `acBattleSceneDecompTilemapE03B09`–`E040D3`, `acBattleSceneUnusedTilemapE03F2B`–`E041B7`, `acBattleSceneEffectTilemapF22851`, `acTitleSceneTilemapF5222D`/`F524B7`/`F527E5`/`F57B55`): now `ac...Tilemap` `.bin` | gfx/compressed/ | `230ab78` |
 | 7 Mode 1 BG3 2bpp tile sheets unpacked as 4bpp (`gcAntiPiracyWarningTiles`, `gcAbnormalityWarningTiles`, `g2bppcTitleSceneTilesF57765`, `gcBattleSceneStatLabels`, `gcHiraganaFont`, `gcMenuLabelsAndIcons`, `gcOpeningCreditsFont`): now `.2bpp.png` | gfx/compressed/, tools/ | `09f4ed7` |
 | `aWorldMapMarkerPalette` (`$7ECB88` = `aDecompressionBuffer+$4000`, 7 words -> 8) leaked into battle-scene and map-battle-magic code; scoped to `markers.asm` | include/WRAM.h, tools/name_ram.py, engine/ | `c6f165e` |
+| `rlReset`'s comment: its three tests said to lead on regardless (a failed test hangs). `wChapterFlags` `$0008` undocumented (rsMapVBlank skipped the tile animations; never read) and `$0200` described as live (only `rsPauseMapProcsAndHDMAUnused` sets it). `bFrameCounterByThrees` and `wVBlankDisabledFramecount` have no readers | engine/core/frame/boot.asm, include/WRAM.h | `3afb7a8` |
 
 **In the documentation** (reference pages, guide drafts):
 
@@ -157,6 +159,7 @@ Places where the earlier disassembly or documentation was wrong, found while wri
 | map.md: the map's main loop said to run the game state routines and redraw the dialogue boxes (both are in `rsMapVBlank`; the main loop runs the AI and the queues) | docs/reference/map.md | 2026-11-25 |
 | Gemini's renames left 24 removed names in the hand-written reference pages, three guide chapters and gfx/ui/README.md; `tools/battle_animation.py`, `backgrounds.py` and `songs.py` read deleted offset CSVs | docs/, tools/ | `e46cc7a` |
 | Ch. 6: the random numbers said to be seeded from the frame counter; the counter is always 0 there, so the table starts the same at every boot, and saves carry it | docs/guide/06 | 2026-11-25 |
+| frame.md: `rlReset` said to reach the same place whichever way its tests go (a failed test stays in bank 0 and the bank check hangs); the random table said to be seeded from the frame counter without saying it is always 0 | docs/reference/frame.md | `3afb7a8` |
 
 ## Retail bugs and quirks found
 
