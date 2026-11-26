@@ -40,5 +40,6 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 - [battle_scene.md](battle_scene.md): the battle scene with the animations on (game states `$18`/`$19`): its frame, the rounds and strikes, HP, the end steps (experience, level up, messages), the animation slots.
 - [map_battle.md](map_battle.md): battles played on the map with the animations off, and the map actions and scripted scenes that use the same sprites.
 - [worldmap.md](worldmap.md): the world map between chapters and in the epilogue (game states `$0D`-`$0F`): its steps, frame, edge IRQs and layer HDMA, and the leftovers.
+- [sound.md](sound.md): the APU ports and the effect and command queues, uploading the driver and the sound data, the sound scripts songs are, choosing the music, the sound data in ROM.
 
 The other systems get their page as Phase 3 names and sorts them (see [PLAN.md](../../PLAN.md)).
