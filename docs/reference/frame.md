@@ -27,14 +27,14 @@ The reset vector (`$00/FFFC`, [header.asm](../../engine/core/frame/header.asm)) 
 
 1. **`rlReset`** turns off interrupts, switches the CPU to native mode, and jumps to `rlBootInitAndCheckHardware` in bank `$80` (the FastROM mirror). On the way it checks that the CPU was in emulation mode (as after a real reset), that the direct page is 0, and that the reset vector still points at itself. A failed check branches to the same routine without leaving bank 0, so the bank check in step 2 sends it to the anti-tamper hang.
 2. **`rlBootInitAndCheckHardware`** sets the stack to `$1FF7`, turns on FastROM (`MEMSEL`), blanks the screen and stops NMI, DMA and HDMA. If `$1FFC`-`$1FFF` hold `"ELM0"`, RAM survived a reset and the copier scan is skipped. Otherwise it looks for signs of a copier or cheat device, any of which jumps to the anti-tamper hang (below):
-   - the word just below the stack pointer, plus one, is `rlReset`'s address (a return address into `rlReset`);
-   - in `$0000`-`$1FFD`, a `JMP ($FFFC)`, a `JMP (addr)` whose target holds `rlReset`, a `JMP rlReset`, or the 32 bytes `$60`, `$61` ... `$7F` in a row.
+   - the word just below the pre-reset stack pointer, plus one, is `rlReset`'s address (a return address into `rlReset`);
+   - in `$0000`-`$1FFD`, a `JMP ($FFFC)`, a `JMP (addr)` with `addr < $1FFF` whose target holds `rlReset`, a `JMP rlReset`, or the 32 bytes `$60`, `$61` ... `$7F` in a row.
 
    Then, if the code is running in bank 0 instead of `$80`, it hangs the same way. Otherwise it runs `rlCheckCodeChecksumsAtReset` and writes `"ELM0"` to `$1FFC`.
-3. **`rlColdResetClearMemory`** (falling through) clears `$7E:0000`-`$1FF7`, `$7E:2000`-`$FFFF` and all of bank `$7F`, leaving the stack's top and `"ELM0"`. It clears VRAM with one 64 KB fixed-source DMA from a zero word in its own code (the operand of a `lda #$0000` at `$80/8E93`). It sets every PPU and CPU register to a default (`rsInitPPURegisters`), uploads the sound driver (`rlInitSound`), runs `rlCheckCodeChecksumsAtReset` again, sets the joypad repeat to 40 and 10 frames, installs `rsDefaultVBlankRoutine` and `rsDefaultIRQRoutine`, and enters the main loop with `rlInitEngineAndStartLogo` as its routine.
+3. **`rlColdResetClearMemory`** (falling through) clears `$7E:0000`-`$1FF7`, `$7E:2000`-`$FFFF` and all of bank `$7F`, leaving `$1FF8`-`$1FFB` (above the stack top) and `"ELM0"`. It clears VRAM with one 64 KB fixed-source DMA from a single zero byte in its own code (`$80/8E93`, the first operand byte of `lda #$0000` at `$80/8E92`). It sets every PPU and CPU register to a default (`rsInitPPURegisters`), uploads the sound driver (`rlInitSound`), runs `rlCheckCodeChecksumsAtReset` again, sets the joypad repeat to 40 and 10 frames (overwritten before the first VBlank by `rsSetupOpeningLogoScreen`), installs `rsDefaultVBlankRoutine` and `rsDefaultIRQRoutine`, and enters the main loop with `rlInitEngineAndStartLogo` as its routine.
 4. **`rlInitEngineAndStartLogo`** turns off NMI, blanks the screen, clears the sprite buffer and the decompression queue, copies the block-copy stubs to RAM ([allocation.md](allocation.md)), and registers the five per-frame engines ([game_states.md](game_states.md)). It sets both game states to 0 and jumps to `rsSetupOpeningLogoScreen` ([opening_logo.asm](../../engine/title/opening_logo.asm)), which installs the logo's VBlank routine and game states `$01`-`$03`.
 
-**The soft reset.** `rlButtonCombinationResetCheck` ([frame.asm](../../engine/core/frame/frame.asm)) runs from the main loop each frame. When the held buttons are exactly Select, L and R (with or without Start) and Start is newly pressed, it blanks the screen, turns off NMI and the timer IRQs (joypad reading stays on), stops DMA and HDMA, empties the DMA queue and jumps to `rlSoftReset`, which resets the stack and registers and goes to `rlColdResetClearMemory`. A soft reset skips the copier scan and keeps `"ELM0"`.
+**The soft reset.** `rlButtonCombinationResetCheck` ([frame.asm](../../engine/core/frame/frame.asm)) runs from the main loop each frame. When the held buttons are exactly Select, L and R (with or without Start) and Start is newly pressed, it blanks the screen, turns off NMI and the timer IRQs, stops DMA and HDMA, empties the DMA queue and jumps to `rlSoftReset`, which resets the stack and registers (clearing `NMITIMEN` completely) and goes to `rlColdResetClearMemory`. A soft reset skips the copier scan and keeps `"ELM0"`.
 
 ## The two loops
 
@@ -44,7 +44,7 @@ The reset vector (`$00/FFFC`, [header.asm](../../engine/core/frame/header.asm)) 
 
 **Lag frames.** The NMI can't be masked, so a VBlank routine that overruns its frame is interrupted by the next one. If `wVBlankFlag` bit 15 is still set when the next NMI arrives, the previous VBlank routine has overrun its frame. `rlVBlank` then only counts `wVBlankDisabledFramecount`, sends the sound queues to the APU, writes `bBufferINIDISP` to `INIDISP` and ticks the game timer, and returns to the routine it interrupted. The game timer runs at 60 ticks a second whatever the load. The main loop's wait (`rlHaltUntilVBlank`) watches `wVBlankEnabledFramecount`, which a lag frame leaves alone, so the main loop is not resumed early. Nothing reads `wVBlankDisabledFramecount`.
 
-**Installed routines.** Twelve VBlank routines are installed in `wVBlankPointer`: `rsDefaultVBlankRoutine`, `rsMapVBlank` (map and game over), `rsOpeningLogoVBlank`, `rsRunTitleScreenVBlank`, `rsWorldMapVBlank`, `rsRunCastleScreenVBlank`, `rsRunBattleSceneVBlank`, `rsRunMenuScreenVBlank` (the full-screen windows, 8 installers), `rsRunSaveMenuVBlank`, `rsRunEpilogueVBlank`, `rsRunAntiTamperVBlank` and `rsRunVBlankWithoutSound`. Main loop routines in `wMainLoopPointer` are either a screen's loop (`rsRunFrameTasks`, `rsMapMainLoop`, `rsRunBattleSceneMainLoop`, `rsRunTitleScreenMainLoop`, `rsRunSaveMenuMainLoop`, `rsRunAntiTamperMainLoop`) or an opener that runs once and installs the next screen's (`rsOpenCastleScreen`, `rsOpenStatusScreen`, `rsOpenBattleScene`, `rsReturnToMapMainLoop`, `rsItemWindowOpen`, `rsUnitWindowOpen`, and `rlInitEngineAndStartLogo` at boot).
+**Installed routines.** Twelve VBlank routines are installed in `wVBlankPointer`: `rsDefaultVBlankRoutine`, `rsMapVBlank` (map and game over), `rsOpeningLogoVBlank`, `rsRunTitleScreenVBlank`, `rsWorldMapVBlank`, `rsRunCastleScreenVBlank`, `rsRunBattleSceneVBlank`, `rsRunMenuScreenVBlank` (the full-screen windows, 8 installers), `rsRunSaveMenuVBlank`, `rsRunEpilogueVBlank`, `rsRunAntiTamperVBlank` and `rsRunVBlankWithoutSound`. Main loop routines in `wMainLoopPointer` are either a screen's loop (`rsRunFrameTasks`, `rsMapMainLoop`, `rsRunBattleSceneMainLoop`, `rsRunTitleScreenMainLoop`, `rsRunSaveMenuMainLoop`, and the unreached `rsRunAntiTamperMainLoop` installed by `rlFadeInAndHang`) or an opener that runs once and installs the next screen's (among them `rsOpenCastleScreen`, `rsOpenStatusScreen`, `rsOpenBattleScene`, `rsReturnToMapMainLoop`, `rsItemWindowOpen`, `rsUnitWindowOpen`, and `rlInitEngineAndStartLogo` at boot).
 
 **IRQ.** `rlIRQ` reads `TIMEUP`; if an H/V timer interrupt fired it runs the routine at `wIRQPointer`. That is `rsDefaultIRQRoutine` (an `rts`) unless the IRQ engine is on ([scanlines.md](scanlines.md)).
 
@@ -56,12 +56,12 @@ Each screen installs its own VBlank routine, built from the same calls. `rsDefau
 |---|---|---|
 | 1 | force blank | force blank |
 | 2 | the DMA queue (`rlProcessDMAStructArray`) | the palette and sprite buffers (`rlDMAPaletteAndOAMBuffer`) |
-| 3 | the palette and sprite buffers | the map's animated tiles, when the DMA queue is empty, then the DMA queue |
+| 3 | the palette and sprite buffers | the moving unit's frame and the animated tiles or standing sprites, when the DMA queue is empty, then the DMA queue |
 | 4 | the PPU register buffers (`rlCopyPPURegisterBuffer`) | the HDMA hand-off (`rlHandlePossibleHDMA`), then the PPU register buffers |
 | 5 | the sound queues, the joypads, the frame counters | the sound queues, the joypads, the frame counters, the IRQ engine's sort (`rlIRQEngineSyncAndSort`) |
-| 6 | clear the sprite extra bits | clear the sprite extra bits (not while the AI flag `$0010` is set) |
+| 6 | clear the sprite extra bits | clear the sprite extra bits (not while `bAIEngineFlags` bit `$10` is set) |
 | 7 | the game state routines, the per-frame engines | the game state routines, the per-frame engines, the dialogue box tilemaps, the map menu upload |
-| 8 | hide the unused sprites, update sound | draw the moving unit and the map sprites, hide the unused sprites (not with AI flag `$0010`), update sound |
+| 8 | hide the unused sprites, update sound | draw the moving unit and the map sprites, hide the unused sprites (not while `bAIEngineFlags` bit `$10` is set), update sound |
 
 In `rsMapVBlank`, `rlUploadMapAnimations` (the moving unit's frame, then an animated tile frame or the standing sprite frames) runs only when the DMA queue is empty and `wChapterFlags` bit `$0200` is clear; a skip sets `wChapterFlags` bit `$0008`, which nothing reads. Only `rsPauseMapProcsAndHDMAUnused`, which nothing calls, sets `$0200`. Steps 6 and 8 are skipped while `bAIEngineFlags` bit `$10` is set (an AI cycle step running in the main loop, whose maps share RAM with the moving map sprites' buffers).
 
@@ -81,11 +81,11 @@ Code anywhere in the frame queues transfers to and from VRAM and CGRAM; the VBla
 
 A count of 0 sends 64 KB. Three routines add entries:
 
-- `rlDMAByStruct` reads a struct written inline after its `jsl` and returns past it. All 297 uses in the source are `.structDMAToVRAM source, count, VMAIN, VRAM address` (type 2; [DMA.h](../../include/DMA.h)).
-- `rlDMAByPointer`: type 2 from `lR18`, `wR0` bytes, to VRAM `wR1`, with `VMAIN` `$80`.
-- Code that builds an entry itself.
+- `rlDMAByStruct` reads a struct written inline after its `jsl` and returns past it. All 303 uses in the source are type 2 (297 `.structDMAToVRAM` and 6 `.dstruct structDMAToVRAM`; [DMA.h](../../include/DMA.h)), which takes a VRAM byte address and shifts it (`>> 1`) into the queue's word address.
+- `rlDMAByPointer`: type 2 from `lR18`, `wR0` bytes, to VRAM word address `wR1`, with `VMAIN` `$80`.
+- Code that builds an entry itself (all type 2 as well; types 1, 3, and 4 are never queued).
 
-Each adds a 0 after the entry. If the screen is force-blanked (`bBufferINIDISP` bit 7) both routines send the queue at once instead of waiting for VBlank. `rlProcessDMAStructArray` turns off DMA and HDMA (`MDMAEN`, `HDMAEN`) before it starts, and resets the position to 0 when it is done. Nothing checks the queue's size when an entry is added; the sender hangs in an endless loop if it reads past `$100` bytes.
+Each adds a 0 after the entry. If the screen is force-blanked (`bBufferINIDISP` bit 7) both routines send the queue at once instead of waiting for VBlank. `rlProcessDMAStructArray` turns off DMA and HDMA (`MDMAEN`, `HDMAEN`) before it starts, and resets the position to 0 when it is done. Nothing checks the queue's size when an entry is added; the sender hangs in an endless loop if its position reaches `$100` bytes.
 
 **The palette and sprite buffers.** `rlDMAPaletteAndOAMBuffer` sends `aSpriteBuffer` and `aSpriteExtBuffer` (544 bytes) to OAM on channel 0 and `aBGPaletteBuffer` with `aOAMPaletteBuffer` (512 bytes) to CGRAM on channel 1, every frame, then writes `wBufferOAMADD`. Palettes and sprites are only ever changed in these buffers.
 
@@ -103,7 +103,7 @@ Each adds a 0 after the entry. If the screen is force-blanked (`bBufferINIDISP` 
 
 - `wJoy1Input`: the buttons held;
 - `wJoy1New`: the buttons pressed this frame;
-- `wJoy1Repeated`: the new presses, plus, while the held buttons stay the same, all of them once `wJoy1RepeatTimer` runs out: first after `wJoyRepeatDelay` frames (40), then every `wJoyRepeatInterval` (10).
+- `wJoy1Repeated`: the new presses, plus, while the held buttons stay the same, all of them once `wJoy1RepeatTimer` runs out: first after `wJoyRepeatDelay` frames, then every `wJoyRepeatInterval`. Boot initializes these to 40 and 10, `rsSetupOpeningLogoScreen` overwrites them to 10 and 6 before the first VBlank, and chapter map display setup (`rlSetUpChapterMapDisplay` / `rlSetUpChapterMapDisplayAllFrames`) sets them to 10 and 2.
 
 `rlIncreaseFrameCounters` adds 1 to `bFrameCounterByOnes` and 3 to `bFrameCounterByThrees` (bytes). The only reader of `bFrameCounterByOnes` is the random number table's seeding, which runs before the first VBlank and so always reads 0 ([allocation.md](allocation.md)); nothing reads `bFrameCounterByThrees`. Code that times an effect by frames reads `wVBlankEnabledFramecount`.
 
@@ -118,13 +118,13 @@ Each sum is a 16-bit sum of words. Three `structCodeChecksums` hold the sums: `a
 
 | Routine | Called | Checks | On a mismatch |
 |---|---|---|---|
-| `rlCheckCodeChecksumsAtReset` (`$87/8074`) | twice at boot | the reset signature, then the bank `$80` sum against `aCodeChecksumsCopy87` | the second anti-tamper screen; a match clears the SRAM mark |
+| `rlCheckCodeChecksumsAtReset` (`$87/8074`) | twice at boot | the reset signature (always, even when `ChecksEnabled` is 0), then the bank `$80` sum against `aCodeChecksumsCopy87` | the second anti-tamper screen; a match clears the SRAM mark |
 | `rlCheckCodeChecksumsCopy88` (`$88/800F`) | twice by the save menu screen | both sums against `aCodeChecksumsCopy88`, and copy 87 against copy 88 | the second anti-tamper screen |
 | `rlCheckCodeChecksums` (`$8F/8006`) | every time the random number table is reshuffled (every 55 rolls) | both sums against `aCodeChecksums`, and that copy against the other two | carry set: `rlGetRandomNumber` rigs the table (`rsRigRNArrayByPlaytime`, [allocation.md](allocation.md)) |
 
-`rsStartChapterMap` calls into the middle of `rlCheckCodeChecksumsCopy88` (`._806A`), past the check, to load the chapter's layout; the map code and the check share those lines.
+`rsStartChapterMap` calls `rlCheckCodeChecksumsCopy88._806A`, a separate map-layout and animation helper that sits immediately after the non-returning mismatch call (`_8066`).
 
-**The reset signature.** `rlWriteResetSignature` copies the 128 bytes at `$88/8888` into `aSpriteExtBuffer` (`$1E00`-`$1E7F`). `rlCheckResetSignature` compares them: if any word differs it writes the signature and returns. `rlInitEngineAndStartLogo` and the VBlank routines clear `$1E00`-`$1E1F` (`rlClearSpriteExtBuffer`), so the signature is whole at a reset only if nothing has run the engine since it was written. A whole signature goes to the anti-tamper hang (`._803E`).
+**The reset signature.** `rlWriteResetSignature` copies the 128 bytes at `$88/8888` into `$1E00`-`$1E7F` (`aSpriteExtBuffer` at `$1E00`-`$1E1F` and the 96 bytes after it). `rlCheckResetSignature` compares them: on a normal boot any differing word returns at once via `rlWriteResetSignature._8029` (`rtl`) without writing. Only when all 128 bytes match—or when `rlBootInitAndCheckHardware` jumps straight to `._803E`—does `_803E` write the signature and trigger the anti-tamper hang. Because `rsClearRAMAndResetHardware` only clears `$0000`-`$0FFF` and `rsRunAntiTamperVBlank` does not clear `aSpriteExtBuffer`, pressing Reset after the first anti-tamper screen leaves all 128 bytes intact, so the next boot trips `_803E` again and escalates to the second screen.
 
 **The anti-tamper hang.** It clears `"ELM0"` and looks at the SRAM mark (`rlGetAntiTamperMark`). Without the mark it writes it (`SRAM_ANTI_TAMPER_MARK`) and shows the first screen (`rlShowAntiTamperScreen`, `gcAbnormalityWarningTiles`). With it, or straight from a failed sum (`._8063`), it shows the second (`rlShowAntiTamperScreenAgain`, `gcAntiPiracyWarningTiles`). Either way `rsClearRAMAndResetHardware` clears `$0000`-`$0FFF`, reloads the sound driver and resets the registers; the screen's graphics go through the decompressor and the DMA queue, and `rlFadeInAndHang` raises the brightness one step a frame to 15, turns off VBlank and loops forever. A clean boot whose checksum matches clears the mark again.
 

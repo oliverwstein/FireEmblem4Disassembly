@@ -84,11 +84,11 @@ Other calls:
 
 | Routine | Does |
 |---|---|
-| `rlProcEngineCreateProcByIndex` | creates in slot A; carry set if it is taken |
-| `rlProcEngineFindProc` | finds a proc made from the definition at `lR44`; carry set and X = its slot index |
-| `rlProcEngineFreeProc` | frees slot X / 2: clears the definition, sets `$2000` |
-| `rlProcEngineFreeProcByIndex` | frees slot A; carry set if it was free |
-| `rlProcEngineCheckProcEnded` | A = a slot index: carry set if `$2000` is set in `aLastFrameBitfield` |
+| `rlProcEngineCreateProcByIndex` | creates in slot `A` (`0`-`15`); carry set if taken, else carry clear and `A` = `slot × 2` |
+| `rlProcEngineFindProc` | finds a proc made from the definition at `lR44`; carry set and `X` = `slot × 2` |
+| `rlProcEngineFreeProc` | frees slot `X` (`slot × 2`): clears the definition, sets `$2000` |
+| `rlProcEngineFreeProcByIndex` | frees slot `A` (`0`-`15`); carry set if it was free |
+| `rlProcEngineCheckProcEnded` | `A` = `slot × 2`: carry set if `$2000` is set in `aLastFrameBitfield` |
 | `rlProcEngineResetProcEngine` | zeroes `aProcSystem` (the engine's init routine) |
 
 A freed slot keeps `$2000` in its bitfield until another proc takes it, so `rlProcEngineCheckProcEnded` answers "has the proc that was in this slot ended", as long as nothing has reused the slot. The map battle uses it to wait for its Pavise proc and the scripted critical's effect, the village raid and the Belhalla mages for the procs they start.
@@ -129,13 +129,13 @@ The macros are in [Procs.h](../../include/Procs.h); the uses are counted over th
 | `PROC_JUMP_IF_BITS_SET p, b` | position, bits | jump to p if any of b is set | 4 |
 | `PROC_CREATE_ACTIVE_SPRITE d, x, y` | long definition, X, Y | create an active sprite at (x, y) | 0 |
 
-A halted proc leaves its script only if its on-cycle routine changes `aHeaderCodeOffset` or frees the proc.
+A halted proc leaves its script only if its on-cycle routine frees the proc or changes `aHeaderCodeOffset` (also resetting `aHeaderSleepTimer`, e.g., to 1, to resume promptly).
 
 **Where scripts live.** A command word is the address of its routine in bank `$82` (all at `$8000` or above), which is how the reader tells it from a sleep. The script is read through the data bank, set to the definition's bank, so a script must be in the same bank as its definition.
 
 **Freeing does not stop a step.** `rlProcEngineFreeProc` from an on-cycle routine or a `PROC_CALL` routine clears the definition, but the step goes on: the timer is counted and the script read until the next sleep or halt. Only `PROC_END` frees and stops reading at once.
 
-**Two styles.** 129 of the 177 definitions have a script that is only `PROC_HALT` (35 map magic effects share `aProcMapMagicHaltCode`, 13 dialogue boxes and pop-ups `aProcDialogueBoxCode`, 6 list menus `aProcListMenuCode`); they change stage by writing their own `aHeaderOnCycle` (275 stores in the source), for example `rlProcCastleNamePopUpCycle1`-`3`. The other 46 have real scripts, nearly all animations: the map battle and its effects, map magic, map action animations, cutscenes, the phase banner, `procCastleTakenOver`. An init can choose where its script starts by writing `aHeaderCodeOffset` and a sleep timer of 1 (`rlProcCastleTakenOverInit`). Procs end themselves far more often from a routine (`rlProcEngineFreeProc`, 69 calls) than with `PROC_END` (21).
+**Two styles.** 130 of the 177 definitions have a script that is only `PROC_HALT` (35 map magic effects share `aProcMapMagicHaltCode`, 13 dialogue boxes and pop-ups `aProcDialogueBoxCode`, 6 list menus `aProcListMenuCode`); they change stage by writing their own `aHeaderOnCycle` (275 stores in the source), for example `rlProcCastleNamePopUpCycle1`-`3`. Of the remaining 47, 45 have multi-command scripts—nearly all animations: the map battle and its effects, map magic, map action animations, cutscenes, the phase banner, `procCastleTakenOver`—1 (`procEventNoOp`) is a single `PROC_END`, and 1 unreferenced dummy (`"MM"` in `dialogue.asm`) points at a bare `rtl`. An init can choose where its script starts by writing `aHeaderCodeOffset` and a sleep timer of 1 (`rlProcCastleTakenOverInit`). Procs end themselves far more often from a routine (`rlProcEngineFreeProc`, 69 calls) than with `PROC_END` (21).
 
 **Waiting on a bit.** A script that has to wait for something its routines will notice loops on a bit:
 

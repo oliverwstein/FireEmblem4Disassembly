@@ -27,9 +27,9 @@ Most screens own three consecutive entries:
 
 | Entry | Kind | Selected by | Runs |
 |---|---|---|---|
-| 3k + 1 | upkeep (`rl<Screen>Upkeep`) | the opener, in `wGameStateRoutine2` | every frame while the screen is up: sprites, scroll arrows, sometimes input |
-| 3k + 2 | setup (`rl<Screen>Setup`) | the opener, in `wGameStateRoutine1` | once: turns on sprites, picks a first step, starts a fade-in; ends with `inc wGameStateRoutine1` |
-| 3k + 3 | step (`rl<Screen>Step`) | the setup's increment | every frame after that: calls the routine for `wGameStateStep` from the screen's own step table |
+| `base + 0` | upkeep (`rl<Screen>Upkeep`) | the opener, in `wGameStateRoutine2` | every frame while the screen is up: sprites, scroll arrows, sometimes input |
+| `base + 1` | setup (`rl<Screen>Setup`) | the opener, in `wGameStateRoutine1` | once: turns on sprites, picks a first step, starts a fade-in; ends with `inc wGameStateRoutine1` |
+| `base + 2` | step (`rl<Screen>Step`) | the setup's increment | every frame after that: calls the routine for `wGameStateStep` from the screen's own step table |
 
 | Entries | Screen | Pages |
 |---|---|---|
@@ -54,7 +54,7 @@ Most screens own three consecutive entries:
 | `$32`-`$34` | the revive screen | [menus.md](menus.md) |
 | `$35`-`$37` | the epilogue | [epilogue.md](epilogue.md) |
 
-The battle scene and the title screen have no upkeep; their openers leave `wGameStateRoutine2` at 0. The setups end with `inc wGameStateRoutine1` (18 places).
+The battle scene and the title screen have no upkeep; their openers leave `wGameStateRoutine2` at 0. All 17 setups end with `inc wGameStateRoutine1` (and `rlResumeCastleTown` also increments it to skip setup when entering a castle triggers an event).
 
 The game over screen has no entries: `rsSetupGameOverScreen` sets both slots to 0, keeps `rsMapVBlank` and `rsMapMainLoop`, and runs the screen as `procGameOver`.
 
@@ -76,12 +76,12 @@ An **opener** is a main loop routine (`rsOpenStatusScreen`, `rsOpenCastleScreen`
 The old screen installs the opener in one of three ways:
 
 - `procMainLoopChangeFade` (41 places) or `procMainLoopChangeFadeByTimer` (9), with the opener in `aProcSystem.wInput0`. Its init starts a fade-out proc unless the screen is already blank or dark; its on-cycle waits until it is, then installs the opener with `rlSetMainLoopPointer`, turns off the H and V timer IRQs and ends.
-- `rlSetMainLoopPointer` directly (3 places). With bit `$0010` of `wEventEngineFlags` set it would save the routine in `wR26` instead; nothing sets that bit.
-- A store to `wMainLoopPointer` (44 places), usually from another opener installing its screen's main loop.
+- `rlSetMainLoopPointer` directly (1 place: `rlFlashToTitleScreen`; the other two calls are inside the fade procs). With bit `$0010` of `wEventEngineFlags` set it would save the routine in `wR26` instead; nothing sets that bit.
+- A store to `wMainLoopPointer` (43 places outside `rlSetMainLoopPointer`), usually from another opener installing its screen's main loop.
 
-**Who opens whom.** Boot opens the opening logo, which opens the title screen and the save menu (`rsSetupSaveSelectMenu`). A load goes to `rsStartChapterMap`; a new game runs the Jugdral history and the prologue's world map events on the save menu screen. The world map (`rsSetupWorldMapScreen`, from an event's `WM_FADE_IN`) opens the chapter intro (`rsOpenChapterIntroScreen`), which opens `rsStartChapterMap`. The end of a chapter opens the save menu screen at step `$23` (`rsOpenChapterSaveTransition`), which starts the next chapter's world map events. From the map: the castle screen, the battle scene (`rsOpenBattleScene`), the status screen, the unit, item, skill and data windows, the options, the map save (`rsOpenMapSaveMenu`) and game over (which ends in a soft reset); the rest come back through `rsReturnToMapMainLoop`. The castle screen opens the status screen, conversations, the revive screen (`rsReviveScreenOpen`, from the Valkyrie Staff) and the arena's battle scene, which return to it. The epilogue's screens hand over among themselves and end at the title screen.
+**Who opens whom.** Boot opens the opening logo, which opens the title screen and the save menu (`rsSetupSaveSelectMenu`). A load goes to `rsStartChapterMap`; a new game runs the Jugdral history and the prologue's world map events on the save menu screen. The world map (`rsSetupWorldMapScreen`, from an event's `WM_FADE_IN`) opens the chapter intro (`rsOpenChapterIntroScreen`), which opens `rsStartChapterMap`. The end of a chapter opens the save menu screen at step `$23` (`rsOpenChapterSaveTransition`), which starts the next chapter's world map events. From the map: the castle screen, the battle scene (`rsOpenBattleScene`), the status screen, the unit, item, skill and data windows, the options, the map save (`rsOpenMapSaveMenu`) and game over (which ends in a soft reset); the rest come back through `rsReturnToMapMainLoop`. The castle screen opens the status screen, conversations, the revive screen (`rsReviveScreenOpen`, from the Valkyrie Staff) and the arena's battle scene, which return to it. The epilogue's screens hand over among themselves and end on the ranking screen.
 
-`rsReturnToMapMainLoop` (22 places name it) is the way back to the chapter map from every other screen. It blanks the screen, turns VBlank off, resets the map's graphics and engines (`rsResetMapGraphicsAndSystems`), sets up the map display for `wMainGameMode`, loads the window and font graphics, the window registers and the row-upload IRQ, installs `rsMapMainLoop` and `rsMapVBlank`, and selects `GAMESTATE_MAP_STEP` with the step from `wSavedMapStep`. Then `rsResumeMapAfterMenu` rebuilds the map menus' RAM area, sets the step to 11 (the map step for a return), handles a defeated unit and resumes the phase music, and the screen is unblanked. `rsStartChapterMap` does the same for a new or resumed chapter, but selects `GAMESTATE_MAP_SETUP` and starts the chapter's events; `rlMapSetup` then starts the step at `wSavedMapStep` (0 for a new chapter, 7 for a resumed one). The return's own store of `wSavedMapStep` into `wGameStateStep` is overwritten by `rsResumeMapAfterMenu`; step 11 (`rsMapStepResume`) recreates the unit and terrain windows, fades in by the mode, gives the active unit its canto move and restores `wSavedMapStep`, which `rlMapStep` writes every frame.
+`rsReturnToMapMainLoop` (22 places name it) is the way back to the chapter map from every other screen. It blanks the screen, turns VBlank off, resets the map's graphics and engines (`rsResetMapGraphicsAndSystems`), sets up the map display for `wMainGameMode`, loads the window and font graphics, the window registers and the row-upload IRQ, installs `rsMapMainLoop` and `rsMapVBlank`, and selects `GAMESTATE_MAP_STEP` with the step from `wSavedMapStep`. Then `rsResumeMapAfterMenu` rebuilds the map menus' RAM area, sets the step to 11 (the map step for a return), and—when `wMainGameMode >= 2`—handles a defeated unit and (if `wEventEngineFlags` is 0) resumes the phase music, and the screen is unblanked. `rsStartChapterMap` does the same for a new or resumed chapter, but selects `GAMESTATE_MAP_SETUP` and starts the chapter's events; `rlMapSetup` then starts the step at `wSavedMapStep` (0 for a new chapter, 7 for a resumed one). The return's own store of `wSavedMapStep` into `wGameStateStep` is overwritten by `rsResumeMapAfterMenu`; step 11 (`rsMapStepResume`) recreates the unit and terrain windows, fades in by the mode, gives the active unit its canto move and restores `wSavedMapStep`, which `rlMapStep` writes every frame.
 
 **`wMainGameMode`**, set by the screen being left, says how much the return rebuilds:
 
@@ -89,12 +89,12 @@ The old screen installs the opener in one of three ways:
 |---|---|---|---|
 | 0 | castle screen and conversations, map menu, options, skill and data windows | `rlSetUpChapterMapDisplay` | fade in |
 | 1 | status screen, unit and item windows | `rlSetUpChapterMapDisplayAllFrames` (all 16 standing sprite frames at once) | brightness 15 at once |
-| 2 | battle scene, save menu, opening demo, epilogue | `rlLoadChapterMapLayout`, `rlUpdateAllLocationEvents`, `rlApplyAllActiveMapChanges`, then the display | fade in; `rsResumeMapAfterMenu` also handles a defeated unit and resumes the phase music (modes 2 and 3) |
+| 2 | battle scene, save menu, opening demo, epilogue, `RELOAD_MAP_SCREEN` (bit 7 clear) | `rlLoadChapterMapLayout`, `rlUpdateAllLocationEvents`, `rlApplyAllActiveMapChanges`, then the display | fade in; `rsResumeMapAfterMenu` also handles a defeated unit and resumes the phase music (modes 2 and 3) |
 | 3 | battle scene with `BattleSceneFlagToMapMode3`, `RELOAD_MAP_SCREEN` with bit 7 | as 2 | no fade: the caller fades in |
 
 ## The per-frame engines
 
-After the game state routines, the VBlank routine calls `rlRunVBlankHooks`, which runs every routine in `aTaskTable`: 16 slots of 3-byte long pointers, from slot 15 down to slot 0.
+Most VBlank routines call `rlRunVBlankHooks` after the game state routines, though `rsRunMenuScreenVBlank` (used by 8 full-screen menu and intro screens) calls `rlRunVBlankHooks` before `rlRunGameStateRoutines`, and `rsRunAntiTamperVBlank` calls neither. `rlRunVBlankHooks` runs every routine in `aTaskTable`: 16 slots of 3-byte long pointers, from slot 15 down to slot 0.
 
 `rlRegisterVBlankHook` takes a long pointer in `lR44` to an engine's action table, three words in one bank:
 

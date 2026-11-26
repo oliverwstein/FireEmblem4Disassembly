@@ -40,7 +40,7 @@ Each port carries at most one new value a frame. A queue holds four words; a fif
 | `rlPlaySoundEffect` (297 calls) | port 0 | an upload is running (`bAPUUploading`) or `bSoundFlags` bit 0 |
 | `rlSendSoundCommand` | port 0 | never |
 | `rlQueueSoundCommand` | port 0 | values `$C8`-`$DF` while `bSoundFlags` bit 4 (sound off); `$CB`-`$CD` are also kept in `bSoundResendCommand` |
-| `rlPlaySoundEffect2` (46 calls) | port 2 | an upload is running or `bSoundFlags` bit 2 |
+| `rlPlaySoundEffect2` (47 calls) | port 2 | an upload is running or `bSoundFlags` bit 2 |
 | `rlPlaySoundEffect2Checked` | port 2 | as above, but during an upload `$10` and `$20` are still queued, once |
 
 Menus use effects `$06` (cursor), `$08` (confirm), `$21` (cancel). Port-2 effects are mostly the battle animations'.
@@ -49,8 +49,8 @@ Menus use effects `$06` (cursor), `$08` (confirm), `$21` (cancel). Port-2 effect
 
 | Value | Used for |
 |---|---|
-| `$C0` | stop the song (debug sound test, X) |
-| `$C8`-`$CD` | start the song just uploaded (script command 17: `$C8` 78 times, `$CB` 34, `$C9` 8, `$CC` 2, `$CA` 1); dropped while the sound is off; `$CB`-`$CD` are resent when it comes back on |
+| `$C0` | stop the song (5 places: the battle scene, castle courtyard, save menu, opening logo, and debug sound test) |
+| `$C8`-`$CD` | start the song just uploaded (script command 17, across the 150 unique scripts: `$C8` 78 times, `$CB` 34, `$C9` 8, `$CC` 2, `$CA` 1; one script also passes `$C4`); dropped while the sound is off; `$CB`-`$CD` are resent when it comes back on |
 | `$E0` | fade the music out (13 places: before a battle, a level-up, game over, the phase change) |
 | `$E1` | the fade before the victory theme (`rlCheckVictoryTheme`) |
 | `$F7` | lower the music: a map battle (`rlMapBattleLowerMusic`, which sets `wMapBattleMusicLowered`), the gold pop-up, the castle courtyard (5 places) |
@@ -125,7 +125,7 @@ The usual song script is two commands: a deferred upload of its data, then comma
 
 | Kind | Count | SPC RAM | Files |
 |---|---|---|---|
-| sample | 158 | anywhere | `audio/samples/ID.brr` (9-byte BRR blocks), 736 KB |
+| sample | 158 | anywhere | `audio/samples/ID.brr` (9-byte BRR blocks), 380,466 bytes (~372 KB) |
 | sequence | 112 | `$C500` (a few at `$B500`, `$BC00`, `$D400`) | `audio/sequences/ID.bin`, compressed in ROM |
 | directory | 210 | `$FD00`-`$FDFF`, the DSP's sample directory (`DIR` = `$FD`) | `audio/directories/ID.bin` |
 | instruments | 122 | `$FE00`-`$FEFF`, 6 bytes each | `audio/instruments/ID.bin` |

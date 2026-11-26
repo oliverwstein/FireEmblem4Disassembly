@@ -43,9 +43,9 @@ A stream in the lower half of a bank continues at `$0000` of the next bank when 
 1. `rlAppendDecompList` adds an entry (`structDecompressionEntry`: source `lR18`, destination `lR19`, both long) at `wDecompressionArrayPosition` and writes a 0 source after it. With the screen blanked it runs the queue at once.
 2. `rlDecompressByList`, from the main loop routine (`rsRunFrameTasks`, `rsMapMainLoop`), runs every entry until a 0 source and empties the queue.
 
-The queue (`aDecompressionArray`) is `$20` bytes, room for five entries. The fifth's end marker reaches `bFrameCounterByOnes` (`$0469`); nothing checks for a sixth, which would be written over the frame counters and the random number table. `rlDecompressByList` hangs in an endless loop if it reads past `$20` bytes.
+The queue (`aDecompressionArray`) is `$20` bytes, room for five entries. The fifth's end marker (three 16-bit stores at `+6`, `+7`, `+8`) spills two bytes past the array onto `bFrameCounterByOnes` (`$0469`) and `bFrameCounterByThrees` (`$046A`); nothing checks for a sixth, which would be written over the frame counters and the random number table. `rlDecompressByList` hangs in an endless loop if it reads past `$20` bytes.
 
-A screen that needs the data in VRAM unpacks it into a RAM buffer and then DMAs the buffer. Openers work with the screen blanked, where both run at once. During play the DMA must wait: `rlDecompressByList` clears `bDecompressionArrayFlag` only after the last entry, and a stream can take several frames of main loop time, so code polls the flag before queuing the copy: the battle scene's loader (`bBattleSceneDecompState`: 1 unpack then copy, 2 copy, 3 unpack), `rlMapBattleWaitDecompression` (sets proc bit `$0001`), the map magic, the event unit movers, `combatants.asm`. There are 61 calls to `rlAppendDecompList` and 57 direct calls to `rlDecompressor` (the title, logo, world map, its markers and highlights, the minimap, game over, records, the opening demo).
+A screen that needs the data in VRAM unpacks it into a RAM buffer and then DMAs the buffer. Openers work with the screen blanked, where both run at once. During play the DMA must wait: `rlDecompressByList` clears `bDecompressionArrayFlag` only after the last entry, and a stream can take several frames of main loop time, so code polls the flag before queuing the copy: the battle scene's loader (`bBattleSceneDecompState`: 1 unpack then copy, 2 copy, 3 unpack), `rlMapBattleWaitDecompression` (sets proc bit `$0001`), the map magic, the event unit movers, `combatants.asm`. There are 61 calls to `rlAppendDecompList` (one in `procDecompressToBufferUnused`), 32 calls to `rlDecompressSingle`, and 55 direct calls to `rlDecompressor` (the title, logo, world map, its markers and highlights, the minimap, game over, records, the opening demo).
 
 `procDecompressToBufferUnused` ("De") would queue a stream into `aDecompressionBuffer` and end when the queue is empty; nothing creates it.
 
@@ -64,11 +64,11 @@ The screen's brightness is the low nibble of `bBufferINIDISP`, written to `INIDI
 | `procMainLoopChangeFade` | `Bt` | starts `procFadeOut`, then installs the opener in `wInput0` ([game_states.md](game_states.md)) |
 | `procMainLoopChangeFadeByTimer` | `Bt` | the same with `procFadeOutByScreenFadingTimer` |
 
-`procFadeIn` is created in nine files (screen setups, the map cursor, the dialogue procs); nothing but `procMainLoopChangeFade` creates `procFadeOut`. The event engine has fade procs of its own (`procEventFadeInByTimer`, `procEventFadeOutByTimer`, [events.md](events.md)). All the fades share one timer, so two at once would interfere. `rlClearAllFadeProcs` frees every fade-in and fade-out proc, the events' included, and sets the flag back.
+`procFadeIn` is created in eight files (screen setups, the dialogue procs, the save screen; `map_cursor.asm` only checks whether one is running); nothing but `procMainLoopChangeFade` creates `procFadeOut`. The event engine has fade procs of its own (`procEventFadeInByTimer`, `procEventFadeOutByTimer`, [events.md](events.md)). All the fades share one timer, so two at once would interfere. `rlClearAllFadeProcs` frees every fade-in and fade-out proc, the events' included, and sets the flag back.
 
 ## Palette fading
 
-The palette fades change colors in `aBGPaletteBuffer` toward a target, one step per call ([palette_fade.asm](../../engine/core/graphics/palette_fade.asm)). They share `aPaletteFading`: `wMaxSteps`, the steps in a whole fade; `wCurrentStep`; `wDesiredColor`. A caller sets `wMaxSteps`, then calls the fade once a frame with carry clear (or set, to halve the steps) until it returns carry set. Each takes its arguments inline after the call and returns past them:
+The palette fades change colors in `aBGPaletteBuffer` (offsets `>= $0100` reach `aOAMPaletteBuffer` right after it) toward a target, one step per call ([palette_fade.asm](../../engine/core/graphics/palette_fade.asm)). They share `aPaletteFading`: `wMaxSteps`, the steps in a whole fade; `wCurrentStep`; `wDesiredColor`. A caller sets `wMaxSteps`, then calls the fade once a frame with carry clear (or set, to stop halfway at `wMaxSteps / 2` steps without changing the interpolator's `wMaxSteps` — used to dim backgrounds partway for map magic) until it returns carry set. Each takes its arguments inline after the call and returns past them:
 
 | Routine | Inline arguments | Fades toward |
 |---|---|---|
@@ -96,7 +96,7 @@ The palette fades change colors in `aBGPaletteBuffer` toward a target, one step 
 ## Tilemaps and layers
 
 - `rlFillBG2Page0TilemapBuffer`, `rlFillBG2Page1TilemapBuffer`, `rlFillBG3Page0TilemapBuffer` fill a page of `aBG2TilemapBuffer` or `aBG3TilemapBuffer` with the tile word in A (the map, the logo, dialogue, the save menu).
-- `rlSetLayerPositionsAndSizes` sets the VRAM addresses of the four layers' tiles (`wR1`-`wR4`), the sprites' tiles (`wR5`) and the four tilemaps (`wR6`-`wR9`), all as VRAM word addresses, into the `BG12NBA`, `BG34NBA`, `OBSEL` and `BG1SC`-`BG4SC` buffers. It does nothing unless `bBufferINIDISP` has forced blank set. Twenty-four files call it, every screen opener among them.
+- `rlSetLayerPositionsAndSizes` sets the VRAM addresses of the four layers' tiles (`wR1`-`wR4`), the sprites' tiles (`wR5`) and the four tilemaps (`wR6`-`wR9`), all as VRAM word addresses, into both the `BG12NBA`, `BG34NBA`, `OBSEL` and `BG1SC`-`BG4SC` hardware registers and their buffers. It does nothing unless `bBufferINIDISP` has forced blank set. Twenty-four files call it, every screen opener among them.
 
 ## Depends on
 
@@ -106,4 +106,4 @@ The palette fades change colors in `aBGPaletteBuffer` toward a target, one step 
 ## Open questions
 
 - **Appending during a run.** `rlDecompressByList` resets `wDecompressionArrayPosition` to 0 before it starts. An `rlAppendDecompList` from VBlank while the main loop is still unpacking would write at entry 0 and put an end marker at entry 1, cutting off the entries not yet run. Code that waits for the flag before queuing avoids it; whether any path appends mid-run is not checked.
-- **The queue's size.** Whether any screen queues five decompressions at once (where the fifth's end marker shares a byte with the frame counter) is not checked.
+- **The queue's size.** Whether any screen queues five decompressions at once (where the fifth's end marker spills two bytes onto the frame counters) is not checked.
