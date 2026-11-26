@@ -18,8 +18,7 @@ comment lines above the next rename's .streams entry (where comments stay when
 tools/find_streams.py rewrites the folder).
 
 NEW must not be used anywhere yet. Without --write it checks the list and
-reports; with it, it applies the renames and builds. Run
-tools/stream_catalog.py afterwards.
+reports; with it, it applies the renames and builds.
 """
 import argparse
 import glob
