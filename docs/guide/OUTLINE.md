@@ -92,7 +92,7 @@ How a program with no operating system keeps sixty frames a second, schedules co
 | 28 | **[Procs](28-procs.md)** | A fade, a sliding window, and a scrolling camera all happen at once, and none of them can block. | Update Method; Bytecode (the proc script); cooperative multitasking; structure of arrays in depth | `core/proc`, `include/Procs.h` | Drafted |
 | 29 | **[Sprites and scanlines](29-sprites-and-scanlines.md)** | 128 hardware sprites, and effects that change partway down the screen. | Active sprites as a second proc engine; HDMA scripts; the IRQ engine's sorted list of mid-frame interrupts | `core/display/` (`active_sprites`, `oam`, `hdma`, `irq`) | Drafted |
 | 30 | **[Getting graphics in](30-getting-graphics-in.md)** | 4 MB of cartridge and 64 KB of video RAM. Graphics are compressed, and unpacking them is slow. | Compression; deferred work queue run from the main loop (`rlDecompressByList`); palettes and fades as data | `core/graphics/` (`decompressor`, `fade`, `palette_fade`, `palettes`, `tilemaps`) | Drafted |
-| 31 | **The second computer** | A sound chip with its own CPU, reached through four one-byte ports. | Message passing; a sound command queue | `sound/`, `audio/` | Needs reference (sound, lowest priority) |
+| 31 | **[The second computer](31-the-second-computer.md)** | A sound chip with its own CPU, reached through four one-byte ports. | Message passing; a sound command queue | `sound/`, `audio/` | Drafted (sound.md) |
 
 - **Interlude: One frame on the map** — A closing vertical slice tying the hardware stack back to a single 16.7 ms frame on the map, from NMI entry through VBlank uploads, game-state step, procs, map sprites, and leftover main-loop time.
 
