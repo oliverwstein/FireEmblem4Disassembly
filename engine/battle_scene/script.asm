@@ -4448,7 +4448,7 @@
         .word $7000, $1000
         .long acBattleSceneEffectDataF22579, aDecompressionBuffer
         .word $2C00, $0800
-        .long g4bppcBattleSceneEffectTilesF22851, aDecompressionBuffer
+        .long acBattleSceneEffectTilemapF22851, aDecompressionBuffer
         .word $2000, $0400
         .long g4bppcBattleSceneEffectTilesF2292F, aDecompressionBuffer
         .word $2000, $0A00
@@ -4559,11 +4559,11 @@
 
         .long acBattleSceneDecompE03105, $7E9388
         .long g4bppcBattleSceneDecompE033A5, $7E9B88
-        .long g4bppcBattleSceneDecompE03B09, $7FCBC0
-        .long g4bppcBattleSceneDecompE03D3B, $7FD480
+        .long acBattleSceneDecompTilemapE03B09, $7FCBC0
+        .long acBattleSceneDecompTilemapE03D3B, $7FD480
         .long acBattleSceneDecompE03D7F, $7E9388
-        .long g4bppcBattleSceneDecompE04000, $7E9588
-        .long g4bppcBattleSceneDecompE040D3, $7E9588
+        .long acBattleSceneDecompTilemapE04000, $7E9588
+        .long acBattleSceneDecompTilemapE040D3, $7E9588
         .long g4bppcBattleSceneHUDTiles, aDecompressionBuffer
         .long gcBattleSceneStatLabels, $7E8F88
         .long g4bppcTitleSceneTilesF3426A, aDecompressionBuffer

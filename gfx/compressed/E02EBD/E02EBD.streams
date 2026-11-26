@@ -13,19 +13,19 @@ gcBattleSceneStatLabels gcBattleSceneStatLabels ; 1024 bytes decompressed
 g4bppcBattleSceneEffectTilesE03749 g4bppcBattleSceneEffectTilesE03749 ; 1024 bytes decompressed
 # Battle scene level up banner (Project Naga Battle_LevelUp_LVUP).
 gcBattleSceneLevelUpBanner gcBattleSceneLevelUpBanner ; 160 bytes decompressed
-g4bppcBattleSceneHUDWindowTilemap g4bppcBattleSceneHUDWindowTilemap ; 960 bytes decompressed
-g4bppcBattleSceneDecompE03B09 g4bppcBattleSceneDecompE03B09 ; 1280 bytes decompressed
+acBattleSceneHUDWindowTilemap acBattleSceneHUDWindowTilemap ; 960 bytes decompressed
+acBattleSceneDecompTilemapE03B09 acBattleSceneDecompTilemapE03B09 ; 1280 bytes decompressed
 acBattleSceneHUDTilemap acBattleSceneHUDTilemap ; 960 bytes decompressed
-g4bppcBattleSceneDecompE03D3B g4bppcBattleSceneDecompE03D3B ; 640 bytes decompressed
+acBattleSceneDecompTilemapE03D3B acBattleSceneDecompTilemapE03D3B ; 640 bytes decompressed
 acBattleSceneDecompE03D7F acBattleSceneDecompE03D7F ; 512 bytes decompressed
 # Unreferenced.
-g4bppcBattleSceneUnusedE03F2B g4bppcBattleSceneUnusedE03F2B ; 640 bytes decompressed, found
-g4bppcBattleSceneDecompE04000 g4bppcBattleSceneDecompE04000 ; 640 bytes decompressed
-g4bppcBattleSceneDecompE040D3 g4bppcBattleSceneDecompE040D3 ; 640 bytes decompressed
+acBattleSceneUnusedTilemapE03F2B acBattleSceneUnusedTilemapE03F2B ; 640 bytes decompressed, found
+acBattleSceneDecompTilemapE04000 acBattleSceneDecompTilemapE04000 ; 640 bytes decompressed
+acBattleSceneDecompTilemapE040D3 acBattleSceneDecompTilemapE040D3 ; 640 bytes decompressed
 # Unreferenced.
-g4bppcBattleSceneUnusedE0414C g4bppcBattleSceneUnusedE0414C ; 640 bytes decompressed, found
+acBattleSceneUnusedTilemapE0414C acBattleSceneUnusedTilemapE0414C ; 640 bytes decompressed, found
 # Unreferenced.
-g4bppcBattleSceneUnusedE041B7 g4bppcBattleSceneUnusedE041B7 ; 640 bytes decompressed, found
+acBattleSceneUnusedTilemapE041B7 acBattleSceneUnusedTilemapE041B7 ; 640 bytes decompressed, found
 g4bppcBattleAnimationSheetJuniorLord g4bppcBattleAnimationSheetJuniorLord ; 16640 bytes decompressed
 g4bppcBattleAnimationExtraJuniorLord g4bppcBattleAnimationExtraJuniorLord ; 4096 bytes decompressed
 g4bppcBattleAnimationSheetWarMage g4bppcBattleAnimationSheetWarMage ; 16640 bytes decompressed
@@ -367,7 +367,7 @@ acBattleSceneEffectTilemapF2200D acBattleSceneEffectTilemapF2200D ; 4096 bytes d
 acBattleSceneEffectTilemapF22128 acBattleSceneEffectTilemapF22128 ; 4096 bytes decompressed
 acBattleSceneEffectTilemapF22240 acBattleSceneEffectTilemapF22240 ; 4096 bytes decompressed
 acBattleSceneEffectDataF22579 acBattleSceneEffectDataF22579 ; 2048 bytes decompressed
-g4bppcBattleSceneEffectTilesF22851 g4bppcBattleSceneEffectTilesF22851 ; 1024 bytes decompressed
+acBattleSceneEffectTilemapF22851 acBattleSceneEffectTilemapF22851 ; 1024 bytes decompressed
 g4bppcBattleSceneEffectTilesF2292F g4bppcBattleSceneEffectTilesF2292F ; 2560 bytes decompressed
 acBattleSceneEffectDataF22E80 acBattleSceneEffectDataF22E80 ; 512 bytes decompressed
 acBattleSceneEffectTilemapF22FD8 acBattleSceneEffectTilemapF22FD8 ; 4096 bytes decompressed
@@ -408,9 +408,9 @@ g4bppcTitleSceneTilesF468D3 g4bppcTitleSceneTilesF468D3 ; 8192 bytes decompresse
 acTitleSceneTilemapF47CBD acTitleSceneTilemapF47CBD ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF47E55 g4bppcTitleSceneTilesF47E55 ; 4096 bytes decompressed
 g4bppcTitleSceneTilesF50A88 g4bppcTitleSceneTilesF50A88 ; 8192 bytes decompressed
-g4bppcTitleSceneTilesF5222D g4bppcTitleSceneTilesF5222D ; 4096 bytes decompressed
-g4bppcTitleSceneTilesF524B7 g4bppcTitleSceneTilesF524B7 ; 4096 bytes decompressed
-g4bppcTitleSceneTilesF527E5 g4bppcTitleSceneTilesF527E5 ; 4096 bytes decompressed
+acTitleSceneTilemapF5222D acTitleSceneTilemapF5222D ; 4096 bytes decompressed
+acTitleSceneTilemapF524B7 acTitleSceneTilemapF524B7 ; 4096 bytes decompressed
+acTitleSceneTilemapF527E5 acTitleSceneTilemapF527E5 ; 4096 bytes decompressed
 acTitleSceneTilemapF5299B acTitleSceneTilemapF5299B ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF52B03 g4bppcTitleSceneTilesF52B03 ; 8192 bytes decompressed
 g4bppcTitleSceneTilesF547D4 g4bppcTitleSceneTilesF547D4 ; 6144 bytes decompressed
@@ -419,7 +419,7 @@ acTitleSceneTilemapF5597A acTitleSceneTilemapF5597A ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF55B0E g4bppcTitleSceneTilesF55B0E ; 8704 bytes decompressed
 acTitleSceneTilemapF57599 acTitleSceneTilemapF57599 ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF57765 g4bppcTitleSceneTilesF57765 ; 2816 bytes decompressed
-g4bppcTitleSceneTilesF57B55 g4bppcTitleSceneTilesF57B55 ; 4096 bytes decompressed
+acTitleSceneTilemapF57B55 acTitleSceneTilemapF57B55 ; 4096 bytes decompressed
 acTitleSceneTilemapF57C2D acTitleSceneTilemapF57C2D ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF57E44 g4bppcTitleSceneTilesF57E44 ; 11392 bytes decompressed
 g4bppcBattleSceneEffectTilesF61BB4 g4bppcBattleSceneEffectTilesF61BB4 ; 3072 bytes decompressed

@@ -604,7 +604,7 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80CE8E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/CE8E
-      aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry g4bppcDebugMenuWindowTiles, $0800, $2800 ; 80/CE96
+      aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry acMenuWindowBackgroundTilemap, $0800, $2800 ; 80/CE96
 
       .dsection Unsorted80CE9ESection
 
@@ -626,7 +626,7 @@
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/D41D
       aDecompressionDMAEntry80D425 .structDecompressionDMAEntry acSkillWindowBG1Tilemap, $0700, $1800 ; 80/D425
-      aDecompressionDMAEntry80D42D .structDecompressionDMAEntry g4bppcDebugMenuWindowTiles, $0800, $2000 ; 80/D42D
+      aDecompressionDMAEntry80D42D .structDecompressionDMAEntry acMenuWindowBackgroundTilemap, $0800, $2000 ; 80/D42D
 
       .dsection Unsorted80D435Section
 

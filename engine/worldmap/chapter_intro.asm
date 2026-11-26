@@ -241,7 +241,7 @@
         .autsiz
         .databank ?
 
-        ; Loads aChapterIntroAndUIBGPalettes, decompresses g4bppcChapterIntroBannerTiles, dispatches wCurrentChapter via aChapterIntroTitleDMATable
+        ; Loads aChapterIntroAndUIBGPalettes, decompresses acChapterIntroBannerTilemaps, dispatches wCurrentChapter via aChapterIntroTitleDMATable
 
         lda #(`aDecompressionDMAEntry80F42B)<<8
         sta lR19+1
@@ -275,9 +275,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $A000
 
-        lda #(`g4bppcChapterIntroBannerTiles)<<8
+        lda #(`acChapterIntroBannerTilemaps)<<8
         sta lR18+1
-        lda #<>g4bppcChapterIntroBannerTiles
+        lda #<>acChapterIntroBannerTilemaps
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

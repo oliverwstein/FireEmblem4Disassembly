@@ -338,9 +338,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>g4bppcTitleSceneTilesF57B55
+        ldx #<>acTitleSceneTilemapF57B55
         stx DecompressionVariables
-        lda #`g4bppcTitleSceneTilesF57B55
+        lda #`acTitleSceneTilemapF57B55
         sta $CA
         ldx #$8B88
         stx $CB

@@ -1229,9 +1229,9 @@
         jsl rlBattleSceneLoadNames
         sep #$20
         rep #$10
-        ldx #<>g4bppcBattleSceneHUDWindowTilemap
+        ldx #<>acBattleSceneHUDWindowTilemap
         stx DecompressionVariables
-        lda #`g4bppcBattleSceneHUDWindowTilemap
+        lda #`acBattleSceneHUDWindowTilemap
         sta $CA
         ldx #$C800
         stx $CB

@@ -528,7 +528,7 @@
         .long g4bppcTitleSceneTilesF676FE, aDecompressionBuffer
         .word $4000, $4000
         .byte $00
-        .long g4bppcTitleSceneTilesF524B7, aDecompressionBuffer
+        .long acTitleSceneTilemapF524B7, aDecompressionBuffer
         .word $3800, $1000
         .byte $00
         .long gcTitleIntroCaption02, aDecompressionBuffer
@@ -546,13 +546,13 @@
         .long g4bppcBattleBackgroundTitleIntro, aDecompressionBuffer
         .word $0000, $4000
         .byte $00
-        .long g4bppcTitleSceneTilesF5222D, aDecompressionBuffer
+        .long acTitleSceneTilemapF5222D, aDecompressionBuffer
         .word $3000, $1000
         .byte $00
         .long g4bppcTitleSceneTilesF47E55, aDecompressionBuffer
         .word $2000, $1000
         .byte $00
-        .long g4bppcTitleSceneTilesF527E5, aDecompressionBuffer
+        .long acTitleSceneTilemapF527E5, aDecompressionBuffer
         .word $7000, $1000
         .byte $00
         .long g4bppcTitleSceneTilesF50A88, aDecompressionBuffer
@@ -675,7 +675,7 @@
         .long g4bppcTitleSceneTilesF57E44, aDecompressionBuffer
         .word $6000, $2C80
         .byte $00
-        .long g4bppcTitleSceneTilesF57B55, aDecompressionBuffer
+        .long acTitleSceneTilemapF57B55, aDecompressionBuffer
         .word $5800, $1000
         .byte $00
         .long gcTitleIntroCaption12, aDecompressionBuffer
