@@ -10,14 +10,20 @@ The existing build pipeline is:
 
 ```
 .4bpp.png ──(gfx.py png2bpp)──► .4bpp ──(gfx.py lz)──► .4bpp.lz ──(stream_layout.py)──► Layout.asm ──► 64tass
+.bin ─────────────────────────────────(gfx.py lz)──► .bin.lz  ──┘
 ```
+
+Two parts of it already do most of what an authoring layer needs:
+
+- **Recompression fallback.** `gfx.py lz` keeps the committed original stream `NAME.comp` as long as it still decompresses to the current `.4bpp`/`.bin`, and only recompresses an edited file. Unedited assets stay byte-identical without any hash bookkeeping.
+- **Stream relocation.** [tools/stream_layout.py](../tools/stream_layout.py) places every stream in a `.streams` list one after another, splits streams across bank halves, and fails if a region overflows. A graphic that compresses to a different size moves everything after it, and the pointer tables move with it ([tools/backgrounds.py](../tools/backgrounds.py) `--self-test` proves this end to end).
 
 Adding an **authoring layer** puts one stage in front of it:
 
 ```
 Author-facing object (assembled PNG / Tiled map / sprite sheet / scene PNG)
         │
-        ▼  asset compiler (slice, dedup, palette-map, build tilemap/OAM)
+        ▼  asset compiler (slice, match tiles, palette-map, build tilemap/OAM)
 VRAM blobs (.4bpp / .bin / palette .asm)
         │
         ▼  existing pipeline (gfx.py lz + stream_layout.py + 64tass)
@@ -26,61 +32,62 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 **Key design rules:**
 
-1. **Dual-mode compilation (exact vs. repacked):**
-   - For **fixed-layout** assets (portraits, icons, fonts, map movement sprites), the mapping between the assembled image and VRAM tiles is 1-to-1 and deterministic—slicing the authored PNG always reproduces the exact ROM bytes.
-   - For **deduplicated tilemap** assets (backgrounds, title/opening screens, UI screens), a naïve tile deduplicator won't always assign tile IDs in the original ROM's order. To keep unmodified assets byte-identical while letting edited ones repack freely, each authored asset keeps a lightweight `.meta.json` (or falls back to the committed `.bin.comp`/`.4bpp.comp` when the authored PNG hash matches the original), and runs full tile-slicing + deduplication + palette/flip matching whenever the authored PNG changes.
-2. **Hard SNES budget checks at build time:** Every compiler validates VRAM tile count, palette count (16 colors per 4bpp sub-palette, 4 per 2bpp), OAM entry budget, and `.streams` region size, failing with a clear error instead of silent corruption.
-3. **Generated blobs become gitignored:** Once an asset class is promoted, its `.4bpp` / `.bin` intermediate files are generated in `build.sh` and deleted by `./build.sh clean` (keeping `.comp` streams for byte-identical LZ fallback).
+1. **Compilers must reproduce the existing blobs from unedited sources.** For fixed-layout assets (portraits, icons, fonts, map movement sprites) slicing is 1-to-1, so this is automatic. For tilemap assets (backgrounds, title/opening screens, UI screens) the packer starts from the existing tile order and only appends new tiles (see Phase 3), so an unedited scene packs to the same `.4bpp` and `.bin`, and the `.comp` fallback above does the rest.
+2. **No information may live only in a generated file.** Anything the PNG cannot hold (per-tile palette choice, flip and priority bits, which entries share graphics) stays in a committed source file next to it, in a documented format.
+3. **Hard SNES budget checks at build time:** every compiler validates VRAM tile count, palette count (16 colors per 4bpp sub-palette, 4 per 2bpp), and OAM entry budget, failing with a clear error. Region size is already checked by `stream_layout.py`; a full region is fixed by moving a stream to another `.streams` list with free space, not by the compiler.
+4. **Generated files stay gitignored.** `.4bpp`, `.2bpp` and all `.lz` files already are. When an asset class is promoted, the files its compiler writes (for example `.bin` tilemaps built from a scene) join them, and `./build.sh clean` deletes them. The `.comp` streams stay committed.
 
 ---
 
-## Phased Rollout Plan (Ordered by Impact & Complexity)
+## Phased Rollout Plan (Ordered by Cost and Readiness)
 
-### Phase 1 — Portraits (`152` portraits + palettes)
-*Highest visual payoff; 100% deterministic 1-to-1 packing.*
+### Phase 1 — Wire the existing map decoders into the build (`12` chapter maps, `120` map-battle layouts)
+*Both tools already round-trip; this is the open item in [todo.md](../todo.md) ("Wire decoded map/layout tools into `build.sh`").*
 
-- **Current state:** `gfx/portraits/*.4bpp.png` are 16×4 VRAM tile strips (columns 0–5 = top half, 6–11 = bottom half, 12–15 = mouth/eye frames), separated from [data/portraits/PortraitPalettes.asm](../data/portraits/PortraitPalettes.asm).
-- **Author-facing object:** One assembled indexed PNG per portrait (e.g. `assets/portraits/AdultFinn.png`):
-  - Left `48×64` region: the assembled face (as rendered in-game).
-  - Right `32×32` (or `32×64`) region: the 16 mouth/eye animation tiles laid out as coherent 16×16 / 32×16 animation frames rather than raw columns 12–15.
-  - Palette embedded directly in the PNG's 16-color index table (with a manifest noting portraits that intentionally share graphics with different palettes, like the horseman/class cards).
+- **Current state:** the chapter map streams are committed as raw binaries in [gfx/compressed/C70C80/](../gfx/compressed/C70C80/) (`acChapterMap*Layout.bin`, `*TileEntries.bin`, `*Terrain.bin`, and `g4bppcChapterMap*.4bpp.png` for the tiles), listed in `C70C80.streams` and compressed by build.sh. [tools/chapter_maps.py](../tools/chapter_maps.py) decodes them to `layout.csv`, `metatiles.json` and `terrain.json`, encodes them back, and renders previews with [gfx/map/BaseMapTileEntries.bin](../gfx/map/BaseMapTileEntries.bin); `--self-test` passes 12/12. [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) does the same for the 120 `aMapBattle*Layout*.bin` OAM tables. Neither is called from build.sh, so the `.bin` files are still the source.
+- **Step 1 (wiring):** commit the decoded files as source, have build.sh run `encode` to write the `.bin` files before `gfx.py lz`, gitignore those `.bin` files, and keep the `.comp` files for the fallback.
+- **Step 2 (optional editor format):** export **Tiled `.tmj` maps** (a shared `BaseMapTileset.tsx` plus one tileset per chapter) with a visual layer of 16×16 metatiles (`64×32` for the Prologue, `64×64` for Chapters 1–Final) and a terrain layer, and import them back to the same CSV/JSON. This is a layer on top of Step 1 and can come later.
+- **Risk:** Low. The round-trip is already proven.
+
+---
+
+### Phase 2 — Portraits (`152` graphics, `248` pointer entries)
+*Large visual payoff; the face is a 1-to-1 slice.*
+
+- **Current state:** `gfx/portraits/*.4bpp.png` are the 64 tiles in storage order, four rows of 16 ([tools/portraits.py](../tools/portraits.py) describes the layout). `rsDialogueLoadPortraitWriteTilemap` ($91/9739) builds the 6×8 tile face from columns 0–5 (top half) and 6–11 (bottom half). Columns 12–15 are not part of the face. They are *probably* the mouth and eye frames, but no routine that reads them has been identified yet. Palettes are in [data/portraits/PortraitPalettes.asm](../data/portraits/PortraitPalettes.asm), selected per entry by `PortraitPalettePointers.csv`.
+- **Graphics and palettes are not 1-to-1.** `PortraitGraphicPointers.csv` and `PortraitPalettePointers.csv` have 248 entries but there are 152 graphics. Entries $B9–$F2 are generic class cards (portrait ID $F3 in character data means "use the class's card", via `rlTryGetClassPortraitDataID` and `aClassPortraitDataIDs`), and $73, $74, $9C, $F3 and $F4 share one horseman card with different palettes. The authoring format must keep graphics and palettes separate.
+- **Author-facing object:**
+  - One indexed PNG per **graphic** (`gfx/portraits/AdultFinn.png`): the assembled `48×64` face, with columns 12–15 kept beside it as a `32×32` block of tiles in storage order. The PNG's palette is the palette of the first entry that uses the graphic, for viewing only; the pixel indices are what get packed.
+  - Palettes stay in `PortraitPalettes.asm` (one `bgr555()` palette per label, already editable), and the pointer CSVs stay as they are. A generated `portraits.txt` (already written by portraits.py) lists which entries use each graphic with which palette.
 - **Round-trip tool (`tools/portrait_pack.py`):**
-  - `unpack`: assembles the `152` portraits from `gfx/portraits/*.4bpp` + `PortraitPalettes.asm`.
-  - `pack`: slices the `48×64` face + animation frames back into the exact 64-tile (`$800`-byte) VRAM strip and optionally exports the BGR555 palette.
-- **Risk:** Very low. No tile deduplication needed; byte-identical round-trip is exact.
-
----
-
-### Phase 2 — Chapter Maps (`12` maps: `10` tilesets, `10` metatile tables, `12` layouts, `10` terrain tables)
-*Tools already exist and pass 12/12 byte-identical round-trip tests.*
-
-- **Current state:** [tools/chapter_maps.py](../tools/chapter_maps.py) already decodes/encodes `layout.csv`, `metatiles.json`, and `terrain.json` and renders previews using [gfx/map/BaseMapTileEntries.bin](../gfx/map/BaseMapTileEntries.bin).
-- **Author-facing object:** **Tiled `.tmx` / `.tmj` maps** (plus a shared `BaseMapTileset.tsx` and per-chapter `ChapterXXTileset.tsx`):
-  - Layer 1: **Visual map** (`64×32` for Prologue, `64×64` for Ch. 1–Final) painting directly with 16×16 metatiles (rendered with the chapter's actual palette).
-  - Layer 2 (or tile property): **Terrain ID** per metatile.
-  - Metatile definitions (`metatiles.json` / `.tsx`) stay editable if someone wants to build new 16×16 tiles from 8×8 graphics.
-- **Round-trip tool (extend [tools/chapter_maps.py](../tools/chapter_maps.py)):**
-  - `decode`: emits Tiled-compatible `.tmj` + tileset preview PNGs (or `layout.csv` + `metatiles.json` + `terrain.json`) into `data/maps/<Chapter>/`.
-  - `encode`: compiles back to `*Layout.bin`, `*TileEntries.bin`, `*Terrain.bin` (wired into `build.sh` before `gfx.py lz`).
-- **Risk:** Low. Exact round-trip is already proven.
+  - `unpack`: assembles the face from the `.4bpp.png` tile strip and writes the authored PNG.
+  - `pack`: slices the face and the 32×32 block back into the exact 64-tile (`$800`-byte) strip.
+  - `--self-test`: unpack and pack all 152 graphics and compare bytes.
+- **Before the animation frames can be laid out as frames:** find and read the routine that copies columns 12–15 during dialogue (search the dialogue code around `rsDialogueLoadPortraitWriteTilemap` for reads of tile offsets 12–15 or of the portrait's VRAM base plus `$180`). Once its frame size and which face tiles each frame replaces are known, the 32×32 block can be redrawn as positioned mouth and eye frames. Until then it stays raw.
+- **Risk:** Very low for the face. The frame layout is blocked on the routine above.
 
 ---
 
 ### Phase 3 — Static Full-Screen Scenes & Backgrounds (`24` dialogue/battle backgrounds, `~40` title/opening/credits/world-map scenes, `14` battle banners)
-*Big readability win; introduces the reusable tilemap + deduplication engine.*
+*Big readability win; introduces the reusable tilemap packer that Phase 4 also uses.*
 
-- **Current state:** Split across `.4bpp.png` tile sheets + raw `.bin` tilemaps (`25` background tilemaps, `39` title/opening/credits `.bin`, `9` world-map/epilogue `.bin`) + separate palettes in `data/palettes/`.
-- **Author-facing object:** One **assembled scene PNG** per background/screen (e.g. `256×224` or `256×160` full-color or multi-palette PNG) + a small `.scene.json` recording SNES constraints (BG mode, tilemap dimensions, VRAM base tile index, which BG sub-palettes `0–7` are available, and any priority-bit mask PNG if needed).
+- **Current state:** split across `.4bpp.png`/`.2bpp.png` tile sheets, raw `.bin` tilemaps (`25` background tilemaps, `39` title/opening/credits, `9` world-map/epilogue) and palettes in `data/palettes/`. [tools/backgrounds.py](../tools/backgrounds.py) already renders the dialogue, battle and map-battle magic backgrounds as the game composes them, from the built ROM, and its `--self-test` checks that an edited tile and tilemap entry reach the ROM and that later streams move correctly.
+- **Author-facing object:** one **assembled scene PNG** per screen (`256×224`, `256×160`, or the tilemap's own size), plus a committed `NAME.scene.json` holding everything the PNG cannot:
+  - BG mode and bit depth, tilemap size, VRAM base tile index, and which sub-palettes (`0–7`) the scene may use;
+  - the tile sheet(s) it draws from, in order (the existing `.4bpp.png` stays committed as the seed tile order);
+  - the priority bit per tilemap entry, stored as a 1-bit `NAME_priority.png` mask when any bit is set;
+  - for scenes that share a tile sheet or are layered (two dialogue backgrounds on one sheet, `CloisterForegroundTilemap` over its background), the list of scenes packed together.
 - **Round-trip tool (`tools/scene_pack.py`):**
-  - `unpack`: renders each tileset + tilemap + palette into a single editable scene PNG (+ optional priority overlay PNG).
+  - `unpack`: renders tiles + tilemap + palettes into the scene PNG and writes the `.scene.json` and priority mask. The palette for each 8×8 cell comes from its tilemap entry, so the PNG is a direct-color render; `unpack` also checks that re-packing it reproduces the `.bin` exactly.
   - `pack`:
-    1. Splits the image into 8×8 tiles.
-    2. Quantizes/assigns each 8×8 tile to one of the allowed 16-color BG sub-palettes (or reads palette indices directly if authored with a palette-hinted format).
-    3. Deduplicates tiles modulo horizontal/vertical flips (`H-flip`, `V-flip`).
-    4. Checks the unique tile count against the scene's VRAM tile budget and emits `.4bpp` + `.bin` tilemap + palette `.asm`.
-- **Tricky edge cases:**
-  - **Shared tilesets across multiple screens** (e.g., two dialogue backgrounds sharing one tileset, or parallax foreground/background layers like `CloisterForegroundTilemap`). Handle by grouping coupled scenes in one `.scene.json` so they pack into a single shared tileset.
-  - **Priority bits** (tiles that draw in front of sprites): preserve via a separate 1-bit `*_priority.png` mask when non-empty.
+    1. Split the image into 8×8 cells.
+    2. For each cell, find the sub-palette whose colors cover it exactly (fail if none does, naming the cell and the colors that are missing; quantizing is the artist's job, not the packer's).
+    3. Match the cell, converted to that palette's indices, against the **existing tiles in their committed order**, trying all four flip combinations. When several tiles or palettes match, prefer the choice the original tilemap entry made (read from the previous `.bin` when present), so unedited cells keep their exact entry.
+    4. Append a new tile only for a cell nothing matches.
+    5. Check the tile count against the VRAM budget and write `.4bpp` + `.bin` (and the palette `.asm` if palettes are edited in the PNG).
+  - `--self-test`: unpack and pack every scene and compare `.4bpp` and `.bin` bytes.
+- **Why seed from the existing order instead of deduplicating from scratch:** a fresh deduplicator assigns tile IDs in scan order, which differs from the ROM's, so every unedited scene would need a fallback and every one-pixel edit would renumber the whole tilemap. Seeding keeps unedited scenes byte-identical and keeps the diff of an edit to the tiles and entries that actually changed. Tiles that an edit leaves unused are kept, not compacted, unless `pack --compact` is passed.
+- **Open question:** whether any of these sheets hold tiles that no tilemap here references (used by code or by another screen). `unpack` should report unreferenced tiles per sheet so they are not mistaken for garbage.
 
 ---
 
@@ -90,20 +97,20 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 - **Fonts (`gfx/font/DialogueFont*.2bpp.png`):** Already editable 2bpp sheets; pair with a glyph-grid visualizer that overlays character codes and widths from [data/dialogue/DialogueFontWidth.asm](../data/dialogue/DialogueFontWidth.asm).
 - **UI windows & tilemaps (`28` in `gfx/ui/tilemaps/` + `31` in `gfx/compressed/`):**
   - Status screen (`StatusScreenTilemap1–3`), unit window pages (`UnitWindowPage0–5`), castle courtyard/town, shop screen, genealogy wheel, dialogue boxes, save menu.
-  - Use `tools/scene_pack.py` from Phase 3 in **fixed-tileset mode** (since UI screens share common tile sheets like `WindowFrames`, `MenuLabels`, `SkillIcons`): artists can edit either the shared tile sheet or the assembled UI layout PNG, and the packer matches tiles against the shared sheet to emit the `.bin` tilemap.
+  - Use `tools/scene_pack.py` from Phase 3 with the shared sheets (`WindowFrames`, `MenuLabels`, `SkillIcons`, …) as the seed and appending **disabled**: a UI layout may only use tiles that already exist in its sheets, and new art goes into the sheet itself. Artists edit either the shared sheet or the assembled layout PNG.
 
 ---
 
-### Phase 5 — Map Sprites & Map-Battle Animations (`97` movement sprites, `2` standing sheets, `625` map-battle sheets, `120` OAM layouts)
+### Phase 5 — Map Sprites & Map-Battle Animations (`97` movement sprites, `2` standing sheets, `557` map-battle sheets, `120` OAM layouts)
 
 - **Current state:**
   - `gfx/MapMovementSprites/*.4bpp.png` and `StandingMapSprites1–2.4bpp.png` are already editable sprite sheets (just in compact VRAM tile order).
-  - Map-battle animations have `625` tile sheets + `120` `aMapBattle*Layout*.bin` OAM frame tables; [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) already decodes/encodes all 120 layouts to JSON and renders assembled frame strips.
+  - Map-battle animations have `557` tile sheets and `120` `aMapBattle*Layout*.bin` OAM frame tables; [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) decodes/encodes all 120 layouts to JSON and renders assembled frame strips (wired into the build in Phase 1).
 - **Author-facing object:**
   - **Map sprites:** Standard frame-grid PNGs (e.g., 4 directions × N frames at `16×16` / `16×24` per cell) that slice deterministically back to VRAM order.
   - **Map-battle animations:**
-    - **Level A (immediate):** Wire [tools/map_battle_layouts.py](../tools/map_battle_layouts.py)'s `.json` OAM layouts directly into `build.sh` alongside the `.4bpp.png` sheets, with rendered preview strips for verification.
-    - **Level B (full artist workflow):** Per-animation **assembled frame strip PNG** (`frame_0.png`, `frame_1.png`, …) + an OAM packer that greedily covers non-transparent regions with 8×8 and 16×16 SNES OAM sprites, deduplicates tiles, and emits both the `.4bpp` sheet and `aMapBattle*Layout*.bin`.
+    - **Level A:** the JSON layouts from Phase 1 plus the `.4bpp.png` sheets, with rendered preview strips for verification.
+    - **Level B (optional, full artist workflow):** Per-animation **assembled frame strip PNG** (`frame_0.png`, `frame_1.png`, …) + an OAM packer that greedily covers non-transparent regions with 8×8 and 16×16 SNES OAM sprites, deduplicates tiles, and emits both the `.4bpp` sheet and `aMapBattle*Layout*.bin`.
 
 ---
 
@@ -113,7 +120,14 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 - **Current state:** Battle scene combatants are composite sprites (body + weapon + cape/mount pieces assembled from `data/battle_animation/frames_98–9B.asm`, driven by [data/battle_animation/moves.asm](../data/battle_animation/moves.asm), colored by [data/palettes/BattleAnimationPalettes.asm](../data/palettes/BattleAnimationPalettes.asm)).
 - **Author-facing object:**
   - **Level A:** Keep the tile sheets editable as indexed PNGs, add a **preview/timeline renderer** (combining `moves.asm` + `frames_98–9B.asm` + `BattleAnimationPalettes.asm` into animated GIFs / sprite sheets so artists can immediately see edits in motion).
-  - **Level B:** An OAM-covering frame compiler (same core greedy 8×8 / 16×16 sprite packer as Phase 5 Level B) that takes assembled animation frame PNGs + anchor points and generates the tile sheet + `frames_*.asm` OAM lists, validating against FE4's per-frame OAM and VRAM transfer budgets.
+  - **Level B (optional):** An OAM-covering frame compiler (same core greedy 8×8 / 16×16 sprite packer as Phase 5 Level B) that takes assembled animation frame PNGs + anchor points and generates the tile sheet + `frames_*.asm` OAM lists, validating against FE4's per-frame OAM and VRAM transfer budgets.
+
+---
+
+## Not yet covered
+
+- **Palettes as authored objects.** `data/palettes/*.asm` and `PortraitPalettes.asm` are already editable `bgr555()` text; a swatch preview per file would help, but no compiler is needed.
+- **Animated map tiles** (`gfx/map/MapTileAnimations1–2.4bpp.png`): need the frame order and timing from the map tile animation code before a frame-strip format makes sense.
 
 ---
 
@@ -121,9 +135,9 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 | Phase | Asset Class | Count | Round-Trip Complexity | Existing Foundation |
 |---|---|---:|---|---|
-| **1** | Portraits | 152 | **Easy** (1-to-1 deterministic) | [tools/portraits.py](../tools/portraits.py) (export only) |
-| **2** | Chapter maps | 12 maps (42 files) | **Easy** (already round-trips) | [tools/chapter_maps.py](../tools/chapter_maps.py) (12/12 pass) |
-| **3** | Backgrounds & full-screen scenes | ~78 scenes | **Medium** (tile dedup + sub-palette) | [tools/gfx.py](../tools/gfx.py), `data/palettes/` |
-| **4** | UI tilemaps, icons, fonts | ~80 assets | **Medium** (shared-sheet tilemap match) | `tools/scene_pack.py` from Phase 3 |
-| **5** | Map sprites & map-battle layouts | 99 + 120 layouts | **Medium–Hard** (OAM layout / packing) | [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) (120/120 pass) |
+| **1** | Chapter maps, map-battle layouts (build wiring) | 12 maps, 120 layouts | **Easy** (already round-trips) | [tools/chapter_maps.py](../tools/chapter_maps.py) (12/12), [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) (120/120) |
+| **2** | Portraits | 152 graphics, 248 entries | **Easy** for the face; frames blocked on code | [tools/portraits.py](../tools/portraits.py) (export only) |
+| **3** | Backgrounds & full-screen scenes | ~78 scenes | **Medium** (seeded tile matching + sub-palette) | [tools/gfx.py](../tools/gfx.py), [tools/backgrounds.py](../tools/backgrounds.py), `data/palettes/` |
+| **4** | UI tilemaps, icons, fonts | ~80 assets | **Medium** (fixed-sheet tilemap match) | `tools/scene_pack.py` from Phase 3 |
+| **5** | Map sprites & map-battle animations | 99 sheets + 557 battle sheets | **Medium–Hard** (OAM packing, Level B only) | Phase 1 layouts |
 | **6** | Battle scene animations | 337 sheets + scripts | **Hard** (multi-piece OAM + DMA budgets) | `data/battle_animation/` |
