@@ -2661,7 +2661,8 @@
 
   .virtual $7ECB88
 
-    aWorldMapMarkerPalette .fill size(word) * 7 ; $7ECB88
+    ; Aliases aDecompressionBuffer+$4000; scoped to engine/worldmap/markers.asm in tools/name_ram.py.
+    aWorldMapMarkerPalette .fill size(word) * 8 ; $7ECB88
 
   .endvirtual
 

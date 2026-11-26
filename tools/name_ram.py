@@ -71,6 +71,8 @@ SCOPED = [
     (0x7F57EA, 0x7F57F1, ('wMapBattleTemp',), ('engine/battle/map_battle.asm',)),
     # Map magic effect state; battle_scene reuses $7ECC08 for saved palettes.
     (0x7ECC06, 0x7ECC0D, ('wMapMagic',), ('engine/battle/map_magic_effects.asm',)),
+    # World map marker shadow palette; aliases aDecompressionBuffer+$4000.
+    (0x7ECB88, 0x7ECB97, ('aWorldMapMarkerPalette',), ('engine/worldmap/markers.asm',)),
 ]
 
 OPERAND = re.compile(r'^(\s+[a-z]{3} (?:@l )?)\$([0-9A-F]{4}|[0-9A-F]{6})\b((?:,b)?(?:,[xy])?)(\s*)$')

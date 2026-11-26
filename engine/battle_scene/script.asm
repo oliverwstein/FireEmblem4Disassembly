@@ -126,9 +126,9 @@
         sta lR18
         lda lR19+1
         sta lR18+1
-        lda #(`aWorldMapMarkerPalette)<<8
+        lda #(`(aDecompressionBuffer+$4000))<<8
         sta lR19+1
-        lda #<>aWorldMapMarkerPalette
+        lda #<>(aDecompressionBuffer+$4000)
         sta lR19
         jsl rlAppendDecompList
         sep #$20
@@ -4067,7 +4067,7 @@
         PALETTE_EFFECT_VALUE_DATA $03, $07, $61, $0F, $08, $7FFEC2
 
       _A9A8_AF09 ; 97/AF09
-        PALETTE_EFFECT_VALUE_DATA $08, $07, $31, $1F, $08, aWorldMapMarkerPalette
+        PALETTE_EFFECT_VALUE_DATA $08, $07, $31, $1F, $08, aDecompressionBuffer+$4000
 
       _A9A8_AF11 ; 97/AF11
         PALETTE_EFFECT_VALUE_DATA $08, $07, $31, $1F, $0A, $7ECBC8
@@ -4586,7 +4586,7 @@
         .word $6E40, $0280
         .long aDecompressionBuffer
         .word $0000, $4000
-        .long aWorldMapMarkerPalette
+        .long aDecompressionBuffer+$4000
         .word $6000, $1000
         .long aDecompressionBuffer
         .word $7800, $0800

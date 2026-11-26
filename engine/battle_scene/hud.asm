@@ -3472,7 +3472,7 @@
         .autsiz
         .databank ?
 
-        ; In battle type 2: saves BG palettes 0 and 7 at $7ECC08, copies palette 0 to 1, and halves or darkens the HUD's and the scene's colors (some into $7FFE02.. and $7FFEC2..), with the sprite colors brightened into aWorldMapMarkerPalette and $7ECBC8.
+        ; In battle type 2: saves BG palettes 0 and 7 at $7ECC08, copies palette 0 to 1, and halves or darkens the HUD's and the scene's colors (some into $7FFE02.. and $7FFEC2..), with the sprite colors brightened into aDecompressionBuffer+$4000 and $7ECBC8.
 
         phx
         lda wBattleSceneFlags
@@ -3635,7 +3635,7 @@
         _9B6E
         lda $0162,b,x
         jsl rlBattleSceneBrightenColor
-        sta aWorldMapMarkerPalette,x
+        sta aDecompressionBuffer+$4000,x
         inc x
         inc x
         cpx #$003E

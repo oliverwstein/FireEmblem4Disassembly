@@ -1716,9 +1716,9 @@
         sta lR18
         lda aMapBattleMagicBackgrounds+1,x
         sta lR18+1
-        lda #(`aWorldMapMarkerPalette)<<8
+        lda #(`(aDecompressionBuffer+$4000))<<8
         sta lR19+1
-        lda #<>aWorldMapMarkerPalette
+        lda #<>(aDecompressionBuffer+$4000)
         sta lR19
         jsl rlAppendDecompList
         ply
@@ -1853,9 +1853,9 @@
         bmi _85CB
         phy
         phx
-        lda #(`aWorldMapMarkerPalette)<<8
+        lda #(`(aDecompressionBuffer+$4000))<<8
         sta lR18+1
-        lda #<>aWorldMapMarkerPalette
+        lda #<>(aDecompressionBuffer+$4000)
         sta lR18
         lda #$0800
         sta wR0
