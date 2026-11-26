@@ -2,6 +2,10 @@
 
 Current state and next steps for the **writing**: the engine guide (`docs/guide/`) and the reference pages (`docs/reference/`). Read this first. The code phase (naming, carving, shiftability) is recorded in [HISTORY.md](HISTORY.md), whose first section says where it stopped; the roadmap is [PLAN.md](PLAN.md); tool usage is in [tools/README.md](tools/README.md). **Rewrite this file at the end of every session.**
 
+## Graphics authoring (started 2026-11-26)
+
+With the guide drafted, work has moved to [docs/AUTHORING_GRAPHICS_PLAN.md](docs/AUTHORING_GRAPHICS_PLAN.md), which keeps each phase's state. **Phase 1 is done** (`aee6f926`). The chapter maps are CSV source and the 120 map battle sprite data streams are assembly source; both are built by `build.sh`, and the generated `.bin` files are gitignored. **Next: Phase 2, portraits.** First read the dialogue code around `rsDialogueLoadPortraitWriteTilemap` for what uses tile columns 12-15, then write `tools/portrait_pack.py`. Open questions this phase raised: words +2/+4 of each sprite data block and the Dancer's unrunnable staff/tome strike script ([map_battle.md](docs/reference/map_battle.md)); terrain values `$1A`-`$35` ([map.md](docs/reference/map.md)).
+
 ## Current state (2026-11-25)
 
 The build is byte-identical and checksums verify. Code changes made while writing must keep it so, and are committed separately from prose.
