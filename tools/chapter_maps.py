@@ -1,14 +1,39 @@
 #!/usr/bin/env python3
-"""Decode, encode, and preview-render FE4 chapter maps (aChapterMapPointers).
+"""Chapter maps (aChapterMapPointers) as CSV source, and back; previews.
 
-usage: tools/chapter_maps.py decode CHAPTER OUT_DIR
-       tools/chapter_maps.py encode IN_DIR OUT_PREFIX
+usage: tools/chapter_maps.py decode CHAPTER|all
+       tools/chapter_maps.py build
        tools/chapter_maps.py render CHAPTER|all OUT_DIR
        tools/chapter_maps.py --self-test
+
+Each chapter's entry in engine/map/chapter_maps.asm names three compressed data
+streams in gfx/compressed/C70C80/ (besides its tile graphics and palettes). Each
+has one CSV source beside it, which build turns into the NAME.bin that gfx.py lz
+compresses; ./build.sh runs build. Chapter 2 uses the Prologue's tile entries and
+terrain, and the final chapter Chapter 5's.
+
+- acChapterMap*Layout.csv: the map, 64 rows of 64 words (aMapData), in hex. The
+  low ten bits are the tile ID (wMapTileIDMask, $03FF); bits 10-15 are the area
+  the tile belongs to, which the chapter can close to player units
+  (wAreaRestrictionBitfield). Maps narrower or shorter than 64 tiles leave the
+  rest unused.
+- acChapterMap*TileEntries.csv: tile IDs 0-255, each four 8x8 BG tilemap
+  entries (decompressed to $7F0000; IDs from 256 come from
+  gfx/map/BaseMapTileEntries.bin). Columns in stored order: top left, bottom
+  left, top right, bottom right. An entry is TILE:PALETTE (hex tile number,
+  palette 0-7) followed by any of p (priority), h and v (flips): 0A3:2, 1C0:3hv.
+- acChapterMap*Terrain.csv: the terrain of each tile ID 0-1023
+  (aTerrainTileset), by its name in include/Terrain.h, or in hex for values no
+  name covers ($1A and up occur; what reads them is not yet traced).
+
+decode writes the CSVs from the .bin files (a one-time extraction; the CSVs are
+the source after that). render draws a chapter's map from the built .bin and
+.4bpp files and the palettes in the ROM. --self-test decodes and encodes every
+stream from its committed .comp and compares bytes, checks that the committed
+CSVs encode to the same bytes, and renders the Prologue.
 """
 import argparse
 import csv
-import json
 import os
 import re
 import struct
@@ -82,63 +107,97 @@ def decode_4bpp_tiles(raw):
     return tiles
 
 
-def decode_chapter(ch, out_dir):
-    os.makedirs(out_dir, exist_ok=True)
-    layout_raw = open(bin_path(ch['layout']), 'rb').read()
-    entries_raw = open(bin_path(ch['tile_entries']), 'rb').read()
-    terrain_raw = open(bin_path(ch['terrain']), 'rb').read()
-
-    words = struct.unpack(f'<{len(layout_raw) // 2}H', layout_raw)
-    with open(os.path.join(out_dir, 'layout.csv'), 'w', newline='', encoding='utf-8') as f:
-        w = csv.writer(f)
-        for row in range(0, len(words), 64):
-            w.writerow([f'{v:04X}' for v in words[row:row + 64]])
-
-    metatiles = []
-    for i in range(0, len(entries_raw), 8):
-        tl, bl, tr, br = struct.unpack('<4H', entries_raw[i:i + 8])
-        def unpack_tile(val):
-            return {
-                'tile': val & 0x3FF,
-                'palette': (val >> 10) & 7,
-                'priority': bool((val >> 13) & 1),
-                'hflip': bool((val >> 14) & 1),
-                'vflip': bool((val >> 15) & 1),
-            }
-        metatiles.append({
-            'tl': unpack_tile(tl),
-            'bl': unpack_tile(bl),
-            'tr': unpack_tile(tr),
-            'br': unpack_tile(br),
-        })
-    with open(os.path.join(out_dir, 'metatiles.json'), 'w', encoding='utf-8') as f:
-        json.dump(metatiles, f, indent=2)
-
-    with open(os.path.join(out_dir, 'terrain.json'), 'w', encoding='utf-8') as f:
-        json.dump(list(terrain_raw), f)
+def terrain_names():
+    names = {}
+    for line in open(os.path.join(ROOT, 'include/Terrain.h'), encoding='utf-8'):
+        m = re.match(r'\s*(Terrain\w+)\s*=\s*\$([0-9A-F]+)', line)
+        if m:
+            names[int(m.group(2), 16)] = m.group(1)
+    return names
 
 
-def encode_chapter(in_dir, out_prefix):
-    rows = list(csv.reader(open(os.path.join(in_dir, 'layout.csv'), encoding='utf-8')))
-    layout_words = [int(cell, 16) for row in rows for cell in row]
-    open(f'{out_prefix}Layout.bin', 'wb').write(struct.pack(f'<{len(layout_words)}H', *layout_words))
+def entry_text(v):
+    flags = ('p' if v & 0x2000 else '') + ('h' if v & 0x4000 else '') + ('v' if v & 0x8000 else '')
+    return f'{v & 0x3FF:03X}:{(v >> 10) & 7}{flags}'
 
-    metatiles = json.load(open(os.path.join(in_dir, 'metatiles.json'), encoding='utf-8'))
-    def pack_tile(t):
-        return (
-            (t['tile'] & 0x3FF)
-            | ((t['palette'] & 7) << 10)
-            | ((1 if t['priority'] else 0) << 13)
-            | ((1 if t['hflip'] else 0) << 14)
-            | ((1 if t['vflip'] else 0) << 15)
-        )
-    entries = bytearray()
-    for mt in metatiles:
-        entries += struct.pack('<4H', pack_tile(mt['tl']), pack_tile(mt['bl']), pack_tile(mt['tr']), pack_tile(mt['br']))
-    open(f'{out_prefix}TileEntries.bin', 'wb').write(entries)
 
-    terrain = json.load(open(os.path.join(in_dir, 'terrain.json'), encoding='utf-8'))
-    open(f'{out_prefix}Terrain.bin', 'wb').write(bytes(terrain))
+def entry_value(text):
+    m = re.fullmatch(r'([0-9A-Fa-f]{1,3}):([0-7])([phv]*)', text.strip())
+    if not m:
+        raise ValueError(f'bad tilemap entry {text!r}')
+    v = int(m.group(1), 16) | int(m.group(2)) << 10
+    for c, bit in (('p', 0x2000), ('h', 0x4000), ('v', 0x8000)):
+        if c in m.group(3):
+            v |= bit
+    return v
+
+
+def layout_csv(raw):
+    words = struct.unpack(f'<{len(raw) // 2}H', raw)
+    return ''.join(','.join(f'{v:04X}' for v in words[r:r + 64]) + '\n' for r in range(0, len(words), 64))
+
+
+def layout_bin(text):
+    return b''.join(struct.pack('<H', int(c, 16)) for row in csv.reader(text.splitlines()) for c in row)
+
+
+def entries_csv(raw):
+    out = ['tile_id,top_left,bottom_left,top_right,bottom_right']
+    for i in range(0, len(raw), 8):
+        out.append(f'{i // 8},' + ','.join(entry_text(v) for v in struct.unpack_from('<4H', raw, i)))
+    return '\n'.join(out) + '\n'
+
+
+def entries_bin(text):
+    rows = list(csv.reader(text.splitlines()))[1:]
+    data = bytearray()
+    for n, row in enumerate(rows):
+        assert int(row[0]) == n, f'tile ID {row[0]} out of order (expected {n})'
+        data += struct.pack('<4H', *(entry_value(c) for c in row[1:5]))
+    return bytes(data)
+
+
+def terrain_csv(raw):
+    names = terrain_names()
+    return 'tile_id,terrain\n' + ''.join(f'{i},{names.get(b, f"${b:02X}")}\n' for i, b in enumerate(raw))
+
+
+def terrain_bin(text):
+    values = {n: v for v, n in terrain_names().items()}
+    rows = list(csv.reader(text.splitlines()))[1:]
+    data = bytearray()
+    for n, (tid, t) in enumerate(rows):
+        assert int(tid) == n, f'tile ID {tid} out of order (expected {n})'
+        data.append(int(t[1:], 16) if t.startswith('$') else values[t])
+    return bytes(data)
+
+
+KINDS = {'Layout': (layout_csv, layout_bin), 'TileEntries': (entries_csv, entries_bin),
+         'Terrain': (terrain_csv, terrain_bin)}
+
+
+def kind_of(label):
+    return next(k for k in KINDS if label.endswith(k))
+
+
+def stream_labels():
+    labels = set()
+    for ch in parse_chapter_maps().values():
+        labels |= {ch['layout'], ch['tile_entries'], ch['terrain']}
+    return sorted(labels)
+
+
+def decode(label):
+    raw = open(bin_path(label), 'rb').read()
+    open(bin_path(label)[:-4] + '.csv', 'w', encoding='utf-8').write(KINDS[kind_of(label)][0](raw))
+
+
+def build():
+    for label in stream_labels():
+        src, out = bin_path(label)[:-4] + '.csv', bin_path(label)
+        if not os.path.exists(out) or os.path.getmtime(src) > os.path.getmtime(out):
+            data = KINDS[kind_of(label)][1](open(src, encoding='utf-8').read())
+            open(out, 'wb').write(data)
 
 
 def render_chapter(ch, rom, labels, base_tiles, out_png):
@@ -193,51 +252,59 @@ def render_chapter(ch, rom, labels, base_tiles, out_png):
     img.save(out_png)
 
 
+def decompress_comp(path):
+    from decompress import decompress
+    data = open(path, 'rb').read()
+    buf = bytearray(0x400000)
+    buf[:len(data)] = data
+    return decompress(bytes(buf), 0xC00000)[0]
+
+
 def self_test():
     chapters = parse_chapter_maps()
     assert len(chapters) == 12, f'Expected 12 chapters, got {len(chapters)}'
-    rom = open(os.path.join(ROOT, 'fe4.sfc'), 'rb').read()
-    labels = load_labels()
-    base_tiles = decode_4bpp_tiles(open(os.path.join(ROOT, 'gfx/map/MapTiles.4bpp'), 'rb').read())
-
+    labels = stream_labels()
+    committed = 0
+    for label in labels:
+        raw = decompress_comp(bin_path(label) + '.comp')
+        to_csv, to_bin = KINDS[kind_of(label)]
+        text = to_csv(raw)
+        assert to_bin(text) == raw, f'{label}: decode/encode differs'
+        src = bin_path(label)[:-4] + '.csv'
+        if os.path.exists(src):
+            assert to_bin(open(src, encoding='utf-8').read()) == raw, f'{label}: committed CSV differs'
+            committed += 1
     with tempfile.TemporaryDirectory() as tmp:
-        for name, ch in chapters.items():
-            d = os.path.join(tmp, name)
-            decode_chapter(ch, d)
-            out_pref = os.path.join(tmp, f're_{name}')
-            encode_chapter(d, out_pref)
-            for suffix, key in [('Layout', 'layout'), ('TileEntries', 'tile_entries'), ('Terrain', 'terrain')]:
-                got = open(f'{out_pref}{suffix}.bin', 'rb').read()
-                exp = open(bin_path(ch[key]), 'rb').read()
-                assert got == exp, f'{name} {suffix} round-trip mismatch'
-        render_chapter(chapters['Prologue'], rom, labels, base_tiles, os.path.join(tmp, 'Prologue.png'))
-    print('12 of 12 chapter maps decode/encode byte-identical + preview rendered')
+        render_chapter(chapters['Prologue'], open(os.path.join(ROOT, 'fe4.sfc'), 'rb').read(), load_labels(),
+                       decode_4bpp_tiles(open(os.path.join(ROOT, 'gfx/map/MapTiles.4bpp'), 'rb').read()),
+                       os.path.join(tmp, 'Prologue.png'))
+    print(f'{len(labels)} chapter map streams (12 chapters) decode and encode byte-identical '
+          f'({committed} committed CSVs checked); Prologue rendered')
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--self-test', action='store_true')
     sub = ap.add_subparsers(dest='cmd')
-    p_dec = sub.add_parser('decode')
-    p_dec.add_argument('chapter')
-    p_dec.add_argument('out_dir')
-    p_enc = sub.add_parser('encode')
-    p_enc.add_argument('in_dir')
-    p_enc.add_argument('out_prefix')
-    p_ren = sub.add_parser('render')
-    p_ren.add_argument('chapter')
-    p_ren.add_argument('out_dir')
+    p = sub.add_parser('decode')
+    p.add_argument('chapter')
+    sub.add_parser('build')
+    p = sub.add_parser('render')
+    p.add_argument('chapter')
+    p.add_argument('out_dir')
     args = ap.parse_args()
 
     if args.self_test:
         self_test()
         return
-
     chapters = parse_chapter_maps()
     if args.cmd == 'decode':
-        decode_chapter(chapters[args.chapter], args.out_dir)
-    elif args.cmd == 'encode':
-        encode_chapter(args.in_dir, args.out_prefix)
+        targets = chapters.values() if args.chapter == 'all' else [chapters[args.chapter]]
+        for ch in targets:
+            for key in ('layout', 'tile_entries', 'terrain'):
+                decode(ch[key])
+    elif args.cmd == 'build':
+        build()
     elif args.cmd == 'render':
         rom = open(os.path.join(ROOT, 'fe4.sfc'), 'rb').read()
         labels = load_labels()

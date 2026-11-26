@@ -6,6 +6,9 @@ REM Graphics: gfx\**\NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAM
 for /r "%startDir%gfx" %%f in (*.4bpp.png *.2bpp.png) do python "%startDir%tools\gfx.py" png2bpp "%%f" "%%~dpnf"
 REM Compressed graphics: NAME.4bpp / NAME.2bpp to NAME.4bpp.lz / NAME.2bpp.lz, keeping the original NAME.*bpp.comp while it matches.
 for /r "%startDir%gfx" %%f in (*.4bpp.comp *.2bpp.comp) do if exist "%%~dpnf" python "%startDir%tools\gfx.py" lz "%%~dpnf" "%%f" "%%~dpnf.lz"
+REM Data written as source: chapter map CSVs and map battle sprite data (.asm) to NAME.bin.
+python "%startDir%tools\chapter_maps.py" build
+python "%startDir%tools\map_battle_layouts.py" build
 REM Other compressed data (tilemaps and the like): NAME.bin to NAME.bin.lz, the same way.
 for /r "%startDir%gfx" %%f in (*.bin.comp) do if exist "%%~dpnf" python "%startDir%tools\gfx.py" lz "%%~dpnf" "%%f" "%%~dpnf.lz"
 for /r "%startDir%audio" %%f in (*.bin.comp) do if exist "%%~dpnf" python "%startDir%tools\gfx.py" lz "%%~dpnf" "%%f" "%%~dpnf.lz"

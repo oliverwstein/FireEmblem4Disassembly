@@ -33,6 +33,7 @@ clean() {
   find gfx \( -name '*.4bpp' -o -name '*.2bpp' \) -delete
   find gfx \( -name '*.4bpp.lz' -o -name '*.2bpp.lz' -o -name '*.bin.lz' -o -name Layout.asm \) -delete
   find audio -name '*.bin.lz' -delete
+  find gfx/compressed \( -name 'acChapterMap*.bin' -o -name 'aMapBattle*Layout*.bin' \) -delete
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
@@ -84,6 +85,11 @@ generate() {
       python3 tools/gfx.py lz "$bpp" "$t" "$out"
     fi
   done < <(find gfx \( -name '*.4bpp.comp' -o -name '*.2bpp.comp' \))
+
+  # Data written as source: chapter map CSVs and map battle sprite data (.asm) to
+  # the NAME.bin files compressed below, each only when its source is newer.
+  python3 tools/chapter_maps.py build
+  python3 tools/map_battle_layouts.py build
 
   # Other compressed data (tilemaps and the like): NAME.bin to NAME.bin.lz, the
   # same way, keeping NAME.bin.comp while it still decompresses to NAME.bin.

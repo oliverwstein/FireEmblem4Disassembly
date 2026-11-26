@@ -204,3 +204,14 @@
       ; $1E: set wMusicID.
       .byte $1E, \Song
     .endsegment
+
+    MAP_BATTLE_SPRITE_DATA_END .segment Size
+      ; The end of a map battle sprite data stream (gfx/compressed/*/aMapBattle*Layout*.asm,
+      ; assembled at 0 by tools/map_battle_layouts.py): zeros up to Size, the stream's
+      ; original length. A stream may grow to $880 bytes, the distance between the two
+      ; sides' copies (aMapBattleSpriteBufferOffsets).
+      .if * < \Size
+        .fill \Size - *, 0
+      .endif
+      .cerror * > $880, "map battle sprite data is larger than $880 bytes"
+    .endsegment

@@ -23,6 +23,9 @@ gfx/**/*.4bpp.lz
 gfx/**/*.2bpp.lz
 gfx/**/*.bin.lz
 gfx/**/Layout.asm
+# Built from .csv / .asm sources by tools/chapter_maps.py and tools/map_battle_layouts.py
+gfx/compressed/C70C80/acChapterMap*.bin
+gfx/compressed/*/aMapBattle*Layout*.bin
 *.dialogue.txt
 
 tools/64tass.exe

@@ -180,9 +180,11 @@
 
         ; One per chapter, prologue to final. Each entry has:
         ; - the layout: 64x64 words of tile IDs (compressed, to aMapData);
-        ; - TileEntries: 1,024 16x16 metatiles (4,096 tilemap words / 8 KB,
-        ;   four 8x8 entries per metatile in TL, BL, TR, BR order,
-        ;   compressed to $7F0000), read by engine/map/map_tilemap.asm;
+        ;   bits 10-15 of each word are the tile's area (wAreaRestrictionBitfield);
+        ; - TileEntries: tile IDs 0-255, four 8x8 tilemap entries each in TL, BL,
+        ;   TR, BR order (2 KB, compressed, to $7F0000); IDs 256-1023 are
+        ;   aBaseMapTileEntries, copied to $7F0800 (rlSetUpChapterMapDisplay).
+        ;   Read by engine/map/map_tilemap.asm;
         ; - the tile graphics (compressed 4bpp, to VRAM $2800);
         ; - the palettes (BG palettes 1-7, uncompressed);
         ; - six words: wMapWidthMode, $075E, wMapMinXScroll, wMapMinYScroll,
