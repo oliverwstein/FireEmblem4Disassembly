@@ -52,10 +52,10 @@ g4bppcCastlePawnShopBGTiles g4bppcCastlePawnShopBGTiles ; 4096 bytes decompresse
 g4bppcCastleRepairShopBGTiles g4bppcCastleRepairShopBGTiles ; 4096 bytes decompressed
 g4bppcArenaBGTiles g4bppcArenaBGTiles ; 4096 bytes decompressed
 g4bppcDepotBGTiles g4bppcDepotBGTiles ; 4096 bytes decompressed
-g4bppcEpilogueCreditsBG1Tiles g4bppcEpilogueCreditsBG1Tiles ; 8192 bytes decompressed
+g4bppcEpilogueCreditsBG2Tiles g4bppcEpilogueCreditsBG2Tiles ; 8192 bytes decompressed
 g4bppcEpilogueCreditsSpriteTiles0 g4bppcEpilogueCreditsSpriteTiles0 ; 4096 bytes decompressed
-g4bppcEpilogueCreditsSpriteTiles1 g4bppcEpilogueCreditsSpriteTiles1 ; 4096 bytes decompressed
-g4bppcEpilogueCreditsSpriteTiles2 g4bppcEpilogueCreditsSpriteTiles2 ; 4096 bytes decompressed
+acEpilogueCreditsBG1Tilemap acEpilogueCreditsBG1Tilemap ; 4096 bytes decompressed
+acEpilogueCreditsBG2Tilemap acEpilogueCreditsBG2Tilemap ; 4096 bytes decompressed
 g4bppcCastleTownBGTiles g4bppcCastleTownBGTiles ; 8192 bytes decompressed
 acCastleTownBGTilemap acCastleTownBGTilemap ; 2048 bytes decompressed
 g4bppcEpilogueEndScreenTiles g4bppcEpilogueEndScreenTiles ; 22528 bytes decompressed
@@ -64,7 +64,7 @@ acEpilogueEndScreenTilemap acEpilogueEndScreenTilemap ; 2048 bytes decompressed
 gcRankingScreenTiles gcRankingScreenTiles ; 4096 bytes decompressed
 acEpilogueRankingBG2Tilemap acEpilogueRankingBG2Tilemap ; 2048 bytes decompressed
 acEpilogueRankingBG1Tilemap acEpilogueRankingBG1Tilemap ; 2048 bytes decompressed
-g4bppcEpilogueRankingsSpriteTiles g4bppcEpilogueRankingsSpriteTiles ; 4096 bytes decompressed
+acEpilogueRankingsBG2Tilemap acEpilogueRankingsBG2Tilemap ; 4096 bytes decompressed
 g4bppcOpeningSkySceneTiles g4bppcOpeningSkySceneTiles ; 4096 bytes decompressed
 acOpeningSkySceneTilemap0 acOpeningSkySceneTilemap0 ; 2048 bytes decompressed
 acOpeningSkySceneTilemap1 acOpeningSkySceneTilemap1 ; 2048 bytes decompressed

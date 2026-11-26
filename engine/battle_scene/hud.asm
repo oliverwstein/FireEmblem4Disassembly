@@ -1251,9 +1251,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>g4bppcBattleSceneHUDTilemap
+        ldx #<>acBattleSceneHUDTilemap
         stx DecompressionVariables
-        lda #`g4bppcBattleSceneHUDTilemap
+        lda #`acBattleSceneHUDTilemap
         sta $CA
         ldx #$D0C0
         stx $CB

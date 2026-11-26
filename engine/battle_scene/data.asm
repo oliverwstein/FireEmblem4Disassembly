@@ -603,7 +603,7 @@
         .long g4bppcTitleSceneTilesF41F38, aDecompressionBuffer
         .word $0000, $3800
         .byte $00
-        .long g4bppcTitleSceneTilesF43803, aDecompressionBuffer
+        .long acTitleSceneTilemapF43803, aDecompressionBuffer
         .word $7000, $1000
         .byte $00
         .long g4bppcTitleSceneTilesF03A1C, aDecompressionBuffer
@@ -621,7 +621,7 @@
         .long g4bppcTitleSceneTilesF30E6F, aDecompressionBuffer
         .word $4000, $4000
         .byte $00
-        .long g4bppcTitleSceneTilesF339EB, aDecompressionBuffer
+        .long acTitleSceneTilemapF339EB, aDecompressionBuffer
         .word $2800, $1000
         .byte $00
         .long g4bppcTitleSceneTilesF27E72, aDecompressionBuffer

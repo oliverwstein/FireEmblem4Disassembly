@@ -679,11 +679,11 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80EFA8 .structDecompressionDMAEntry g4bppcBattleBackgroundThicket, $4000, $0000 ; 80/EFA8
-      aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry g4bppcEpilogueCreditsBG1Tiles, $2000, $2000 ; 80/EFB0
+      aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry g4bppcEpilogueCreditsBG2Tiles, $2000, $2000 ; 80/EFB0
       aDecompressionDMAEntry80EFB8 .structDecompressionDMAEntry g4bppcDialogueBackgroundFountainForeground, $2000, $3000 ; 80/EFB8
       aDecompressionDMAEntry80EFC0 .structDecompressionDMAEntry g4bppcEpilogueCreditsSpriteTiles0, $1000, $6000 ; 80/EFC0
-      aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry g4bppcEpilogueCreditsSpriteTiles1, $1000, $5000 ; 80/EFC8
-      aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry g4bppcEpilogueCreditsSpriteTiles2, $1000, $5800 ; 80/EFD0
+      aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry acEpilogueCreditsBG1Tilemap, $1000, $5000 ; 80/EFC8
+      aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry acEpilogueCreditsBG2Tilemap, $1000, $5800 ; 80/EFD0
 
       .dsection Unsorted80EFD8Section
 
@@ -691,7 +691,7 @@
       aDecompressionDMAEntry80F187 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $3000 ; 80/F187
       aDecompressionDMAEntry80F18F .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $5000 ; 80/F18F
       aDecompressionDMAEntry80F197 .structDecompressionDMAEntry g4bppcEpilogueEndScreenTiles, $5800, $0000 ; 80/F197
-      aDecompressionDMAEntry80F19F .structDecompressionDMAEntry g4bppcEpilogueRankingsSpriteTiles, $1000, $5800 ; 80/F19F
+      aDecompressionDMAEntry80F19F .structDecompressionDMAEntry acEpilogueRankingsBG2Tilemap, $1000, $5800 ; 80/F19F
 
       .dsection Unsorted80F1A7Section
 
