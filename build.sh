@@ -31,7 +31,7 @@ clean() {
   find text -name '*.dialogue.txt' -delete
   find data -name '*.csv.asm' -delete
   find gfx \( -name '*.4bpp' -o -name '*.2bpp' \) -delete
-  find gfx \( -name '*.4bpp.lz' -o -name '*.bin.lz' -o -name Layout.asm \) -delete
+  find gfx \( -name '*.4bpp.lz' -o -name '*.2bpp.lz' -o -name '*.bin.lz' -o -name Layout.asm \) -delete
   find audio -name '*.bin.lz' -delete
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
@@ -76,14 +76,14 @@ generate() {
     fi
   done < <(find gfx \( -name '*.4bpp.png' -o -name '*.2bpp.png' \))
 
-  # Compressed graphics: NAME.4bpp to NAME.4bpp.lz, keeping the committed
-  # original stream NAME.4bpp.comp while it still decompresses to NAME.4bpp.
+  # Compressed graphics: NAME.4bpp / NAME.2bpp to NAME.4bpp.lz / NAME.2bpp.lz,
+  # keeping the committed original stream NAME.*bpp.comp while it still decompresses to it.
   while IFS= read -r t; do
     bpp=${t%.comp}; out=$bpp.lz
     if [[ -e $bpp && ( ! -e $out || $bpp -nt $out || $t -nt $out ) ]]; then
       python3 tools/gfx.py lz "$bpp" "$t" "$out"
     fi
-  done < <(find gfx -name '*.4bpp.comp')
+  done < <(find gfx \( -name '*.4bpp.comp' -o -name '*.2bpp.comp' \))
 
   # Other compressed data (tilemaps and the like): NAME.bin to NAME.bin.lz, the
   # same way, keeping NAME.bin.comp while it still decompresses to NAME.bin.

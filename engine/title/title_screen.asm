@@ -322,9 +322,9 @@
 
         sep #$20
         rep #$10
-        ldx #<>g4bppcTitleSceneTilesF57765
+        ldx #<>g2bppcTitleSceneTilesF57765
         stx DecompressionVariables
-        lda #`g4bppcTitleSceneTilesF57765
+        lda #`g2bppcTitleSceneTilesF57765
         sta $CA
         ldx #$8B88
         stx $CB

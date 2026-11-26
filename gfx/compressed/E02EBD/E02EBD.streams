@@ -418,7 +418,7 @@ acTitleSceneTilemapF5580C acTitleSceneTilemapF5580C ; 2048 bytes decompressed
 acTitleSceneTilemapF5597A acTitleSceneTilemapF5597A ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF55B0E g4bppcTitleSceneTilesF55B0E ; 8704 bytes decompressed
 acTitleSceneTilemapF57599 acTitleSceneTilemapF57599 ; 2048 bytes decompressed
-g4bppcTitleSceneTilesF57765 g4bppcTitleSceneTilesF57765 ; 2816 bytes decompressed
+g2bppcTitleSceneTilesF57765 g2bppcTitleSceneTilesF57765 ; 2816 bytes decompressed
 acTitleSceneTilemapF57B55 acTitleSceneTilemapF57B55 ; 4096 bytes decompressed
 acTitleSceneTilemapF57C2D acTitleSceneTilemapF57C2D ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF57E44 g4bppcTitleSceneTilesF57E44 ; 11392 bytes decompressed

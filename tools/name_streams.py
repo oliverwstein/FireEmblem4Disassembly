@@ -8,8 +8,8 @@ stream listed in a gfx/**/*.streams file as `OLD OLD` (label and file name the
 same, as tools/find_streams.py writes them). For each rename the tool
 
   - rewrites that .streams line as `NEW NEW`, keeping its comment;
-  - renames the stream's files next to it: OLD.comp, OLD.4bpp.comp and
-    OLD.4bpp.png (with git mv when they are tracked);
+  - renames the stream's files next to it: OLD.comp, OLD.4bpp.comp, OLD.4bpp.png,
+    OLD.2bpp.comp, OLD.2bpp.png, OLD.bin.comp and OLD.bin (with git mv when tracked);
   - replaces OLD as a whole word in engine/, include/, events/, data/ and
     build.asm.
 
@@ -99,7 +99,7 @@ def main():
                 out += [n for n in notes.get(old, []) if n not in out[-len(notes[old]):]]
                 out.append(f'{new} {new}{m.group(2)}')
                 folder = os.path.dirname(path)
-                for ext in ('.comp', '.4bpp.comp', '.4bpp.png', '.bin.comp', '.bin'):
+                for ext in ('.comp', '.4bpp.comp', '.4bpp.png', '.2bpp.comp', '.2bpp.png', '.bin.comp', '.bin'):
                     src, dst = os.path.join(folder, old + ext), os.path.join(folder, new + ext)
                     if os.path.exists(src):
                         if os.path.relpath(src, ROOT) in tracked:

@@ -20,6 +20,7 @@ EN_ROM/*.*
 gfx/**/*.4bpp
 gfx/**/*.2bpp
 gfx/**/*.4bpp.lz
+gfx/**/*.2bpp.lz
 gfx/**/*.bin.lz
 gfx/**/Layout.asm
 *.dialogue.txt

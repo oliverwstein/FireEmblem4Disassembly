@@ -4,8 +4,8 @@ SET as="%startDir%/tools/64tass"
 
 REM Graphics: gfx\**\NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAME.2bpp.
 for /r "%startDir%gfx" %%f in (*.4bpp.png *.2bpp.png) do python "%startDir%tools\gfx.py" png2bpp "%%f" "%%~dpnf"
-REM Compressed graphics: NAME.4bpp to NAME.4bpp.lz, keeping the original NAME.4bpp.comp while it matches.
-for /r "%startDir%gfx" %%f in (*.4bpp.comp) do if exist "%%~dpnf" python "%startDir%tools\gfx.py" lz "%%~dpnf" "%%f" "%%~dpnf.lz"
+REM Compressed graphics: NAME.4bpp / NAME.2bpp to NAME.4bpp.lz / NAME.2bpp.lz, keeping the original NAME.*bpp.comp while it matches.
+for /r "%startDir%gfx" %%f in (*.4bpp.comp *.2bpp.comp) do if exist "%%~dpnf" python "%startDir%tools\gfx.py" lz "%%~dpnf" "%%f" "%%~dpnf.lz"
 REM Other compressed data (tilemaps and the like): NAME.bin to NAME.bin.lz, the same way.
 for /r "%startDir%gfx" %%f in (*.bin.comp) do if exist "%%~dpnf" python "%startDir%tools\gfx.py" lz "%%~dpnf" "%%f" "%%~dpnf.lz"
 for /r "%startDir%audio" %%f in (*.bin.comp) do if exist "%%~dpnf" python "%startDir%tools\gfx.py" lz "%%~dpnf" "%%f" "%%~dpnf.lz"

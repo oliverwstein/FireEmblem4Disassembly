@@ -696,7 +696,7 @@
         .long acTitleSceneTilemapF57C2D, aDecompressionBuffer
         .word $0C00, $0800
         .byte $00
-        .long g4bppcTitleSceneTilesF57765, aDecompressionBuffer
+        .long g2bppcTitleSceneTilesF57765, aDecompressionBuffer
         .word $5100, $0B00
         .byte $00
         .long g4bppcSaveMenuMainTiles, aDecompressionBuffer
