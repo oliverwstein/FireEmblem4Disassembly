@@ -109,13 +109,11 @@ Workflow: identify via loader routines and [gfx/compressed/CATALOG.md](gfx/compr
 
 ### 2.5 Streams Unpacked as the Wrong Kind (checked 2026-11-25)
 
-All 145 stream PNGs renamed in `1961416`..`e902eb3` were checked against their loaders and pictures. These are tilemaps named and unpacked as 4bpp tiles; each wants `ac...Tilemap` and `tools/unpack_streams.py LABEL bin`:
+All 145 stream PNGs renamed in `1961416`..`e902eb3` were checked against their loaders and pictures.
 
-- [ ] 34 loaded through `aBattleSceneDecompressToVRAMTable` to a battle scene tilemap: VRAM `$3000`/`$3800` (BG1, BG1SC `$31`/`$39`/`$3C`), `$6000` (BG2) or `$7000` (BG3, the striped ones): `EffectTilesEF0A82`, `EffectTilesEF0F33`, `EffectTilesEF1680`, `EffectTilesEF3FF1`, `EffectTilesEF4246`, `EffectTilesEF49D5`, `EffectTilesEF5460`, `EffectTilesEF55C9`, `EffectTilesEF6513`, `EffectTilesEF7972`, `EffectTilesEF7EBA`, `EffectTilesEF7FFC`, `EffectTilesF10762`, `EffectTilesF124AF`, `EffectTilesF14061`, `EffectTilesF14E0F`, `EffectTilesF14F90`, `EffectTilesF15927`, `EffectTilesF15C82`, `EffectTilesF16912`, `EffectTilesF16A9C`, `EffectTilesF209BE`, `EffectTilesF2200D`, `EffectTilesF22128`, `EffectTilesF22240`, `EffectTilesF22FD8`, `EffectTilesF2447D`, `EffectTilesF25C57`, `EffectTilesF25DD4`, `EffectTilesF25F67`, `EffectTilesF46551`, `TitleSceneTilesF339EB`, `TitleSceneTilesF40F1E`, `TitleSceneTilesF43803`. Nine other `$3000` loads are tiles (BG1's tiles run on from `$2000`): EffectTiles `EF0815`, `EF0C10`, `EF1175`, `EF421A`, `F01360`, `F21830`, `F23B79`, `F25289`, `F33DD0`.
-- [ ] `g4bppcEpilogueCreditsSpriteTiles1` (VRAM `$5000`, BG1's tilemap), `g4bppcEpilogueCreditsSpriteTiles2` and `g4bppcEpilogueRankingsSpriteTiles` (`$5800`, BG2's), by `rsOpenEpilogueScreen`'s layout.
-- [ ] `g4bppcBattleSceneHUDTilemap` and `g4bppcMapBattleMagicTilemapUnusedD629B1`: named tilemaps, unpacked as 4bpp.
-- [ ] `g4bppcEpilogueCreditsBG1Tiles` goes to VRAM `$2000`, BG2's tile area (BG1's starts at `$3000`): BG2's tiles.
-- [ ] Unsure from the picture: `g4bppcTitleSceneTilesF57B55` (striped, but loaded into the title screen's BG1 tile area), `g4bppcChapterIntroBannerTiles` (noisy at 4bpp), `gcAbnormalityWarningTiles`/`gcAntiPiracyWarningTiles` (dots only without their palette; the names rest on their loader).
+- [x] 39 tilemaps named or unpacked as 4bpp tiles are now `ac...Tilemap` `.bin` streams (`df418b5`): 34 battle scene and title loads through `aBattleSceneDecompressToVRAMTable` to a BG map (VRAM `$3000`/`$3800` BG1, `$6000` BG2, `$7000` BG3; nine other `$3000` loads are tiles, BG1's tiles running on from `$2000`), the epilogue's three BG maps, `acBattleSceneHUDTilemap` and `acMapBattleMagicTilemapUnusedD629B1`.
+- [x] `g4bppcEpilogueCreditsBG1Tiles` is BG2's tiles (VRAM `$2000`; BG1's start at `$3000`): now `g4bppcEpilogueCreditsBG2Tiles`.
+- [ ] Unsure from the picture: `g4bppcTitleSceneTilesF57B55` (striped, but loaded into the title screen's BG1 tile area), `g4bppcChapterIntroBannerTiles` (noisy at 4bpp), `gcAbnormalityWarningTiles`/`gcAntiPiracyWarningTiles` (dots only without their palette; the names rest on their loader). Settling them needs a render with their real palette and tilemap.
 
 ## 3. ROM Data Organization (Moddability & Readability)
 
