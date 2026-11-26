@@ -405,11 +405,13 @@
     lMapMenuRAMEntryPointer .long ?         ; $00052E
     lMapMenuTilemapRAMEntryPointer .long ?  ; $000531
     wMapMenuNewPosition .word ?             ; $000534 ; argument of rlMoveMapMenu: column, row; bit 15 hides the menu
-    bMapMenuDMABusyFlags .byte ?                    ; $000536
-      ; Bitfield
+    bMapMenuDMABusyFlags .byte ?            ; $000536
+      ; rlHandleMapMenuDecompressionDMA's one slot. Any bit set: the slot is taken,
+      ; and other callers get carry set. Cleared when the request finishes.
       ; $0001 = busy decompressing
       ; $0002 = busy dma-ing
-    lMapMenuDMADataPointer .long ?                    ; $000537
+      ; $0080 = taken by the caller whose return address is in lMapMenuDMADataPointer
+    lMapMenuDMADataPointer .long ?          ; $000537 ; the caller's return address (its inline data), which identifies the request
 
     aCurrentTilemapInfo .block 
       wBaseTile .word ?                     ; $00053A
