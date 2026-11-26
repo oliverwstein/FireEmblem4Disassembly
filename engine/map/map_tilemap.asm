@@ -2249,7 +2249,7 @@
       .xl
 
       aMapRowUploadIRQ ; 81/B522
-        .word $0068, $00D7, <>rlIRQUploadMapRowAndColumn, <>aMapRowUploadIRQNext
+        .word $0068, $00D7, <>rlIRQUploadMapRowAndColumn, <>aMapRowUploadIRQCode
 
     .endsection Table81B522Section
 
@@ -2298,7 +2298,7 @@
       .al
       .xl
 
-      aMapRowUploadIRQNext ; 81/B54A
+      aMapRowUploadIRQCode ; 81/B54A
         .word <>rsIRQCodeHalt
 
     .endsection Table81B54ASection

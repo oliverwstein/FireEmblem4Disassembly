@@ -648,6 +648,9 @@
         .autsiz
         .databank ?
 
+        ; IRQ at line $CF (aBattleSceneIRQ5Setup): forces blank and turns HDMA off for
+        ; the rest of the frame (rlBattleSceneHBlankForceBlank).
+
         jsl rlBattleSceneHBlankForceBlank
         rtl
 
@@ -684,6 +687,10 @@
         .xl
         .autsiz
         .databank ?
+
+        ; IRQ at line $7E (aBattleSceneIRQ2Setup): switches the layers, tilemap and tile
+        ; bases, scroll offsets, windows and color math for the HUD, by bBattleSceneBG3Mode
+        ; (0-1, 2, 3, 4 and up), and sets $7FE1CF.
 
         lda bBattleSceneBG3Mode
         and #$00FF
@@ -751,6 +758,9 @@
         .autsiz
         .databank ?
 
+        ; IRQ at line $9C (aBattleSceneIRQ3Setup): in HUD modes 1 and 3, the HUD's
+        ; middle part (rlBattleSceneHBlankMode1MidHUD, ...Mode3MidHUD).
+
         lda bBattleSceneBG3Mode
         and #$00FF
         cmp #$0003
@@ -803,6 +813,9 @@
         .autsiz
         .databank ?
 
+        ; IRQ at line $A1 (aBattleSceneIRQ4Setup): in HUD mode 1, the HUD's lower part
+        ; (rlBattleSceneHBlankMode1LowerHUD).
+
         lda bBattleSceneBG3Mode
         and #$00FF
         cmp #$0001
@@ -847,6 +860,10 @@
         .xl
         .autsiz
         .databank ?
+
+        ; IRQ at line $0E (aBattleSceneIRQ1Setup): turns the picture on at the scene's
+        ; brightness (rlBattleSceneHBlankApplyINIDISP). The scene's step writes INIDISP 0
+        ; every frame, so the lines above stay black.
 
         jsl rlBattleSceneHBlankApplyINIDISP
         rtl
