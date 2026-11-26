@@ -9,7 +9,7 @@
     YIELD
 
     SET_FLAG_IF_IN_CHAPTER Chapter08, FlagChapter08_FeeOnMountainCheck
-    SET_FLAG_IF_IN_CHAPTER Chapter08, FlagChapter08_Unknown53
+    SET_FLAG_IF_IN_CHAPTER Chapter08, FlagChapter08_ConnachtSeized
 
     DIALOGUE_WITH_BG dialogueChapter08ConnachtSeized, DIALOGUE_BG_HALLWAY, CONVERSATION_EXIT_MAP, 2
     YIELD

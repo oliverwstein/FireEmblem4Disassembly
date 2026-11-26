@@ -23,7 +23,7 @@
 
       FlagChapter06_BrotherRecruitedDanannResponse    := 33
       FlagChapter06_JuliaCaptureReturn                := 34
-      FlagChapter06_Unknown35                         := 35
+      FlagChapter06_Group27Charging                   := 35 ; set by group 27's AI as it starts charging; nothing reads it
       FlagChapter06_DanannDied                        := 36
       FlagChapter06_CreidneIucharbaAdjacent           := 37
       FlagChapter06_CreidneIucharAdjacent             := 38
@@ -545,9 +545,9 @@
             AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
             AI_END
 
-          ; tries to set Ch1 flag?
+          ; Names Chapter01, but sets the flag in this chapter (see AI_SET_CHAPTER_EVENT_FLAG).
           +
-          AI_SET_CHAPTER_EVENT_FLAG Chapter01, FlagChapter06_Unknown35
+          AI_SET_CHAPTER_EVENT_FLAG Chapter01, FlagChapter06_Group27Charging
           AI_CHARGE_IF_ENGAGEABLE_ELSE_HOLD
           AI_END
 

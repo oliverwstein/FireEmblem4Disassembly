@@ -48,7 +48,7 @@
       FlagChapter04_PlayerPastBridge                := 47
       FlagChapter04_DewAtBridge                     := 48
 
-      FlagChapter04_Unknown51                       := 51
+      FlagChapter04_Group19LeaderArrived            := 51 ; set by group 19's AI when its leader reaches [9, 34]; it then idles
       FlagChapter04_LamiaDied                       := 52
 
       FlagChapter04_DaccarDied                      := 55
@@ -765,7 +765,7 @@
 
       aFactionGroup19AI1 ; 86/DE3A
 
-        AI_FLAG_IF_LEADER_ON_COORDS Chapter04, FlagChapter04_Unknown51, [9, 34]
+        AI_FLAG_IF_LEADER_ON_COORDS Chapter04, FlagChapter04_Group19LeaderArrived, [9, 34]
         AI_END
 
     .endsection Chapter04EventDataSection

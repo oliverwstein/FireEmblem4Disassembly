@@ -178,14 +178,16 @@
   .endsegment
 
   AI_SET_CHAPTER_EVENT_FLAG .segment ChapterID, EventFlag
-    ; Any chapter but the active one doesnt work
+    ; With one chapter entry during play, rsAIScriptCommand15 ignores rlGetSpecifiedChaptersRAMPointer's
+    ; failure, so another chapter's ID sets the flag in the active chapter's flags.
     .byte $15
     .word \ChapterID
     .byte \EventFlag
   .endsegment
 
   AI_UNSET_CHAPTER_EVENT_FLAG .segment ChapterID, EventFlag
-    ; Any chapter but the active one doesnt work
+    ; With one chapter entry during play, rsAIScriptCommand16 ignores rlGetSpecifiedChaptersRAMPointer's
+    ; failure, so another chapter's ID clears the flag in the active chapter's flags.
     .byte $16
     .word \ChapterID
     .byte \EventFlag
@@ -247,7 +249,7 @@
   .endsegment
 
   AI_JUMP_IF_CHAPTER_EVENT_FLAG_SET .segment ChapterID, EventFlag, Address
-    ; Any chapter but the active one doesnt work
+    ; A chapter other than the active one reads as unset (rlCheckIfEventFlagOfSpecifiedChapterSet).
     .byte $20
     .word \ChapterID
     .byte \EventFlag
@@ -255,7 +257,7 @@
   .endsegment
 
   AI_JUMP_IF_CHAPTER_EVENT_FLAG_UNSET .segment ChapterID, EventFlag, Address
-    ; Any chapter but the active one doesnt work
+    ; A chapter other than the active one reads as unset (rlCheckIfEventFlagOfSpecifiedChapterSet).
     .byte $21
     .word \ChapterID
     .byte \EventFlag

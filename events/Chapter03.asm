@@ -4,14 +4,14 @@
       FlagChapter03_MadinoSeized                        :=  0
       FlagChapter03_SylvaleSeized                       :=  1
       FlagChapter03_OrgahilSeized                       :=  2
-      FlagChapter03_Unknown3                            :=  3
+      FlagChapter03_MadinoSeizedEvent                   :=  3 ; EventChapter03MadinoSeized has started
       FlagChapter03_SylvaleSpawn                        :=  4
 
       FlagChapter03_EldiganGone                         := 10
       FlagChapter03_ThraciaSpawn                        := 11
 
       FlagChapter03_TravantLeave                        := 13
-      FlagChapter03_Unknown14                           := 14
+      FlagChapter03_SylvaleSeizedEvent                  := 14 ; EventChapter03SylvaleSeized has started
       FlagChapter03_ClaudTailiuSpawn                    := 15
       FlagChapter03_OrgahilSpawn                        := 16
 
@@ -85,10 +85,10 @@
       aChapter03MapEvents ; 86/D3CF
 
         CHECK_SEIZING_CASTLE FlagChapter03_MadinoSeized, FS_Player, Ch03_Madino
-          EVENT FlagChapter03_Unknown3, EventChapter03MadinoSeized
+          EVENT FlagChapter03_MadinoSeizedEvent, EventChapter03MadinoSeized
 
         CHECK_SEIZING_CASTLE FlagChapter03_SylvaleSeized, FS_Player, Ch03_Sylvale
-          EVENT FlagChapter03_Unknown14, EventChapter03SylvaleSeized
+          EVENT FlagChapter03_SylvaleSeizedEvent, EventChapter03SylvaleSeized
 
         CHECK_SEIZING_CASTLE FlagChapter03_OrgahilSeized, FS_Player, Ch03_Orgahil
           EVENT FlagAlways, EventChapter03Ending

@@ -45,7 +45,7 @@
       FlagChapter08_ConnachtBridgeLowered               := 50
       FlagChapter08_LeifNearMountainCheck               := 51
       FlagChapter08_FeeOnMountainCheck                  := 52
-      FlagChapter08_Unknown53                           := 53
+      FlagChapter08_ConnachtSeized                      := 53 ; set by EventChapter08ConnachtSeized; nothing reads it
       FlagChapter08_MuirneSeliphAdjacentCheck           := 54
       FlagChapter08_MuirneSeliphAdjacent                := 55
       FlagChapter08_LindaOnTree                         := 56
