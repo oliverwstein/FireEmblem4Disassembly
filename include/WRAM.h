@@ -847,7 +847,17 @@
     wDestroyedLocationsCount .word ?  ; $000D73
     bSavedPlayerCursorXTile .byte ?   ; $000D75 ; cursor X tile saved when entering castle / checked on turn 2+
     bSavedPlayerCursorYTile .byte ?   ; $000D76 ; cursor Y tile saved alongside bSavedPlayerCursorXTile
-    wMainGameMode .word ?             ; $000D77 ; 2 = chapter map
+    wMainGameMode .word ?             ; $000D77
+      ; How rsReturnToMapMainLoop rebuilds the map and how map step 11 shows it:
+      ; 0 = redraw the display (rlSetUpChapterMapDisplay), fade in: the castle screen and
+      ;     its conversations, the map menu, the options, the skill and data windows;
+      ; 1 = redraw with every standing sprite frame at once, full brightness at once:
+      ;     the status screen, the unit and item windows;
+      ; 2 = reload the layout from ROM and reapply map changes, fade in, then handle a
+      ;     defeated unit and resume the phase music: the battle scene, the save menu,
+      ;     the demo and the epilogue;
+      ; 3 = as 2, but no fade-in (the caller fades in): a battle scene with
+      ;     BattleSceneFlagToMapMode3, RELOAD_MAP_SCREEN with bit 7.
 
   .endvirtual
 

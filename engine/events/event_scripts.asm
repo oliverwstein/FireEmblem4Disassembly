@@ -320,7 +320,7 @@
         .word <>rsEventCommand38
         .word <>rsEventCommandSetCursorToEventUnitSlot1
         .word <>rsEventCommandSetCameraPosition
-        .word <>rsEventCommand3B
+        .word <>rsEventCommandReloadMapScreen
         .word <>rsEventCommand3C
         .word <>rsEventCommand3D
         .word <>rsEventCommand3E
@@ -3089,13 +3089,16 @@
 
         .databank 0
 
-      rsEventCommand3B ; 91/C7A7
+      rsEventCommandReloadMapScreen ; 91/C7A7
 
         .al
         .autsiz
         .databank ?
 
-        ; Sets map state? $80 = not interactable?
+        ; RELOAD_MAP_SCREEN: fades out over (Mode & $3F) frames, then rebuilds the map
+        ; through rsReturnToMapMainLoop (procMainLoopChangeFadeByTimer) with wMainGameMode
+        ; 3 if bit 7 of Mode is set, 2 if bit 6, else 0; procEventWaitFadeToMap holds the
+        ; script until then.
 
         php
         phy

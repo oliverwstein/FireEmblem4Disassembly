@@ -48,7 +48,9 @@
         .autsiz
         .databank ?
 
-        ; At least i think $0302 is the map state...
+        ; X = proc: keeps wGameStateRoutine1 in the proc's aBody3 and sets it to 0, so the
+        ; screen's step (on the map, rlMapStep, and with it the AI) stops while the menu is
+        ; open. rlMapMenuCloseAndRestoreMapState puts it back.
 
         lda wGameStateRoutine1,b
         sta aProcSystem.aBody3,b,x
