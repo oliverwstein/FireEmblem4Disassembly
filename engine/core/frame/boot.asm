@@ -77,9 +77,12 @@
       rlReset ; 80/8D56
 
         ; The reset vector ($00/FFFC) points here. Switches the CPU to native mode
-        ; and jumps on into rlBootInitAndCheckHardware in bank $80, checking on the way that
-        ; the reset vector still points at this routine. Part of the code that the
-        ; checksums in include/Checksums.h cover.
+        ; and jumps on into rlBootInitAndCheckHardware in bank $80. Three tests come
+        ; first: the CPU was in emulation mode (as after a real reset), the direct page
+        ; is 0, and the reset vector holds this routine's address. A failed test takes a
+        ; short branch to the same routine, which stays in bank 0, and its bank check
+        ; then hangs (the anti-tamper screens). Part of the code that the checksums in
+        ; include/Checksums.h cover.
         .as
         .xs
         .autsiz

@@ -25,7 +25,7 @@ Data: `wVBlankPointer`, `wIRQPointer`, `wMainLoopPointer`, `wVBlankFlag`, `wVBla
 
 The reset vector (`$00/FFFC`, [header.asm](../../engine/core/frame/header.asm)) points at `rlReset`. The native vectors point VBlank at `rlVBlank` and IRQ at `rlIRQ`; every other vector is `$8000`.
 
-1. **`rlReset`** turns off interrupts, switches the CPU to native mode, and jumps to `rlBootInitAndCheckHardware` in bank `$80` (the FastROM mirror). On the way it checks that the direct page is 0 and that the reset vector still points at itself; it reaches the same place either way.
+1. **`rlReset`** turns off interrupts, switches the CPU to native mode, and jumps to `rlBootInitAndCheckHardware` in bank `$80` (the FastROM mirror). On the way it checks that the CPU was in emulation mode (as after a real reset), that the direct page is 0, and that the reset vector still points at itself. A failed check branches to the same routine without leaving bank 0, so the bank check in step 2 sends it to the anti-tamper hang.
 2. **`rlBootInitAndCheckHardware`** sets the stack to `$1FF7`, turns on FastROM (`MEMSEL`), blanks the screen and stops NMI, DMA and HDMA. If `$1FFC`-`$1FFF` hold `"ELM0"`, RAM survived a reset and the copier scan is skipped. Otherwise it looks for signs of a copier or cheat device, any of which jumps to the anti-tamper hang (below):
    - the word just below the stack pointer, plus one, is `rlReset`'s address (a return address into `rlReset`);
    - in `$0000`-`$1FFD`, a `JMP ($FFFC)`, a `JMP (addr)` whose target holds `rlReset`, a `JMP rlReset`, or the 32 bytes `$60`, `$61` ... `$7F` in a row.
@@ -101,7 +101,7 @@ Each adds a 0 after the entry. If the screen is force-blanked (`bBufferINIDISP` 
 - `wJoy1New`: the buttons pressed this frame;
 - `wJoy1Repeated`: the new presses, plus, while the held buttons stay the same, all of them once `wJoy1RepeatTimer` runs out: first after `wJoyRepeatDelay` frames (40), then every `wJoyRepeatInterval` (10).
 
-`rlIncreaseFrameCounters` adds 1 to `bFrameCounterByOnes` and 3 to `bFrameCounterByThrees` (bytes). The random number table is seeded from `bFrameCounterByOnes` ([allocation.md](allocation.md)).
+`rlIncreaseFrameCounters` adds 1 to `bFrameCounterByOnes` and 3 to `bFrameCounterByThrees` (bytes). The only reader of `bFrameCounterByOnes` is the random number table's seeding, which runs before the first VBlank and so always reads 0 ([allocation.md](allocation.md)); nothing reads `bFrameCounterByThrees`. Code that times an effect by frames reads `wVBlankEnabledFramecount`.
 
 ## The code checksums
 

@@ -135,8 +135,14 @@
     wIRQPointer               .word ? ; $0000D5
     wMainLoopPointer          .word ? ; $0000D7
     wVBlankFlag               .word ? ; $0000D9
+      ; Bit 15 is set while rlVBlank runs the routine at wVBlankPointer. An NMI that
+      ; finds it still set is a lag frame: rlVBlank takes its short path and returns
+      ; to the routine it interrupted.
     wVBlankEnabledFramecount  .word ? ; $0000DB
+      ; Frames whose VBlank routine finished. rlHaltUntilVBlank (the main loop's wait)
+      ; waits for it to change; a few effects read it as a frame timer.
     wVBlankDisabledFramecount .word ? ; $0000DD
+      ; Lag frames (rlVBlank's short path). Nothing reads it.
 
   .endvirtual
 
@@ -232,7 +238,10 @@
       ; The decompression queue: 6-byte entries (source, destination), ended by a 0
       ; source. Five fit; the fifth's end marker reaches bFrameCounterByOnes.
     bFrameCounterByOnes .byte ?         ; $000469
+      ; +1 a frame (rlIncreaseFrameCounters). Its only reader is rlInitRNArray, which
+      ; runs before the first VBlank, so it reads 0.
     bFrameCounterByThrees .byte ?       ; $00046A
+      ; +3 a frame (rlIncreaseFrameCounters). Nothing reads it.
     aRNArray .fill 55                   ; $00046B
     wRNIndex .word ?                    ; $0004A2
     bRNGTemp1 .byte ?                ; $0004A4
@@ -1342,12 +1351,14 @@
       ; $0001 = the dialogue boxes' tilemaps have been drawn (rlRedrawDialogueBoxTilemaps)
       ; $0002 = a dialogue box changed: redraw their tilemaps next frame
       ; $0004 = deployment states changed: copy the state buffers next frame (rlApplyBufferedDeploymentStates)
+      ; $0008 = rsMapVBlank skipped the animated tiles this frame (DMA queue busy, or $0200); nothing reads it
       ; $0010 = set while a battle's rounds are built (engine/battle/battle.asm)
       ; $0020 = the castle screen is open: relocations refresh its units, battles are type 3
       ; $0040 = open the castle screen after the unit goes into the castle (rsRelocateIntoCastle)
       ; $0080 = the AI queued an event for the unit about to act (rsRunQueuedAIUnitEvent)
       ; $0100 = the chapter is resumed from a map save (rsSaveMenuStartLoadedMap, the map menu's reload): rsStartChapterMap enters at map step 7
-      ; $0200 = the map step does not move the cursor (rsMapStepPhase)
+      ; $0200 = map step 7 does not move the cursor or the camera, and rsMapVBlank skips the
+      ;         animated tiles; only rsPauseMapProcsAndHDMAUnused sets it, so it is always clear
       ; $0400 = the chapter has ended (rlSaveChapterTurncount); no seize popup
       ; $0800 = the minimap is choosing a Warp destination
       ; $1000 = a unit of the army acted this phase; disables the map save command
