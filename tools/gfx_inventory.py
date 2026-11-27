@@ -17,7 +17,8 @@ Classifies each asset by:
     (map_sprites.py: walking streams and both standing sheets), or a map battle
     frame-grid sheet (map_battle_sprites.py);
   - unused: nothing in engine/, data/, include/, events/ or build.asm names the
-    label outside a comment and its own definition (no reader);
+    label outside a comment and its own definition (no reader), or its only
+    reader can never select it (UNREACHABLE, each with its reason);
   - sheet: an indexed .4bpp.png/.2bpp.png tile sheet in VRAM order;
   - raw: a committed .comp/.bin with no source.
 - system and phase: from the tool or folder that builds an authored asset;
@@ -39,6 +40,14 @@ import map_battle_sprites
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_MD = os.path.join(ROOT, 'docs', 'reference', 'gfx_inventory.md')
+
+# Labels whose only reader can never pick them, checked by hand.
+UNREACHABLE = {
+    # aMapBattleScriptedCritSprites entry 4 (by wBattleCriticalType - 1):
+    # rlActionStructGetScriptedCritPossibility returns only types 0-3, and the
+    # other writers of wBattleCriticalType only set or clear bit $8000.
+    'g4bppcMapBattleCritUnused4',
+}
 
 STREAMS_RE = re.compile(r'^([A-Za-z_]\w*)\s+([A-Za-z0-9_./-]+)')
 BINARY_RE = re.compile(r'^\s*([A-Za-z_]\w*)\s+\.binary\s+"(gfx/[^"]+)"')
@@ -180,7 +189,7 @@ def collect_inventory():
                     form, system, phase, src = 'authored', 'chapter_maps', 'Phase 1', f'gfx/maps/{name}.csv'
                 elif os.path.exists(os.path.join(ROOT, 'gfx/map_battle', f'{name}.asm')):
                     form, system, phase, src = 'authored', 'map_battle', 'Phase 1', f'gfx/map_battle/{name}.asm'
-                elif refs.get(label, 0) == 0:
+                elif refs.get(label, 0) == 0 or label in UNREACHABLE:
                     system, phase = _system_for_name(label, out_rel)
                     form, src = 'unused', out_rel + '.comp'
                 elif kind in ('.4bpp', '.2bpp') and os.path.exists(os.path.join(ROOT, out_rel + '.png')):

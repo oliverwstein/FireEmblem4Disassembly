@@ -11082,7 +11082,9 @@
         ; Read by rlDecompressScriptedCritSprites, by wBattleCriticalType - 1: compressed 4bpp
         ; sprite tiles for the effect of a scripted critical (see
         ; rlActionStructGetScriptedCritPossibility), decompressed to
-        ; aDecompressionBuffer+$6000. Nothing found sets type 4 yet.
+        ; aDecompressionBuffer+$6000. Nothing sets type 4: rlActionStructGetScriptedCritPossibility
+        ; returns 0-3, and the other writers of wBattleCriticalType only set or clear bit $8000,
+        ; so entry 4 (g4bppcMapBattleCritUnused4) is never read.
 
         .long g4bppcMapBattleCritSibling ; 1: sibling
         .long g4bppcMapBattleCritLover ; 2: lover

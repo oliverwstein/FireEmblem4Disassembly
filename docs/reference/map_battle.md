@@ -65,7 +65,7 @@ The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) als
 - **Give gold** (`procGiveGold`, from `rlStartGiveGoldAnimation`): shows both units, uploads coin graphics (`rlGiveGoldUploadCoinGraphics`) and plays `aGiveGoldCoinSpriteData` (`rlGiveGoldCreateCoinSprite`), then runs the experience and level-up steps.
 - **Holy weapon shine** (`procHolyWeaponShine`, from `rlStartHolyWeaponShine`): sets up the unit (`rlSetHolyWeaponShineUnit`), plays `rlMapBattleStartSkillEffect`, and signals completion (`rlSignalMapAnimationDone`).
 - **Rewards without a battle** (`procMapActionRewards`, from `rlStartMapActionRewards`): experience, level up, gold, item, using the battle's steps, then restores graphics (`rlProcMapActionRewardsRestoreGraphics`, `rlProcMapActionRewardsEnd`).
-- **Scripted critical** (`procScriptedCritStart`, `procScriptedCritEffect`): before a battle with a scripted critical (`rlStartCombatAnimation`), the critical's effect plays on the map (`aMapBattleScriptedCritSprites`).
+- **Scripted critical** (`procScriptedCritStart`, `procScriptedCritEffect`): before a battle with a scripted critical (`rlStartCombatAnimation`), the critical's effect plays on the map (`aMapBattleScriptedCritSprites`, by type 1-3; its fourth entry, `g4bppcMapBattleCritUnused4`, is never picked: `rlActionStructGetScriptedCritPossibility` returns only types 0-3, and the other writers of `wBattleCriticalType` only set or clear bit `$8000`).
 - **Warp away / warp in** (`procWarpAway`, `procWarpIn`) and **the Belhalla mages** (`procBelhallaAttackingMage`, `procBelhallaMagesBlast`), from event ASMCs.
 
 ## Sprites
@@ -92,4 +92,3 @@ Other pieces: the weapon icon over each unit (`rlUploadMapBattleWeaponIcon`), th
 - The round entry `$7F00` makes the battle signal a waiting event and pause (`rlMapBattleSignalEventMarker`); which events use it.
 - Words +2 and +4 of each weapon block in the sprite data: no routine reads them. They point at a few bytes after the scripts (kept as `Unknown2`/`Unknown4` in the sources).
 - The Dancer's staff-or-tome block (`aMapBattleDancerLayout0`) has a strike script that calls `$A248`, `$A256`, `$A270` and `$A24F` with command `$17`, in the sprite's bank `$7E`, where no routine starts. Whether anything runs it.
-- Scripted critical type 4: nothing found sets it.

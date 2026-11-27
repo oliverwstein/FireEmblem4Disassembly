@@ -9,9 +9,9 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | Form | Compressed | Uncompressed | Total |
 |---|---:|---:|---:|
 | `authored` | 1048 | 24 | 1072 |
-| `sheet` | 398 | 21 | 419 |
+| `sheet` | 397 | 21 | 418 |
 | `raw` | 152 | 4 | 156 |
-| `unused` | 49 | 8 | 57 |
+| `unused` | 50 | 8 | 58 |
 | **Total** | **1647** | **57** | **1704** |
 
 ## Summary by System and Form
@@ -24,7 +24,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | `fonts` | 3 | 0 | 0 | 0 | 3 |
 | `icons` | 1 | 0 | 0 | 0 | 1 |
 | `map` | 0 | 3 | 1 | 2 | 6 |
-| `map_battle` | 620 | 6 | 0 | 0 | 626 |
+| `map_battle` | 620 | 5 | 0 | 1 | 626 |
 | `map_sprites` | 99 | 0 | 0 | 0 | 99 |
 | `portraits` | 152 | 0 | 0 | 0 | 152 |
 | `scenes` | 128 | 1 | 1 | 0 | 130 |
@@ -969,7 +969,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcMapActionEffectGfx2` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapActionEffectGfx2.4bpp.png` | `gfx/build/D50000/g4bppcMapActionEffectGfx2.4bpp` |
 | compressed | `g4bppcMapBattleCritSibling` | `sheet` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritSibling.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleCritSibling.4bpp` |
 | compressed | `g4bppcMapBattleCritLover` | `sheet` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritLover.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleCritLover.4bpp` |
-| compressed | `g4bppcMapBattleCritUnused4` | `sheet` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritUnused4.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleCritUnused4.4bpp` |
+| compressed | `g4bppcMapBattleCritUnused4` | `unused` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritUnused4.4bpp.comp` | `gfx/build/D50000/g4bppcMapBattleCritUnused4.4bpp` |
 | compressed | `g4bppcMapBattleCritTriangleAttack` | `sheet` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritTriangleAttack.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleCritTriangleAttack.4bpp` |
 | compressed | `g4bppcMapMagicCutsceneGfx2` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapMagicCutsceneGfx2.4bpp.png` | `gfx/build/D50000/g4bppcMapMagicCutsceneGfx2.4bpp` |
 | compressed | `gcGenealogyWheelTiles` | `sheet` | `ui` | Phase 4 | `gfx/build/DD0000/gcGenealogyWheelTiles.4bpp.png` | `gfx/build/DD0000/gcGenealogyWheelTiles.4bpp` |
