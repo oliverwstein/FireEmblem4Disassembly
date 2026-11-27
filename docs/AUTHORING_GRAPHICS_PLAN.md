@@ -89,6 +89,18 @@ After Phase 5:
 
 Phase 5 added 597 compressed streams (97 walking sprites, 500 map battle sheets) and the 2 standing sheets. `g4bppcMapBattleCritUnused4` moved from `sheet` to `unused` (its only reader cannot select it; see Phase 5).
 
+After Phase 6:
+
+| Form | Compressed | Uncompressed | Total |
+|---|---:|---:|---:|
+| `authored` | 1,279 | 24 | 1,303 |
+| `sheet` | 161 | 21 | 182 |
+| `raw` | 152 | 4 | 156 |
+| `unused` | 55 | 8 | 63 |
+| **Total** | **1,647** | **57** | **1,704** |
+
+Phase 6 added 231 authored battle animation streams (`84` class sheets, `65` extra sheets, `64` weapon sheets, `18` character pieces). The 5 unreachable streams (`g4bppcBattleAnimationSheet50`, `52`, `Extra03`, `04`, `Weapon12`) moved from `sheet` to `unused`.
+
 ### Target layout of `gfx/`
 
 Authored sources live in one folder per game system. The ROM-address folders hold only build plumbing.
@@ -103,7 +115,7 @@ gfx/
   map_sprites/        short/ tall/   NAME.png frame grids, standing + walking (Phase 5)
   map_battle/         sprite data .asm (Phase 1), sheets/NAME.png frame grids (Phase 5)
   effects/            battle scene effects, map-battle magic (Phase 7)
-  battle_animation/   (Phase 6)
+  battle_animation/   sheets/ extras/ weapons/ pieces/   NAME.png (Phase 6)
   build/              one folder per ROM region: REGION.streams, the committed NAME.comp
                       originals, and the generated .4bpp/.2bpp/.bin/.lz files
 ```
@@ -234,13 +246,23 @@ Every phase so far edits assets in place. Adding one (a portrait, a background, 
 
 ---
 
-### Phase 6 — Full Battle Scene Animations (`337` `.4bpp.png`, `49` `.bin`, `frames_98–9B.asm`, `moves.asm`)
+### Phase 6 — Full Battle Scene Animations (`231` authored streams, `5` unreachable, `frames_98–9B.asm`, `moves.asm`) — **done (2026-11-27)**
 *Hardest / most complex system — best tackled last.*
 
-- **Current state:** Battle scene combatants are composite sprites (body + weapon + cape/mount pieces assembled from `data/battle_animation/frames_98–9B.asm`, driven by [data/battle_animation/moves.asm](../data/battle_animation/moves.asm), colored by [data/palettes/BattleAnimationPalettes.asm](../data/palettes/BattleAnimationPalettes.asm)).
-- **Author-facing object:**
-  - **Level A:** Keep the tile sheets editable as indexed PNGs, add a **preview/timeline renderer** (combining `moves.asm` + `frames_98–9B.asm` + `BattleAnimationPalettes.asm` into animated GIFs / sprite sheets so artists can immediately see edits in motion).
-  - **Level B (optional):** An OAM-covering frame compiler (same core greedy 8×8 / 16×16 sprite packer as Phase 5 Level B) that takes assembled animation frame PNGs + anchor points and generates the tile sheet + `frames_*.asm` OAM lists, validating against FE4's per-frame OAM and VRAM transfer budgets.
+- **Author-facing objects ([tools/battle_animations.py](../tools/battle_animations.py), `gfx/battle_animation/`):** all `231` reachable battle-scene sprite streams move out of `gfx/build/` into indexed PNGs (`P` mode, colours `0–15`), replacing the old VRAM-order `.4bpp.png` files (65 of which were greyscale):
+  - **`sheets/NAME.png` (`84` class sheets):** laid out in frame-row order from the `ANIM_TILE_ROW` slices of every `aBattleAnimationFrameTables` entry that uses the sheet (all 84 reachable sheets partition `[0, len)` with no gaps or overlaps). Each unique slice `(offset, size)` takes `ceil(tiles / 16)` consecutive 16-tile rows (128 pixels wide); trailing slots on a slice's last row must be colour `0` (enforced on pack). Two Pegasus/FalconKnight frames (`frame 8` `$560`+`$40`, `frame 10` `$5E0`+`$40`) queue a second row after a 3-row slice, so row 1 overwrites part of row 0 in VRAM; laying slices sequentially keeps the sheet 1-to-1 lossless. Decompressed size is checked against the `$6000`-byte spacing between combatant 1's `$7F0000` and combatant 2's `$7F6000` buffers in `rsBattleSceneLoadSheet`.
+  - **`extras/NAME.png` (`65` extra tile sheets):** `128×64` (`$1000` bytes) or `128×80` (`$1400` bytes for the four Ballisticians) in 16-tile VRAM rows, coloured with the first user's player palette.
+  - **`weapons/NAME.png` (`64` weapon sheets):** `128×16` (`$400` bytes, 32 tiles for VRAM `$40–$5F`), coloured with the first item's weapon palette.
+  - **`pieces/NAME.png` (`18` character pieces):** `128×16` (`$400` bytes). `rlBattleSceneLoadCharacterPieces` DMAs `$300` bytes (tiles `0–23`) to VRAM `$60–$77`; the remaining 8 tiles (`$300–$3FF`, bottom-right `64×8`) are zero in all 18 streams and must be colour `0` (enforced on pack).
+- **Budget validation & live preview (`validate`, `list`, `preview`):** `tools/battle_animations.py` reads the live sources (`gfx/battle_animation/`, `data/battle_animation/frames_98–9B.asm`, `moves.asm`, `data/palettes/BattleAnimationPalettes.asm`, `engine/battle_scene/animations.asm`, `data.asm`, `rounds.asm`) without requiring a built ROM:
+  - `validate` checks all 231 PNGs, the `$6000`-byte class sheet cap, the `$0C00`-byte per-frame DMA cap (`rlBattleSceneRunUploads`), and the 128-entry OAM sprite limit across all 46 frame/sequence entries and 46 move programs.
+  - `preview OUT_DIR [--class NAME | --record N | --dance] [--item ITEM] [--character NAME] [--enemy] [--facing left|right] [--action NAME|N] [--sequence N] [--frames] [--scale N]` renders full 4-palette sprites (OAM palettes 0–1 combatant/enemy + 3-colour character overrides, palette 2 weapon, palette 3 character piece colours 1–9 + colour 15 ground shadow), mirroring, movement scripts, and `ANIM_MOVE_JUMP` parabolic arcs into animated GIFs and frame strips with strike/spell/projectile markers (`ANIM_CMD_F1`/`F0`/`EF`), or `--frames` contact sheets. It leaves out spell scripts, hit sparks, afterimage trails, and opponent knockback. Level B (an OAM packer from assembled frames) is not started.
+- **5 unreachable streams:** `g4bppcBattleAnimationSheet50` and `52` (only sheet IDs `$53`/`$55` map to them, and no lookup record or dance selects them), `g4bppcBattleAnimationExtra03` and `04` (no `aBattleAnimationExtraIndices` entry maps to them), and `g4bppcBattleWeapon12` (no `aBattleWeaponGraphicsIndices` entry maps to it). Documented in [animations.asm](../engine/battle_scene/animations.asm) and counted as `unused` in `gfx_inventory.py`.
+- **Add path (a checklist, not yet a command; see *Room in the ROM*):**
+  - A new class/variant animation needs entries in `aBattleAnimationLookup` and `aBattleAnimationSheetIndices`/`Sheets`, `ExtraIndices`/`Extras`, `FrameIndices`/`FrameTables` (with blocks in `data/battle_animation/frames_*.asm`), `ProgramIndices`/`Programs` (in `moves.asm`), and `PaletteIndices`/`Palettes` (in `BattleAnimationPalettes.asm`), plus `.streams` entries in `gfx/build/E02EBD/E02EBD.streams` (or another region with free space).
+  - A new weapon graphic needs an `aBattleWeaponGraphics` entry, an `aBattleWeaponGraphicsIndices` slot (`weapon_id`), its 15-colour palette after `aBattleWeaponPaletteIronSword`, `weapons/NAME.png`, and a `.streams` line.
+  - A new character piece needs an `aBattleCharacterPieces` entry, a `aBattleCharacterPieceLookup` list entry, its 9-colour palette after `aBattleCharacterPiecePaletteAzelle`, `pieces/NAME.png`, and a `.streams` line.
+- **Proved:** `tools/battle_animations.py --self-test` round-trips all `231` streams byte-identically against their `.4bpp.comp` files, checks all `231` committed PNGs, verifies all 46 frame tables/records and 104 palette entries against `fe4.sfc`, validates all budgets, tests single-tile pixel edits + `gfx.lz` recompression across all four asset kinds, tests negative refusals (non-indexed mode, wrong dimensions, non-zero slice-row or piece padding), and runs `preview` on `Myrmidon`, `Cavalier` (`Alec`, `--enemy`), `FalconKnight`, `Ballistician`, and `--dance`. `./build.sh clean && ./build.sh` is byte-identical, `tools/gfx.py --self-test` (`212` PNGs) and `tools/gfx_inventory.py --self-test` pass, and an edited `gfx/battle_animation/sheets/Myrmidon.png` built with `./build.sh mod` reached the ROM with subsequent streams in `E02EBD` decompressing unchanged.
 
 ---
 
@@ -272,6 +294,6 @@ Cross-cutting work not tied to one phase: the inventory tool, the `gfx/` layout 
 | **2** ✓ | Portraits | 152 graphics, 248 entries | Done | [tools/portrait_pack.py](../tools/portrait_pack.py) (`80×64` PNG) |
 | **3** ✓ | Backgrounds & full-screen scenes | 65 scene layers (45 manifests) | Done | [tools/scene_pack.py](../tools/scene_pack.py) (`gfx/scenes/`) |
 | **4** ✓ | UI tilemaps, icons, fonts, target layout & inventory | 53 UI/overlay layers (24 manifests), 111 icons, 3 fonts | Done | [tools/scene_pack.py](../tools/scene_pack.py), [tools/item_icons.py](../tools/item_icons.py), [tools/font_preview.py](../tools/font_preview.py), [tools/gfx_inventory.py](../tools/gfx_inventory.py) |
-| **5** | Map sprites & map-battle animations | 99 sheets + 557 battle sheets | **Medium–Hard** (OAM packing, Level B only) | Phase 1 layouts |
-| **6** | Battle scene animations | 337 sheets + scripts | **Hard** (multi-piece OAM + DMA budgets) | `data/battle_animation/` |
+| **5** ✓ | Map sprites & map-battle animations | 99 map sprites + 500 battle sheets | Done (Level B deferred) | [tools/map_sprites.py](../tools/map_sprites.py), [tools/map_battle_sprites.py](../tools/map_battle_sprites.py) |
+| **6** ✓ | Battle scene animations | 231 sheets + frames/moves | Done (Level B deferred) | [tools/battle_animations.py](../tools/battle_animations.py), `data/battle_animation/` |
 | **7** | Battle effects & map-battle magic | ~120 streams | **Medium** (effect data format unknown) | `tools/backgrounds.py` magic renderer |

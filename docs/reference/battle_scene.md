@@ -16,7 +16,7 @@ Per-routine details: [routines/battle_scene.md](routines/battle_scene.md) (gener
 | [results.asm](../../engine/battle_scene/results.asm) | The end steps: death quote, experience, level up, item, gold and broken weapon messages; the skill banners; Julius's ending. |
 | [combatants.asm](../../engine/battle_scene/combatants.asm) | The animation slots: sequences and their script interpreter, drawing and frame tiles, the action and move queues, movement and the camera, gravity, jumps, facing, the knockback, the effect slots, afterimages and shadows; the VBlank upload queue. |
 | [animation_moves.asm](../../engine/battle_scene/animation_moves.asm) | The move routines a move list step runs (`AnimMove*`). |
-| [animations.asm](../../engine/battle_scene/animations.asm) | The animation data by class: sheets, frames, programs, character pieces, weapon graphics, sound effects. |
+| [animations.asm](../../engine/battle_scene/animations.asm) | The animation data by class: sheets, frames, programs, character pieces, weapon graphics, sound effects. Five entries have no path that selects them (`g4bppcBattleAnimationSheet50`, `52`, `Extra03`, `04`, `Weapon12`). |
 | [loading.asm](../../engine/battle_scene/loading.asm) | Loading each combatant's graphics and palette, the background and foreground, and placing the combatants. |
 | [backgrounds.asm](../../engine/battle_scene/backgrounds.asm) | The backgrounds by terrain and the foreground layers. |
 | [script.asm](../../engine/battle_scene/script.asm) | The battle scene script interpreter and its commands. |
@@ -205,3 +205,4 @@ Script commands 4, 5 and 8 take an index into `aBattleSceneScriptRoutines` (72 l
 - **The magic sword's spell rows.** Bits 3-5 of `bBattleAnimationCombatantFlags` pick one of eight rows of `aBattleSceneMagicSwordSpellActions`, but only `rlBattleSceneRunSpellRowCommand`, which nothing reaches, sets a row other than 0.
 - **`rlBattleAnimationGetEffectArcHeight`** reads the defender's height with X = `$0E` for combatant 1's effect, an offset into `aBattleSceneCombatant1`, not into the slots. It reads the wrong byte; what difference that makes on screen is not known.
 - **Data tables.** All 790 routines in `engine/battle_scene/` are named; the window effect data tables (`aTitleIntroScene6WindowEffect1Data` at `$97/F64E`, `aTitleSceneWindowEffectData` at `$97/A7C7`) are named for their readers, but their format is not described yet.
+- **Authored graphics.** The 231 reachable class, extra, weapon, and character-piece sheets live in `gfx/battle_animation/` and are built, validated, and previewed from live sources by `tools/battle_animations.py`.
