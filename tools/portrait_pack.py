@@ -21,7 +21,8 @@ palette for viewing only; pixel indices 0-15 are what get packed):
 - Top-right 32x32 (x = 48..79, y = 0..31): unused; must be colour index 0.
 
 build packs every gfx/portraits/NAME.png newer than NAME.4bpp before gfx.py lz
-compresses it; ./build.sh runs build.
+compresses it, fails if a NAME.4bpp.comp has no NAME.png, and deletes a
+NAME.4bpp whose PNG is gone; ./build.sh runs build.
 """
 import argparse
 import glob
@@ -134,7 +135,21 @@ def pack_file(src, out):
 
 
 def build():
-    """Pack every gfx/portraits/NAME.png newer than NAME.4bpp."""
+    """Pack every gfx/portraits/NAME.png newer than NAME.4bpp.
+
+    Fails if a NAME.4bpp.comp stream has no NAME.png, and deletes a NAME.4bpp
+    whose PNG is gone, so a removed or renamed PNG cannot leave a stale graphic
+    for gfx.py lz to compress.
+    """
+    comps = glob.glob(os.path.join(PORTRAIT_DIR, '*.4bpp.comp'))
+    missing = sorted(os.path.basename(c)[:-len('.4bpp.comp')] for c in comps
+                     if not os.path.exists(c[:-len('.4bpp.comp')] + '.png'))
+    if missing:
+        sys.exit('tools/portrait_pack.py: no gfx/portraits/NAME.png for '
+                 + ', '.join(missing))
+    for stale in glob.glob(os.path.join(PORTRAIT_DIR, '*.4bpp')):
+        if not os.path.exists(stale[:-len('.4bpp')] + '.png'):
+            os.remove(stale)
     n = 0
     for src in sorted(glob.glob(os.path.join(PORTRAIT_DIR, '*.png'))):
         if src.endswith(('.4bpp.png', '.2bpp.png')):

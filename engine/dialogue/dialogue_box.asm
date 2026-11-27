@@ -1168,7 +1168,11 @@
         .autsiz
         .databank ?
 
-        ; Writes portrait eye/mouth overlay tilemap entries for slot Y
+        ; Writes the 4 x 2 mouth patch tilemap entries for slot Y (slot 0
+        ; is mirrored) from mouth state A, an index into
+        ; aDialoguePortraitOverlayTileOffsets, or $FFFF to write $0000 entries.
+        ; Each row is four tiles counting down from the offset; the second row
+        ; is 16 tiles on. Portraits have no eye frames.
 
         sty wR7
         sta wR6
@@ -1278,7 +1282,11 @@
 
       aDialoguePortraitOverlayTileOffsets ; 85/BD8D
 
-        ; Read by rlUpdateDialoguePortraitOverlayTiles.
+        ; Read by rlUpdateDialoguePortraitOverlayTiles: the last tile of the
+        ; top row of each mouth state, in the portrait's 16-tile rows.
+        ; $0009: columns 6-9, rows 0-1, the face's own closed mouth.
+        ; $000F: columns 12-15, rows 0-1, mouth frame 1.
+        ; $002F: columns 12-15, rows 2-3, mouth frame 2.
 
         .word $0009, $000F, $002F
 
