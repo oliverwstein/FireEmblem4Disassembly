@@ -4,6 +4,7 @@
 usage: tools/map_battle_layouts.py decode NAME.bin OUT.asm
        tools/map_battle_layouts.py assemble IN.asm OUT.bin
        tools/map_battle_layouts.py build
+       tools/map_battle_layouts.py clean
        tools/map_battle_layouts.py --self-test
 
 Each aMapBattle*Layout* stream is the sprite data of one class row and facing in
@@ -405,6 +406,13 @@ def build():
     return n
 
 
+def clean():
+    for comp in _comp_map().values():
+        p = comp[:-len('.comp')]
+        if os.path.exists(p):
+            os.remove(p)
+
+
 def self_test():
     comps = sorted(glob.glob(BUILD_PATTERN + '.bin.comp'))
     assert len(comps) == 120, f'expected 120 streams, found {len(comps)}'
@@ -476,6 +484,7 @@ def main():
     p.add_argument('src')
     p.add_argument('out')
     sub.add_parser('build')
+    sub.add_parser('clean')
     args = ap.parse_args()
     if args.self_test:
         self_test()
@@ -487,6 +496,8 @@ def main():
         assemble(args.src, args.out)
     elif args.cmd == 'build':
         build()
+    elif args.cmd == 'clean':
+        clean()
     else:
         ap.print_help()
 

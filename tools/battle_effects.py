@@ -17,7 +17,7 @@ Manages all Phase 7 battle_effects assets:
 3. Map-battle magic / action / cutscene / ripple sprite sheets (24 PNGs in
    gfx/effects/map_magic/sprites/*.4bpp.png): packed to .4bpp in gfx/build/*/.
 4. Battle scene effect & window tile sheets (47 PNGs in
-   gfx/effects/battle_scene/tiles/*.{4bpp,2bpp}.png): packed to .4bpp or .bin in
+   gfx/effects/battle_scene/tiles/*.{4bpp,2bpp}.png): packed to .4bpp or .2bpp in
    gfx/build/E02EBD/.
 5. Battle scene effect & window tilemap layouts (61 grid CSV layers in
    gfx/effects/battle_scene/*.scene.json): packed by tools/scene_pack.py.
@@ -752,9 +752,8 @@ def build():
     for stem, region, label, _ in MAP_MAGIC_SPRITES:
         src = os.path.join(MAP_MAGIC_SPR_DIR, f'{stem}.4bpp.png')
         out = _repo_path(f'gfx/build/{region}/{label}.4bpp')
-        comp = out + '.comp'
-        max_bytes = len(_decompress_comp(comp))
         if not os.path.exists(out) or os.path.getmtime(src) > os.path.getmtime(out):
+            max_bytes = len(_decompress_comp(out + '.comp'))
             try:
                 raw = _pack_sheet_png(src, 4, max_bytes)
             except ValueError as e:
@@ -782,11 +781,14 @@ def clean():
         p = _repo_path(f'gfx/build/D50000/acMapBattleMagic{name}Palette.bin')
         if os.path.exists(p):
             os.remove(p)
-    for stem, label, ext, _, _, _ in BATTLE_SCENE_TILES:
-        if ext == '.bin':
-            p = _repo_path(f'gfx/build/E02EBD/{label}.bin')
-            if os.path.exists(p):
-                os.remove(p)
+    for _, region, label, _ in MAP_MAGIC_SPRITES:
+        p = _repo_path(f'gfx/build/{region}/{label}.4bpp')
+        if os.path.exists(p):
+            os.remove(p)
+    for _, label, ext, _, _, _ in BATTLE_SCENE_TILES:
+        p = _repo_path(f'gfx/build/E02EBD/{label}{ext}')
+        if os.path.exists(p):
+            os.remove(p)
 
 
 def cmd_list():

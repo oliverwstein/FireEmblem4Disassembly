@@ -979,16 +979,52 @@ def unpack(force=False):
     print(f'wrote {total} battle animation PNGs to {os.path.relpath(GFX_DIR, ROOT)}/')
 
 
+def _check_frame_budgets(tables, ftables, seq_blocks, frames_by_key, recs_by_key, seqs_by_key):
+    """Check upload queue, VBlank DMA, OAM sprite count, and index bounds across all frame tables."""
+    errors, warnings = [], []
+    for k, (s_lbl, f_lbl) in enumerate(tables['frame_tables'][1:], 1):
+        blk = seq_blocks[s_lbl]
+        for fkey in ftables[f_lbl]:
+            rows = frames_by_key[fkey]
+            e, w = check_frame_rows(fkey, rows)
+            errors += e
+            warnings += w
+        for rkey in blk['recs']:
+            fnum, sprites = recs_by_key[rkey]
+            if len(sprites) > MAX_OAM_SPRITES:
+                errors.append(f'{rkey}: {len(sprites)} sprites > {MAX_OAM_SPRITES}')
+            if fnum is not None and fnum >= len(ftables[f_lbl]):
+                errors.append(f'{rkey}: frame {fnum} >= {len(ftables[f_lbl])}')
+        for skey in blk['seqs']:
+            for step in seqs_by_key[skey]:
+                if step[0] == 'STEP' and step[1] >= len(blk['recs']) and skey not in KNOWN_BAD_SEQUENCES:
+                    errors.append(f'{skey}: record {step[1]} >= {len(blk["recs"])}')
+    return errors, warnings
+
+
 def build():
-    assets = collect_assets()
+    tables = load_animations_tables(load_constants()[3])
+    ftables, seq_blocks, frames_by_key, recs_by_key, seqs_by_key = load_frames_data()
+    assets = collect_assets(tables, ftables, frames_by_key)
     missing = [src_path(k, l) for k, items in assets.items() for l in items if not os.path.exists(src_path(k, l))]
     if missing:
         sys.exit('tools/battle_animations.py: missing ' + ', '.join(os.path.relpath(m, ROOT) for m in missing[:10]))
+    errors, warnings = _check_frame_budgets(tables, ftables, seq_blocks, frames_by_key, recs_by_key, seqs_by_key)
+    for w in warnings[:20]:
+        print('warning:', w, file=sys.stderr)
+    if errors:
+        for e in errors[:20]:
+            print('ERROR:', e, file=sys.stderr)
+        sys.exit(f'{len(errors)} validation errors')
+    anim_mtime = os.path.getmtime(ANIM_ASM)
+    sheets_meta_mtime = max([anim_mtime] + [os.path.getmtime(p) for p in glob.glob(FRAMES_GLOB)])
     for kind, items in assets.items():
+        meta_mtime = sheets_meta_mtime if kind == 'sheets' else anim_mtime
         for lbl, info in items.items():
             src = src_path(kind, lbl)
             out = comp_path(lbl)[:-len('.comp')]
-            if not os.path.exists(out) or os.path.getmtime(src) > os.path.getmtime(out):
+            dep_mtime = max(os.path.getmtime(src), meta_mtime)
+            if not os.path.exists(out) or dep_mtime > os.path.getmtime(out):
                 try:
                     if kind == 'sheets':
                         data = sheet_from_image(src, info['slices'])
@@ -1069,23 +1105,9 @@ def validate():
                 errors.append(str(e))
 
     # Budget checks across all 46 frame tables and sequence blocks
-    for k, (s_lbl, f_lbl) in enumerate(tables['frame_tables'][1:], 1):
-        blk = seq_blocks[s_lbl]
-        for fkey in ftables[f_lbl]:
-            rows = frames_by_key[fkey]
-            e, w = check_frame_rows(fkey, rows)
-            errors += e
-            warnings += w
-        for rkey in blk['recs']:
-            fnum, sprites = recs_by_key[rkey]
-            if len(sprites) > MAX_OAM_SPRITES:
-                errors.append(f'{rkey}: {len(sprites)} sprites > {MAX_OAM_SPRITES}')
-            if fnum is not None and fnum >= len(ftables[f_lbl]):
-                errors.append(f'{rkey}: frame {fnum} >= {len(ftables[f_lbl])}')
-        for skey in blk['seqs']:
-            for step in seqs_by_key[skey]:
-                if step[0] == 'STEP' and step[1] >= len(blk['recs']) and skey not in KNOWN_BAD_SEQUENCES:
-                    errors.append(f'{skey}: record {step[1]} >= {len(blk["recs"])}')
+    b_errors, b_warnings = _check_frame_budgets(tables, ftables, seq_blocks, frames_by_key, recs_by_key, seqs_by_key)
+    errors += b_errors
+    warnings += b_warnings
 
     for w in warnings[:20]:
         print('warning:', w, file=sys.stderr)

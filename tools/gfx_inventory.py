@@ -357,9 +357,15 @@ def self_test():
     with open(OUT_MD, encoding='utf-8') as f:
         assert strip(f.read()) == strip(render_markdown(entries)), \
             f'{OUT_MD} is out of date: run tools/gfx_inventory.py --write'
-    named = [e['label'] for e in entries if 'Unused' in e['label'] and e['form'] != 'unused']
-    if named:
-        print(f'note: {len(named)} labels named Unused have a reader: {", ".join(named[:8])}')
+    refs = reference_counts()
+    named = [e for e in entries if 'Unused' in e['label'] and e['form'] != 'unused']
+    with_reader = [e['label'] for e in named if refs.get(e['label'], 0) > 0]
+    from_manifest = [e['label'] for e in named if refs.get(e['label'], 0) == 0]
+    if with_reader:
+        print(f'note: {len(with_reader)} labels named Unused have a reader: {", ".join(with_reader[:8])}')
+    if from_manifest:
+        print(f'note: {len(from_manifest)} labels named Unused have no reader (built from manifest): '
+              f'{", ".join(from_manifest[:8])}')
     print(f'Inventory verified: {s["compressed"]} compressed + {s["uncompressed"]} uncompressed = '
           f'{s["total"]} total ({s["total_by_form"]})')
 

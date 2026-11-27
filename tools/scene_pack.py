@@ -870,6 +870,11 @@ def clean():
     for mp in manifests():
         with open(mp, encoding='utf-8') as f:
             m = json.load(f)
+        for s in m['sheets']:
+            if s.get('writable', False):
+                p = repo_path(sheet_bpp_out(s))
+                if os.path.exists(p):
+                    os.remove(p)
         for layer in m['layers']:
             p = repo_path(layer['tilemap'])
             if os.path.exists(p):

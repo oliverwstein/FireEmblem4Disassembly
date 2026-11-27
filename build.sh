@@ -33,7 +33,9 @@ clean() {
   find gfx \( -name '*.4bpp' -o -name '*.2bpp' \) -delete
   find gfx \( -name '*.4bpp.lz' -o -name '*.2bpp.lz' -o -name '*.bin.lz' -o -name Layout.asm \) -delete
   find audio -name '*.bin.lz' -delete
-  find gfx/build \( -name 'acChapterMap*.bin' -o -name 'aMapBattle*Layout*.bin' \) -delete
+  python3 tools/chapter_maps.py clean
+  python3 tools/map_battle_layouts.py clean
+  python3 tools/portrait_pack.py clean
   python3 tools/scene_pack.py clean
   python3 tools/item_icons.py clean
   python3 tools/map_sprites.py clean
@@ -75,13 +77,14 @@ generate() {
     fi
   done < <(find data -name '*.csv')
 
-  # Graphics: gfx/**/NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAME.2bpp.
+  # Graphics: gfx/**/NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAME.2bpp
+  # (gfx/effects/ sheets are packed into gfx/build/ by tools/battle_effects.py).
   while IFS= read -r t; do
     out=${t%.png}
     if [[ ! -e $out || $t -nt $out ]]; then
       python3 tools/gfx.py png2bpp "$t" "$out"
     fi
-  done < <(find gfx \( -name '*.4bpp.png' -o -name '*.2bpp.png' \))
+  done < <(find gfx -path gfx/effects -prune -o \( -name '*.4bpp.png' -o -name '*.2bpp.png' \) -print)
 
   # Portraits: gfx/portraits/NAME.png (80x64 assembled face + mouth frames) to NAME.4bpp.
   python3 tools/portrait_pack.py build

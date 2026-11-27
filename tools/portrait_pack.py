@@ -4,6 +4,7 @@
 usage: tools/portrait_pack.py unpack IN OUT [--palette FILE|ADDR|grey]
        tools/portrait_pack.py pack IN.png OUT.4bpp
        tools/portrait_pack.py build
+       tools/portrait_pack.py clean
        tools/portrait_pack.py --self-test
 
 Each portrait graphic is $800 bytes (64 4bpp tiles, stored as 4 rows of 16).
@@ -166,6 +167,11 @@ def build():
     return n
 
 
+def clean():
+    for p in glob.glob(os.path.join(BUILD_DIR, '*.4bpp')):
+        os.remove(p)
+
+
 def self_test():
     """Round-trip all 152 portraits, test edits + LZ recompression, and check validation."""
     comps = sorted(glob.glob(os.path.join(BUILD_DIR, '*.4bpp.comp')))
@@ -271,6 +277,7 @@ def main():
     p.add_argument('src')
     p.add_argument('out')
     sub.add_parser('build')
+    sub.add_parser('clean')
     args = ap.parse_args()
 
     if args.self_test:
@@ -284,6 +291,8 @@ def main():
             sys.exit(str(e))
     elif args.cmd == 'build':
         build()
+    elif args.cmd == 'clean':
+        clean()
     else:
         ap.print_help()
 

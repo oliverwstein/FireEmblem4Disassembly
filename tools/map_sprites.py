@@ -327,24 +327,29 @@ def build():
         sheet = os.path.join(STAND_DIR, k['sheet'] + '.4bpp')
         sheet_time = os.path.getmtime(sheet) if os.path.exists(sheet) else -1
         csv_time = os.path.getmtime(CSV[kind])
-        rebuild_sheet = sheet_time < csv_time or sheet_time < os.path.getmtime(__file__)
+        stand_rows = [e for e in rows if e[1] < k['stand_count']]
+        rebuild_sheet = (
+            sheet_time < csv_time
+            or sheet_time < os.path.getmtime(__file__)
+            or any(os.path.getmtime(src_path(kind, n)) > sheet_time for _, _, n, _ in stand_rows)
+        )
         stands = []
         for _, i, name, fname in rows:
             src = src_path(kind, name)
             out = os.path.join(WALK_DIR, fname + '.4bpp')
             t = os.path.getmtime(src)
-            fresh = not os.path.exists(out) or t > os.path.getmtime(out)
-            rebuild_sheet |= t > sheet_time
-            if not (fresh or rebuild_sheet or i < k['stand_count']):
+            need_walk = not os.path.exists(out) or t > os.path.getmtime(out)
+            need_stand = rebuild_sheet and i < k['stand_count']
+            if not (need_walk or need_stand):
                 continue
             try:
                 walk, stand = from_image(kind, src, i < k['stand_count'])
             except ValueError as e:
                 sys.exit(str(e))
-            if fresh:
+            if need_walk:
                 with open(out, 'wb') as f:
                     f.write(walk)
-            if stand is not None:
+            if need_stand:
                 stands.append(stand)
         if rebuild_sheet:
             with open(sheet, 'wb') as f:

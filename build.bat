@@ -2,8 +2,9 @@ SET startDir=%~dp0
 
 SET as="%startDir%/tools/64tass"
 
-REM Graphics: gfx\**\NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAME.2bpp.
-for /r "%startDir%gfx" %%f in (*.4bpp.png *.2bpp.png) do python "%startDir%tools\gfx.py" png2bpp "%%f" "%%~dpnf"
+REM Graphics: gfx\**\NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAME.2bpp
+REM (gfx\effects\ sheets are packed into gfx\build\ by tools\battle_effects.py).
+for /r "%startDir%gfx" %%f in (*.4bpp.png *.2bpp.png) do echo %%f | find /i "\gfx\effects\" >nul || python "%startDir%tools\gfx.py" png2bpp "%%f" "%%~dpnf"
 REM Portraits: gfx\portraits\NAME.png to NAME.4bpp.
 python "%startDir%tools\portrait_pack.py" build
 REM Map sprites: gfx\map_sprites\{short,tall}\NAME.png to walking NAME.4bpp and the standing sheets.

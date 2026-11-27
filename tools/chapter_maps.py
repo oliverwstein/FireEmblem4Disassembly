@@ -3,6 +3,7 @@
 
 usage: tools/chapter_maps.py decode CHAPTER|all
        tools/chapter_maps.py build
+       tools/chapter_maps.py clean
        tools/chapter_maps.py render CHAPTER|all OUT_DIR
        tools/chapter_maps.py --self-test
 
@@ -246,6 +247,13 @@ def build():
                 f.write(data)
 
 
+def clean():
+    for label in stream_labels():
+        p = bin_path(label)
+        if os.path.exists(p):
+            os.remove(p)
+
+
 def render_chapter(ch, rom, labels, base_tiles, out_png):
     pal_addr = labels[ch['palette']]
     pal_off = offset(pal_addr)
@@ -356,6 +364,7 @@ def main():
     p = sub.add_parser('decode')
     p.add_argument('chapter')
     sub.add_parser('build')
+    sub.add_parser('clean')
     p = sub.add_parser('render')
     p.add_argument('chapter')
     p.add_argument('out_dir')
@@ -372,6 +381,8 @@ def main():
                 decode(ch[key])
     elif args.cmd == 'build':
         build()
+    elif args.cmd == 'clean':
+        clean()
     elif args.cmd == 'render':
         rom = open(os.path.join(ROOT, 'fe4.sfc'), 'rb').read()
         labels = load_labels()
