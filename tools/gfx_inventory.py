@@ -19,7 +19,10 @@ Classifies each asset by:
   - unused: nothing in engine/, data/, include/, events/ or build.asm names the
     label outside a comment and its own definition (no reader), or its only
     reader can never select it (UNREACHABLE, each with its reason);
-  - sheet: an indexed .4bpp.png/.2bpp.png tile sheet in VRAM order;
+  - sheet: an indexed .4bpp.png/.2bpp.png tile sheet in VRAM order, wherever
+    it lives (the battle animation sheets in gfx/battle_animation/ are sheets:
+    tools/battle_animations.py builds them and draws the frames, but the PNGs
+    hold tiles in upload order, not pictures);
   - raw: a committed .comp/.bin with no source.
 - system and phase: from the tool or folder that builds an authored asset;
   for the rest, from words in the label (a heuristic: check odd ones by hand).
@@ -192,7 +195,9 @@ def collect_inventory():
                 if rel_dir == 'gfx/build/portraits':
                     form, system, phase, src = 'authored', 'portraits', 'Phase 2', f'gfx/portraits/{name}.png'
                 elif label in battle_anim_src:
-                    form, system, phase, src = 'authored', 'battle_animation', 'Phase 6', battle_anim_src[label][1]
+                    # Tile sheets in VRAM row order (frames are drawn by its preview):
+                    # moved to gfx/battle_animation/ and recoloured, but still sheets.
+                    form, system, phase, src = 'sheet', 'battle_animation', 'Phase 6', battle_anim_src[label][1]
                 elif label in map_battle_src:
                     form, system, phase, src = 'authored', 'map_battle', 'Phase 5', map_battle_src[label]
                 elif rel_dir == 'gfx/build/MapMovementSprites':

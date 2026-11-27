@@ -10,13 +10,36 @@ usage: tools/battle_animations.py unpack [--force]
                                           [--category CAT] [--item ITEM] [--character NAME]
                                           [--gender Male|Female] [--enemy] [--facing left|right]
                                           [--action NAME|N] [--sequence N] [--frames] [--scale N]
+                                          [--ids A,B,C,D] [--entry N] [--sheet LABEL]
        tools/battle_animations.py --self-test
 
 Manages the 231 reachable battle-scene sprite streams in gfx/battle_animation/:
 
 - sheets/NAME.png (84): class sheets laid out in frame-row order (each unique
   ANIM_TILE_ROW slice takes ceil(tiles / 16) 16-tile rows, 128 px wide; trailing
-  slots in a slice's last row must be colour 0; max $6000 bytes).
+  slots in a slice's last row must be colour 0; max $6000 bytes). The layout is
+  not stored with the PNG: it is worked out from the slices of every frame
+  table that uses the sheet (data/battle_animation/frames_*.asm), which must
+  cover it from 0 exactly once. Changing those slices changes the expected
+  layout, so the PNG has to be rearranged with them; build stops with a
+  message when they no longer fit.
+
+These are tile sheets (tiles in the rows the game uploads them to VRAM), not
+pictures of frames; preview draws the frames. gfx_inventory.py counts them as
+sheet.
+
+validate also checks the budgets: the $6000-byte sheet buffer, the 16-entry
+upload queue (rows past it are dropped; over 8 rows a frame is a warning,
+since both combatants share it), $0C00 bytes of tiles a VBlank (a warning:
+the rest goes a VBlank late), and 128 sprites a record.
+
+preview takes a lookup record (--record, or the first for --class, narrowed by
+--category, --character, --gender), or the dance (--dance). To look at data no
+record uses: --ids A,B,C,D gives the four animation IDs in hex (frames, sheet,
+extras, palette; 5E,66,46,2E is the dance), --entry N draws entry N of
+aBattleAnimationFrameTables instead of the first ID's, and --sheet LABEL takes
+the class sheet from that stream (read from its .comp when it has no PNG, as
+the unreachable g4bppcBattleAnimationSheet50 and 52 do).
 - extras/NAME.png (65): extra tile sheets in 16-tile VRAM rows (128x64 or
   128x80 for Ballisticians), coloured with the first user's palette.
 - weapons/NAME.png (64): weapon tile sheets (128x16, 32 tiles for VRAM $40-$5F).
@@ -59,7 +82,14 @@ MOVES_ASM = os.path.join(ROOT, 'data', 'battle_animation', 'moves.asm')
 
 TILE = 32
 MAX_SHEET_BYTES = 0x6000       # $7F0000 vs $7F6000 in rsBattleSceneLoadSheet
-MAX_FRAME_DMA_BYTES = 0x0C00   # rlBattleSceneRunUploads per-VBlank cap
+# rlBattleSceneRunUploads sends up to $0C00 bytes a VBlank and leaves the rest
+# queued for the next one: more is not lost, only late (a soft budget).
+FRAME_DMA_BUDGET = 0x0C00
+# rlBattleSceneQueueUpload holds 16 uploads and sets carry when full;
+# rsBattleAnimationQueueFrameRows ignores the carry, so rows past it are
+# dropped. Both combatants share the queue, so a frame over 8 rows can drop
+# rows when the other combatant changes frame in the same VBlank.
+UPLOAD_QUEUE = 16
 MAX_OAM_SPRITES = 128          # SNES OAM table limit
 
 CATEGORIES = {
@@ -756,11 +786,23 @@ def collect_assets(tables=None, ftables=None, frames_by_key=None):
                 for row in frames_by_key[fkey]:
                     slices.add(row)
         ordered = sorted(slices)
-        # Verify exact contiguous partition from 0
+        # The PNG's layout is these slices in order, so they must tile the
+        # sheet from 0 with no gap or overlap (true of all 84 original sheets).
         pos = 0
         for off, sz in ordered:
-            assert off == pos, f'{s_lbl}: expected slice at {pos:#x}, found {off:#x}'
-            assert sz > 0 and sz % TILE == 0, f'{s_lbl}: bad slice size {sz:#x}'
+            problem = None
+            if sz <= 0 or sz % TILE:
+                problem = f'a slice of {sz:#x} bytes is not a whole number of tiles'
+            elif off < pos:
+                problem = f'the slice at {off:#x} overlaps the one before it (which ends at {pos:#x})'
+            elif off > pos:
+                problem = f'bytes {pos:#x}-{off - 1:#x} are in no slice'
+            if problem:
+                sys.exit(f'tools/battle_animations.py: {s_lbl}: {problem}. Its PNG '
+                         f'({os.path.relpath(src_path("sheets", s_lbl), ROOT)}) is laid out from the '
+                         f'ANIM_TILE_ROW slices of {", ".join(sorted(f_lbls))} in data/battle_animation/frames_*.asm, '
+                         'one group of 16-tile rows per slice, so those slices must cover the sheet from 0 '
+                         'exactly once. After changing them, rearrange the PNG to match.')
             pos += sz
         sheets_info[s_lbl] = {
             'slices': ordered,
@@ -850,7 +892,9 @@ def sheet_from_image(path, slices):
     total_rows = sum(((sz // TILE) + 15) // 16 for _, sz in slices)
     exp_size = (128, total_rows * 8)
     if img.size != exp_size:
-        raise ValueError(f'{path}: expected {exp_size[0]}x{exp_size[1]}, got {img.size[0]}x{img.size[1]}')
+        raise ValueError(f'{path}: expected {exp_size[0]}x{exp_size[1]}, got {img.size[0]}x{img.size[1]} '
+                         '(the size comes from the ANIM_TILE_ROW slices in data/battle_animation/frames_*.asm: '
+                         'one group of 16-tile rows per slice)')
     px = img.load()
     out = bytearray()
     row_y = 0
@@ -985,13 +1029,29 @@ def list_records():
     print('dance: Dancer (--dance)  sheet=61               extra=44               frames=DancerDance          pal=Dancer')
 
 
+def check_frame_rows(fkey, rows):
+    """(errors, warnings) for one frame's tile rows against the upload limits."""
+    errors, warnings = [], []
+    dma_bytes = sum(sz for _, sz in rows)
+    if len(rows) > UPLOAD_QUEUE:
+        errors.append(f'{fkey}: {len(rows)} tile rows; the upload queue holds {UPLOAD_QUEUE} '
+                      'and drops the rest')
+    elif len(rows) > UPLOAD_QUEUE // 2:
+        warnings.append(f'{fkey}: {len(rows)} tile rows; with the other combatant changing frame '
+                        f'in the same VBlank, rows past {UPLOAD_QUEUE} are dropped')
+    if dma_bytes > FRAME_DMA_BUDGET:
+        warnings.append(f'{fkey}: {dma_bytes:#x} bytes of tiles, over the ${FRAME_DMA_BUDGET:X} a VBlank '
+                        'sends; the rest goes a VBlank late')
+    return errors, warnings
+
+
 def validate():
     tables = load_animations_tables(load_constants()[3])
     ftables, seq_blocks, frames_by_key, recs_by_key, seqs_by_key = load_frames_data()
     actions, move_lists, move_scripts = load_moves_data()
     assets = collect_assets(tables, ftables, frames_by_key)
 
-    errors = []
+    errors, warnings = [], []
     for kind, items in assets.items():
         for lbl, info in items.items():
             src = src_path(kind, lbl)
@@ -1013,9 +1073,9 @@ def validate():
         blk = seq_blocks[s_lbl]
         for fkey in ftables[f_lbl]:
             rows = frames_by_key[fkey]
-            dma_bytes = sum(sz for _, sz in rows)
-            if dma_bytes > MAX_FRAME_DMA_BYTES:
-                errors.append(f'{fkey}: DMA {dma_bytes:#x} > ${MAX_FRAME_DMA_BYTES:X}')
+            e, w = check_frame_rows(fkey, rows)
+            errors += e
+            warnings += w
         for rkey in blk['recs']:
             fnum, sprites = recs_by_key[rkey]
             if len(sprites) > MAX_OAM_SPRITES:
@@ -1027,6 +1087,8 @@ def validate():
                 if step[0] == 'STEP' and step[1] >= len(blk['recs']) and skey not in KNOWN_BAD_SEQUENCES:
                     errors.append(f'{skey}: record {step[1]} >= {len(blk["recs"])}')
 
+    for w in warnings[:20]:
+        print('warning:', w, file=sys.stderr)
     if errors:
         for e in errors[:20]:
             print('ERROR:', e, file=sys.stderr)
@@ -1163,7 +1225,7 @@ def _save_gif_and_strip(rendered_frames, out_stem, scale=2, bg=(40, 40, 60)):
 
 def preview(out_dir, cls_name=None, record=None, dance=False, category=None, item='IronSword',
             character=None, gender=None, enemy=False, facing='left', action=None,
-            sequence=None, frames_only=False, scale=2):
+            sequence=None, frames_only=False, scale=2, ids_override=None, entry=None, sheet=None):
     classes, chars, items, sym = load_constants()
     tables = load_animations_tables(sym)
     pal_db = load_palettes()
@@ -1218,9 +1280,15 @@ def preview(out_dir, cls_name=None, record=None, dance=False, category=None, ite
             ch_id = sym[character]
         tag = f'{classes[cls_id]}_{CAT_NAMES.get(cat_id, cat_id)}'
 
+    if ids_override is not None:
+        ids = ids_override
+        tag += '_ids' + ''.join(f'{i:02X}' for i in ids)
     f_id, s_id, e_id, p_id = ids
-    s_lbl, f_lbl = tables['frame_tables'][tables['frame_indices'][f_id + 1]]
-    sheet_lbl = tables['sheets'][tables['sheet_indices'][s_id + 1]]
+    f_entry = tables['frame_indices'][f_id + 1] if entry is None else entry
+    if entry is not None:
+        tag += f'_entry{entry}'
+    s_lbl, f_lbl = tables['frame_tables'][f_entry]
+    sheet_lbl = tables['sheets'][tables['sheet_indices'][s_id + 1]] if sheet is None else sheet
     extra_tile, _, extra_lbl = tables['extras'][tables['extra_indices'][e_id + 1]]
     p_entry = tables['palette_indices'][p_id + 1]
     if ch_id:
@@ -1233,7 +1301,12 @@ def preview(out_dir, cls_name=None, record=None, dance=False, category=None, ite
 
     # Load live PNGs
     assets = collect_assets(tables, ftables, frames_by_key)
-    sheet_bytes = sheet_from_image(src_path('sheets', sheet_lbl), assets['sheets'][sheet_lbl]['slices'])
+    if sheet_lbl in assets['sheets']:
+        sheet_bytes = sheet_from_image(src_path('sheets', sheet_lbl), assets['sheets'][sheet_lbl]['slices'])
+    else:
+        # A sheet no record reaches has no PNG: read its committed stream.
+        sheet_bytes = decompress_file(comp_path(sheet_lbl))
+        tag += '_' + sheet_lbl[len(PREFIXES['sheets']):]
     extra_bytes = grid_from_image(src_path('extras', extra_lbl), assets['extras'][extra_lbl]['size'])
 
     # Weapon tiles & palette (magic/any/barehanded staff get blank)
@@ -1460,6 +1533,23 @@ def self_test():
 
         # 3. Run full budget validation
         validate()
+        # The row limits: 17 rows is an error, 9 a warning, $C40 bytes a warning;
+        # the original data's largest frame (2 rows, $800 bytes) passes clean.
+        row = [(0, 0x40)]
+        assert check_frame_rows('t', row * 17)[0], '17 rows should be an error'
+        assert not check_frame_rows('t', row * 9)[0] and check_frame_rows('t', row * 9)[1], '9 rows: a warning'
+        assert check_frame_rows('t', [(0, 0x800), (0x800, 0x440)])[1], '$C40 bytes: a warning'
+        assert check_frame_rows('t', [(0, 0x400), (0x400, 0x400)]) == ([], []), '2 rows, $800 bytes: clean'
+        # Slices that no longer tile a sheet stop collect_assets with a message.
+        _ft, _, _fbk, _, _ = load_frames_data()
+        key = ('aBattleAnimationFramesPegasusKnightSword', '_Frame08')
+        _fbk[key] = [(0x2E00, 0x540), (0x3360, 0x40)]
+        try:
+            collect_assets(None, _ft, _fbk)
+        except SystemExit as ex:
+            assert 'FalconKnight' in str(ex) and 'ANIM_TILE_ROW' in str(ex), ex
+        else:
+            raise AssertionError('changed slices should stop collect_assets')
 
         # 4. Pixel edit + LZ round-trip for each of the 4 asset kinds
         edit_cases = [
@@ -1560,6 +1650,9 @@ def main():
     p.add_argument('--sequence', type=int)
     p.add_argument('--frames', action='store_true')
     p.add_argument('--scale', type=int, default=2)
+    p.add_argument('--ids', help='four animation IDs in hex, A,B,C,D (frames, sheet, extras, palette)')
+    p.add_argument('--entry', type=int, help='aBattleAnimationFrameTables entry instead of the first ID\'s')
+    p.add_argument('--sheet', help='class sheet stream label instead of the second ID\'s (read from its .comp)')
     args = ap.parse_args()
     if args.self_test:
         self_test()
@@ -1576,7 +1669,9 @@ def main():
     elif args.cmd == 'preview':
         preview(args.out_dir, args.cls, args.record, args.dance, args.category, args.item,
                 args.character, args.gender, args.enemy, args.facing, args.action,
-                args.sequence, args.frames, args.scale)
+                args.sequence, args.frames, args.scale,
+                tuple(int(x, 16) for x in args.ids.split(',')) if args.ids else None,
+                args.entry, args.sheet)
     else:
         ap.print_help()
 
