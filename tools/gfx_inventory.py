@@ -47,6 +47,17 @@ UNREACHABLE = {
     # rlActionStructGetScriptedCritPossibility returns only types 0-3, and the
     # other writers of wBattleCriticalType only set or clear bit $8000.
     'g4bppcMapBattleCritUnused4',
+    # aBattleAnimationSheets entries $50 and $52: only sheet IDs $53 and $55
+    # map to them, and no record in aBattleAnimationLookup or dance selects them.
+    'g4bppcBattleAnimationSheet50',
+    'g4bppcBattleAnimationSheet52',
+    # aBattleAnimationExtras entries $03 and $04: no entry in
+    # aBattleAnimationExtraIndices maps to them.
+    'g4bppcBattleAnimationExtra03',
+    'g4bppcBattleAnimationExtra04',
+    # aBattleWeaponGraphics entry $12: no entry in aBattleWeaponGraphicsIndices
+    # maps to it.
+    'g4bppcBattleWeapon12',
 }
 
 STREAMS_RE = re.compile(r'^([A-Za-z_]\w*)\s+([A-Za-z0-9_./-]+)')

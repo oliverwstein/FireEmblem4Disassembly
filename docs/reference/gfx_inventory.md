@@ -9,16 +9,16 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | Form | Compressed | Uncompressed | Total |
 |---|---:|---:|---:|
 | `authored` | 1048 | 24 | 1072 |
-| `sheet` | 397 | 21 | 418 |
+| `sheet` | 392 | 21 | 413 |
 | `raw` | 152 | 4 | 156 |
-| `unused` | 50 | 8 | 58 |
+| `unused` | 55 | 8 | 63 |
 | **Total** | **1647** | **57** | **1704** |
 
 ## Summary by System and Form
 
 | System | Authored | Sheet | Raw | Unused | Total |
 |---|---:|---:|---:|---:|---:|
-| `battle_animation` | 0 | 236 | 0 | 0 | 236 |
+| `battle_animation` | 0 | 231 | 0 | 5 | 236 |
 | `battle_effects` | 0 | 86 | 121 | 47 | 254 |
 | `chapter_maps` | 32 | 10 | 0 | 0 | 42 |
 | `fonts` | 3 | 0 | 0 | 0 | 3 |
@@ -1037,7 +1037,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcBattleAnimationSheetWarMageF` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetWarMageF.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetWarMageF.4bpp` |
 | compressed | `g4bppcBattleSceneUnusedE121ED` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneUnusedE121ED.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleSceneUnusedE121ED.4bpp` |
 | compressed | `g4bppcBattleAnimationSheet02` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheet02.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheet02.4bpp` |
-| compressed | `g4bppcBattleAnimationExtra03` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtra03.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtra03.4bpp` |
+| compressed | `g4bppcBattleAnimationExtra03` | `unused` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtra03.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleAnimationExtra03.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetPrince` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetPrince.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetPrince.4bpp` |
 | compressed | `g4bppcBattleAnimationExtraPrince` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtraPrince.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtraPrince.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetPrincess` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetPrincess.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetPrincess.4bpp` |
@@ -1070,7 +1070,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcBattleAnimationSheetHighPriest2` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetHighPriest2.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetHighPriest2.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetBishop` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetBishop.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetBishop.4bpp` |
 | compressed | `g4bppcBattleAnimationExtraBishop` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtraBishop.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtraBishop.4bpp` |
-| compressed | `g4bppcBattleAnimationSheet52` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheet52.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheet52.4bpp` |
+| compressed | `g4bppcBattleAnimationSheet52` | `unused` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheet52.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleAnimationSheet52.4bpp` |
 | compressed | `g4bppcBattleAnimationExtraBard` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtraBard.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtraBard.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetBard` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetBard.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetBard.4bpp` |
 | compressed | `g4bppcBattleSceneUnusedE3799A` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneUnusedE3799A.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleSceneUnusedE3799A.4bpp` |
@@ -1082,7 +1082,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcBattleAnimationExtraDarkBishop` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtraDarkBishop.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtraDarkBishop.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetSage` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetSage.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetSage.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetSage2` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetSage2.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetSage2.4bpp` |
-| compressed | `g4bppcBattleAnimationSheet50` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheet50.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheet50.4bpp` |
+| compressed | `g4bppcBattleAnimationSheet50` | `unused` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheet50.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleAnimationSheet50.4bpp` |
 | compressed | `g4bppcBattleAnimationExtraSage` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtraSage.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtraSage.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetPegasusKnight` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetPegasusKnight.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetPegasusKnight.4bpp` |
 | compressed | `g4bppcBattleAnimationExtraPegasusKnight` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtraPegasusKnight.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtraPegasusKnight.4bpp` |
@@ -1157,7 +1157,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcBattleSceneUnusedEB3AB5` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneUnusedEB3AB5.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleSceneUnusedEB3AB5.4bpp` |
 | compressed | `g4bppcBattleSceneUnusedEB4A9D` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneUnusedEB4A9D.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleSceneUnusedEB4A9D.4bpp` |
 | compressed | `g4bppcBattleSceneUnusedEB4ABB` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneUnusedEB4ABB.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleSceneUnusedEB4ABB.4bpp` |
-| compressed | `g4bppcBattleAnimationExtra04` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtra04.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtra04.4bpp` |
+| compressed | `g4bppcBattleAnimationExtra04` | `unused` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtra04.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleAnimationExtra04.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetCavalier` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetCavalier.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetCavalier.4bpp` |
 | compressed | `g4bppcBattleAnimationExtraCavalier` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationExtraCavalier.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationExtraCavalier.4bpp` |
 | compressed | `g4bppcBattleAnimationSheetBowKnight` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleAnimationSheetBowKnight.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetBowKnight.4bpp` |
@@ -1211,7 +1211,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcBattleWeaponWindSword` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleWeaponWindSword.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleWeaponWindSword.4bpp` |
 | compressed | `g4bppcBattleWeaponBalmung` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleWeaponBalmung.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleWeaponBalmung.4bpp` |
 | compressed | `g4bppcBattleWeaponLightBrand` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleWeaponLightBrand.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleWeaponLightBrand.4bpp` |
-| compressed | `g4bppcBattleWeapon12` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleWeapon12.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleWeapon12.4bpp` |
+| compressed | `g4bppcBattleWeapon12` | `unused` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleWeapon12.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleWeapon12.4bpp` |
 | compressed | `g4bppcBattleWeaponMystletainn` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleWeaponMystletainn.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleWeaponMystletainn.4bpp` |
 | compressed | `g4bppcBattleWeaponTyrfing` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleWeaponTyrfing.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleWeaponTyrfing.4bpp` |
 | compressed | `g4bppcBattleWeaponArmorslayer` | `sheet` | `battle_animation` | Phase 6 | `gfx/build/E02EBD/g4bppcBattleWeaponArmorslayer.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleWeaponArmorslayer.4bpp` |

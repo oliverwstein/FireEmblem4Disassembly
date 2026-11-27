@@ -279,13 +279,13 @@
         ; 4F: IDs $52 (Sage)
         .long g4bppcBattleAnimationSheetSage
         .word $FFFF
-        ; 50: IDs $53
+        ; 50: IDs $53 (unreachable: no lookup record or dance selects it)
         .long g4bppcBattleAnimationSheet50
         .word $FFFF
         ; 51: IDs $54 (Sage)
         .long g4bppcBattleAnimationSheetSage2
         .word $FFFF
-        ; 52: IDs $55
+        ; 52: IDs $55 (unreachable: no lookup record or dance selects it)
         .long g4bppcBattleAnimationSheet52
         .word $FFFF
         ; 53: IDs $56 (Bard)
@@ -375,9 +375,11 @@
         .byte $80, $80
         .long g4bppcBattleAnimationExtraSwordmaster
         .word $FFFF
+        ; 03: unreachable (no entry of aBattleAnimationExtraIndices maps here)
         .byte $80, $80
         .long g4bppcBattleAnimationExtra03
         .word $FFFF
+        ; 04: unreachable (no entry of aBattleAnimationExtraIndices maps here)
         .byte $80, $80
         .long g4bppcBattleAnimationExtra04
         .word $FFFF
@@ -1677,7 +1679,7 @@
         .long g4bppcBattleWeaponWindSword
         .long g4bppcBattleWeaponBalmung
         .long g4bppcBattleWeaponLightBrand
-        .long g4bppcBattleWeapon12
+        .long g4bppcBattleWeapon12 ; $12: unreachable (no entry of aBattleWeaponGraphicsIndices maps here)
         .long g4bppcBattleWeaponMystletainn
         .long g4bppcBattleWeaponTyrfing
         .long g4bppcBattleWeaponArmorslayer
