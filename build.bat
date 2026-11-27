@@ -6,6 +6,8 @@ REM Graphics: gfx\**\NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAM
 for /r "%startDir%gfx" %%f in (*.4bpp.png *.2bpp.png) do python "%startDir%tools\gfx.py" png2bpp "%%f" "%%~dpnf"
 REM Portraits: gfx\portraits\NAME.png to NAME.4bpp.
 python "%startDir%tools\portrait_pack.py" build
+REM Map sprites: gfx\map_sprites\{short,tall}\NAME.png to walking NAME.4bpp and the standing sheets.
+python "%startDir%tools\map_sprites.py" build
 REM Scenes & backgrounds: gfx\scenes\**\*.scene.json and gfx\ui\layouts\*.scene.json to .4bpp/.2bpp + .bin tilemaps.
 python "%startDir%tools\scene_pack.py" build
 REM Item icons: gfx\icons\ItemIcons.json to data\item\ItemIconOffsets.asm.

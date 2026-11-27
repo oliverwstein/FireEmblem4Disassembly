@@ -6897,7 +6897,7 @@
     * = $170000
     .logical $D70000
 
-      g4bppStandingMapSprites1 .binary "gfx/map/StandingMapSprites1.4bpp" ; D70000
+      g4bppStandingMapSprites1 .binary "gfx/build/map_sprites/StandingMapSprites1.4bpp" ; D70000
 
     .here
 
@@ -7033,7 +7033,7 @@
     * = $1A0000
     .logical $DA0000
 
-      g4bppStandingMapSprites2 .binary "gfx/map/StandingMapSprites2.4bpp" ; DA0000
+      g4bppStandingMapSprites2 .binary "gfx/build/map_sprites/StandingMapSprites2.4bpp" ; DA0000
 
       g4bppUnusedDA45C0 .binary "gfx/map/UnusedDA45C0.4bpp" ; DA45C0, unreferenced: 250 tiles, mostly blank
 

@@ -1,8 +1,10 @@
 # The map movement sprites, in the order they are placed from start to end:
 # the lower halves of banks $C1-$C7 (tools/stream_layout.py). Each NAME is
-# NAME.4bpp.png here (8 KB sprites 4 tiles wide, 5 KB ones 2), built through
-# NAME.4bpp.lz; NAME.4bpp.comp is the stream as the ROM has it. The region
-# ends where other data begins, so an edited sprite must not compress larger.
+# built from gfx/map_sprites/{short,tall}/MAPSPRITE.png by tools/map_sprites.py
+# (the pointer CSVs in data/class/ pair map sprite names with these labels) to
+# NAME.4bpp, then NAME.4bpp.lz; NAME.4bpp.comp is the stream as the ROM has it.
+# The region ends where other data begins, so an edited sprite must not
+# compress larger.
 start $C10000
 end $C70C80
 

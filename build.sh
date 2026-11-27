@@ -36,6 +36,7 @@ clean() {
   find gfx/build \( -name 'acChapterMap*.bin' -o -name 'aMapBattle*Layout*.bin' \) -delete
   python3 tools/scene_pack.py clean
   python3 tools/item_icons.py clean
+  python3 tools/map_sprites.py clean
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
@@ -81,6 +82,10 @@ generate() {
 
   # Portraits: gfx/portraits/NAME.png (80x64 assembled face + mouth frames) to NAME.4bpp.
   python3 tools/portrait_pack.py build
+
+  # Map sprites: gfx/map_sprites/{short,tall}/NAME.png (standing + walking frames) to the
+  # walking NAME.4bpp in gfx/build/MapMovementSprites/ and the two standing sheets.
+  python3 tools/map_sprites.py build
 
   # Scenes & backgrounds: gfx/scenes/**/*.scene.json and gfx/ui/layouts/*.scene.json
   python3 tools/scene_pack.py build

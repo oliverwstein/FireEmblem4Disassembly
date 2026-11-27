@@ -8,8 +8,8 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 
 | Form | Compressed | Uncompressed | Total |
 |---|---:|---:|---:|
-| `authored` | 451 | 22 | 473 |
-| `sheet` | 995 | 23 | 1018 |
+| `authored` | 548 | 24 | 572 |
+| `sheet` | 898 | 21 | 919 |
 | `raw` | 152 | 4 | 156 |
 | `unused` | 49 | 8 | 57 |
 | **Total** | **1647** | **57** | **1704** |
@@ -25,7 +25,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | `icons` | 1 | 0 | 0 | 0 | 1 |
 | `map` | 0 | 3 | 1 | 2 | 6 |
 | `map_battle` | 120 | 506 | 0 | 0 | 626 |
-| `map_sprites` | 0 | 99 | 0 | 0 | 99 |
+| `map_sprites` | 99 | 0 | 0 | 0 | 99 |
 | `portraits` | 152 | 0 | 0 | 0 | 152 |
 | `scenes` | 128 | 1 | 1 | 0 | 130 |
 | `title` | 0 | 18 | 24 | 0 | 42 |
@@ -1435,103 +1435,103 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcBattleBackgroundRoad` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Road.scene.json` | `gfx/build/E02EBD/g4bppcBattleBackgroundRoad.4bpp` |
 | compressed | `acBattleBackgroundBridgeTilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Bridge.scene.json` | `gfx/build/E02EBD/acBattleBackgroundBridgeTilemap.bin` |
 | compressed | `g4bppcBattleBackgroundBridge` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Bridge.scene.json` | `gfx/build/E02EBD/g4bppcBattleBackgroundBridge.4bpp` |
-| compressed | `g4bppcMageFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/MageFemale.4bpp.png` | `gfx/build/MapMovementSprites/MageFemale.4bpp` |
-| compressed | `g4bppcMageMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Mage.4bpp.png` | `gfx/build/MapMovementSprites/Mage.4bpp` |
-| compressed | `g4bppcPriestFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/PriestFemale.4bpp.png` | `gfx/build/MapMovementSprites/PriestFemale.4bpp` |
-| compressed | `g4bppcJuniorLordMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/JuniorLord.4bpp.png` | `gfx/build/MapMovementSprites/JuniorLord.4bpp` |
-| compressed | `g4bppcMyrmidonMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Myrmidon.4bpp.png` | `gfx/build/MapMovementSprites/Myrmidon.4bpp` |
-| compressed | `g4bppcLanceArmorMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/LanceArmor.4bpp.png` | `gfx/build/MapMovementSprites/LanceArmor.4bpp` |
-| compressed | `g4bppcBarbarianMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Barbarian.4bpp.png` | `gfx/build/MapMovementSprites/Barbarian.4bpp` |
-| compressed | `g4bppcArcherMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Archer.4bpp.png` | `gfx/build/MapMovementSprites/Archer.4bpp` |
-| compressed | `g4bppcSoldierMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Soldier.4bpp.png` | `gfx/build/MapMovementSprites/Soldier.4bpp` |
-| compressed | `g4bppcArcherFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/ArcherFemale.4bpp.png` | `gfx/build/MapMovementSprites/ArcherFemale.4bpp` |
-| compressed | `g4bppcAxeArmorMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/AxeArmor.4bpp.png` | `gfx/build/MapMovementSprites/AxeArmor.4bpp` |
-| compressed | `g4bppcBowSoldierMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/BowSoldier.4bpp.png` | `gfx/build/MapMovementSprites/BowSoldier.4bpp` |
-| compressed | `g4bppcDancerMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Dancer.4bpp.png` | `gfx/build/MapMovementSprites/Dancer.4bpp` |
-| compressed | `g4bppcMyrmidonFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/MyrmidonFemale.4bpp.png` | `gfx/build/MapMovementSprites/MyrmidonFemale.4bpp` |
-| compressed | `g4bppcPrincessMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Princess.4bpp.png` | `gfx/build/MapMovementSprites/Princess.4bpp` |
-| compressed | `g4bppcThiefMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Thief.4bpp.png` | `gfx/build/MapMovementSprites/Thief.4bpp` |
-| compressed | `g4bppcGeneralMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/General.4bpp.png` | `gfx/build/MapMovementSprites/General.4bpp` |
-| compressed | `g4bppcPriestessMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Priestess.4bpp.png` | `gfx/build/MapMovementSprites/Priestess.4bpp` |
-| compressed | `g4bppcFighterMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Fighter.4bpp.png` | `gfx/build/MapMovementSprites/Fighter.4bpp` |
-| compressed | `g4bppcWindMageMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/WindMage.4bpp.png` | `gfx/build/MapMovementSprites/WindMage.4bpp` |
-| compressed | `g4bppcWindMageFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/WindMageFemale.4bpp.png` | `gfx/build/MapMovementSprites/WindMageFemale.4bpp` |
-| compressed | `g4bppcPriestMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Priest.4bpp.png` | `gfx/build/MapMovementSprites/Priest.4bpp` |
-| compressed | `g4bppcHunterMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Hunter.4bpp.png` | `gfx/build/MapMovementSprites/Hunter.4bpp` |
-| compressed | `g4bppcSwordmasterMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Swordmaster.4bpp.png` | `gfx/build/MapMovementSprites/Swordmaster.4bpp` |
-| compressed | `g4bppcHeroMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Hero.4bpp.png` | `gfx/build/MapMovementSprites/Hero.4bpp` |
-| compressed | `g4bppcWarriorMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Warrior.4bpp.png` | `gfx/build/MapMovementSprites/Warrior.4bpp` |
-| compressed | `g4bppcBrigandMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Brigand.4bpp.png` | `gfx/build/MapMovementSprites/Brigand.4bpp` |
-| compressed | `g4bppcPirateMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Pirate.4bpp.png` | `gfx/build/MapMovementSprites/Pirate.4bpp` |
-| compressed | `g4bppcHeroFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/HeroFemale.4bpp.png` | `gfx/build/MapMovementSprites/HeroFemale.4bpp` |
-| compressed | `g4bppcBaronMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Baron.4bpp.png` | `gfx/build/MapMovementSprites/Baron.4bpp` |
-| compressed | `g4bppcHighPriestFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/HighPriestFemale.4bpp.png` | `gfx/build/MapMovementSprites/HighPriestFemale.4bpp` |
-| compressed | `g4bppcSwordmasterFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/SwordmasterFemale.4bpp.png` | `gfx/build/MapMovementSprites/SwordmasterFemale.4bpp` |
-| compressed | `g4bppcSniperFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/SniperFemale.4bpp.png` | `gfx/build/MapMovementSprites/SniperFemale.4bpp` |
-| compressed | `g4bppcSniperMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Sniper.4bpp.png` | `gfx/build/MapMovementSprites/Sniper.4bpp` |
-| compressed | `g4bppcEmperorMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Emperor.4bpp.png` | `gfx/build/MapMovementSprites/Emperor.4bpp` |
-| compressed | `g4bppcSwordSoldierMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/SwordSoldier.4bpp.png` | `gfx/build/MapMovementSprites/SwordSoldier.4bpp` |
-| compressed | `g4bppcAxeSoldierMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/AxeSoldier.4bpp.png` | `gfx/build/MapMovementSprites/AxeSoldier.4bpp` |
-| compressed | `g4bppcSpearSoldierMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/SpearSoldier.4bpp.png` | `gfx/build/MapMovementSprites/SpearSoldier.4bpp` |
-| compressed | `g4bppcSwordArmorMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/SwordArmor.4bpp.png` | `gfx/build/MapMovementSprites/SwordArmor.4bpp` |
-| compressed | `g4bppcBowArmorMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/BowArmor.4bpp.png` | `gfx/build/MapMovementSprites/BowArmor.4bpp` |
-| compressed | `g4bppcFireMageFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/FireMageFemale.4bpp.png` | `gfx/build/MapMovementSprites/FireMageFemale.4bpp` |
-| compressed | `g4bppcFireMageMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/FireMage.4bpp.png` | `gfx/build/MapMovementSprites/FireMage.4bpp` |
-| compressed | `g4bppcThunderMageFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/ThunderMageFemale.4bpp.png` | `gfx/build/MapMovementSprites/ThunderMageFemale.4bpp` |
-| compressed | `g4bppcThunderMageMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/ThunderMage.4bpp.png` | `gfx/build/MapMovementSprites/ThunderMage.4bpp` |
-| compressed | `g4bppcHighPriestMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/HighPriest.4bpp.png` | `gfx/build/MapMovementSprites/HighPriest.4bpp` |
-| compressed | `g4bppcWarMageFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/WarMageFemale.4bpp.png` | `gfx/build/MapMovementSprites/WarMageFemale.4bpp` |
-| compressed | `g4bppcDarkBishopMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DarkBishop.4bpp.png` | `gfx/build/MapMovementSprites/DarkBishop.4bpp` |
-| compressed | `g4bppcDarkMageMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DarkMage.4bpp.png` | `gfx/build/MapMovementSprites/DarkMage.4bpp` |
-| compressed | `g4bppcPrinceMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Prince.4bpp.png` | `gfx/build/MapMovementSprites/Prince.4bpp` |
-| compressed | `g4bppcWarMageMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/WarMage.4bpp.png` | `gfx/build/MapMovementSprites/WarMage.4bpp` |
-| compressed | `g4bppcChildFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/ChildFemale.4bpp.png` | `gfx/build/MapMovementSprites/ChildFemale.4bpp` |
-| compressed | `g4bppcChildMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Child.4bpp.png` | `gfx/build/MapMovementSprites/Child.4bpp` |
-| compressed | `g4bppcQueenMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Queen.4bpp.png` | `gfx/build/MapMovementSprites/Queen.4bpp` |
-| compressed | `g4bppcBishopMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Bishop.4bpp.png` | `gfx/build/MapMovementSprites/Bishop.4bpp` |
-| compressed | `g4bppcCivilianMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Civilian.4bpp.png` | `gfx/build/MapMovementSprites/Civilian.4bpp` |
-| compressed | `g4bppcCivilianFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/CivilianFemale.4bpp.png` | `gfx/build/MapMovementSprites/CivilianFemale.4bpp` |
-| compressed | `g4bppcRogueFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/RogueFemale.4bpp.png` | `gfx/build/MapMovementSprites/RogueFemale.4bpp` |
-| compressed | `g4bppcBardMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Bard.4bpp.png` | `gfx/build/MapMovementSprites/Bard.4bpp` |
-| compressed | `g4bppcThiefFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/ThiefFemale.4bpp.png` | `gfx/build/MapMovementSprites/ThiefFemale.4bpp` |
-| compressed | `g4bppcRogueMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Rogue.4bpp.png` | `gfx/build/MapMovementSprites/Rogue.4bpp` |
-| compressed | `g4bppcSageMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Sage.4bpp.png` | `gfx/build/MapMovementSprites/Sage.4bpp` |
-| compressed | `g4bppcSageFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/SageFemale.4bpp.png` | `gfx/build/MapMovementSprites/SageFemale.4bpp` |
-| compressed | `g4bppcDarkPrinceMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DarkPrince.4bpp.png` | `gfx/build/MapMovementSprites/DarkPrince.4bpp` |
-| compressed | `g4bppcSmallOifeyMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/SmallOifey.4bpp.png` | `gfx/build/MapMovementSprites/SmallOifey.4bpp` |
-| compressed | `g4bppcShortEmptyMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/ShortEmpty.4bpp.png` | `gfx/build/MapMovementSprites/ShortEmpty.4bpp` |
-| compressed | `g4bppcDragonRiderMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DragonRider.4bpp.png` | `gfx/build/MapMovementSprites/DragonRider.4bpp` |
-| compressed | `g4bppcCavalierMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Cavalier.4bpp.png` | `gfx/build/MapMovementSprites/Cavalier.4bpp` |
-| compressed | `g4bppcDukeKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DukeKnight.4bpp.png` | `gfx/build/MapMovementSprites/DukeKnight.4bpp` |
-| compressed | `g4bppcPegasusRiderMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/PegasusRider.4bpp.png` | `gfx/build/MapMovementSprites/PegasusRider.4bpp` |
-| compressed | `g4bppcAxeKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/AxeKnight.4bpp.png` | `gfx/build/MapMovementSprites/AxeKnight.4bpp` |
-| compressed | `g4bppcFreeKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/FreeKnight.4bpp.png` | `gfx/build/MapMovementSprites/FreeKnight.4bpp` |
-| compressed | `g4bppcLanceKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/LanceKnight.4bpp.png` | `gfx/build/MapMovementSprites/LanceKnight.4bpp` |
-| compressed | `g4bppcBowKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/BowKnight.4bpp.png` | `gfx/build/MapMovementSprites/BowKnight.4bpp` |
-| compressed | `g4bppcKnightLordSeliphMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/KnightLordSeliph.4bpp.png` | `gfx/build/MapMovementSprites/KnightLordSeliph.4bpp` |
-| compressed | `g4bppcTroubadourMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Troubadour.4bpp.png` | `gfx/build/MapMovementSprites/Troubadour.4bpp` |
-| compressed | `g4bppcKnightLordSigurdMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/KnightLordSigurd.4bpp.png` | `gfx/build/MapMovementSprites/KnightLordSigurd.4bpp` |
-| compressed | `g4bppcPaladinMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Paladin.4bpp.png` | `gfx/build/MapMovementSprites/Paladin.4bpp` |
-| compressed | `g4bppcDragonMasterMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DragonMaster.4bpp.png` | `gfx/build/MapMovementSprites/DragonMaster.4bpp` |
-| compressed | `g4bppcArchKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/ArchKnight.4bpp.png` | `gfx/build/MapMovementSprites/ArchKnight.4bpp` |
-| compressed | `g4bppcGreatKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/GreatKnight.4bpp.png` | `gfx/build/MapMovementSprites/GreatKnight.4bpp` |
-| compressed | `g4bppcMageKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/MageKnight.4bpp.png` | `gfx/build/MapMovementSprites/MageKnight.4bpp` |
-| compressed | `g4bppcDragonKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DragonKnight.4bpp.png` | `gfx/build/MapMovementSprites/DragonKnight.4bpp` |
-| compressed | `g4bppcPegasusKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/PegasusKnight.4bpp.png` | `gfx/build/MapMovementSprites/PegasusKnight.4bpp` |
-| compressed | `g4bppcFalconKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/FalconKnight.4bpp.png` | `gfx/build/MapMovementSprites/FalconKnight.4bpp` |
-| compressed | `g4bppcMasterKnightMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/MasterKnight.4bpp.png` | `gfx/build/MapMovementSprites/MasterKnight.4bpp` |
-| compressed | `g4bppcRangerMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Ranger.4bpp.png` | `gfx/build/MapMovementSprites/Ranger.4bpp` |
-| compressed | `g4bppcBallisticianMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/Ballistician.4bpp.png` | `gfx/build/MapMovementSprites/Ballistician.4bpp` |
-| compressed | `g4bppcIronBallisticianMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/IronBallistician.4bpp.png` | `gfx/build/MapMovementSprites/IronBallistician.4bpp` |
-| compressed | `g4bppcKillerBallisticianMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/KillerBallistician.4bpp.png` | `gfx/build/MapMovementSprites/KillerBallistician.4bpp` |
-| compressed | `g4bppcGreatBallisticianMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/GreatBallistician.4bpp.png` | `gfx/build/MapMovementSprites/GreatBallistician.4bpp` |
-| compressed | `g4bppcDragonRiderFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DragonRiderFemale.4bpp.png` | `gfx/build/MapMovementSprites/DragonRiderFemale.4bpp` |
-| compressed | `g4bppcDragonKnightFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DragonKnightFemale.4bpp.png` | `gfx/build/MapMovementSprites/DragonKnightFemale.4bpp` |
-| compressed | `g4bppcDragonMasterFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/DragonMasterFemale.4bpp.png` | `gfx/build/MapMovementSprites/DragonMasterFemale.4bpp` |
-| compressed | `g4bppcPaladinFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/PaladinFemale.4bpp.png` | `gfx/build/MapMovementSprites/PaladinFemale.4bpp` |
-| compressed | `g4bppcMageKnightFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/MageKnightFemale.4bpp.png` | `gfx/build/MapMovementSprites/MageKnightFemale.4bpp` |
-| compressed | `g4bppcMasterKnightFemaleMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/MasterKnightFemale.4bpp.png` | `gfx/build/MapMovementSprites/MasterKnightFemale.4bpp` |
-| compressed | `g4bppcTallEmptyMapMovementSprite` | `sheet` | `map_sprites` | Phase 5 | `gfx/build/MapMovementSprites/TallEmpty.4bpp.png` | `gfx/build/MapMovementSprites/TallEmpty.4bpp` |
+| compressed | `g4bppcMageFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/MageFemale.png` | `gfx/build/MapMovementSprites/MageFemale.4bpp` |
+| compressed | `g4bppcMageMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Mage.png` | `gfx/build/MapMovementSprites/Mage.4bpp` |
+| compressed | `g4bppcPriestFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/PriestFemale.png` | `gfx/build/MapMovementSprites/PriestFemale.4bpp` |
+| compressed | `g4bppcJuniorLordMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/JuniorLord.png` | `gfx/build/MapMovementSprites/JuniorLord.4bpp` |
+| compressed | `g4bppcMyrmidonMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Myrmidon.png` | `gfx/build/MapMovementSprites/Myrmidon.4bpp` |
+| compressed | `g4bppcLanceArmorMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/LanceArmor.png` | `gfx/build/MapMovementSprites/LanceArmor.4bpp` |
+| compressed | `g4bppcBarbarianMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Barbarian.png` | `gfx/build/MapMovementSprites/Barbarian.4bpp` |
+| compressed | `g4bppcArcherMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Archer.png` | `gfx/build/MapMovementSprites/Archer.4bpp` |
+| compressed | `g4bppcSoldierMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Soldier.png` | `gfx/build/MapMovementSprites/Soldier.4bpp` |
+| compressed | `g4bppcArcherFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/ArcherFemale.png` | `gfx/build/MapMovementSprites/ArcherFemale.4bpp` |
+| compressed | `g4bppcAxeArmorMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/AxeArmor.png` | `gfx/build/MapMovementSprites/AxeArmor.4bpp` |
+| compressed | `g4bppcBowSoldierMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/BowSoldier.png` | `gfx/build/MapMovementSprites/BowSoldier.4bpp` |
+| compressed | `g4bppcDancerMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Dancer.png` | `gfx/build/MapMovementSprites/Dancer.4bpp` |
+| compressed | `g4bppcMyrmidonFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/MyrmidonFemale.png` | `gfx/build/MapMovementSprites/MyrmidonFemale.4bpp` |
+| compressed | `g4bppcPrincessMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Princess.png` | `gfx/build/MapMovementSprites/Princess.4bpp` |
+| compressed | `g4bppcThiefMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Thief.png` | `gfx/build/MapMovementSprites/Thief.4bpp` |
+| compressed | `g4bppcGeneralMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/General.png` | `gfx/build/MapMovementSprites/General.4bpp` |
+| compressed | `g4bppcPriestessMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Priestess.png` | `gfx/build/MapMovementSprites/Priestess.4bpp` |
+| compressed | `g4bppcFighterMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Fighter.png` | `gfx/build/MapMovementSprites/Fighter.4bpp` |
+| compressed | `g4bppcWindMageMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/WindMage.png` | `gfx/build/MapMovementSprites/WindMage.4bpp` |
+| compressed | `g4bppcWindMageFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/WindMageFemale.png` | `gfx/build/MapMovementSprites/WindMageFemale.4bpp` |
+| compressed | `g4bppcPriestMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Priest.png` | `gfx/build/MapMovementSprites/Priest.4bpp` |
+| compressed | `g4bppcHunterMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Hunter.png` | `gfx/build/MapMovementSprites/Hunter.4bpp` |
+| compressed | `g4bppcSwordmasterMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Swordmaster.png` | `gfx/build/MapMovementSprites/Swordmaster.4bpp` |
+| compressed | `g4bppcHeroMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Hero.png` | `gfx/build/MapMovementSprites/Hero.4bpp` |
+| compressed | `g4bppcWarriorMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Warrior.png` | `gfx/build/MapMovementSprites/Warrior.4bpp` |
+| compressed | `g4bppcBrigandMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Brigand.png` | `gfx/build/MapMovementSprites/Brigand.4bpp` |
+| compressed | `g4bppcPirateMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Pirate.png` | `gfx/build/MapMovementSprites/Pirate.4bpp` |
+| compressed | `g4bppcHeroFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/HeroFemale.png` | `gfx/build/MapMovementSprites/HeroFemale.4bpp` |
+| compressed | `g4bppcBaronMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Baron.png` | `gfx/build/MapMovementSprites/Baron.4bpp` |
+| compressed | `g4bppcHighPriestFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/HighPriestFemale.png` | `gfx/build/MapMovementSprites/HighPriestFemale.4bpp` |
+| compressed | `g4bppcSwordmasterFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/SwordmasterFemale.png` | `gfx/build/MapMovementSprites/SwordmasterFemale.4bpp` |
+| compressed | `g4bppcSniperFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/SniperFemale.png` | `gfx/build/MapMovementSprites/SniperFemale.4bpp` |
+| compressed | `g4bppcSniperMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Sniper.png` | `gfx/build/MapMovementSprites/Sniper.4bpp` |
+| compressed | `g4bppcEmperorMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Emperor.png` | `gfx/build/MapMovementSprites/Emperor.4bpp` |
+| compressed | `g4bppcSwordSoldierMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/SwordSoldier.png` | `gfx/build/MapMovementSprites/SwordSoldier.4bpp` |
+| compressed | `g4bppcAxeSoldierMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/AxeSoldier.png` | `gfx/build/MapMovementSprites/AxeSoldier.4bpp` |
+| compressed | `g4bppcSpearSoldierMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/SpearSoldier.png` | `gfx/build/MapMovementSprites/SpearSoldier.4bpp` |
+| compressed | `g4bppcSwordArmorMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/SwordArmor.png` | `gfx/build/MapMovementSprites/SwordArmor.4bpp` |
+| compressed | `g4bppcBowArmorMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/BowArmor.png` | `gfx/build/MapMovementSprites/BowArmor.4bpp` |
+| compressed | `g4bppcFireMageFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/FireMageFemale.png` | `gfx/build/MapMovementSprites/FireMageFemale.4bpp` |
+| compressed | `g4bppcFireMageMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/FireMage.png` | `gfx/build/MapMovementSprites/FireMage.4bpp` |
+| compressed | `g4bppcThunderMageFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/ThunderMageFemale.png` | `gfx/build/MapMovementSprites/ThunderMageFemale.4bpp` |
+| compressed | `g4bppcThunderMageMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/ThunderMage.png` | `gfx/build/MapMovementSprites/ThunderMage.4bpp` |
+| compressed | `g4bppcHighPriestMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/HighPriest.png` | `gfx/build/MapMovementSprites/HighPriest.4bpp` |
+| compressed | `g4bppcWarMageFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/WarMageFemale.png` | `gfx/build/MapMovementSprites/WarMageFemale.4bpp` |
+| compressed | `g4bppcDarkBishopMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/DarkBishop.png` | `gfx/build/MapMovementSprites/DarkBishop.4bpp` |
+| compressed | `g4bppcDarkMageMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/DarkMage.png` | `gfx/build/MapMovementSprites/DarkMage.4bpp` |
+| compressed | `g4bppcPrinceMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Prince.png` | `gfx/build/MapMovementSprites/Prince.4bpp` |
+| compressed | `g4bppcWarMageMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/WarMage.png` | `gfx/build/MapMovementSprites/WarMage.4bpp` |
+| compressed | `g4bppcChildFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/ChildFemale.png` | `gfx/build/MapMovementSprites/ChildFemale.4bpp` |
+| compressed | `g4bppcChildMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Child.png` | `gfx/build/MapMovementSprites/Child.4bpp` |
+| compressed | `g4bppcQueenMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Queen.png` | `gfx/build/MapMovementSprites/Queen.4bpp` |
+| compressed | `g4bppcBishopMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Bishop.png` | `gfx/build/MapMovementSprites/Bishop.4bpp` |
+| compressed | `g4bppcCivilianMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Civilian.png` | `gfx/build/MapMovementSprites/Civilian.4bpp` |
+| compressed | `g4bppcCivilianFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/CivilianFemale.png` | `gfx/build/MapMovementSprites/CivilianFemale.4bpp` |
+| compressed | `g4bppcRogueFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/RogueFemale.png` | `gfx/build/MapMovementSprites/RogueFemale.4bpp` |
+| compressed | `g4bppcBardMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Bard.png` | `gfx/build/MapMovementSprites/Bard.4bpp` |
+| compressed | `g4bppcThiefFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/ThiefFemale.png` | `gfx/build/MapMovementSprites/ThiefFemale.4bpp` |
+| compressed | `g4bppcRogueMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Rogue.png` | `gfx/build/MapMovementSprites/Rogue.4bpp` |
+| compressed | `g4bppcSageMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/Sage.png` | `gfx/build/MapMovementSprites/Sage.4bpp` |
+| compressed | `g4bppcSageFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/SageFemale.png` | `gfx/build/MapMovementSprites/SageFemale.4bpp` |
+| compressed | `g4bppcDarkPrinceMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/DarkPrince.png` | `gfx/build/MapMovementSprites/DarkPrince.4bpp` |
+| compressed | `g4bppcSmallOifeyMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/SmallOifey.png` | `gfx/build/MapMovementSprites/SmallOifey.4bpp` |
+| compressed | `g4bppcShortEmptyMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/ShortEmpty.png` | `gfx/build/MapMovementSprites/ShortEmpty.4bpp` |
+| compressed | `g4bppcDragonRiderMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/DragonRider.png` | `gfx/build/MapMovementSprites/DragonRider.4bpp` |
+| compressed | `g4bppcCavalierMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/Cavalier.png` | `gfx/build/MapMovementSprites/Cavalier.4bpp` |
+| compressed | `g4bppcDukeKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/DukeKnight.png` | `gfx/build/MapMovementSprites/DukeKnight.4bpp` |
+| compressed | `g4bppcPegasusRiderMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/PegasusRider.png` | `gfx/build/MapMovementSprites/PegasusRider.4bpp` |
+| compressed | `g4bppcAxeKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/AxeKnight.png` | `gfx/build/MapMovementSprites/AxeKnight.4bpp` |
+| compressed | `g4bppcFreeKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/FreeKnight.png` | `gfx/build/MapMovementSprites/FreeKnight.4bpp` |
+| compressed | `g4bppcLanceKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/LanceKnight.png` | `gfx/build/MapMovementSprites/LanceKnight.4bpp` |
+| compressed | `g4bppcBowKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/BowKnight.png` | `gfx/build/MapMovementSprites/BowKnight.4bpp` |
+| compressed | `g4bppcKnightLordSeliphMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/KnightLordSeliph.png` | `gfx/build/MapMovementSprites/KnightLordSeliph.4bpp` |
+| compressed | `g4bppcTroubadourMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/Troubadour.png` | `gfx/build/MapMovementSprites/Troubadour.4bpp` |
+| compressed | `g4bppcKnightLordSigurdMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/KnightLordSigurd.png` | `gfx/build/MapMovementSprites/KnightLordSigurd.4bpp` |
+| compressed | `g4bppcPaladinMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/Paladin.png` | `gfx/build/MapMovementSprites/Paladin.4bpp` |
+| compressed | `g4bppcDragonMasterMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/DragonMaster.png` | `gfx/build/MapMovementSprites/DragonMaster.4bpp` |
+| compressed | `g4bppcArchKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/ArchKnight.png` | `gfx/build/MapMovementSprites/ArchKnight.4bpp` |
+| compressed | `g4bppcGreatKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/GreatKnight.png` | `gfx/build/MapMovementSprites/GreatKnight.4bpp` |
+| compressed | `g4bppcMageKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/MageKnight.png` | `gfx/build/MapMovementSprites/MageKnight.4bpp` |
+| compressed | `g4bppcDragonKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/DragonKnight.png` | `gfx/build/MapMovementSprites/DragonKnight.4bpp` |
+| compressed | `g4bppcPegasusKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/PegasusKnight.png` | `gfx/build/MapMovementSprites/PegasusKnight.4bpp` |
+| compressed | `g4bppcFalconKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/FalconKnight.png` | `gfx/build/MapMovementSprites/FalconKnight.4bpp` |
+| compressed | `g4bppcMasterKnightMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/MasterKnight.png` | `gfx/build/MapMovementSprites/MasterKnight.4bpp` |
+| compressed | `g4bppcRangerMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/Ranger.png` | `gfx/build/MapMovementSprites/Ranger.4bpp` |
+| compressed | `g4bppcBallisticianMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/Ballistician.png` | `gfx/build/MapMovementSprites/Ballistician.4bpp` |
+| compressed | `g4bppcIronBallisticianMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/IronBallistician.png` | `gfx/build/MapMovementSprites/IronBallistician.4bpp` |
+| compressed | `g4bppcKillerBallisticianMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/KillerBallistician.png` | `gfx/build/MapMovementSprites/KillerBallistician.4bpp` |
+| compressed | `g4bppcGreatBallisticianMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/GreatBallistician.png` | `gfx/build/MapMovementSprites/GreatBallistician.4bpp` |
+| compressed | `g4bppcDragonRiderFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/DragonRiderFemale.png` | `gfx/build/MapMovementSprites/DragonRiderFemale.4bpp` |
+| compressed | `g4bppcDragonKnightFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/DragonKnightFemale.png` | `gfx/build/MapMovementSprites/DragonKnightFemale.4bpp` |
+| compressed | `g4bppcDragonMasterFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/DragonMasterFemale.png` | `gfx/build/MapMovementSprites/DragonMasterFemale.4bpp` |
+| compressed | `g4bppcPaladinFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/PaladinFemale.png` | `gfx/build/MapMovementSprites/PaladinFemale.4bpp` |
+| compressed | `g4bppcMageKnightFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/MageKnightFemale.png` | `gfx/build/MapMovementSprites/MageKnightFemale.4bpp` |
+| compressed | `g4bppcMasterKnightFemaleMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/MasterKnightFemale.png` | `gfx/build/MapMovementSprites/MasterKnightFemale.4bpp` |
+| compressed | `g4bppcTallEmptyMapMovementSprite` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/TallEmpty.png` | `gfx/build/MapMovementSprites/TallEmpty.4bpp` |
 | compressed | `g4bppcPortraitSigurd` | `authored` | `portraits` | Phase 2 | `gfx/portraits/Sigurd.png` | `gfx/build/portraits/Sigurd.4bpp` |
 | compressed | `g4bppcPortraitNaoise` | `authored` | `portraits` | Phase 2 | `gfx/portraits/Naoise.png` | `gfx/build/portraits/Naoise.4bpp` |
 | compressed | `g4bppcPortraitAlec` | `authored` | `portraits` | Phase 2 | `gfx/portraits/Alec.png` | `gfx/build/portraits/Alec.4bpp` |
@@ -1688,7 +1688,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | uncompressed | `g2bppDialogueFont` | `authored` | `fonts` | Phase 4 | `gfx/fonts/DialogueFont.2bpp.png` | `gfx/fonts/DialogueFont.2bpp` |
 | uncompressed | `g2bppDialogueFont2` | `authored` | `fonts` | Phase 4 | `gfx/fonts/DialogueFont2.2bpp.png` | `gfx/fonts/DialogueFont2.2bpp` |
 | uncompressed | `g2bppDialogueFont3` | `authored` | `fonts` | Phase 4 | `gfx/fonts/DialogueFont3.2bpp.png` | `gfx/fonts/DialogueFont3.2bpp` |
-| uncompressed | `g4bppStandingMapSprites1` | `sheet` | `map_sprites` | Phase 5 | `gfx/map/StandingMapSprites1.4bpp.png` | `gfx/map/StandingMapSprites1.4bpp` |
+| uncompressed | `g4bppStandingMapSprites1` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/short/*.png` | `gfx/build/map_sprites/StandingMapSprites1.4bpp` |
 | uncompressed | `g2bppItemStatLabels` | `sheet` | `ui` | Phase 4 | `gfx/ui/ItemStatLabels.2bpp.png` | `gfx/ui/ItemStatLabels.2bpp` |
 | uncompressed | `g2bppShopLabels` | `sheet` | `ui` | Phase 4 | `gfx/ui/ShopLabels.2bpp.png` | `gfx/ui/ShopLabels.2bpp` |
 | uncompressed | `aCastleTownButtonTilemap` | `authored` | `ui` | Phase 4 | `gfx/ui/layouts/CastleTownButtons.scene.json` | `gfx/build/ui/tilemaps/CastleTownButtonTilemap.bin` |
@@ -1703,7 +1703,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | uncompressed | `gWorldMapDataD97940` | `raw` | `worldmap` | Unassigned | `gfx/build/ui/tilemaps/WorldMapDataD97940.bin` | `gfx/build/ui/tilemaps/WorldMapDataD97940.bin` |
 | uncompressed | `gUnusedD97B00` | `unused` | `ui` | Phase 4 | `gfx/build/ui/tilemaps/UnusedD97B00.bin` | `gfx/build/ui/tilemaps/UnusedD97B00.bin` |
 | uncompressed | `aFirstGenerationEndingBG2Tilemap` | `raw` | `ui` | Phase 4 | `gfx/build/ui/tilemaps/FirstGenerationEndingBG2Tilemap.bin` | `gfx/build/ui/tilemaps/FirstGenerationEndingBG2Tilemap.bin` |
-| uncompressed | `g4bppStandingMapSprites2` | `sheet` | `map_sprites` | Phase 5 | `gfx/map/StandingMapSprites2.4bpp.png` | `gfx/map/StandingMapSprites2.4bpp` |
+| uncompressed | `g4bppStandingMapSprites2` | `authored` | `map_sprites` | Phase 5 | `gfx/map_sprites/tall/*.png` | `gfx/build/map_sprites/StandingMapSprites2.4bpp` |
 | uncompressed | `g4bppUnusedDA45C0` | `unused` | `map` | Unassigned | `gfx/map/UnusedDA45C0.4bpp` | `gfx/map/UnusedDA45C0.4bpp` |
 | uncompressed | `gUnusedDA6700` | `unused` | `ui` | Phase 4 | `gfx/build/ui/tilemaps/UnusedDA6700.bin` | `gfx/build/ui/tilemaps/UnusedDA6700.bin` |
 | uncompressed | `gConversationLeftWindowTilemap` | `authored` | `ui` | Phase 4 | `gfx/ui/layouts/DialogueBoxes.scene.json` | `gfx/build/ui/tilemaps/ConversationLeftWindowTilemap.bin` |

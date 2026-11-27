@@ -13,7 +13,8 @@ Classifies each asset by:
     (scene_pack.py manifests), a portrait PNG, a chapter map CSV, map battle
     sprite data assembly, or a tile sheet whose tile order is already the
     asset's own order (the font glyph sheets, in character-code order; the item
-    icon grid, with ItemIcons.json);
+    icon grid, with ItemIcons.json), or a map sprite frame-grid PNG
+    (map_sprites.py: walking streams and both standing sheets);
   - unused: nothing in engine/, data/, include/, events/ or build.asm names the
     label outside a comment and its own definition (no reader);
   - sheet: an indexed .4bpp.png/.2bpp.png tile sheet in VRAM order;
@@ -30,6 +31,9 @@ import json
 import os
 import re
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import map_sprites
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_MD = os.path.join(ROOT, 'docs', 'reference', 'gfx_inventory.md')
@@ -136,6 +140,8 @@ def collect_inventory():
     entries = []
 
     # 1. Compressed streams from every .streams file
+    map_sprite_src = {f: os.path.relpath(map_sprites.src_path(kind, n), ROOT)
+                      for kind, _, n, f in map_sprites.sprites()}
     for spath in sorted(glob.glob(os.path.join(ROOT, 'gfx', '**', '*.streams'), recursive=True)):
         sdir = os.path.dirname(spath)
         rel_dir = os.path.relpath(sdir, ROOT).replace(os.sep, '/')
@@ -159,6 +165,8 @@ def collect_inventory():
 
                 if rel_dir == 'gfx/build/portraits':
                     form, system, phase, src = 'authored', 'portraits', 'Phase 2', f'gfx/portraits/{name}.png'
+                elif rel_dir == 'gfx/build/MapMovementSprites':
+                    form, system, phase, src = 'authored', 'map_sprites', 'Phase 5', map_sprite_src[name]
                 elif out_rel in scene_idx:
                     src, phase, system = scene_idx[out_rel]
                     form = 'authored'
@@ -192,7 +200,11 @@ def collect_inventory():
                 if not m:
                     continue
                 label, rel_out = m.group(1), m.group(2)
-                if rel_out == 'gfx/icons/ItemIcons.4bpp':
+                if rel_out.startswith('gfx/build/map_sprites/'):
+                    kind_dir = 'short' if rel_out.endswith('1.4bpp') else 'tall'
+                    form, system, phase, src = ('authored', 'map_sprites', 'Phase 5',
+                                                f'gfx/map_sprites/{kind_dir}/*.png')
+                elif rel_out == 'gfx/icons/ItemIcons.4bpp':
                     form, system, phase, src = 'authored', 'icons', 'Phase 4', 'gfx/icons/ItemIcons.json'
                 elif rel_out.startswith('gfx/fonts/'):
                     form, system, phase, src = 'authored', 'fonts', 'Phase 4', rel_out + '.png'
