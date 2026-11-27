@@ -1561,7 +1561,7 @@
       .al
       .xl
 
-      aDialogueBoxTilemap .binary "../../gfx/ui/tilemaps/DialogueBoxTilemap.bin" ; 85/8000
+      aDialogueBoxTilemap .binary "../../gfx/build/ui/tilemaps/DialogueBoxTilemap.bin" ; 85/8000
 
     .endsection Unsorted858000Section
 

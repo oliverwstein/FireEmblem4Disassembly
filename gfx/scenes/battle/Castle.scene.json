@@ -10,15 +10,15 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/B48720/g4bppcBattleBackgroundCastle.4bpp.png",
       "max_tiles": 512,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/B48720/g4bppcBattleBackgroundCastle.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "Castle.png",
-      "tilemap": "gfx/compressed/E02EBD/acBattleBackgroundCastleTilemap.bin",
+      "tilemap": "gfx/build/E02EBD/acBattleBackgroundCastleTilemap.bin",
       "width": 64,
       "height": 32,
       "transparent": false,

@@ -161,7 +161,8 @@ def self_test():
         import json
         import scene_pack
         manifest = json.load(open(os.path.join(ROOT, 'gfx/scenes/battle/Plains.scene.json')))
-        bpp_rel = manifest['sheets'][0]['png'][:-4]
+        s0 = manifest['sheets'][0]
+        bpp_rel = s0['comp'][:-5] if 'comp' in s0 else s0['png'][:-4]
         tm_rel = manifest['layers'][0]['tilemap']
         plains_png = os.path.join(tmp, 'gfx/scenes/battle/Plains.png')
         pimg = Image.open(plains_png)

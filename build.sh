@@ -33,8 +33,9 @@ clean() {
   find gfx \( -name '*.4bpp' -o -name '*.2bpp' \) -delete
   find gfx \( -name '*.4bpp.lz' -o -name '*.2bpp.lz' -o -name '*.bin.lz' -o -name Layout.asm \) -delete
   find audio -name '*.bin.lz' -delete
-  find gfx/compressed \( -name 'acChapterMap*.bin' -o -name 'aMapBattle*Layout*.bin' \) -delete
+  find gfx/build \( -name 'acChapterMap*.bin' -o -name 'aMapBattle*Layout*.bin' \) -delete
   python3 tools/scene_pack.py clean
+  python3 tools/item_icons.py clean
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
@@ -81,8 +82,11 @@ generate() {
   # Portraits: gfx/portraits/NAME.png (80x64 assembled face + mouth frames) to NAME.4bpp.
   python3 tools/portrait_pack.py build
 
-  # Scenes & backgrounds: gfx/scenes/**/*.scene.json to .4bpp/.2bpp + .bin tilemaps.
+  # Scenes & backgrounds: gfx/scenes/**/*.scene.json and gfx/ui/layouts/*.scene.json
   python3 tools/scene_pack.py build
+
+  # Item icons: gfx/icons/ItemIcons.json -> data/item/ItemIconOffsets.asm.
+  python3 tools/item_icons.py build
 
   # Compressed graphics: NAME.4bpp / NAME.2bpp to NAME.4bpp.lz / NAME.2bpp.lz,
   # keeping the committed original stream NAME.*bpp.comp while it still decompresses to it.

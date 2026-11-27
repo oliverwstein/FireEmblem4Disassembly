@@ -1,0 +1,122 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/WindowPalette.asm",
+      "label": "aStatusScreenBGPalettes",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/build/DD0000/gcGenealogyWheelTiles.4bpp.png",
+      "max_tiles": 304,
+      "writable": false
+    },
+    {
+      "png": "gfx/ui/WindowFrames.4bpp.png",
+      "max_tiles": 96,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "StatusScreenTilemap1.csv",
+      "tilemap": "gfx/build/ui/tilemaps/StatusScreenTilemap1.bin",
+      "width": 32,
+      "height": 11,
+      "transparent": false,
+      "palettes": [
+        0
+      ],
+      "sheets": [
+        {
+          "sheet": 1,
+          "base": 768
+        }
+      ]
+    },
+    {
+      "grid": "StatusScreenTilemap2.csv",
+      "tilemap": "gfx/build/ui/tilemaps/StatusScreenTilemap2.bin",
+      "width": 32,
+      "height": 35,
+      "transparent": false,
+      "palettes": [
+        0
+      ],
+      "sheets": [
+        {
+          "sheet": 1,
+          "base": 768
+        }
+      ]
+    },
+    {
+      "grid": "StatusScreenTilemap3.csv",
+      "tilemap": "gfx/build/ui/tilemaps/StatusScreenTilemap3.bin",
+      "width": 32,
+      "height": 17,
+      "transparent": false,
+      "palettes": [
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 768
+        }
+      ]
+    },
+    {
+      "grid": "GenealogyWheel.csv",
+      "tilemap": "gfx/build/ui/tilemaps/GenealogyWheelTilemap.bin",
+      "width": 32,
+      "height": 17,
+      "transparent": false,
+      "palettes": [
+        0,
+        4,
+        5
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 768
+        }
+      ]
+    },
+    {
+      "grid": "GenealogyWheelLoptous.csv",
+      "tilemap": "gfx/build/ui/tilemaps/GenealogyWheelLoptousTilemap.bin",
+      "width": 32,
+      "height": 17,
+      "transparent": false,
+      "palettes": [
+        0,
+        4,
+        5,
+        6
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 768
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "depth": 2,
+  "palette": [
+    {
+      "asm": "data/palettes/WindowPalette.asm",
+      "label": "aWindowPalette",
+      "dest": 0,
+      "count": 32
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/build/C00A2B/gcHiraganaFont.2bpp.png",
+      "max_tiles": 384,
+      "writable": false
+    },
+    {
+      "png": "gfx/ui/MenuLabels.2bpp.png",
+      "max_tiles": 384,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "UnitWindowPage0.csv",
+      "tilemap": "gfx/build/ui/tilemaps/UnitWindowPage0Tilemap.bin",
+      "width": 32,
+      "height": 5,
+      "transparent": true,
+      "palettes": [
+        0,
+        4,
+        6,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 384
+        }
+      ]
+    },
+    {
+      "grid": "UnitWindowPage1.csv",
+      "tilemap": "gfx/build/ui/tilemaps/UnitWindowPage1Tilemap.bin",
+      "width": 32,
+      "height": 5,
+      "transparent": true,
+      "palettes": [
+        0,
+        4,
+        6,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 384
+        }
+      ]
+    },
+    {
+      "grid": "UnitWindowPage2.csv",
+      "tilemap": "gfx/build/ui/tilemaps/UnitWindowPage2Tilemap.bin",
+      "width": 32,
+      "height": 5,
+      "transparent": true,
+      "palettes": [
+        0,
+        4,
+        6,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 384
+        }
+      ]
+    },
+    {
+      "grid": "UnitWindowPage3.csv",
+      "tilemap": "gfx/build/ui/tilemaps/UnitWindowPage3Tilemap.bin",
+      "width": 32,
+      "height": 5,
+      "transparent": true,
+      "palettes": [
+        0,
+        4,
+        6,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 384
+        }
+      ]
+    },
+    {
+      "grid": "UnitWindowPage4.csv",
+      "tilemap": "gfx/build/ui/tilemaps/UnitWindowPage4Tilemap.bin",
+      "width": 32,
+      "height": 5,
+      "transparent": true,
+      "palettes": [
+        0,
+        4,
+        6,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 384
+        }
+      ]
+    },
+    {
+      "grid": "UnitWindowPage5.csv",
+      "tilemap": "gfx/build/ui/tilemaps/UnitWindowPage5Tilemap.bin",
+      "width": 32,
+      "height": 5,
+      "transparent": true,
+      "palettes": [
+        0,
+        4,
+        6,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 384
+        }
+      ]
+    }
+  ]
+}

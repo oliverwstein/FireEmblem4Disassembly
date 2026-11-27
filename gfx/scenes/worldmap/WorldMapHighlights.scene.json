@@ -1,0 +1,241 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/worldmap/markers.asm",
+      "label": "aWorldMapPartialBGPalettes",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/build/D05673/g4bppcWorldMapOverlayTiles.4bpp.png",
+      "max_tiles": 128,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "AedMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aAedMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "AgustriaMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aAgustriaMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "GrannvaleMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aGrannvaleMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "IsaachMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aIsaachMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "MiletosMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aMiletosMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "MunsterMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aMunsterMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "SilesseMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aSilesseMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "ThraciaMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aThraciaMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "UnifiedThraciaMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aUnifiedThraciaMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "UnitedGrannvaleMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aUnitedGrannvaleMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "VerdaneMapHighlight.csv",
+      "tilemap": "gfx/build/D05673/aVerdaneMapHighlightTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "WorldMapMarkerShadow.csv",
+      "tilemap": "gfx/build/D05673/aWorldMapMarkerShadowTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "WorldMapHighlightUnused.csv",
+      "tilemap": "gfx/build/D05673/acWorldMapHighlightTilemapUnused.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        5
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

@@ -16,15 +16,15 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/E02EBD/g4bppcDialogueBackgroundFountainForeground.4bpp.png",
       "max_tiles": 256,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/E02EBD/g4bppcDialogueBackgroundFountainForeground.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "FountainForeground.png",
-      "tilemap": "gfx/compressed/C70C80/acDialogueBackgroundFountainForegroundTilemap.bin",
+      "tilemap": "gfx/build/C70C80/acDialogueBackgroundFountainForegroundTilemap.bin",
       "width": 32,
       "height": 32,
       "transparent": true,
@@ -42,7 +42,7 @@
     },
     {
       "png": "GateForeground.png",
-      "tilemap": "gfx/compressed/D05673/acDialogueBackgroundGateForegroundTilemap.bin",
+      "tilemap": "gfx/build/D05673/acDialogueBackgroundGateForegroundTilemap.bin",
       "width": 32,
       "height": 32,
       "transparent": true,
@@ -61,7 +61,7 @@
     },
     {
       "png": "BattleForeground3Tilemap1.png",
-      "tilemap": "gfx/compressed/94C140/acBattleForeground3Tilemap1.bin",
+      "tilemap": "gfx/build/94C140/acBattleForeground3Tilemap1.bin",
       "width": 32,
       "height": 32,
       "transparent": true,
@@ -80,7 +80,7 @@
     },
     {
       "png": "BattleForeground3Tilemap2.png",
-      "tilemap": "gfx/compressed/94C140/acBattleForeground3Tilemap2.bin",
+      "tilemap": "gfx/build/94C140/acBattleForeground3Tilemap2.bin",
       "width": 32,
       "height": 32,
       "transparent": true,

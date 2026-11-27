@@ -1,0 +1,84 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/menus/window_graphics.asm",
+      "label": "aDialogueBoxPalette",
+      "dest": 0,
+      "count": 16
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/ui/DialogueBoxFrames.4bpp.png",
+      "max_tiles": 64,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "ConversationLeftWindow.csv",
+      "tilemap": "gfx/build/ui/tilemaps/ConversationLeftWindowTilemap.bin",
+      "width": 32,
+      "height": 9,
+      "transparent": true,
+      "palettes": [
+        0
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 768
+        }
+      ]
+    },
+    {
+      "grid": "ConversationRightWindow.csv",
+      "tilemap": "gfx/build/ui/tilemaps/ConversationRightWindowTilemap.bin",
+      "width": 32,
+      "height": 9,
+      "transparent": true,
+      "palettes": [
+        0
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 768
+        }
+      ]
+    },
+    {
+      "grid": "ConversationClosedWindow.csv",
+      "tilemap": "gfx/build/ui/tilemaps/ConversationClosedWindowTilemap.bin",
+      "width": 32,
+      "height": 9,
+      "transparent": true,
+      "palettes": [
+        0
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 768
+        }
+      ]
+    },
+    {
+      "grid": "DialogueBox.csv",
+      "tilemap": "gfx/build/ui/tilemaps/DialogueBoxTilemap.bin",
+      "width": 32,
+      "height": 10,
+      "transparent": true,
+      "palettes": [
+        0
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

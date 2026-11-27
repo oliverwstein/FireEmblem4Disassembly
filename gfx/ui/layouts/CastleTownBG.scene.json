@@ -1,0 +1,49 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BGPalettes8C.asm",
+      "label": "aCastleTownBGPalettes",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/ui/ShopScreen.4bpp.png",
+      "max_tiles": 512,
+      "writable": false
+    },
+    {
+      "png": "gfx/build/D05673/g4bppcCastleTownBGTiles.4bpp.png",
+      "max_tiles": 256,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "CastleTownBG.csv",
+      "tilemap": "gfx/build/D05673/acCastleTownBGTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        0,
+        2,
+        3,
+        4,
+        6
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 256
+        }
+      ]
+    }
+  ]
+}

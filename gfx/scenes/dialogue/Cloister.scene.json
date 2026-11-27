@@ -10,20 +10,20 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/DE6230/g4bppcDialogueBackgroundCloister.4bpp.png",
       "max_tiles": 512,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/DE6230/g4bppcDialogueBackgroundCloister.4bpp.comp"
     },
     {
-      "png": "gfx/compressed/DE6230/g4bppcDialogueBackgroundCloisterForeground.4bpp.png",
       "max_tiles": 256,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/DE6230/g4bppcDialogueBackgroundCloisterForeground.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "Cloister.png",
-      "tilemap": "gfx/compressed/DE6230/acDialogueBackgroundCloisterTilemap.bin",
+      "tilemap": "gfx/build/DE6230/acDialogueBackgroundCloisterTilemap.bin",
       "width": 32,
       "height": 11,
       "transparent": false,
@@ -41,7 +41,7 @@
     },
     {
       "png": "CloisterForeground.png",
-      "tilemap": "gfx/compressed/9C8000/acDialogueBackgroundCloisterForegroundTilemap.bin",
+      "tilemap": "gfx/build/9C8000/acDialogueBackgroundCloisterForegroundTilemap.bin",
       "width": 32,
       "height": 32,
       "transparent": true,

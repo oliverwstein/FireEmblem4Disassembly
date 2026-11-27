@@ -35,7 +35,8 @@ offsets as label differences, so frames and scripts can grow, shrink, be added
 or reordered and every offset follows. Bytes no offset reaches stay as .byte.
 assemble runs 64tass on it (with include/Sprites.h and
 include/ActiveSpriteEngine.h) to the .bin that gfx.py lz compresses; build does
-that for every gfx/compressed/*/aMapBattle*Layout*.asm newer than its .bin, and
+that for every gfx/map_battle/aMapBattle*Layout*.asm newer than its .bin (written
+beside its .bin.comp in gfx/build/*/), and
 is what ./build.sh runs.
 
 There is no preview yet: a frame does not hold its own picture. Its tiles from
@@ -61,7 +62,8 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PATTERN = os.path.join(ROOT, 'gfx/compressed/*/aMapBattle*Layout*')
+SRC_DIR = os.path.join(ROOT, 'gfx/map_battle')
+BUILD_PATTERN = os.path.join(ROOT, 'gfx/build/*/aMapBattle*Layout*')
 
 WEAPONS = ['Sword', 'Lance', 'Axe', 'Bow', 'Magic']
 # Block header words after the frame table offset: (name, offset in block).
@@ -381,12 +383,21 @@ def decompress_comp(path):
     return decompress(bytes(buf), 0xC00000)[0]
 
 
+def _comp_map():
+    return {os.path.basename(c)[:-len('.bin.comp')]: c
+            for c in sorted(glob.glob(BUILD_PATTERN + '.bin.comp'))}
+
+
 def build():
     deps_mtime = max(os.path.getmtime(os.path.join(ROOT, p))
                      for p in ('include/Sprites.h', 'include/ActiveSpriteEngine.h'))
+    comps = _comp_map()
     n = 0
-    for src in sorted(glob.glob(PATTERN + '.asm')):
-        out = src[:-4] + '.bin'
+    for src in sorted(glob.glob(os.path.join(SRC_DIR, 'aMapBattle*Layout*.asm'))):
+        name = os.path.basename(src)[:-4]
+        if name not in comps:
+            sys.exit(f'tools/map_battle_layouts.py: no .bin.comp for {src}')
+        out = comps[name][:-len('.comp')]
         if not os.path.exists(out) or max(os.path.getmtime(src), deps_mtime) > os.path.getmtime(out):
             assemble(src, out)
             n += 1
@@ -394,7 +405,7 @@ def build():
 
 
 def self_test():
-    comps = sorted(glob.glob(PATTERN + '.bin.comp'))
+    comps = sorted(glob.glob(BUILD_PATTERN + '.bin.comp'))
     assert len(comps) == 120, f'expected 120 streams, found {len(comps)}'
     committed = 0
     with tempfile.TemporaryDirectory() as tmp:
@@ -405,7 +416,7 @@ def self_test():
             open(src, 'w').write(to_source(raw, name))
             got = assemble(src, os.path.join(tmp, name + '.bin'))
             assert got == raw, f'{name}: decode/assemble differs'
-            mine = c[:-len('.bin.comp')] + '.asm'
+            mine = os.path.join(SRC_DIR, name + '.asm')
             if os.path.exists(mine):
                 assert assemble(mine, os.path.join(tmp, name + '.c.bin')) == raw, \
                     f'{name}: committed source does not assemble to the stream'
@@ -414,7 +425,7 @@ def self_test():
         # An edit that changes sizes: one more sprite in the first frame of the
         # first block. Everything after it moves; the parsed structure must not change.
         name = 'aMapBattleCavalierLayout0'
-        raw = decompress_comp(glob.glob(PATTERN.replace('aMapBattle*Layout*', name) + '.bin.comp')[0])
+        raw = decompress_comp(glob.glob(BUILD_PATTERN.replace('aMapBattle*Layout*', name) + '.bin.comp')[0])
         text = to_source(raw, name)
         first = re.search(r'\n(_\w+Frame00)\n  \.word (\d+) ; sprite count\n(  \.structSpriteEntry[^\n]*)\n', text)
         edited = text.replace(first.group(0), f'\n{first.group(1)}\n  .word {int(first.group(2)) + 1} ; sprite count\n'

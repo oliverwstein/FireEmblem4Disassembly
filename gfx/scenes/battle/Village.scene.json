@@ -10,15 +10,15 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/AFC8C0/g4bppcBattleBackgroundVillage.4bpp.png",
       "max_tiles": 512,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/AFC8C0/g4bppcBattleBackgroundVillage.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "Village.png",
-      "tilemap": "gfx/compressed/AFC8C0/acBattleBackgroundVillageTilemap.bin",
+      "tilemap": "gfx/build/AFC8C0/acBattleBackgroundVillageTilemap.bin",
       "width": 64,
       "height": 32,
       "transparent": false,

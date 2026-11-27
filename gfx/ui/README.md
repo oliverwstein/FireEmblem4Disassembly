@@ -1,5 +1,7 @@
 # Uncompressed tile sheets that code copies to VRAM
 
+These sheets are the source of the UI art: the layouts in [layouts/](layouts/) are grids of tile entries that point into them, so an edit here reaches every layout that uses the tile (`tools/scene_pack.py render` draws a layout).
+
 These sheets are stored uncompressed and copied to VRAM whole by `.structDMAToVRAM` entries (`rlDMAByStruct`). `build.sh` converts each `NAME.4bpp.png` or `NAME.2bpp.png` to `NAME.4bpp`/`NAME.2bpp`, and `build.asm` includes that with `.binary`. `tools/gfx_blocks.py` made them from labelled slices. `../map/MapTiles.4bpp.png` was made the same way.
 
 **How the depth was settled.** Every screen here runs in BG mode 1, where BG1, BG2 and the sprites are 4bpp and only BG3 is 2bpp. For each sheet, the layout the code sets before the copy (`rlSetLayerPositionsAndSizes`: wR1-wR4 are the BG tile bases, wR5 the sprite base and wR6-wR9 the tilemaps, all as VRAM word addresses) shows which layer can reach the destination. A sheet is 2bpp only where BG3 reaches it.
@@ -42,7 +44,7 @@ The names follow what the sheets show and who loads them. `StatusScreenHolyBlood
 
 ## Blocks left as labelled slices
 
-These are tilemaps, not tiles: each is copied into a layer's tilemap area in the layout in force. Most are named after the screen that loads them (`gfx/ui/tilemaps/*.bin`); `$D9/7940` stays `gWorldMapDataD97940` because what it is (tiles or tilemap) is not settled, and the unreferenced blocks keep their addresses.
+These are tilemaps, not tiles: each is copied into a layer's tilemap area in the layout in force. Most are named after the screen that loads them (`gfx/build/ui/tilemaps/*.bin`). Nineteen are now built from grid sources in [layouts/](layouts/) by `tools/scene_pack.py` (the originals kept as `NAME.bin.seed`); the rest are still raw; `$D9/7940` stays `gWorldMapDataD97940` because what it is (tiles or tilemap) is not settled, and the unreferenced blocks keep their addresses.
 
 | Block | Bytes | Copied to |
 |---|---|---|

@@ -1,0 +1,56 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/WindowPalette.asm",
+      "label": "aWindowPalette",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/ui/WindowFrames.4bpp.png",
+      "max_tiles": 96,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "DataWindowBG1.csv",
+      "tilemap": "gfx/build/DD0000/acDataWindowBG1Tilemap.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": true,
+      "palettes": [
+        0,
+        2,
+        3
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 768
+        }
+      ]
+    },
+    {
+      "grid": "DataWindowBG2.csv",
+      "tilemap": "gfx/build/DD0000/acDataWindowBG2Tilemap.bin",
+      "width": 32,
+      "height": 19,
+      "transparent": true,
+      "palettes": [
+        0,
+        2,
+        3
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 768
+        }
+      ]
+    }
+  ]
+}

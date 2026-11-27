@@ -10,15 +10,15 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/E02EBD/g4bppcBattleBackgroundRoad.4bpp.png",
       "max_tiles": 512,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/E02EBD/g4bppcBattleBackgroundRoad.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "Road.png",
-      "tilemap": "gfx/compressed/E02EBD/acBattleBackgroundRoadTilemap.bin",
+      "tilemap": "gfx/build/E02EBD/acBattleBackgroundRoadTilemap.bin",
       "width": 64,
       "height": 32,
       "transparent": false,

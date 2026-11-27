@@ -7,9 +7,9 @@ usage: tools/chapter_maps.py decode CHAPTER|all
        tools/chapter_maps.py --self-test
 
 Each chapter's entry in engine/map/chapter_maps.asm names three compressed data
-streams in gfx/compressed/C70C80/ (besides its tile graphics and palettes). Each
-has one CSV source beside it, which build turns into the NAME.bin that gfx.py lz
-compresses; ./build.sh runs build. Chapter 2 uses the Prologue's tile entries and
+streams in gfx/build/C70C80/ (besides its tile graphics and palettes). Each
+has one CSV source in gfx/maps/, which build turns into the NAME.bin in
+gfx/build/C70C80/ that gfx.py lz compresses; ./build.sh runs build. Chapter 2 uses the Prologue's tile entries and
 terrain, and the final chapter Chapter 5's.
 
 - acChapterMap*Layout.csv: the map, 64 rows of 64 words (aMapData), in hex. The
@@ -84,12 +84,16 @@ def parse_chapter_maps():
     return chapters
 
 
+def csv_path(label):
+    return os.path.join(ROOT, 'gfx/maps', f'{label}.csv')
+
+
 def bin_path(label):
-    return os.path.join(ROOT, 'gfx/compressed/C70C80', f'{label}.bin')
+    return os.path.join(ROOT, 'gfx/build/C70C80', f'{label}.bin')
 
 
 def bpp_path(label):
-    return os.path.join(ROOT, 'gfx/compressed/C70C80', f'{label}.4bpp')
+    return os.path.join(ROOT, 'gfx/build/C70C80', f'{label}.4bpp')
 
 
 def decode_4bpp_tiles(raw):
@@ -231,7 +235,7 @@ def build():
     terrain_h_mtime = os.path.getmtime(terrain_h)
     for label in stream_labels():
         kind = kind_of(label)
-        src, out = bin_path(label)[:-4] + '.csv', bin_path(label)
+        src, out = csv_path(label), bin_path(label)
         src_mtime = os.path.getmtime(src)
         if kind == 'Terrain':
             src_mtime = max(src_mtime, terrain_h_mtime)
@@ -312,7 +316,7 @@ def self_test():
         to_csv, to_bin = KINDS[kind_of(label)]
         text = to_csv(raw)
         assert to_bin(text) == raw, f'{label}: decode/encode differs'
-        src = bin_path(label)[:-4] + '.csv'
+        src = csv_path(label)
         if os.path.exists(src):
             assert to_bin(open(src, encoding='utf-8').read()) == raw, f'{label}: committed CSV differs'
             committed += 1

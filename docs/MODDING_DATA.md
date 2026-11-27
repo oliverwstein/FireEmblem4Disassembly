@@ -12,7 +12,7 @@ This guide summarizes where editable ROM data lives, how build-time generators w
 | Chapter unit groups (`UNIT`) | [data/eventunit/](../data/eventunit/) | CSVs using `include/Deployment.h` constants (`UNITEntryEnd`, `UNITFormationNone`) |
 | Chapter events & castle/arena tables | [events/](../events/) | Macro-driven `.asm` per chapter |
 | Dialogue & menu text | [text/dialogue/](../text/dialogue/), [text/menutext/](../text/menutext/) | `.txt` (`process_dialogue.py`) and Shift-JIS `.asm` |
-| Graphics & tilemaps | [gfx/](../gfx/) | Indexed `.4bpp.png` / `.2bpp.png`, `.bin`, and compressed streams in `gfx/compressed/` |
+| Graphics & tilemaps | [gfx/](../gfx/) | Indexed `.4bpp.png` / `.2bpp.png`, `.bin`, and compressed streams in `gfx/build/` (authored sources by system in `gfx/`; see [AUTHORING_GRAPHICS_PLAN.md](AUTHORING_GRAPHICS_PLAN.md)) |
 | Audio | [audio/](../audio/) | Sequence `.bin`, BRR `.brr`, directory/instrument `.bin`, and [audio/sound_data.asm](../audio/sound_data.asm) |
 | Battle scene & map-battle scripts/data | [engine/battle_scene/](../engine/battle_scene/), [engine/battle/](../engine/battle/) | Macro/table `.asm` (`script.asm`, `data.asm`, `animations.asm`, `map_battle.asm`, `map_magic_effects.asm`) |
 
@@ -26,6 +26,6 @@ This guide summarizes where editable ROM data lives, how build-time generators w
 ## 3. Bank Headroom & Relocation Notes
 
 - **Bank `$83` (core tables + menu text):** [build.asm](../build.asm) places `aMainDataOffsets`, all core gameplay CSVs (`CharacterData`, `ClassData`, `ItemData`, `HolyBloodData`, `MovementCost`, love tables), and all `text/menutext/` strings in Bank `$83` (`$83/8000–$83/FFFF`), ending at `$83/F7C1` (~2.1 KB free). Adding many new items, characters, or long English menu descriptions will overflow Bank `$83` unless `aMainDataOffsets` consumers are updated to read 24-bit pointers or text/tables are split to another bank.
-- **Compressed stream regions (`gfx/compressed/*/*.streams`):** Each `.streams` file specifies `start $XXXXXX` and `end $YYYYYY`. If edited graphics compress larger than the region's `end`, `tools/stream_layout.py` will abort; move overflow streams to a free bank/region and update their long pointers.
+- **Compressed stream regions (`gfx/build/*/*.streams`):** Each `.streams` file specifies `start $XXXXXX` and `end $YYYYYY`. If edited graphics compress larger than the region's `end`, `tools/stream_layout.py` will abort; move overflow streams to a free bank/region and update their long pointers.
 - **Audio sample directories (`audio/directories/*.bin`):** As noted in [audio/README.md](../audio/README.md), ROM placement in `audio/sound_data.asm` uses labels and `len(binary(...))`, but DSP sample directory entries store fixed SPC RAM `(start, loop)` addresses—resizing a `.brr` sample requires updating subsequent directory entries in that upload group.
 - **Mod builds without the original ROM:** Run `./build.sh mod` (or `./build.sh mod --disable-checks` if modifying protected code regions) to update SNES/internal checksums automatically.

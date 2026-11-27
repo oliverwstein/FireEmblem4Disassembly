@@ -1,0 +1,679 @@
+{
+  "sheet": "gfx/icons/ItemIcons.4bpp.png",
+  "max_icons": 128,
+  "icons": [
+    "IronSword",
+    "SteelSword",
+    "SilverSword",
+    "IronBlade",
+    "SteelBlade",
+    "SilverBlade",
+    "MiracleSword",
+    "ThiefSword",
+    "BarrierBlade",
+    "BerserkSword",
+    "BraveSword",
+    "SilenceSword",
+    "SleepSword",
+    "SlimSword",
+    "Safeguard",
+    "FireSword",
+    "EarthSword",
+    "ThunderSword",
+    "WindSword",
+    "LightBrand",
+    "Mystletainn",
+    "Tyrfing",
+    "Balmung",
+    "Armorslayer",
+    "Wingclipper",
+    "BrokenSword",
+    "IronLance",
+    "SteelLance",
+    "SilverLance",
+    "Javelin",
+    "Ridersbane",
+    "BraveLance",
+    "SlimLance",
+    "Gungnir",
+    "GaeBolg",
+    "BrokenLance",
+    "IronAxe",
+    "SteelAxe",
+    "SilverAxe",
+    "BraveAxe",
+    "Helswath",
+    "HandAxe",
+    "BrokenAxe",
+    "IronBow",
+    "SteelBow",
+    "SilverBow",
+    "BraveBow",
+    "KillerBow",
+    "Yewfelle",
+    "BrokenBow",
+    "Fire",
+    "Elfire",
+    "Bolganone",
+    "Valflame",
+    "Meteor",
+    "Thunder",
+    "Elthunder",
+    "Thoron",
+    "Mjolnir",
+    "Bolting",
+    "Wind",
+    "Elwind",
+    "Tornado",
+    "Forseti",
+    "Blizzard",
+    "Light",
+    "Nosferatu",
+    "Aura",
+    "Naga",
+    "Jormungandr",
+    "Fenrir",
+    "Hel",
+    "Loptous",
+    "BrokenTome",
+    "HealStaff",
+    "MendStaff",
+    "RecoverStaff",
+    "PhysicStaff",
+    "Fortify",
+    "ReturnStaff",
+    "WarpStaff",
+    "RescueStaff",
+    "CharmStaff",
+    "RestoreStaff",
+    "SilenceStaff",
+    "SleepStaff",
+    "BerserkStaff",
+    "ThiefStaff",
+    "BrokenStaff",
+    "RenewalBand",
+    "ParagonBand",
+    "ThiefBand",
+    "MiracleBand",
+    "PursuitRing",
+    "RecoverRing",
+    "BargainBand",
+    "KnightRing",
+    "ReturnBand",
+    "SpeedRing",
+    "MagicRing",
+    "PowerRing",
+    "ShieldRing",
+    "BarrierRing",
+    "LegRing",
+    "SkillRing",
+    "Ballista",
+    "IronBallista",
+    "KillerBallista",
+    "GreatBallista",
+    "ValkyrieStaff",
+    "Circlet"
+  ],
+  "items": [
+    {
+      "item": "IronSword",
+      "icon": "IronSword"
+    },
+    {
+      "item": "SteelSword",
+      "icon": "SteelSword"
+    },
+    {
+      "item": "SilverSword",
+      "icon": "SilverSword"
+    },
+    {
+      "item": "IronBlade",
+      "icon": "IronBlade"
+    },
+    {
+      "item": "SteelBlade",
+      "icon": "SteelBlade"
+    },
+    {
+      "item": "SilverBlade",
+      "icon": "SilverBlade"
+    },
+    {
+      "item": "MiracleSword",
+      "icon": "MiracleSword"
+    },
+    {
+      "item": "ThiefSword",
+      "icon": "ThiefSword"
+    },
+    {
+      "item": "BarrierBlade",
+      "icon": "BarrierBlade"
+    },
+    {
+      "item": "BerserkSword",
+      "icon": "BerserkSword"
+    },
+    {
+      "item": "BraveSword",
+      "icon": "BraveSword"
+    },
+    {
+      "item": "SilenceSword",
+      "icon": "SilenceSword"
+    },
+    {
+      "item": "SleepSword",
+      "icon": "SleepSword"
+    },
+    {
+      "item": "SlimSword",
+      "icon": "SlimSword"
+    },
+    {
+      "item": "Safeguard",
+      "icon": "Safeguard"
+    },
+    {
+      "item": "FireSword",
+      "icon": "FireSword"
+    },
+    {
+      "item": "EarthSword",
+      "icon": "EarthSword"
+    },
+    {
+      "item": "ThunderSword",
+      "icon": "ThunderSword"
+    },
+    {
+      "item": "WindSword",
+      "icon": "WindSword"
+    },
+    {
+      "item": "LightBrand",
+      "icon": "LightBrand"
+    },
+    {
+      "item": "Mystletainn",
+      "icon": "Mystletainn"
+    },
+    {
+      "item": "Tyrfing",
+      "icon": "Tyrfing"
+    },
+    {
+      "item": "Balmung",
+      "icon": "Balmung"
+    },
+    {
+      "item": "Armorslayer",
+      "icon": "Armorslayer"
+    },
+    {
+      "item": "Wingclipper",
+      "icon": "Wingclipper"
+    },
+    {
+      "item": "BrokenSwordA",
+      "icon": "BrokenSword"
+    },
+    {
+      "item": "BrokenSwordB",
+      "icon": "BrokenSword"
+    },
+    {
+      "item": "BrokenSwordC",
+      "icon": "BrokenSword"
+    },
+    {
+      "item": "IronLance",
+      "icon": "IronLance"
+    },
+    {
+      "item": "SteelLance",
+      "icon": "SteelLance"
+    },
+    {
+      "item": "SilverLance",
+      "icon": "SilverLance"
+    },
+    {
+      "item": "Javelin",
+      "icon": "Javelin"
+    },
+    {
+      "item": "Ridersbane",
+      "icon": "Ridersbane"
+    },
+    {
+      "item": "BraveLance",
+      "icon": "BraveLance"
+    },
+    {
+      "item": "SlimLance",
+      "icon": "SlimLance"
+    },
+    {
+      "item": "Gungnir",
+      "icon": "Gungnir"
+    },
+    {
+      "item": "GaeBolg",
+      "icon": "GaeBolg"
+    },
+    {
+      "item": "BrokenLanceA",
+      "icon": "BrokenLance"
+    },
+    {
+      "item": "BrokenLanceB",
+      "icon": "BrokenLance"
+    },
+    {
+      "item": "BrokenLanceC",
+      "icon": "BrokenLance"
+    },
+    {
+      "item": "IronAxe",
+      "icon": "IronAxe"
+    },
+    {
+      "item": "SteelAxe",
+      "icon": "SteelAxe"
+    },
+    {
+      "item": "SilverAxe",
+      "icon": "SilverAxe"
+    },
+    {
+      "item": "BraveAxe",
+      "icon": "BraveAxe"
+    },
+    {
+      "item": "Helswath",
+      "icon": "Helswath"
+    },
+    {
+      "item": "HandAxe",
+      "icon": "HandAxe"
+    },
+    {
+      "item": "BrokenAxeA",
+      "icon": "BrokenAxe"
+    },
+    {
+      "item": "BrokenAxeB",
+      "icon": "BrokenAxe"
+    },
+    {
+      "item": "BrokenAxeC",
+      "icon": "BrokenAxe"
+    },
+    {
+      "item": "IronBow",
+      "icon": "IronBow"
+    },
+    {
+      "item": "SteelBow",
+      "icon": "SteelBow"
+    },
+    {
+      "item": "SilverBow",
+      "icon": "SilverBow"
+    },
+    {
+      "item": "BraveBow",
+      "icon": "BraveBow"
+    },
+    {
+      "item": "KillerBow",
+      "icon": "KillerBow"
+    },
+    {
+      "item": "Yewfelle",
+      "icon": "Yewfelle"
+    },
+    {
+      "item": "BrokenBowA",
+      "icon": "BrokenBow"
+    },
+    {
+      "item": "BrokenBowB",
+      "icon": "BrokenBow"
+    },
+    {
+      "item": "BrokenBowC",
+      "icon": "BrokenBow"
+    },
+    {
+      "item": "Ballista",
+      "icon": "Ballista"
+    },
+    {
+      "item": "IronBallista",
+      "icon": "IronBallista"
+    },
+    {
+      "item": "KillerBallista",
+      "icon": "KillerBallista"
+    },
+    {
+      "item": "GreatBallista",
+      "icon": "GreatBallista"
+    },
+    {
+      "item": "Fire",
+      "icon": "Fire"
+    },
+    {
+      "item": "Elfire",
+      "icon": "Elfire"
+    },
+    {
+      "item": "Bolganone",
+      "icon": "Bolganone"
+    },
+    {
+      "item": "Valflame",
+      "icon": "Valflame"
+    },
+    {
+      "item": "Meteor",
+      "icon": "Meteor"
+    },
+    {
+      "item": "Thunder",
+      "icon": "Thunder"
+    },
+    {
+      "item": "Elthunder",
+      "icon": "Elthunder"
+    },
+    {
+      "item": "Thoron",
+      "icon": "Thoron"
+    },
+    {
+      "item": "Mjolnir",
+      "icon": "Mjolnir"
+    },
+    {
+      "item": "Bolting",
+      "icon": "Bolting"
+    },
+    {
+      "item": "Wind",
+      "icon": "Wind"
+    },
+    {
+      "item": "Elwind",
+      "icon": "Elwind"
+    },
+    {
+      "item": "Tornado",
+      "icon": "Tornado"
+    },
+    {
+      "item": "Forseti",
+      "icon": "Forseti"
+    },
+    {
+      "item": "Blizzard",
+      "icon": "Blizzard"
+    },
+    {
+      "item": "Light",
+      "icon": "Light"
+    },
+    {
+      "item": "Nosferatu",
+      "icon": "Nosferatu"
+    },
+    {
+      "item": "Aura",
+      "icon": "Aura"
+    },
+    {
+      "item": "Naga",
+      "icon": "Naga"
+    },
+    {
+      "item": "Jormungandr",
+      "icon": "Jormungandr"
+    },
+    {
+      "item": "Fenrir",
+      "icon": "Fenrir"
+    },
+    {
+      "item": "Hel",
+      "icon": "Hel"
+    },
+    {
+      "item": "Loptous",
+      "icon": "Loptous"
+    },
+    {
+      "item": "BrokenFireTomeA",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenFireTomeB",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenFireTomeC",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "HealStaff",
+      "icon": "HealStaff"
+    },
+    {
+      "item": "MendStaff",
+      "icon": "MendStaff"
+    },
+    {
+      "item": "RecoverStaff",
+      "icon": "RecoverStaff"
+    },
+    {
+      "item": "PhysicStaff",
+      "icon": "PhysicStaff"
+    },
+    {
+      "item": "Fortify",
+      "icon": "Fortify"
+    },
+    {
+      "item": "ReturnStaff",
+      "icon": "ReturnStaff"
+    },
+    {
+      "item": "WarpStaff",
+      "icon": "WarpStaff"
+    },
+    {
+      "item": "RescueStaff",
+      "icon": "RescueStaff"
+    },
+    {
+      "item": "CharmStaff",
+      "icon": "CharmStaff"
+    },
+    {
+      "item": "RestoreStaff",
+      "icon": "RestoreStaff"
+    },
+    {
+      "item": "ValkyrieStaff",
+      "icon": "ValkyrieStaff"
+    },
+    {
+      "item": "SilenceStaff",
+      "icon": "SilenceStaff"
+    },
+    {
+      "item": "SleepStaff",
+      "icon": "SleepStaff"
+    },
+    {
+      "item": "BerserkStaff",
+      "icon": "BerserkStaff"
+    },
+    {
+      "item": "ThiefStaff",
+      "icon": "ThiefStaff"
+    },
+    {
+      "item": "BrokenStaffA",
+      "icon": "BrokenStaff"
+    },
+    {
+      "item": "BrokenStaffB",
+      "icon": "BrokenStaff"
+    },
+    {
+      "item": "BrokenStaffC",
+      "icon": "BrokenStaff"
+    },
+    {
+      "item": "RenewalBand",
+      "icon": "RenewalBand"
+    },
+    {
+      "item": "ParagonBand",
+      "icon": "ParagonBand"
+    },
+    {
+      "item": "ThiefBand",
+      "icon": "ThiefBand"
+    },
+    {
+      "item": "MiracleBand",
+      "icon": "MiracleBand"
+    },
+    {
+      "item": "PursuitRing",
+      "icon": "PursuitRing"
+    },
+    {
+      "item": "RecoverRing",
+      "icon": "RecoverRing"
+    },
+    {
+      "item": "BargainBand",
+      "icon": "BargainBand"
+    },
+    {
+      "item": "KnightRing",
+      "icon": "KnightRing"
+    },
+    {
+      "item": "ReturnBand",
+      "icon": "ReturnBand"
+    },
+    {
+      "item": "SpeedRing",
+      "icon": "SpeedRing"
+    },
+    {
+      "item": "MagicRing",
+      "icon": "MagicRing"
+    },
+    {
+      "item": "PowerRing",
+      "icon": "PowerRing"
+    },
+    {
+      "item": "ShieldRing",
+      "icon": "ShieldRing"
+    },
+    {
+      "item": "BarrierRing",
+      "icon": "BarrierRing"
+    },
+    {
+      "item": "LegRing",
+      "icon": "LegRing"
+    },
+    {
+      "item": "SkillRing",
+      "icon": "SkillRing"
+    },
+    {
+      "item": "BrokenHolySword",
+      "icon": "BrokenSword"
+    },
+    {
+      "item": "BrokenHolyLance",
+      "icon": "BrokenLance"
+    },
+    {
+      "item": "BrokenHolyBow",
+      "icon": "BrokenBow"
+    },
+    {
+      "item": "BrokenThunderTomeA",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenThunderTomeB",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenThunderTomeC",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenHolyWindTome",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenWindTomeA",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenWindTomeB",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenWindTomeC",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenHolyLightTome",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenLightTomeA",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenLightTomeB",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenLightTomeC",
+      "icon": "BrokenTome"
+    },
+    {
+      "item": "BrokenHolyStaff",
+      "icon": "BrokenStaff"
+    },
+    {
+      "item": "Circlet",
+      "icon": "Circlet"
+    },
+    {
+      "item": "(no item)",
+      "icon": "IronSword"
+    },
+    {
+      "item": "(no item)",
+      "icon": "IronSword"
+    }
+  ]
+}

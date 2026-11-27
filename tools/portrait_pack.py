@@ -20,9 +20,9 @@ palette for viewing only; pixel indices 0-15 are what get packed):
   - y = 48..63: Mouth Frame 2 (rows 2..3, cols 12..15)
 - Top-right 32x32 (x = 48..79, y = 0..31): unused; must be colour index 0.
 
-build packs every gfx/portraits/NAME.png newer than NAME.4bpp before gfx.py lz
-compresses it, fails if a NAME.4bpp.comp has no NAME.png, and deletes a
-NAME.4bpp whose PNG is gone; ./build.sh runs build.
+build packs every gfx/portraits/NAME.png newer than gfx/build/portraits/NAME.4bpp
+before gfx.py lz compresses it, fails if a NAME.4bpp.comp in gfx/build/portraits/
+has no NAME.png, and deletes a NAME.4bpp whose PNG is gone; ./build.sh runs build.
 """
 import argparse
 import glob
@@ -41,6 +41,7 @@ except ImportError:
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PORTRAIT_DIR = os.path.join(ROOT, 'gfx', 'portraits')
+BUILD_DIR = os.path.join(ROOT, 'gfx', 'build', 'portraits')
 PORTRAIT_BYTES = 0x800
 WIDTH = 80
 HEIGHT = 64
@@ -141,20 +142,21 @@ def build():
     whose PNG is gone, so a removed or renamed PNG cannot leave a stale graphic
     for gfx.py lz to compress.
     """
-    comps = glob.glob(os.path.join(PORTRAIT_DIR, '*.4bpp.comp'))
+    comps = glob.glob(os.path.join(BUILD_DIR, '*.4bpp.comp'))
     missing = sorted(os.path.basename(c)[:-len('.4bpp.comp')] for c in comps
-                     if not os.path.exists(c[:-len('.4bpp.comp')] + '.png'))
+                     if not os.path.exists(os.path.join(PORTRAIT_DIR, os.path.basename(c)[:-len('.4bpp.comp')] + '.png')))
     if missing:
         sys.exit('tools/portrait_pack.py: no gfx/portraits/NAME.png for '
                  + ', '.join(missing))
-    for stale in glob.glob(os.path.join(PORTRAIT_DIR, '*.4bpp')):
-        if not os.path.exists(stale[:-len('.4bpp')] + '.png'):
+    for stale in glob.glob(os.path.join(BUILD_DIR, '*.4bpp')):
+        name = os.path.basename(stale)[:-len('.4bpp')]
+        if not os.path.exists(os.path.join(PORTRAIT_DIR, name + '.png')):
             os.remove(stale)
     n = 0
     for src in sorted(glob.glob(os.path.join(PORTRAIT_DIR, '*.png'))):
         if src.endswith(('.4bpp.png', '.2bpp.png')):
             continue
-        out = src[:-4] + '.4bpp'
+        out = os.path.join(BUILD_DIR, os.path.basename(src)[:-4] + '.4bpp')
         if not os.path.exists(out) or os.path.getmtime(src) > os.path.getmtime(out):
             try:
                 pack_file(src, out)
@@ -166,7 +168,7 @@ def build():
 
 def self_test():
     """Round-trip all 152 portraits, test edits + LZ recompression, and check validation."""
-    comps = sorted(glob.glob(os.path.join(PORTRAIT_DIR, '*.4bpp.comp')))
+    comps = sorted(glob.glob(os.path.join(BUILD_DIR, '*.4bpp.comp')))
     assert len(comps) == 152, f'expected 152 portrait streams, found {len(comps)}'
     committed = 0
     with tempfile.TemporaryDirectory() as tmp:
@@ -189,7 +191,7 @@ def self_test():
             committed += 1
 
         # Edit 1 pixel in each of the 4 regions of Sigurd.png and verify tile mapping + LZ.
-        sigurd_comp = os.path.join(PORTRAIT_DIR, 'Sigurd.4bpp.comp')
+        sigurd_comp = os.path.join(BUILD_DIR, 'Sigurd.4bpp.comp')
         sigurd_png = os.path.join(PORTRAIT_DIR, 'Sigurd.png')
         orig_raw = portrait_to_bpp(sigurd_png)
         img = Image.open(sigurd_png).copy()

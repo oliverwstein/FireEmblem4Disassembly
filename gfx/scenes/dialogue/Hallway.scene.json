@@ -10,20 +10,20 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/D05673/g4bppcDialogueBackgroundHallway.4bpp.png",
       "max_tiles": 512,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/D05673/g4bppcDialogueBackgroundHallway.4bpp.comp"
     },
     {
-      "png": "gfx/compressed/D05673/g4bppcDialogueBackgroundHallwayForeground.4bpp.png",
       "max_tiles": 256,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/D05673/g4bppcDialogueBackgroundHallwayForeground.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "Hallway.png",
-      "tilemap": "gfx/compressed/D05673/acDialogueBackgroundHallwayTilemap.bin",
+      "tilemap": "gfx/build/D05673/acDialogueBackgroundHallwayTilemap.bin",
       "width": 32,
       "height": 11,
       "transparent": false,
@@ -41,7 +41,7 @@
     },
     {
       "png": "HallwayForeground.png",
-      "tilemap": "gfx/compressed/D05673/acDialogueBackgroundHallwayForegroundTilemap.bin",
+      "tilemap": "gfx/build/D05673/acDialogueBackgroundHallwayForegroundTilemap.bin",
       "width": 32,
       "height": 32,
       "transparent": true,

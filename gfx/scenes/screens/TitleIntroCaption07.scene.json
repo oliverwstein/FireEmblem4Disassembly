@@ -3,15 +3,15 @@
   "palette": "grey",
   "sheets": [
     {
-      "png": "gfx/compressed/DF0000/gcTitleIntroCaption07.4bpp.png",
       "max_tiles": 64,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/DF0000/gcTitleIntroCaption07.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "TitleIntroCaption07.png",
-      "tilemap": "gfx/compressed/B48720/gcTitleIntroCaption07Tilemap.bin",
+      "tilemap": "gfx/build/B48720/gcTitleIntroCaption07Tilemap.bin",
       "width": 32,
       "height": 2,
       "transparent": false,

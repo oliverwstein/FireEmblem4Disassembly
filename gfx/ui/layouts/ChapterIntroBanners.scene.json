@@ -1,0 +1,37 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/core/graphics/palettes.asm",
+      "label": "aChapterIntroAndUIBGPalettes",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/build/DD0000/g4bppcChapterIntroBG1Tiles.4bpp.png",
+      "max_tiles": 512,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "ChapterIntroBanners.csv",
+      "tilemap": "gfx/build/DD0000/acChapterIntroBannerTilemaps.bin",
+      "width": 32,
+      "height": 36,
+      "transparent": false,
+      "palettes": [
+        0,
+        4
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

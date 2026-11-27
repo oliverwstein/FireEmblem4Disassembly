@@ -10,25 +10,25 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/DF0000/g4bppcBattleBackgroundThicket.4bpp.png",
       "max_tiles": 512,
-      "writable": false
+      "writable": false,
+      "comp": "gfx/build/DF0000/g4bppcBattleBackgroundThicket.4bpp.comp"
     },
     {
-      "png": "gfx/compressed/D05673/g4bppcEpilogueCreditsBG2Tiles.4bpp.png",
       "max_tiles": 256,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/D05673/g4bppcEpilogueCreditsBG2Tiles.4bpp.comp"
     },
     {
-      "png": "gfx/compressed/E02EBD/g4bppcDialogueBackgroundFountainForeground.4bpp.png",
       "max_tiles": 256,
-      "writable": false
+      "writable": false,
+      "comp": "gfx/build/E02EBD/g4bppcDialogueBackgroundFountainForeground.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "EpilogueCreditsBG1.png",
-      "tilemap": "gfx/compressed/D05673/acEpilogueCreditsBG1Tilemap.bin",
+      "tilemap": "gfx/build/D05673/acEpilogueCreditsBG1Tilemap.bin",
       "width": 64,
       "height": 32,
       "transparent": true,
@@ -47,7 +47,7 @@
     },
     {
       "png": "EpilogueCreditsBG2.png",
-      "tilemap": "gfx/compressed/D05673/acEpilogueCreditsBG2Tilemap.bin",
+      "tilemap": "gfx/build/D05673/acEpilogueCreditsBG2Tilemap.bin",
       "width": 64,
       "height": 32,
       "transparent": false,

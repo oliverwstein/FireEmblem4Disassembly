@@ -139,7 +139,7 @@ NAME.4bpp.png ──(tools/gfx.py png2bpp)──► NAME.4bpp ──(tools/gfx.p
 
 - The PNG is indexed: its pixel values are the tile's color numbers, so it converts to tile data and back without loss ([tools/gfx.py](../../tools/gfx.py)). Tilemaps and other data are `.bin` files and skip this step.
 - `gfx.py lz` decompresses the committed original stream, `NAME.4bpp.comp`, and compares it with the tile data. If they match, it uses the original bytes; if the file has been edited, it compresses the new data with [tools/compress.py](../../tools/compress.py), a compressor for the same format. An unedited build is byte-identical to the original ROM, and an edited one still decompresses with the game's own routine.
-- A `.streams` list in each region of [gfx/compressed/](../../gfx/compressed/) names the streams in order between a start and an end address. [tools/stream_layout.py](../../tools/stream_layout.py) places them one after another into each region's `Layout.asm`, crossing bank halves the way the decompressor expects, and fails if an edited stream no longer fits before the region's end.
+- A `.streams` list in each region of [gfx/build/](../../gfx/build/) names the streams in order between a start and an end address. [tools/stream_layout.py](../../tools/stream_layout.py) places them one after another into each region's `Layout.asm`, crossing bank halves the way the decompressor expects, and fails if an edited stream no longer fits before the region's end.
 
 ## Trade-offs and hard limits
 

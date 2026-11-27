@@ -10,16 +10,16 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/E02EBD/g4bppcBattleBackgroundTitleIntro.4bpp.png",
       "max_tiles": 512,
       "writable": true,
-      "external": "title scene: acTitleSceneTilemapF5222D (engine/battle_scene/data.asm)"
+      "external": "title scene: acTitleSceneTilemapF5222D (engine/battle_scene/data.asm)",
+      "comp": "gfx/build/E02EBD/g4bppcBattleBackgroundTitleIntro.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "Unused16.png",
-      "tilemap": "gfx/compressed/E02EBD/acBattleBackgroundUnused16Tilemap.bin",
+      "tilemap": "gfx/build/E02EBD/acBattleBackgroundUnused16Tilemap.bin",
       "width": 64,
       "height": 32,
       "transparent": false,

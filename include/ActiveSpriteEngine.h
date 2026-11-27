@@ -206,7 +206,7 @@
     .endsegment
 
     MAP_BATTLE_SPRITE_DATA_END .segment Size
-      ; The end of a map battle sprite data stream (gfx/compressed/*/aMapBattle*Layout*.asm,
+      ; The end of a map battle sprite data stream (gfx/map_battle/aMapBattle*Layout*.asm,
       ; assembled at 0 by tools/map_battle_layouts.py): zeros up to Size, the stream's
       ; original length. A stream may grow to $880 bytes, the distance between the two
       ; sides' copies (aMapBattleSpriteBufferOffsets).

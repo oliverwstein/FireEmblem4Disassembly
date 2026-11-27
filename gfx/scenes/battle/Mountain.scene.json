@@ -10,15 +10,15 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/B48720/g4bppcBattleBackgroundMountain.4bpp.png",
       "max_tiles": 512,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/B48720/g4bppcBattleBackgroundMountain.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "Mountain.png",
-      "tilemap": "gfx/compressed/B48720/acBattleBackgroundMountainTilemap.bin",
+      "tilemap": "gfx/build/B48720/acBattleBackgroundMountainTilemap.bin",
       "width": 64,
       "height": 32,
       "transparent": false,

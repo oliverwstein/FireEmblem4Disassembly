@@ -16,15 +16,15 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/94C140/g4bppcBattleForeground5.4bpp.png",
       "max_tiles": 128,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/94C140/g4bppcBattleForeground5.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "BattleForeground5Tilemap1.png",
-      "tilemap": "gfx/compressed/94C140/acBattleForeground5Tilemap1.bin",
+      "tilemap": "gfx/build/94C140/acBattleForeground5Tilemap1.bin",
       "width": 32,
       "height": 32,
       "transparent": true,
@@ -43,7 +43,7 @@
     },
     {
       "png": "BattleForeground5Tilemap2.png",
-      "tilemap": "gfx/compressed/94C140/acBattleForeground5Tilemap2.bin",
+      "tilemap": "gfx/build/94C140/acBattleForeground5Tilemap2.bin",
       "width": 32,
       "height": 32,
       "transparent": true,

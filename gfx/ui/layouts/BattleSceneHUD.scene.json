@@ -1,0 +1,38 @@
+{
+  "depth": 2,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleSceneHUDBaseColors",
+      "dest": 0,
+      "count": 16
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/build/E02EBD/gcBattleSceneStatLabels.2bpp.png",
+      "max_tiles": 64,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "BattleSceneHUD.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneHUDTilemap.bin",
+      "width": 32,
+      "height": 15,
+      "transparent": true,
+      "palettes": [
+        0,
+        1,
+        3
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 384
+        }
+      ]
+    }
+  ]
+}

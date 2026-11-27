@@ -10,15 +10,15 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/D05673/g4bppcBattleBackgroundClassChange.4bpp.png",
       "max_tiles": 256,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/D05673/g4bppcBattleBackgroundClassChange.4bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "ClassChange.png",
-      "tilemap": "gfx/compressed/DF0000/acBattleBackgroundClassChangeTilemap.bin",
+      "tilemap": "gfx/build/DF0000/acBattleBackgroundClassChangeTilemap.bin",
       "width": 64,
       "height": 32,
       "transparent": false,

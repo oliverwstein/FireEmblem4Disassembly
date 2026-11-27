@@ -1,23 +1,35 @@
 #!/usr/bin/env python3
-"""Author-facing full-screen scene & background PNGs to/from SNES tiles + tilemaps.
+"""Scenes, backgrounds and UI layouts to/from SNES tiles + tilemaps.
 
 usage: tools/scene_pack.py unpack MANIFEST.scene.json [--force]
        tools/scene_pack.py pack MANIFEST.scene.json [--compact]
+       tools/scene_pack.py render MANIFEST.scene.json OUT_DIR
        tools/scene_pack.py build
        tools/scene_pack.py clean
        tools/scene_pack.py --self-test
 
 Each MANIFEST.scene.json describes one scene (or a group of layers sharing a
 tile sheet or palette): bit depth (4 or 2), palette sources (BGR555 labels in
-.asm or .bin/.bin.comp, or "grey"), tile sheets (.4bpp.png / .2bpp.png, the
-committed seed tile order), and layers (assembled PNG + optional 1-bit
-_priority.png mask -> .bin tilemap).
+.asm or .bin/.bin.comp, or "grey"; "offset" skips colours, "dest" and "count"
+place them), tile sheets ("png": a .4bpp.png/.2bpp.png, or "comp": a seed read
+straight from its .comp stream), and layers, each built to a .bin tilemap whose
+committed original is TILEMAP.comp (compressed) or TILEMAP.seed (uncompressed).
 
-The scene PNGs are the source. A sheet the manifest marks "writable" is the
-seed only: pack refuses to run when its .4bpp.png/.2bpp.png no longer decodes
-to its committed .comp stream, because the scene PNG would silently put the
-old pixels back. Sheets that are not writable (fixed UI sheets, or a sheet
-another manifest owns) are read as they are.
+A layer's source is one of two kinds:
+
+- "png": an assembled picture (+ optional 1-bit _priority.png mask). The
+  picture is the source of the art: the packer finds or makes the tiles. Used
+  by scenes whose sheets are "writable".
+- "grid": a CSV of tilemap entries, one row per tilemap row, each entry
+  TILE:PALETTE (hex tile number, palette 0-7) plus any of p (priority), h and v
+  (flips), as in the chapter map CSVs: 300:0p, 314:0pv. The art stays in the
+  sheets, so editing a sheet changes every layout that uses its tiles. Used by
+  fixed-sheet UI layouts. render draws previews.
+
+A sheet a manifest marks "writable" is the seed only: pack refuses to run when
+a "png" seed no longer decodes to its committed .comp stream, because the scene
+PNG would silently put the old pixels back. Sheets that are not writable (the
+shared UI sheets, or a sheet another manifest owns) are sources as they are.
 
 Packing matches each 8x8 cell against existing tiles in their committed order
 (trying all four flip combinations and preferring the original tilemap entry
@@ -41,6 +53,7 @@ records new masks in the manifest, checks that packing reproduces the .comp
 streams, and reports unreferenced tiles per sheet.
 """
 import argparse
+import csv
 import glob
 import json
 import os
@@ -52,6 +65,7 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from decompress import decompress
+from chapter_maps import entry_text, entry_value
 import gfx
 
 try:
@@ -61,6 +75,7 @@ except ImportError:
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCENES_DIR = os.path.join(ROOT, 'gfx', 'scenes')
+UI_LAYOUTS_DIR = os.path.join(ROOT, 'gfx', 'ui', 'layouts')
 
 WORD_ITEM_RE = re.compile(r'bgr555\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)|\$([0-9A-Fa-f]{1,4})\b')
 
@@ -69,8 +84,17 @@ def repo_path(rel):
     return rel if os.path.isabs(rel) else os.path.join(ROOT, rel)
 
 
-def sheet_key(png):
-    return os.path.normpath(repo_path(png))
+def sheet_source(s):
+    return s['png'] if 'png' in s else s['comp']
+
+
+def sheet_bpp_out(s):
+    return s['png'][:-4] if 'png' in s else s['comp'][:-5]
+
+
+def sheet_key(s):
+    path = sheet_bpp_out(s) if isinstance(s, dict) else s[:-4]
+    return os.path.normpath(repo_path(path))
 
 
 def decompress_comp(path):
@@ -82,10 +106,11 @@ def decompress_comp(path):
 
 
 def read_comp_bin(bin_path):
-    """Read decompressed bytes from bin_path.comp if present, else bin_path, else None."""
-    comp = bin_path + '.comp'
-    if os.path.exists(comp):
-        return decompress_comp(comp)
+    """Read decompressed bytes from .comp or .seed if present, else bin_path, else None."""
+    for ext in ('.comp', '.seed'):
+        p = bin_path + ext
+        if os.path.exists(p):
+            return decompress_comp(p) if ext == '.comp' else open(p, 'rb').read()
     if os.path.exists(bin_path):
         with open(bin_path, 'rb') as f:
             return f.read()
@@ -114,10 +139,18 @@ def validate_manifest(m, path):
     if not sheets:
         bad('no sheets')
     for i, s in enumerate(sheets):
-        if not s.get('png', '').endswith(f".{m['depth']}bpp.png"):
-            bad(f"sheet {i} ({s.get('png')!r}) is not a .{m['depth']}bpp.png")
+        if 'png' in s:
+            if not s['png'].endswith(f".{m['depth']}bpp.png"):
+                bad(f"sheet {i} ({s['png']!r}) is not a .{m['depth']}bpp.png")
+        elif 'comp' in s:
+            if not s['comp'].endswith(f".{m['depth']}bpp.comp"):
+                bad(f"sheet {i} ({s['comp']!r}) is not a .{m['depth']}bpp.comp")
+        else:
+            bad(f'sheet {i} must specify "png" or "comp"')
     for li, layer in enumerate(m.get('layers') or []):
-        name = layer.get('png', f'layer {li}')
+        name = layer.get('png') or layer.get('grid') or f'layer {li}'
+        if ('png' in layer) == ('grid' in layer):
+            bad(f'{name}: a layer needs exactly one of "png" and "grid"')
         refs = layer.get('sheets') or []
         if not refs:
             bad(f'{name}: no sheets')
@@ -126,15 +159,18 @@ def validate_manifest(m, path):
                 bad(f"{name}: sheet index {r.get('sheet')!r} out of range (0-{len(sheets) - 1})")
             if not 0 <= r.get('base', -1) < 1024:
                 bad(f"{name}: base {r.get('base')!r} out of range")
-        pals = layer.get('palettes') or []
-        if not pals or any(not isinstance(p, int) or not 0 <= p < 8 for p in pals):
-            bad(f'{name}: palettes must be a non-empty list of 0-7, got {pals!r}')
+        pals = layer.get('palettes')
+        if 'png' in layer or pals is not None:
+            if not pals or any(not isinstance(p, int) or not 0 <= p < 8 for p in pals):
+                bad(f'{name}: palettes must be a non-empty list of 0-7, got {pals!r}')
         a = layer.get('append_sheet')
+        if 'grid' in layer and a is not None:
+            bad(f'{name}: a grid layer names its tiles and cannot append (append_sheet must be null)')
         if a is not None:
             if not isinstance(a, int) or not 0 <= a < len(refs):
                 bad(f"{name}: append_sheet {a!r} is not an index into this layer's {len(refs)} sheet(s)")
             if not sheets[refs[a]['sheet']].get('writable', False):
-                bad(f"{name}: append_sheet points at {sheets[refs[a]['sheet']]['png']}, which is not writable")
+                bad(f"{name}: append_sheet points at {sheet_source(sheets[refs[a]['sheet']])}, which is not writable")
         if layer.get('width', 0) <= 0 or layer.get('height', 0) <= 0:
             bad(f'{name}: width and height must be positive')
 
@@ -191,6 +227,9 @@ def load_palette(specs, depth):
         else:
             raise ValueError(f'unknown palette spec: {spec!r}')
         dest = spec.get('dest', 0)
+        offset = spec.get('offset', 0)
+        if offset:
+            cols = cols[offset:]
         count = spec.get('count')
         if count is not None:
             cols = cols[:count]
@@ -257,15 +296,17 @@ def tilemap_index(tx, ty, width):
     return ty * width + tx
 
 
-def read_seed_sheet(png_path, depth, check=False):
-    """Decode a seed sheet PNG to tiles, trimming PNG row padding past its .comp length.
+def read_seed_sheet(src_path, depth, check=False):
+    """Decode a seed sheet (.png or .comp) to tiles, trimming PNG row padding past .comp length.
 
-    With check, fail if the PNG no longer decodes to the .comp stream: the
+    With check, fail if a PNG no longer decodes to the .comp stream: the
     sheet of a writable scene is not the source, and edits to it would be
     overridden by the scene PNG.
     """
-    raw = gfx.png_to_bpp(png_path, depth)
-    comp = png_path[:-4] + '.comp'
+    if src_path.endswith('.comp'):
+        return decode_tiles(decompress_comp(src_path), depth)
+    raw = gfx.png_to_bpp(src_path, depth)
+    comp = src_path[:-4] + '.comp'
     if os.path.exists(comp):
         want = decompress_comp(comp)
         orig_len = len(want)
@@ -273,7 +314,7 @@ def read_seed_sheet(png_path, depth, check=False):
             raw = raw[:orig_len]
         if check and raw != want:
             raise ValueError(
-                f'{png_path} differs from {os.path.basename(comp)}: this sheet is the seed '
+                f'{src_path} differs from {os.path.basename(comp)}: this sheet is the seed '
                 f'of a scene, and the scene PNGs in gfx/scenes/ are the source. Revert the '
                 f'sheet and edit the scene PNG instead.')
     return decode_tiles(raw, depth)
@@ -316,9 +357,9 @@ def scene_index():
         for mp in manifests():
             with open(mp, encoding='utf-8') as f:
                 m = json.load(f)
-            lens = [len(read_seed_sheet(repo_path(s['png']), m['depth'])) for s in m['sheets']]
+            lens = [len(read_seed_sheet(repo_path(sheet_source(s)), m['depth'])) for s in m['sheets']]
             for s in m['sheets']:
-                idx.setdefault(sheet_key(s['png']), {'refs': set(), 'users': set()})['users'].add(
+                idx.setdefault(sheet_key(s), {'refs': set(), 'users': set()})['users'].add(
                     os.path.basename(mp))
             for layer in m['layers']:
                 raw = read_comp_bin(repo_path(layer['tilemap']))
@@ -328,7 +369,7 @@ def scene_index():
                     tid = w & 0x3FF
                     for r in layer['sheets']:
                         if r['base'] <= tid < r['base'] + lens[r['sheet']]:
-                            idx[sheet_key(m['sheets'][r['sheet']]['png'])]['refs'].add(tid - r['base'])
+                            idx[sheet_key(m['sheets'][r['sheet']])]['refs'].add(tid - r['base'])
                             break
         _SCENE_INDEX = idx
     return _SCENE_INDEX
@@ -339,53 +380,108 @@ def _check_png_target(path, force):
         raise ValueError(f'{path} exists; unpack would overwrite it (pass --force to replace it)')
 
 
-def unpack_scene(manifest_path, force=False):
-    """Render scene PNGs (and _priority.png masks when used) from committed sheets + .bin.comp.
+def read_grid(path, w, h):
+    """Read a grid layer CSV (h rows of w TILE:PALETTE[phv] entries) into tilemap words."""
+    with open(path, encoding='utf-8') as f:
+        rows = [r for r in csv.reader(f) if r]
+    if len(rows) != h:
+        raise ValueError(f'{path}: expected {h} rows, got {len(rows)}')
+    words = [0] * (w * h)
+    for ty, row in enumerate(rows):
+        if len(row) != w:
+            raise ValueError(f'{path}: row {ty} has {len(row)} entries, expected {w}')
+        for tx, text in enumerate(row):
+            try:
+                words[tilemap_index(tx, ty, w)] = entry_value(text)
+            except ValueError as e:
+                raise ValueError(f'{path}: cell ({tx}, {ty}): {e}') from None
+    return words
 
-    Refuses to overwrite existing PNGs unless force, records new masks in the
-    manifest, and checks that packing the result reproduces the .comp streams.
-    Returns {sheet png: unreferenced tile count}.
+
+def grid_text(words, w, h):
+    return ''.join(','.join(entry_text(words[tilemap_index(tx, ty, w)]) for tx in range(w)) + '\n'
+                   for ty in range(h))
+
+
+def _layer_image(words, layer, sheets_tiles, cgram, stride):
+    w, h = layer['width'], layer['height']
+    trans = layer.get('transparent', False)
+    img = Image.new('RGBA' if trans else 'RGB', (w * 8, h * 8))
+    px = img.load()
+    for ty in range(h):
+        for tx in range(w):
+            rendered = _render_word(words[tilemap_index(tx, ty, w)], layer, sheets_tiles, cgram, stride, trans)
+            for y in range(8):
+                for x in range(8):
+                    px[tx * 8 + x, ty * 8 + y] = rendered[y * 8 + x]
+    return img
+
+
+def render_scene(manifest_path, out_dir):
+    """Draw every layer as the build would put it in VRAM, from the current sources."""
+    m = load_manifest(manifest_path)
+    depth = m['depth']
+    cgram = load_palette(m['palette'], depth)
+    sheet_outs, tm_outs = pack_scene(manifest_path, write=False)
+    sheets_tiles = []
+    for s in m['sheets']:
+        out = repo_path(sheet_bpp_out(s))
+        sheets_tiles.append(decode_tiles(sheet_outs[out], depth) if out in sheet_outs
+                            else read_seed_sheet(repo_path(sheet_source(s)), depth))
+    os.makedirs(out_dir, exist_ok=True)
+    written = []
+    for layer in m['layers']:
+        raw = tm_outs[repo_path(layer['tilemap'])]
+        words = struct.unpack(f'<{len(raw) // 2}H', raw)
+        name = os.path.splitext(layer.get('png') or layer['grid'])[0] + '.png'
+        _layer_image(words, layer, sheets_tiles, cgram, 1 << depth).save(os.path.join(out_dir, name))
+        written.append(name)
+    return written
+
+
+def unpack_scene(manifest_path, force=False):
+    """Write each layer's source from the committed sheets and .comp/.seed tilemaps.
+
+    A "png" layer gets its picture (and a _priority.png mask when any entry
+    sets priority, recorded in the manifest); a "grid" layer gets its CSV.
+    Refuses to overwrite existing files unless force, and checks that packing
+    the result reproduces the committed streams. Returns {sheet: unreferenced
+    tile count}.
     """
     mdir = os.path.dirname(os.path.abspath(manifest_path))
     m = load_manifest(manifest_path)
     depth = m['depth']
     stride = 1 << depth
     cgram = load_palette(m['palette'], depth)
-    sheets_tiles = [read_seed_sheet(repo_path(s['png']), depth) for s in m['sheets']]
+    sheets_tiles = [read_seed_sheet(repo_path(sheet_source(s)), depth) for s in m['sheets']]
     referenced = [set() for _ in m['sheets']]
     manifest_changed = False
 
-    renders = []
+    outputs = []  # (path, writer)
     for layer in m['layers']:
         w, h = layer['width'], layer['height']
-        trans = layer.get('transparent', False)
         tm_raw = read_comp_bin(repo_path(layer['tilemap']))
         if tm_raw is None:
-            raise ValueError(f"{layer['tilemap']}: missing .bin and .bin.comp")
+            raise ValueError(f"{layer['tilemap']}: missing .comp and .seed")
         words = struct.unpack(f'<{len(tm_raw) // 2}H', tm_raw)
         if len(words) != w * h:
             raise ValueError(f"{layer['tilemap']}: expected {w * h} words, got {len(words)}")
+        for word in words:
+            tid = word & 0x3FF
+            for ref in layer['sheets']:
+                if ref['base'] <= tid < ref['base'] + len(sheets_tiles[ref['sheet']]):
+                    referenced[ref['sheet']].add(tid - ref['base'])
+                    break
 
-        img = Image.new('RGBA' if trans else 'RGB', (w * 8, h * 8))
-        px = img.load()
-        pri_cells = []
-        for ty in range(h):
-            for tx in range(w):
-                word = words[tilemap_index(tx, ty, w)]
-                tid = word & 0x3FF
-                if word & 0x2000:
-                    pri_cells.append((tx, ty))
-                for ref in layer['sheets']:
-                    if ref['base'] <= tid < ref['base'] + len(sheets_tiles[ref['sheet']]):
-                        referenced[ref['sheet']].add(tid - ref['base'])
-                        break
-                rendered = _render_word(word, layer, sheets_tiles, cgram, stride, trans)
-                ox, oy = tx * 8, ty * 8
-                for y in range(8):
-                    for x in range(8):
-                        px[ox + x, oy + y] = rendered[y * 8 + x]
+        if 'grid' in layer:
+            text = grid_text(words, w, h)
+            outputs.append((os.path.join(mdir, layer['grid']),
+                            lambda p, t=text: open(p, 'w', encoding='utf-8').write(t)))
+            continue
 
-        pimg = None
+        img = _layer_image(words, layer, sheets_tiles, cgram, stride)
+        outputs.append((os.path.join(mdir, layer['png']), lambda p, i=img: i.save(p)))
+        pri_cells = [(tx, ty) for ty in range(h) for tx in range(w) if words[tilemap_index(tx, ty, w)] & 0x2000]
         if pri_cells:
             if not layer.get('priority'):
                 layer['priority'] = os.path.splitext(layer['png'])[0] + '_priority.png'
@@ -396,28 +492,24 @@ def unpack_scene(manifest_path, force=False):
                 for y in range(8):
                     for x in range(8):
                         ppx[tx * 8 + x, ty * 8 + y] = 255
-        renders.append((layer, img, pimg))
+            outputs.append((os.path.join(mdir, layer['priority']), lambda p, i=pimg: i.save(p)))
 
-    for layer, img, pimg in renders:
-        _check_png_target(os.path.join(mdir, layer['png']), force)
-        if pimg is not None:
-            _check_png_target(os.path.join(mdir, layer['priority']), force)
-    for layer, img, pimg in renders:
-        img.save(os.path.join(mdir, layer['png']))
-        if pimg is not None:
-            pimg.save(os.path.join(mdir, layer['priority']))
+    for path, _ in outputs:
+        _check_png_target(path, force)
+    for path, writer in outputs:
+        writer(path)
     if manifest_changed:
         write_manifest(manifest_path, m)
 
     verify_against_comp(manifest_path)
     return {
-        m['sheets'][i]['png']: len(tiles) - len(referenced[i])
+        sheet_source(m['sheets'][i]): len(tiles) - len(referenced[i])
         for i, tiles in enumerate(sheets_tiles)
     }
 
 
 def verify_against_comp(manifest_path):
-    """Pack without writing and fail unless every output equals its committed .comp stream."""
+    """Pack without writing and fail unless every output equals its committed .comp or .seed."""
     sheet_outs, tm_outs = pack_scene(manifest_path, write=False)
     for bpp_path, got in sheet_outs.items():
         comp = bpp_path + '.comp'
@@ -425,8 +517,16 @@ def verify_against_comp(manifest_path):
             raise ValueError(f'{manifest_path}: sheet {bpp_path} does not pack back to its .comp')
     for tm_path, got in tm_outs.items():
         comp = tm_path + '.comp'
-        if os.path.exists(comp) and got != decompress_comp(comp):
-            raise ValueError(f'{manifest_path}: tilemap {tm_path} does not pack back to its .comp')
+        seed = tm_path + '.seed'
+        if os.path.exists(comp):
+            want = decompress_comp(comp)
+        elif os.path.exists(seed):
+            with open(seed, 'rb') as f:
+                want = f.read()
+        else:
+            raise ValueError(f'{manifest_path}: tilemap {tm_path} has neither .comp nor .seed')
+        if got != want:
+            raise ValueError(f'{manifest_path}: tilemap {tm_path} does not pack back to its committed source')
 
 
 def _read_cell(px, tx, ty, trans):
@@ -476,7 +576,7 @@ def pack_scene(manifest_path, write=True, compact=False):
     depth = m['depth']
     stride = 1 << depth
     cgram = load_palette(m['palette'], depth)
-    sheets_tiles = [read_seed_sheet(repo_path(s['png']), depth, check=s.get('writable', False))
+    sheets_tiles = [read_seed_sheet(repo_path(sheet_source(s)), depth, check=s.get('writable', False))
                     for s in m['sheets']]
     index = scene_index()
 
@@ -485,7 +585,7 @@ def pack_scene(manifest_path, write=True, compact=False):
     free_slots = {}
     for si, s in enumerate(m['sheets']):
         if s.get('writable', False) and not s.get('external'):
-            refs = index.get(sheet_key(s['png']), {}).get('refs', set())
+            refs = index.get(sheet_key(s), {}).get('refs', set())
             free_slots[si] = [i for i, t in enumerate(sheets_tiles[si]) if not any(t) and i not in refs]
     used_now = {si: set() for si in range(len(m['sheets']))}
 
@@ -515,6 +615,17 @@ def pack_scene(manifest_path, write=True, compact=False):
     for layer in m['layers']:
         w, h = layer['width'], layer['height']
         trans = layer.get('transparent', False)
+        if 'grid' in layer:
+            grid_path = os.path.join(mdir, layer['grid'])
+            words = read_grid(grid_path, w, h)
+            allowed = layer.get('palettes')
+            for i, wd in enumerate(words):
+                if allowed is not None and (wd >> 10) & 7 not in allowed:
+                    raise ValueError(f'{grid_path}: entry {entry_text(wd)} uses palette {(wd >> 10) & 7}, '
+                                     f'not one of {allowed}')
+                note_use(layer, wd)
+            layer_words_out.append((layer, words))
+            continue
         png_path = os.path.join(mdir, layer['png'])
         px = _open_layer_png(png_path, w, h, trans)
 
@@ -609,7 +720,7 @@ def pack_scene(manifest_path, write=True, compact=False):
                         if len(sheets_tiles[si]) >= max_tiles:
                             raise ValueError(
                                 f"{png_path}: cell ({tx}, {ty}) needs a new tile, but sheet "
-                                f"{m['sheets'][si]['png']} has no free blank slot and reached its "
+                                f"{sheet_source(m['sheets'][si])} has no free blank slot and reached its "
                                 f"VRAM budget ({max_tiles} tiles)"
                             )
                         new_local_tid = len(sheets_tiles[si])
@@ -628,11 +739,11 @@ def pack_scene(manifest_path, write=True, compact=False):
         for si, s in enumerate(m['sheets']):
             if not s.get('writable', False):
                 continue
-            info = index.get(sheet_key(s['png']), {'refs': set(), 'users': set()})
+            info = index.get(sheet_key(s), {'refs': set(), 'users': set()})
             others = sorted(info['users'] - {mname})
             if s.get('external') or others:
                 raise ValueError(
-                    f"{manifest_path}: --compact would renumber {s['png']}, which is also read by "
+                    f"{manifest_path}: --compact would renumber {sheet_source(s)}, which is also read by "
                     f"{', '.join(others) if others else s['external']}")
             old = sheets_tiles[si]
             keep = [i for i, t in enumerate(old)
@@ -652,7 +763,7 @@ def pack_scene(manifest_path, write=True, compact=False):
     sheet_outputs = {}
     for si, s in enumerate(m['sheets']):
         if s.get('writable', False):
-            sheet_outputs[repo_path(s['png'][:-4])] = encode_tiles(sheets_tiles[si], depth)
+            sheet_outputs[repo_path(sheet_bpp_out(s))] = encode_tiles(sheets_tiles[si], depth)
 
     tilemap_outputs = {}
     for layer, words in layer_words_out:
@@ -667,7 +778,10 @@ def pack_scene(manifest_path, write=True, compact=False):
 
 
 def manifests():
-    return sorted(glob.glob(os.path.join(SCENES_DIR, '**', '*.scene.json'), recursive=True))
+    return sorted(
+        glob.glob(os.path.join(SCENES_DIR, '**', '*.scene.json'), recursive=True)
+        + glob.glob(os.path.join(UI_LAYOUTS_DIR, '**', '*.scene.json'), recursive=True)
+    )
 
 
 def build():
@@ -679,13 +793,18 @@ def build():
         except ValueError as e:
             sys.exit(str(e))
         inputs = [mp] + palette_dep_files(m['palette'])
-        inputs += [repo_path(s['png']) for s in m['sheets']]
-        outputs = [repo_path(s['png'][:-4]) for s in m['sheets'] if s.get('writable', False)]
+        inputs += [repo_path(sheet_source(s)) for s in m['sheets']]
+        outputs = [repo_path(sheet_bpp_out(s)) for s in m['sheets'] if s.get('writable', False)]
         for layer in m['layers']:
-            inputs.append(os.path.join(mdir, layer['png']))
+            inputs.append(os.path.join(mdir, layer.get('png') or layer['grid']))
             if layer.get('priority'):
                 inputs.append(os.path.join(mdir, layer['priority']))
-            outputs.append(repo_path(layer['tilemap']))
+            tm_path = repo_path(layer['tilemap'])
+            for ext in ('.comp', '.seed'):
+                if os.path.exists(tm_path + ext):
+                    inputs.append(tm_path + ext)
+                    break
+            outputs.append(tm_path)
         in_mtime = max(os.path.getmtime(p) for p in inputs)
         if any(not os.path.exists(p) or in_mtime > os.path.getmtime(p) for p in outputs):
             try:
@@ -716,13 +835,13 @@ def _expect_error(fn, needle, what):
 
 
 def _copy_scene(mp, tmp, sub):
-    """Copy a manifest and its layer PNGs/masks into tmp/sub; return the copy's path."""
+    """Copy a manifest and its layer sources (PNGs, masks, grids) into tmp/sub; return the copy's path."""
     src_dir = os.path.dirname(mp)
     dst = os.path.join(tmp, sub)
     os.makedirs(dst)
     m = load_manifest(mp)
     for layer in m['layers']:
-        for key in ('png', 'priority'):
+        for key in ('png', 'priority', 'grid'):
             if layer.get(key):
                 shutil.copy(os.path.join(src_dir, layer[key]), dst)
     shutil.copy(mp, dst)
@@ -761,15 +880,17 @@ def self_test():
         m = load_manifest(mp)
         for s in m['sheets']:
             if s.get('writable', False):
-                assert s['png'] not in writable_sheets, f"duplicate writable sheet {s['png']}"
-                writable_sheets.add(s['png'])
+                key = sheet_key(s)
+                assert key not in writable_sheets, f"duplicate writable sheet {sheet_source(s)}"
+                writable_sheets.add(key)
         for layer in m['layers']:
             assert layer['tilemap'] not in tilemap_targets, f"duplicate tilemap {layer['tilemap']}"
             tilemap_targets.add(layer['tilemap'])
             total_layers += 1
         verify_against_comp(mp)
 
-    assert total_layers == 65, f'expected 65 scene layers, found {total_layers}'
+    assert len(mps) == 69, f'expected 69 manifests, found {len(mps)}'
+    assert total_layers == 118, f'expected 118 scene/UI layers, found {total_layers}'
 
     with tempfile.TemporaryDirectory() as tmp:
         # 1. Tile append + LZ recompression on OpeningLogo (65/256 tiles, no blank slots).
@@ -803,12 +924,14 @@ def self_test():
             layer = m2['layers'][layer_i]
             tx, ty = _new_tile_edit(os.path.join(os.path.dirname(mp2), layer['png']), start_row=2)
             si = layer['sheets'][layer['append_sheet']]['sheet']
-            sheet_png = m2['sheets'][si]['png']
-            free = sorted(i for i, t in enumerate(read_seed_sheet(repo_path(sheet_png), m2['depth']))
-                          if not any(t) and i not in scene_index()[sheet_key(sheet_png)]['refs'])
+            s_obj = m2['sheets'][si]
+            s_src = sheet_source(s_obj)
+            s_bpp = repo_path(sheet_bpp_out(s_obj))
+            free = sorted(i for i, t in enumerate(read_seed_sheet(repo_path(s_src), m2['depth']))
+                          if not any(t) and i not in scene_index()[sheet_key(s_obj)]['refs'])
             s_outs, t_outs = pack_scene(mp2, write=False)
-            orig_sheet = decompress_comp(repo_path(sheet_png[:-4]) + '.comp')
-            new_sheet = s_outs[repo_path(sheet_png[:-4])]
+            orig_sheet = decompress_comp(s_bpp + '.comp')
+            new_sheet = s_outs[s_bpp]
             assert len(new_sheet) == len(orig_sheet), f'{sub}: sheet size changed'
             tm = repo_path(layer['tilemap'])
             old_w = struct.unpack(f'<{layer["width"] * layer["height"]}H', decompress_comp(tm + '.comp'))
@@ -849,11 +972,11 @@ def self_test():
         #    the unreferenced blank ones, and still renders the same picture.
         gate_mp = _copy_scene(os.path.join(SCENES_DIR, 'dialogue', 'Gate.scene.json'), tmp, 'gate')
         gate_m = load_manifest(gate_mp)
-        gate_png = gate_m['sheets'][0]['png']
-        seed = read_seed_sheet(repo_path(gate_png), 4)
-        refs = scene_index()[sheet_key(gate_png)]['refs']
+        gate_s = gate_m['sheets'][0]
+        seed = read_seed_sheet(repo_path(sheet_source(gate_s)), 4)
+        refs = scene_index()[sheet_key(gate_s)]['refs']
         s_outs, t_outs = pack_scene(gate_mp, write=False, compact=True)
-        new_tiles = decode_tiles(s_outs[repo_path(gate_png[:-4])], 4)
+        new_tiles = decode_tiles(s_outs[repo_path(sheet_bpp_out(gate_s))], 4)
         want = [t for i, t in enumerate(seed) if i in refs or any(t)]
         assert new_tiles == want, 'compact kept or dropped the wrong tiles'
         assert len(new_tiles) < len(seed), 'compact dropped nothing'
@@ -876,18 +999,18 @@ def self_test():
         _expect_error(lambda: pack_scene(tit_mp, write=False, compact=True), 'title scene',
                       'compact of an external sheet')
 
-        # 7. An edited seed sheet is refused (the scene PNG is the source).
+        # 7. An edited writable PNG seed sheet is refused (the scene PNG is the source).
         sheet_dir = os.path.join(tmp, 'sheet')
         os.makedirs(sheet_dir)
-        logo_sheet = repo_path(logo_m['sheets'][0]['png'])
-        tmp_sheet = os.path.join(sheet_dir, os.path.basename(logo_sheet))
-        shutil.copy(logo_sheet[:-4] + '.comp', sheet_dir)
-        simg = Image.open(logo_sheet).copy()
+        logo_comp = repo_path(sheet_source(logo_m['sheets'][0]))
+        tmp_sheet = os.path.join(sheet_dir, 'OpeningLogo.4bpp.png')
+        shutil.copy(logo_comp, os.path.join(sheet_dir, 'OpeningLogo.4bpp.comp'))
+        simg = gfx.bpp_to_png(decompress_comp(logo_comp), gfx.grey(4), 16, depth=4)
         simg.putpixel((0, 0), (simg.getpixel((0, 0)) + 1) % 16)
         simg.save(tmp_sheet)
         orig_img.save(logo_png)
         sheet_m = json.loads(json.dumps(logo_m))
-        sheet_m['sheets'][0]['png'] = tmp_sheet
+        sheet_m['sheets'][0] = {'png': tmp_sheet, 'max_tiles': 256, 'writable': True}
         write_manifest(tmp_logo_mp, sheet_m)
         _expect_error(lambda: pack_scene(tmp_logo_mp, write=False), 'edit the scene PNG',
                       'edited seed sheet')
@@ -933,9 +1056,78 @@ def self_test():
         pimg.save(pri_png)
         _expect_error(lambda: pack_scene(tmp_throne_mp, write=False), 'mixes priority', 'mixed priority cell')
 
-    print(f'{total_layers} of {total_layers} scene layers ({len(mps)} manifests) pack byte-identical; '
+        # 10. Grid layer edit on an uncompressed UI tilemap (.seed): copying
+        #     one entry changes exactly that word; a bad entry is refused.
+        st_mp = _copy_scene(os.path.join(UI_LAYOUTS_DIR, 'StatusScreen.scene.json'), tmp, 'status')
+        st_m = load_manifest(st_mp)
+        st_layer = st_m['layers'][0]
+        st_csv = os.path.join(os.path.dirname(st_mp), st_layer['grid'])
+        rows = [r.split(',') for r in open(st_csv, encoding='utf-8').read().splitlines()]
+        rows[0][1] = rows[0][0]
+        open(st_csv, 'w', encoding='utf-8').write(''.join(','.join(r) + '\n' for r in rows))
+        _, st_outs = pack_scene(st_mp, write=False)
+        st_tm = repo_path(st_layer['tilemap'])
+        seed_raw = open(st_tm + '.seed', 'rb').read()
+        got_raw = st_outs[st_tm]
+        assert got_raw[2:4] == seed_raw[0:2] and got_raw[:2] == seed_raw[:2] and got_raw[4:] == seed_raw[4:], \
+            'grid edit did not change only entry (1, 0)'
+        rows[0][1] = '400:0'
+        open(st_csv, 'w', encoding='utf-8').write(''.join(','.join(r) + '\n' for r in rows))
+        _expect_error(lambda: pack_scene(st_mp, write=False), 'cell (1, 0)', 'out-of-range grid tile')
+
+        # 11. Grid layer edit on a compressed UI tilemap, and its LZ round-trip.
+        iw_mp = _copy_scene(os.path.join(UI_LAYOUTS_DIR, 'ItemWindow.scene.json'), tmp, 'itemwin')
+        iw_m = load_manifest(iw_mp)
+        iw_layer = iw_m['layers'][0]
+        iw_csv = os.path.join(os.path.dirname(iw_mp), iw_layer['grid'])
+        rows = [r.split(',') for r in open(iw_csv, encoding='utf-8').read().splitlines()]
+        rows[0][1] = rows[1][0]
+        open(iw_csv, 'w', encoding='utf-8').write(''.join(','.join(r) + '\n' for r in rows))
+        _, iw_outs = pack_scene(iw_mp, write=False)
+        iw_tm = repo_path(iw_layer['tilemap'])
+        assert iw_outs[iw_tm] != decompress_comp(iw_tm + '.comp'), 'ItemWindowBG1 grid edit changed nothing'
+        iw_lz = gfx.lz(iw_outs[iw_tm], iw_tm + '.comp')
+        buf = bytearray(0x400000)
+        buf[:len(iw_lz)] = iw_lz
+        assert decompress(bytes(buf), 0xC00000)[0] == iw_outs[iw_tm], 'ItemWindowBG1 LZ round-trip failed'
+
+        # 12. Editing a shared sheet reaches every layout that uses the tile:
+        #     the tilemap stays the same and the rendered preview changes.
+        uw_mp = _copy_scene(os.path.join(UI_LAYOUTS_DIR, 'UnitWindowList.scene.json'), tmp, 'uwlist')
+        uw_m = load_manifest(uw_mp)
+        before_dir = os.path.join(tmp, 'uw_before')
+        render_scene(uw_mp, before_dir)
+        wf_copy = os.path.join(tmp, 'WindowFrames.4bpp.png')
+        shutil.copy(repo_path(uw_m['sheets'][0]['png']), wf_copy)
+        uw_layer = uw_m['layers'][0]
+        first = read_grid(os.path.join(os.path.dirname(uw_mp), uw_layer['grid']),
+                          uw_layer['width'], uw_layer['height'])[0]
+        local = (first & 0x3FF) - uw_layer['sheets'][0]['base']
+        wf_img = Image.open(wf_copy).copy()
+        tx0, ty0 = local % (wf_img.width // 8) * 8, local // (wf_img.width // 8) * 8
+        wf_img.putpixel((tx0 + 3, ty0 + 3), (wf_img.getpixel((tx0 + 3, ty0 + 3)) + 1) % 16)
+        wf_img.save(wf_copy)
+        uw_m['sheets'][0]['png'] = wf_copy
+        write_manifest(uw_mp, uw_m)
+        _, uw_outs = pack_scene(uw_mp, write=False)
+        uw_tm = repo_path(uw_layer['tilemap'])
+        assert uw_outs[uw_tm] == read_comp_bin(uw_tm), 'a sheet edit changed the layout tilemap'
+        after_dir = os.path.join(tmp, 'uw_after')
+        name = render_scene(uw_mp, after_dir)[0]
+        assert Image.open(os.path.join(before_dir, name)).tobytes() != \
+            Image.open(os.path.join(after_dir, name)).tobytes(), 'the sheet edit did not reach the preview'
+
+        # 13. A grid layer cannot append, and needs exactly one source.
+        bad_m = json.loads(json.dumps(uw_m))
+        bad_m['layers'][0]['append_sheet'] = 0
+        _expect_error(lambda: validate_manifest(bad_m, 'bad'), 'cannot append', 'grid layer with append_sheet')
+        bad_m = json.loads(json.dumps(uw_m))
+        bad_m['layers'][0]['png'] = 'x.png'
+        _expect_error(lambda: validate_manifest(bad_m, 'bad'), 'exactly one', 'layer with png and grid')
+
+    print(f'{total_layers} of {total_layers} scene/UI layers ({len(mps)} manifests) pack byte-identical; '
           f'tile append, blank-slot reuse, external sheets, priority toggle, compact, seed-sheet '
-          f'guard, unpack, LZ recompression, and validation checks passed')
+          f'guard, unpack, LZ recompression, UI grid layers (.seed and compressed edits, shared-sheet edits reaching the layouts), and validation checks passed')
 
 
 def main():
@@ -944,10 +1136,13 @@ def main():
     sub = ap.add_subparsers(dest='cmd')
     p = sub.add_parser('unpack')
     p.add_argument('manifest')
-    p.add_argument('--force', action='store_true', help='overwrite existing scene PNGs')
+    p.add_argument('--force', action='store_true', help='overwrite existing layer sources')
     p = sub.add_parser('pack')
     p.add_argument('manifest')
     p.add_argument('--compact', action='store_true')
+    p = sub.add_parser('render')
+    p.add_argument('manifest')
+    p.add_argument('out_dir')
     sub.add_parser('build')
     sub.add_parser('clean')
     args = ap.parse_args()
@@ -961,6 +1156,9 @@ def main():
                     print(f'  {sheet}: {n} unreferenced tiles')
         elif args.cmd == 'pack':
             pack_scene(args.manifest, write=True, compact=args.compact)
+        elif args.cmd == 'render':
+            for name in render_scene(args.manifest, args.out_dir):
+                print(f'  {os.path.join(args.out_dir, name)}')
         elif args.cmd == 'build':
             build()
         elif args.cmd == 'clean':

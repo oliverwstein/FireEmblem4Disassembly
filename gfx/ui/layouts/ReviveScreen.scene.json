@@ -1,0 +1,62 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/core/graphics/palettes.asm",
+      "label": "aChapterIntroAndUIBGPalettes",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/build/DD0000/g4bppcReviveScreenTiles.4bpp.png",
+      "max_tiles": 144,
+      "writable": false
+    },
+    {
+      "png": "gfx/ui/WindowFrames.4bpp.png",
+      "max_tiles": 96,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "ReviveScreenBG1.csv",
+      "tilemap": "gfx/build/DD0000/acReviveScreenBG1Tilemap.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 144
+        }
+      ]
+    },
+    {
+      "grid": "ReviveScreenBG2.csv",
+      "tilemap": "gfx/build/DD0000/acReviveScreenBG2Tilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

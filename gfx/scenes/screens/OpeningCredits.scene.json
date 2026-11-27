@@ -10,15 +10,15 @@
   ],
   "sheets": [
     {
-      "png": "gfx/compressed/D05673/gcOpeningCreditsFont.2bpp.png",
       "max_tiles": 768,
-      "writable": true
+      "writable": true,
+      "comp": "gfx/build/D05673/gcOpeningCreditsFont.2bpp.comp"
     }
   ],
   "layers": [
     {
       "png": "OpeningCreditsPage1.png",
-      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage1.bin",
+      "tilemap": "gfx/build/D05673/gcOpeningCreditsPage1.bin",
       "width": 32,
       "height": 28,
       "transparent": false,
@@ -36,7 +36,7 @@
     },
     {
       "png": "OpeningCreditsPage2.png",
-      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage2.bin",
+      "tilemap": "gfx/build/D05673/gcOpeningCreditsPage2.bin",
       "width": 32,
       "height": 28,
       "transparent": false,
@@ -54,7 +54,7 @@
     },
     {
       "png": "OpeningCreditsPage3.png",
-      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage3.bin",
+      "tilemap": "gfx/build/D05673/gcOpeningCreditsPage3.bin",
       "width": 32,
       "height": 28,
       "transparent": false,
@@ -72,7 +72,7 @@
     },
     {
       "png": "OpeningCreditsPage4.png",
-      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage4.bin",
+      "tilemap": "gfx/build/D05673/gcOpeningCreditsPage4.bin",
       "width": 32,
       "height": 28,
       "transparent": false,
@@ -90,7 +90,7 @@
     },
     {
       "png": "OpeningCreditsPage5.png",
-      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage5.bin",
+      "tilemap": "gfx/build/D05673/gcOpeningCreditsPage5.bin",
       "width": 32,
       "height": 28,
       "transparent": false,
@@ -108,7 +108,7 @@
     },
     {
       "png": "OpeningCreditsPage6.png",
-      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage6.bin",
+      "tilemap": "gfx/build/D05673/gcOpeningCreditsPage6.bin",
       "width": 32,
       "height": 28,
       "transparent": false,
@@ -126,7 +126,7 @@
     },
     {
       "png": "OpeningCreditsPage7.png",
-      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage7.bin",
+      "tilemap": "gfx/build/D05673/gcOpeningCreditsPage7.bin",
       "width": 32,
       "height": 28,
       "transparent": false,
@@ -144,7 +144,7 @@
     },
     {
       "png": "OpeningCreditsPage8.png",
-      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage8.bin",
+      "tilemap": "gfx/build/D05673/gcOpeningCreditsPage8.bin",
       "width": 32,
       "height": 28,
       "transparent": false,

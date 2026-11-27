@@ -1,0 +1,59 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BGPalettes8C.asm",
+      "label": "aCastleAuguryBGPalettes",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/build/D05673/g4bppcAuguryBG1Tiles.4bpp.png",
+      "max_tiles": 128,
+      "writable": false
+    },
+    {
+      "png": "gfx/build/D05673/g4bppcAuguryBG2Tiles.4bpp.png",
+      "max_tiles": 256,
+      "writable": false
+    },
+    {
+      "png": "gfx/ui/DialogueBoxFrames.4bpp.png",
+      "max_tiles": 64,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "AuguryBG.csv",
+      "tilemap": "gfx/build/D05673/acAuguryBGTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 256
+        },
+        {
+          "sheet": 2,
+          "base": 768
+        }
+      ]
+    }
+  ]
+}

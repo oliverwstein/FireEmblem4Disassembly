@@ -6,8 +6,10 @@ REM Graphics: gfx\**\NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAM
 for /r "%startDir%gfx" %%f in (*.4bpp.png *.2bpp.png) do python "%startDir%tools\gfx.py" png2bpp "%%f" "%%~dpnf"
 REM Portraits: gfx\portraits\NAME.png to NAME.4bpp.
 python "%startDir%tools\portrait_pack.py" build
-REM Scenes & backgrounds: gfx\scenes\**\*.scene.json to .4bpp/.2bpp + .bin tilemaps.
+REM Scenes & backgrounds: gfx\scenes\**\*.scene.json and gfx\ui\layouts\*.scene.json to .4bpp/.2bpp + .bin tilemaps.
 python "%startDir%tools\scene_pack.py" build
+REM Item icons: gfx\icons\ItemIcons.json to data\item\ItemIconOffsets.asm.
+python "%startDir%tools\item_icons.py" build
 REM Compressed graphics: NAME.4bpp / NAME.2bpp to NAME.4bpp.lz / NAME.2bpp.lz, keeping the original NAME.*bpp.comp while it matches.
 for /r "%startDir%gfx" %%f in (*.4bpp.comp *.2bpp.comp) do if exist "%%~dpnf" python "%startDir%tools\gfx.py" lz "%%~dpnf" "%%f" "%%~dpnf.lz"
 REM Data written as source: chapter map CSVs and map battle sprite data (.asm) to NAME.bin.

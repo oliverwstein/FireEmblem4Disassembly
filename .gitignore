@@ -23,22 +23,50 @@ gfx/**/*.4bpp.lz
 gfx/**/*.2bpp.lz
 gfx/**/*.bin.lz
 gfx/**/Layout.asm
-# Built from .csv / .asm sources by tools/chapter_maps.py and tools/map_battle_layouts.py
-gfx/compressed/C70C80/acChapterMap*.bin
-gfx/compressed/*/aMapBattle*Layout*.bin
-# Built from gfx/scenes/ manifests by tools/scene_pack.py
-gfx/compressed/*/acDialogueBackground*.bin
-gfx/compressed/*/acBattleBackground*.bin
-gfx/compressed/*/acBattleForeground*.bin
-gfx/compressed/*/acGameOverBG*.bin
-gfx/compressed/*/acAntiPiracyWarningTilemap.bin
-gfx/compressed/*/acAbnormalityWarningTilemap.bin
-gfx/compressed/*/acOpeningLogoTilemap.bin
-gfx/compressed/*/gcOpeningCreditsPage*.bin
-gfx/compressed/*/acEpilogueCreditsBG*.bin
-gfx/compressed/*/acEpilogueEndScreenTilemap.bin
-gfx/compressed/*/acEpilogueRankingsBG2Tilemap.bin
-gfx/compressed/*/gcTitleIntroCaption*Tilemap.bin
+# Built from gfx/maps/ and gfx/map_battle/ by tools/chapter_maps.py and tools/map_battle_layouts.py
+gfx/build/C70C80/acChapterMap*.bin
+gfx/build/*/aMapBattle*Layout*.bin
+# Built from gfx/scenes/ and gfx/ui/layouts/ manifests by tools/scene_pack.py
+gfx/build/*/acDialogueBackground*.bin
+gfx/build/*/acBattleBackground*.bin
+gfx/build/*/acBattleForeground*.bin
+gfx/build/*/acGameOverBG*.bin
+gfx/build/*/acAntiPiracyWarningTilemap.bin
+gfx/build/*/acAbnormalityWarningTilemap.bin
+gfx/build/*/acOpeningLogoTilemap.bin
+gfx/build/*/gcOpeningCreditsPage*.bin
+gfx/build/*/acEpilogueCreditsBG*.bin
+gfx/build/*/acEpilogueEndScreenTilemap.bin
+gfx/build/*/acEpilogueRankingsBG2Tilemap.bin
+gfx/build/*/gcTitleIntroCaption*Tilemap.bin
+gfx/build/*/acSaveMenuBG*.bin
+gfx/build/*/acItemWindowBG*.bin
+gfx/build/*/acSkillWindowBG1Tilemap.bin
+gfx/build/*/acDataWindowBG*.bin
+gfx/build/*/acOptionsMenuBG1Tilemap.bin
+gfx/build/*/acMenuWindowBackgroundTilemap.bin
+gfx/build/*/acReviveScreenBG*.bin
+gfx/build/*/acChapterIntroBannerTilemaps.bin
+gfx/build/*/acCastleTownBGTilemap.bin
+gfx/build/*/acCastleShopAndArenaBG1Tilemap.bin
+gfx/build/*/acCastleFacilityBG2Tilemap.bin
+gfx/build/*/acAuguryBGTilemap.bin
+gfx/build/*/acClassChangeBGTilemap.bin
+gfx/build/*/acEpilogueRankingBG*.bin
+gfx/build/*/a*MapHighlightTilemap.bin
+gfx/build/*/aWorldMapMarkerShadowTilemap.bin
+gfx/build/*/acWorldMapHighlightTilemapUnused.bin
+gfx/build/*/acBattleSceneHUD*.bin
+gfx/build/ui/tilemaps/StatusScreenTilemap*.bin
+gfx/build/ui/tilemaps/GenealogyWheel*.bin
+gfx/build/ui/tilemaps/UnitWindow*.bin
+gfx/build/ui/tilemaps/CastleCourtyardTilemap.bin
+gfx/build/ui/tilemaps/CastleTownButtonTilemap.bin
+gfx/build/ui/tilemaps/CastleListBG3Template.bin
+gfx/build/ui/tilemaps/Conversation*WindowTilemap.bin
+gfx/build/ui/tilemaps/DialogueBoxTilemap.bin
+# Built from gfx/icons/ItemIcons.json by tools/item_icons.py
+data/item/ItemIconOffsets.asm
 *.dialogue.txt
 
 tools/64tass.exe

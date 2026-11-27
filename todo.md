@@ -133,7 +133,7 @@ All 145 stream PNGs renamed in `1961416`..`e902eb3` were checked against their l
 ### 3.2 Cleanup & Consistency
 
 - [x] **Remove stale stream catalog & orphaned build files:** Removed [gfx/compressed/CATALOG.md](gfx/compressed/CATALOG.md), the `233` tracked PNGs in `gfx/compressed/catalog/`, and orphaned `gcUnknown*` build outputs.
-- [x] **Identify or mark the `11` remaining tracked `Unknown*` data/asset files:** Renamed [data/Unused838961.asm](data/Unused838961.asm), [gfx/map/BaseMapTileEntries.bin](gfx/map/BaseMapTileEntries.bin), [gfx/ui/tilemaps/WorldMapDataD97940.bin](gfx/ui/tilemaps/WorldMapDataD97940.bin), and the `8` unreferenced `UnusedD9*` / `UnusedDA*` files in [gfx/map/](gfx/map/) and [gfx/ui/tilemaps/](gfx/ui/tilemaps/).
+- [x] **Identify or mark the `11` remaining tracked `Unknown*` data/asset files:** Renamed [data/Unused838961.asm](data/Unused838961.asm), [gfx/map/BaseMapTileEntries.bin](gfx/map/BaseMapTileEntries.bin), [gfx/build/ui/tilemaps/WorldMapDataD97940.bin](gfx/build/ui/tilemaps/WorldMapDataD97940.bin), and the `8` unreferenced `UnusedD9*` / `UnusedDA*` files in [gfx/map/](gfx/map/) and [gfx/build/ui/tilemaps/](gfx/build/ui/tilemaps/).
 - [x] **Group loose top-level `data/` portrait files:** Moved `PortraitGraphicPointers.csv`, `PortraitPalettePointers.csv`, and `PortraitPalettes.asm` into [data/portraits/](data/portraits/).
 - [x] **Harmonize minor name label inconsistencies:** Aligned `ShannanName`, `DeimneName`, `CreidneName`, and `HerminaName` in [data/character/CharacterData.csv](data/character/CharacterData.csv), [data/offset/CharacterNameOffsets.csv](data/offset/CharacterNameOffsets.csv), and [text/menutext/CharacterNames.asm](text/menutext/CharacterNames.asm).
 

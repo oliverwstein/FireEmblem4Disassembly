@@ -1,0 +1,37 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BGPalettes8C.asm",
+      "label": "aEpilogueRankingsBGPalettes",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "max_tiles": 704,
+      "writable": false,
+      "comp": "gfx/build/D05673/g4bppcEpilogueEndScreenTiles.4bpp.comp"
+    }
+  ],
+  "layers": [
+    {
+      "grid": "EpilogueRankingBG1.csv",
+      "tilemap": "gfx/build/D05673/acEpilogueRankingBG1Tilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

@@ -236,8 +236,8 @@
   .include "audio/sound_data.asm"
   .include "data/palettes/BGPalettes8C.asm"
 
-    ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
-    .include "gfx/compressed/C00A2B/Layout.asm"
+    ; Compressed streams: generated from gfx/build/C00A2B/C00A2B.streams by build.sh.
+    .include "gfx/build/C00A2B/Layout.asm"
 
     * = $003C05
     .logical $C03C05
@@ -650,7 +650,7 @@
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80E72E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/E72E
-      aDecompressionDMAEntry80E736 .structDecompressionDMAEntry acOptionsMenuTiles, $0800, $4200 ; 80/E736
+      aDecompressionDMAEntry80E736 .structDecompressionDMAEntry g4bppcOptionsMenuTiles, $0800, $4200 ; 80/E736
       aDecompressionDMAEntry80E73E .structDecompressionDMAEntry acOptionsMenuBG1Tilemap, $0700, $2000 ; 80/E73E
 
       .dsection Unsorted80E746Section
@@ -2116,7 +2116,7 @@
       .dsection Unsorted85D648Section
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry85D669 .structDecompressionDMAEntry acMapBattleHUDTiles, $0800, $4C00 ; 85/D669
+      aDecompressionDMAEntry85D669 .structDecompressionDMAEntry g4bppcMapBattleHUDTiles, $0800, $4C00 ; 85/D669
 
       .dsection Unsorted85D671Section
 
@@ -2356,8 +2356,8 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/C70C80/C70C80.streams by build.sh.
-    .include "gfx/compressed/C70C80/Layout.asm"
+    ; Compressed streams: generated from gfx/build/C70C80/C70C80.streams by build.sh.
+    .include "gfx/build/C70C80/Layout.asm"
 
     * = $078000
     .logical $878000
@@ -3422,8 +3422,8 @@
 
     .here
 
-    ; The portraits: generated from gfx/portraits/portraits.streams by build.sh.
-    .include "gfx/portraits/Layout.asm"
+    ; The portraits: generated from gfx/build/portraits/portraits.streams by build.sh.
+    .include "gfx/build/portraits/Layout.asm"
 
     * = $105639
     .logical $D05639
@@ -4250,8 +4250,8 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/8BE03C/8BE03C.streams by build.sh.
-    .include "gfx/compressed/8BE03C/Layout.asm"
+    ; Compressed streams: generated from gfx/build/8BE03C/8BE03C.streams by build.sh.
+    .include "gfx/build/8BE03C/Layout.asm"
 
     * = $0C9400
     .logical $8C9400
@@ -5712,8 +5712,8 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/D05673/D05673.streams by build.sh.
-    .include "gfx/compressed/D05673/Layout.asm"
+    ; Compressed streams: generated from gfx/build/D05673/D05673.streams by build.sh.
+    .include "gfx/build/D05673/Layout.asm"
 
     * = $108000
     .logical $908000
@@ -6123,31 +6123,31 @@
     * = $128000
     .logical $928000
 
-      g2bppDialogueFont .binary "gfx/font/DialogueFont.2bpp" ; 92/8000
+      g2bppDialogueFont .binary "gfx/fonts/DialogueFont.2bpp" ; 92/8000
 
     .here
 
     * = $138000
     .logical $938000
 
-      g2bppDialogueFont2 .binary "gfx/font/DialogueFont2.2bpp" ; 93/8000
+      g2bppDialogueFont2 .binary "gfx/fonts/DialogueFont2.2bpp" ; 93/8000
 
     .here
 
     * = $148000
     .logical $948000
 
-      g2bppDialogueFont3 .binary "gfx/font/DialogueFont3.2bpp" ; 94/8000
+      g2bppDialogueFont3 .binary "gfx/fonts/DialogueFont3.2bpp" ; 94/8000
 
       .dsection BackgroundPalettes94C000Section
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/94C140/94C140.streams by build.sh.
-    .include "gfx/compressed/94C140/Layout.asm"
+    ; Compressed streams: generated from gfx/build/94C140/94C140.streams by build.sh.
+    .include "gfx/build/94C140/Layout.asm"
 
-    ; Compressed streams: generated from gfx/compressed/D50000/D50000.streams by build.sh.
-    .include "gfx/compressed/D50000/Layout.asm"
+    ; Compressed streams: generated from gfx/build/D50000/D50000.streams by build.sh.
+    .include "gfx/build/D50000/Layout.asm"
 
     * = $158000
     .logical $958000
@@ -6908,9 +6908,9 @@
 
       g2bppShopLabels .binary "gfx/ui/ShopLabels.2bpp" ; D76800
 
-      aCastleTownButtonTilemap .binary "gfx/ui/tilemaps/CastleTownButtonTilemap.bin" ; D77000
+      aCastleTownButtonTilemap .binary "gfx/build/ui/tilemaps/CastleTownButtonTilemap.bin" ; D77000
 
-      gCastleCourtyardTilemap .binary "gfx/ui/tilemaps/CastleCourtyardTilemap.bin" ; D77800
+      gCastleCourtyardTilemap .binary "gfx/build/ui/tilemaps/CastleCourtyardTilemap.bin" ; D77800
 
     .here
 
@@ -6953,7 +6953,7 @@
 
       g4bppShopScreen .binary "gfx/ui/ShopScreen.4bpp" ; D80000
 
-      g4bppItemIcons .binary "gfx/ItemIcons.4bpp" ; D84000
+      g4bppItemIcons .binary "gfx/icons/ItemIcons.4bpp" ; D84000
 
     .here
 
@@ -6992,15 +6992,15 @@
 
       aUnusedD96800 .binary "gfx/map/UnusedD96800.bin" ; D96800, unreferenced
 
-      gWorldMapTilemap .binary "gfx/ui/tilemaps/WorldMapTilemap.bin" ; D96C00
+      gWorldMapTilemap .binary "gfx/build/ui/tilemaps/WorldMapTilemap.bin" ; D96C00
 
-      gUnusedD97400 .binary "gfx/ui/tilemaps/UnusedD97400.bin" ; D97400, unreferenced
+      gUnusedD97400 .binary "gfx/build/ui/tilemaps/UnusedD97400.bin" ; D97400, unreferenced
 
-      gWorldMapDataD97940 .binary "gfx/ui/tilemaps/WorldMapDataD97940.bin" ; D97940
+      gWorldMapDataD97940 .binary "gfx/build/ui/tilemaps/WorldMapDataD97940.bin" ; D97940
 
-      gUnusedD97B00 .binary "gfx/ui/tilemaps/UnusedD97B00.bin" ; D97B00, unreferenced
+      gUnusedD97B00 .binary "gfx/build/ui/tilemaps/UnusedD97B00.bin" ; D97B00, unreferenced
 
-      aFirstGenerationEndingBG2Tilemap .binary "gfx/ui/tilemaps/FirstGenerationEndingBG2Tilemap.bin" ; D97C00
+      aFirstGenerationEndingBG2Tilemap .binary "gfx/build/ui/tilemaps/FirstGenerationEndingBG2Tilemap.bin" ; D97C00
 
     .here
 
@@ -7039,21 +7039,21 @@
 
       .dsection DataDA6500Section
 
-      gUnusedDA6700 .binary "gfx/ui/tilemaps/UnusedDA6700.bin" ; DA6700, unreferenced
+      gUnusedDA6700 .binary "gfx/build/ui/tilemaps/UnusedDA6700.bin" ; DA6700, unreferenced
 
-      gConversationLeftWindowTilemap .binary "gfx/ui/tilemaps/ConversationLeftWindowTilemap.bin" ; DA6800
+      gConversationLeftWindowTilemap .binary "gfx/build/ui/tilemaps/ConversationLeftWindowTilemap.bin" ; DA6800
 
-      gConversationClosedWindowTilemap .binary "gfx/ui/tilemaps/ConversationClosedWindowTilemap.bin" ; DA6A40
+      gConversationClosedWindowTilemap .binary "gfx/build/ui/tilemaps/ConversationClosedWindowTilemap.bin" ; DA6A40
 
-      gUnusedDA6C80 .binary "gfx/ui/tilemaps/UnusedDA6C80.bin" ; DA6C80, unreferenced
+      gUnusedDA6C80 .binary "gfx/build/ui/tilemaps/UnusedDA6C80.bin" ; DA6C80, unreferenced
 
-      gConversationRightWindowTilemap .binary "gfx/ui/tilemaps/ConversationRightWindowTilemap.bin" ; DA6D00
+      gConversationRightWindowTilemap .binary "gfx/build/ui/tilemaps/ConversationRightWindowTilemap.bin" ; DA6D00
 
-      gUnusedDA6F40 .binary "gfx/ui/tilemaps/UnusedDA6F40.bin" ; DA6F40, unreferenced
+      gUnusedDA6F40 .binary "gfx/build/ui/tilemaps/UnusedDA6F40.bin" ; DA6F40, unreferenced
 
-      aCastleListBG3Template .binary "gfx/ui/tilemaps/CastleListBG3Template.bin" ; DA7000
+      aCastleListBG3Template .binary "gfx/build/ui/tilemaps/CastleListBG3Template.bin" ; DA7000
 
-      gUnusedDA7800 .binary "gfx/ui/tilemaps/UnusedDA7800.bin" ; DA7800, unreferenced
+      gUnusedDA7800 .binary "gfx/build/ui/tilemaps/UnusedDA7800.bin" ; DA7800, unreferenced
 
       g4bppConversationSprites .binary "gfx/ui/ConversationSprites.4bpp" ; DA7A00
 
@@ -7256,11 +7256,11 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/9C8000/9C8000.streams by build.sh.
-    .include "gfx/compressed/9C8000/Layout.asm"
+    ; Compressed streams: generated from gfx/build/9C8000/9C8000.streams by build.sh.
+    .include "gfx/build/9C8000/Layout.asm"
 
-    ; Compressed streams: generated from gfx/compressed/DD0000/DD0000.streams by build.sh.
-    .include "gfx/compressed/DD0000/Layout.asm"
+    ; Compressed streams: generated from gfx/build/DD0000/DD0000.streams by build.sh.
+    .include "gfx/build/DD0000/Layout.asm"
 
     * = $1CF000
     .logical $9CF000
@@ -7276,9 +7276,9 @@
     * = $1D6730
     .logical $DD6730
 
-      gStatusScreenTilemap1 .binary "gfx/ui/tilemaps/StatusScreenTilemap1.bin" ; DD6730
+      gStatusScreenTilemap1 .binary "gfx/build/ui/tilemaps/StatusScreenTilemap1.bin" ; DD6730
 
-      gStatusScreenTilemap2 .binary "gfx/ui/tilemaps/StatusScreenTilemap2.bin" ; DD69F0
+      gStatusScreenTilemap2 .binary "gfx/build/ui/tilemaps/StatusScreenTilemap2.bin" ; DD69F0
 
       g4bppWindowFrames .binary "gfx/ui/WindowFrames.4bpp" ; DD72B0
 
@@ -7542,8 +7542,8 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/DE6230/DE6230.streams by build.sh.
-    .include "gfx/compressed/DE6230/Layout.asm"
+    ; Compressed streams: generated from gfx/build/DE6230/DE6230.streams by build.sh.
+    .include "gfx/build/DE6230/Layout.asm"
 
     * = $1E0000
     .logical $DE0000
@@ -7554,23 +7554,23 @@
 
       g4bppStatusScreenHolyBloodIcons .binary "gfx/ui/StatusScreenHolyBloodIcons.4bpp" ; DE0A00
 
-      gGenealogyWheelTilemap .binary "gfx/ui/tilemaps/GenealogyWheelTilemap.bin" ; DE1600
+      gGenealogyWheelTilemap .binary "gfx/build/ui/tilemaps/GenealogyWheelTilemap.bin" ; DE1600
 
-      gStatusScreenTilemap3 .binary "gfx/ui/tilemaps/StatusScreenTilemap3.bin" ; DE1A40
+      gStatusScreenTilemap3 .binary "gfx/build/ui/tilemaps/StatusScreenTilemap3.bin" ; DE1A40
 
-      gGenealogyWheelLoptousTilemap .binary "gfx/ui/tilemaps/GenealogyWheelLoptousTilemap.bin" ; DE1E80
+      gGenealogyWheelLoptousTilemap .binary "gfx/build/ui/tilemaps/GenealogyWheelLoptousTilemap.bin" ; DE1E80
 
-      gUnitWindowListTilemap .binary "gfx/ui/tilemaps/UnitWindowListTilemap.bin" ; DE22C0
+      gUnitWindowListTilemap .binary "gfx/build/ui/tilemaps/UnitWindowListTilemap.bin" ; DE22C0
 
-      gUnitWindowPage1Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage1Tilemap.bin" ; DE2480
+      gUnitWindowPage1Tilemap .binary "gfx/build/ui/tilemaps/UnitWindowPage1Tilemap.bin" ; DE2480
 
-      gUnitWindowPage2Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage2Tilemap.bin" ; DE25C0
+      gUnitWindowPage2Tilemap .binary "gfx/build/ui/tilemaps/UnitWindowPage2Tilemap.bin" ; DE25C0
 
-      gUnitWindowPage3Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage3Tilemap.bin" ; DE2700
+      gUnitWindowPage3Tilemap .binary "gfx/build/ui/tilemaps/UnitWindowPage3Tilemap.bin" ; DE2700
 
-      gUnitWindowPage4Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage4Tilemap.bin" ; DE2840
+      gUnitWindowPage4Tilemap .binary "gfx/build/ui/tilemaps/UnitWindowPage4Tilemap.bin" ; DE2840
 
-      gUnitWindowPage5Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage5Tilemap.bin" ; DE2980
+      gUnitWindowPage5Tilemap .binary "gfx/build/ui/tilemaps/UnitWindowPage5Tilemap.bin" ; DE2980
 
       .dsection WindowPaletteDE2AC0Section
 
@@ -7584,7 +7584,7 @@
 
       g2bppMenuLabels .binary "gfx/ui/MenuLabels.2bpp" ; DE48C0
 
-      gUnitWindowPage0Tilemap .binary "gfx/ui/tilemaps/UnitWindowPage0Tilemap.bin" ; DE60C0
+      gUnitWindowPage0Tilemap .binary "gfx/build/ui/tilemaps/UnitWindowPage0Tilemap.bin" ; DE60C0
 
       .dsection DataDE6200Section
 
@@ -8026,8 +8026,8 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/DF0000/DF0000.streams by build.sh.
-    .include "gfx/compressed/DF0000/Layout.asm"
+    ; Compressed streams: generated from gfx/build/DF0000/DF0000.streams by build.sh.
+    .include "gfx/build/DF0000/Layout.asm"
 
     * = $1F8000
     .logical $9F8000
@@ -8524,11 +8524,11 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/E02EBD/E02EBD.streams by build.sh.
-    .include "gfx/compressed/E02EBD/Layout.asm"
+    ; Compressed streams: generated from gfx/build/E02EBD/E02EBD.streams by build.sh.
+    .include "gfx/build/E02EBD/Layout.asm"
 
-    ; Compressed streams: generated from gfx/compressed/A08000/A08000.streams by build.sh.
-    .include "gfx/compressed/A08000/Layout.asm"
+    ; Compressed streams: generated from gfx/build/A08000/A08000.streams by build.sh.
+    .include "gfx/build/A08000/Layout.asm"
 
     * = $2DFF80
     .logical $ADFF80
@@ -8693,8 +8693,8 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/AFC8C0/AFC8C0.streams by build.sh.
-    .include "gfx/compressed/AFC8C0/Layout.asm"
+    ; Compressed streams: generated from gfx/build/AFC8C0/AFC8C0.streams by build.sh.
+    .include "gfx/build/AFC8C0/Layout.asm"
 
     * = $308000
     .logical $B08000
@@ -9538,8 +9538,8 @@
 
     .here
 
-    ; The map movement sprites: generated from gfx/MapMovementSprites/sprites.streams by build.sh.
-    .include "gfx/MapMovementSprites/Layout.asm"
+    ; The map movement sprites: generated from gfx/build/MapMovementSprites/sprites.streams by build.sh.
+    .include "gfx/build/MapMovementSprites/Layout.asm"
 
     * = $348000
     .logical $B48000
@@ -9548,8 +9548,8 @@
 
     .here
 
-    ; Compressed streams: generated from gfx/compressed/B48720/B48720.streams by build.sh.
-    .include "gfx/compressed/B48720/Layout.asm"
+    ; Compressed streams: generated from gfx/build/B48720/B48720.streams by build.sh.
+    .include "gfx/build/B48720/Layout.asm"
 
     ; Unused space between blocks that cannot take a fill at their end (graphics,
     ; text and data placed by address). All zeros.

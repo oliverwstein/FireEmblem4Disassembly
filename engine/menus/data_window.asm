@@ -821,9 +821,9 @@
         ; Decompresses the battle banner graphics and copies each army's banner to VRAM
         ; (rsDataWindowCopyBanner).
 
-        lda #(`acDataWindowBannerTilemap)<<8
+        lda #(`g4bppcDataWindowBannerTiles)<<8
         sta lR18+1
-        lda #<>acDataWindowBannerTilemap
+        lda #<>g4bppcDataWindowBannerTiles
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

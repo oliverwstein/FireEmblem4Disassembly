@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Find the compressed streams in the ROM and carve them into gfx/compressed/.
+"""Find the compressed streams in the ROM and carve them into gfx/build/.
 
 usage: tools/find_streams.py [--table LABEL ...] [--write]
 
@@ -21,7 +21,7 @@ is a whole number of 32-byte tiles, stopping at built bytes or the next region.
 A start that falls inside another stream is reported, not used.
 
 Without --write it reports the regions. With it, each region becomes
-gfx/compressed/ADDR/ (the CPU address of its start): the streams as NAME.comp
+gfx/build/ADDR/ (the CPU address of its start): the streams as NAME.comp
 (the ROM's bytes) and ADDR.streams for tools/stream_layout.py, which build.sh
 turns into Layout.asm. A stream keeps the label it has; others are named
 gcUnknownADDR (format not identified: graphics or a tilemap). The tool removes
@@ -46,7 +46,7 @@ from decompress import decompress, rom_offset, DecompressionError
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CALLS = {'rlAppendDecompList': 'lR18', 'rlDecompressSingle': 'lR45',
          'rlHandleMapMenuDecompressionDMA': 'lR19'}
-KEEP = ('gfx/portraits', 'gfx/MapMovementSprites')      # carved with PNGs already
+KEEP = ('gfx/build/portraits', 'gfx/build/MapMovementSprites')      # carved with PNGs already
 
 
 def load_labels():
@@ -375,7 +375,7 @@ def write(rom, regions, by_addr, carved):
     starts = {}
     for r in regions:
         top = f'{r[0][0]:06X}'
-        folder = os.path.join(ROOT, 'gfx', 'compressed', top)
+        folder = os.path.join(ROOT, 'gfx', 'build', top)
         os.makedirs(folder, exist_ok=True)
         lines = ['# Compressed streams for rlDecompressor, placed in this order from start to',
                  '# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is',
@@ -419,8 +419,8 @@ def write(rom, regions, by_addr, carved):
     for r in sorted(regions, key=lambda r: -rom_offset(r[0][0])):
         off, top = rom_offset(r[0][0]), f'{r[0][0]:06X}'
         at = min((x for x in blocks if x[1] > off), key=lambda x: x[1], default=(len(b), 0))[0]
-        b[at:at] = [f'    ; Compressed streams: generated from gfx/compressed/{top}/{top}.streams by build.sh.',
-                    f'    .include "gfx/compressed/{top}/Layout.asm"', '']
+        b[at:at] = [f'    ; Compressed streams: generated from gfx/build/{top}/{top}.streams by build.sh.',
+                    f'    .include "gfx/build/{top}/Layout.asm"', '']
     open(os.path.join(ROOT, 'build.asm'), 'w', encoding='utf-8').write('\n'.join(b))
 
 
