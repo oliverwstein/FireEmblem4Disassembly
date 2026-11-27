@@ -35,6 +35,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import battle_animations
 import map_sprites
 import map_battle_sprites
 
@@ -166,6 +167,7 @@ def collect_inventory():
                       for kind, _, n, f in map_sprites.sprites()}
     map_battle_src = {l: os.path.relpath(map_battle_sprites.src_path(l), ROOT)
                       for l in map_battle_sprites.sheets()}
+    battle_anim_src = battle_animations.all_reachable_labels()
     for spath in sorted(glob.glob(os.path.join(ROOT, 'gfx', '**', '*.streams'), recursive=True)):
         sdir = os.path.dirname(spath)
         rel_dir = os.path.relpath(sdir, ROOT).replace(os.sep, '/')
@@ -189,6 +191,8 @@ def collect_inventory():
 
                 if rel_dir == 'gfx/build/portraits':
                     form, system, phase, src = 'authored', 'portraits', 'Phase 2', f'gfx/portraits/{name}.png'
+                elif label in battle_anim_src:
+                    form, system, phase, src = 'authored', 'battle_animation', 'Phase 6', battle_anim_src[label][1]
                 elif label in map_battle_src:
                     form, system, phase, src = 'authored', 'map_battle', 'Phase 5', map_battle_src[label]
                 elif rel_dir == 'gfx/build/MapMovementSprites':
