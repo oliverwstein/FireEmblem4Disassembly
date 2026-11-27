@@ -3172,9 +3172,11 @@
 
       aMapSpriteWalkFrameDelays ; 88/CBE8
 
-        ; Indexed by map sprite ID (without the tall flag $8000).
-        ; 65 bytes of 9 and then 32 bytes of 14: the same counts as the
-        ; short and tall map sprite tables.
+        ; Frames between walking frames, indexed by map sprite ID without the tall
+        ; flag $8000 (rsUpdateMovingUnitSpriteFrame, rsAnimateShortMovingMapSprite,
+        ; rsAnimateTallMovingMapSprite). So tall ID n reads entry n, and only entries
+        ; 0-64 (all 9) are read. The 32 bytes of 14 after them match the 32 tall
+        ; sprites but nothing reads them.
 
         .fill 65, 9
         .fill 32, 14
@@ -4073,7 +4075,9 @@
 
       aMapSpriteWalkOffsetPointers ; 88/D488
 
-        ; Read by rsAnimateTallMovingMapSprite.
+        ; Read by rsAnimateTallMovingMapSprite and rsGetMovingUnitSpriteToDraw, by tall
+        ; map sprite ID (31 entries, IDs 0-30): which of the three sets of
+        ; aMapSpriteWalkOffsets ($00, $20, $40) nudges that sprite's walking frames.
 
         .word $0020, $0000, $0040, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0020, $0000, $0000, $0000
@@ -4092,7 +4096,9 @@
 
       aMapSpriteWalkOffsets ; 88/D4C6
 
-        ; Read by rsAnimateTallMovingMapSprite.
+        ; Read by rsAnimateTallMovingMapSprite and rsGetMovingUnitSpriteToDraw: per
+        ; set, a (X, Y) byte pair for each facing and walking frame, added to a tall
+        ; sprite's position.
 
         .word $0800, $0800, $0800, $0800, $0800, $0800, $0800, $0800
         .word $0800, $0800, $0800, $0800, $0800, $0800, $0800, $0800
