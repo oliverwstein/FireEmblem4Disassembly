@@ -77,6 +77,18 @@ After Phase 4 (from `tools/gfx_inventory.py`, which also counts the 57 uncompres
 
 The rise in authored compressed streams (369 plus 48 seeds, to 451) is Phase 4's 34 compressed UI and world-map tilemaps. The 48 seed sheets now count as authored, since they are built from their scenes. Every phase reports its before-and-after inventory counts in its *Proved* bullet.
 
+After Phase 5:
+
+| Form | Compressed | Uncompressed | Total |
+|---|---:|---:|---:|
+| `authored` | 1,048 | 24 | 1,072 |
+| `sheet` | 397 | 21 | 418 |
+| `raw` | 152 | 4 | 156 |
+| `unused` | 50 | 8 | 58 |
+| **Total** | **1,647** | **57** | **1,704** |
+
+Phase 5 added 597 compressed streams (97 walking sprites, 500 map battle sheets) and the 2 standing sheets. `g4bppcMapBattleCritUnused4` moved from `sheet` to `unused` (its only reader cannot select it; see Phase 5).
+
 ### Target layout of `gfx/`
 
 Authored sources live in one folder per game system. The ROM-address folders hold only build plumbing.
@@ -88,8 +100,8 @@ gfx/
   maps/               chapter map CSVs (Layout, TileEntries, Terrain)
   ui/                 shared sheets + layout manifests (Phase 4)
   fonts/  icons/      (Phase 4)
-  map_sprites/        frame-grid PNGs (Phase 5)
-  map_battle/         sprite data .asm, sheets (Phase 5)
+  map_sprites/        short/ tall/   NAME.png frame grids, standing + walking (Phase 5)
+  map_battle/         sprite data .asm (Phase 1), sheets/NAME.png frame grids (Phase 5)
   effects/            battle scene effects, map-battle magic (Phase 7)
   battle_animation/   (Phase 6)
   build/              one folder per ROM region: REGION.streams, the committed NAME.comp
@@ -97,7 +109,7 @@ gfx/
 ```
 
 - An authored file names where its output goes (a manifest field, or a fixed rule in its tool), as `.scene.json` tilemap paths do. No author has to open `gfx/build/` for an authored asset.
-- `gfx/build/` holds, per ROM region, `REGION.streams`, the committed `NAME.comp` originals and the generated files; `gfx/build/portraits/` and `gfx/build/MapMovementSprites/` hold those two classes' streams; `gfx/build/ui/tilemaps/` holds the uncompressed UI tilemaps (the committed originals as `NAME.bin.seed`, the generated `NAME.bin`, and the raw tilemaps not yet converted).
+- `gfx/build/` holds, per ROM region, `REGION.streams`, the committed `NAME.comp` originals and the generated files; `gfx/build/portraits/` and `gfx/build/MapMovementSprites/` hold those two classes' streams; `gfx/build/map_sprites/` the generated standing sheets; `gfx/build/ui/tilemaps/` holds the uncompressed UI tilemaps (the committed originals as `NAME.bin.seed`, the generated `NAME.bin`, and the raw tilemaps not yet converted).
 - Nothing in `gfx/build/` is edited by hand except `.streams` order, which decides placement, and the tile sheets still in VRAM order (`sheet` in the inventory): about 1,000 `.4bpp.png`/`.2bpp.png` files stay beside their streams until their phase gives them an authored form.
 - `build.sh` writes `NAME.4bpp`/`NAME.2bpp` beside every `NAME.4bpp.png`/`NAME.2bpp.png` (gitignored), including the shared UI sheets in `gfx/ui/`.
 
@@ -108,7 +120,8 @@ The migration of Phases 1–3 was done with Phase 4 (2026-11-27): the chapter ma
 Every phase so far edits assets in place. Adding one (a portrait, a background, a chapter map, a scene) still means editing pointer tables, a `.streams` list and a manifest by hand, and nothing documents the steps. Each class needs:
 
 - **A declared add path.** Name the table the code indexes (`PortraitGraphicPointers.csv` and `PortraitPalettePointers.csv`, `aDialogueBackgroundPointers`, `aBattleBackgrounds`, the chapter map tables), the ID constants, and the limits on the count (an ID width, a table the code bounds-checks, a fixed array). Then a tool command, or failing that a documented checklist, that adds the entry, the source file and the `.streams` line together. Backlog: Phases 1–3 have no add path yet.
-- **Room in the ROM.** Every graphics region is packed with no slack: each `.streams` region ends exactly where its last original stream ends, so an edit that compresses larger than the original fails (so far our compressor has usually beaten the game's). The ROM is already 4 MB, the largest standard HiROM size. The whole ROM is built from source, and the original has only about 99 KB in runs of 1 KB or more of `$00` or `$FF`, some of which may be data. Options, to decide before the first add path ships:
+- **Room in the ROM: decided 2026-11-27, deferred.** Nothing needs the room until a mod adds content: unmodified builds never do, and an edit that compresses to the same size or smaller already fits. When a mod needs it, the route is ExHiROM (option 2 below). It plays in bsnes, Mesen, snes9x and flash carts. Until then each add path is written down as a checklist (as Phase 5's is) rather than a tool command. Measured in Phase 5: an edit that put new art in a blank map battle frame compressed 12 bytes larger and overflowed `A08000`; recompressing all 97 walking sprites with `tools/compress.py` would free 5,270 of 199,808 bytes (2.6%) and takes about six minutes.
+- **Room in the ROM (the options).** Every graphics region is packed with no slack: each `.streams` region ends exactly where its last original stream ends, so an edit that compresses larger than the original fails (so far our compressor has usually beaten the game's). The ROM is already 4 MB, the largest standard HiROM size. The whole ROM is built from source, and the original has only about 99 KB in runs of 1 KB or more of `$00` or `$FF`, some of which may be data. Options, to decide before the first add path ships:
   1. move streams between regions, and reclaim padding that is shown to be unused (each run needs a reader check first);
   2. expand to ExHiROM (up to 8 MB). This means a header and mapping change, and new regions in the added banks for new and grown streams. It would leave every original region byte-identical on an unmodified build.
 - **Budgets per asset as well as per region:** VRAM tile budgets (as in Phase 3), palette slots, and any fixed decompression buffer the loader uses.
@@ -120,7 +133,7 @@ Every phase so far edits assets in place. Adding one (a portrait, a background, 
 - **Chapter maps:** each of the 32 streams in [gfx/build/C70C80/](../gfx/build/C70C80/) has one CSV source in [gfx/maps/](../gfx/maps/), and `tools/chapter_maps.py build` (run by build.sh) writes the `.bin` that `gfx.py lz` compresses. `acChapterMap*Layout.csv` is the 64×64 grid of map words in hex (bits 0–9 tile ID, bits 10–15 the area a chapter can close). `*TileEntries.csv` is one row per tile ID 0–255, with four entries written `TILE:PALETTE` plus `p`/`h`/`v`; IDs 256–1023 are `aBaseMapTileEntries`. `*Terrain.csv` is one row per tile ID, named from `include/Terrain.h`. Values `$1A`–`$35` have no name and stay hex (open question in [map.md](reference/map.md)).
 - **Map-battle sprite data:** the earlier JSON format guessed structure from byte ranges and could not change size. It was replaced by assembly source (`gfx/map_battle/aMapBattle*Layout*.asm`) in the style of `aGiveGoldCoinSpriteData`, decoded along what the code reads. That means five block offsets by weapon type; blocks of a frame table, two unread words and (main, aux) script pairs; frames as `.structSpriteEntry` arrays; scripts as `ACTIVE_SPRITE_*` commands; and every offset a label difference. `tools/map_battle_layouts.py build` assembles each with 64tass. `MAP_BATTLE_SPRITE_DATA_END` pads to the original size and fails past `$880` bytes, the distance between the two sides' buffers. The format is in the tool's docstring and [map_battle.md](reference/map_battle.md).
 - **Proved:** both self-tests round-trip every stream from its `.comp` and check the committed sources. The sprite data test adds a sprite to a frame and checks that the rest moves while every frame and script parses the same. A clean build is byte-identical. An edited sprite frame and terrain entry built with `./build.sh mod` reached the ROM, and the following streams moved and still decompress correctly. The generated `.bin` files are gitignored and removed by `./build.sh clean`.
-- **Left for later:** the Tiled export (Step 2 below) and a sprite data preview (Phase 5).
+- **Left for later:** the Tiled export (Step 2 below). The sprite data preview came with Phase 5 (`tools/map_battle_sprites.py preview`).
 - **Step 2 (optional editor format):** export **Tiled `.tmj` maps** (a shared `BaseMapTileset.tsx` plus one tileset per chapter) with a visual layer of 16×16 tiles (`64×32` for the Prologue, `64×64` for Chapters 1–Final), a terrain layer and an area layer (bits 10–15), and import them back to the same CSVs.
 
 ---
@@ -183,22 +196,41 @@ Every phase so far edits assets in place. Adding one (a portrait, a background, 
   - **Item icons:** `tools/item_icons.py add NAME [PNG] [--item ITEM]` fills the next of the sheet's `128` slots (`111` used; slots `111–127` are blank) and can point an item at it. The sheet is a fixed-size uncompressed block, so this needs no ROM space.
   - **UI layouts:** no data-driven add path. Each layout is loaded by its own screen routine at a fixed VRAM address, so a new layout is a code change. What authors can do is rearrange existing layouts (grids) and redraw or add tiles in the shared sheets within their sizes.
   - **Fonts:** glyphs are edited in place; adding glyphs means a new character code in the dialogue encoding, outside this phase.
-- **Inventory:** [docs/reference/gfx_inventory.md](reference/gfx_inventory.md) from `tools/gfx_inventory.py --write` (rules in its docstring; `unused` means no reader in the sources, checked, not taken from the label). Counts are in *Inventory* above. One label named `Unused` has a reader: `g4bppcMapBattleCritUnused4` (Phase 5 should check it).
+- **Inventory:** [docs/reference/gfx_inventory.md](reference/gfx_inventory.md) from `tools/gfx_inventory.py --write` (rules in its docstring; `unused` means no reader in the sources, checked, not taken from the label). Counts are in *Inventory* above. One label named `Unused` had a reader: `g4bppcMapBattleCritUnused4`; Phase 5 showed that reader can never select it.
 - **Left as-is in `gfx/build/ui/tilemaps/`:** `6` `Unused*.bin`, `WorldMapDataD97940.bin`, `WorldMapTilemap.bin` (metatiles), `FirstGenerationEndingBG2Tilemap.bin`.
 - **Proved:** `tools/scene_pack.py --self-test` (all layers byte-identical; grid edits on an uncompressed and a compressed tilemap change only the edited entries, with LZ round-trip; an edit to `WindowFrames` leaves `UnitWindowList`'s tilemap unchanged and changes its preview; grid layers refuse `append_sheet` and out-of-range tiles), `tools/item_icons.py --self-test`, `tools/font_preview.py --self-test`, `tools/gfx_inventory.py --self-test` (which also fails when the inventory page is out of date), the Phase 1–3 self-tests from their new locations, `tools/backgrounds.py --self-test`, a clean build, and a build of only the files a commit contains (byte-identical).
 
 ---
 
-### Phase 5 — Map Sprites & Map-Battle Animations (`97` movement sprites, `2` standing sheets, `557` map-battle sheets, `120` OAM layouts)
+### Phase 5 — Map Sprites & Map-Battle Animations (`97` map sprites, `2` standing sheets, `500` map battle sheets, `120` sprite data streams) — **done (2026-11-27)**
 
-- **Current state:**
-  - `gfx/MapMovementSprites/*.4bpp.png` and `StandingMapSprites1–2.4bpp.png` are already editable sprite sheets (just in compact VRAM tile order).
-  - Map-battle animations have `557` tile sheets and `120` sprite data streams, assembly source since Phase 1 ([tools/map_battle_layouts.py](../tools/map_battle_layouts.py)). There is no preview yet. A frame does not hold its own picture: its tiles from `$20` (`$28` for side 1) are the graphics frame the script last uploaded with command `$03`, from the paired `g4bppcMapBattle*` stream through `aMapBattleSpriteDMATable`, and the rest depend on each sprite's tile base. A preview therefore has to step a script, as `tools/battle_animation.py` does for battle scenes.
-- **Author-facing object:**
-  - **Map sprites:** Standard frame-grid PNGs (e.g., 4 directions × N frames at `16×16` / `16×24` per cell) that slice deterministically back to VRAM order.
-  - **Map-battle animations:**
-    - **Level A:** the sprite data sources from Phase 1 plus the `.4bpp.png` sheets, with a preview that steps each script (frame uploads by `$03`, frames by `$0E`) into strips or GIFs.
-    - **Level B (optional, full artist workflow):** Per-animation **assembled frame strip PNG** (`frame_0.png`, `frame_1.png`, …) + an OAM packer that greedily covers non-transparent regions with 8×8 and 16×16 SNES OAM sprites, deduplicates tiles, and emits both the `.4bpp` sheet and `aMapBattle*Layout*.bin`.
+- **Map sprites ([tools/map_sprites.py](../tools/map_sprites.py), `gfx/map_sprites/short/` and `tall/`):** one indexed PNG per map sprite ID, named as in `data/class/MapMovementShortSpritePointers.csv` (65, IDs 0–64) and `MapMovementTallSpritePointers.csv` (32, IDs 0–31, flag `$8000`). Row 0 holds the 3 standing frames, played 0, 1, 2, 1. Rows 1–4 hold the walking frames for each facing in storage order: left, right, up, down (`wMovingUnitSpriteFacing` `$00`, `$08`, `$10`, `$18`), 4 frames each. Cells are `24×24` (short, `96×120`) or `32×32` (tall, `128×160`).
+  - **Cell to tiles, from the drawing code.** A short walking frame is `aMovingUnitSprite24x24`: tiles `$20 $21 $24 / $30 $22 $23 / $34 $32 $33`. Its `$22` and `$31` overlap at the centre, and all 1,040 frames store the same pixels in both, so the centre cell writes both. A tall walking frame is `aMovingUnitSprite32x32`: `$20–$23 / $30–$33 / $24–$27 / $34–$37`, nudged at run time by `aMapSpriteWalkOffsets`. A short standing frame is one `16×16` (`aMapSpriteSlotTiles`) at `(4, 8)` in its cell. A tall standing frame is `16×24` at `(8, 8)`. `rlDrawDeployedUnitMapSprites` draws two `16×16` sprites 16 pixels apart, but only six tiles are uploaded (`rsQueueTallStandingMapSpriteFrames`): the upper sprite's top row is never written. Pixels outside the pictures must be colour 0.
+  - **Build:** the walking frames go to `gfx/build/MapMovementSprites/NAME.4bpp` (then `gfx.py lz` against the `.comp`). The standing frames of short IDs 0–62 and tall IDs 0–30 go to `gfx/build/map_sprites/StandingMapSprites1–2.4bpp` (uncompressed, `$D70000` and `$DA0000`). Short IDs 63–64 (`SmallOifey`, `ShortEmpty`) and tall ID 31 (`TallEmpty`) have no standing frames, and their row 0 must be blank. The 97 VRAM-order sheets and `gfx/map/StandingMapSprites1–2.4bpp.png` are gone.
+  - **Found on the way:** every reader of `aMapSpriteWalkFrameDelays` strips the tall flag, so tall sprites read the short entries (all 9), and the 32 bytes of 14 after them are never read.
+- **Map battle sheets ([tools/map_battle_sprites.py](../tools/map_battle_sprites.py), `gfx/map_battle/sheets/NAME.png`):** the 500 graphics streams that `aBattleMapSpriteData` names. Each row (94; `rows` lists them) pairs, for each of 8 facings, a sprite data stream with a graphics stream, plus the tall flag. Facings run clockwise from left: 0 left, 1 up-left, 2 up, 3 up-right, 4 right, 5 down-right, 6 down, 7 down-left (`aMapBattleFacingOffsets`). Each stream is `$2000` bytes:
+  - `$0000–$09FF`, the tile blocks: `rlUploadMapBattleSideTiles` uploads `$400` bytes to tiles `$40–$5F` from `$000` (sword, lance, axe), `$400` (bow) or `$600` (staff, tome) (`aMapBattleWeaponTypeTileOffsets`). The PNG shows them as five 16-tile rows, as uploaded, so `16×16` pieces read whole.
+  - `$0A00–$0FFF` is zero in every stream; nothing reads it.
+  - `$1000` on: 8 frames (`aMapBattleSpriteDMATable`) in the walking-frame format, shown as cells in row 0. A short stream's last `$600` bytes (zero or a repeated filler tile) are kept as three more tile rows.
+  - No graphics stream is shared between a short and a tall row. The other two `$2000` streams, `g4bppcMapBattleWeaponIcons` and `...SoloIcons`, stay sheets.
+- **Preview (Level A):** `tools/map_battle_sprites.py preview ROW OUT_DIR [--facing F] [--weapon W] [--item ITEM]` steps each block's wait, dodge, strike and ranged scripts (main and aux), read from the `.asm` sources, for side 0, and writes a GIF and a frame strip for each. What it models, all from the code:
+  - timing by `$0E` and `$12`, graphics frames by `$03`, moves by `$19`; the strike (`$04`) is marked;
+  - tile bases as `rlPushToOAMBufferDualTileBase` applies them: tiles below `$20` as they are, `$20–$3F` plus the base, `$40` and up plus the high base; side 0's main sprite uses 0 and 0, a tall row's aux sprite base `$20`;
+  - the weapon in hand: `rlUploadMapBattleWeaponIcon` writes the item's icon over tiles `$40–$43` and `$50–$53`, with its two colours as colours 2 and 3.
+  - It leaves out side 1's bases, tiles below `$20`, and the waits on the other side, which go on at once. Level B (an OAM packer from assembled frames) is not started.
+- **`g4bppcMapBattleCritUnused4`:** entry 4 of `aMapBattleScriptedCritSprites`, read by `wBattleCriticalType - 1`. `rlActionStructGetScriptedCritPossibility` returns only types 0–3, and the other writers only set or clear bit `$8000`, so it is never read. `gfx_inventory.py` counts it as `unused` through a checked `UNREACHABLE` list.
+- **Add path: a checklist, not yet a command (see *Room in the ROM*).** A new map sprite needs:
+  - a row in the pointer CSV (its ID is the row) and its PNG;
+  - a line in `gfx/build/MapMovementSprites/sprites.streams`, with ROM space for the stream. `build.sh` only compresses streams with a `.comp`, so a new stream also needs that loop changed;
+  - standing frames, which means raising the counts in `aShortStandingMapSpritePointers`/`aTallStandingMapSpritePointers` (`.for range(63)`/`range(31)`, `engine/map/map_sprites.asm`) and `stand_count` in the tool. `StandingMapSprites1` has room for one more short sprite before `$D76000`. `StandingMapSprites2` has none before the unreferenced `UnusedDA45C0`;
+  - a byte in `aShortMapSpriteMovementSounds` or `aTallMapSpriteMovementSounds`; for tall sprites, an `aMapSpriteWalkOffsetPointers` entry; and `aMapSpriteWalkFrameDelays` (`.fill 65, 9`) when a short ID passes 64;
+  - a class assignment in `data/class/ClassMapSpriteAssignment.asm`.
+
+  A map battle row needs a new `aBattleMapSpriteData` row (49 bytes: 8 pairs of long pointers and the tall byte), its 8 sprite data streams and graphics (existing ones can be shared), and the class or sprite index that selects it (`rlGetMapBattleClassSprite`).
+- **Proved:** `tools/map_sprites.py --self-test` round-trips all 97 sprites against their `.comp` streams and both standing sheets against `fe4.sfc`, and checks the committed PNGs. It also checks that an edit to a short frame's centre cell changes exactly tiles `$22` and `$31`, that a standing edit changes one tile, that a tall edit changes the tile the array draws there, LZ recompression, and refusals. `tools/map_battle_sprites.py --self-test` round-trips all 500 sheets, checks that a centre-cell edit changes that frame's `$22`/`$31` and a tile-row edit the bow block, LZ recompression, refusals, and previews of a short and a tall row. A clean build is byte-identical. With `./build.sh mod`:
+  - a Soldier map sprite edit (walking and standing) reached the ROM, and all 97 moved streams still decompressed to their PNGs;
+  - a recoloured `Soldier0` map battle frame reached the ROM, and all 500 still matched;
+  - new art in a blank map battle frame overflowed `A08000` by 12 bytes, and `stream_layout.py` refused it.
 
 ---
 
