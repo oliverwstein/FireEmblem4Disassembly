@@ -14,7 +14,8 @@ Classifies each asset by:
     sprite data assembly, or a tile sheet whose tile order is already the
     asset's own order (the font glyph sheets, in character-code order; the item
     icon grid, with ItemIcons.json), or a map sprite frame-grid PNG
-    (map_sprites.py: walking streams and both standing sheets);
+    (map_sprites.py: walking streams and both standing sheets), or a map battle
+    frame-grid sheet (map_battle_sprites.py);
   - unused: nothing in engine/, data/, include/, events/ or build.asm names the
     label outside a comment and its own definition (no reader);
   - sheet: an indexed .4bpp.png/.2bpp.png tile sheet in VRAM order;
@@ -34,6 +35,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import map_sprites
+import map_battle_sprites
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_MD = os.path.join(ROOT, 'docs', 'reference', 'gfx_inventory.md')
@@ -142,6 +144,8 @@ def collect_inventory():
     # 1. Compressed streams from every .streams file
     map_sprite_src = {f: os.path.relpath(map_sprites.src_path(kind, n), ROOT)
                       for kind, _, n, f in map_sprites.sprites()}
+    map_battle_src = {l: os.path.relpath(map_battle_sprites.src_path(l), ROOT)
+                      for l in map_battle_sprites.sheets()}
     for spath in sorted(glob.glob(os.path.join(ROOT, 'gfx', '**', '*.streams'), recursive=True)):
         sdir = os.path.dirname(spath)
         rel_dir = os.path.relpath(sdir, ROOT).replace(os.sep, '/')
@@ -165,6 +169,8 @@ def collect_inventory():
 
                 if rel_dir == 'gfx/build/portraits':
                     form, system, phase, src = 'authored', 'portraits', 'Phase 2', f'gfx/portraits/{name}.png'
+                elif label in map_battle_src:
+                    form, system, phase, src = 'authored', 'map_battle', 'Phase 5', map_battle_src[label]
                 elif rel_dir == 'gfx/build/MapMovementSprites':
                     form, system, phase, src = 'authored', 'map_sprites', 'Phase 5', map_sprite_src[name]
                 elif out_rel in scene_idx:

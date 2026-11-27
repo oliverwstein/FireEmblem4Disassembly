@@ -39,11 +39,12 @@ that for every gfx/map_battle/aMapBattle*Layout*.asm newer than its .bin (writte
 beside its .bin.comp in gfx/build/*/), and
 is what ./build.sh runs.
 
-There is no preview yet: a frame does not hold its own picture. Its tiles from
-$20 ($28 for side 1) are whatever graphics frame the script last uploaded with
-command $03 (ACTIVE_SPRITE_MAP_BATTLE_FRAME, from the paired g4bppcMapBattle*
-stream through aMapBattleSpriteDMATable to aMapBattleSideFrameVRAM), and the
-rest depend on the sprite's tile base, so a preview has to step a script.
+A frame does not hold its own picture: its tiles from $20 ($28 for side 1) are
+whatever graphics frame the script last uploaded with command $03
+(ACTIVE_SPRITE_MAP_BATTLE_FRAME, from the paired g4bppcMapBattle* stream through
+aMapBattleSpriteDMATable to aMapBattleSideFrameVRAM), and the rest depend on
+each sprite's tile bases. tools/map_battle_sprites.py preview steps the scripts
+to draw them.
 
 --self-test decodes and assembles all 120 streams (from their committed .comp)
 and compares bytes, checks that the committed .asm files assemble to the same
