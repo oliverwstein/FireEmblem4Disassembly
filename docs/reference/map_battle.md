@@ -48,7 +48,7 @@ A tome or staff plays an effect over a background of its own. The effect number 
 For each round, the battle's script:
 
 1. `rlSelectMapMagicEffectForRound`: `wMapMagicEffect` = the acting side's number.
-2. `rlQueueMapMagicBackgroundTiles`, `...Tilemap`, `...Palette` (queued before the rounds) decompress the background from `aMapBattleMagicBackgrounds`. Meteor and Valflame have a second tilemap for a target on the right of the screen.
+2. `rlQueueMapMagicBackgroundTiles`, `...Tilemap`, `...Palette` (queued before the rounds) decompress the background from `aMapBattleMagicBackgrounds`. Meteor and Valflame have a second tilemap for a target on the right of the screen. Authored sources for the 21 palettes, 25 assembled backgrounds, and 24 sprite/action/cutscene/ripple sheets live in `gfx/effects/map_magic/` (built by `tools/battle_effects.py` and `tools/scene_pack.py`).
 3. `rlUploadMapMagicBackgroundTiles`, `...TilesRest`, `...Tilemap`, `rlCopyMapMagicBackgroundColors`, then `rlLoadMapMagicSprites` and `rlUploadMapMagicSpriteTiles` (`aMapBattleMagicSprites`).
 4. `rlStartMapMagicEffect` saves the screen registers and creates `procMapMagicEffect`.
 5. The battler's sprite script reaches `ACTIVE_SPRITE_START_MAP_MAGIC` (command `$10`), which sets `wMapMagicStart`. The proc then runs the spell's starter from `aMapMagicEffectStarters` (`rlStartMapMagicFire` ... `rlStartMapMagicBrokenStaff`) and ends. The script waits at `ACTIVE_SPRITE_WAIT_MAP_MAGIC` (command `$11`) until the effect sets `wMapMagicDone`, usually after fading the colours back (`rsFadeBackMapMagicColors`).
