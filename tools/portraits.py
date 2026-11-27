@@ -15,9 +15,12 @@ from ./build.sh, and Pillow.
 How a portrait is stored: $800 bytes decompressed, 64 4bpp tiles, read as four
 rows of 16 tiles. rsDialogueLoadPortraitWriteTilemap ($91/9739) builds the 6x8
 tile face from them: the top half is columns 0-5, the bottom half columns 6-11
-(the tile 6 after the one above). Columns 12-15 are not part of the face; they
-are probably the mouth and eye frames. The game mirrors the face for one of the
-two dialogue slots. Colour 0 is drawn as it is in the palette.
+(the tile 6 after the one above). Columns 12-15 are the two 4x2-tile (32x16)
+mouth animation frames (rlUpdateDialoguePortraitOverlayTiles /
+aDialoguePortraitOverlayTileOffsets, and aUnitPortraitSpritesFrame1/2 in
+engine/castle/keepers.asm), replacing the mouth strip at (0, 32)..(31, 47) on
+the face. The game mirrors the face for one of the two dialogue slots. Colour 0
+is drawn as it is in the palette.
 
 Several entries share graphics with different palettes. Entries $B9-$F2 are
 generic class cards (a framed picture of the class, not a face): portrait ID

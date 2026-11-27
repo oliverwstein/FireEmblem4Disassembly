@@ -1,7 +1,9 @@
 # The portrait graphics, in the order they are placed from start to end:
 # the lower halves of banks $CA-$D0 (tools/stream_layout.py). Each NAME is
-# gfx/portraits/NAME.4bpp.png, built through NAME.4bpp.lz. Entries are the
-# portrait data IDs that use it (PortraitData... in PortraitGraphicPointers.csv).
+# gfx/portraits/NAME.png (80x64 assembled face + mouth frames), packed to
+# NAME.4bpp by tools/portrait_pack.py and compressed to NAME.4bpp.lz. Entries
+# are the portrait data IDs that use it (PortraitData... in
+# PortraitGraphicPointers.csv).
 start $CA65B5
 end $D05639
 

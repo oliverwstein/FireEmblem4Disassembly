@@ -77,6 +77,9 @@ generate() {
     fi
   done < <(find gfx \( -name '*.4bpp.png' -o -name '*.2bpp.png' \))
 
+  # Portraits: gfx/portraits/NAME.png (80x64 assembled face + mouth frames) to NAME.4bpp.
+  python3 tools/portrait_pack.py build
+
   # Compressed graphics: NAME.4bpp / NAME.2bpp to NAME.4bpp.lz / NAME.2bpp.lz,
   # keeping the committed original stream NAME.*bpp.comp while it still decompresses to it.
   while IFS= read -r t; do
