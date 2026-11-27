@@ -287,8 +287,11 @@ def to_source(raw, name):
             ul = [(None, f'{ind}.byte ' + ', '.join(f'${x:02X}' for x in raw[i:min(i + 16, stop)]))
                   for i in range(a, stop, 16)]
             if a in bad:
-                ul.insert(0, (None, f'{ind}; Not a script this data can run: command $17 calls '
-                                    f'routines in the sprite\'s bank, $7E (RAM), where none starts.'))
+                if 0x17 in raw[a:stop]:
+                    ul.insert(0, (None, f'{ind}; Not a script this data can run: command $17 calls '
+                                        f'routines in the sprite\'s bank, $7E (RAM), where none starts.'))
+                else:
+                    ul.insert(0, (None, f'{ind}; Not a valid active sprite script.'))
             items.append((a, stop - a, ul))
 
     # Lay the items out in order; whatever lies between is kept as bytes.
@@ -349,16 +352,24 @@ PRELUDE = '''.cpu "65816"
 def assemble(src, out):
     with tempfile.TemporaryDirectory() as tmp:
         wrapper = os.path.join(tmp, 'wrap.asm')
-        open(wrapper, 'w').write(PRELUDE.format(root=ROOT, src=os.path.abspath(src)))
+        tmp_out = os.path.join(tmp, 'out.bin')
+        with open(wrapper, 'w', encoding='utf-8') as f:
+            f.write(PRELUDE.format(
+                root=ROOT.replace('\\', '/'),
+                src=os.path.abspath(src).replace('\\', '/'),
+            ))
         exe = next((x for x in (os.path.join(ROOT, 'tools', '64tass.exe'), os.path.join(ROOT, 'tools', '64tass'))
                     if os.path.exists(x)), '64tass')
         r = subprocess.run([exe, '-q', '--nostart', '-Wall', '-Wno-portable', '-Wno-shadow',
-                            '-o', os.path.abspath(out), wrapper], capture_output=True, text=True)
+                            '-o', tmp_out, wrapper], capture_output=True, text=True)
         if r.returncode:
             sys.exit(f'{src}: 64tass failed\n{r.stdout}{r.stderr}')
-    data = open(out, 'rb').read()
+        with open(tmp_out, 'rb') as f:
+            data = f.read()
     if len(data) > MAX_SIZE:
         sys.exit(f'{src}: {len(data):#x} bytes, more than a side\'s ${MAX_SIZE:X}-byte buffer')
+    with open(out, 'wb') as f:
+        f.write(data)
     return data
 
 
@@ -371,10 +382,12 @@ def decompress_comp(path):
 
 
 def build():
+    deps_mtime = max(os.path.getmtime(os.path.join(ROOT, p))
+                     for p in ('include/Sprites.h', 'include/ActiveSpriteEngine.h'))
     n = 0
     for src in sorted(glob.glob(PATTERN + '.asm')):
         out = src[:-4] + '.bin'
-        if not os.path.exists(out) or os.path.getmtime(src) > os.path.getmtime(out):
+        if not os.path.exists(out) or max(os.path.getmtime(src), deps_mtime) > os.path.getmtime(out):
             assemble(src, out)
             n += 1
     return n
@@ -424,6 +437,18 @@ def self_test():
         sb[0][0][0] = sa[0][0][0]
         assert sa == sb, 'adding a sprite changed other frames or scripts'
         assert list(b['blocks'])[1] == list(a['blocks'])[1] + 5, 'later blocks did not move by 5 bytes'
+
+        over_src = os.path.join(tmp, 'over.asm')
+        over_out = os.path.join(tmp, 'over.bin')
+        with open(over_src, 'w', encoding='utf-8') as f:
+            f.write(f'  .fill ${MAX_SIZE + 1:X}, 0\n')
+        try:
+            assemble(over_src, over_out)
+        except SystemExit:
+            pass
+        else:
+            raise AssertionError('oversized layout should fail')
+        assert not os.path.exists(over_out), 'failed assemble left output file behind'
     print(f'120 of 120 map battle sprite data streams decode and assemble byte-identical '
           f'({committed} committed sources checked); a 5-byte frame edit moves the rest and keeps every script')
 

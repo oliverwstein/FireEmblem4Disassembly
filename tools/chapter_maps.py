@@ -125,7 +125,10 @@ def entry_value(text):
     m = re.fullmatch(r'([0-9A-Fa-f]{1,3}):([0-7])([phv]*)', text.strip())
     if not m:
         raise ValueError(f'bad tilemap entry {text!r}')
-    v = int(m.group(1), 16) | int(m.group(2)) << 10
+    tile = int(m.group(1), 16)
+    if tile > 0x3FF:
+        raise ValueError(f'tile index ${tile:X} exceeds 10-bit max ($3FF) in {text!r}')
+    v = tile | int(m.group(2)) << 10
     for c, bit in (('p', 0x2000), ('h', 0x4000), ('v', 0x8000)):
         if c in m.group(3):
             v |= bit
@@ -138,7 +141,19 @@ def layout_csv(raw):
 
 
 def layout_bin(text):
-    return b''.join(struct.pack('<H', int(c, 16)) for row in csv.reader(text.splitlines()) for c in row)
+    rows = list(csv.reader(text.splitlines()))
+    if len(rows) != 64:
+        raise ValueError(f'layout must have 64 rows, got {len(rows)}')
+    data = bytearray()
+    for r, row in enumerate(rows):
+        if len(row) != 64:
+            raise ValueError(f'layout row {r} must have 64 columns, got {len(row)}')
+        for c, cell in enumerate(row):
+            val = int(cell, 16)
+            if not 0 <= val <= 0xFFFF:
+                raise ValueError(f'layout word out of range at ({r}, {c}): {cell!r}')
+            data += struct.pack('<H', val)
+    return bytes(data)
 
 
 def entries_csv(raw):
@@ -150,9 +165,14 @@ def entries_csv(raw):
 
 def entries_bin(text):
     rows = list(csv.reader(text.splitlines()))[1:]
+    if len(rows) != 256:
+        raise ValueError(f'tile entries must have 256 rows, got {len(rows)}')
     data = bytearray()
     for n, row in enumerate(rows):
-        assert int(row[0]) == n, f'tile ID {row[0]} out of order (expected {n})'
+        if len(row) != 5:
+            raise ValueError(f'tile entry row {n} must have 5 columns, got {len(row)}')
+        if int(row[0]) != n:
+            raise ValueError(f'tile ID {row[0]} out of order (expected {n})')
         data += struct.pack('<4H', *(entry_value(c) for c in row[1:5]))
     return bytes(data)
 
@@ -165,10 +185,24 @@ def terrain_csv(raw):
 def terrain_bin(text):
     values = {n: v for v, n in terrain_names().items()}
     rows = list(csv.reader(text.splitlines()))[1:]
+    if len(rows) != 1024:
+        raise ValueError(f'terrain table must have 1024 rows, got {len(rows)}')
     data = bytearray()
-    for n, (tid, t) in enumerate(rows):
-        assert int(tid) == n, f'tile ID {tid} out of order (expected {n})'
-        data.append(int(t[1:], 16) if t.startswith('$') else values[t])
+    for n, row in enumerate(rows):
+        if len(row) != 2:
+            raise ValueError(f'terrain row {n} must have 2 columns, got {len(row)}')
+        tid, t = row[0].strip(), row[1].strip()
+        if int(tid) != n:
+            raise ValueError(f'tile ID {tid} out of order (expected {n})')
+        if t.startswith('$'):
+            val = int(t[1:], 16)
+            if not 0 <= val <= 0xFF:
+                raise ValueError(f'terrain value out of range at tile {n}: {t!r}')
+            data.append(val)
+        else:
+            if t not in values:
+                raise ValueError(f'unknown terrain {t!r} at tile {n}')
+            data.append(values[t])
     return bytes(data)
 
 
@@ -193,11 +227,19 @@ def decode(label):
 
 
 def build():
+    terrain_h = os.path.join(ROOT, 'include/Terrain.h')
+    terrain_h_mtime = os.path.getmtime(terrain_h)
     for label in stream_labels():
+        kind = kind_of(label)
         src, out = bin_path(label)[:-4] + '.csv', bin_path(label)
-        if not os.path.exists(out) or os.path.getmtime(src) > os.path.getmtime(out):
-            data = KINDS[kind_of(label)][1](open(src, encoding='utf-8').read())
-            open(out, 'wb').write(data)
+        src_mtime = os.path.getmtime(src)
+        if kind == 'Terrain':
+            src_mtime = max(src_mtime, terrain_h_mtime)
+        if not os.path.exists(out) or src_mtime > os.path.getmtime(out):
+            with open(src, encoding='utf-8') as f:
+                data = KINDS[kind][1](f.read())
+            with open(out, 'wb') as f:
+                f.write(data)
 
 
 def render_chapter(ch, rom, labels, base_tiles, out_png):
@@ -278,6 +320,27 @@ def self_test():
         render_chapter(chapters['Prologue'], open(os.path.join(ROOT, 'fe4.sfc'), 'rb').read(), load_labels(),
                        decode_4bpp_tiles(open(os.path.join(ROOT, 'gfx/map/MapTiles.4bpp'), 'rb').read()),
                        os.path.join(tmp, 'Prologue.png'))
+    for bad in ('400:1', 'FFF:0'):
+        try:
+            entry_value(bad)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f'entry_value({bad!r}) should fail')
+    for fn, arg, desc in (
+        (layout_bin, '0000\n', 'short layout'),
+        (entries_bin, 'tile_id,top_left,bottom_left,top_right,bottom_right\n0,000:0,000:0,000:0,000:0\n', 'short entries'),
+        (entries_bin, 'tile_id,top_left,bottom_left,top_right,bottom_right\n' +
+                      ''.join(f'{i},000:0,000:0,000:0,000:0,extra\n' for i in range(256)), 'extra entry col'),
+        (terrain_bin, 'tile_id,terrain\n0,TerrainPlains\n', 'short terrain'),
+        (terrain_bin, 'tile_id,terrain\n' + ''.join(f'{i},TerrainBogus\n' for i in range(1024)), 'unknown terrain'),
+    ):
+        try:
+            fn(arg)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f'{desc} should fail')
     print(f'{len(labels)} chapter map streams (12 chapters) decode and encode byte-identical '
           f'({committed} committed CSVs checked); Prologue rendered')
 
