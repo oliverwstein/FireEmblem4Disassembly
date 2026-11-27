@@ -1,0 +1,85 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE02090",
+      "byte_offset": 16,
+      "dest": 17,
+      "count": 31,
+      "span_labels": true,
+      "from": "script 0x03: aBattleScenePaletteCopyTable entry 6"
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD9F2",
+      "byte_offset": 1,
+      "dest": 25,
+      "count": 7,
+      "span_labels": true,
+      "from": "script 0x02: aBattleScenePaletteEffects entry 161, colors 0-6 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/Fire.4bpp.png",
+      "max_tiles": 160,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "Fire.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapEF7EBA.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    },
+    {
+      "grid": "FireFlip.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapEF7FFC.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    },
+    {
+      "grid": "Elfire.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapEF7972.bin",
+      "width": 64,
+      "height": 64,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    }
+  ]
+}

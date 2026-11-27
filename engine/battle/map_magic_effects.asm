@@ -15984,12 +15984,15 @@
       .al
       .xl
 
-      rlStartMapMagicCutsceneSeqUnused ; 9F/F4C5
+      rlStartMapMagicCutsceneSeq ; 9F/F4C5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Creates procMapMagicCutsceneSeq. Run by Julius's death cutscene
+        ; (rlASMCChapterFinalJuliusDeathCutscene, events/ChapterFinal/EventChapterFinalJuliusDied.asm).
 
         phx
         lda #(`procMapMagicCutsceneSeq)<<8

@@ -1,0 +1,48 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE0221D",
+      "byte_offset": 92,
+      "dest": 33,
+      "count": 31,
+      "span_labels": true,
+      "from": "script 0x17: aBattleScenePaletteCopyTable entry 14"
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aTitleIntroPalette2",
+      "byte_offset": 0,
+      "dest": 49,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x17: aBattleScenePaletteEffects entry 109 (type 7)"
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/HelBG1.4bpp.png",
+      "max_tiles": 160,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "HelBG1.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF40D9D.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 768
+        }
+      ]
+    }
+  ]
+}

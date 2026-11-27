@@ -39,6 +39,7 @@ clean() {
   python3 tools/map_sprites.py clean
   python3 tools/map_battle_sprites.py clean
   python3 tools/battle_animations.py clean
+  python3 tools/battle_effects.py clean
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
@@ -97,7 +98,12 @@ generate() {
   # to NAME.4bpp beside its .comp in gfx/build/*/.
   python3 tools/battle_animations.py build
 
-  # Scenes & backgrounds: gfx/scenes/**/*.scene.json and gfx/ui/layouts/*.scene.json
+  # Battle effects & map-battle magic: palettes, sprite sheets, and effect tile sheets
+  # (before scene_pack.py, which reads gfx/effects/battle_scene/tiles/*.png and palettes/*.asm).
+  python3 tools/battle_effects.py build
+
+  # Scenes & backgrounds: gfx/scenes/**/*.scene.json, gfx/ui/layouts/*.scene.json,
+  # and gfx/effects/**/*.scene.json
   python3 tools/scene_pack.py build
 
   # Item icons: gfx/icons/ItemIcons.json -> data/item/ItemIconOffsets.asm.

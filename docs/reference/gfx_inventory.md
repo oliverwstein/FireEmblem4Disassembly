@@ -8,10 +8,10 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 
 | Form | Compressed | Uncompressed | Total |
 |---|---:|---:|---:|
-| `authored` | 1048 | 24 | 1072 |
-| `sheet` | 392 | 21 | 413 |
-| `raw` | 152 | 4 | 156 |
-| `unused` | 55 | 8 | 63 |
+| `authored` | 1178 | 24 | 1202 |
+| `sheet` | 377 | 21 | 398 |
+| `raw` | 31 | 4 | 35 |
+| `unused` | 61 | 8 | 69 |
 | **Total** | **1647** | **57** | **1704** |
 
 ## Summary by System and Form
@@ -19,7 +19,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | System | Authored | Sheet | Raw | Unused | Total |
 |---|---:|---:|---:|---:|---:|
 | `battle_animation` | 0 | 231 | 0 | 5 | 236 |
-| `battle_effects` | 0 | 86 | 121 | 47 | 254 |
+| `battle_effects` | 130 | 71 | 0 | 53 | 254 |
 | `chapter_maps` | 32 | 10 | 0 | 0 | 42 |
 | `fonts` | 3 | 0 | 0 | 0 | 3 |
 | `icons` | 1 | 0 | 0 | 0 | 1 |
@@ -664,7 +664,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `aMapBattleCavalierLayout6` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattleCavalierLayout6.asm` | `gfx/build/A08000/aMapBattleCavalierLayout6.bin` |
 | compressed | `acBattleBackgroundVillageTilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Village.scene.json` | `gfx/build/AFC8C0/acBattleBackgroundVillageTilemap.bin` |
 | compressed | `g4bppcBattleBackgroundVillage` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Village.scene.json` | `gfx/build/AFC8C0/g4bppcBattleBackgroundVillage.4bpp` |
-| compressed | `g4bppcMapMagicCutsceneGfx1` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/AFC8C0/g4bppcMapMagicCutsceneGfx1.4bpp.png` | `gfx/build/AFC8C0/g4bppcMapMagicCutsceneGfx1.4bpp` |
+| compressed | `g4bppcMapMagicCutsceneGfx1` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/MapMagicCutscene1.4bpp.png` | `gfx/build/AFC8C0/g4bppcMapMagicCutsceneGfx1.4bpp` |
 | compressed | `g4bppcBattleBackgroundPlains` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Plains.scene.json` | `gfx/build/B48720/g4bppcBattleBackgroundPlains.4bpp` |
 | compressed | `g4bppcBattleBackgroundSand` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Sand.scene.json` | `gfx/build/B48720/g4bppcBattleBackgroundSand.4bpp` |
 | compressed | `g4bppcBattleBackgroundMountain` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Mountain.scene.json` | `gfx/build/B48720/g4bppcBattleBackgroundMountain.4bpp` |
@@ -690,7 +690,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcGameOverTiles` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/GameOver.scene.json` | `gfx/build/C00A2B/g4bppcGameOverTiles.4bpp` |
 | compressed | `acGameOverBG1Tilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/GameOver.scene.json` | `gfx/build/C00A2B/acGameOverBG1Tilemap.bin` |
 | compressed | `acGameOverBG2Tilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/GameOver.scene.json` | `gfx/build/C00A2B/acGameOverBG2Tilemap.bin` |
-| compressed | `g4bppcMapMagicRippleTiles` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/C00A2B/g4bppcMapMagicRippleTiles.4bpp.png` | `gfx/build/C00A2B/g4bppcMapMagicRippleTiles.4bpp` |
+| compressed | `g4bppcMapMagicRippleTiles` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/MapMagicRipple.4bpp.png` | `gfx/build/C00A2B/g4bppcMapMagicRippleTiles.4bpp` |
 | compressed | `g4bppcChapterMapPrologue` | `sheet` | `chapter_maps` | Phase 1 | `gfx/build/C70C80/g4bppcChapterMapPrologue.4bpp.png` | `gfx/build/C70C80/g4bppcChapterMapPrologue.4bpp` |
 | compressed | `g4bppcChapterMapChapter01` | `sheet` | `chapter_maps` | Phase 1 | `gfx/build/C70C80/g4bppcChapterMapChapter01.4bpp.png` | `gfx/build/C70C80/g4bppcChapterMapChapter01.4bpp` |
 | compressed | `g4bppcChapterMapChapter03` | `sheet` | `chapter_maps` | Phase 1 | `gfx/build/C70C80/g4bppcChapterMapChapter03.4bpp.png` | `gfx/build/C70C80/g4bppcChapterMapChapter03.4bpp` |
@@ -823,37 +823,37 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `aMapBattlePegasusRiderLayout5` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattlePegasusRiderLayout5.asm` | `gfx/build/D50000/aMapBattlePegasusRiderLayout5.bin` |
 | compressed | `aMapBattlePegasusRiderLayout6` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattlePegasusRiderLayout6.asm` | `gfx/build/D50000/aMapBattlePegasusRiderLayout6.bin` |
 | compressed | `aMapBattlePegasusRiderLayout7` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattlePegasusRiderLayout7.asm` | `gfx/build/D50000/aMapBattlePegasusRiderLayout7.bin` |
-| compressed | `acMapBattleMagicFenrirPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicFenrirPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicFenrirPalette.bin` |
-| compressed | `acMapBattleMagicHelPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicHelPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicHelPalette.bin` |
+| compressed | `acMapBattleMagicFenrirPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Fenrir.asm` | `gfx/build/D50000/acMapBattleMagicFenrirPalette.bin` |
+| compressed | `acMapBattleMagicHelPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Hel.asm` | `gfx/build/D50000/acMapBattleMagicHelPalette.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD534DC` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD534DC.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD534DC.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD53555` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53555.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53555.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD535C4` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD535C4.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD535C4.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD5362F` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD5362F.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD5362F.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD53670` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53670.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53670.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD536B8` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD536B8.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD536B8.bin` |
-| compressed | `acMapBattleMagicFirePalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicFirePalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicFirePalette.bin` |
-| compressed | `acMapBattleMagicBolganonePalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicBolganonePalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicBolganonePalette.bin` |
-| compressed | `acMapBattleMagicValflamePalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicValflamePalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicValflamePalette.bin` |
-| compressed | `acMapBattleMagicMeteorPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicMeteorPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicMeteorPalette.bin` |
+| compressed | `acMapBattleMagicFirePalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Fire.asm` | `gfx/build/D50000/acMapBattleMagicFirePalette.bin` |
+| compressed | `acMapBattleMagicBolganonePalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Bolganone.asm` | `gfx/build/D50000/acMapBattleMagicBolganonePalette.bin` |
+| compressed | `acMapBattleMagicValflamePalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Valflame.asm` | `gfx/build/D50000/acMapBattleMagicValflamePalette.bin` |
+| compressed | `acMapBattleMagicMeteorPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Meteor.asm` | `gfx/build/D50000/acMapBattleMagicMeteorPalette.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD53CFF` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53CFF.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53CFF.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD53D92` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53D92.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53D92.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD53DEC` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53DEC.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53DEC.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD53E5A` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53E5A.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD53E5A.bin` |
-| compressed | `acMapBattleMagicLightPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicLightPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicLightPalette.bin` |
-| compressed | `acMapBattleMagicNosferatuPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicNosferatuPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicNosferatuPalette.bin` |
-| compressed | `acMapBattleMagicAuraPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicAuraPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicAuraPalette.bin` |
+| compressed | `acMapBattleMagicLightPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Light.asm` | `gfx/build/D50000/acMapBattleMagicLightPalette.bin` |
+| compressed | `acMapBattleMagicNosferatuPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Nosferatu.asm` | `gfx/build/D50000/acMapBattleMagicNosferatuPalette.bin` |
+| compressed | `acMapBattleMagicAuraPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Aura.asm` | `gfx/build/D50000/acMapBattleMagicAuraPalette.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54330` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54330.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54330.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54378` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54378.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54378.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54407` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54407.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54407.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54424` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54424.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54424.bin` |
-| compressed | `acMapBattleMagicThunderPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicThunderPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicThunderPalette.bin` |
-| compressed | `acMapBattleMagicThoronPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicThoronPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicThoronPalette.bin` |
-| compressed | `acMapBattleMagicMjolnirPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicMjolnirPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicMjolnirPalette.bin` |
+| compressed | `acMapBattleMagicThunderPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Thunder.asm` | `gfx/build/D50000/acMapBattleMagicThunderPalette.bin` |
+| compressed | `acMapBattleMagicThoronPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Thoron.asm` | `gfx/build/D50000/acMapBattleMagicThoronPalette.bin` |
+| compressed | `acMapBattleMagicMjolnirPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Mjolnir.asm` | `gfx/build/D50000/acMapBattleMagicMjolnirPalette.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD548CE` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD548CE.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD548CE.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54916` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54916.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54916.bin` |
-| compressed | `acMapBattleMagicSilenceStaffPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicSilenceStaffPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicSilenceStaffPalette.bin` |
-| compressed | `acMapBattleMagicSleepStaffPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicSleepStaffPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicSleepStaffPalette.bin` |
-| compressed | `acMapBattleMagicBerserkStaffPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicBerserkStaffPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicBerserkStaffPalette.bin` |
+| compressed | `acMapBattleMagicSilenceStaffPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/SilenceStaff.asm` | `gfx/build/D50000/acMapBattleMagicSilenceStaffPalette.bin` |
+| compressed | `acMapBattleMagicSleepStaffPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/SleepStaff.asm` | `gfx/build/D50000/acMapBattleMagicSleepStaffPalette.bin` |
+| compressed | `acMapBattleMagicBerserkStaffPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/BerserkStaff.asm` | `gfx/build/D50000/acMapBattleMagicBerserkStaffPalette.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54D91` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54D91.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54D91.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54DD9` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54DD9.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54DD9.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54E60` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54E60.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54E60.bin` |
@@ -861,86 +861,86 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `acMapBattleMagicPaletteUnusedD54F0A` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54F0A.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54F0A.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54F31` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54F31.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54F31.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD54F79` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54F79.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD54F79.bin` |
-| compressed | `acMapBattleMagicWindPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicWindPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicWindPalette.bin` |
+| compressed | `acMapBattleMagicWindPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Wind.asm` | `gfx/build/D50000/acMapBattleMagicWindPalette.bin` |
 | compressed | `acMapBattleMagicPaletteUnusedD55131` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD55131.bin.comp` | `gfx/build/D50000/acMapBattleMagicPaletteUnusedD55131.bin` |
-| compressed | `acMapBattleMagicFortifyPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicFortifyPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicFortifyPalette.bin` |
-| compressed | `acMapBattleMagicReturnStaffPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicReturnStaffPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicReturnStaffPalette.bin` |
-| compressed | `acMapBattleMagicRestoreStaffPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicRestoreStaffPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicRestoreStaffPalette.bin` |
-| compressed | `acMapBattleMagicForsetiPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicForsetiPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicForsetiPalette.bin` |
-| compressed | `acMapBattleMagicBlizzardPalette` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicBlizzardPalette.bin.comp` | `gfx/build/D50000/acMapBattleMagicBlizzardPalette.bin` |
-| compressed | `g4bppcMapBattleMagicFenrir` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicFenrir.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicFenrir.4bpp` |
-| compressed | `g4bppcMapBattleMagicHel` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicHel.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicHel.4bpp` |
-| compressed | `g4bppcMapBattleMagicFire` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicFire.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicFire.4bpp` |
-| compressed | `g4bppcMapBattleMagicBolganone` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicBolganone.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicBolganone.4bpp` |
-| compressed | `g4bppcMapBattleMagicValflame` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicValflame.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicValflame.4bpp` |
-| compressed | `g4bppcMapBattleMagicMeteor` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicMeteor.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicMeteor.4bpp` |
-| compressed | `g4bppcMapBattleMagicLight` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicLight.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicLight.4bpp` |
-| compressed | `g4bppcMapBattleMagicNosferatu` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicNosferatu.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicNosferatu.4bpp` |
-| compressed | `g4bppcMapBattleMagicAura` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicAura.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicAura.4bpp` |
-| compressed | `g4bppcMapBattleMagicThunder` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicThunder.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicThunder.4bpp` |
-| compressed | `g4bppcMapBattleMagicThoron` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicThoron.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicThoron.4bpp` |
-| compressed | `g4bppcMapBattleMagicMjolnir` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicMjolnir.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicMjolnir.4bpp` |
-| compressed | `g4bppcMapBattleMagicSilenceStaff` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicSilenceStaff.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicSilenceStaff.4bpp` |
-| compressed | `g4bppcMapBattleMagicSleepStaff` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicSleepStaff.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicSleepStaff.4bpp` |
-| compressed | `g4bppcMapBattleMagicBerserkStaff` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicBerserkStaff.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicBerserkStaff.4bpp` |
-| compressed | `g4bppcMapBattleMagicWind` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicWind.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicWind.4bpp` |
-| compressed | `g4bppcMapBattleMagicMendStaff` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicMendStaff.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicMendStaff.4bpp` |
-| compressed | `g4bppcMapBattleMagicRecoverStaff` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicRecoverStaff.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicRecoverStaff.4bpp` |
+| compressed | `acMapBattleMagicFortifyPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Fortify.asm` | `gfx/build/D50000/acMapBattleMagicFortifyPalette.bin` |
+| compressed | `acMapBattleMagicReturnStaffPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/ReturnStaff.asm` | `gfx/build/D50000/acMapBattleMagicReturnStaffPalette.bin` |
+| compressed | `acMapBattleMagicRestoreStaffPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/RestoreStaff.asm` | `gfx/build/D50000/acMapBattleMagicRestoreStaffPalette.bin` |
+| compressed | `acMapBattleMagicForsetiPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Forseti.asm` | `gfx/build/D50000/acMapBattleMagicForsetiPalette.bin` |
+| compressed | `acMapBattleMagicBlizzardPalette` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/palettes/Blizzard.asm` | `gfx/build/D50000/acMapBattleMagicBlizzardPalette.bin` |
+| compressed | `g4bppcMapBattleMagicFenrir` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicFenrir.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicFenrir.4bpp` |
+| compressed | `g4bppcMapBattleMagicHel` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicHel.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicHel.4bpp` |
+| compressed | `g4bppcMapBattleMagicFire` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicFire.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicFire.4bpp` |
+| compressed | `g4bppcMapBattleMagicBolganone` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicBolganone.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicBolganone.4bpp` |
+| compressed | `g4bppcMapBattleMagicValflame` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicValflame.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicValflame.4bpp` |
+| compressed | `g4bppcMapBattleMagicMeteor` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicMeteor.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicMeteor.4bpp` |
+| compressed | `g4bppcMapBattleMagicLight` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicLight.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicLight.4bpp` |
+| compressed | `g4bppcMapBattleMagicNosferatu` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicNosferatu.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicNosferatu.4bpp` |
+| compressed | `g4bppcMapBattleMagicAura` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicAura.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicAura.4bpp` |
+| compressed | `g4bppcMapBattleMagicThunder` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicThunder.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicThunder.4bpp` |
+| compressed | `g4bppcMapBattleMagicThoron` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicThoron.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicThoron.4bpp` |
+| compressed | `g4bppcMapBattleMagicMjolnir` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicMjolnir.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicMjolnir.4bpp` |
+| compressed | `g4bppcMapBattleMagicSilenceStaff` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicSilenceStaff.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicSilenceStaff.4bpp` |
+| compressed | `g4bppcMapBattleMagicSleepStaff` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicSleepStaff.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicSleepStaff.4bpp` |
+| compressed | `g4bppcMapBattleMagicBerserkStaff` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicBerserkStaff.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicBerserkStaff.4bpp` |
+| compressed | `g4bppcMapBattleMagicWind` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicWind.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicWind.4bpp` |
+| compressed | `g4bppcMapBattleMagicMendStaff` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicMendStaff.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicMendStaff.4bpp` |
+| compressed | `g4bppcMapBattleMagicRecoverStaff` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicRecoverStaff.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicRecoverStaff.4bpp` |
 | compressed | `g4bppcMapBattleMagicUnusedD57B50` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicUnusedD57B50.4bpp.comp` | `gfx/build/D50000/g4bppcMapBattleMagicUnusedD57B50.4bpp` |
-| compressed | `g4bppcMapBattleMagicFortify` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicFortify.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicFortify.4bpp` |
-| compressed | `g4bppcMapBattleMagicReturnStaff` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicReturnStaff.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicReturnStaff.4bpp` |
-| compressed | `g4bppcMapBattleMagicRestoreStaff` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicRestoreStaff.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicRestoreStaff.4bpp` |
-| compressed | `g4bppcMapBattleMagicForseti` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicForseti.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicForseti.4bpp` |
-| compressed | `g4bppcMapBattleMagicBlizzard` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicBlizzard.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicBlizzard.4bpp` |
-| compressed | `acMapBattleMagicFenrirTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicFenrirTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicFenrirTilemap.bin` |
-| compressed | `acMapBattleMagicHelTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicHelTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicHelTilemap.bin` |
-| compressed | `acMapBattleMagicFireTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicFireTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicFireTilemap.bin` |
-| compressed | `acMapBattleMagicBolganoneTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicBolganoneTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicBolganoneTilemap.bin` |
-| compressed | `acMapBattleMagicValflameTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicValflameTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicValflameTilemap.bin` |
-| compressed | `acMapBattleMagicValflameTilemap2` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicValflameTilemap2.bin.comp` | `gfx/build/D50000/acMapBattleMagicValflameTilemap2.bin` |
-| compressed | `acMapBattleMagicMeteorTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicMeteorTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicMeteorTilemap.bin` |
-| compressed | `acMapBattleMagicMeteorTilemap2` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicMeteorTilemap2.bin.comp` | `gfx/build/D50000/acMapBattleMagicMeteorTilemap2.bin` |
-| compressed | `acMapBattleMagicLightTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicLightTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicLightTilemap.bin` |
-| compressed | `acMapBattleMagicNosferatuTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicNosferatuTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicNosferatuTilemap.bin` |
-| compressed | `acMapBattleMagicAuraTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicAuraTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicAuraTilemap.bin` |
-| compressed | `acMapBattleMagicThunderTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicThunderTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicThunderTilemap.bin` |
-| compressed | `acMapBattleMagicThoronTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicThoronTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicThoronTilemap.bin` |
-| compressed | `acMapBattleMagicMjolnirTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicMjolnirTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicMjolnirTilemap.bin` |
-| compressed | `acMapBattleMagicSilenceStaffTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicSilenceStaffTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicSilenceStaffTilemap.bin` |
-| compressed | `acMapBattleMagicSleepStaffTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicSleepStaffTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicSleepStaffTilemap.bin` |
-| compressed | `acMapBattleMagicBerserkStaffTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicBerserkStaffTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicBerserkStaffTilemap.bin` |
-| compressed | `acMapBattleMagicWindTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicWindTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicWindTilemap.bin` |
-| compressed | `acMapBattleMagicMendStaffTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicMendStaffTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicMendStaffTilemap.bin` |
-| compressed | `acMapBattleMagicRecoverStaffTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicRecoverStaffTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicRecoverStaffTilemap.bin` |
+| compressed | `g4bppcMapBattleMagicFortify` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicFortify.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicFortify.4bpp` |
+| compressed | `g4bppcMapBattleMagicReturnStaff` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicReturnStaff.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicReturnStaff.4bpp` |
+| compressed | `g4bppcMapBattleMagicRestoreStaff` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicRestoreStaff.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicRestoreStaff.4bpp` |
+| compressed | `g4bppcMapBattleMagicForseti` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicForseti.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicForseti.4bpp` |
+| compressed | `g4bppcMapBattleMagicBlizzard` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicBlizzard.scene.json` | `gfx/build/D50000/g4bppcMapBattleMagicBlizzard.4bpp` |
+| compressed | `acMapBattleMagicFenrirTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicFenrir.scene.json` | `gfx/build/D50000/acMapBattleMagicFenrirTilemap.bin` |
+| compressed | `acMapBattleMagicHelTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicHel.scene.json` | `gfx/build/D50000/acMapBattleMagicHelTilemap.bin` |
+| compressed | `acMapBattleMagicFireTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicFire.scene.json` | `gfx/build/D50000/acMapBattleMagicFireTilemap.bin` |
+| compressed | `acMapBattleMagicBolganoneTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicBolganone.scene.json` | `gfx/build/D50000/acMapBattleMagicBolganoneTilemap.bin` |
+| compressed | `acMapBattleMagicValflameTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicValflame.scene.json` | `gfx/build/D50000/acMapBattleMagicValflameTilemap.bin` |
+| compressed | `acMapBattleMagicValflameTilemap2` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicValflame.scene.json` | `gfx/build/D50000/acMapBattleMagicValflameTilemap2.bin` |
+| compressed | `acMapBattleMagicMeteorTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicMeteor.scene.json` | `gfx/build/D50000/acMapBattleMagicMeteorTilemap.bin` |
+| compressed | `acMapBattleMagicMeteorTilemap2` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicMeteor.scene.json` | `gfx/build/D50000/acMapBattleMagicMeteorTilemap2.bin` |
+| compressed | `acMapBattleMagicLightTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicLight.scene.json` | `gfx/build/D50000/acMapBattleMagicLightTilemap.bin` |
+| compressed | `acMapBattleMagicNosferatuTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicNosferatu.scene.json` | `gfx/build/D50000/acMapBattleMagicNosferatuTilemap.bin` |
+| compressed | `acMapBattleMagicAuraTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicAura.scene.json` | `gfx/build/D50000/acMapBattleMagicAuraTilemap.bin` |
+| compressed | `acMapBattleMagicThunderTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicThunder.scene.json` | `gfx/build/D50000/acMapBattleMagicThunderTilemap.bin` |
+| compressed | `acMapBattleMagicThoronTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicThoron.scene.json` | `gfx/build/D50000/acMapBattleMagicThoronTilemap.bin` |
+| compressed | `acMapBattleMagicMjolnirTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicMjolnir.scene.json` | `gfx/build/D50000/acMapBattleMagicMjolnirTilemap.bin` |
+| compressed | `acMapBattleMagicSilenceStaffTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicSilenceStaff.scene.json` | `gfx/build/D50000/acMapBattleMagicSilenceStaffTilemap.bin` |
+| compressed | `acMapBattleMagicSleepStaffTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicSleepStaff.scene.json` | `gfx/build/D50000/acMapBattleMagicSleepStaffTilemap.bin` |
+| compressed | `acMapBattleMagicBerserkStaffTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicBerserkStaff.scene.json` | `gfx/build/D50000/acMapBattleMagicBerserkStaffTilemap.bin` |
+| compressed | `acMapBattleMagicWindTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicWind.scene.json` | `gfx/build/D50000/acMapBattleMagicWindTilemap.bin` |
+| compressed | `acMapBattleMagicMendStaffTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicMendStaff.scene.json` | `gfx/build/D50000/acMapBattleMagicMendStaffTilemap.bin` |
+| compressed | `acMapBattleMagicRecoverStaffTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicRecoverStaff.scene.json` | `gfx/build/D50000/acMapBattleMagicRecoverStaffTilemap.bin` |
 | compressed | `acMapBattleMagicTilemapUnusedD629B1` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicTilemapUnusedD629B1.bin.comp` | `gfx/build/D50000/acMapBattleMagicTilemapUnusedD629B1.bin` |
-| compressed | `acMapBattleMagicFortifyTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicFortifyTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicFortifyTilemap.bin` |
-| compressed | `acMapBattleMagicReturnStaffTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicReturnStaffTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicReturnStaffTilemap.bin` |
-| compressed | `acMapBattleMagicRestoreStaffTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicRestoreStaffTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicRestoreStaffTilemap.bin` |
-| compressed | `acMapBattleMagicForsetiTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicForsetiTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicForsetiTilemap.bin` |
-| compressed | `acMapBattleMagicBlizzardTilemap` | `raw` | `battle_effects` | Phase 7 | `gfx/build/D50000/acMapBattleMagicBlizzardTilemap.bin.comp` | `gfx/build/D50000/acMapBattleMagicBlizzardTilemap.bin` |
-| compressed | `g4bppcMapBattleMagicJormungandrSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicJormungandrSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicJormungandrSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicFenrirSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicFenrirSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicFenrirSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicFireSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicFireSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicFireSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicElfireSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicElfireSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicElfireSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicBolganoneSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicBolganoneSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicBolganoneSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicValflameSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicValflameSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicValflameSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicMeteorSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicMeteorSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicMeteorSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicLightSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicLightSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicLightSprites.4bpp` |
+| compressed | `acMapBattleMagicFortifyTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicFortify.scene.json` | `gfx/build/D50000/acMapBattleMagicFortifyTilemap.bin` |
+| compressed | `acMapBattleMagicReturnStaffTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicReturnStaff.scene.json` | `gfx/build/D50000/acMapBattleMagicReturnStaffTilemap.bin` |
+| compressed | `acMapBattleMagicRestoreStaffTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicRestoreStaff.scene.json` | `gfx/build/D50000/acMapBattleMagicRestoreStaffTilemap.bin` |
+| compressed | `acMapBattleMagicForsetiTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicForseti.scene.json` | `gfx/build/D50000/acMapBattleMagicForsetiTilemap.bin` |
+| compressed | `acMapBattleMagicBlizzardTilemap` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/MapMagicBlizzard.scene.json` | `gfx/build/D50000/acMapBattleMagicBlizzardTilemap.bin` |
+| compressed | `g4bppcMapBattleMagicJormungandrSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/JormungandrSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicJormungandrSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicFenrirSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/FenrirSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicFenrirSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicFireSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/FireSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicFireSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicElfireSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/ElfireSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicElfireSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicBolganoneSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/BolganoneSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicBolganoneSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicValflameSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/ValflameSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicValflameSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicMeteorSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/MeteorSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicMeteorSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicLightSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/LightSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicLightSprites.4bpp` |
 | compressed | `g4bppcMapBattleMagicSpritesUnusedD64244` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicSpritesUnusedD64244.4bpp.comp` | `gfx/build/D50000/g4bppcMapBattleMagicSpritesUnusedD64244.4bpp` |
-| compressed | `g4bppcMapBattleMagicNosferatuSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicNosferatuSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicNosferatuSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicThunderSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicThunderSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicThunderSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicThoronSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicThoronSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicThoronSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicMjolnirSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicMjolnirSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicMjolnirSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicReturnStaffSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicReturnStaffSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicReturnStaffSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicThiefStaffSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicThiefStaffSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicThiefStaffSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicNosferatuSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/NosferatuSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicNosferatuSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicThunderSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/ThunderSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicThunderSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicThoronSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/ThoronSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicThoronSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicMjolnirSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/MjolnirSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicMjolnirSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicReturnStaffSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/ReturnStaffSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicReturnStaffSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicThiefStaffSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/ThiefStaffSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicThiefStaffSprites.4bpp` |
 | compressed | `g4bppcMapBattleMagicSpritesUnusedD65010` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicSpritesUnusedD65010.4bpp.comp` | `gfx/build/D50000/g4bppcMapBattleMagicSpritesUnusedD65010.4bpp` |
 | compressed | `g4bppcMapBattleMagicSpritesUnusedD65153` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicSpritesUnusedD65153.4bpp.comp` | `gfx/build/D50000/g4bppcMapBattleMagicSpritesUnusedD65153.4bpp` |
-| compressed | `g4bppcMapBattleMagicWarpStaffSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicWarpStaffSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicWarpStaffSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicRescueStaffSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicRescueStaffSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicRescueStaffSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicWarpStaffSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/WarpStaffSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicWarpStaffSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicRescueStaffSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/RescueStaffSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicRescueStaffSprites.4bpp` |
 | compressed | `g4bppcMapBattleMagicSpritesUnusedD6564B` | `unused` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicSpritesUnusedD6564B.4bpp.comp` | `gfx/build/D50000/g4bppcMapBattleMagicSpritesUnusedD6564B.4bpp` |
-| compressed | `g4bppcMapBattleMagicWindSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicWindSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicWindSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicElwindSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicElwindSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicElwindSprites.4bpp` |
-| compressed | `g4bppcMapBattleMagicTornadoSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapBattleMagicTornadoSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicTornadoSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicWindSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/WindSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicWindSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicElwindSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/ElwindSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicElwindSprites.4bpp` |
+| compressed | `g4bppcMapBattleMagicTornadoSprites` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/TornadoSprites.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleMagicTornadoSprites.4bpp` |
 | compressed | `aMapBattleBallisticianLayout3` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattleBallisticianLayout3.asm` | `gfx/build/D50000/aMapBattleBallisticianLayout3.bin` |
 | compressed | `aMapBattleBallisticianLayout2` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattleBallisticianLayout2.asm` | `gfx/build/D50000/aMapBattleBallisticianLayout2.bin` |
 | compressed | `aMapBattleBallisticianLayout1` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattleBallisticianLayout1.asm` | `gfx/build/D50000/aMapBattleBallisticianLayout1.bin` |
@@ -965,13 +965,13 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `aMapBattleThiefLayout5` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattleThiefLayout5.asm` | `gfx/build/D50000/aMapBattleThiefLayout5.bin` |
 | compressed | `aMapBattleThiefLayout6` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattleThiefLayout6.asm` | `gfx/build/D50000/aMapBattleThiefLayout6.bin` |
 | compressed | `aMapBattleThiefLayout7` | `authored` | `map_battle` | Phase 1 | `gfx/map_battle/aMapBattleThiefLayout7.asm` | `gfx/build/D50000/aMapBattleThiefLayout7.bin` |
-| compressed | `g4bppcMapActionEffectGfx1` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapActionEffectGfx1.4bpp.png` | `gfx/build/D50000/g4bppcMapActionEffectGfx1.4bpp` |
-| compressed | `g4bppcMapActionEffectGfx2` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapActionEffectGfx2.4bpp.png` | `gfx/build/D50000/g4bppcMapActionEffectGfx2.4bpp` |
+| compressed | `g4bppcMapActionEffectGfx1` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/MapActionEffect1.4bpp.png` | `gfx/build/D50000/g4bppcMapActionEffectGfx1.4bpp` |
+| compressed | `g4bppcMapActionEffectGfx2` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/MapActionEffect2.4bpp.png` | `gfx/build/D50000/g4bppcMapActionEffectGfx2.4bpp` |
 | compressed | `g4bppcMapBattleCritSibling` | `sheet` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritSibling.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleCritSibling.4bpp` |
 | compressed | `g4bppcMapBattleCritLover` | `sheet` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritLover.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleCritLover.4bpp` |
 | compressed | `g4bppcMapBattleCritUnused4` | `unused` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritUnused4.4bpp.comp` | `gfx/build/D50000/g4bppcMapBattleCritUnused4.4bpp` |
 | compressed | `g4bppcMapBattleCritTriangleAttack` | `sheet` | `map_battle` | Phase 5 | `gfx/build/D50000/g4bppcMapBattleCritTriangleAttack.4bpp.png` | `gfx/build/D50000/g4bppcMapBattleCritTriangleAttack.4bpp` |
-| compressed | `g4bppcMapMagicCutsceneGfx2` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/D50000/g4bppcMapMagicCutsceneGfx2.4bpp.png` | `gfx/build/D50000/g4bppcMapMagicCutsceneGfx2.4bpp` |
+| compressed | `g4bppcMapMagicCutsceneGfx2` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/map_magic/sprites/MapMagicCutscene2.4bpp.png` | `gfx/build/D50000/g4bppcMapMagicCutsceneGfx2.4bpp` |
 | compressed | `gcGenealogyWheelTiles` | `sheet` | `ui` | Phase 4 | `gfx/build/DD0000/gcGenealogyWheelTiles.4bpp.png` | `gfx/build/DD0000/gcGenealogyWheelTiles.4bpp` |
 | compressed | `g4bppcReviveScreenTiles` | `sheet` | `ui` | Phase 4 | `gfx/build/DD0000/g4bppcReviveScreenTiles.4bpp.png` | `gfx/build/DD0000/g4bppcReviveScreenTiles.4bpp` |
 | compressed | `acReviveScreenBG1Tilemap` | `authored` | `ui` | Phase 4 | `gfx/ui/layouts/ReviveScreen.scene.json` | `gfx/build/DD0000/acReviveScreenBG1Tilemap.bin` |
@@ -1013,19 +1013,19 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `acBattleBackgroundForestTilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/battle/Forest.scene.json` | `gfx/build/DF0000/acBattleBackgroundForestTilemap.bin` |
 | compressed | `g4bppcBattleAnimationSheetHighPriest` | `sheet` | `battle_animation` | Phase 6 | `gfx/battle_animation/sheets/HighPriest.png` | `gfx/build/DF0000/g4bppcBattleAnimationSheetHighPriest.4bpp` |
 | compressed | `g4bppcBattleSceneHUDTiles` | `sheet` | `ui` | Phase 4 | `gfx/build/E02EBD/g4bppcBattleSceneHUDTiles.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneHUDTiles.4bpp` |
-| compressed | `acBattleSceneDecompE03105` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneDecompE03105.bin.comp` | `gfx/build/E02EBD/acBattleSceneDecompE03105.bin` |
-| compressed | `g4bppcBattleSceneDecompE033A5` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneDecompE033A5.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneDecompE033A5.4bpp` |
+| compressed | `g4bppcBattleSceneDecompE03105` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/LevelUpWindow.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneDecompE03105.4bpp` |
+| compressed | `g4bppcBattleSceneDecompE033A5` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/LevelUpExtra.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneDecompE033A5.4bpp` |
 | compressed | `gcBattleSceneStatLabels` | `sheet` | `ui` | Phase 4 | `gfx/build/E02EBD/gcBattleSceneStatLabels.2bpp.png` | `gfx/build/E02EBD/gcBattleSceneStatLabels.2bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesE03749` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesE03749.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesE03749.4bpp` |
+| compressed | `g4bppcBattleSceneEffectTilesE03749` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ExpBar.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesE03749.4bpp` |
 | compressed | `gcBattleSceneLevelUpBanner` | `sheet` | `ui` | Phase 4 | `gfx/build/E02EBD/gcBattleSceneLevelUpBanner.4bpp.png` | `gfx/build/E02EBD/gcBattleSceneLevelUpBanner.4bpp` |
 | compressed | `acBattleSceneHUDWindowTilemap` | `authored` | `ui` | Phase 4 | `gfx/ui/layouts/BattleSceneHUDWindow.scene.json` | `gfx/build/E02EBD/acBattleSceneHUDWindowTilemap.bin` |
-| compressed | `acBattleSceneDecompTilemapE03B09` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneDecompTilemapE03B09.bin.comp` | `gfx/build/E02EBD/acBattleSceneDecompTilemapE03B09.bin` |
+| compressed | `acBattleSceneDecompTilemapE03B09` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BattleSceneLevelUpWindow.scene.json` | `gfx/build/E02EBD/acBattleSceneDecompTilemapE03B09.bin` |
 | compressed | `acBattleSceneHUDTilemap` | `authored` | `ui` | Phase 4 | `gfx/ui/layouts/BattleSceneHUD.scene.json` | `gfx/build/E02EBD/acBattleSceneHUDTilemap.bin` |
-| compressed | `acBattleSceneDecompTilemapE03D3B` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneDecompTilemapE03D3B.bin.comp` | `gfx/build/E02EBD/acBattleSceneDecompTilemapE03D3B.bin` |
-| compressed | `acBattleSceneDecompE03D7F` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneDecompE03D7F.bin.comp` | `gfx/build/E02EBD/acBattleSceneDecompE03D7F.bin` |
+| compressed | `acBattleSceneDecompTilemapE03D3B` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BattleSceneLevelUpBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneDecompTilemapE03D3B.bin` |
+| compressed | `g4bppcBattleSceneDecompE03D7F` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/MessageWindow.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneDecompE03D7F.4bpp` |
 | compressed | `acBattleSceneUnusedTilemapE03F2B` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneUnusedTilemapE03F2B.bin.comp` | `gfx/build/E02EBD/acBattleSceneUnusedTilemapE03F2B.bin` |
-| compressed | `acBattleSceneDecompTilemapE04000` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneDecompTilemapE04000.bin.comp` | `gfx/build/E02EBD/acBattleSceneDecompTilemapE04000.bin` |
-| compressed | `acBattleSceneDecompTilemapE040D3` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneDecompTilemapE040D3.bin.comp` | `gfx/build/E02EBD/acBattleSceneDecompTilemapE040D3.bin` |
+| compressed | `acBattleSceneDecompTilemapE04000` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BattleSceneMessageWindow.scene.json` | `gfx/build/E02EBD/acBattleSceneDecompTilemapE04000.bin` |
+| compressed | `acBattleSceneDecompTilemapE040D3` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BattleSceneMessageWindow.scene.json` | `gfx/build/E02EBD/acBattleSceneDecompTilemapE040D3.bin` |
 | compressed | `acBattleSceneUnusedTilemapE0414C` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneUnusedTilemapE0414C.bin.comp` | `gfx/build/E02EBD/acBattleSceneUnusedTilemapE0414C.bin` |
 | compressed | `acBattleSceneUnusedTilemapE041B7` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneUnusedTilemapE041B7.bin.comp` | `gfx/build/E02EBD/acBattleSceneUnusedTilemapE041B7.bin` |
 | compressed | `g4bppcBattleAnimationSheetJuniorLord` | `sheet` | `battle_animation` | Phase 6 | `gfx/battle_animation/sheets/JuniorLord.png` | `gfx/build/E02EBD/g4bppcBattleAnimationSheetJuniorLord.4bpp` |
@@ -1276,122 +1276,122 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcBattleCharacterPieceEmperor` | `sheet` | `battle_animation` | Phase 6 | `gfx/battle_animation/pieces/Emperor.png` | `gfx/build/E02EBD/g4bppcBattleCharacterPieceEmperor.4bpp` |
 | compressed | `g4bppcBattleCharacterPieceArden` | `sheet` | `battle_animation` | Phase 6 | `gfx/battle_animation/pieces/Arden.png` | `gfx/build/E02EBD/g4bppcBattleCharacterPieceArden.4bpp` |
 | compressed | `g4bppcBattleCharacterPieceEldiganCh01` | `sheet` | `battle_animation` | Phase 6 | `gfx/battle_animation/pieces/EldiganCh01.png` | `gfx/build/E02EBD/g4bppcBattleCharacterPieceEldiganCh01.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesEF0815` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF0815.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF0815.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF0A82` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF0A82.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF0A82.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF0C10` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF0C10.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF0C10.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF0F33` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF0F33.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF0F33.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF1175` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF1175.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF1175.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF1680` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF1680.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF1680.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF19AE` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF19AE.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF19AE.4bpp` |
-| compressed | `acBattleSceneEffectDataEF29FC` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataEF29FC.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataEF29FC.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF2EB2` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF2EB2.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF2EB2.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF3FF1` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF3FF1.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF3FF1.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF421A` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF421A.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF421A.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF4246` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF4246.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF4246.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF4324` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF4324.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF4324.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF49D5` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF49D5.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF49D5.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF4C33` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF4C33.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF4C33.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF5460` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF5460.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF5460.bin` |
-| compressed | `acBattleSceneEffectTilemapEF55C9` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF55C9.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF55C9.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF5739` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF5739.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF5739.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF6513` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF6513.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF6513.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF6771` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF6771.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF6771.4bpp` |
-| compressed | `acBattleSceneEffectDataEF68C3` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataEF68C3.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataEF68C3.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF698D` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF698D.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF698D.4bpp` |
-| compressed | `acBattleSceneEffectDataEF6D77` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataEF6D77.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataEF6D77.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesEF6F42` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF6F42.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF6F42.4bpp` |
-| compressed | `acBattleSceneEffectTilemapEF7972` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7972.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7972.bin` |
-| compressed | `acBattleSceneEffectTilemapEF7EBA` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7EBA.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7EBA.bin` |
-| compressed | `acBattleSceneEffectTilemapEF7FFC` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7FFC.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7FFC.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF0013D` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF0013D.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF0013D.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesF01360` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF01360.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF01360.4bpp` |
-| compressed | `acBattleSceneEffectDataF016E8` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF016E8.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF016E8.bin` |
-| compressed | `acBattleSceneEffectDataF018FC` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF018FC.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF018FC.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF0815` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/HealStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF0815.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF0A82` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/HealStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF0A82.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF0C10` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/MendStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF0C10.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF0F33` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/MendStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF0F33.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF1175` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/RecoverStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF1175.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF1680` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/RecoverStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF1680.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF19AE` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/Fortify.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF19AE.4bpp` |
+| compressed | `acBattleSceneEffectDataEF29FC` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Fortify.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataEF29FC.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF2EB2` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/WarpStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF2EB2.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF3FF1` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/WarpStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF3FF1.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF421A` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ReturnStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF421A.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF4246` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ReturnStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF4246.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF4324` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/RestoreStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF4324.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF49D5` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/RestoreStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF49D5.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF4C33` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/SleepStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF4C33.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF5460` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/SleepStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF5460.bin` |
+| compressed | `acBattleSceneEffectTilemapEF55C9` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF55C9.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF55C9.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF5739` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/BerserkStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF5739.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF6513` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BerserkStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF6513.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF6771` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/CharmStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF6771.4bpp` |
+| compressed | `acBattleSceneEffectDataEF68C3` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/CharmStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataEF68C3.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF698D` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/SilenceStaff.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF698D.4bpp` |
+| compressed | `acBattleSceneEffectDataEF6D77` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/SilenceStaff.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataEF6D77.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesEF6F42` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/Fire.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesEF6F42.4bpp` |
+| compressed | `acBattleSceneEffectTilemapEF7972` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Fire.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7972.bin` |
+| compressed | `acBattleSceneEffectTilemapEF7EBA` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Fire.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7EBA.bin` |
+| compressed | `acBattleSceneEffectTilemapEF7FFC` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Fire.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapEF7FFC.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF0013D` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/BolganoneBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF0013D.4bpp` |
+| compressed | `g2bppcBattleSceneEffectTilesF01360` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/BolganoneBG3.2bpp.png` | `gfx/build/E02EBD/g2bppcBattleSceneEffectTilesF01360.2bpp` |
+| compressed | `acBattleSceneEffectDataF016E8` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BolganoneBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF016E8.bin` |
+| compressed | `acBattleSceneEffectDataF018FC` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BolganoneBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF018FC.bin` |
 | compressed | `g4bppcTitleSceneTilesF019F4` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF019F4.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF019F4.4bpp` |
 | compressed | `g4bppcTitleSceneTilesF02266` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF02266.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF02266.4bpp` |
 | compressed | `acTitleSceneTilemapF02FC1` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF02FC1.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF02FC1.bin` |
 | compressed | `acTitleSceneTilemapF03141` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF03141.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF03141.bin` |
-| compressed | `acBattleSceneEffectDataF0358F` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF0358F.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF0358F.bin` |
-| compressed | `acBattleSceneEffectDataF03771` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF03771.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF03771.bin` |
+| compressed | `acBattleSceneEffectDataF0358F` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Valflame.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF0358F.bin` |
+| compressed | `acBattleSceneEffectDataF03771` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Valflame.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF03771.bin` |
 | compressed | `acTitleSceneTilemapF039A2` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF039A2.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF039A2.bin` |
 | compressed | `g4bppcTitleSceneTilesF03A1C` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF03A1C.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF03A1C.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesF046BF` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF046BF.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF046BF.4bpp` |
+| compressed | `g4bppcBattleSceneEffectTilesF046BF` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/MeteorBG2.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF046BF.4bpp` |
 | compressed | `acTitleSceneTilemapF06B78` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF06B78.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF06B78.bin` |
-| compressed | `acBattleSceneEffectDataF07009` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF07009.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF07009.bin` |
-| compressed | `acBattleSceneEffectDataF07458` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF07458.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF07458.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF078E5` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF078E5.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF078E5.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF10762` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF10762.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF10762.bin` |
-| compressed | `acBattleSceneEffectDataF10DF5` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF10DF5.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF10DF5.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF11286` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF11286.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF11286.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF124AF` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF124AF.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF124AF.bin` |
-| compressed | `acBattleSceneEffectDataF12801` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF12801.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF12801.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF12972` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF12972.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF12972.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF14061` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14061.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14061.bin` |
-| compressed | `acBattleSceneEffectDataF14534` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF14534.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF14534.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF149C5` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF149C5.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF149C5.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF14E0F` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14E0F.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14E0F.bin` |
-| compressed | `acBattleSceneEffectTilemapF14F90` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14F90.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14F90.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF15110` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF15110.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF15110.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF15927` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF15927.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF15927.bin` |
-| compressed | `acBattleSceneEffectTilemapF15C82` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF15C82.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF15C82.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF15FDD` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF15FDD.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF15FDD.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF16912` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF16912.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF16912.bin` |
-| compressed | `acBattleSceneEffectTilemapF16A9C` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF16A9C.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF16A9C.bin` |
-| compressed | `acBattleSceneEffectDataF16C14` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF16C14.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF16C14.bin` |
-| compressed | `acBattleSceneEffectDataF16D80` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF16D80.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF16D80.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF17076` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF17076.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF17076.4bpp` |
-| compressed | `acBattleSceneEffectDataF1718D` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF1718D.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF1718D.bin` |
-| compressed | `acBattleSceneEffectDataF17245` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF17245.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF17245.bin` |
-| compressed | `acBattleSceneEffectDataF173D5` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF173D5.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF173D5.bin` |
-| compressed | `acBattleSceneEffectDataF1756A` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF1756A.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF1756A.bin` |
-| compressed | `acBattleSceneEffectDataF17647` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF17647.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF17647.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF1771D` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF1771D.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF1771D.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesF20083` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF20083.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF20083.4bpp` |
-| compressed | `acBattleSceneEffectDataF206F9` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF206F9.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF206F9.bin` |
-| compressed | `acBattleSceneEffectTilemapF209BE` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF209BE.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF209BE.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF21081` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF21081.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF21081.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesF21830` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF21830.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF21830.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF2200D` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF2200D.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF2200D.bin` |
-| compressed | `acBattleSceneEffectTilemapF22128` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22128.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22128.bin` |
-| compressed | `acBattleSceneEffectTilemapF22240` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22240.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22240.bin` |
-| compressed | `acBattleSceneEffectDataF22579` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF22579.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF22579.bin` |
-| compressed | `acBattleSceneEffectTilemapF22851` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22851.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22851.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF2292F` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF2292F.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF2292F.4bpp` |
-| compressed | `acBattleSceneEffectDataF22E80` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF22E80.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF22E80.bin` |
-| compressed | `acBattleSceneEffectTilemapF22FD8` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22FD8.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22FD8.bin` |
-| compressed | `acBattleSceneEffectDataF2316A` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF2316A.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF2316A.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF232C0` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF232C0.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF232C0.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesF23B79` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF23B79.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF23B79.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF2447D` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF2447D.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF2447D.bin` |
-| compressed | `acBattleSceneEffectDataF246DA` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF246DA.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF246DA.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF2487B` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF2487B.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF2487B.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesF25289` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF25289.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF25289.4bpp` |
-| compressed | `acBattleSceneEffectTilemapF25C57` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25C57.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25C57.bin` |
-| compressed | `acBattleSceneEffectTilemapF25DD4` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25DD4.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25DD4.bin` |
-| compressed | `acBattleSceneEffectTilemapF25F67` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25F67.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25F67.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF262AC` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF262AC.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF262AC.4bpp` |
-| compressed | `acBattleSceneEffectDataF2736D` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF2736D.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF2736D.bin` |
-| compressed | `acBattleSceneEffectDataF276E0` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF276E0.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF276E0.bin` |
-| compressed | `acBattleSceneEffectDataF27D79` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF27D79.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF27D79.bin` |
+| compressed | `acBattleSceneEffectDataF07009` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Meteor.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF07009.bin` |
+| compressed | `acBattleSceneEffectDataF07458` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Meteor.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF07458.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF078E5` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/Nosferatu.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF078E5.4bpp` |
+| compressed | `acBattleSceneEffectTilemapF10762` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Nosferatu.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF10762.bin` |
+| compressed | `acBattleSceneEffectDataF10DF5` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Nosferatu.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF10DF5.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF11286` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/Aura.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF11286.4bpp` |
+| compressed | `acBattleSceneEffectTilemapF124AF` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Aura.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF124AF.bin` |
+| compressed | `acBattleSceneEffectDataF12801` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Aura.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF12801.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF12972` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/Forseti.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF12972.4bpp` |
+| compressed | `acBattleSceneEffectTilemapF14061` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Forseti.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14061.bin` |
+| compressed | `acBattleSceneEffectDataF14534` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Forseti.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF14534.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF149C5` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/Wind.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF149C5.4bpp` |
+| compressed | `acBattleSceneEffectTilemapF14E0F` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Wind.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14E0F.bin` |
+| compressed | `acBattleSceneEffectTilemapF14F90` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Wind.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF14F90.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF15110` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/Elwind.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF15110.4bpp` |
+| compressed | `acBattleSceneEffectTilemapF15927` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Elwind.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF15927.bin` |
+| compressed | `acBattleSceneEffectTilemapF15C82` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Elwind.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF15C82.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF15FDD` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/TornadoBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF15FDD.4bpp` |
+| compressed | `acBattleSceneEffectTilemapF16912` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/TornadoBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF16912.bin` |
+| compressed | `acBattleSceneEffectTilemapF16A9C` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/TornadoBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF16A9C.bin` |
+| compressed | `g2bppcBattleSceneEffectTilesF16C14` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/TornadoBG3.2bpp.png` | `gfx/build/E02EBD/g2bppcBattleSceneEffectTilesF16C14.2bpp` |
+| compressed | `acBattleSceneEffectDataF16D80` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/TornadoBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF16D80.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF17076` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/BlizzardBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF17076.4bpp` |
+| compressed | `g2bppcBattleSceneEffectTilesF1718D` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/BlizzardBG3.2bpp.png` | `gfx/build/E02EBD/g2bppcBattleSceneEffectTilesF1718D.2bpp` |
+| compressed | `acBattleSceneEffectDataF17245` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BlizzardBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF17245.bin` |
+| compressed | `acBattleSceneEffectDataF173D5` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BlizzardBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF173D5.bin` |
+| compressed | `acBattleSceneEffectDataF1756A` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BlizzardBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF1756A.bin` |
+| compressed | `acBattleSceneEffectDataF17647` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/BlizzardBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF17647.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF1771D` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/MjolnirBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF1771D.4bpp` |
+| compressed | `g2bppcBattleSceneEffectTilesF20083` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/MjolnirBG3.2bpp.png` | `gfx/build/E02EBD/g2bppcBattleSceneEffectTilesF20083.2bpp` |
+| compressed | `acBattleSceneEffectDataF206F9` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/MjolnirBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF206F9.bin` |
+| compressed | `acBattleSceneEffectTilemapF209BE` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/MjolnirBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF209BE.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF21081` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ThoronBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF21081.4bpp` |
+| compressed | `g2bppcBattleSceneEffectTilesF21830` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ThoronBG3.2bpp.png` | `gfx/build/E02EBD/g2bppcBattleSceneEffectTilesF21830.2bpp` |
+| compressed | `acBattleSceneEffectTilemapF2200D` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ThoronBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF2200D.bin` |
+| compressed | `acBattleSceneEffectTilemapF22128` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ThoronBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22128.bin` |
+| compressed | `acBattleSceneEffectTilemapF22240` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ThoronBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22240.bin` |
+| compressed | `acBattleSceneEffectDataF22579` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ThoronBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF22579.bin` |
+| compressed | `acBattleSceneEffectTilemapF22851` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ThoronBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22851.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF2292F` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ThunderBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF2292F.4bpp` |
+| compressed | `g2bppcBattleSceneEffectTilesF22E80` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ThunderBG3.2bpp.png` | `gfx/build/E02EBD/g2bppcBattleSceneEffectTilesF22E80.2bpp` |
+| compressed | `acBattleSceneEffectTilemapF22FD8` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ThunderBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF22FD8.bin` |
+| compressed | `acBattleSceneEffectDataF2316A` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ThunderBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF2316A.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF232C0` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ElthunderBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF232C0.4bpp` |
+| compressed | `g2bppcBattleSceneEffectTilesF23B79` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ElthunderBG3.2bpp.png` | `gfx/build/E02EBD/g2bppcBattleSceneEffectTilesF23B79.2bpp` |
+| compressed | `acBattleSceneEffectTilemapF2447D` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ElthunderBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF2447D.bin` |
+| compressed | `acBattleSceneEffectDataF246DA` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ElthunderBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF246DA.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF2487B` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF2487B.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF2487B.4bpp` |
+| compressed | `g4bppcBattleSceneEffectTilesF25289` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF25289.4bpp.comp` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF25289.4bpp` |
+| compressed | `acBattleSceneEffectTilemapF25C57` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25C57.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25C57.bin` |
+| compressed | `acBattleSceneEffectTilemapF25DD4` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25DD4.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25DD4.bin` |
+| compressed | `acBattleSceneEffectTilemapF25F67` | `unused` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25F67.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF25F67.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF262AC` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/LightBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF262AC.4bpp` |
+| compressed | `acBattleSceneEffectDataF2736D` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/LightBG1.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF2736D.bin` |
+| compressed | `g2bppcBattleSceneEffectTilesF276E0` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/LightBG3.2bpp.png` | `gfx/build/E02EBD/g2bppcBattleSceneEffectTilesF276E0.2bpp` |
+| compressed | `acBattleSceneEffectDataF27D79` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/LightBG3.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF27D79.bin` |
 | compressed | `g4bppcTitleSceneTilesF27E72` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF27E72.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF27E72.4bpp` |
 | compressed | `g4bppcTitleSceneTilesF30E6F` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF30E6F.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF30E6F.4bpp` |
 | compressed | `acTitleSceneTilemapF3365D` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF3365D.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF3365D.bin` |
 | compressed | `acTitleSceneTilemapF33663` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF33663.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF33663.bin` |
 | compressed | `acTitleSceneTilemapF339EB` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF339EB.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF339EB.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF33DD0` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF33DD0.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF33DD0.4bpp` |
+| compressed | `g4bppcBattleSceneEffectTilesF33DD0` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/HelBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF33DD0.4bpp` |
 | compressed | `g4bppcTitleSceneTilesF3426A` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF3426A.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF3426A.4bpp` |
-| compressed | `acBattleSceneEffectDataF40D9D` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF40D9D.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF40D9D.bin` |
+| compressed | `acBattleSceneEffectDataF40D9D` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Hel.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF40D9D.bin` |
 | compressed | `acTitleSceneTilemapF40F1E` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF40F1E.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF40F1E.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF41469` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF41469.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF41469.4bpp` |
-| compressed | `acBattleSceneEffectDataF41C5A` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF41C5A.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF41C5A.bin` |
-| compressed | `acBattleSceneEffectDataF41DCD` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF41DCD.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF41DCD.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF41469` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/Jormungandr.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF41469.4bpp` |
+| compressed | `acBattleSceneEffectDataF41C5A` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Jormungandr.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF41C5A.bin` |
+| compressed | `acBattleSceneEffectDataF41DCD` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Jormungandr.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF41DCD.bin` |
 | compressed | `g4bppcTitleSceneTilesF41F38` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF41F38.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF41F38.4bpp` |
 | compressed | `acTitleSceneTilemapF43803` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF43803.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF43803.bin` |
-| compressed | `acBattleSceneEffectDataF43AD9` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF43AD9.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF43AD9.bin` |
-| compressed | `g4bppcBattleSceneEffectTilesF43D26` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF43D26.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF43D26.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesF4493C` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF4493C.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF4493C.4bpp` |
-| compressed | `acBattleSceneEffectDataF460FF` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF460FF.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF460FF.bin` |
-| compressed | `acBattleSceneEffectTilemapF46551` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectTilemapF46551.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF46551.bin` |
+| compressed | `acBattleSceneEffectDataF43AD9` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/JuliusEnd.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF43AD9.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF43D26` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/FenrirBG1.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF43D26.4bpp` |
+| compressed | `g4bppcBattleSceneEffectTilesF4493C` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/FenrirBG2.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF4493C.4bpp` |
+| compressed | `acBattleSceneEffectDataF460FF` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Fenrir.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF460FF.bin` |
+| compressed | `acBattleSceneEffectTilemapF46551` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/Fenrir.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectTilemapF46551.bin` |
 | compressed | `g4bppcTitleSceneTilesF468D3` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF468D3.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF468D3.4bpp` |
 | compressed | `acTitleSceneTilemapF47CBD` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF47CBD.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF47CBD.bin` |
 | compressed | `g4bppcTitleSceneTilesF47E55` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF47E55.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF47E55.4bpp` |
@@ -1410,12 +1410,12 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `acTitleSceneTilemapF57B55` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF57B55.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF57B55.bin` |
 | compressed | `acTitleSceneTilemapF57C2D` | `raw` | `title` | Unassigned | `gfx/build/E02EBD/acTitleSceneTilemapF57C2D.bin.comp` | `gfx/build/E02EBD/acTitleSceneTilemapF57C2D.bin` |
 | compressed | `g4bppcTitleSceneTilesF57E44` | `sheet` | `title` | Unassigned | `gfx/build/E02EBD/g4bppcTitleSceneTilesF57E44.4bpp.png` | `gfx/build/E02EBD/g4bppcTitleSceneTilesF57E44.4bpp` |
-| compressed | `g4bppcBattleSceneEffectTilesF61BB4` | `sheet` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF61BB4.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF61BB4.4bpp` |
-| compressed | `acBattleSceneEffectDataF621E6` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF621E6.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF621E6.bin` |
-| compressed | `acBattleSceneEffectDataF62298` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF62298.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF62298.bin` |
-| compressed | `acBattleSceneEffectDataF622C0` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF622C0.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF622C0.bin` |
-| compressed | `acBattleSceneEffectDataF6232E` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF6232E.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF6232E.bin` |
-| compressed | `acBattleSceneEffectDataF6239C` | `raw` | `battle_effects` | Phase 7 | `gfx/build/E02EBD/acBattleSceneEffectDataF6239C.bin.comp` | `gfx/build/E02EBD/acBattleSceneEffectDataF6239C.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF61BB4` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/ClassChange.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF61BB4.4bpp` |
+| compressed | `acBattleSceneEffectDataF621E6` | `authored` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/ClassChangeEffect.scene.json` | `gfx/build/E02EBD/acBattleSceneEffectDataF621E6.bin` |
+| compressed | `g4bppcBattleSceneEffectTilesF62298` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/SkillSparkle.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF62298.4bpp` |
+| compressed | `g4bppcBattleSceneEffectTilesF622C0` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/SkillHoly.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF622C0.4bpp` |
+| compressed | `g4bppcBattleSceneEffectTilesF6232E` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/SkillDarkness.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF6232E.4bpp` |
+| compressed | `g4bppcBattleSceneEffectTilesF6239C` | `sheet` | `battle_effects` | Phase 7 | `gfx/effects/battle_scene/tiles/SkillPavise.4bpp.png` | `gfx/build/E02EBD/g4bppcBattleSceneEffectTilesF6239C.4bpp` |
 | compressed | `g4bppcDialogueBackgroundFountainForeground` | `authored` | `scenes` | Phase 3 | `gfx/scenes/dialogue/FountainForegroundGroup.scene.json` | `gfx/build/E02EBD/g4bppcDialogueBackgroundFountainForeground.4bpp` |
 | compressed | `gcTitleIntroCaption01Tilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/TitleIntroCaption01.scene.json` | `gfx/build/E02EBD/gcTitleIntroCaption01Tilemap.bin` |
 | compressed | `gcTitleIntroCaption02Tilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/TitleIntroCaption02.scene.json` | `gfx/build/E02EBD/gcTitleIntroCaption02Tilemap.bin` |

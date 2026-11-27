@@ -1,0 +1,51 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BC241",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x26: aBattleScenePaletteEffects entry 8, colors 0-14 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BC265",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x26: aBattleScenePaletteEffects entry 10, colors 0-14 (scroll, type 1), the brightest",
+      "stream": true
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/BerserkStaff.4bpp.png",
+      "max_tiles": 256,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "BerserkStaff.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapEF6513.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    }
+  ]
+}

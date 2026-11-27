@@ -1,0 +1,60 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleSceneHUDBaseColors",
+      "dest": 0,
+      "count": 16
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleSceneHUDColors",
+      "offset": 11,
+      "dest": 113,
+      "count": 8
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/MessageWindow.4bpp.png",
+      "max_tiles": 16,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "MessageWindow.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneDecompTilemapE04000.bin",
+      "width": 32,
+      "height": 10,
+      "transparent": true,
+      "palettes": [
+        0,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 128
+        }
+      ]
+    },
+    {
+      "grid": "MessageWindowNoPortrait.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneDecompTilemapE040D3.bin",
+      "width": 32,
+      "height": 10,
+      "transparent": true,
+      "palettes": [
+        0
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 128
+        }
+      ]
+    }
+  ]
+}

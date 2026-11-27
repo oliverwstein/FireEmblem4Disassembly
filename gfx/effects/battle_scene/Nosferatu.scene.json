@@ -1,0 +1,216 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCCE5",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 10,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 54, colors 0-9 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCD4B",
+      "byte_offset": 1,
+      "dest": 17,
+      "count": 10,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 57, colors 0-9 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCD2D",
+      "byte_offset": 1,
+      "dest": 27,
+      "count": 5,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 56, colors 0-4 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCC89",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 10,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 50, colors 0-9 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCCCF",
+      "byte_offset": 1,
+      "dest": 17,
+      "count": 10,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 53, colors 0-9 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCD0F",
+      "byte_offset": 1,
+      "dest": 43,
+      "count": 5,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 55, colors 0-4 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCBAD",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 10,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 42, colors 0-9 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCBED",
+      "byte_offset": 1,
+      "dest": 17,
+      "count": 10,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 45, colors 0-9 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCC03",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 10,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 46, colors 0-9 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCC73",
+      "byte_offset": 1,
+      "dest": 17,
+      "count": 10,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 49, colors 0-9 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCC9F",
+      "byte_offset": 9,
+      "dest": 43,
+      "count": 5,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 51, colors 4-8 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCCB3",
+      "byte_offset": 17,
+      "dest": 27,
+      "count": 5,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 52, colors 8-12 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCC45",
+      "byte_offset": 15,
+      "dest": 27,
+      "count": 5,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 48, colors 7-11 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCC19",
+      "byte_offset": 1,
+      "dest": 43,
+      "count": 5,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 47, colors 0-4 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCBC3",
+      "byte_offset": 1,
+      "dest": 43,
+      "count": 5,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 43, colors 0-4 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCBD7",
+      "byte_offset": 9,
+      "dest": 27,
+      "count": 5,
+      "span_labels": true,
+      "from": "script 0x12: aBattleScenePaletteEffects entry 44, colors 4-8 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/Nosferatu.4bpp.png",
+      "max_tiles": 512,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "NosferatuBG1.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapF10762.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 256
+        }
+      ]
+    },
+    {
+      "grid": "NosferatuBG2.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF10DF5.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

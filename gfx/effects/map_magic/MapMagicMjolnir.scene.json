@@ -1,0 +1,48 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "gfx/effects/map_magic/palettes/Mjolnir.asm",
+      "label": "acMapBattleMagicMjolnirPalette",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "comp": "gfx/build/D50000/g4bppcMapBattleMagicMjolnir.4bpp.comp",
+      "max_tiles": 128,
+      "writable": true
+    },
+    {
+      "png": "gfx/effects/OutsideTile.4bpp.png",
+      "max_tiles": 1,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "png": "Mjolnir.png",
+      "tilemap": "gfx/build/D50000/acMapBattleMagicMjolnirTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        0,
+        6
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 896
+        },
+        {
+          "sheet": 1,
+          "base": 832
+        }
+      ],
+      "append_sheet": 0,
+      "priority": "Mjolnir_priority.png"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD092",
+      "byte_offset": 3,
+      "dest": 49,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x06: aBattleScenePaletteEffects entry 89, colors 1-15 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD056",
+      "byte_offset": 3,
+      "dest": 49,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x06: aBattleScenePaletteEffects entry 87, colors 1-15 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD0F8",
+      "byte_offset": 5,
+      "dest": 49,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x06: aBattleScenePaletteEffects entry 91, colors 2-16 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD0B4",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x06: aBattleScenePaletteEffects entry 90, colors 0-14 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD324",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x06: aBattleScenePaletteEffects entry 93, colors 0-14 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD158",
+      "byte_offset": 214,
+      "dest": 65,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x06: aBattleScenePaletteEffects entry 92, frame 7, the brightest",
+      "stream": true
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/MeteorBG2.4bpp.png",
+      "max_tiles": 512,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "MeteorBG2.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF07009.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        3
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "MeteorBG2Phase2.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF07458.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        4
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

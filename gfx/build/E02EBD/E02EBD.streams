@@ -6,7 +6,8 @@ start $E02EBD
 end $F77BC8
 
 g4bppcBattleSceneHUDTiles g4bppcBattleSceneHUDTiles ; 1024 bytes decompressed
-acBattleSceneDecompE03105 acBattleSceneDecompE03105 ; 2048 bytes decompressed
+# 4bpp window tiles (was named as data).
+g4bppcBattleSceneDecompE03105 g4bppcBattleSceneDecompE03105 ; 2048 bytes decompressed
 g4bppcBattleSceneDecompE033A5 g4bppcBattleSceneDecompE033A5 ; 768 bytes decompressed
 # Battle scene stat labels HIT ATK DEF LEV (Project Naga Battle_Stats.2bpp).
 gcBattleSceneStatLabels gcBattleSceneStatLabels ; 1024 bytes decompressed
@@ -17,7 +18,8 @@ acBattleSceneHUDWindowTilemap acBattleSceneHUDWindowTilemap ; 960 bytes decompre
 acBattleSceneDecompTilemapE03B09 acBattleSceneDecompTilemapE03B09 ; 1280 bytes decompressed
 acBattleSceneHUDTilemap acBattleSceneHUDTilemap ; 960 bytes decompressed
 acBattleSceneDecompTilemapE03D3B acBattleSceneDecompTilemapE03D3B ; 640 bytes decompressed
-acBattleSceneDecompE03D7F acBattleSceneDecompE03D7F ; 512 bytes decompressed
+# 4bpp window tiles (was named as data).
+g4bppcBattleSceneDecompE03D7F g4bppcBattleSceneDecompE03D7F ; 512 bytes decompressed
 # Unreferenced.
 acBattleSceneUnusedTilemapE03F2B acBattleSceneUnusedTilemapE03F2B ; 640 bytes decompressed, found
 acBattleSceneDecompTilemapE04000 acBattleSceneDecompTilemapE04000 ; 640 bytes decompressed
@@ -316,7 +318,8 @@ acBattleSceneEffectTilemapEF7972 acBattleSceneEffectTilemapEF7972 ; 8192 bytes d
 acBattleSceneEffectTilemapEF7EBA acBattleSceneEffectTilemapEF7EBA ; 4096 bytes decompressed
 acBattleSceneEffectTilemapEF7FFC acBattleSceneEffectTilemapEF7FFC ; 4096 bytes decompressed
 g4bppcBattleSceneEffectTilesF0013D g4bppcBattleSceneEffectTilesF0013D ; 7168 bytes decompressed
-g4bppcBattleSceneEffectTilesF01360 g4bppcBattleSceneEffectTilesF01360 ; 1280 bytes decompressed
+# 2bpp BG3 tile sheet (Mode 1 BG3), not 4bpp: Phase 7 review.
+g2bppcBattleSceneEffectTilesF01360 g2bppcBattleSceneEffectTilesF01360 ; 1280 bytes decompressed
 acBattleSceneEffectDataF016E8 acBattleSceneEffectDataF016E8 ; 2048 bytes decompressed
 acBattleSceneEffectDataF018FC acBattleSceneEffectDataF018FC ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF019F4 g4bppcTitleSceneTilesF019F4 ; 6144 bytes decompressed
@@ -349,31 +352,37 @@ acBattleSceneEffectTilemapF15C82 acBattleSceneEffectTilemapF15C82 ; 4096 bytes d
 g4bppcBattleSceneEffectTilesF15FDD g4bppcBattleSceneEffectTilesF15FDD ; 4096 bytes decompressed
 acBattleSceneEffectTilemapF16912 acBattleSceneEffectTilemapF16912 ; 4096 bytes decompressed
 acBattleSceneEffectTilemapF16A9C acBattleSceneEffectTilemapF16A9C ; 4096 bytes decompressed
-acBattleSceneEffectDataF16C14 acBattleSceneEffectDataF16C14 ; 512 bytes decompressed
+# 2bpp BG3 tile sheet (was named as data).
+g2bppcBattleSceneEffectTilesF16C14 g2bppcBattleSceneEffectTilesF16C14 ; 512 bytes decompressed
 acBattleSceneEffectDataF16D80 acBattleSceneEffectDataF16D80 ; 2048 bytes decompressed
 g4bppcBattleSceneEffectTilesF17076 g4bppcBattleSceneEffectTilesF17076 ; 1024 bytes decompressed
-acBattleSceneEffectDataF1718D acBattleSceneEffectDataF1718D ; 512 bytes decompressed
+# 2bpp BG3 tile sheet (was named as data).
+g2bppcBattleSceneEffectTilesF1718D g2bppcBattleSceneEffectTilesF1718D ; 512 bytes decompressed
 acBattleSceneEffectDataF17245 acBattleSceneEffectDataF17245 ; 2048 bytes decompressed
 acBattleSceneEffectDataF173D5 acBattleSceneEffectDataF173D5 ; 2048 bytes decompressed
 acBattleSceneEffectDataF1756A acBattleSceneEffectDataF1756A ; 2048 bytes decompressed
 acBattleSceneEffectDataF17647 acBattleSceneEffectDataF17647 ; 2048 bytes decompressed
 g4bppcBattleSceneEffectTilesF1771D g4bppcBattleSceneEffectTilesF1771D ; 4608 bytes decompressed
-g4bppcBattleSceneEffectTilesF20083 g4bppcBattleSceneEffectTilesF20083 ; 3328 bytes decompressed
+# 2bpp BG3 tile sheet, not 4bpp.
+g2bppcBattleSceneEffectTilesF20083 g2bppcBattleSceneEffectTilesF20083 ; 3328 bytes decompressed
 acBattleSceneEffectDataF206F9 acBattleSceneEffectDataF206F9 ; 2048 bytes decompressed
 acBattleSceneEffectTilemapF209BE acBattleSceneEffectTilemapF209BE ; 6144 bytes decompressed
 g4bppcBattleSceneEffectTilesF21081 g4bppcBattleSceneEffectTilesF21081 ; 4608 bytes decompressed
-g4bppcBattleSceneEffectTilesF21830 g4bppcBattleSceneEffectTilesF21830 ; 3584 bytes decompressed
+# 2bpp BG3 tile sheet, not 4bpp.
+g2bppcBattleSceneEffectTilesF21830 g2bppcBattleSceneEffectTilesF21830 ; 3584 bytes decompressed
 acBattleSceneEffectTilemapF2200D acBattleSceneEffectTilemapF2200D ; 4096 bytes decompressed
 acBattleSceneEffectTilemapF22128 acBattleSceneEffectTilemapF22128 ; 4096 bytes decompressed
 acBattleSceneEffectTilemapF22240 acBattleSceneEffectTilemapF22240 ; 4096 bytes decompressed
 acBattleSceneEffectDataF22579 acBattleSceneEffectDataF22579 ; 2048 bytes decompressed
 acBattleSceneEffectTilemapF22851 acBattleSceneEffectTilemapF22851 ; 1024 bytes decompressed
 g4bppcBattleSceneEffectTilesF2292F g4bppcBattleSceneEffectTilesF2292F ; 2560 bytes decompressed
-acBattleSceneEffectDataF22E80 acBattleSceneEffectDataF22E80 ; 512 bytes decompressed
+# 2bpp BG3 tile sheet (was named as data).
+g2bppcBattleSceneEffectTilesF22E80 g2bppcBattleSceneEffectTilesF22E80 ; 512 bytes decompressed
 acBattleSceneEffectTilemapF22FD8 acBattleSceneEffectTilemapF22FD8 ; 4096 bytes decompressed
 acBattleSceneEffectDataF2316A acBattleSceneEffectDataF2316A ; 2048 bytes decompressed
 g4bppcBattleSceneEffectTilesF232C0 g4bppcBattleSceneEffectTilesF232C0 ; 5632 bytes decompressed
-g4bppcBattleSceneEffectTilesF23B79 g4bppcBattleSceneEffectTilesF23B79 ; 3840 bytes decompressed
+# 2bpp BG3 tile sheet, not 4bpp.
+g2bppcBattleSceneEffectTilesF23B79 g2bppcBattleSceneEffectTilesF23B79 ; 3840 bytes decompressed
 acBattleSceneEffectTilemapF2447D acBattleSceneEffectTilemapF2447D ; 4096 bytes decompressed
 acBattleSceneEffectDataF246DA acBattleSceneEffectDataF246DA ; 2048 bytes decompressed
 g4bppcBattleSceneEffectTilesF2487B g4bppcBattleSceneEffectTilesF2487B ; 5632 bytes decompressed
@@ -383,7 +392,8 @@ acBattleSceneEffectTilemapF25DD4 acBattleSceneEffectTilemapF25DD4 ; 4096 bytes d
 acBattleSceneEffectTilemapF25F67 acBattleSceneEffectTilemapF25F67 ; 6144 bytes decompressed
 g4bppcBattleSceneEffectTilesF262AC g4bppcBattleSceneEffectTilesF262AC ; 6144 bytes decompressed
 acBattleSceneEffectDataF2736D acBattleSceneEffectDataF2736D ; 2048 bytes decompressed
-acBattleSceneEffectDataF276E0 acBattleSceneEffectDataF276E0 ; 2048 bytes decompressed
+# 2bpp BG3 tile sheet (was named as data).
+g2bppcBattleSceneEffectTilesF276E0 g2bppcBattleSceneEffectTilesF276E0 ; 2048 bytes decompressed
 acBattleSceneEffectDataF27D79 acBattleSceneEffectDataF27D79 ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF27E72 g4bppcTitleSceneTilesF27E72 ; 6144 bytes decompressed
 g4bppcTitleSceneTilesF30E6F g4bppcTitleSceneTilesF30E6F ; 16384 bytes decompressed
@@ -424,10 +434,14 @@ acTitleSceneTilemapF57C2D acTitleSceneTilemapF57C2D ; 2048 bytes decompressed
 g4bppcTitleSceneTilesF57E44 g4bppcTitleSceneTilesF57E44 ; 11392 bytes decompressed
 g4bppcBattleSceneEffectTilesF61BB4 g4bppcBattleSceneEffectTilesF61BB4 ; 3072 bytes decompressed
 acBattleSceneEffectDataF621E6 acBattleSceneEffectDataF621E6 ; 2048 bytes decompressed
-acBattleSceneEffectDataF62298 acBattleSceneEffectDataF62298 ; 64 bytes decompressed
-acBattleSceneEffectDataF622C0 acBattleSceneEffectDataF622C0 ; 160 bytes decompressed
-acBattleSceneEffectDataF6232E acBattleSceneEffectDataF6232E ; 160 bytes decompressed
-acBattleSceneEffectDataF6239C acBattleSceneEffectDataF6239C ; 96 bytes decompressed
+# 4bpp sprite tiles (was named as data).
+g4bppcBattleSceneEffectTilesF62298 g4bppcBattleSceneEffectTilesF62298 ; 64 bytes decompressed
+# 4bpp sprite tiles (was named as data).
+g4bppcBattleSceneEffectTilesF622C0 g4bppcBattleSceneEffectTilesF622C0 ; 160 bytes decompressed
+# 4bpp sprite tiles (was named as data).
+g4bppcBattleSceneEffectTilesF6232E g4bppcBattleSceneEffectTilesF6232E ; 160 bytes decompressed
+# 4bpp sprite tiles (was named as data).
+g4bppcBattleSceneEffectTilesF6239C g4bppcBattleSceneEffectTilesF6239C ; 96 bytes decompressed
 # Also used as: g4bppcDialogueBackgroundGateForeground, g4bppcDialogueBackgroundAlleyForeground, g4bppcBattleForeground3, g4bppcBattleForeground6.
 g4bppcDialogueBackgroundFountainForeground g4bppcDialogueBackgroundFountainForeground ; 7200 bytes decompressed
 # Tilemap for title intro caption line 1; loaded by aTitleLoadList to $7F20.

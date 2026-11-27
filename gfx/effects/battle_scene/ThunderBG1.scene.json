@@ -1,0 +1,50 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BC92C",
+      "byte_offset": 272,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x07: aBattleScenePaletteEffects entry 36, frame 9, the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE0215C",
+      "byte_offset": 122,
+      "dest": 17,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x07: aBattleScenePaletteCopyTable entry 10"
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/ThunderBG1.4bpp.png",
+      "max_tiles": 80,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "ThunderBG1.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapF22FD8.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    }
+  ]
+}

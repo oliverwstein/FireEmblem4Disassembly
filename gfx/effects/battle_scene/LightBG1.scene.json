@@ -1,0 +1,69 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BC6A5",
+      "byte_offset": 36,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x11: aBattleScenePaletteEffects entry 24, colors 17-31 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BC6E8",
+      "byte_offset": 19,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x11: aBattleScenePaletteEffects entry 25, colors 9-23 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE0215C",
+      "byte_offset": 187,
+      "dest": 17,
+      "count": 3,
+      "span_labels": true,
+      "from": "script 0x11: aBattleScenePaletteCopyTable entry 18"
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/LightBG1.4bpp.png",
+      "max_tiles": 192,
+      "writable": false
+    },
+    {
+      "png": "gfx/effects/OutsideTile.4bpp.png",
+      "max_tiles": 1,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "LightBG1.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF2736D.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        },
+        {
+          "sheet": 1,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

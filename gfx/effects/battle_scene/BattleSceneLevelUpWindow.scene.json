@@ -1,0 +1,70 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleSceneHUDBaseColors",
+      "dest": 0,
+      "count": 16
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleSceneHUDColors",
+      "offset": 0,
+      "dest": 97,
+      "count": 8
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleSceneHUDColors",
+      "offset": 11,
+      "dest": 113,
+      "count": 8
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/LevelUpWindow.4bpp.png",
+      "max_tiles": 64,
+      "writable": false
+    },
+    {
+      "png": "gfx/effects/battle_scene/tiles/LevelUpExtra.4bpp.png",
+      "max_tiles": 24,
+      "writable": false
+    },
+    {
+      "png": "gfx/build/E02EBD/g4bppcBattleSceneHUDTiles.4bpp.png",
+      "max_tiles": 32,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "LevelUpWindow.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneDecompTilemapE03B09.bin",
+      "width": 32,
+      "height": 20,
+      "transparent": true,
+      "palettes": [
+        0,
+        6,
+        7
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 32
+        },
+        {
+          "sheet": 1,
+          "base": 192
+        },
+        {
+          "sheet": 2,
+          "base": 224
+        }
+      ]
+    }
+  ]
+}

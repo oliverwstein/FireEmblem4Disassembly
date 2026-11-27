@@ -12,7 +12,9 @@ REM Map battle sprite graphics: gfx\map_battle\sheets\NAME.png to g4bppcMapBattl
 python "%startDir%tools\map_battle_sprites.py" build
 REM Battle scene animations: gfx\battle_animation\{sheets,extras,weapons,pieces}\NAME.png to NAME.4bpp.
 python "%startDir%tools\battle_animations.py" build
-REM Scenes & backgrounds: gfx\scenes\**\*.scene.json and gfx\ui\layouts\*.scene.json to .4bpp/.2bpp + .bin tilemaps.
+REM Battle effects & map-battle magic: palettes and tile sheets.
+python "%startDir%tools\battle_effects.py" build
+REM Scenes & backgrounds: gfx\scenes\**\*.scene.json, gfx\ui\layouts\*.scene.json, and gfx\effects\**\*.scene.json.
 python "%startDir%tools\scene_pack.py" build
 REM Item icons: gfx\icons\ItemIcons.json to data\item\ItemIconOffsets.asm.
 python "%startDir%tools\item_icons.py" build

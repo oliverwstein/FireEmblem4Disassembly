@@ -1,0 +1,50 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BC82A",
+      "byte_offset": 43,
+      "dest": 33,
+      "count": 8,
+      "span_labels": true,
+      "from": "script 0x22: aBattleScenePaletteEffects entry 34, colors 21-28 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE02080",
+      "byte_offset": 4,
+      "dest": 41,
+      "count": 3,
+      "span_labels": true,
+      "from": "script 0x22: aBattleScenePaletteCopyTable entry 19"
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/RestoreStaff.4bpp.png",
+      "max_tiles": 192,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "RestoreStaff.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapEF49D5.bin",
+      "width": 32,
+      "height": 64,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD02E",
+      "byte_offset": 1,
+      "dest": 42,
+      "count": 6,
+      "span_labels": true,
+      "from": "script 0x1f: aBattleScenePaletteEffects entry 70, colors 0-5 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCFEC",
+      "byte_offset": 29,
+      "dest": 33,
+      "count": 7,
+      "span_labels": true,
+      "from": "script 0x1f: aBattleScenePaletteEffects entry 69, colors 14-20 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE02080",
+      "byte_offset": 0,
+      "dest": 40,
+      "count": 2,
+      "span_labels": true,
+      "from": "script 0x1f: aBattleScenePaletteCopyTable entry 20"
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/WarpStaff.4bpp.png",
+      "max_tiles": 256,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "WarpStaff.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapEF3FF1.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "gfx/effects/map_magic/palettes/Blizzard.asm",
+      "label": "acMapBattleMagicBlizzardPalette",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "comp": "gfx/build/D50000/g4bppcMapBattleMagicBlizzard.4bpp.comp",
+      "max_tiles": 128,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "Blizzard.png",
+      "tilemap": "gfx/build/D50000/acMapBattleMagicBlizzardTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        6
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 896
+        }
+      ],
+      "append_sheet": 0,
+      "priority": "Blizzard_priority.png"
+    }
+  ]
+}

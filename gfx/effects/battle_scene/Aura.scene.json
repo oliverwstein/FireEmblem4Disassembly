@@ -1,0 +1,89 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD72E",
+      "byte_offset": 65,
+      "dest": 49,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x13: aBattleScenePaletteEffects entry 73, colors 32-46 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD790",
+      "byte_offset": 3,
+      "dest": 49,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x13: aBattleScenePaletteEffects entry 75, colors 1-15 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE02090",
+      "byte_offset": 138,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x13: aBattleScenePaletteCopyTable entry 7"
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD6EC",
+      "byte_offset": 17,
+      "dest": 49,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x13: aBattleScenePaletteEffects entry 74, colors 8-22 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/Aura.4bpp.png",
+      "max_tiles": 224,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "AuraBG1.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapF124AF.bin",
+      "width": 32,
+      "height": 64,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    },
+    {
+      "grid": "AuraBG2.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF12801.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        3
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

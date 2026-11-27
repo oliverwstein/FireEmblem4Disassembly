@@ -1,0 +1,100 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCE3B",
+      "byte_offset": 63,
+      "dest": 47,
+      "count": 1,
+      "span_labels": true,
+      "from": "script 0x25: aBattleScenePaletteEffects entry 61, colors 31-31 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCEBF",
+      "byte_offset": 1,
+      "dest": 47,
+      "count": 1,
+      "span_labels": true,
+      "from": "script 0x25: aBattleScenePaletteEffects entry 63, colors 0-0 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCDB7",
+      "byte_offset": 1,
+      "dest": 47,
+      "count": 1,
+      "span_labels": true,
+      "from": "script 0x25: aBattleScenePaletteEffects entry 59, colors 0-0 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCE7D",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 14,
+      "span_labels": true,
+      "from": "script 0x25: aBattleScenePaletteEffects entry 62, colors 0-13 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCDF9",
+      "byte_offset": 37,
+      "dest": 33,
+      "count": 14,
+      "span_labels": true,
+      "from": "script 0x25: aBattleScenePaletteEffects entry 60, colors 18-31 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCD75",
+      "byte_offset": 11,
+      "dest": 33,
+      "count": 14,
+      "span_labels": true,
+      "from": "script 0x25: aBattleScenePaletteEffects entry 58, colors 5-18 (scroll, type 1), the brightest",
+      "stream": true
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/SleepStaff.4bpp.png",
+      "max_tiles": 128,
+      "writable": false
+    },
+    {
+      "png": "gfx/effects/OutsideTile.4bpp.png",
+      "max_tiles": 1,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "SleepStaff.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapEF5460.bin",
+      "width": 32,
+      "height": 64,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        },
+        {
+          "sheet": 1,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

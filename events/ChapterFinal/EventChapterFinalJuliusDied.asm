@@ -116,7 +116,7 @@
     .autsiz
     .databank ?
 
-    jsl rlStartMapMagicCutsceneSeqUnused
+    jsl rlStartMapMagicCutsceneSeq
     jsl rlCreateProcEventWaitFlag7F4C07Bit10
     rtl
 

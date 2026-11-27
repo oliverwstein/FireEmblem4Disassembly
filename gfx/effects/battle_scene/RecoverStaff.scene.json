@@ -1,0 +1,70 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BDB08",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 7,
+      "span_labels": true,
+      "from": "script 0x1b: aBattleScenePaletteEffects entry 168, colors 0-6 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BDB4C",
+      "byte_offset": 13,
+      "dest": 33,
+      "count": 7,
+      "span_labels": true,
+      "from": "script 0x1b: aBattleScenePaletteEffects entry 170, colors 6-12 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BDB2A",
+      "byte_offset": 13,
+      "dest": 33,
+      "count": 7,
+      "span_labels": true,
+      "from": "script 0x1b: aBattleScenePaletteEffects entry 169, colors 6-12 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BDAD8",
+      "byte_offset": 27,
+      "dest": 33,
+      "count": 7,
+      "span_labels": true,
+      "from": "script 0x1b: aBattleScenePaletteEffects entry 167, colors 13-19 (scroll, type 1), the brightest",
+      "stream": true
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/RecoverStaff.4bpp.png",
+      "max_tiles": 128,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "RecoverStaff.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapEF1680.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 768
+        }
+      ]
+    }
+  ]
+}

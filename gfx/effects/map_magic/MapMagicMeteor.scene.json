@@ -1,0 +1,58 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "gfx/effects/map_magic/palettes/Meteor.asm",
+      "label": "acMapBattleMagicMeteorPalette",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "comp": "gfx/build/D50000/g4bppcMapBattleMagicMeteor.4bpp.comp",
+      "max_tiles": 128,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "Meteor.png",
+      "tilemap": "gfx/build/D50000/acMapBattleMagicMeteorTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        0,
+        6
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 896
+        }
+      ],
+      "append_sheet": 0,
+      "priority": "Meteor_priority.png"
+    },
+    {
+      "png": "MeteorRight.png",
+      "tilemap": "gfx/build/D50000/acMapBattleMagicMeteorTilemap2.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        0,
+        6
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 896
+        }
+      ],
+      "append_sheet": 0,
+      "priority": "MeteorRight_priority.png"
+    }
+  ]
+}

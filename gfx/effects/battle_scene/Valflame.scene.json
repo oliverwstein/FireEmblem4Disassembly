@@ -1,0 +1,133 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD3C5",
+      "byte_offset": 21,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x05: aBattleScenePaletteEffects entry 79, colors 10-24 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE02090",
+      "byte_offset": 108,
+      "dest": 17,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x05: aBattleScenePaletteCopyTable entry 21"
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD385",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x05: aBattleScenePaletteEffects entry 80, colors 0-14 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD3F9",
+      "byte_offset": 3,
+      "dest": 65,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x05: aBattleScenePaletteEffects entry 101, colors 1-15 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD41B",
+      "byte_offset": 1,
+      "dest": 65,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x05: aBattleScenePaletteEffects entry 103, colors 0-14 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD3A5",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x05: aBattleScenePaletteEffects entry 81, colors 0-14 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD43B",
+      "byte_offset": 31,
+      "dest": 0,
+      "count": 1,
+      "span_labels": true,
+      "from": "script 0x05: aBattleScenePaletteEffects entry 106, colors 15-15 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD365",
+      "byte_offset": 1,
+      "dest": 65,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x05: aBattleScenePaletteEffects entry 102, colors 0-14 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/build/E02EBD/g4bppcTitleSceneTilesF019F4.4bpp.png",
+      "max_tiles": 192,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "ValflameBG2.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF0358F.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        4
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    },
+    {
+      "grid": "ValflameBG2Alt.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF03771.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        4
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ]
+    }
+  ]
+}

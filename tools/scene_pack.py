@@ -76,6 +76,7 @@ except ImportError:
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCENES_DIR = os.path.join(ROOT, 'gfx', 'scenes')
 UI_LAYOUTS_DIR = os.path.join(ROOT, 'gfx', 'ui', 'layouts')
+EFFECTS_DIR = os.path.join(ROOT, 'gfx', 'effects')
 
 WORD_ITEM_RE = re.compile(r'bgr555\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)|\$([0-9A-Fa-f]{1,4})\b')
 
@@ -179,7 +180,16 @@ def _bgr555_to_rgb(w):
     return tuple((w >> s & 31) * 255 // 31 for s in (0, 5, 10))
 
 
-def _parse_asm_palette(asm_path, label):
+def _parse_asm_palette(asm_path, label, byte_offset=0, need=None, big_endian=False, stream=False):
+    """Colors from the data after a label: its .word and .byte rows, from byte_offset.
+
+    Reading stops at the next label, or, when need (a byte count) is given and not
+    yet reached, goes on through the data rows of the labels after it (a battle
+    scene color copy may start in one palette label and run into the next).
+    big_endian reads each color high byte first, as the battle scene's palette
+    effect streams store them; stream also skips their delay bytes ($80 | n)
+    and stops at $FE or $FF.
+    """
     with open(asm_path, encoding='utf-8') as f:
         lines = f.readlines()
     label_re = re.compile(rf'^\s*{re.escape(label)}\b')
@@ -190,22 +200,51 @@ def _parse_asm_palette(asm_path, label):
             break
     if start is None:
         raise ValueError(f'{asm_path}: palette label {label!r} not found')
-    words = []
+    raw = bytearray()
     for line in lines[start:]:
         code = line.split(';', 1)[0].strip()
         if not code:
             continue
-        if code.startswith('.endsection') or (not code.startswith('.') and re.match(r'^[A-Za-z_]\w*', code)):
+        if code.startswith('.endsection') or code.startswith('.section'):
             break
-        if not code.startswith('.word'):
+        if not code.startswith('.') and re.match(r'^[A-Za-z_]\w*', code):
+            if need is None or len(raw) >= byte_offset + need:
+                break
             continue
-        for m in WORD_ITEM_RE.finditer(code[5:]):
-            if m.group(1) is not None:
-                r, g, b = (int(m.group(k)) for k in (1, 2, 3))
-                words.append(r | (g << 5) | (b << 10))
-            else:
-                words.append(int(m.group(4), 16))
-    return [_bgr555_to_rgb(w) for w in words]
+        if code.startswith('.word'):
+            for m in WORD_ITEM_RE.finditer(code[5:]):
+                if m.group(1) is not None:
+                    r, g, b = (int(m.group(k)) for k in (1, 2, 3))
+                    w = r | (g << 5) | (b << 10)
+                else:
+                    w = int(m.group(4), 16)
+                raw.extend((w & 0xFF, (w >> 8) & 0xFF))
+        elif code.startswith('.byte'):
+            for m in re.finditer(r'\$([0-9A-Fa-f]{1,2})\b', code[5:]):
+                raw.append(int(m.group(1), 16))
+        elif need is not None:
+            break               # not data: stop rather than read past it
+    if byte_offset:
+        raw = raw[byte_offset:]
+    if stream:
+        # A palette effect stream: colors high byte first; a byte with bit 7 set
+        # ($80 | delay) may come before a color, $FE or $FF ends the stream.
+        cols, i = [], 0
+        while i + 1 < len(raw):
+            b = raw[i]
+            if b in (0xFE, 0xFF):
+                break
+            if b & 0x80:
+                i += 1
+                continue
+            cols.append(_bgr555_to_rgb(raw[i] << 8 | raw[i + 1]))
+            i += 2
+        return cols
+    if need is not None and len(raw) < need and not stream:
+        raise ValueError(f'{asm_path}: {label} + {byte_offset}: {len(raw)} bytes of data, {need} needed')
+    if big_endian:
+        return [_bgr555_to_rgb(raw[i] << 8 | raw[i + 1]) for i in range(0, len(raw) - 1, 2)]
+    return [_bgr555_to_rgb(raw[i] | (raw[i + 1] << 8)) for i in range(0, len(raw) - 1, 2)]
 
 
 def load_palette(specs, depth):
@@ -219,7 +258,18 @@ def load_palette(specs, depth):
         return cgram
     for spec in specs:
         if 'asm' in spec:
-            cols = _parse_asm_palette(repo_path(spec['asm']), spec['label'])
+            # span_labels (set by tools/battle_scene_palettes.py): the colors may run on
+            # past the label into the data after it; without it a spec reads only its
+            # label's data and colors past it stay black, as before.
+            need = None
+            if spec.get('span_labels') and spec.get('count') is not None:
+                need = 2 * (spec.get('offset', 0) + spec['count'])
+                if spec.get('stream'):
+                    need = 3 * need    # a delay byte may come before each color
+            cols = _parse_asm_palette(repo_path(spec['asm']), spec['label'], spec.get('byte_offset', 0),
+                                      need, spec.get('big_endian', False), spec.get('stream', False))
+            if spec.get('reverse'):
+                cols = cols[:spec['count']][::-1]
         elif 'bin' in spec:
             p = repo_path(spec['bin'])
             raw = decompress_comp(p) if p.endswith('.comp') else open(p, 'rb').read()
@@ -292,7 +342,7 @@ def flip_tile(px64, hf, vf):
 
 def tilemap_index(tx, ty, width):
     if width == 64:
-        return (tx // 32) * 1024 + ty * 32 + (tx % 32)
+        return ((ty // 32) * 2 + (tx // 32)) * 1024 + (ty % 32) * 32 + (tx % 32)
     return ty * width + tx
 
 
@@ -781,6 +831,7 @@ def manifests():
     return sorted(
         glob.glob(os.path.join(SCENES_DIR, '**', '*.scene.json'), recursive=True)
         + glob.glob(os.path.join(UI_LAYOUTS_DIR, '**', '*.scene.json'), recursive=True)
+        + glob.glob(os.path.join(EFFECTS_DIR, '**', '*.scene.json'), recursive=True)
     )
 
 
@@ -889,8 +940,8 @@ def self_test():
             total_layers += 1
         verify_against_comp(mp)
 
-    assert len(mps) == 69, f'expected 69 manifests, found {len(mps)}'
-    assert total_layers == 118, f'expected 118 scene/UI layers, found {total_layers}'
+    assert len(mps) == 135, f'expected 135 manifests, found {len(mps)}'
+    assert total_layers == 204, f'expected 204 scene/UI/effect layers, found {total_layers}'
 
     with tempfile.TemporaryDirectory() as tmp:
         # 1. Tile append + LZ recompression on OpeningLogo (65/256 tiles, no blank slots).

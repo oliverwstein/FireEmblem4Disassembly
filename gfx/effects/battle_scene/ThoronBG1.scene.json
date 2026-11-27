@@ -1,0 +1,103 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD9B4",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x09: aBattleScenePaletteEffects entry 138, colors 0-14 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD962",
+      "byte_offset": 3,
+      "dest": 28,
+      "count": 4,
+      "span_labels": true,
+      "from": "script 0x09: aBattleScenePaletteEffects entry 134, colors 1-4 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD98E",
+      "byte_offset": 1,
+      "dest": 28,
+      "count": 4,
+      "span_labels": true,
+      "from": "script 0x09: aBattleScenePaletteEffects entry 136, colors 0-3 (scroll, type 1), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE0215C",
+      "byte_offset": 92,
+      "dest": 17,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x09: aBattleScenePaletteCopyTable entry 22"
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/ThoronBG1.4bpp.png",
+      "max_tiles": 144,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "ThoronBG1.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapF2200D.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 544
+        }
+      ]
+    },
+    {
+      "grid": "ThoronBG1Flip.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapF22128.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 544
+        }
+      ]
+    },
+    {
+      "grid": "ThoronBG2.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectTilemapF22240.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 544
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD914",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x0a: aBattleScenePaletteEffects entry 133, colors 0-14 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD8E2",
+      "byte_offset": 1,
+      "dest": 33,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x0a: aBattleScenePaletteEffects entry 132, colors 0-14 (scroll, type 2), the brightest",
+      "stream": true,
+      "reverse": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE0215C",
+      "byte_offset": 62,
+      "dest": 17,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x0a: aBattleScenePaletteCopyTable entry 9"
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/MjolnirBG1.4bpp.png",
+      "max_tiles": 144,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "MjolnirBG1.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF206F9.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        2
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 512
+        }
+      ]
+    }
+  ]
+}

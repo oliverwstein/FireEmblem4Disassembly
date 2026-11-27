@@ -1,0 +1,77 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BD02E",
+      "byte_offset": 1,
+      "dest": 42,
+      "count": 6,
+      "span_labels": true,
+      "from": "script 0x33: aBattleScenePaletteEffects entry 141, colors 0-5 (scroll, type 12), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteScript9BCFEC",
+      "byte_offset": 29,
+      "dest": 33,
+      "count": 7,
+      "span_labels": true,
+      "from": "script 0x33: aBattleScenePaletteEffects entry 140, colors 14-20 (scroll, type 12), the brightest",
+      "stream": true
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE027A5",
+      "byte_offset": 0,
+      "dest": 81,
+      "count": 15,
+      "span_labels": true,
+      "from": "script 0x33: aBattleScenePaletteEffects entry 149 (type 7)"
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE02080",
+      "byte_offset": 0,
+      "dest": 40,
+      "count": 2,
+      "span_labels": true,
+      "from": "script 0x33: aBattleScenePaletteCopyTable entry 20"
+    },
+    {
+      "asm": "engine/battle_scene/data.asm",
+      "label": "aBattleScenePaletteE02080",
+      "byte_offset": 0,
+      "dest": 40,
+      "count": 2,
+      "span_labels": true,
+      "from": "script 0x33: aBattleScenePaletteEffects entry 143 (type 7)"
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/effects/battle_scene/tiles/ClassChange.4bpp.png",
+      "max_tiles": 96,
+      "writable": false
+    }
+  ],
+  "layers": [
+    {
+      "grid": "ClassChangeEffect.csv",
+      "tilemap": "gfx/build/E02EBD/acBattleSceneEffectDataF621E6.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        5
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 256
+        }
+      ]
+    }
+  ]
+}

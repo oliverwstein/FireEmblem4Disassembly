@@ -39,6 +39,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import battle_animations
+import battle_effects
 import map_sprites
 import map_battle_sprites
 
@@ -62,6 +63,17 @@ UNREACHABLE = {
     # aBattleWeaponGraphics entry $12: no entry in aBattleWeaponGraphicsIndices
     # maps to it.
     'g4bppcBattleWeapon12',
+    # aBattleSceneDecompressToVRAMTable entry 26: no script's command 1 or 20 selects
+    # it (scripts $25, $42, $48 load 24 and 25 with command 1; command 20 with 25
+    # would reach it). Checked by decoding all 77 scripts (battle_scene_palettes.py).
+    'acBattleSceneEffectTilemapEF55C9',
+    # aBattleSceneDecompressToVRAMTable entries 94-98: no script in
+    # aBattleSceneEffectOffsetTable indexes them.
+    'g4bppcBattleSceneEffectTilesF2487B',
+    'g4bppcBattleSceneEffectTilesF25289',
+    'acBattleSceneEffectTilemapF25C57',
+    'acBattleSceneEffectTilemapF25DD4',
+    'acBattleSceneEffectTilemapF25F67',
 }
 
 STREAMS_RE = re.compile(r'^([A-Za-z_]\w*)\s+([A-Za-z0-9_./-]+)')
@@ -74,21 +86,23 @@ def _load_scene_index():
     mps = sorted(
         glob.glob(os.path.join(ROOT, 'gfx', 'scenes', '**', '*.scene.json'), recursive=True)
         + glob.glob(os.path.join(ROOT, 'gfx', 'ui', 'layouts', '**', '*.scene.json'), recursive=True)
+        + glob.glob(os.path.join(ROOT, 'gfx', 'effects', '**', '*.scene.json'), recursive=True)
     )
     for mp in mps:
         rel_mp = os.path.relpath(mp, ROOT).replace(os.sep, '/')
         m = json.load(open(mp, encoding='utf-8'))
+        is_p7 = rel_mp.startswith('gfx/effects/')
         is_p4 = rel_mp.startswith('gfx/ui/layouts/') or os.path.basename(mp) in (
             'WorldMapHighlights.scene.json', 'EpilogueRankingBG1.scene.json', 'EpilogueRankingBG2.scene.json'
         )
-        phase = 'Phase 4' if is_p4 else 'Phase 3'
+        phase = 'Phase 7' if is_p7 else ('Phase 4' if is_p4 else 'Phase 3')
         for s in m['sheets']:
             if s.get('writable', False):
                 bpp = (s['png'][:-4] if 'png' in s else s['comp'][:-5]).replace('\\', '/')
-                out[bpp] = (rel_mp, phase, 'scenes')
+                out[bpp] = (rel_mp, phase, 'battle_effects' if is_p7 else 'scenes')
         for l in m['layers']:
             tm = l['tilemap'].replace('\\', '/')
-            sys_name = 'ui' if rel_mp.startswith('gfx/ui/layouts/') else 'scenes'
+            sys_name = 'battle_effects' if is_p7 else ('ui' if rel_mp.startswith('gfx/ui/layouts/') else 'scenes')
             out[tm] = (rel_mp, phase, sys_name)
     return out
 
@@ -171,6 +185,8 @@ def collect_inventory():
     map_battle_src = {l: os.path.relpath(map_battle_sprites.src_path(l), ROOT)
                       for l in map_battle_sprites.sheets()}
     battle_anim_src = battle_animations.all_reachable_labels()
+    effect_pal_src = battle_effects.all_managed_palettes()
+    effect_sheet_src = battle_effects.all_managed_sheets()
     for spath in sorted(glob.glob(os.path.join(ROOT, 'gfx', '**', '*.streams'), recursive=True)):
         sdir = os.path.dirname(spath)
         rel_dir = os.path.relpath(sdir, ROOT).replace(os.sep, '/')
@@ -198,6 +214,10 @@ def collect_inventory():
                     # Tile sheets in VRAM row order (frames are drawn by its preview):
                     # moved to gfx/battle_animation/ and recoloured, but still sheets.
                     form, system, phase, src = 'sheet', 'battle_animation', 'Phase 6', battle_anim_src[label][1]
+                elif label in effect_pal_src:
+                    form, system, phase, src = 'authored', 'battle_effects', 'Phase 7', effect_pal_src[label]
+                elif label in effect_sheet_src:
+                    form, system, phase, src = 'sheet', 'battle_effects', 'Phase 7', effect_sheet_src[label][0]
                 elif label in map_battle_src:
                     form, system, phase, src = 'authored', 'map_battle', 'Phase 5', map_battle_src[label]
                 elif rel_dir == 'gfx/build/MapMovementSprites':

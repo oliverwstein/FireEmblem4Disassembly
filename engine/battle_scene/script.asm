@@ -186,23 +186,23 @@
         .autsiz
         .databank ?
 
-        ; Command 14: copies colors into aBGPaletteBuffer from entry arg of the offset
-        ; table at $97/AFE5 (first color, count, source).
+        ; Command 14: copies colors into aBGPaletteBuffer from entry arg of
+        ; aBattleScenePaletteCopyTable (first color, count, source).
 
         phx
         phy
-        lda #$9700
+        lda #(`aBattleScenePaletteCopyTable)<<8
         sta lR18+1
         tya
         and #$01FF
         asl a
         clc
-        adc #$AFE5
+        adc #<>aBattleScenePaletteCopyTable
         sta lR18
         ldy #$0000
         lda [lR18],y
         clc
-        adc #$AFE5
+        adc #<>aBattleScenePaletteCopyTable
         sta lR18
         ldy #$0000
         lda [lR18],y
@@ -1283,7 +1283,7 @@
         .autsiz
         .databank ?
 
-        ; A = script ID: starts that script from the offset table at $97/8F7D, unless
+        ; A = script ID: starts that script from aBattleSceneEffectOffsetTable, unless
         ; one is running (bit 7 of $7FE4B7). Text for it (quotes, item names) is passed
         ; in $7FE4D6 and aDialogue.
 
@@ -1302,10 +1302,10 @@
         pla
         asl a
         pha
-        lda #$9700
+        lda #(`aBattleSceneEffectOffsetTable)<<8
         sta $7FE4BA
         sta lR18+1
-        lda #$8F7D
+        lda #<>aBattleSceneEffectOffsetTable
         clc
         adc #1,s
         sta lR18
@@ -1313,7 +1313,7 @@
         ldy #$0000
         lda [lR18],y
         clc
-        adc #$8F7D
+        adc #<>aBattleSceneEffectOffsetTable
         sta $7FE4B9
         sta wBattleSceneScriptOffset
         bra _A4FA
@@ -4199,70 +4199,92 @@
         .word _AFE5_B07C - aBattleScenePaletteCopyTable
 
       _AFE5_B013 ; 97/B013
-        .byte $11, $0F, $DE, $20, $E0
+        .byte $11, $0F ; first color, count
+        .long aBattleScenePaletteE02090 + $4E
 
       _AFE5_B018 ; 97/B018
-        .byte $11, $1F, $5C, $21, $E0
+        .byte $11, $1F ; first color, count
+        .long aBattleScenePaletteE0215C
 
       _AFE5_B01D ; 97/B01D
-        .byte $21, $0F, $B7, $22, $E0
+        .byte $21, $0F ; first color, count
+        .long aTitleScenePaletteE022B7
 
       _AFE5_B022 ; 97/B022
-        .byte $11, $03, $8A, $20, $E0
+        .byte $11, $03 ; first color, count
+        .long aBattleScenePaletteE02080 + $0A
 
       _AFE5_B027 ; 97/B027
-        .byte $11, $03, $56, $21, $E0
+        .byte $11, $03 ; first color, count
+        .long aBattleScenePaletteE02156
 
       _AFE5_B02C ; 97/B02C
-        .byte $11, $1F, $A0, $20, $E0
+        .byte $11, $1F ; first color, count
+        .long aBattleScenePaletteE02090 + $10
 
       _AFE5_B031 ; 97/B031
-        .byte $21, $0F, $1A, $21, $E0
+        .byte $21, $0F ; first color, count
+        .long aBattleScenePaletteE02090 + $8A
 
       _AFE5_B036 ; 97/B036
-        .byte $20, $0F, $38, $21, $E0
+        .byte $20, $0F ; first color, count
+        .long aBattleScenePaletteE02138
 
       _AFE5_B03B ; 97/B03B
-        .byte $11, $0F, $9A, $21, $E0
+        .byte $11, $0F ; first color, count
+        .long aBattleScenePaletteE0215C + $3E
 
       _AFE5_B040 ; 97/B040
-        .byte $11, $0F, $D6, $21, $E0
+        .byte $11, $0F ; first color, count
+        .long aBattleScenePaletteE0215C + $7A
 
       _AFE5_B045 ; 97/B045
-        .byte $11, $0C, $F4, $21, $E0
+        .byte $11, $0C ; first color, count
+        .long aBattleScenePaletteE0215C + $98
 
       _AFE5_B04A ; 97/B04A
-        .byte $11, $0F, $09, $22, $E0
+        .byte $11, $0F ; first color, count
+        .long aBattleScenePaletteE0215C + $AD
 
       _AFE5_B04F ; 97/B04F
-        .byte $31, $0F, $1D, $22, $E0
+        .byte $31, $0F ; first color, count
+        .long aBattleScenePaletteE0221D
 
       _AFE5_B054 ; 97/B054
-        .byte $21, $1F, $79, $22, $E0
+        .byte $21, $1F ; first color, count
+        .long aBattleScenePaletteE0221D + $5C
 
       _AFE5_B059 ; 97/B059
-        .byte $11, $0F, $D5, $22, $E0
+        .byte $11, $0F ; first color, count
+        .long aTitleScenePaletteE022B7 + $1E
 
       _AFE5_B05E ; 97/B05E
-        .byte $31, $1F, $73, $23, $E0
+        .byte $31, $1F ; first color, count
+        .long aBattleScenePaletteE02373
 
       _AFE5_B063 ; 97/B063
-        .byte $21, $08, $90, $20, $E0
+        .byte $21, $08 ; first color, count
+        .long aBattleScenePaletteE02090
 
       _AFE5_B068 ; 97/B068
-        .byte $11, $03, $17, $22, $E0
+        .byte $11, $03 ; first color, count
+        .long aBattleScenePaletteE0215C + $BB
 
       _AFE5_B06D ; 97/B06D
-        .byte $29, $03, $84, $20, $E0
+        .byte $29, $03 ; first color, count
+        .long aBattleScenePaletteE02080 + $04
 
       _AFE5_B072 ; 97/B072
-        .byte $28, $02, $80, $20, $E0
+        .byte $28, $02 ; first color, count
+        .long aBattleScenePaletteE02080
 
       _AFE5_B077 ; 97/B077
-        .byte $11, $0F, $FC, $20, $E0
+        .byte $11, $0F ; first color, count
+        .long aBattleScenePaletteE02090 + $6C
 
       _AFE5_B07C ; 97/B07C
-        .byte $11, $0F, $B8, $21, $E0
+        .byte $11, $0F ; first color, count
+        .long aBattleScenePaletteE0215C + $5C
 
         ; 97/B081
 
@@ -4306,7 +4328,7 @@
         .word $2000, $2000
         .long acBattleSceneEffectDataEF29FC, aDecompressionBuffer
         .word $3800, $0800
-        .long g4bppcBattleSceneEffectTilesF01360, aDecompressionBuffer
+        .long g2bppcBattleSceneEffectTilesF01360, aDecompressionBuffer
         .word $3000, $0500
         .long acBattleSceneEffectDataF018FC, aDecompressionBuffer
         .word $7000, $0800
@@ -4330,6 +4352,9 @@
         .word $2000, $1000
         .long acBattleSceneEffectTilemapEF5460, aDecompressionBuffer
         .word $3800, $1000
+        ; Entry 26: no script selects it. Scripts $25, $42 and $48 load 24 and 25 with command 1;
+        ; command 20 with 25 would load this entry instead when the attacker's $0B24 bit 15 is set,
+        ; so it looks like an alternate of 25 that is not used.
         .long acBattleSceneEffectTilemapEF55C9, aDecompressionBuffer
         .word $3800, $1000
         .long $000000, $000000
@@ -4412,13 +4437,13 @@
         .word $3800, $1000
         .long acBattleSceneEffectTilemapF16A9C, aDecompressionBuffer
         .word $3800, $1000
-        .long acBattleSceneEffectDataF16C14, aDecompressionBuffer
+        .long g2bppcBattleSceneEffectTilesF16C14, aDecompressionBuffer
         .word $3000, $0200
         .long acBattleSceneEffectDataF16D80, aDecompressionBuffer
         .word $7000, $0800
         .long g4bppcBattleSceneEffectTilesF17076, aDecompressionBuffer
         .word $2000, $0400
-        .long acBattleSceneEffectDataF1718D, aDecompressionBuffer
+        .long g2bppcBattleSceneEffectTilesF1718D, aDecompressionBuffer
         .word $3000, $0200
         .long acBattleSceneEffectDataF17245, aDecompressionBuffer
         .word $3800, $0800
@@ -4430,7 +4455,7 @@
         .word $7000, $0800
         .long g4bppcBattleSceneEffectTilesF1771D, aDecompressionBuffer
         .word $2000, $1200
-        .long g4bppcBattleSceneEffectTilesF20083, aDecompressionBuffer
+        .long g2bppcBattleSceneEffectTilesF20083, aDecompressionBuffer
         .word $7000, $0D00
         .long acBattleSceneEffectDataF206F9, aDecompressionBuffer
         .word $3C00, $0800
@@ -4438,7 +4463,7 @@
         .word $3000, $1800
         .long g4bppcBattleSceneEffectTilesF21081, aDecompressionBuffer
         .word $2200, $1200
-        .long g4bppcBattleSceneEffectTilesF21830, aDecompressionBuffer
+        .long g2bppcBattleSceneEffectTilesF21830, aDecompressionBuffer
         .word $3000, $0E00
         .long acBattleSceneEffectTilemapF2200D, aDecompressionBuffer
         .word $3800, $1000
@@ -4452,7 +4477,7 @@
         .word $2000, $0400
         .long g4bppcBattleSceneEffectTilesF2292F, aDecompressionBuffer
         .word $2000, $0A00
-        .long acBattleSceneEffectDataF22E80, aDecompressionBuffer
+        .long g2bppcBattleSceneEffectTilesF22E80, aDecompressionBuffer
         .word $3000, $0200
         .long acBattleSceneEffectTilemapF22FD8, aDecompressionBuffer
         .word $3800, $1000
@@ -4460,12 +4485,14 @@
         .word $7000, $0800
         .long g4bppcBattleSceneEffectTilesF232C0, aDecompressionBuffer
         .word $2000, $1600
-        .long g4bppcBattleSceneEffectTilesF23B79, aDecompressionBuffer
+        .long g2bppcBattleSceneEffectTilesF23B79, aDecompressionBuffer
         .word $3000, $0F00
         .long acBattleSceneEffectTilemapF2447D, aDecompressionBuffer
         .word $3800, $1000
         .long acBattleSceneEffectDataF246DA, aDecompressionBuffer
         .word $7000, $0800
+        ; Entries 94-98: no command 1 or 20 in the 77 scripts of aBattleSceneEffectOffsetTable
+        ; selects them, and no other code reads this table (rlBattleSceneCommandDecompressToVRAM).
         .long g4bppcBattleSceneEffectTilesF2487B, aDecompressionBuffer
         .word $2000, $1200
         .long g4bppcBattleSceneEffectTilesF25289, aDecompressionBuffer
@@ -4528,7 +4555,7 @@
         .word $2000, $0520
         .long acBattleSceneEffectDataEF6D77, aDecompressionBuffer
         .word $3800, $0800
-        .long acBattleSceneEffectDataF276E0, aDecompressionBuffer
+        .long g2bppcBattleSceneEffectTilesF276E0, aDecompressionBuffer
         .word $3000, $0800
         .long acBattleSceneEffectDataF27D79, aDecompressionBuffer
         .word $7000, $0800
@@ -4536,15 +4563,15 @@
         .word $1000, $0C00
         .long acBattleSceneEffectDataF621E6, aDecompressionBuffer
         .word $1800, $0800
-        .long acBattleSceneEffectDataF62298, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF62298, aDecompressionBuffer
         .word $47B0, $0040
-        .long acBattleSceneEffectDataF622C0, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF622C0, aDecompressionBuffer
         .word $57B0, $00A0
-        .long acBattleSceneEffectDataF6232E, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF6232E, aDecompressionBuffer
         .word $57B0, $00A0
         .long gcBattleSceneLevelUpBanner, aDecompressionBuffer
         .word $47B0, $00A0
-        .long acBattleSceneEffectDataF6239C, aDecompressionBuffer
+        .long g4bppcBattleSceneEffectTilesF6239C, aDecompressionBuffer
         .word $57B0, $0060
         .long g4bppcTitleSceneTilesF41F38, aDecompressionBuffer
         .word $2000, $3400
@@ -4557,11 +4584,11 @@
 
         ; Read by rlBattleSceneCommandDecompress (6 bytes: Source, Dest).
 
-        .long acBattleSceneDecompE03105, $7E9388
+        .long g4bppcBattleSceneDecompE03105, $7E9388
         .long g4bppcBattleSceneDecompE033A5, $7E9B88
         .long acBattleSceneDecompTilemapE03B09, $7FCBC0
         .long acBattleSceneDecompTilemapE03D3B, $7FD480
-        .long acBattleSceneDecompE03D7F, $7E9388
+        .long g4bppcBattleSceneDecompE03D7F, $7E9388
         .long acBattleSceneDecompTilemapE04000, $7E9588
         .long acBattleSceneDecompTilemapE040D3, $7E9588
         .long g4bppcBattleSceneHUDTiles, aDecompressionBuffer

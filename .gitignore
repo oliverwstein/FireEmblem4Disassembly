@@ -65,6 +65,17 @@ gfx/build/ui/tilemaps/CastleTownButtonTilemap.bin
 gfx/build/ui/tilemaps/CastleListBG3Template.bin
 gfx/build/ui/tilemaps/Conversation*WindowTilemap.bin
 gfx/build/ui/tilemaps/DialogueBoxTilemap.bin
+# Built from gfx/effects/ by tools/battle_effects.py and tools/scene_pack.py
+gfx/build/D50000/acMapBattleMagic*Palette.bin
+!gfx/build/D50000/acMapBattleMagicPaletteUnused*.bin
+gfx/build/D50000/acMapBattleMagic*Tilemap*.bin
+!gfx/build/D50000/acMapBattleMagicTilemapUnused*.bin
+gfx/build/E02EBD/acBattleSceneDecomp*.bin
+gfx/build/E02EBD/acBattleSceneEffect*.bin
+!gfx/build/E02EBD/acBattleSceneEffectTilemapEF55C9.bin
+!gfx/build/E02EBD/acBattleSceneEffectTilemapF25C57.bin
+!gfx/build/E02EBD/acBattleSceneEffectTilemapF25DD4.bin
+!gfx/build/E02EBD/acBattleSceneEffectTilemapF25F67.bin
 # Built from gfx/icons/ItemIcons.json by tools/item_icons.py
 data/item/ItemIconOffsets.asm
 *.dialogue.txt
