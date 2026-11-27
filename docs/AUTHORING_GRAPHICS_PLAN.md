@@ -51,20 +51,14 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 ---
 
-### Phase 2 — Portraits (`152` graphics, `248` pointer entries)
-*Large visual payoff; the face is a 1-to-1 slice.*
+### Phase 2 — Portraits (`152` graphics, `248` pointer entries) — **done (2026-11-27)**
+*Large visual payoff; the face and mouth frames are a 1-to-1 slice.*
 
-- **Current state:** `gfx/portraits/*.4bpp.png` are the 64 tiles in storage order, four rows of 16 ([tools/portraits.py](../tools/portraits.py) describes the layout). `rsDialogueLoadPortraitWriteTilemap` ($91/9739) builds the 6×8 tile face from columns 0–5 (top half) and 6–11 (bottom half). Columns 12–15 are not part of the face. They are *probably* the mouth and eye frames, but no routine that reads them has been identified yet. Palettes are in [data/portraits/PortraitPalettes.asm](../data/portraits/PortraitPalettes.asm), selected per entry by `PortraitPalettePointers.csv`.
-- **Graphics and palettes are not 1-to-1.** `PortraitGraphicPointers.csv` and `PortraitPalettePointers.csv` have 248 entries but there are 152 graphics. Entries $B9–$F2 are generic class cards (portrait ID $F3 in character data means "use the class's card", via `rlTryGetClassPortraitDataID` and `aClassPortraitDataIDs`), and $73, $74, $9C, $F3 and $F4 share one horseman card with different palettes. The authoring format must keep graphics and palettes separate.
-- **Author-facing object:**
-  - One indexed PNG per **graphic** (`gfx/portraits/AdultFinn.png`): the assembled `48×64` face, with columns 12–15 kept beside it as a `32×32` block of tiles in storage order. The PNG's palette is the palette of the first entry that uses the graphic, for viewing only; the pixel indices are what get packed.
-  - Palettes stay in `PortraitPalettes.asm` (one `bgr555()` palette per label, already editable), and the pointer CSVs stay as they are. A generated `portraits.txt` (already written by portraits.py) lists which entries use each graphic with which palette.
-- **Round-trip tool (`tools/portrait_pack.py`):**
-  - `unpack`: assembles the face from the `.4bpp.png` tile strip and writes the authored PNG.
-  - `pack`: slices the face and the 32×32 block back into the exact 64-tile (`$800`-byte) strip.
-  - `--self-test`: unpack and pack all 152 graphics and compare bytes.
-- **Before the animation frames can be laid out as frames:** find and read the routine that copies columns 12–15 during dialogue (search the dialogue code around `rsDialogueLoadPortraitWriteTilemap` for reads of tile offsets 12–15 or of the portrait's VRAM base plus `$180`). Once its frame size and which face tiles each frame replaces are known, the 32×32 block can be redrawn as positioned mouth and eye frames. Until then it stays raw.
-- **Risk:** Very low for the face. The frame layout is blocked on the routine above.
+- **Format resolved:** each portrait decompresses to `$800` bytes (64 4bpp tiles, 4 rows of 16). `rsDialogueLoadPortraitWriteTilemap` (`$91/9739`) and `aUnitPortraitSpritesFrame0` (`$8A/9586`) assemble the `48×64` (`6×8`-tile) face from columns 0–5 (top half) and 6–11 (bottom half). `rlUpdateDialoguePortraitOverlayTiles` (`$85/BD12`, using `aDialoguePortraitOverlayTileOffsets`: `.word $0009, $000F, $002F`) and `aUnitPortraitSpritesFrame1`/`2` + `aKeeperPortraitSpritesFrame1`/`2` (`engine/castle/keepers.asm`) read columns 12–15 as **two `32×16` (`4×2`-tile) mouth animation frames** (rows 0–1 and rows 2–3), both replacing `(0, 32)..(31, 47)` on the face. There are no eye blink frames.
+- **Graphics and palettes are not 1-to-1.** `PortraitGraphicPointers.csv` and `PortraitPalettePointers.csv` have 248 entries across 152 graphics (`$B9–$F2` are class cards; `$73, $74, $9C, $F3, $F4` share `ClassCardKnightLord`). Palettes stay in [data/portraits/PortraitPalettes.asm](../data/portraits/PortraitPalettes.asm) (`bgr555()`) and pointer CSVs stay as they are.
+- **Author-facing object (`gfx/portraits/NAME.png`):** one `80×64` indexed PNG per graphic (replacing `gfx/portraits/*.4bpp.png`), with the `48×64` face on the left (`x = 0..47`), Mouth Frame 1 at `(48, 32)..(79, 47)` and Mouth Frame 2 at `(48, 48)..(79, 63)`. The unused `32×32` top-right `(48, 0)..(79, 31)` must be colour index `0` (enforced at pack time). The PNG's palette is for viewing only (the palette of the first entry using the graphic); pixel indices `0–15` are what get packed.
+- **Round-trip & build wiring ([tools/portrait_pack.py](../tools/portrait_pack.py)):** `unpack`, `pack`, `build` (run by `build.sh` and `build.bat` before `gfx.py lz`), and `--self-test`.
+- **Proved:** `tools/portrait_pack.py --self-test` round-trips all 152 `.4bpp.comp` streams and checks all 152 committed `gfx/portraits/*.png` files, verifies a 4-region pixel edit updates only tiles `{$00, $06, $0C, $2C}` and recompresses cleanly via `gfx.lz`, and checks negative validation (mode, dimensions, palette range, non-zero unused pixels). Clean build is byte-identical.
 
 ---
 
@@ -136,7 +130,7 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 | Phase | Asset Class | Count | Round-Trip Complexity | Existing Foundation |
 |---|---|---:|---|---|
 | **1** ✓ | Chapter maps, map-battle sprite data (source + build wiring) | 32 map streams, 120 sprite data | Done | [tools/chapter_maps.py](../tools/chapter_maps.py) (CSV), [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) (assembly) |
-| **2** | Portraits | 152 graphics, 248 entries | **Easy** for the face; frames blocked on code | [tools/portraits.py](../tools/portraits.py) (export only) |
+| **2** ✓ | Portraits | 152 graphics, 248 entries | Done | [tools/portrait_pack.py](../tools/portrait_pack.py) (`80×64` PNG) |
 | **3** | Backgrounds & full-screen scenes | ~78 scenes | **Medium** (seeded tile matching + sub-palette) | [tools/gfx.py](../tools/gfx.py), [tools/backgrounds.py](../tools/backgrounds.py), `data/palettes/` |
 | **4** | UI tilemaps, icons, fonts | ~80 assets | **Medium** (fixed-sheet tilemap match) | `tools/scene_pack.py` from Phase 3 |
 | **5** | Map sprites & map-battle animations | 99 sheets + 557 battle sheets | **Medium–Hard** (OAM packing, Level B only) | Phase 1 layouts |
