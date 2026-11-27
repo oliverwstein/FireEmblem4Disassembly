@@ -44,9 +44,9 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 The goal is one part of the repository, `gfx/`, holding an authorable version of every piece of graphical content, organised by game system, that builds into the ROM and can be expanded: assets edited, and new ones added. Byte-identity on unedited sources is the check that the authored versions are complete.
 
-### Inventory (`tools/gfx_inventory.py`, to write before Phase 4 closes)
+### Inventory (`tools/gfx_inventory.py`)
 
-Nothing measures how much of the graphics is authorable. The tool lists every graphics stream from every `gfx/**/*.streams` file, and every uncompressed `.4bpp`/`.2bpp`/`.bin` the source includes, and gives each one a form, a system and a phase. It writes `docs/reference/gfx_inventory.md` (generated-file header, do not edit). Forms:
+`tools/gfx_inventory.py` tracks how much of the graphics is authorable. The tool lists every graphics stream from every `gfx/**/*.streams` file, and every uncompressed `.4bpp`/`.2bpp`/`.bin` the source includes, and gives each one a form, a system and a phase. It writes `docs/reference/gfx_inventory.md` (generated-file header, do not edit). Forms:
 
 - `authored`: built from an author-facing source (assembled PNG, CSV, assembly, manifest);
 - `sheet`: an indexed tile sheet in VRAM order, editable but not as a picture;
@@ -121,6 +121,7 @@ Authored sources live in one folder per game system. The ROM-address folders hol
 gfx/
   portraits/          NAME.png (80x64)
   scenes/             dialogue/ battle/ screens/ title/ worldmap/   NAME.png + NAME.scene.json
+  map/                MapTiles.4bpp.png, MapTileAnimations1–2.4bpp.png, BaseMapTileEntries.bin, 2 Unused files
   maps/               chapter map CSVs (Layout, TileEntries, Terrain)
   ui/                 shared sheets + layout manifests (Phase 4)
   fonts/  icons/      (Phase 4)
@@ -134,14 +135,14 @@ gfx/
 
 - An authored file names where its output goes (a manifest field, or a fixed rule in its tool), as `.scene.json` tilemap paths do. No author has to open `gfx/build/` for an authored asset.
 - `gfx/build/` holds, per ROM region, `REGION.streams`, the committed `NAME.comp` originals and the generated files; `gfx/build/portraits/` and `gfx/build/MapMovementSprites/` hold those two classes' streams; `gfx/build/map_sprites/` the generated standing sheets; `gfx/build/ui/tilemaps/` holds the uncompressed UI tilemaps (the committed originals as `NAME.bin.seed`, the generated `NAME.bin`, and the raw tilemaps not yet converted).
-- Nothing in `gfx/build/` is edited by hand except `.streams` order, which decides placement, and the tile sheets still in VRAM order (`sheet` in the inventory): about 1,000 `.4bpp.png`/`.2bpp.png` files stay beside their streams until their phase gives them an authored form.
+- Nothing in `gfx/build/` is edited by hand except `.streams` order, which decides placement, and the tile sheets still in VRAM order (`sheet` in the inventory): 102 `.4bpp.png`/`.2bpp.png` files (97 `.4bpp.png` + 5 `.2bpp.png`) remain beside their streams until their phase gives them an authored form.
 - `build.sh` writes `NAME.4bpp`/`NAME.2bpp` beside every `NAME.4bpp.png`/`NAME.2bpp.png` (gitignored), including the shared UI sheets in `gfx/ui/`.
 
 The migration of Phases 1–3 was done with Phase 4 (2026-11-27): the chapter map CSVs are in `gfx/maps/`, the map-battle sprite data in `gfx/map_battle/`, the portrait streams in `gfx/build/portraits/`; the 48 Phase 3 seed sheets were dropped (manifests name them as `"comp"` and `scene_pack.py` reads the `.comp` directly); the map movement sprites and the uncompressed UI tilemaps moved into `gfx/build/`.
 
 ### Adding assets and ROM space
 
-Every phase so far edits assets in place. Adding one (a portrait, a background, a chapter map, a scene) still means editing pointer tables, a `.streams` list and a manifest by hand, and nothing documents the steps. Each class needs:
+Phases 4–7 document their add paths (`tools/item_icons.py add` for item icons, and checklists for Phases 5–7); Phases 1–3 have no add-path checklist yet (backlog). Adding a brand-new compressed stream also requires updating the `.comp`-gated `gfx.py lz` loops in `build.sh` and `build.bat` (which currently only compress files with an existing `.comp`). Each class needs:
 
 - **A declared add path.** Name the table the code indexes (`PortraitGraphicPointers.csv` and `PortraitPalettePointers.csv`, `aDialogueBackgroundPointers`, `aBattleBackgrounds`, the chapter map tables), the ID constants, and the limits on the count (an ID width, a table the code bounds-checks, a fixed array). Then a tool command, or failing that a documented checklist, that adds the entry, the source file and the `.streams` line together. Backlog: Phases 1–3 have no add path yet.
 - **Room in the ROM: decided 2026-11-27, deferred.** Nothing needs the room until a mod adds content: unmodified builds never do, and an edit that compresses to the same size or smaller already fits. When a mod needs it, the route is ExHiROM (option 2 below). It plays in bsnes, Mesen, snes9x and flash carts. Until then each add path is written down as a checklist (as Phase 5's is) rather than a tool command. Measured in Phase 5: an edit that put new art in a blank map battle frame compressed 12 bytes larger and overflowed `A08000`; recompressing all 97 walking sprites with `tools/compress.py` would free 5,270 of 199,808 bytes (2.6%) and takes about six minutes.
@@ -220,7 +221,7 @@ Every phase so far edits assets in place. Adding one (a portrait, a background, 
   - **Item icons:** `tools/item_icons.py add NAME [PNG] [--item ITEM]` fills the next of the sheet's `128` slots (`111` used; slots `111–127` are blank) and can point an item at it. The sheet is a fixed-size uncompressed block, so this needs no ROM space.
   - **UI layouts:** no data-driven add path. Each layout is loaded by its own screen routine at a fixed VRAM address, so a new layout is a code change. What authors can do is rearrange existing layouts (grids) and redraw or add tiles in the shared sheets within their sizes.
   - **Fonts:** glyphs are edited in place; adding glyphs means a new character code in the dialogue encoding, outside this phase.
-- **Inventory:** [docs/reference/gfx_inventory.md](reference/gfx_inventory.md) from `tools/gfx_inventory.py --write` (rules in its docstring; `unused` means no reader in the sources, checked, not taken from the label). Counts are in *Inventory* above. One label named `Unused` had a reader: `g4bppcMapBattleCritUnused4`; Phase 5 showed that reader can never select it.
+- **Inventory:** [docs/reference/gfx_inventory.md](reference/gfx_inventory.md) from `tools/gfx_inventory.py --write` (rules in its docstring; `unused` means no reader in the sources, checked, not taken from the label). Counts are in *Inventory* above. `g4bppcMapBattleCritUnused4` was moved to `unused` in Phase 5, while two `Unused`-named labels stay `authored`: `acBattleBackgroundUnused16Tilemap` (referenced in `aBattleBackgrounds` slot `$16`) and `acWorldMapHighlightTilemapUnused` (0 readers, built by `WorldMapHighlights.scene.json`).
 - **Left as-is in `gfx/build/ui/tilemaps/`:** `6` `Unused*.bin`, `WorldMapDataD97940.bin`, `WorldMapTilemap.bin` (metatiles), `FirstGenerationEndingBG2Tilemap.bin`.
 - **Proved:** `tools/scene_pack.py --self-test` (all layers byte-identical; grid edits on an uncompressed and a compressed tilemap change only the edited entries, with LZ round-trip; an edit to `WindowFrames` leaves `UnitWindowList`'s tilemap unchanged and changes its preview; grid layers refuse `append_sheet` and out-of-range tiles), `tools/item_icons.py --self-test`, `tools/font_preview.py --self-test`, `tools/gfx_inventory.py --self-test` (which also fails when the inventory page is out of date), the Phase 1–3 self-tests from their new locations, `tools/backgrounds.py --self-test`, a clean build, and a build of only the files a commit contains (byte-identical).
 
@@ -312,7 +313,7 @@ Every phase so far edits assets in place. Adding one (a portrait, a background, 
 
 ## Summary Roadmap
 
-Cross-cutting work not tied to one phase: the inventory tool, the `gfx/` layout migration, and an add path plus ROM-space plan for each class (see *Goal and how progress is measured*).
+Cross-cutting work: the inventory tool (`tools/gfx_inventory.py`) and `gfx/` layout migration are done, ROM space is decided/deferred (ExHiROM), and Phase 1–3 add-path checklists remain backlog (see *Goal and how progress is measured*).
 
 | Phase | Asset Class | Count | Round-Trip Complexity | Existing Foundation |
 |---|---|---:|---|---|

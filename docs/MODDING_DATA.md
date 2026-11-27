@@ -12,7 +12,7 @@ This guide summarizes where editable ROM data lives, how build-time generators w
 | Chapter unit groups (`UNIT`) | [data/eventunit/](../data/eventunit/) | CSVs using `include/Deployment.h` constants (`UNITEntryEnd`, `UNITFormationNone`) |
 | Chapter events & castle/arena tables | [events/](../events/) | Macro-driven `.asm` per chapter |
 | Dialogue & menu text | [text/dialogue/](../text/dialogue/), [text/menutext/](../text/menutext/) | `.txt` (`process_dialogue.py`) and Shift-JIS `.asm` |
-| Graphics & tilemaps | [gfx/](../gfx/) | Indexed `.4bpp.png` / `.2bpp.png`, `.bin`, and compressed streams in `gfx/build/` (authored sources by system in `gfx/`; see [AUTHORING_GRAPHICS_PLAN.md](AUTHORING_GRAPHICS_PLAN.md)) |
+| Graphics & tilemaps | [gfx/](../gfx/) | Authored sources by system (`portraits/`, `scenes/`, `maps/`, `ui/layouts/`, `icons/`, `fonts/`, `map_sprites/`, `map_battle/`, `effects/`, `battle_animation/`), shared sheets (`.4bpp.png`/`.2bpp.png`), and build plumbing/compressed streams in `gfx/build/` (see [AUTHORING_GRAPHICS_PLAN.md](AUTHORING_GRAPHICS_PLAN.md)) |
 | Audio | [audio/](../audio/) | Sequence `.bin`, BRR `.brr`, directory/instrument `.bin`, and [audio/sound_data.asm](../audio/sound_data.asm) |
 | Battle scene & map-battle scripts/data | [engine/battle_scene/](../engine/battle_scene/), [engine/battle/](../engine/battle/) | Macro/table `.asm` (`script.asm`, `data.asm`, `animations.asm`, `map_battle.asm`, `map_magic_effects.asm`) |
 
@@ -20,7 +20,7 @@ This guide summarizes where editable ROM data lives, how build-time generators w
 
 - **1-to-1 offset tables (`13` tables in `data/offset/`):** Generated automatically by [tools/gen_offsets.py](../tools/gen_offsets.py) (run by `./build.sh` and `tablebuilder.bat`) from their source CSVs, `data/class/ClassMapSpriteAssignment.asm`, and `text/menutext/*.asm`. You can add or reorder rows in those source files without manually editing offset CSVs.
 - **Many-to-one offset tables (`4` CSVs in `data/offset/`):** `CharacterNameOffsets.csv`, `ClassNameOffsets.csv`, `ItemNameOffsets.csv`, and `ItemDescriptionOffsets.csv` are kept as explicit mapping CSVs because multiple entries share strings (e.g., `Paladin` / `PaladinF`, or `aItemDescriptions.None`).
-- **Compressed graphics & tilemaps:** Editing a `.4bpp.png` / `.2bpp.png` or `.bin` file in `gfx/` triggers `tools/gfx.py lz` to recompress it to `.lz`, and `tools/stream_layout.py` repacks the region's `.streams` manifest across SNES bank halves automatically.
+- **Graphics & tilemap compilers:** `./build.sh` runs the Phase 1–7 asset compilers (`portrait_pack.py`, `map_sprites.py`, `map_battle_sprites.py`, `battle_animations.py`, `battle_effects.py`, `scene_pack.py`, `item_icons.py`, `chapter_maps.py`, `map_battle_layouts.py`) before `gfx.py lz` and `stream_layout.py`, so editing any authored source PNG, CSV, manifest, or `.asm` layout rebuilds its `.4bpp`/`.2bpp`/`.bin` output, recompresses it to `.lz` if changed, and repacks the region's `.streams` manifest across SNES bank halves automatically.
 - **Palettes:** Use `bgr555(r, g, b)` (5-bit channels `0..31`) in `data/palettes/*.asm` and `data/portraits/PortraitPalettes.asm`.
 
 ## 3. Bank Headroom & Relocation Notes
