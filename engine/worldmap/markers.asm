@@ -1005,7 +1005,7 @@
     .endsection WorldMapMarkers2Section
 
 
-    .section Table8CDC30Section
+    .section WorldMapMarkerShadowBluePaletteSection
 
       .al
       .xl
@@ -1053,10 +1053,10 @@
 
         ; 8C/DE00
 
-    .endsection Table8CDC30Section
+    .endsection WorldMapMarkerShadowBluePaletteSection
 
 
-    .section Table8CDC00Section
+    .section WorldMapPartialBGPalettesSection
 
       .al
       .xl
@@ -1071,6 +1071,6 @@
 
         ; 8C/DC30
 
-    .endsection Table8CDC00Section
+    .endsection WorldMapPartialBGPalettesSection
 
 

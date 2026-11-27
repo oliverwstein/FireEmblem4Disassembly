@@ -6,7 +6,7 @@
 ; $8B; its variables are at $7F8185 (include/WRAM.h).
 
 
-    .section Unsorted80D2C6Section
+    .section SkillWindowOpenSection
 
       .al
       .xl
@@ -174,10 +174,16 @@
 
         ; 80/D41D
 
-    .endsection Unsorted80D2C6Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/D41D
+      aDecompressionDMAEntry80D425 .structDecompressionDMAEntry acSkillWindowBG1Tilemap, $0700, $1800 ; 80/D425
+      aDecompressionDMAEntry80D42D .structDecompressionDMAEntry acMenuWindowBackgroundTilemap, $0800, $2000 ; 80/D42D
+
+    .endsection SkillWindowOpenSection
 
 
-    .section Unsorted80D435Section
+    .section SkillWindowSetBGSettingsSection
 
       .al
       .xl
@@ -449,10 +455,10 @@
 
         ; 80/D662
 
-    .endsection Unsorted80D435Section
+    .endsection SkillWindowSetBGSettingsSection
 
 
-    .section Table80D662Section
+    .section SkillWindowPaviseRowTextSection
 
       .al
       .xl
@@ -584,10 +590,10 @@
         .enc "none"
 
 
-    .endsection Table80D662Section
+    .endsection SkillWindowPaviseRowTextSection
 
 
-    .section Unsorted80D818Section
+    .section SkillWindowGetUnitsSection
 
       .al
       .xl
@@ -729,7 +735,7 @@
 
         ; 80/D8E8
 
-    .endsection Unsorted80D818Section
+    .endsection SkillWindowGetUnitsSection
 
 
     .section Data89AC56Section
@@ -762,7 +768,7 @@
     .endsection Data89AC56Section
 
 
-    .section Unsorted8BD794Section
+    .section SkillWindowShowSection
 
       .al
       .xl
@@ -816,10 +822,10 @@
 
         ; 8B/D7B9
 
-    .endsection Unsorted8BD794Section
+    .endsection SkillWindowShowSection
 
 
-    .section Table8BD7B9Section
+    .section SkillWindowStepHandlersSection
 
       .al
       .xl
@@ -830,10 +836,10 @@
         .word <>rsSkillWindowHandleInput
         .word <>rsSkillWindowWaitStep
 
-    .endsection Table8BD7B9Section
+    .endsection SkillWindowStepHandlersSection
 
 
-    .section Unsorted8BD7BDSection
+    .section SkillWindowHandleInputSection
 
       .al
       .xl
@@ -1039,10 +1045,10 @@
 
         ; 8B/D8FE
 
-    .endsection Unsorted8BD7BDSection
+    .endsection SkillWindowHandleInputSection
 
 
-    .section Unsorted8BD8FESection
+    .section SkillWindowRenderSection
 
       .al
       .xl
@@ -1066,10 +1072,10 @@
 
         ; 8B/D90B
 
-    .endsection Unsorted8BD8FESection
+    .endsection SkillWindowRenderSection
 
 
-    .section Unsorted8BD90BSection
+    .section SkillWindowCopyVisibleRowsSection
 
       .al
       .xl
@@ -1321,7 +1327,7 @@
 
         ; 8B/DA9C
 
-    .endsection Unsorted8BD90BSection
+    .endsection SkillWindowCopyVisibleRowsSection
 
 
     .section Data8BDA9CSection
@@ -1341,7 +1347,7 @@
     .endsection Data8BDA9CSection
 
 
-    .section Unsorted8BDAB4Section
+    .section SkillWindowRenderBG2SpritesSection
 
       .al
       .xl
@@ -1422,10 +1428,10 @@
 
         .structSpriteArray aSkillWindowBG2SpritesBottom._Sprites
 
-    .endsection Unsorted8BDAB4Section
+    .endsection SkillWindowRenderBG2SpritesSection
 
 
-    .section Unsorted8BDB54Section
+    .section SkillWindowRenderSkillIconSection
 
       .al
       .xl
@@ -1466,7 +1472,7 @@
 
         .structSpriteArray aSkillWindowSkillIconSprite._Sprites
 
-    .endsection Unsorted8BDB54Section
+    .endsection SkillWindowRenderSkillIconSection
 
 
     .section Data8BDB7ESection
@@ -1487,7 +1493,7 @@
     .endsection Data8BDB7ESection
 
 
-    .section Unsorted8BDBA2Section
+    .section SkillWindowRenderCursorSection
 
       .al
       .xl
@@ -1581,10 +1587,10 @@
 
         ; 8B/DC22
 
-    .endsection Unsorted8BDBA2Section
+    .endsection SkillWindowRenderCursorSection
 
 
-    .section Table8BDC22Section
+    .section SkillWindowScrollArrowSpritesSection
 
       .al
       .xl
@@ -1624,10 +1630,10 @@
 
         ; 8B/DC49
 
-    .endsection Table8BDC22Section
+    .endsection SkillWindowScrollArrowSpritesSection
 
 
-    .section Unsorted8BDC49Section
+    .section CollectUnitsWithSelectedSkillSection
 
       .al
       .xl
@@ -1685,10 +1691,10 @@
         ; 8B/DC92
 
 
-    .endsection Unsorted8BDC49Section
+    .endsection CollectUnitsWithSelectedSkillSection
 
 
-    .section Unsorted8BDC92Section
+    .section SkillWindowMoveUpSection
 
       .al
       .xl
@@ -1980,7 +1986,7 @@
 
         ; 8B/DE9D
 
-    .endsection Unsorted8BDC92Section
+    .endsection SkillWindowMoveUpSection
 
 
     .section Data8BDE9DSection
@@ -2001,7 +2007,7 @@
     .endsection Data8BDE9DSection
 
 
-    .section Unsorted8BDECDSection
+    .section SkillWindowCopyVisibleHoldersSection
 
       .al
       .xl
@@ -2140,7 +2146,7 @@
         .text "だれももっていません\n"
         .enc "none"
 
-    .endsection Unsorted8BDECDSection
+    .endsection SkillWindowCopyVisibleHoldersSection
 
 
     .section Data8BDFBFSection

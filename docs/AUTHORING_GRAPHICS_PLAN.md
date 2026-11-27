@@ -142,7 +142,7 @@ The migration of Phases 1–3 was done with Phase 4 (2026-11-27): the chapter ma
 
 ### Adding assets and ROM space
 
-Phases 4–7 document their add paths (`tools/item_icons.py add` for item icons, and checklists for Phases 5–7); Phases 1–3 have no add-path checklist yet (backlog). Adding a brand-new compressed stream also requires updating the `.comp`-gated `gfx.py lz` loops in `build.sh` and `build.bat` (which currently only compress files with an existing `.comp`). Each class needs:
+- **Adding assets and ROM space:** Phases 4–7 document their add paths (`tools/item_icons.py add` for item icons, and checklists for Phases 5–7); Phases 1–3 have no add-path checklist yet (backlog). `build.py` (and `./build.sh`) also compresses new streams declared in `gfx/**/*.streams` even without an existing `.comp` file. Each class needs:
 
 - **A declared add path.** Name the table the code indexes (`PortraitGraphicPointers.csv` and `PortraitPalettePointers.csv`, `aDialogueBackgroundPointers`, `aBattleBackgrounds`, the chapter map tables), the ID constants, and the limits on the count (an ID width, a table the code bounds-checks, a fixed array). Then a tool command, or failing that a documented checklist, that adds the entry, the source file and the `.streams` line together. Backlog: Phases 1–3 have no add path yet.
 - **Room in the ROM: decided 2026-11-27, deferred.** Nothing needs the room until a mod adds content: unmodified builds never do, and an edit that compresses to the same size or smaller already fits. When a mod needs it, the route is ExHiROM (option 2 below). It plays in bsnes, Mesen, snes9x and flash carts. Until then each add path is written down as a checklist (as Phase 5's is) rather than a tool command. Measured in Phase 5: an edit that put new art in a blank map battle frame compressed 12 bytes larger and overflowed `A08000`; recompressing all 97 walking sprites with `tools/compress.py` would free 5,270 of 199,808 bytes (2.6%) and takes about six minutes.
@@ -304,7 +304,7 @@ Phases 4–7 document their add paths (`tools/item_icons.py add` for item icons,
 ## Not yet assigned to a phase
 
 - **Title, opening and world map scenes (Phase 3 follow-up, `gfx/scenes/title/` and `worldmap/`):** `acTitleScene*` (19), `acTitleScreen*`, `acOpeningSkySceneTilemap*` (3), `acOpeningLogoSubTiles`; world map tileset, tilemap, `acWorldMapBG3Tilemap` and `acWorldMapData` (the highlight and marker-shadow tilemaps were done in Phase 4). The title scenes need their palette setups pinned down; `gcWorldMapTilemap` uses 16×16 metatiles, which the packer does not handle yet. The TitleIntro sheet (Phase 3, `external`) belongs to these scenes.
-- **Compressed palettes (`acBattleBannerPalettes`, `acSaveMenuPalettes`, `acWarningScreenPalettes`):** should become `bgr555()` source like `data/palettes/`.
+- **Compressed palettes (`acBattleBannerPalettes`, `acSaveMenuPalettes`, `acWarningScreenPalettes`):** converted to `bgr555()` source in `data/palettes/` (`SaveMenuPalettes.asm`, `WarningScreenPalettes.asm`, `BattleBannerPalettes.asm`), built by `tools/palettes.py`.
 - **Palettes as authored objects.** `data/palettes/*.asm` and `PortraitPalettes.asm` are already editable `bgr555()` text; a swatch preview per file would help, but no compiler is needed.
 - **Animated map tiles** (`gfx/map/MapTileAnimations1–2.4bpp.png`): need the frame order and timing from the map tile animation code before a frame-strip format makes sense.
 - **Unused data** (`acDataC00000Unused`, `acDataC02786Unused`): inventory only.

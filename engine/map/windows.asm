@@ -80,7 +80,7 @@
     .endsection CreateUnitWindowAndTerrainWindowProcsSection
 
 
-    .section Unsorted85C0CESection
+    .section HideMapWindowsSection
 
       .al
       .xl
@@ -101,10 +101,10 @@
 
         ; 85/C0D5
 
-    .endsection Unsorted85C0CESection
+    .endsection HideMapWindowsSection
 
 
-    .section Unsorted85C0D5Section
+    .section ShowMapWindowsSection
 
       .al
       .xl
@@ -128,10 +128,10 @@
 
         ; 85/C0E2
 
-    .endsection Unsorted85C0D5Section
+    .endsection ShowMapWindowsSection
 
 
-    .section Unsorted85C0E2Section
+    .section GetMapWindowPositionSection
 
       .al
       .xl
@@ -342,10 +342,10 @@
 
         ; 85/C19B
 
-    .endsection Unsorted85C0E2Section
+    .endsection GetMapWindowPositionSection
 
 
-    .section Table85C19BSection
+    .section MapWindowTextTilemapDataSection
 
       .al
       .xl
@@ -353,10 +353,10 @@
       aMapWindowTextTilemapData ; 85/C19B
         .byte $20, $20, $00, $00, $00, $00, $CA, $E3, $7F
 
-    .endsection Table85C19BSection
+    .endsection MapWindowTextTilemapDataSection
 
 
-    .section Unsorted85C1A4Section
+    .section ClearMapWindowSection
 
       .al
       .xl
@@ -659,10 +659,10 @@
         ; A map window proc with no draw routine of its own. Nothing in the build creates it.
         .structProcInfo "Ba", rlInitMapWindowProc, rlUpdateMapWindow, aProcTerrainWindowCode
 
-    .endsection Unsorted85C1A4Section
+    .endsection ClearMapWindowSection
 
 
-    .section Unsorted85C30DSection
+    .section InitMapWindowProcSection
 
       .al
       .xl
@@ -721,7 +721,7 @@
 
         ; 85/C33D
 
-    .endsection Unsorted85C30DSection
+    .endsection InitMapWindowProcSection
 
 
     .section ProcScript85C33DSection
@@ -738,7 +738,7 @@
     .endsection ProcScript85C33DSection
 
 
-    .section Unsorted85C347Section
+    .section ProcTerrainWindowInitSection
 
       .al
       .xl
@@ -845,10 +845,10 @@
         .word $236D, $236D, $236D, $236E, $2378, $236F, $236F, $236F
         .word $236F, $236F, $236F, $2379, $237A
 
-    .endsection Unsorted85C347Section
+    .endsection ProcTerrainWindowInitSection
 
 
-    .section Unsorted85C41FSection
+    .section KeepTerrainWindowAwayFromCursorSection
 
       .al
       .xl
@@ -983,10 +983,10 @@
 
         ; 85/C4E0
 
-    .endsection Unsorted85C41FSection
+    .endsection KeepTerrainWindowAwayFromCursorSection
 
 
-    .section Unsorted85C55BSection
+    .section DrawTerrainNameSection
 
       .al
       .xl
@@ -1169,7 +1169,7 @@
 
         ; 85/C652
 
-    .endsection Unsorted85C55BSection
+    .endsection DrawTerrainNameSection
 
 
     .section ProcScript85C652Section
@@ -1183,7 +1183,7 @@
     .endsection ProcScript85C652Section
 
 
-    .section Unsorted85C65ASection
+    .section ProcUnitWindowInitSection
 
       .al
       .xl
@@ -1295,10 +1295,10 @@
         PROC_SET_ONCYCLE rlProcUnitWindowFindUnit
         PROC_HALT
 
-    .endsection Unsorted85C65ASection
+    .endsection ProcUnitWindowInitSection
 
 
-    .section Unsorted85C6D2Section
+    .section UnitWindowFindUnitSection
 
       .al
       .xl
@@ -1495,10 +1495,10 @@
         .word $2361, $2361, $E361, $E360, $A364, $A365, $A363, $A363
         .word $A363, $A363, $A363, $E365, $E364
 
-    .endsection Unsorted85C6D2Section
+    .endsection UnitWindowFindUnitSection
 
 
-    .section Unsorted85C819Section
+    .section PlaceUnitWindowSection
 
       .al
       .xl
@@ -1701,10 +1701,10 @@
 
         ; 85/C983
 
-    .endsection Unsorted85C819Section
+    .endsection PlaceUnitWindowSection
 
 
-    .section Table85C983Section
+    .section UnitWindowHPLabelTilesSection
 
       .al
       .xl
@@ -1730,10 +1730,10 @@
       aUnitWindowStatusTilePointers ; 85/C999
         .word <>aUnitWindowStatus4Tiles, <>aUnitWindowStatus5Tiles, <>aUnitWindowStatus6Tiles
 
-    .endsection Table85C983Section
+    .endsection UnitWindowHPLabelTilesSection
 
 
-    .section Unsorted85C99FSection
+    .section SetUnitWindowColourSection
 
       .al
       .xl
@@ -1763,7 +1763,7 @@
 
         ; 85/C9B7
 
-    .endsection Unsorted85C99FSection
+    .endsection SetUnitWindowColourSection
 
 
     .section Data85C9B7Section
@@ -1782,7 +1782,7 @@
     .endsection Data85C9B7Section
 
 
-    .section Unsorted85C9BFSection
+    .section DrawUnitWindowPointerSection
 
       .al
       .xl
@@ -1855,10 +1855,10 @@
         .word $0104, $2362, $0000, $0000, $0108, $2362, $010A, $2362
         .word $0000, $0000, $0108, $6362, $0000, $0000, $010C, $6362
 
-    .endsection Unsorted85C9BFSection
+    .endsection DrawUnitWindowPointerSection
 
 
-    .section Unsorted85CA4BSection
+    .section RefreshUnitWindowSection
 
       .al
       .xl
@@ -1909,6 +1909,6 @@
         .long 0, 0, aMapExperienceWindowTilemapData
         .byte 5, 10, 11
 
-    .endsection Unsorted85CA4BSection
+    .endsection RefreshUnitWindowSection
 
 

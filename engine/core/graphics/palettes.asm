@@ -147,7 +147,7 @@
     .endsection Data8C9D00Section
 
 
-    .section TableDD7EB0Section
+    .section ChapterIntroAndUIBGPalettesSection
 
       .al
       .xl
@@ -178,6 +178,6 @@
 
         ; DD/7FB0
 
-    .endsection TableDD7EB0Section
+    .endsection ChapterIntroAndUIBGPalettesSection
 
 

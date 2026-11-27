@@ -261,7 +261,7 @@
     .endsection DrawMenuTextLineSection
 
 
-    .section Table879471Section
+    .section MenuFontBankOffsetsSection
 
       .al
       .xl
@@ -421,10 +421,10 @@
 
         ; 87/9D77
 
-    .endsection Table879471Section
+    .endsection MenuFontBankOffsetsSection
 
 
-    .section Table879D77Section
+    .section MenuFontKanjiOverridesSection
 
       .al
       .xl
@@ -545,7 +545,7 @@
 
         ; 87/9E42
 
-    .endsection Table879D77Section
+    .endsection MenuFontKanjiOverridesSection
 
 
     .section DrawMenuTextNumberSection
@@ -721,7 +721,7 @@
     .endsection DrawMenuTextNumberSection
 
 
-    .section Unsorted80B0A3Section
+    .section LoadDefaultWindowBorderPaletteSection
 
       .al
       .xl
@@ -769,10 +769,14 @@
 
         ; 80/B0CB
 
-    .endsection Unsorted80B0A3Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B0CB .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/B0CB
+
+    .endsection LoadDefaultWindowBorderPaletteSection
 
 
-    .section Unsorted80B0D3Section
+    .section QueueMenuFontDecompressionSection
 
       .al
       .xl
@@ -823,10 +827,14 @@
 
         ; 80/B0FD
 
-    .endsection Unsorted80B0D3Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B0FD .structDecompressionDMAEntry gcMenuLabelsAndIcons, $0800, $4C00 ; 80/B0FD
+
+    .endsection QueueMenuFontDecompressionSection
 
 
-    .section Unsorted89BECCSection
+    .section DrawBG3TileRunSection
 
       .al
       .xl
@@ -862,10 +870,10 @@
 
         ; 89/BEEB
 
-    .endsection Unsorted89BECCSection
+    .endsection DrawBG3TileRunSection
 
 
-    .section Unsorted91AA15Section
+    .section SplitNumberIntoFiveDigitsSection
 
       .as
       .xl
@@ -931,10 +939,10 @@
 
         ; 91/AA6F
 
-    .endsection Unsorted91AA15Section
+    .endsection SplitNumberIntoFiveDigitsSection
 
 
-    .section Unsorted91AA6FSection
+    .section DrawFiveDigitNumberSection
 
       .al
       .xl
@@ -1028,10 +1036,10 @@
 
         ; 91/AAE2
 
-    .endsection Unsorted91AA6FSection
+    .endsection DrawFiveDigitNumberSection
 
 
-    .section Unsorted91AAE2Section
+    .section DrawBlankDigitSection
 
       .as
       .xl
@@ -1169,6 +1177,6 @@
 
         .databank 0
 
-    .endsection Unsorted91AAE2Section
+    .endsection DrawBlankDigitSection
 
 

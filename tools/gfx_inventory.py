@@ -42,6 +42,7 @@ import battle_animations
 import battle_effects
 import map_sprites
 import map_battle_sprites
+import palettes
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_MD = os.path.join(ROOT, 'docs', 'reference', 'gfx_inventory.md')
@@ -187,6 +188,7 @@ def collect_inventory():
     battle_anim_src = battle_animations.all_reachable_labels()
     effect_pal_src = battle_effects.all_managed_palettes()
     effect_sheet_src = battle_effects.all_managed_sheets()
+    comp_pal_src = {label: src_rel for label, src_rel, _out_rel, _comment in palettes.PALETTES}
     for spath in sorted(glob.glob(os.path.join(ROOT, 'gfx', '**', '*.streams'), recursive=True)):
         sdir = os.path.dirname(spath)
         rel_dir = os.path.relpath(sdir, ROOT).replace(os.sep, '/')
@@ -216,6 +218,9 @@ def collect_inventory():
                     form, system, phase, src = 'sheet', 'battle_animation', 'Phase 6', battle_anim_src[label][1]
                 elif label in effect_pal_src:
                     form, system, phase, src = 'authored', 'battle_effects', 'Phase 7', effect_pal_src[label]
+                elif label in comp_pal_src:
+                    system, phase = _system_for_name(label, out_rel)
+                    form, src = 'authored', comp_pal_src[label]
                 elif label in effect_sheet_src:
                     form, system, phase, src = 'sheet', 'battle_effects', 'Phase 7', effect_sheet_src[label][0]
                 elif label in map_battle_src:

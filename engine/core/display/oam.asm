@@ -358,7 +358,7 @@
     .endsection OAMUpperXBitTableSection
 
 
-    .section Unsorted808875Section
+    .section EnableOAMScanlineFlickerSection
 
       .al
       .xl
@@ -409,10 +409,10 @@
 
         ; 80/889D
 
-    .endsection Unsorted808875Section
+    .endsection EnableOAMScanlineFlickerSection
 
 
-    .section Unsorted80889DSection
+    .section PushToOAMBufferWithScanlineCullingSection
 
       .as
       .xl
@@ -631,10 +631,10 @@
 
         ; 80/89F1
 
-    .endsection Unsorted80889DSection
+    .endsection PushToOAMBufferWithScanlineCullingSection
 
 
-    .section Table8089F1Section
+    .section OAMScanlineTrailExtMaskTableSection
 
       .al
       .xl
@@ -647,10 +647,10 @@
 
         ; 80/8A01
 
-    .endsection Table8089F1Section
+    .endsection OAMScanlineTrailExtMaskTableSection
 
 
-    .section Unsorted808A01Section
+    .section FinishOAMScanlineFrameSection
 
       .al
       .xl
@@ -687,10 +687,10 @@
 
         ; 80/8A25
 
-    .endsection Unsorted808A01Section
+    .endsection FinishOAMScanlineFrameSection
 
 
-    .section Table808A25Section
+    .section OAMUnusedExtMaskTableSection
 
       .al
       .xl
@@ -703,10 +703,10 @@
 
         ; 80/8A35
 
-    .endsection Table808A25Section
+    .endsection OAMUnusedExtMaskTableSection
 
 
-    .section Unsorted808A35Section
+    .section FillTrailingSpriteExtBufferSection
 
       .as
       .xl
@@ -761,10 +761,10 @@
 
         ; 80/8A6C
 
-    .endsection Unsorted808A35Section
+    .endsection FillTrailingSpriteExtBufferSection
 
 
-    .section Unsorted808A6CSection
+    .section CountSpritesPerScanlineSection
 
       .al
       .xl
@@ -903,10 +903,10 @@
 
         ; 80/8B48
 
-    .endsection Unsorted808A6CSection
+    .endsection CountSpritesPerScanlineSection
 
 
-    .section Unsorted808B48Section
+    .section UpdateOAMBandSpriteLimitsSection
 
       .al
       .xl
@@ -1094,6 +1094,6 @@
 
         ; 80/8C50
 
-    .endsection Unsorted808B48Section
+    .endsection UpdateOAMBandSpriteLimitsSection
 
 

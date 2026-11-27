@@ -18,7 +18,7 @@
     .endsection UnitAnimationMenuDataSection
 
 
-    .section Unsorted85A5EFSection
+    .section ProcUnitAnimationMenuSection
 
       .al
       .xl
@@ -31,10 +31,10 @@
         .long aUnitAnimationMenuData
         .byte 1
 
-    .endsection Unsorted85A5EFSection
+    .endsection ProcUnitAnimationMenuSection
 
 
-    .section Unsorted85A5FBSection
+    .section ProcUnitAnimationMenuInitSection
 
       .al
       .xl
@@ -101,10 +101,10 @@
 
         ; 85/A670
 
-    .endsection Unsorted85A5FBSection
+    .endsection ProcUnitAnimationMenuInitSection
 
 
-    .section Table85A670Section
+    .section UnitAnimationMenuTitleSection
 
       .al
       .xl
@@ -138,10 +138,10 @@
         .enc "none"
 
 
-    .endsection Table85A670Section
+    .endsection UnitAnimationMenuTitleSection
 
 
-    .section Unsorted85A69ASection
+    .section ProcUnitAnimationMenuWaitSection
 
       .al
       .xl
@@ -278,10 +278,10 @@
 
         ; 85/A765
 
-    .endsection Unsorted85A69ASection
+    .endsection ProcUnitAnimationMenuWaitSection
 
 
-    .section Unsorted85A765Section
+    .section ProcUnitAnimationMenuCodeSection
 
       .al
       .xl
@@ -305,10 +305,10 @@
         .long 0, 0, aAllUnitsAnimationMenuTilemapData
         .byte 1, 18, 12
 
-    .endsection Unsorted85A765Section
+    .endsection ProcUnitAnimationMenuCodeSection
 
 
-    .section Unsorted85A782Section
+    .section ProcAllUnitsAnimationMenuSection
 
       .al
       .xl
@@ -321,10 +321,10 @@
         .long aAllUnitsAnimationMenuData
         .byte 1
 
-    .endsection Unsorted85A782Section
+    .endsection ProcAllUnitsAnimationMenuSection
 
 
-    .section Unsorted85A78ESection
+    .section ProcAllUnitsAnimationMenuInitSection
 
       .al
       .xl
@@ -377,10 +377,10 @@
 
         ; 85/A7CE
 
-    .endsection Unsorted85A78ESection
+    .endsection ProcAllUnitsAnimationMenuInitSection
 
 
-    .section Table85A7CESection
+    .section AllUnitsAnimationMenuRealTextSection
 
       .al
       .xl
@@ -400,10 +400,10 @@
         .enc "none"
 
 
-    .endsection Table85A7CESection
+    .endsection AllUnitsAnimationMenuRealTextSection
 
 
-    .section Unsorted85A7DESection
+    .section ProcAllUnitsAnimationMenuCycleSection
 
       .al
       .xl
@@ -522,10 +522,10 @@
 
         ; 85/A895
 
-    .endsection Unsorted85A7DESection
+    .endsection ProcAllUnitsAnimationMenuCycleSection
 
 
-    .section Unsorted85DE7CSection
+    .section UnitMenuAssaultSection
 
       .al
       .xl
@@ -593,10 +593,10 @@
 
         ; 85/DED6
 
-    .endsection Unsorted85DE7CSection
+    .endsection UnitMenuAssaultSection
 
 
-    .section Unsorted85DED6Section
+    .section UnitMenuStaffSection
 
       .al
       .xl
@@ -652,10 +652,10 @@
 
         .databank 0
 
-    .endsection Unsorted85DED6Section
+    .endsection UnitMenuStaffSection
 
 
-    .section Unsorted85DF20Section
+    .section UnitMenuEnterSection
 
       .al
       .xl
@@ -690,10 +690,10 @@
 
         ; 85/DF3F
 
-    .endsection Unsorted85DF20Section
+    .endsection UnitMenuEnterSection
 
 
-    .section Unsorted85DF3FSection
+    .section UnitMenuTownSection
 
       .al
       .xl
@@ -754,10 +754,10 @@
 
 ; 00 00 18 00 50 57 DB E1 ED E1 AA 84 A3 83 85 01 C8 E1 85 22 C2 83 85 A9 00 00 85 89 85 87 AD CF 0E 9D B7 10 6B A9 09 00 22 AD 8F 80 BD D7 0E A8 22 80 82 85 22 AC 84 85 A9 00 00 8D 00 01 A9 00 20 8D 3A 05 A9 FF 20 8D 3C 05 BD B7 10 8D CF 0E A9 01 00 8D 43 05 8D 45 05 DA AE 72 07 BF EB 46 7E 8D 6F 05 20 4E E4 20 68 E4 A2 2E 00 DA FC 7F E2 FA 90 0F A9 E2 85 8D 41 05 BD AF E2 8D 40 05 20 32 E3 CA CA 10 E6 FA 22 BE F3 82 1A 0A EB 09 09 00 22 97 87 87 22 6E 85 85 22 DC 84 85 BD B7 10 C9 02 00 F0 0A C9 01 00 D0 05 20 DF E2 80 00 A9 3D E3 9D 57 0F 6B B6 E5 E8 E6 45 E5 39 E5 A5 E6 D7 E6 F6 E7 B3 E7 24
 
-    .endsection Unsorted85DF3FSection
+    .endsection UnitMenuTownSection
 
 
-    .section Unsorted85DF61Section
+    .section UnitMenuVillageSection
 
       .al
       .xl
@@ -781,10 +781,10 @@
 
         ; 85/DF6F
 
-    .endsection Unsorted85DF61Section
+    .endsection UnitMenuVillageSection
 
 
-    .section Unsorted85DF6FSection
+    .section UnitMenuSeizeSection
 
       .al
       .xl
@@ -806,10 +806,10 @@
 
         ; 85/DF7D
 
-    .endsection Unsorted85DF6FSection
+    .endsection UnitMenuSeizeSection
 
 
-    .section Unsorted85DF7DSection
+    .section UnitMenuGuardSection
 
       .al
       .xl
@@ -835,10 +835,10 @@
 
         ; 85/DF8A
 
-    .endsection Unsorted85DF7DSection
+    .endsection UnitMenuGuardSection
 
 
-    .section Unsorted85DF8ASection
+    .section UnitMenuDepartSection
 
       .al
       .xl
@@ -881,10 +881,10 @@
 
         ; 85/DFA6
 
-    .endsection Unsorted85DF8ASection
+    .endsection UnitMenuDepartSection
 
 
-    .section Unsorted85DFA6Section
+    .section UnitMenuDismountSection
 
       .al
       .xl
@@ -931,10 +931,10 @@
 
         ; 85/DFC2
 
-    .endsection Unsorted85DFA6Section
+    .endsection UnitMenuDismountSection
 
 
-    .section Unsorted85DFC2Section
+    .section UnitMenuTalkSection
 
       .al
       .xl
@@ -984,10 +984,10 @@
 
         .databank 0
 
-    .endsection Unsorted85DFC2Section
+    .endsection UnitMenuTalkSection
 
 
-    .section Unsorted85DFFDSection
+    .section UnitMenuAnimationSection
 
       .al
       .xl
@@ -1009,10 +1009,10 @@
 
         ; 85/E004
 
-    .endsection Unsorted85DFFDSection
+    .endsection UnitMenuAnimationSection
 
 
-    .section Unsorted85E004Section
+    .section UnitMenuReturnSkillSection
 
       .al
       .xl
@@ -1040,10 +1040,10 @@
 
         ; 85/E012
 
-    .endsection Unsorted85E004Section
+    .endsection UnitMenuReturnSkillSection
 
 
-    .section Unsorted85E012Section
+    .section UnitMenuHelpSection
 
       .al
       .xl
@@ -1311,7 +1311,7 @@
 
         .word 0, 24
 
-    .endsection Unsorted85E012Section
+    .endsection UnitMenuHelpSection
 
 
     .section ProcScript85E1CCSection
@@ -1331,7 +1331,7 @@
     .endsection ProcScript85E1CCSection
 
 
-    .section Unsorted85E1DBSection
+    .section ProcUnitMenuInitSection
 
       .al
       .xl
@@ -1433,10 +1433,10 @@
 
         ; 85/E27F
 
-    .endsection Unsorted85E1DBSection
+    .endsection ProcUnitMenuInitSection
 
 
-    .section Table85E27FSection
+    .section UnitMenuCommandChecksSection
 
       .al
       .xl
@@ -1497,10 +1497,10 @@
         .word <>aUnitMenuOptionHelp
         .word <>aUnitMenuOptionTalk
 
-    .endsection Table85E27FSection
+    .endsection UnitMenuCommandChecksSection
 
 
-    .section Unsorted85E2DFSection
+    .section UnitMenuMoveOptionListDownSection
 
       .al
       .xl
@@ -1584,10 +1584,10 @@
 
         ; 85/E33D
 
-    .endsection Unsorted85E2DFSection
+    .endsection UnitMenuMoveOptionListDownSection
 
 
-    .section Unsorted85E33DSection
+    .section ProcUnitMenuCycleSection
 
       .al
       .xl
@@ -1650,10 +1650,10 @@
 
         ; 85/E38C
 
-    .endsection Unsorted85E33DSection
+    .endsection ProcUnitMenuCycleSection
 
 
-    .section Unsorted85E38CSection
+    .section UnitMenuCheckEnterSection
 
       .al
       .xl
@@ -1791,10 +1791,10 @@
 
         ; 85/E44E
 
-    .endsection Unsorted85E38CSection
+    .endsection UnitMenuCheckEnterSection
 
 
-    .section Unsorted85E44ESection
+    .section UnitMenuBuildItemListsSection
 
       .al
       .xl
@@ -1844,10 +1844,10 @@
 
         ; 85/E47F
 
-    .endsection Unsorted85E44ESection
+    .endsection UnitMenuBuildItemListsSection
 
 
-    .section Unsorted85E47FSection
+    .section UnitMenuCheckAttackSection
 
       .al
       .xl
@@ -1977,10 +1977,10 @@
 
         ; 85/E545
 
-    .endsection Unsorted85E47FSection
+    .endsection UnitMenuCheckAttackSection
 
 
-    .section Unsorted85E545Section
+    .section UnitMenuCheckPassSection
 
       .al
       .xl
@@ -2017,10 +2017,10 @@
 
         ; 85/E549
 
-    .endsection Unsorted85E545Section
+    .endsection UnitMenuCheckPassSection
 
 
-    .section Unsorted85E549Section
+    .section UnitMenuCheckTalkSection
 
       .al
       .xl
@@ -2065,10 +2065,10 @@
 
         ; 85/E57E
 
-    .endsection Unsorted85E549Section
+    .endsection UnitMenuCheckTalkSection
 
 
-    .section Unsorted85E57ESection
+    .section UnitMenuCheckGuardSection
 
       .al
       .xl
@@ -2327,10 +2327,10 @@
 
         ; 85/E6D7
 
-    .endsection Unsorted85E57ESection
+    .endsection UnitMenuCheckGuardSection
 
 
-    .section Unsorted85E6D7Section
+    .section UnitMenuCheckMountSection
 
       .al
       .xl
@@ -2358,10 +2358,10 @@
 
         ; 85/E6E8
 
-    .endsection Unsorted85E6D7Section
+    .endsection UnitMenuCheckMountSection
 
 
-    .section Unsorted85E6E8Section
+    .section UnitMenuCheckReturnSkillSection
 
       .al
       .xl
@@ -2478,10 +2478,10 @@
 
         ; 85/E78A
 
-    .endsection Unsorted85E6E8Section
+    .endsection UnitMenuCheckReturnSkillSection
 
 
-    .section Unsorted85E78ASection
+    .section UnitMenuCheckHelpSection
 
       .al
       .xl
@@ -2521,10 +2521,10 @@
 
         ; 85/E7B3
 
-    .endsection Unsorted85E78ASection
+    .endsection UnitMenuCheckHelpSection
 
 
-    .section Unsorted85E7B3Section
+    .section UnitMenuCheckGiveGoldToArmySection
 
       .al
       .xl
@@ -2627,10 +2627,10 @@
 
         ; 85/E839
 
-    .endsection Unsorted85E7B3Section
+    .endsection UnitMenuCheckGiveGoldToArmySection
 
 
-    .section Unsorted85E839Section
+    .section UnitMenuCheckTalkHereSection
 
       .al
       .xl
@@ -2669,10 +2669,10 @@
 
         ; 85/E85D
 
-    .endsection Unsorted85E839Section
+    .endsection UnitMenuCheckTalkHereSection
 
 
-    .section Unsorted85E85DSection
+    .section OpenUnitMenuSection
 
       .al
       .xl
@@ -2729,10 +2729,10 @@
 
         ; 85/E897
 
-    .endsection Unsorted85E85DSection
+    .endsection OpenUnitMenuSection
 
 
-    .section Unsorted85E897Section
+    .section ClearUnitMenuModeFlagsSection
 
       .al
       .xl
@@ -2760,10 +2760,10 @@
 
         ; 85/E8A8
 
-    .endsection Unsorted85E897Section
+    .endsection ClearUnitMenuModeFlagsSection
 
 
-    .section Unsorted85E8A8Section
+    .section OpenUnitMenuMode1Section
 
       .al
       .xl
@@ -2835,10 +2835,10 @@
 
         ; 85/E8EA
 
-    .endsection Unsorted85E8A8Section
+    .endsection OpenUnitMenuMode1Section
 
 
-    .section Unsorted85E8EASection
+    .section UseItemFromMapSection
 
       .al
       .xl
@@ -2864,10 +2864,10 @@
 
         ; 85/E8FB
 
-    .endsection Unsorted85E8EASection
+    .endsection UseItemFromMapSection
 
 
-    .section Unsorted85E8FBSection
+    .section DiscardItemFromMapSection
 
       .al
       .xl
@@ -2929,10 +2929,10 @@
         .long 0, 0, aItemUseMenuTilemapData
         .byte 2, 12, 10
 
-    .endsection Unsorted85E8FBSection
+    .endsection DiscardItemFromMapSection
 
 
-    .section Unsorted85E951Section
+    .section ProcItemUseMenuSection
 
       .al
       .xl
@@ -2944,10 +2944,10 @@
         .byte 1
         .long aItemUseMenuOptionList
 
-    .endsection Unsorted85E951Section
+    .endsection ProcItemUseMenuSection
 
 
-    .section Unsorted85E960Section
+    .section ProcItemUseMenuSetUpSection
 
       .al
       .xl
@@ -3030,10 +3030,10 @@
 
         ; 85/E96B
 
-    .endsection Unsorted85E960Section
+    .endsection ProcItemUseMenuSetUpSection
 
 
-    .section Unsorted85E9C7Section
+    .section ProcCastleStaffMenuSection
 
       .al
       .xl
@@ -3045,10 +3045,10 @@
         .byte 1
         .long aUnitMenuOptionListTemplate
 
-    .endsection Unsorted85E9C7Section
+    .endsection ProcCastleStaffMenuSection
 
 
-    .section Unsorted85E9D6Section
+    .section ProcCastleStaffMenuSetUpSection
 
       .al
       .xl
@@ -3110,10 +3110,10 @@
 
         ; 85/EA3A
 
-    .endsection Unsorted85E9D6Section
+    .endsection ProcCastleStaffMenuSetUpSection
 
 
-    .section Table85EA3ASection
+    .section CastleStaffMenuChecksSection
 
       .al
       .xl
@@ -3129,10 +3129,10 @@
         .word <>aCastleStaffMenuOptionOutside
         .word <>aCastleStaffMenuOptionInside
 
-    .endsection Table85EA3ASection
+    .endsection CastleStaffMenuChecksSection
 
 
-    .section Unsorted85EA42Section
+    .section CastleStaffMenuCheckOutsideSection
 
       .al
       .xl
@@ -3159,10 +3159,10 @@
 
         ; 85/EA53
 
-    .endsection Unsorted85EA42Section
+    .endsection CastleStaffMenuCheckOutsideSection
 
 
-    .section Unsorted85EA53Section
+    .section CastleStaffMenuCheckInsideSection
 
       .al
       .xl
@@ -3189,6 +3189,6 @@
 
         ; 85/EA64
 
-    .endsection Unsorted85EA53Section
+    .endsection CastleStaffMenuCheckInsideSection
 
 

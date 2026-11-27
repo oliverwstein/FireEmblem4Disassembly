@@ -11,7 +11,7 @@
 ; data window), and the slot checks (rlCheckSaveSlotEmpty, rlCountUsedSaveSlots).
 
 
-    .section Table8D9B65Section
+    .section SaveMenuRowTextsSection
 
       .al
       .xl
@@ -33,10 +33,10 @@
 
         ; 8D/9BF6
 
-    .endsection Table8D9B65Section
+    .endsection SaveMenuRowTextsSection
 
 
-    .section Table8D9BF6Section
+    .section ChapterTitleTextsSection
 
       .al
       .xl
@@ -112,10 +112,10 @@
       aChapterTitleSpaceText ; 8D/9CB4
         .byte $09, $0A, $17, $01
 
-    .endsection Table8D9BF6Section
+    .endsection ChapterTitleTextsSection
 
 
-    .section Unsorted91AB91Section
+    .section BuildChapterTitleStringSection
 
       .al
       .xl
@@ -178,10 +178,10 @@
 
         ; 91/ABEE
 
-    .endsection Unsorted91AB91Section
+    .endsection BuildChapterTitleStringSection
 
 
-    .section Unsorted91ABEESection
+    .section BuildSaveSlotChapterStringSection
 
       .al
       .xl
@@ -274,10 +274,10 @@
 
         ; 91/AC79
 
-    .endsection Unsorted91ABEESection
+    .endsection BuildSaveSlotChapterStringSection
 
 
-    .section Unsorted91AC79Section
+    .section GetSaveSlotChapterTitleSection
 
       .al
       .xl
@@ -314,10 +314,10 @@
 
         ; 91/AC96
 
-    .endsection Unsorted91AC79Section
+    .endsection GetSaveSlotChapterTitleSection
 
 
-    .section Unsorted91AC96Section
+    .section CopyChapterNumberTextSection
 
       .al
       .xl
@@ -376,10 +376,10 @@
 
         ; 91/ACE2
 
-    .endsection Unsorted91AC96Section
+    .endsection CopyChapterNumberTextSection
 
 
-    .section Unsorted91ACE2Section
+    .section GetChapterTitleTextSection
 
       .al
       .xl
@@ -426,10 +426,10 @@
 
         ; 91/AD0B
 
-    .endsection Unsorted91ACE2Section
+    .endsection GetChapterTitleTextSection
 
 
-    .section Unsorted91D616Section
+    .section SaveMenuUpkeepSection
 
       .al
       .xl
@@ -492,10 +492,10 @@
 
         ; 91/D62A
 
-    .endsection Unsorted91D616Section
+    .endsection SaveMenuUpkeepSection
 
 
-    .section Table91D62ASection
+    .section SaveMenuStepsSection
 
       .al
       .xl
@@ -550,10 +550,10 @@
         .word <>rsSaveMenuIdle ; $2A: wait
         .word <>rsSaveMenuUnusedStep ; $2B
 
-    .endsection Table91D62ASection
+    .endsection SaveMenuStepsSection
 
 
-    .section Unsorted91D682Section
+    .section SaveMenuUnusedStepSection
 
       .al
       .xl
@@ -571,10 +571,10 @@
 
         ; 91/D683
 
-    .endsection Unsorted91D682Section
+    .endsection SaveMenuUnusedStepSection
 
 
-    .section Unsorted91D683Section
+    .section SaveMenuStartNewGameSection
 
       .al
       .xl
@@ -603,10 +603,10 @@
 
         ; 91/D69B
 
-    .endsection Unsorted91D683Section
+    .endsection SaveMenuStartNewGameSection
 
 
-    .section Unsorted91D69BSection
+    .section StartChapterWorldMapEventsSection
 
       .al
       .xl
@@ -639,10 +639,10 @@
 
         ; 91/D6BB
 
-    .endsection Unsorted91D69BSection
+    .endsection StartChapterWorldMapEventsSection
 
 
-    .section Unsorted91D6BBSection
+    .section SaveMenuIdleSection
 
       .al
       .xl
@@ -660,10 +660,10 @@
 
         ; 91/D6BC
 
-    .endsection Unsorted91D6BBSection
+    .endsection SaveMenuIdleSection
 
 
-    .section Unsorted91D6ECSection
+    .section LoadSaveMenuScreenSection
 
       .al
       .xl
@@ -769,10 +769,10 @@
 
         ; 91/D7E8
 
-    .endsection Unsorted91D6ECSection
+    .endsection LoadSaveMenuScreenSection
 
 
-    .section Unsorted91D7F8Section
+    .section SaveMenuCommandsStubSection
 
       .al
       .xl
@@ -790,10 +790,10 @@
 
         ; 91/D7F9
 
-    .endsection Unsorted91D7F8Section
+    .endsection SaveMenuCommandsStubSection
 
 
-    .section Unsorted91D7F9Section
+    .section SaveMenuBuildCommandRowsSection
 
       .al
       .xl
@@ -844,10 +844,10 @@
 
         ; 91/D839
 
-    .endsection Unsorted91D7F9Section
+    .endsection SaveMenuBuildCommandRowsSection
 
 
-    .section Unsorted91D839Section
+    .section SaveMenuAddRowSection
 
       .al
       .xl
@@ -868,10 +868,10 @@
 
         ; 91/D844
 
-    .endsection Unsorted91D839Section
+    .endsection SaveMenuAddRowSection
 
 
-    .section Unsorted91D844Section
+    .section SaveMenuFileCommandsSection
 
       .al
       .xl
@@ -925,7 +925,7 @@
 
         ; 91/D899
 
-    .endsection Unsorted91D844Section
+    .endsection SaveMenuFileCommandsSection
 
 
     .section Data91D899Section
@@ -944,7 +944,7 @@
     .endsection Data91D899Section
 
 
-    .section Unsorted91D8A0Section
+    .section SaveMenuSaveSlotsSection
 
       .al
       .xl
@@ -1030,10 +1030,10 @@
 
         ; 91/D90D
 
-    .endsection Unsorted91D8A0Section
+    .endsection SaveMenuSaveSlotsSection
 
 
-    .section Unsorted91D90DSection
+    .section SaveMenuSaveCancelledFadeOutSection
 
       .al
       .xl
@@ -1060,10 +1060,10 @@
 
         ; 91/D921
 
-    .endsection Unsorted91D90DSection
+    .endsection SaveMenuSaveCancelledFadeOutSection
 
 
-    .section Unsorted91D921Section
+    .section SaveMenuLeaveMapSaveSection
 
       .al
       .xl
@@ -1103,10 +1103,10 @@
 
         ; 91/D945
 
-    .endsection Unsorted91D921Section
+    .endsection SaveMenuLeaveMapSaveSection
 
 
-    .section Unsorted91D945Section
+    .section SaveMenuLoadSlotsSection
 
       .al
       .xl
@@ -1157,10 +1157,10 @@
 
         ; 91/D995
 
-    .endsection Unsorted91D945Section
+    .endsection SaveMenuLoadSlotsSection
 
 
-    .section Unsorted91D995Section
+    .section SaveMenuLoadedFadeOutSection
 
       .al
       .xl
@@ -1204,10 +1204,10 @@
 
         ; 91/D9C5
 
-    .endsection Unsorted91D995Section
+    .endsection SaveMenuLoadedFadeOutSection
 
 
-    .section Unsorted91D9FASection
+    .section SaveMenuCopySlotsSection
 
       .al
       .xl
@@ -1247,10 +1247,10 @@
 
         ; 91/DA25
 
-    .endsection Unsorted91D9FASection
+    .endsection SaveMenuCopySlotsSection
 
 
-    .section Unsorted91DA25Section
+    .section SaveMenuEraseSlotsSection
 
       .al
       .xl
@@ -1297,10 +1297,10 @@
 
         ; 91/DA64
 
-    .endsection Unsorted91DA25Section
+    .endsection SaveMenuEraseSlotsSection
 
 
-    .section Unsorted91DA64Section
+    .section SaveMenuSlotInputSection
 
       .al
       .xl
@@ -1413,10 +1413,10 @@
 
         ; 91/DB17
 
-    .endsection Unsorted91DA64Section
+    .endsection SaveMenuSlotInputSection
 
 
-    .section Unsorted91DB17Section
+    .section SaveMenuDrawConfirmWindowSection
 
       .al
       .xl
@@ -1498,10 +1498,10 @@
 
         ; 91/DB6D
 
-    .endsection Unsorted91DB17Section
+    .endsection SaveMenuDrawConfirmWindowSection
 
 
-    .section Unsorted91DB6DSection
+    .section SaveMenuBuildSlotRowsSection
 
       .al
       .xl
@@ -1561,10 +1561,10 @@
 
         ; 91/DBA8
 
-    .endsection Unsorted91DB6DSection
+    .endsection SaveMenuBuildSlotRowsSection
 
 
-    .section Unsorted91DBA8Section
+    .section SaveMenuStartLoadedMapSection
 
       .al
       .xl
@@ -1597,10 +1597,10 @@
 
         ; 91/DBD0
 
-    .endsection Unsorted91DBA8Section
+    .endsection SaveMenuStartLoadedMapSection
 
 
-    .section Unsorted91DBD0Section
+    .section SaveMenuReturnToMapSection
 
       .al
       .xl
@@ -1628,10 +1628,10 @@
 
         ; 91/DBEE
 
-    .endsection Unsorted91DBD0Section
+    .endsection SaveMenuReturnToMapSection
 
 
-    .section Unsorted91DBEESection
+    .section SaveMenuDrawRowsSection
 
       .al
       .xl
@@ -1670,10 +1670,10 @@
 
         ; 91/DC13
 
-    .endsection Unsorted91DBEESection
+    .endsection SaveMenuDrawRowsSection
 
 
-    .section Unsorted91DC13Section
+    .section SaveMenuRedrawRowsSection
 
       .al
       .xl
@@ -1693,10 +1693,10 @@
 
         ; 91/DC1A
 
-    .endsection Unsorted91DC13Section
+    .endsection SaveMenuRedrawRowsSection
 
 
-    .section Unsorted91DC1ASection
+    .section SaveMenuRedrawSlotTextSection
 
       .al
       .xl
@@ -1725,10 +1725,10 @@
 
         ; 91/DC37
 
-    .endsection Unsorted91DC1ASection
+    .endsection SaveMenuRedrawSlotTextSection
 
 
-    .section Unsorted91DC37Section
+    .section SaveMenuWaitSlotTextSection
 
       .al
       .xl
@@ -1756,10 +1756,10 @@
 
         ; 91/DC50
 
-    .endsection Unsorted91DC37Section
+    .endsection SaveMenuWaitSlotTextSection
 
 
-    .section Unsorted91DC50Section
+    .section SaveMenuRedrawSlotDetailsSection
 
       .al
       .xl
@@ -1788,10 +1788,10 @@
 
         ; 91/DC6D
 
-    .endsection Unsorted91DC50Section
+    .endsection SaveMenuRedrawSlotDetailsSection
 
 
-    .section Unsorted91DC6DSection
+    .section SaveMenuWaitSlotDetailsSection
 
       .al
       .xl
@@ -1824,10 +1824,10 @@
 
         ; 91/DC92
 
-    .endsection Unsorted91DC6DSection
+    .endsection SaveMenuWaitSlotDetailsSection
 
 
-    .section Unsorted91DC92Section
+    .section SaveMenuStartDrawingRowsSection
 
       .al
       .xl
@@ -1899,10 +1899,10 @@
 
         ; 91/DCDE
 
-    .endsection Unsorted91DC92Section
+    .endsection SaveMenuStartDrawingRowsSection
 
 
-    .section Unsorted91DCDESection
+    .section SaveMenuScrollBackgroundSection
 
       .al
       .xl
@@ -1944,10 +1944,10 @@
 
         ; 91/DCF8
 
-    .endsection Unsorted91DCDESection
+    .endsection SaveMenuScrollBackgroundSection
 
 
-    .section Unsorted91DCF8Section
+    .section SaveMenuDrawRowTilesSection
 
       .al
       .xl
@@ -2058,10 +2058,10 @@
 
         ; 91/DD9B
 
-    .endsection Unsorted91DCF8Section
+    .endsection SaveMenuDrawRowTilesSection
 
 
-    .section Unsorted91DD9BSection
+    .section SaveMenuRenderAllRowTextsSection
 
       .al
       .xl
@@ -2106,10 +2106,10 @@
 
         ; 91/DDD5
 
-    .endsection Unsorted91DD9BSection
+    .endsection SaveMenuRenderAllRowTextsSection
 
 
-    .section Table91DDD5Section
+    .section SaveMenuRowTextTilesSection
 
       .al
       .xl
@@ -2123,10 +2123,10 @@
 
         ; 91/DDF1
 
-    .endsection Table91DDD5Section
+    .endsection SaveMenuRowTextTilesSection
 
 
-    .section Unsorted91DDF1Section
+    .section SaveMenuRenderRowTextSection
 
       .al
       .xl
@@ -2190,10 +2190,10 @@
 
         ; 91/DE4C
 
-    .endsection Unsorted91DDF1Section
+    .endsection SaveMenuRenderRowTextSection
 
 
-    .section Unsorted91DE4CSection
+    .section SaveMenuEmptyTextSection
 
       .al
       .xl
@@ -2253,10 +2253,10 @@
 
         .databank 0
 
-    .endsection Unsorted91DE4CSection
+    .endsection SaveMenuEmptyTextSection
 
 
-    .section Table91DE9FSection
+    .section SaveMenuEmptyTitleTextSection
 
       .al
       .xl
@@ -2264,10 +2264,10 @@
       aSaveMenuEmptyTitleText ; 91/DE9F
         .word $0100
 
-    .endsection Table91DE9FSection
+    .endsection SaveMenuEmptyTitleTextSection
 
 
-    .section Unsorted91DEA1Section
+    .section SaveMenuClearSlotTextTilesSection
 
       .al
       .xl
@@ -2339,7 +2339,7 @@
 
         ; 91/DF08
 
-    .endsection Unsorted91DEA1Section
+    .endsection SaveMenuClearSlotTextTilesSection
 
 
     .section Unreferenced91DF08Section
@@ -2385,7 +2385,7 @@
         ; 91/DF32
 
     .endsection Unreferenced91DF08Section
-    .section Unsorted91DF32Section
+    .section StartTextToTilesSection
 
       .al
       .xl
@@ -2424,10 +2424,10 @@
 
         ; 91/DF6D
 
-    .endsection Unsorted91DF32Section
+    .endsection StartTextToTilesSection
 
 
-    .section Unsorted91DF6DSection
+    .section SetSaveMenuScreenRegistersSection
 
       .al
       .xl
@@ -2661,10 +2661,10 @@
         .word $0122, 15
         .word $FFFF
 
-    .endsection Unsorted91DF6DSection
+    .endsection SetSaveMenuScreenRegistersSection
 
 
-    .section Unsorted91E07ASection
+    .section CreateSaveMenuHDMASection
 
       .al
       .xl
@@ -2687,20 +2687,20 @@
 
         ; 91/E089
 
-    .endsection Unsorted91E07ASection
+    .endsection CreateSaveMenuHDMASection
 
 
-    .section Table91E089Section
+    .section SaveMenuHDMAInfoSection
 
       .al
       .xl
 
       aSaveMenuHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlInitSaveMenuHDMA, rlSaveMenuHDMAStub, aSaveMenuHDMACode, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $2D, $40, $85 ; 91/E089
 
-    .endsection Table91E089Section
+    .endsection SaveMenuHDMAInfoSection
 
 
-    .section Unsorted91E095Section
+    .section InitSaveMenuHDMASection
 
       .al
       .xl
@@ -2733,10 +2733,10 @@
 
         ; 91/E09E
 
-    .endsection Unsorted91E095Section
+    .endsection InitSaveMenuHDMASection
 
 
-    .section Table91E09ESection
+    .section SaveMenuHDMACodeSection
 
       .al
       .xl
@@ -2781,10 +2781,10 @@
         .byte $08, $08, $08, $07, $07, $07, $06, $06, $06, $06, $05, $05, $05, $05, $04, $04
         .byte $04, $04, $03, $03, $00
 
-    .endsection Table91E09ESection
+    .endsection SaveMenuHDMACodeSection
 
 
-    .section Unsorted91E275Section
+    .section SaveMenuMoveCommandCursorSection
 
       .al
       .xl
@@ -2847,10 +2847,10 @@
 
         ; 91/E2AA
 
-    .endsection Unsorted91E275Section
+    .endsection SaveMenuMoveCommandCursorSection
 
 
-    .section Unsorted91E2AASection
+    .section SaveMenuMoveSlotCursorSection
 
       .al
       .xl
@@ -3047,10 +3047,10 @@
 
         ; 91/E397
 
-    .endsection Unsorted91E2AASection
+    .endsection SaveMenuMoveSlotCursorSection
 
 
-    .section Table91E397Section
+    .section SaveMenuRowSpritesSection
 
       .al
       .xl
@@ -3105,10 +3105,10 @@
 
         ; 91/E405
 
-    .endsection Table91E397Section
+    .endsection SaveMenuRowSpritesSection
 
 
-    .section Unsorted91E405Section
+    .section SaveMenuDrawConfirmSpritesSection
 
       .al
       .xl
@@ -3249,10 +3249,10 @@
 
         .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
 
-    .endsection Unsorted91E405Section
+    .endsection SaveMenuDrawConfirmSpritesSection
 
 
-    .section Table91E4B3Section
+    .section SaveMenuHandFramesSection
 
       .al
       .xl
@@ -3268,7 +3268,7 @@
 
         ; 91/E4F3
 
-    .endsection Table91E4B3Section
+    .endsection SaveMenuHandFramesSection
 
 
     .section Data91E4F3Section
@@ -3290,7 +3290,7 @@
     .endsection Data91E4F3Section
 
 
-    .section Unsorted91E52BSection
+    .section ResetEnginesForSaveMenuSection
 
       .al
       .xl
@@ -3322,10 +3322,10 @@
 
         ; 91/E55A
 
-    .endsection Unsorted91E52BSection
+    .endsection ResetEnginesForSaveMenuSection
 
 
-    .section Unsorted91E55ASection
+    .section ReturnToFileMenuSection
 
       .al
       .xl
@@ -3371,10 +3371,10 @@
 
         ; 91/E583
 
-    .endsection Unsorted91E55ASection
+    .endsection ReturnToFileMenuSection
 
 
-    .section Unsorted91E583Section
+    .section FileMenuReloadRegistersSection
 
       .al
       .xl
@@ -3604,10 +3604,10 @@
 
         ; 91/E6D8
 
-    .endsection Unsorted91E583Section
+    .endsection FileMenuReloadRegistersSection
 
 
-    .section Unsorted91E92ESection
+    .section FillSaveSlotDataBuffersSection
 
       .al
       .xl
@@ -3626,10 +3626,10 @@
 
         ; 91/E932
 
-    .endsection Unsorted91E92ESection
+    .endsection FillSaveSlotDataBuffersSection
 
 
-    .section Unsorted91E932Section
+    .section CheckSaveSlotEmptySection
 
       .al
       .xl
@@ -3663,10 +3663,10 @@
 
         ; 91/E940
 
-    .endsection Unsorted91E932Section
+    .endsection CheckSaveSlotEmptySection
 
 
-    .section Unsorted91E940Section
+    .section CountUsedSaveSlotsSection
 
       .al
       .xl
@@ -3708,6 +3708,6 @@
 
         ; 91/E95F
 
-    .endsection Unsorted91E940Section
+    .endsection CountUsedSaveSlotsSection
 
 

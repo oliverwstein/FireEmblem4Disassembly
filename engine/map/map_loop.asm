@@ -159,7 +159,7 @@
     .endsection MapVBlankAndStartSection
 
 
-    .section Unsorted80AF9BSection
+    .section ResetMapGraphicsAndSystemsSection
 
       .al
       .xl
@@ -233,10 +233,10 @@
 
         ; 80/B041
 
-    .endsection Unsorted80AF9BSection
+    .endsection ResetMapGraphicsAndSystemsSection
 
 
-    .section Unsorted80B041Section
+    .section SetMapMainLoopAndVBlankSection
 
       .as
       .xl
@@ -307,10 +307,14 @@
 
         ; 80/B084
 
-    .endsection Unsorted80B041Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B084 .structDecompressionDMAEntry g4bppcMapMenuTiles3600, $0400, $3600 ; 80/B084
+
+    .endsection SetMapMainLoopAndVBlankSection
 
 
-    .section Unsorted80B08CSection
+    .section LoadMapMenuDecompression80B09BSection
 
       .al
       .xl
@@ -335,10 +339,14 @@
 
         ; 80/B09B
 
-    .endsection Unsorted80B08CSection
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B09B .structDecompressionDMAEntry g4bppcMapMenuTiles3400, $0400, $3400 ; 80/B09B
+
+    .endsection LoadMapMenuDecompression80B09BSection
 
 
-    .section Unsorted80B105Section
+    .section InitMapWindowRegistersSection
 
       .al
       .xl
@@ -372,10 +380,10 @@
 
         ; 80/B122
 
-    .endsection Unsorted80B105Section
+    .endsection InitMapWindowRegistersSection
 
 
-    .section Unsorted80B122Section
+    .section ReturnToMapMainLoopSection
 
       .al
       .xl
@@ -539,7 +547,7 @@
 
         ; 80/B1E1
 
-    .endsection Unsorted80B122Section
+    .endsection ReturnToMapMainLoopSection
 
 
     .section MapMainLoopSection

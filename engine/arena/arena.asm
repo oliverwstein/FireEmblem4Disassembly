@@ -1168,7 +1168,7 @@
     .endsection ArenaMenuSection
 
 
-    .section Unsorted87A082Section
+    .section GetArenaOpponentCharacterIDSection
 
       .al
       .xl
@@ -1412,10 +1412,10 @@
 
         ; 87/A18C
 
-    .endsection Unsorted87A082Section
+    .endsection GetArenaOpponentCharacterIDSection
 
 
-    .section Unsorted8AADF4Section
+    .section DrawArenaOpponentSection
 
       .al
       .xl
@@ -1513,10 +1513,10 @@
 
         ; 8A/AEDA
 
-    .endsection Unsorted8AADF4Section
+    .endsection DrawArenaOpponentSection
 
 
-    .section Table8AAEDASection
+    .section ArenaEnemyTextSection
 
       .al
       .xl
@@ -1543,10 +1543,10 @@
         .enc "none"
 
 
-    .endsection Table8AAEDASection
+    .endsection ArenaEnemyTextSection
 
 
-    .section Unsorted8AE2F8Section
+    .section ArenaScreenSetupSection
 
       .al
       .xl
@@ -1745,10 +1745,10 @@
 
         ; 8A/E4B9
 
-    .endsection Unsorted8AE2F8Section
+    .endsection ArenaScreenSetupSection
 
 
-    .section Unsorted84B508Section
+    .section StartArenaBattleSection
 
       .al
       .xl
@@ -1804,10 +1804,10 @@
 
         ; 84/B550
 
-    .endsection Unsorted84B508Section
+    .endsection StartArenaBattleSection
 
 
-    .section Unsorted84B550Section
+    .section GetArenaBattleResultSection
 
       .al
       .xl
@@ -1857,6 +1857,6 @@
 
         ; 84/B57A
 
-    .endsection Unsorted84B550Section
+    .endsection GetArenaBattleResultSection
 
 

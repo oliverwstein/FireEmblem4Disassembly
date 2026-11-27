@@ -8,9 +8,9 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 
 | Form | Compressed | Uncompressed | Total |
 |---|---:|---:|---:|
-| `authored` | 1178 | 24 | 1202 |
+| `authored` | 1181 | 24 | 1205 |
 | `sheet` | 377 | 21 | 398 |
-| `raw` | 31 | 4 | 35 |
+| `raw` | 28 | 4 | 32 |
 | `unused` | 61 | 8 | 69 |
 | **Total** | **1647** | **57** | **1704** |
 
@@ -27,9 +27,9 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | `map_battle` | 620 | 5 | 0 | 1 | 626 |
 | `map_sprites` | 99 | 0 | 0 | 0 | 99 |
 | `portraits` | 152 | 0 | 0 | 0 | 152 |
-| `scenes` | 128 | 1 | 1 | 0 | 130 |
+| `scenes` | 129 | 1 | 0 | 0 | 130 |
 | `title` | 0 | 18 | 24 | 0 | 42 |
-| `ui` | 37 | 57 | 3 | 6 | 103 |
+| `ui` | 39 | 57 | 1 | 6 | 103 |
 | `unused` | 0 | 0 | 0 | 2 | 2 |
 | `worldmap` | 0 | 2 | 6 | 0 | 8 |
 
@@ -59,12 +59,12 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcSaveMenuWindowTiles` | `sheet` | `ui` | Phase 4 | `gfx/build/9C8000/g4bppcSaveMenuWindowTiles.4bpp.png` | `gfx/build/9C8000/g4bppcSaveMenuWindowTiles.4bpp` |
 | compressed | `acSaveMenuBG2Tilemap` | `authored` | `ui` | Phase 4 | `gfx/ui/layouts/SaveMenu.scene.json` | `gfx/build/9C8000/acSaveMenuBG2Tilemap.bin` |
 | compressed | `acSaveMenuBG1Tilemap` | `authored` | `ui` | Phase 4 | `gfx/ui/layouts/SaveMenu.scene.json` | `gfx/build/9C8000/acSaveMenuBG1Tilemap.bin` |
-| compressed | `acSaveMenuPalettes` | `raw` | `ui` | Phase 4 | `gfx/build/9C8000/acSaveMenuPalettes.bin.comp` | `gfx/build/9C8000/acSaveMenuPalettes.bin` |
+| compressed | `acSaveMenuPalettes` | `authored` | `ui` | Phase 4 | `data/palettes/SaveMenuPalettes.asm` | `gfx/build/9C8000/acSaveMenuPalettes.bin` |
 | compressed | `gcAntiPiracyWarningTiles` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/AntiPiracyWarning.scene.json` | `gfx/build/9C8000/gcAntiPiracyWarningTiles.2bpp` |
 | compressed | `acAntiPiracyWarningTilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/AntiPiracyWarning.scene.json` | `gfx/build/9C8000/acAntiPiracyWarningTilemap.bin` |
 | compressed | `gcAbnormalityWarningTiles` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/AbnormalityWarning.scene.json` | `gfx/build/9C8000/gcAbnormalityWarningTiles.2bpp` |
 | compressed | `acAbnormalityWarningTilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/screens/AbnormalityWarning.scene.json` | `gfx/build/9C8000/acAbnormalityWarningTilemap.bin` |
-| compressed | `acWarningScreenPalettes` | `raw` | `scenes` | Phase 3 | `gfx/build/9C8000/acWarningScreenPalettes.bin.comp` | `gfx/build/9C8000/acWarningScreenPalettes.bin` |
+| compressed | `acWarningScreenPalettes` | `authored` | `scenes` | Phase 3 | `data/palettes/WarningScreenPalettes.asm` | `gfx/build/9C8000/acWarningScreenPalettes.bin` |
 | compressed | `g4bppcBattleBannerLeonster` | `sheet` | `ui` | Phase 4 | `gfx/build/9C8000/g4bppcBattleBannerLeonster.4bpp.png` | `gfx/build/9C8000/g4bppcBattleBannerLeonster.4bpp` |
 | compressed | `g4bppcBattleBannerDozel` | `sheet` | `ui` | Phase 4 | `gfx/build/9C8000/g4bppcBattleBannerDozel.4bpp.png` | `gfx/build/9C8000/g4bppcBattleBannerDozel.4bpp` |
 | compressed | `g4bppcBattleBannerYngvi` | `sheet` | `ui` | Phase 4 | `gfx/build/9C8000/g4bppcBattleBannerYngvi.4bpp.png` | `gfx/build/9C8000/g4bppcBattleBannerYngvi.4bpp` |
@@ -79,7 +79,7 @@ Total tracked assets: **1704** (**1647** compressed streams, **57** uncompressed
 | compressed | `g4bppcBattleBannerBelhalla` | `sheet` | `ui` | Phase 4 | `gfx/build/9C8000/g4bppcBattleBannerBelhalla.4bpp.png` | `gfx/build/9C8000/g4bppcBattleBannerBelhalla.4bpp` |
 | compressed | `g4bppcBattleBannerLoptr` | `sheet` | `ui` | Phase 4 | `gfx/build/9C8000/g4bppcBattleBannerLoptr.4bpp.png` | `gfx/build/9C8000/g4bppcBattleBannerLoptr.4bpp` |
 | compressed | `g4bppcBattleBannerDefault` | `sheet` | `ui` | Phase 4 | `gfx/build/9C8000/g4bppcBattleBannerDefault.4bpp.png` | `gfx/build/9C8000/g4bppcBattleBannerDefault.4bpp` |
-| compressed | `acBattleBannerPalettes` | `raw` | `ui` | Phase 4 | `gfx/build/9C8000/acBattleBannerPalettes.bin.comp` | `gfx/build/9C8000/acBattleBannerPalettes.bin` |
+| compressed | `acBattleBannerPalettes` | `authored` | `ui` | Phase 4 | `data/palettes/BattleBannerPalettes.asm` | `gfx/build/9C8000/acBattleBannerPalettes.bin` |
 | compressed | `acDialogueBackgroundCloisterForegroundTilemap` | `authored` | `scenes` | Phase 3 | `gfx/scenes/dialogue/Cloister.scene.json` | `gfx/build/9C8000/acDialogueBackgroundCloisterForegroundTilemap.bin` |
 | compressed | `g4bppcMapBattleSoldier3` | `authored` | `map_battle` | Phase 5 | `gfx/map_battle/sheets/Soldier3.png` | `gfx/build/A08000/g4bppcMapBattleSoldier3.4bpp` |
 | compressed | `g4bppcMapBattleSoldier2` | `authored` | `map_battle` | Phase 5 | `gfx/map_battle/sheets/Soldier2.png` | `gfx/build/A08000/g4bppcMapBattleSoldier2.4bpp` |

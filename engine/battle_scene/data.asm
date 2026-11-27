@@ -294,7 +294,7 @@
     .endsection Data97BDD4Section
 
 
-    .section Table97E8FBSection
+    .section BattleAnimationBodyRecordsSection
 
       .al
       .xl
@@ -506,7 +506,7 @@
         .byte $3C, $50, $50, $3C, $3C, $50, $50, $50, $50, $50, $64, $50, $50, $3C, $64, $64
         .byte $3C, $46, $64, $64, $FF, $FF, $FF, $FF, $50
 
-    .endsection Table97E8FBSection
+    .endsection BattleAnimationBodyRecordsSection
 
 
     .section Data97F19BSection
@@ -1852,7 +1852,7 @@
     .endsection Data98AFFDSection
 
 
-    .section Table98B231Section
+    .section BattleSceneDodgeMissSpritesSection
 
       .al
       .xl
@@ -1930,7 +1930,7 @@
 
         ; 98/B388
 
-    .endsection Table98B231Section
+    .endsection BattleSceneDodgeMissSpritesSection
 
 
     .section Data98B388Section

@@ -18,7 +18,7 @@
     .endsection MapItemListDataSection
 
 
-    .section Unsorted859281Section
+    .section ProcMapItemListSection
 
       .al
       .xl
@@ -31,10 +31,10 @@
         .long aMapItemListData
         .byte 1
 
-    .endsection Unsorted859281Section
+    .endsection ProcMapItemListSection
 
 
-    .section Unsorted85928DSection
+    .section ProcMapItemListInitSection
 
       .al
       .xl
@@ -116,10 +116,10 @@
 
         ; 85/92FA
 
-    .endsection Unsorted85928DSection
+    .endsection ProcMapItemListInitSection
 
 
-    .section Unsorted8592FASection
+    .section MapItemListDrawItemsSection
 
       .al
       .xl
@@ -207,10 +207,10 @@
 
         ; 85/9386
 
-    .endsection Unsorted8592FASection
+    .endsection MapItemListDrawItemsSection
 
 
-    .section Unsorted859386Section
+    .section ProcMapItemListShowPortraitSection
 
       .al
       .xl
@@ -231,10 +231,10 @@
 
         ; 85/9390
 
-    .endsection Unsorted859386Section
+    .endsection ProcMapItemListShowPortraitSection
 
 
-    .section Unsorted859390Section
+    .section ProcMapItemListShowDetailsSection
 
       .al
       .xl
@@ -326,10 +326,10 @@
 
         ; 85/9427
 
-    .endsection Unsorted859390Section
+    .endsection ProcMapItemListShowDetailsSection
 
 
-    .section Unsorted859427Section
+    .section ProcMapItemListLoadIconsSection
 
       .al
       .xl
@@ -350,10 +350,10 @@
 
         ; 85/9431
 
-    .endsection Unsorted859427Section
+    .endsection ProcMapItemListLoadIconsSection
 
 
-    .section Unsorted859431Section
+    .section ProcMapItemListBeginInputSection
 
       .al
       .xl
@@ -1041,10 +1041,10 @@
         .long 0, 0, aMapItemWeaponStatsTilemapData
         .byte 0, 19, 4
 
-    .endsection Unsorted859431Section
+    .endsection ProcMapItemListBeginInputSection
 
 
-    .section Unsorted85988ESection
+    .section ProcMapItemWeaponStatsSection
 
       .al
       .xl
@@ -1057,10 +1057,10 @@
         .long aMapItemWeaponStatsData
         .byte 0
 
-    .endsection Unsorted85988ESection
+    .endsection ProcMapItemWeaponStatsSection
 
 
-    .section Unsorted85989ASection
+    .section ProcMapItemWeaponStatsInitSection
 
       .al
       .xl
@@ -1144,10 +1144,10 @@
 
         ; 85/9953
 
-    .endsection Unsorted85989ASection
+    .endsection ProcMapItemWeaponStatsInitSection
 
 
-    .section Table859953Section
+    .section WeaponStatsLabel1TopTilesSection
 
       .al
       .xl
@@ -1176,10 +1176,10 @@
       aWeaponStatsLabel0BottomTiles ; 85/996F
         .byte $50, $51, $52, $00
 
-    .endsection Table859953Section
+    .endsection WeaponStatsLabel1TopTilesSection
 
 
-    .section Unsorted859973Section
+    .section ProcMapItemWeaponStatsDrawSection
 
       .al
       .xl
@@ -1351,10 +1351,10 @@
 
         ; 85/9AA8
 
-    .endsection Unsorted859973Section
+    .endsection ProcMapItemWeaponStatsDrawSection
 
 
-    .section Table859AA8Section
+    .section ItemListUpArrowTextSection
 
       .al
       .xl
@@ -1381,10 +1381,10 @@
         .enc "none"
 
 
-    .endsection Table859AA8Section
+    .endsection ItemListUpArrowTextSection
 
 
-    .section Unsorted859AB4Section
+    .section ProcMapItemWeaponStatsCycleSection
 
       .al
       .xl
@@ -1434,10 +1434,10 @@
 
         ; 85/9AFD
 
-    .endsection Unsorted859AB4Section
+    .endsection ProcMapItemWeaponStatsCycleSection
 
 
-    .section Unsorted859AFDSection
+    .section MapItemWeaponStatsDrawRankIconSection
 
       .al
       .xl
@@ -1480,10 +1480,10 @@
 
         .structSpriteArray aMapItemWeaponRankIconSprite._Sprites
 
-    .endsection Unsorted859AFDSection
+    .endsection MapItemWeaponStatsDrawRankIconSection
 
 
-    .section Unsorted859B28Section
+    .section ProcMapItemWeaponStatsCodeSection
 
       .al
       .xl
@@ -1495,6 +1495,6 @@
 
         ; 85/9B2A
 
-    .endsection Unsorted859B28Section
+    .endsection ProcMapItemWeaponStatsCodeSection
 
 

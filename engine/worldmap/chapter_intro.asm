@@ -7,7 +7,7 @@
 ; the slide.
 
 
-    .section Unsorted80F2BESection
+    .section OpenChapterIntroScreenSection
 
       .al
       .xl
@@ -83,10 +83,10 @@
         ; 88/A6CA; nothing reads either copy.
         .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
 
-    .endsection Unsorted80F2BESection
+    .endsection OpenChapterIntroScreenSection
 
 
-    .section Unsorted80F340Section
+    .section CreateChapterIntroHDMASection
 
       .al
       .xl
@@ -120,20 +120,20 @@
 
         ; 80/F36C
 
-    .endsection Unsorted80F340Section
+    .endsection CreateChapterIntroHDMASection
 
 
-    .section Table80F36CSection
+    .section ChapterIntroBG2VOFSHDMASection
 
       .al
       .xl
 
       aChapterIntroBG2VOFSHDMA .dstruct structHDMADirectEntryInfo, rlInitChapterIntroBG2VOFSHDMA, rlCycleChapterIntroBG2VOFSHDMA, aChapterIntroBG2VOFSHDMACode, $7F828F, PPU_REG_BASE + $0F, $02 ; 80/F36C
 
-    .endsection Table80F36CSection
+    .endsection ChapterIntroBG2VOFSHDMASection
 
 
-    .section Unsorted80F377Section
+    .section InitChapterIntroBG2VOFSHDMASection
 
       .al
       .xl
@@ -169,10 +169,10 @@
 
         ; 80/F37D
 
-    .endsection Unsorted80F377Section
+    .endsection InitChapterIntroBG2VOFSHDMASection
 
 
-    .section Table80F37DSection
+    .section ChapterIntroBG2VOFSHDMACodeSection
 
       .al
       .xl
@@ -182,10 +182,10 @@
 
       aChapterIntroBG1HOFSHDMA .dstruct structHDMADirectEntryInfo, rlInitChapterIntroBG1HOFSHDMA, rlCycleChapterIntroBG1HOFSHDMA, $F390, $7F838F, PPU_REG_BASE + $0D, $02 ; 80/F37F
 
-    .endsection Table80F37DSection
+    .endsection ChapterIntroBG2VOFSHDMACodeSection
 
 
-    .section Unsorted80F38ASection
+    .section InitChapterIntroBG1HOFSHDMASection
 
       .al
       .xl
@@ -226,10 +226,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted80F38ASection
+    .endsection InitChapterIntroBG1HOFSHDMASection
 
 
-    .section Unsorted80F392Section
+    .section LoadChapterIntroGraphicsSection
 
       .al
       .xl
@@ -307,10 +307,10 @@
 
         ; 80/F413
 
-    .endsection Unsorted80F392Section
+    .endsection LoadChapterIntroGraphicsSection
 
 
-    .section Table80F413Section
+    .section ChapterIntroTitleDMATableSection
 
       .al
       .xl
@@ -331,7 +331,7 @@
         .word <>rsDMAChapter10TitleGraphic
         .word <>rsDMAChapterFinalTitleGraphic
 
-    .endsection Table80F413Section
+    .endsection ChapterIntroTitleDMATableSection
 
 
     .section ChapterIntroDecompressionDMAEntriesSection
@@ -344,7 +344,7 @@
     .endsection ChapterIntroDecompressionDMAEntriesSection
 
 
-    .section Unsorted80F443Section
+    .section DMAPrologueTitleGraphicSection
 
       .al
       .xl
@@ -368,10 +368,10 @@
 
         ; 80/F451
 
-    .endsection Unsorted80F443Section
+    .endsection DMAPrologueTitleGraphicSection
 
 
-    .section Unsorted80F451Section
+    .section DMAChapter01TitleGraphicSection
 
       .al
       .xl
@@ -395,10 +395,10 @@
 
         ; 80/F45F
 
-    .endsection Unsorted80F451Section
+    .endsection DMAChapter01TitleGraphicSection
 
 
-    .section Unsorted80F45FSection
+    .section DMAChapter02TitleGraphicSection
 
       .al
       .xl
@@ -422,10 +422,10 @@
 
         ; 80/F46D
 
-    .endsection Unsorted80F45FSection
+    .endsection DMAChapter02TitleGraphicSection
 
 
-    .section Unsorted80F46DSection
+    .section DMAChapter03TitleGraphicSection
 
       .al
       .xl
@@ -449,10 +449,10 @@
 
         ; 80/F47B
 
-    .endsection Unsorted80F46DSection
+    .endsection DMAChapter03TitleGraphicSection
 
 
-    .section Unsorted80F47BSection
+    .section DMAChapter04TitleGraphicSection
 
       .al
       .xl
@@ -476,10 +476,10 @@
 
         ; 80/F489
 
-    .endsection Unsorted80F47BSection
+    .endsection DMAChapter04TitleGraphicSection
 
 
-    .section Unsorted80F489Section
+    .section DMAChapter05TitleGraphicSection
 
       .al
       .xl
@@ -503,10 +503,10 @@
 
         ; 80/F497
 
-    .endsection Unsorted80F489Section
+    .endsection DMAChapter05TitleGraphicSection
 
 
-    .section Unsorted80F497Section
+    .section DMAChapter06TitleGraphicSection
 
       .al
       .xl
@@ -530,10 +530,10 @@
 
         ; 80/F4A5
 
-    .endsection Unsorted80F497Section
+    .endsection DMAChapter06TitleGraphicSection
 
 
-    .section Unsorted80F4A5Section
+    .section DMAChapter07TitleGraphicSection
 
       .al
       .xl
@@ -557,10 +557,10 @@
 
         ; 80/F4B3
 
-    .endsection Unsorted80F4A5Section
+    .endsection DMAChapter07TitleGraphicSection
 
 
-    .section Unsorted80F4B3Section
+    .section DMAChapter08TitleGraphicSection
 
       .al
       .xl
@@ -584,10 +584,10 @@
 
         ; 80/F4C1
 
-    .endsection Unsorted80F4B3Section
+    .endsection DMAChapter08TitleGraphicSection
 
 
-    .section Unsorted80F4C1Section
+    .section DMAChapter09TitleGraphicSection
 
       .al
       .xl
@@ -611,10 +611,10 @@
 
         ; 80/F4CF
 
-    .endsection Unsorted80F4C1Section
+    .endsection DMAChapter09TitleGraphicSection
 
 
-    .section Unsorted80F4CFSection
+    .section DMAChapter10TitleGraphicSection
 
       .al
       .xl
@@ -638,10 +638,10 @@
 
         ; 80/F4DD
 
-    .endsection Unsorted80F4CFSection
+    .endsection DMAChapter10TitleGraphicSection
 
 
-    .section Unsorted80F4DDSection
+    .section DMAChapterFinalTitleGraphicSection
 
       .al
       .xl
@@ -665,10 +665,10 @@
 
         ; 80/F4EB
 
-    .endsection Unsorted80F4DDSection
+    .endsection DMAChapterFinalTitleGraphicSection
 
 
-    .section Unsorted80F4EBSection
+    .section SetChapterIntroBGSettingsSection
 
       .al
       .xl
@@ -731,7 +731,7 @@
 
         ; 80/F542
 
-    .endsection Unsorted80F4EBSection
+    .endsection SetChapterIntroBGSettingsSection
 
 
     .section ChapterIntroStepsSection
@@ -805,7 +805,7 @@
     .endsection ChapterIntroStepsSection
 
 
-    .section Unsorted91D6E3Section
+    .section ChapterIntroSkipSection
 
       .al
       .xl
@@ -827,10 +827,10 @@
 
         ; 91/D6EC
 
-    .endsection Unsorted91D6E3Section
+    .endsection ChapterIntroSkipSection
 
 
-    .section Unsorted91F748Section
+    .section ChapterIntroFadeInStepSection
 
       .al
       .xl
@@ -860,10 +860,10 @@
 
         ; 91/F759
 
-    .endsection Unsorted91F748Section
+    .endsection ChapterIntroFadeInStepSection
 
 
-    .section Unsorted91F759Section
+    .section ChapterIntroFadeInPhasesSection
 
       .al
       .xl
@@ -971,10 +971,10 @@
 
         .databank 0
 
-    .endsection Unsorted91F759Section
+    .endsection ChapterIntroFadeInPhasesSection
 
 
-    .section Unsorted91F813Section
+    .section ChapterIntroFadePaletteInSection
 
       .al
       .xl
@@ -1044,7 +1044,7 @@
 
         ; 91/F872
 
-    .endsection Unsorted91F813Section
+    .endsection ChapterIntroFadePaletteInSection
 
 
     .section Data91F872Section
@@ -1064,7 +1064,7 @@
     .endsection Data91F872Section
 
 
-    .section Unsorted91F88ASection
+    .section ChapterIntroFadeOutStepSection
 
       .al
       .xl
@@ -1094,10 +1094,10 @@
 
         ; 91/F89B
 
-    .endsection Unsorted91F88ASection
+    .endsection ChapterIntroFadeOutStepSection
 
 
-    .section Table91F89BSection
+    .section ChapterIntroFadeOutPhasesSection
 
       .al
       .xl
@@ -1108,10 +1108,10 @@
         .word <>rsChapterIntroDarken
         .word <>rsChapterIntroStartMap
 
-    .endsection Table91F89BSection
+    .endsection ChapterIntroFadeOutPhasesSection
 
 
-    .section Unsorted91F89FSection
+    .section ChapterIntroDarkenSection
 
       .al
       .xl
@@ -1183,10 +1183,10 @@
 
         ; 91/F907
 
-    .endsection Unsorted91F89FSection
+    .endsection ChapterIntroDarkenSection
 
 
-    .section Unsorted91F907Section
+    .section ChapterIntroSkipToMapSection
 
       .al
       .xl
@@ -1226,10 +1226,10 @@
 
         ; 91/F935
 
-    .endsection Unsorted91F907Section
+    .endsection ChapterIntroSkipToMapSection
 
 
-    .section Unsorted91F935Section
+    .section ChapterIntroUpdateSection
 
       .al
       .xl
@@ -1262,10 +1262,10 @@
 
         ; 91/F959
 
-    .endsection Unsorted91F935Section
+    .endsection ChapterIntroUpdateSection
 
 
-    .section Unsorted91F959Section
+    .section FillChapterIntroBG2VOFSTableSection
 
       .al
       .xl
@@ -1328,10 +1328,10 @@
 
         ; 91/F9AD
 
-    .endsection Unsorted91F959Section
+    .endsection FillChapterIntroBG2VOFSTableSection
 
 
-    .section Table91F9ADSection
+    .section ChapterIntroWaveOffsetsSection
 
       .al
       .xl
@@ -1346,10 +1346,10 @@
 
         ; 91/F9DD
 
-    .endsection Table91F9ADSection
+    .endsection ChapterIntroWaveOffsetsSection
 
 
-    .section Unsorted91F9DDSection
+    .section FillChapterIntroBG1HOFSTableSection
 
       .al
       .xl
@@ -1403,10 +1403,10 @@
 
         ; 91/FA27
 
-    .endsection Unsorted91F9DDSection
+    .endsection FillChapterIntroBG1HOFSTableSection
 
 
-    .section Table91FA27Section
+    .section ChapterIntroTitleSlideOffsetsSection
 
       .al
       .xl
@@ -1422,10 +1422,10 @@
 
         ; 91/FA57
 
-    .endsection Table91FA27Section
+    .endsection ChapterIntroTitleSlideOffsetsSection
 
 
-    .section Unsorted91FA57Section
+    .section SlideChapterIntroTitleSection
 
       .al
       .xl
@@ -1482,10 +1482,10 @@
 
         ; 91/FA9A
 
-    .endsection Unsorted91FA57Section
+    .endsection SlideChapterIntroTitleSection
 
 
-    .section Unsorted91FA9ASection
+    .section ChapterIntroFadePaletteStepSection
 
       .al
       .xl
@@ -1511,5 +1511,5 @@
         ; Unused: 7 zero bytes.
         .fill 7, $00
 
-    .endsection Unsorted91FA9ASection
+    .endsection ChapterIntroFadePaletteStepSection
 

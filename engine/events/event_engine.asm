@@ -4,7 +4,7 @@
 ; version string; the opening logo's game states that follow it are in
 ; engine/title/opening_logo.asm.
 
-    .section Table81B45BSection
+    .section AreaRestrictionSetBitmasksSection
 
       .al
       .xl
@@ -17,10 +17,10 @@
 
         ; 81/B461
 
-    .endsection Table81B45BSection
+    .endsection AreaRestrictionSetBitmasksSection
 
 
-    .section Table81B47DSection
+    .section AreaRestrictionClearBitmasksSection
 
       .al
       .xl
@@ -33,7 +33,7 @@
 
         ; 81/B483
 
-    .endsection Table81B47DSection
+    .endsection AreaRestrictionClearBitmasksSection
 
 
     .section EventEngineSection
@@ -6827,7 +6827,7 @@
     .endsection ApplyMapTileChangeSection
 
 
-    .section Unsorted81B2AASection
+    .section SaveChapterTurncountSection
 
       .al
       .xl
@@ -6889,10 +6889,10 @@
 
         ; 81/B301
 
-    .endsection Unsorted81B2AASection
+    .endsection SaveChapterTurncountSection
 
 
-    .section Unsorted81B43FSection
+    .section SetAreaRestrictionBitSection
 
       .al
       .xl
@@ -6929,10 +6929,10 @@
 
         ; 81/B45B
 
-    .endsection Unsorted81B43FSection
+    .endsection SetAreaRestrictionBitSection
 
 
-    .section Unsorted81B461Section
+    .section ClearAreaRestrictionBitSection
 
       .al
       .xl
@@ -6970,10 +6970,10 @@
 
         ; 81/B47D
 
-    .endsection Unsorted81B461Section
+    .endsection ClearAreaRestrictionBitSection
 
 
-    .section Unsorted84B57ASection
+    .section HandleArenaExitEventSection
 
       .al
       .xl
@@ -7167,10 +7167,10 @@
 
         ; 84/B6A6
 
-    .endsection Unsorted84B57ASection
+    .endsection HandleArenaExitEventSection
 
 
-    .section Unsorted80C1CBSection
+    .section StartChapterEventByIDSection
 
       .al
       .xs
@@ -7243,10 +7243,10 @@
 
         ; 80/C212
 
-    .endsection Unsorted80C1CBSection
+    .endsection StartChapterEventByIDSection
 
 
-    .section Unsorted91A3ABSection
+    .section ResetEventEngineSection
 
       .al
       .xl
@@ -7284,10 +7284,10 @@
 
         ; 91/A3D9
 
-    .endsection Unsorted91A3ABSection
+    .endsection ResetEventEngineSection
 
 
-    .section Unsorted91A3D9Section
+    .section EventEngineMainLoopSection
 
       .al
       .xl
@@ -7320,10 +7320,10 @@
 
         ; 91/A3DD
 
-    .endsection Unsorted91A3D9Section
+    .endsection EventEngineMainLoopSection
 
 
-    .section Unsorted91A3DESection
+    .section RunEventEngineStateSection
 
       .al
       .xl
@@ -7373,7 +7373,7 @@
 
         ; 91/A405
 
-    .endsection Unsorted91A3DESection
+    .endsection RunEventEngineStateSection
 
 
     .section Data91A405Section

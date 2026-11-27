@@ -4,7 +4,7 @@
 ; into the castle's secondhand stock. Banks $87 and $8A.
 
 
-    .section Unsorted87A18CSection
+    .section CheckUnitHasBargainSection
 
       .al
       .xl
@@ -31,7 +31,7 @@
 
         ; 87/A19D
 
-    .endsection Unsorted87A18CSection
+    .endsection CheckUnitHasBargainSection
 
 
     .section ShopScreenSetupSection
@@ -187,10 +187,16 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8ABE4B .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/BE4B
+      aDecompressionDMAEntry8ABE53 .structDecompressionDMAEntry acCastleShopAndArenaBG1Tilemap, $0800, $2800 ; 8A/BE53
+      aDecompressionDMAEntry8ABE5B .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/BE5B
+
     .endsection ShopScreenSetupSection
 
 
-    .section Unsorted8ABE63Section
+    .section LoadShopBackgroundSection
 
       .al
       .xl
@@ -299,10 +305,16 @@
 
         ; 8A/BF0F
 
-    .endsection Unsorted8ABE63Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8ABF0F .structDecompressionDMAEntry g4bppcCastleArmoryBGTiles, $1000, $0000 ; 8A/BF0F
+      aDecompressionDMAEntry8ABF17 .structDecompressionDMAEntry g4bppcCastleRepairShopBGTiles, $1000, $0000 ; 8A/BF17
+      aDecompressionDMAEntry8ABF1F .structDecompressionDMAEntry g4bppcCastlePawnShopBGTiles, $1000, $0000 ; 8A/BF1F
+
+    .endsection LoadShopBackgroundSection
 
 
-    .section Unsorted8ABF27Section
+    .section SetKeeperOptionListSection
 
       .al
       .xl
@@ -431,7 +443,7 @@
 
         ; 8A/BFF3
 
-    .endsection Unsorted8ABF27Section
+    .endsection SetKeeperOptionListSection
 
 
     .section Data8ABFF3Section
@@ -450,7 +462,7 @@
     .endsection Data8ABFF3Section
 
 
-    .section Unsorted8AC003Section
+    .section DrawShopStartListSection
 
       .al
       .xl
@@ -571,10 +583,10 @@
 
         ; 8A/C08F
 
-    .endsection Unsorted8AC003Section
+    .endsection DrawShopStartListSection
 
 
-    .section Table8AC08FSection
+    .section ShopStepHandlersSection
 
       .al
       .xl
@@ -604,10 +616,10 @@
         .word <>rsShopLeave
         .word <>rsShopLeaveToCourtyard
 
-    .endsection Table8AC08FSection
+    .endsection ShopStepHandlersSection
 
 
-    .section Unsorted8AC0B9Section
+    .section ShopGreetSection
 
       .al
       .xl
@@ -1107,10 +1119,10 @@
 
         ; 8A/C447
 
-    .endsection Unsorted8AC0B9Section
+    .endsection ShopGreetSection
 
 
-    .section Table8AC447Section
+    .section SecondhandShopOptionsTextSection
 
       .al
       .xl
@@ -1123,10 +1135,10 @@
         .enc "none"
 
 
-    .endsection Table8AC447Section
+    .endsection SecondhandShopOptionsTextSection
 
 
-    .section Unsorted8AC457Section
+    .section RepairShopStartSection
 
       .al
       .xl
@@ -1195,10 +1207,10 @@
 
         ; 8A/C50D
 
-    .endsection Unsorted8AC457Section
+    .endsection RepairShopStartSection
 
 
-    .section Unsorted8AC50DSection
+    .section ShopOpenBuyListSection
 
       .al
       .xl
@@ -1225,10 +1237,10 @@
 
         ; 8A/C524
 
-    .endsection Unsorted8AC50DSection
+    .endsection ShopOpenBuyListSection
 
 
-    .section Unsorted8AC524Section
+    .section ShopBuyListInputSection
 
       .al
       .xl
@@ -1399,10 +1411,10 @@
 
         ; 8A/C68E
 
-    .endsection Unsorted8AC524Section
+    .endsection ShopBuyListInputSection
 
 
-    .section Unsorted8AC68ESection
+    .section ShopCompareMoneyWithPriceSection
 
       .al
       .xl
@@ -1439,10 +1451,10 @@
 
         ; 8A/C6BA
 
-    .endsection Unsorted8AC68ESection
+    .endsection ShopCompareMoneyWithPriceSection
 
 
-    .section Unsorted8AC6BASection
+    .section ShopConfirmBuySection
 
       .al
       .xl
@@ -1549,10 +1561,10 @@
 
         ; 8A/C785
 
-    .endsection Unsorted8AC6BASection
+    .endsection ShopConfirmBuySection
 
 
-    .section Unsorted8AC785Section
+    .section ShopAfterBuySection
 
       .al
       .xl
@@ -1630,10 +1642,10 @@
 
         ; 8A/C81E
 
-    .endsection Unsorted8AC785Section
+    .endsection ShopAfterBuySection
 
 
-    .section Unsorted8AC81ESection
+    .section ShopBuyAgainSection
 
       .al
       .xl
@@ -1671,10 +1683,10 @@
 
         ; 8A/C853
 
-    .endsection Unsorted8AC81ESection
+    .endsection ShopBuyAgainSection
 
 
-    .section Unsorted8AC853Section
+    .section ShopLeaveBuyListSection
 
       .al
       .xl
@@ -1720,10 +1732,10 @@
 
         ; 8A/C8A2
 
-    .endsection Unsorted8AC853Section
+    .endsection ShopLeaveBuyListSection
 
 
-    .section Unsorted8AC8A2Section
+    .section ShopOpenSellListSection
 
       .al
       .xl
@@ -1845,10 +1857,10 @@
 
         ; 8A/C984
 
-    .endsection Unsorted8AC8A2Section
+    .endsection ShopOpenSellListSection
 
 
-    .section Unsorted8AC984Section
+    .section ShopConfirmSellSection
 
       .al
       .xl
@@ -1951,10 +1963,10 @@
 
         ; 8A/CA53
 
-    .endsection Unsorted8AC984Section
+    .endsection ShopConfirmSellSection
 
 
-    .section Unsorted8ACA53Section
+    .section ShopAfterSellSection
 
       .al
       .xl
@@ -2021,10 +2033,10 @@
 
         ; 8A/CAD2
 
-    .endsection Unsorted8ACA53Section
+    .endsection ShopAfterSellSection
 
 
-    .section Unsorted8ACAD2Section
+    .section ShopOpenRepairListSection
 
       .al
       .xl
@@ -2175,10 +2187,10 @@
 
         ; 8A/CBF2
 
-    .endsection Unsorted8ACAD2Section
+    .endsection ShopOpenRepairListSection
 
 
-    .section Unsorted8ACBF2Section
+    .section ShopRepairCancelSection
 
       .al
       .xl
@@ -2241,10 +2253,10 @@
 
         ; 8A/CC43
 
-    .endsection Unsorted8ACBF2Section
+    .endsection ShopRepairCancelSection
 
 
-    .section Unsorted8ACC43Section
+    .section CheckItemHasFiftyKillsSection
 
       .al
       .xl
@@ -2276,10 +2288,10 @@
 
         ; 8A/CC58
 
-    .endsection Unsorted8ACC43Section
+    .endsection CheckItemHasFiftyKillsSection
 
 
-    .section Unsorted8ACC58Section
+    .section ShopConfirmRepairSection
 
       .al
       .xl
@@ -2402,10 +2414,10 @@
 
         ; 8A/CD53
 
-    .endsection Unsorted8ACC58Section
+    .endsection ShopConfirmRepairSection
 
 
-    .section Unsorted8ACD53Section
+    .section ShopAfterRepairSection
 
       .al
       .xl
@@ -2447,10 +2459,10 @@
 
         ; 8A/CD94
 
-    .endsection Unsorted8ACD53Section
+    .endsection ShopAfterRepairSection
 
 
-    .section Unsorted8ACD94Section
+    .section ShopOpenBelongingsListSection
 
       .al
       .xl
@@ -2477,10 +2489,10 @@
 
         ; 8A/CDAB
 
-    .endsection Unsorted8ACD94Section
+    .endsection ShopOpenBelongingsListSection
 
 
-    .section Unsorted8ACDABSection
+    .section ShopBelongingsListInputSection
 
       .al
       .xl
@@ -2552,10 +2564,10 @@
 
         ; 8A/CE2B
 
-    .endsection Unsorted8ACDABSection
+    .endsection ShopBelongingsListInputSection
 
 
-    .section Unsorted8ACE2BSection
+    .section ShopLeaveSection
 
       .al
       .xl
@@ -2581,10 +2593,10 @@
 
         ; 8A/CE3A
 
-    .endsection Unsorted8ACE2BSection
+    .endsection ShopLeaveSection
 
 
-    .section Unsorted8ACE3ASection
+    .section ShopLeaveToCourtyardSection
 
       .al
       .xl
@@ -2615,10 +2627,10 @@
         ; Unreachable: it follows a return.
         rts
 
-    .endsection Unsorted8ACE3ASection
+    .endsection ShopLeaveToCourtyardSection
 
 
-    .section Unsorted8ACEB3Section
+    .section ShopDialoguePointersSection
 
       .al
       .xl
@@ -2718,10 +2730,10 @@
         .long dialogueShop54
         .long dialogueShop4E
 
-    .endsection Unsorted8ACEB3Section
+    .endsection ShopDialoguePointersSection
 
 
-    .section Unsorted8ACFBESection
+    .section CastleOptionMenuInputSection
 
       .al
       .xl
@@ -2844,10 +2856,10 @@
 
         ; 8A/D071
 
-    .endsection Unsorted8ACFBESection
+    .endsection CastleOptionMenuInputSection
 
 
-    .section Table8AD071Section
+    .section ItemShopOptionXSection
 
       .al
       .xl
@@ -2883,4 +2895,4 @@
         .byte $FF, $FF, $FF
 
 
-    .endsection Table8AD071Section
+    .endsection ItemShopOptionXSection

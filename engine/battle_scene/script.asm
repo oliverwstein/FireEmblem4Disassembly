@@ -485,7 +485,7 @@
     .endsection BattleSceneCommand96CDB7Section
 
 
-    .section Table96DF60Section
+    .section BattleSceneBGScrollEffectInitsSection
 
       .al
       .xl
@@ -522,7 +522,7 @@
         .word <>rsBattleSceneSetBGSlotVelocityOffset2
         .word <>rsBattleSceneAimBGSlotAtDefenderFlat
 
-    .endsection Table96DF60Section
+    .endsection BattleSceneBGScrollEffectInitsSection
 
 
     .section Unreferenced96DF98Section
@@ -634,7 +634,7 @@
     .endsection BattleSceneCommand96EC4ASection
 
 
-    .section Table96ECCCSection
+    .section BattleScenePaletteOperationsSection
 
       .al
       .xl
@@ -651,7 +651,7 @@
         .word <>rsBattleSceneFillPaletteBlue2
         .word <>rsBattleSceneDimPaletteQuarter
 
-    .endsection Table96ECCCSection
+    .endsection BattleScenePaletteOperationsSection
 
 
     .section BattleSceneCommand96F1C2Section
@@ -1271,7 +1271,7 @@
     .endsection BattleSceneScriptSection
 
 
-    .section Unsorted96A4B2Section
+    .section StartBattleSceneScriptSection
 
       .al
       .xl
@@ -1330,10 +1330,10 @@
 
         ; 96/A4FC
 
-    .endsection Unsorted96A4B2Section
+    .endsection StartBattleSceneScriptSection
 
 
-    .section Unsorted96AC1FSection
+    .section BattleSceneStartWindowEffect1Section
 
       .al
       .xl
@@ -1430,10 +1430,10 @@
 
         ; 96/ACAB
 
-    .endsection Unsorted96AC1FSection
+    .endsection BattleSceneStartWindowEffect1Section
 
 
-    .section Unsorted96B945Section
+    .section BattleSceneCommandDecompressToVRAMSection
 
       .al
       .xl
@@ -1655,10 +1655,10 @@
 
         ; 96/BA68
 
-    .endsection Unsorted96B945Section
+    .endsection BattleSceneCommandDecompressToVRAMSection
 
 
-    .section Unsorted96BB0CSection
+    .section BattleSceneCommandCopyToVRAMSection
 
       .al
       .xl
@@ -1729,10 +1729,10 @@
 
         ; 96/BB70
 
-    .endsection Unsorted96BB0CSection
+    .endsection BattleSceneCommandCopyToVRAMSection
 
 
-    .section Unsorted96BBC2Section
+    .section BattleSceneCommandWaitSection
 
       .al
       .xl
@@ -1783,10 +1783,10 @@
 
         ; 96/BBE2
 
-    .endsection Unsorted96BBC2Section
+    .endsection BattleSceneCommandWaitSection
 
 
-    .section Unsorted96BBE2Section
+    .section BattleSceneScriptUpdateLoadingSection
 
       .al
       .xl
@@ -1861,10 +1861,10 @@
 
         ; 96/BC4C
 
-    .endsection Unsorted96BBE2Section
+    .endsection BattleSceneScriptUpdateLoadingSection
 
 
-    .section Unsorted96BC4CSection
+    .section BattleSceneCommandPlaySoundSection
 
       .al
       .xl
@@ -1952,10 +1952,10 @@
 
         ; 96/BCAF
 
-    .endsection Unsorted96BC4CSection
+    .endsection BattleSceneCommandPlaySoundSection
 
 
-    .section Unsorted96BCF1Section
+    .section BattleSceneCommandWriteRAMSection
 
       .al
       .xl
@@ -1996,10 +1996,10 @@
 
         ; 96/BD1A
 
-    .endsection Unsorted96BCF1Section
+    .endsection BattleSceneCommandWriteRAMSection
 
 
-    .section Unsorted96BD1ASection
+    .section BattleSceneWriteRAMSection
 
       .al
       .xl
@@ -2085,10 +2085,10 @@
 
         ; 96/BD74
 
-    .endsection Unsorted96BD1ASection
+    .endsection BattleSceneWriteRAMSection
 
 
-    .section Unsorted96C9ADSection
+    .section BattleSceneScriptRunRoutineSection
 
       .al
       .xl
@@ -2133,10 +2133,10 @@
 
         ; 96/C9D9
 
-    .endsection Unsorted96C9ADSection
+    .endsection BattleSceneScriptRunRoutineSection
 
 
-    .section Unsorted96DB58Section
+    .section BattleSceneCommandPaletteEffectSection
 
       .al
       .xl
@@ -2190,10 +2190,10 @@
 
         ; 96/DB94
 
-    .endsection Unsorted96DB58Section
+    .endsection BattleSceneCommandPaletteEffectSection
 
 
-    .section Unsorted96DB94Section
+    .section BattleSceneStartPaletteEffectSection
 
       .al
       .xl
@@ -2336,10 +2336,10 @@
 
         ; 96/DC7C
 
-    .endsection Unsorted96DB94Section
+    .endsection BattleSceneStartPaletteEffectSection
 
 
-    .section Unsorted96DEC0Section
+    .section BattleSceneCommandBGScrollEffectSection
 
       .al
       .xl
@@ -2465,10 +2465,10 @@
 
         ; 96/DF60
 
-    .endsection Unsorted96DEC0Section
+    .endsection BattleSceneCommandBGScrollEffectSection
 
 
-    .section Unsorted96EC91Section
+    .section BattleSceneStopBG2ShakeSection
 
       .al
       .xl
@@ -2494,10 +2494,10 @@
 
         ; 96/ECAB
 
-    .endsection Unsorted96EC91Section
+    .endsection BattleSceneStopBG2ShakeSection
 
 
-    .section Unsorted96ECABSection
+    .section BattleSceneCommandPaletteOperationSection
 
       .al
       .xl
@@ -2550,7 +2550,7 @@
 
         ; 96/ECCC
 
-    .endsection Unsorted96ECABSection
+    .endsection BattleSceneCommandPaletteOperationSection
 
 
     .section Data978F3ASection
@@ -7120,7 +7120,7 @@
     .endsection Data9A8000Section
 
 
-    .section Unsorted96A4FCSection
+    .section BattleSceneInitEffectBuffersSection
 
       .al
       .xl
@@ -7156,10 +7156,10 @@
 
         ; 96/A532
 
-    .endsection Unsorted96A4FCSection
+    .endsection BattleSceneInitEffectBuffersSection
 
 
-    .section Unsorted96B852Section
+    .section BattleSceneInitEffectVerticalArcSection
 
       .al
       .xl
@@ -7336,10 +7336,10 @@
 
         ; 96/B945
 
-    .endsection Unsorted96B852Section
+    .endsection BattleSceneInitEffectVerticalArcSection
 
 
-    .section Unsorted96BCECSection
+    .section StartBattleSceneScriptFarSection
 
       .al
       .xl
@@ -7360,10 +7360,10 @@
 
         ; 96/BCF1
 
-    .endsection Unsorted96BCECSection
+    .endsection StartBattleSceneScriptFarSection
 
 
-    .section Unsorted96BD74Section
+    .section BattleSceneClearHDMAEffectsSection
 
       .al
       .xl
@@ -7498,6 +7498,6 @@
 
         ; 96/BE28
 
-    .endsection Unsorted96BD74Section
+    .endsection BattleSceneClearHDMAEffectsSection
 
 

@@ -1,6 +1,6 @@
 ; Struct arrays: blocks of fixed-size entries with a count and a maximum.
 
-    .section Unsorted82E400Section
+    .section ResetRAMStructAndAreaVariablesSection
 
       .al
       .xl
@@ -39,7 +39,7 @@
         ; Unreachable: it follows a return.
         rtl
 
-    .endsection Unsorted82E400Section
+    .endsection ResetRAMStructAndAreaVariablesSection
 
     .section RAMStructSection
 
@@ -486,7 +486,7 @@
 
     .endsection RAMStructSection
 
-    .section Unsorted82E5FFSection
+    .section MoveRAMStructEntryToFirstSection
 
       .al
       .xl
@@ -518,9 +518,9 @@
 
         ; 82/E615
 
-    .endsection Unsorted82E5FFSection
+    .endsection MoveRAMStructEntryToFirstSection
 
-    .section Unsorted82E615Section
+    .section MoveRAMStructEntryToLastSection
 
       .al
       .xl
@@ -552,9 +552,9 @@
 
         ; 82/E62C
 
-    .endsection Unsorted82E615Section
+    .endsection MoveRAMStructEntryToLastSection
 
-    .section Unsorted82E62CSection
+    .section MoveRAMStructEntryPrevSection
 
       .al
       .xl
@@ -638,9 +638,9 @@
 
         ; 82/E664
 
-    .endsection Unsorted82E62CSection
+    .endsection MoveRAMStructEntryPrevSection
 
-    .section Unsorted82E664Section
+    .section MoveRAMStructEntrySection
 
       .al
       .xl
@@ -784,7 +784,7 @@
 
         ; 82/E747
 
-    .endsection Unsorted82E664Section
+    .endsection MoveRAMStructEntrySection
 
     .section RAMStructAccessSection
 
@@ -1565,7 +1565,7 @@
 
     .endsection RAMStructAccessSection
 
-    .section Unsorted82EADESection
+    .section LoadRAMStructEntryToScratchSection
 
       .al
       .xl
@@ -1650,4 +1650,4 @@
 
         ; 82/EB4C
 
-    .endsection Unsorted82EADESection
+    .endsection LoadRAMStructEntryToScratchSection

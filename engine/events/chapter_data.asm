@@ -185,7 +185,7 @@
         ; 82/F517
 
     .endsection Unreferenced82F4F9Section
-    .section Unsorted81B4C5Section
+    .section GetChapterArenaOpponentsPointerSection
 
       .al
       .xl
@@ -226,10 +226,10 @@
 
         ; 81/B4E4
 
-    .endsection Unsorted81B4C5Section
+    .endsection GetChapterArenaOpponentsPointerSection
 
 
-    .section Unsorted81B503Section
+    .section GetChapterFactionPhaseFlagsPointerSection
 
       .al
       .xl
@@ -270,6 +270,6 @@
 
         ; 81/B522
 
-    .endsection Unsorted81B503Section
+    .endsection GetChapterFactionPhaseFlagsPointerSection
 
 

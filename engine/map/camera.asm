@@ -12,7 +12,7 @@
 ; rlCheckPointInScreenMargins, used by events, tests a looser box.
 
 
-    .section Unsorted88BF37Section
+    .section GetMapDataIndexSection
 
       .al
       .xl
@@ -78,10 +78,10 @@
 
         ; 88/BF6C
 
-    .endsection Unsorted88BF37Section
+    .endsection GetMapDataIndexSection
 
 
-    .section Unsorted88BF6CSection
+    .section GetTileScreenPositionSection
 
       .al
       .xl
@@ -132,10 +132,10 @@
 
         ; 88/BF97
 
-    .endsection Unsorted88BF6CSection
+    .endsection GetTileScreenPositionSection
 
 
-    .section Unsorted88BF97Section
+    .section CheckPointInScreenMarginsSection
 
       .al
       .xl
@@ -227,10 +227,10 @@
 
         ; 88/BFFA
 
-    .endsection Unsorted88BF97Section
+    .endsection CheckPointInScreenMarginsSection
 
 
-    .section Unsorted88BFFASection
+    .section GetTileScreenPixelPositionAtMapEdgeUnusedSection
 
       .al
       .xl
@@ -316,10 +316,10 @@
 
         ; 88/C059
 
-    .endsection Unsorted88BFFASection
+    .endsection GetTileScreenPixelPositionAtMapEdgeUnusedSection
 
 
-    .section Unsorted88C059Section
+    .section GetTileAtScreenPositionSection
 
       .al
       .xl
@@ -355,10 +355,10 @@
 
         ; 88/C072
 
-    .endsection Unsorted88C059Section
+    .endsection GetTileAtScreenPositionSection
 
 
-    .section Unsorted88C072Section
+    .section GetCursorMapPositionUnusedSection
 
       .al
       .xl
@@ -387,10 +387,10 @@
 
         ; 88/C085
 
-    .endsection Unsorted88C072Section
+    .endsection GetCursorMapPositionUnusedSection
 
 
-    .section Unsorted88C1BFSection
+    .section JumpToNextCastleSection
 
       .al
       .xl
@@ -492,10 +492,10 @@
 
         ; 88/C25D
 
-    .endsection Unsorted88C1BFSection
+    .endsection JumpToNextCastleSection
 
 
-    .section Unsorted88C25DSection
+    .section CenterCameraOnLocationSection
 
       .al
       .xl
@@ -566,10 +566,10 @@
 
         ; 88/C2BA
 
-    .endsection Unsorted88C25DSection
+    .endsection CenterCameraOnLocationSection
 
 
-    .section Unsorted88C2BASection
+    .section StepCameraTowardsTargetSection
 
       .al
       .xl
@@ -712,10 +712,10 @@
 
         ; 88/C355
 
-    .endsection Unsorted88C2BASection
+    .endsection StepCameraTowardsTargetSection
 
 
-    .section Unsorted88C355Section
+    .section SetCameraTargetForCursorSection
 
       .al
       .xl
@@ -810,10 +810,10 @@
 
         ; 88/C3F0
 
-    .endsection Unsorted88C355Section
+    .endsection SetCameraTargetForCursorSection
 
 
-    .section Unsorted88C3F0Section
+    .section RestoreMapCameraSection
 
       .al
       .xl
@@ -976,6 +976,6 @@
 
         ; 88/C4D9
 
-    .endsection Unsorted88C3F0Section
+    .endsection RestoreMapCameraSection
 
 

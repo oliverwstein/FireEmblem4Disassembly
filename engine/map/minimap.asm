@@ -18,7 +18,7 @@
     .endsection ProcScript889396Section
 
 
-    .section Unsorted88939ESection
+    .section ProcMinimapInitSection
 
       .al
       .xl
@@ -63,10 +63,10 @@
 
         ; 88/93DB
 
-    .endsection Unsorted88939ESection
+    .endsection ProcMinimapInitSection
 
 
-    .section Table8893DBSection
+    .section MinimapPaletteDataSection
 
       .al
       .xl
@@ -77,10 +77,10 @@
         .word $08A5, $1DC9, $1168, $3DEF, $2657, $0D2F, $0089, $6978
         .word $6289, $3945, $7BFF, $7E00, $001F, $03E0, $03FF
 
-    .endsection Table8893DBSection
+    .endsection MinimapPaletteDataSection
 
 
-    .section Unsorted889400Section
+    .section ProcMinimapClearSection
 
       .al
       .xl
@@ -105,10 +105,10 @@
 
         ; 88/9411
 
-    .endsection Unsorted889400Section
+    .endsection ProcMinimapClearSection
 
 
-    .section Unsorted889411Section
+    .section ProcMinimapDrawTerrainSection
 
       .al
       .xl
@@ -276,10 +276,10 @@
 
         ; 88/94F2
 
-    .endsection Unsorted889411Section
+    .endsection ProcMinimapDrawTerrainSection
 
 
-    .section Table8894F2Section
+    .section MinimapTilemapInfoSection
 
       .al
       .xl
@@ -290,7 +290,7 @@
       aMinimapPrologueTilemapInfo ; 88/94FB
         .byte $10, $08, $88, $7B, $7E, $00, $4A, $C5, $7F
 
-    .endsection Table8894F2Section
+    .endsection MinimapTilemapInfoSection
 
 
     .section ProcScript889504Section
@@ -308,7 +308,7 @@
     .endsection ProcScript889504Section
 
 
-    .section Unsorted889506Section
+    .section PutMinimapDotSection
 
       .al
       .xl
@@ -388,10 +388,10 @@
 
         ; 88/958F
 
-    .endsection Unsorted889506Section
+    .endsection PutMinimapDotSection
 
 
-    .section Table88958FSection
+    .section MinimapDotColorBitsSection
 
       .al
       .xl
@@ -422,10 +422,10 @@
 
         ; 88/96AF
 
-    .endsection Table88958FSection
+    .endsection MinimapDotColorBitsSection
 
 
-    .section Unsorted8896AFSection
+    .section ClearMinimapDotSection
 
       .al
       .xl
@@ -500,7 +500,7 @@
 
         ; 88/972F
 
-    .endsection Unsorted8896AFSection
+    .endsection ClearMinimapDotSection
 
 
     .section Data88972FSection
@@ -519,7 +519,7 @@
     .endsection Data88972FSection
 
 
-    .section Unsorted88973FSection
+    .section MinimapStepSection
 
       .al
       .xl
@@ -856,10 +856,10 @@
 
         ; 88/99A4
 
-    .endsection Unsorted88973FSection
+    .endsection MinimapStepSection
 
 
-    .section Table8899A4Section
+    .section MinimapBlankCastleNameTextSection
 
       .al
       .xl
@@ -872,10 +872,10 @@
         .enc "none"
 
 
-    .endsection Table8899A4Section
+    .endsection MinimapBlankCastleNameTextSection
 
 
-    .section Unsorted8899B8Section
+    .section MinimapScrollMapSection
 
       .al
       .xl
@@ -1070,10 +1070,10 @@
         .word $08A5, $1DC9, $1168, $4F9C, $2657, $0D2F, $0089, $6BF4
         .word $6289, $3945, $7BFF, $7E00, $001F, $03E0, $03FF
 
-    .endsection Unsorted8899B8Section
+    .endsection MinimapScrollMapSection
 
 
-    .section Table889AE2Section
+    .section MinimapViewColorCycleSection
 
       .al
       .xl
@@ -1089,10 +1089,10 @@
 
         ; 88/9B22
 
-    .endsection Table889AE2Section
+    .endsection MinimapViewColorCycleSection
 
 
-    .section Unsorted889B22Section
+    .section ClearMinimapSection
 
       .al
       .xl
@@ -1148,10 +1148,10 @@
 
         ; 88/9B6D
 
-    .endsection Unsorted889B22Section
+    .endsection ClearMinimapSection
 
 
-    .section Unsorted889B6DSection
+    .section DrawMinimapTerrainSection
 
       .al
       .xl
@@ -1216,10 +1216,10 @@
 
         ; 88/9BB5
 
-    .endsection Unsorted889B6DSection
+    .endsection DrawMinimapTerrainSection
 
 
-    .section Unsorted889BB5Section
+    .section MinimapTerrainColorsSection
 
       .al
       .xl
@@ -1270,10 +1270,10 @@
 
         ; 88/9BF7
 
-    .endsection Unsorted889BB5Section
+    .endsection MinimapTerrainColorsSection
 
 
-    .section Unsorted889BF7Section
+    .section DrawMinimapUnitsSection
 
       .al
       .xl
@@ -1338,7 +1338,7 @@
         .byte $06, $01, $06, $02, $03, $0A, $0A, $05, $04, $0B, $08, $08, $08, $08, $05, $0B
         .byte $07, $08, $08, $08, $08, $08, $08, $08, $08, $04
 
-    .endsection Unsorted889BF7Section
+    .endsection DrawMinimapUnitsSection
 
 
     .section ProcScript889C52Section
@@ -1353,7 +1353,7 @@
     .endsection ProcScript889C52Section
 
 
-    .section Unsorted889C5ASection
+    .section ProcMinimapCloseInitSection
 
       .al
       .xl
@@ -1459,10 +1459,10 @@
 
         ; 88/9CEE
 
-    .endsection Unsorted889C5ASection
+    .endsection ProcMinimapCloseInitSection
 
 
-    .section Unsorted889CEESection
+    .section ProcMinimapCloseLoadGraphics1Section
 
       .al
       .xl
@@ -1500,10 +1500,10 @@
 
         ; 88/9D20
 
-    .endsection Unsorted889CEESection
+    .endsection ProcMinimapCloseLoadGraphics1Section
 
 
-    .section Unsorted889D20Section
+    .section ProcMinimapCloseLoadGraphics2Section
 
       .al
       .xl
@@ -1563,10 +1563,10 @@
 
         ; 88/9D92
 
-    .endsection Unsorted889D20Section
+    .endsection ProcMinimapCloseLoadGraphics2Section
 
 
-    .section Table889D92Section
+    .section MinimapCloseBlankTextSection
 
       .al
       .xl
@@ -1579,10 +1579,10 @@
         .enc "none"
 
 
-    .endsection Table889D92Section
+    .endsection MinimapCloseBlankTextSection
 
 
-    .section Unsorted889DA6Section
+    .section ProcMinimapCloseFinishSection
 
       .al
       .xl
@@ -1686,7 +1686,7 @@
 
         ; 88/9E6C
 
-    .endsection Unsorted889DA6Section
+    .endsection ProcMinimapCloseFinishSection
 
 
     .section ProcScript889E6CSection

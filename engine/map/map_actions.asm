@@ -8,7 +8,7 @@
 ; talk, $1A help). Bank $84.
 
 
-    .section Unsorted84B32BSection
+    .section StartInventoryStaffTargetSelectionSection
 
       .al
       .xl
@@ -42,10 +42,10 @@
 
         ; 84/B349
 
-    .endsection Unsorted84B32BSection
+    .endsection StartInventoryStaffTargetSelectionSection
 
 
-    .section Unsorted84B9A3Section
+    .section CheckCanTalkSection
 
       .al
       .xl
@@ -103,10 +103,10 @@
 
         ; 84/B9D4
 
-    .endsection Unsorted84B9A3Section
+    .endsection CheckCanTalkSection
 
 
-    .section Unsorted84B9D4Section
+    .section CheckTalkTargetHereSection
 
       .al
       .xl
@@ -193,10 +193,10 @@
 
         ; 84/BA3E
 
-    .endsection Unsorted84B9D4Section
+    .endsection CheckTalkTargetHereSection
 
 
-    .section Unsorted84BA3ESection
+    .section FindTalkTargetsSection
 
       .al
       .xl
@@ -254,10 +254,10 @@
 
         ; 84/BA6F
 
-    .endsection Unsorted84BA3ESection
+    .endsection FindTalkTargetsSection
 
 
-    .section Unsorted84BA6FSection
+    .section StopGuardingCastleSection
 
       .al
       .xl
@@ -295,10 +295,10 @@
 
         ; 84/BAA1
 
-    .endsection Unsorted84BA6FSection
+    .endsection StopGuardingCastleSection
 
 
-    .section Unsorted84CC5DSection
+    .section EnterTargetLocationSection
 
       .al
       .xl
@@ -356,10 +356,10 @@
 
         ; 84/CCB4
 
-    .endsection Unsorted84CC5DSection
+    .endsection EnterTargetLocationSection
 
 
-    .section Unsorted84CD35Section
+    .section UnitReturnToHomeCastleSection
 
       .al
       .xl
@@ -409,10 +409,10 @@
 
         ; 84/CD8A
 
-    .endsection Unsorted84CD35Section
+    .endsection UnitReturnToHomeCastleSection
 
 
-    .section Unsorted84CD8ASection
+    .section QueueUnitRelocationToCastleSection
 
       .al
       .xl
@@ -450,10 +450,10 @@
 
         ; 84/CDA4
 
-    .endsection Unsorted84CD8ASection
+    .endsection QueueUnitRelocationToCastleSection
 
 
-    .section Unsorted84CDA4Section
+    .section UnitVisitTownSection
 
       .al
       .xl
@@ -494,10 +494,10 @@
 
         ; 84/CDD6
 
-    .endsection Unsorted84CDA4Section
+    .endsection UnitVisitTownSection
 
 
-    .section Unsorted84CDD6Section
+    .section UnitVisitVillageSection
 
       .al
       .xl
@@ -548,10 +548,10 @@
 
         ; 84/CE21
 
-    .endsection Unsorted84CDD6Section
+    .endsection UnitVisitVillageSection
 
 
-    .section Unsorted84CE21Section
+    .section UnitSeizeCastleSection
 
       .al
       .xl
@@ -800,10 +800,10 @@
 
         ; 84/CFBF
 
-    .endsection Unsorted84CE21Section
+    .endsection UnitSeizeCastleSection
 
 
-    .section Unsorted84CFBFSection
+    .section StartGuardingCastleAtUnitSection
 
       .al
       .xl
@@ -891,10 +891,10 @@
 
         ; 84/D03E
 
-    .endsection Unsorted84CFBFSection
+    .endsection StartGuardingCastleAtUnitSection
 
 
-    .section Unsorted84D03ESection
+    .section UnitGuardCastleSection
 
       .al
       .xl
@@ -980,10 +980,10 @@
 
         ; 84/D0B2
 
-    .endsection Unsorted84D03ESection
+    .endsection UnitGuardCastleSection
 
 
-    .section Unsorted84D0B2Section
+    .section SetMapActionModeGuardSection
 
       .al
       .xl
@@ -1005,10 +1005,10 @@
 
         ; 84/D0B9
 
-    .endsection Unsorted84D0B2Section
+    .endsection SetMapActionModeGuardSection
 
 
-    .section Unsorted84D0B9Section
+    .section UnitReturnIntoCastleSection
 
       .al
       .xl
@@ -1120,10 +1120,10 @@
 
         ; 84/D16B
 
-    .endsection Unsorted84D0B9Section
+    .endsection UnitReturnIntoCastleSection
 
 
-    .section Unsorted84D16BSection
+    .section UnitTalkSection
 
       .al
       .xl
@@ -1190,10 +1190,10 @@
 
         ; 84/D1CC
 
-    .endsection Unsorted84D16BSection
+    .endsection UnitTalkSection
 
 
-    .section Unsorted84D1CCSection
+    .section UnitDismountSection
 
       .al
       .xl
@@ -1317,10 +1317,10 @@
 
         ; 84/D271
 
-    .endsection Unsorted84D1CCSection
+    .endsection UnitDismountSection
 
 
-    .section Unsorted84D2BASection
+    .section UnitHelpSection
 
       .al
       .xl
@@ -1545,10 +1545,10 @@
 
         ; 84/D472
 
-    .endsection Unsorted84D2BASection
+    .endsection UnitHelpSection
 
 
-    .section Unsorted84D483Section
+    .section RequestUnitMenuMode2Section
 
       .al
       .xl
@@ -1593,10 +1593,10 @@
 
         ; 84/D4A2
 
-    .endsection Unsorted84D483Section
+    .endsection RequestUnitMenuMode2Section
 
 
-    .section Unsorted84D4A2Section
+    .section RequestUnitMenuMode1Section
 
       .al
       .xl
@@ -1642,6 +1642,6 @@
 
         ; 84/D4C7
 
-    .endsection Unsorted84D4A2Section
+    .endsection RequestUnitMenuMode1Section
 
 

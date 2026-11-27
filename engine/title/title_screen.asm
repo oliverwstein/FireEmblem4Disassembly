@@ -184,7 +184,7 @@
     .endsection TitleScreenIRQSection
 
 
-    .section Unsorted95EE73Section
+    .section DecompressTitleGraphicsSection
 
       .al
       .xl
@@ -303,10 +303,10 @@
 
         ; 95/EF54
 
-    .endsection Unsorted95EE73Section
+    .endsection DecompressTitleGraphicsSection
 
 
-    .section Unsorted95EF54Section
+    .section LoadTitleGraphicsSection
 
       .al
       .xl
@@ -482,10 +482,10 @@
 
         ; 95/F0E9
 
-    .endsection Unsorted95EF54Section
+    .endsection LoadTitleGraphicsSection
 
 
-    .section Unsorted95F0E9Section
+    .section SetTitleScreenRegistersSection
 
       .al
       .xl
@@ -533,10 +533,10 @@
 
         ; 95/F12A
 
-    .endsection Unsorted95F0E9Section
+    .endsection SetTitleScreenRegistersSection
 
 
-    .section Unsorted95F12ASection
+    .section TitleScreenNoOpSection
 
       .al
       .xl
@@ -766,10 +766,10 @@
 
         ; 95/F248
 
-    .endsection Unsorted95F12ASection
+    .endsection TitleScreenNoOpSection
 
 
-    .section Unsorted95F248Section
+    .section AllowTitleLoadSection
 
       .al
       .xl
@@ -795,10 +795,10 @@
 
         ; 95/F256
 
-    .endsection Unsorted95F248Section
+    .endsection AllowTitleLoadSection
 
 
-    .section Unsorted95F256Section
+    .section StartTitleLoadDecompressionSection
 
       .al
       .xl
@@ -898,10 +898,10 @@
 
         ; 95/F2E5
 
-    .endsection Unsorted95F256Section
+    .endsection StartTitleLoadDecompressionSection
 
 
-    .section Unsorted95F741Section
+    .section BattleSceneResetWindowEffect1Section
 
       .al
       .xl
@@ -935,10 +935,10 @@
 
         ; 95/F777
 
-    .endsection Unsorted95F741Section
+    .endsection BattleSceneResetWindowEffect1Section
 
 
-    .section Unsorted95F7F7Section
+    .section BattleSceneResetWindowEffect2Section
 
       .al
       .xl
@@ -973,10 +973,10 @@
 
         ; 95/F831
 
-    .endsection Unsorted95F7F7Section
+    .endsection BattleSceneResetWindowEffect2Section
 
 
-    .section Unsorted95F87FSection
+    .section ClearTitleSpritesSection
 
       .al
       .xl
@@ -1187,10 +1187,10 @@
 
         ; 95/F9B4
 
-    .endsection Unsorted95F87FSection
+    .endsection ClearTitleSpritesSection
 
 
-    .section Unsorted9680ACSection
+    .section TitleScreenTopIRQSection
 
       .al
       .xl
@@ -1212,10 +1212,10 @@
 
         ; 96/80B1
 
-    .endsection Unsorted9680ACSection
+    .endsection TitleScreenTopIRQSection
 
 
-    .section Table9680B1Section
+    .section TitleScreenTopIRQCodeSection
 
       .al
       .xl
@@ -1226,10 +1226,10 @@
       aTitleScreenBottomIRQ ; 96/80B3
         .word $0060, $00BD, <>rlTitleScreenBottomIRQ, <>aTitleScreenBottomIRQCode
 
-    .endsection Table9680B1Section
+    .endsection TitleScreenTopIRQCodeSection
 
 
-    .section Unsorted9680BBSection
+    .section TitleScreenBottomIRQSection
 
       .al
       .xl
@@ -1255,10 +1255,10 @@
       aTitleScreenBottomIRQCode ; 96/80C0
         .word <>rsIRQCodeHalt
 
-    .endsection Unsorted9680BBSection
+    .endsection TitleScreenBottomIRQSection
 
 
-    .section Unsorted9BDC24Section
+    .section TitleScreenSetupSection
 
       .al
       .xl
@@ -1630,10 +1630,10 @@
 
         ; 9B/DF09
 
-    .endsection Unsorted9BDC24Section
+    .endsection TitleScreenSetupSection
 
 
-    .section Table9BDF09Section
+    .section TitleScreenRegistersSection
 
       .al
       .xl
@@ -1724,10 +1724,10 @@
 
         ; 9B/DFAA
 
-    .endsection Table9BDF09Section
+    .endsection TitleScreenRegistersSection
 
 
-    .section Unsorted9BDFAASection
+    .section StartOpeningEventSection
 
       .al
       .xl
@@ -2020,10 +2020,10 @@
 
         ; 9B/E15F
 
-    .endsection Unsorted9BDFAASection
+    .endsection StartOpeningEventSection
 
 
-    .section Unsorted9BEAA5Section
+    .section ClearTitleVBlankRoutinesSection
 
       .al
       .xl
@@ -2044,10 +2044,10 @@
 
         ; 9B/EAB1
 
-    .endsection Unsorted9BEAA5Section
+    .endsection ClearTitleVBlankRoutinesSection
 
 
-    .section Unsorted9BEAB1Section
+    .section RunTitleVBlankRoutinesSection
 
       .al
       .xl
@@ -2100,10 +2100,10 @@
 
         ; 9B/EAE8
 
-    .endsection Unsorted9BEAB1Section
+    .endsection RunTitleVBlankRoutinesSection
 
 
-    .section Unsorted9BEAE8Section
+    .section DrawTitleSpriteAfterimageSection
 
       .al
       .xl
@@ -2527,10 +2527,10 @@
 
         ; 9B/EDD7
 
-    .endsection Unsorted9BEAE8Section
+    .endsection DrawTitleSpriteAfterimageSection
 
 
-    .section Unsorted9BEDD7Section
+    .section StartTitleSpriteAfterimageSection
 
       .al
       .xl
@@ -2623,10 +2623,10 @@
 
         ; 9B/EEB4
 
-    .endsection Unsorted9BEDD7Section
+    .endsection StartTitleSpriteAfterimageSection
 
 
-    .section Unsorted9BEEB4Section
+    .section FadeTitleScreenTopEdgeSection
 
       .al
       .xl
@@ -3098,10 +3098,10 @@
 
         ; 9B/F179
 
-    .endsection Unsorted9BEEB4Section
+    .endsection FadeTitleScreenTopEdgeSection
 
 
-    .section Unsorted9BF179Section
+    .section SetTitleEdgeBrightnessSection
 
       .al
       .xl
@@ -3192,10 +3192,10 @@
 
         ; 9B/F1F4
 
-    .endsection Unsorted9BF179Section
+    .endsection SetTitleEdgeBrightnessSection
 
 
-    .section Unsorted9BF297Section
+    .section WaitForVBlankStartSection
 
       .al
       .xl
@@ -3225,10 +3225,10 @@
 
         ; 9B/F2AA
 
-    .endsection Unsorted9BF297Section
+    .endsection WaitForVBlankStartSection
 
 
-    .section Unsorted9BF2AASection
+    .section WaitForVBlankEndSection
 
       .al
       .xl
@@ -3477,10 +3477,10 @@
 
         ; 9B/F3F3
 
-    .endsection Unsorted9BF2AASection
+    .endsection WaitForVBlankEndSection
 
 
-    .section Unsorted9BFC8DSection
+    .section FlashToTitleScreenSection
 
       .al
       .xl
@@ -3640,6 +3640,6 @@
 
         ; 9B/FD71
 
-    .endsection Unsorted9BFC8DSection
+    .endsection FlashToTitleScreenSection
 
 

@@ -3056,7 +3056,7 @@
     .endsection EpilogueDialogueWorldMapCodeSection
 
 
-    .section Unsorted8B80CBSection
+    .section StartEpilogueCreditsSection
 
       .al
       .xl
@@ -3115,6 +3115,6 @@
 
         ; 8B/8114
 
-    .endsection Unsorted8B80CBSection
+    .endsection StartEpilogueCreditsSection
 
 

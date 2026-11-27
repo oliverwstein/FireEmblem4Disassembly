@@ -4,6 +4,9 @@
 
     .section DialogueBackgroundsSection
 
+      ; 8A/BAC9: unreferenced, two long pointers to aDialogueBackgroundPointers.
+      aUnused8ABAC9 .long aDialogueBackgroundPointers, aDialogueBackgroundPointers
+
       .al
       .xl
 

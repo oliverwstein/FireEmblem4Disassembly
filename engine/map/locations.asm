@@ -2115,7 +2115,7 @@
     .endsection LocationTypeOffsetsSection
 
 
-    .section Unsorted87E9E0Section
+    .section FindLocationByNameIDSection
 
       .al
       .xl
@@ -2168,10 +2168,10 @@
 
         ; 87/EA09
 
-    .endsection Unsorted87E9E0Section
+    .endsection FindLocationByNameIDSection
 
 
-    .section Unsorted87EA09Section
+    .section FindLocationAtTileSection
 
       .al
       .xl
@@ -2274,10 +2274,10 @@
 
         ; 87/EA87
 
-    .endsection Unsorted87EA09Section
+    .endsection FindLocationAtTileSection
 
 
-    .section Unsorted87EBC8Section
+    .section InitLocationSection
 
       .al
       .xl
@@ -2368,10 +2368,10 @@
 
         ; 87/EC42
 
-    .endsection Unsorted87EBC8Section
+    .endsection InitLocationSection
 
 
-    .section Unsorted87F321Section
+    .section GetLocationMoneyLevelSection
 
       .al
       .xl
@@ -2426,10 +2426,10 @@
 
         ; 87/F361
 
-    .endsection Unsorted87F321Section
+    .endsection GetLocationMoneyLevelSection
 
 
-    .section Table87F361Section
+    .section LocationMoneyLevelsSection
 
       .al
       .xl
@@ -2444,5 +2444,5 @@
 
         ; 87/F391
 
-    .endsection Table87F361Section
+    .endsection LocationMoneyLevelsSection
 

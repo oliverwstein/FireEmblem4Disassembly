@@ -335,7 +335,7 @@
     .endsection Data90E8CESection
 
 
-    .section Unsorted90EBCASection
+    .section ASMCTestDemoAllowSkipFlagSection
 
       .al
       .xl
@@ -1429,10 +1429,10 @@
         ; Unused: 2526 zero bytes.
         .fill 2526, $00
 
-    .endsection Unsorted90EBCASection
+    .endsection ASMCTestDemoAllowSkipFlagSection
 
 
-    .section Unsorted8DA810Section
+    .section ASMCSetOpeningMapChapter9Section
 
       .al
       .xl
@@ -1789,10 +1789,10 @@
 
         ; 8D/AA96
 
-    .endsection Unsorted8DA810Section
+    .endsection ASMCSetOpeningMapChapter9Section
 
 
-    .section Unsorted8DAA96Section
+    .section ProcOpeningSkyScrollSection
 
       .al
       .xl
@@ -1801,10 +1801,10 @@
 
         .structProcInfo "KM", rlProcOpeningSkyScroll, rlProcOpeningSkyScroll._AAA4, aProcOpeningSkyScrollCode
 
-    .endsection Unsorted8DAA96Section
+    .endsection ProcOpeningSkyScrollSection
 
 
-    .section Unsorted8DAA9ESection
+    .section ProcOpeningSkyScroll8DAA9ESection
 
       .al
       .xl
@@ -1879,10 +1879,10 @@
 
         ; 8D/AAFB
 
-    .endsection Unsorted8DAA9ESection
+    .endsection ProcOpeningSkyScroll8DAA9ESection
 
 
-    .section Unsorted8DAAFBSection
+    .section ProcOpeningSkyScrollCodeSection
 
       .al
       .xl
@@ -1894,6 +1894,6 @@
 
         ; 8D/AAFD
 
-    .endsection Unsorted8DAAFBSection
+    .endsection ProcOpeningSkyScrollCodeSection
 
 

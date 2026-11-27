@@ -4,7 +4,7 @@
 ; screens.
 
 
-    .section Unsorted809B00Section
+    .section GameStateNoneSection
 
       .al
       .xl
@@ -24,10 +24,10 @@
 
         ; 80/9B01
 
-    .endsection Unsorted809B00Section
+    .endsection GameStateNoneSection
 
 
-    .section Unsorted809B01Section
+    .section GameStateRoutinesSection
 
       .al
       .xl
@@ -169,10 +169,10 @@
 
         ; 80/9BEE
 
-    .endsection Unsorted809B01Section
+    .endsection GameStateRoutinesSection
 
 
-    .section Unsorted809BEESection
+    .section ResetVBlankHookTableSection
 
       .as
       .xl
@@ -284,7 +284,7 @@
 
         ; 80/9C3E
 
-    .endsection Unsorted809BEESection
+    .endsection ResetVBlankHookTableSection
 
 
     .section Unreferenced809C3ESection
@@ -354,7 +354,7 @@
         jml [$0306]
 
     .endsection Unreferenced809C3ESection
-    .section Unsorted809C7ASection
+    .section RunVBlankHooksSection
 
       .al
       .xl
@@ -417,10 +417,10 @@
 
         ; 80/9CA0
 
-    .endsection Unsorted809C7ASection
+    .endsection RunVBlankHooksSection
 
 
-    .section Unsorted8BA7CBSection
+    .section UnusedGameState13Section
 
       .al
       .xl
@@ -478,7 +478,7 @@
         ; Unreferenced: a signature left in the ROM.
         .text "  -- Programed by Takahiro Ohgi -- "
 
-    .endsection Unsorted8BA7CBSection
+    .endsection UnusedGameState13Section
 
 
     .section SetMainLoopPointerSection

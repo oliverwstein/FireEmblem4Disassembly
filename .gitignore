@@ -76,6 +76,10 @@ gfx/build/E02EBD/acBattleSceneEffect*.bin
 !gfx/build/E02EBD/acBattleSceneEffectTilemapF25C57.bin
 !gfx/build/E02EBD/acBattleSceneEffectTilemapF25DD4.bin
 !gfx/build/E02EBD/acBattleSceneEffectTilemapF25F67.bin
+# Built from data/palettes/ by tools/palettes.py
+gfx/build/9C8000/acSaveMenuPalettes.bin
+gfx/build/9C8000/acWarningScreenPalettes.bin
+gfx/build/9C8000/acBattleBannerPalettes.bin
 # Built from gfx/icons/ItemIcons.json by tools/item_icons.py
 data/item/ItemIconOffsets.asm
 *.dialogue.txt
@@ -88,6 +92,7 @@ tools/process_dialogue.py
 
 Errors.txt
 Log.txt
+log.txt
 Map.txt
 labels.txt
 

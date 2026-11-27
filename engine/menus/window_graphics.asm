@@ -3,7 +3,7 @@
 ; rlGetDialogueBoxGraphicsAndPalette with its palette. Bank $89.
 
 
-    .section Unsorted899FDCSection
+    .section LoadWindowGraphicsSection
 
       .al
       .xl
@@ -157,7 +157,7 @@
 
         ; 89/A085
 
-    .endsection Unsorted899FDCSection
+    .endsection LoadWindowGraphicsSection
 
 
     .section DataDE6200Section

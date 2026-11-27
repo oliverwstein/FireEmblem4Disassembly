@@ -18,10 +18,10 @@ This guide summarizes where editable ROM data lives, how build-time generators w
 
 ## 2. Build-Time Generators
 
-- **1-to-1 offset tables (`13` tables in `data/offset/`):** Generated automatically by [tools/gen_offsets.py](../tools/gen_offsets.py) (run by `./build.sh` and `tablebuilder.bat`) from their source CSVs, `data/class/ClassMapSpriteAssignment.asm`, and `text/menutext/*.asm`. You can add or reorder rows in those source files without manually editing offset CSVs.
+- **1-to-1 offset tables (`13` tables in `data/offset/`):** Generated automatically by [tools/gen_offsets.py](../tools/gen_offsets.py) (run by `python3 build.py` / `./build.sh`) from their source CSVs, `data/class/ClassMapSpriteAssignment.asm`, and `text/menutext/*.asm`. You can add or reorder rows in those source files without manually editing offset CSVs.
 - **Many-to-one offset tables (`4` CSVs in `data/offset/`):** `CharacterNameOffsets.csv`, `ClassNameOffsets.csv`, `ItemNameOffsets.csv`, and `ItemDescriptionOffsets.csv` are kept as explicit mapping CSVs because multiple entries share strings (e.g., `Paladin` / `PaladinF`, or `aItemDescriptions.None`).
-- **Graphics & tilemap compilers:** `./build.sh` runs the Phase 1–7 asset compilers (`portrait_pack.py`, `map_sprites.py`, `map_battle_sprites.py`, `battle_animations.py`, `battle_effects.py`, `scene_pack.py`, `item_icons.py`, `chapter_maps.py`, `map_battle_layouts.py`) before `gfx.py lz` and `stream_layout.py`, so editing any authored source PNG, CSV, manifest, or `.asm` layout rebuilds its `.4bpp`/`.2bpp`/`.bin` output, recompresses it to `.lz` if changed, and repacks the region's `.streams` manifest across SNES bank halves automatically.
-- **Palettes:** Use `bgr555(r, g, b)` (5-bit channels `0..31`) in `data/palettes/*.asm` and `data/portraits/PortraitPalettes.asm`.
+- **Graphics & tilemap compilers:** `python3 build.py` runs the Phase 1–7 asset compilers (`portrait_pack.py`, `map_sprites.py`, `map_battle_sprites.py`, `battle_animations.py`, `battle_effects.py`, `palettes.py`, `scene_pack.py`, `item_icons.py`, `chapter_maps.py`, `map_battle_layouts.py`) before `gfx.py lz` and `stream_layout.py`, so editing any authored source PNG, CSV, manifest, or `.asm` layout rebuilds its `.4bpp`/`.2bpp`/`.bin` output, recompresses it to `.lz` if changed, and repacks the region's `.streams` manifest across SNES bank halves automatically.
+- **Palettes:** Use `bgr555(r, g, b)` (5-bit channels `0..31`) in `data/palettes/*.asm` (including `SaveMenuPalettes.asm`, `WarningScreenPalettes.asm`, and `BattleBannerPalettes.asm`, compiled by `tools/palettes.py`) and `data/portraits/PortraitPalettes.asm`.
 
 ## 3. Bank Headroom & Relocation Notes
 

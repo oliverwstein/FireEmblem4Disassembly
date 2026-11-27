@@ -730,7 +730,7 @@
     .endsection AIThreatSection
 
 
-    .section Unsorted86B335Section
+    .section AIActionWaitSection
 
       .al
       .xl
@@ -795,10 +795,10 @@
 
         ; 86/B36A
 
-    .endsection Unsorted86B335Section
+    .endsection AIActionWaitSection
 
 
-    .section Unsorted86B36ASection
+    .section AIActionNoOp9Section
 
       .al
       .xl
@@ -820,10 +820,10 @@
 
         ; 86/B371
 
-    .endsection Unsorted86B36ASection
+    .endsection AIActionNoOp9Section
 
 
-    .section Unsorted86B371Section
+    .section AIActionEnterHomeCastleSection
 
       .al
       .xl
@@ -857,10 +857,10 @@
 
         ; 86/B38F
 
-    .endsection Unsorted86B371Section
+    .endsection AIActionEnterHomeCastleSection
 
 
-    .section Unsorted86B38FSection
+    .section AIActionRaidVillageSection
 
       .al
       .xl
@@ -884,10 +884,10 @@
 
         ; 86/B39D
 
-    .endsection Unsorted86B38FSection
+    .endsection AIActionRaidVillageSection
 
 
-    .section Unsorted86B39DSection
+    .section AIActionSeizeCastleSection
 
       .al
       .xl
@@ -910,10 +910,10 @@
 
         ; 86/B3AB
 
-    .endsection Unsorted86B39DSection
+    .endsection AIActionSeizeCastleSection
 
 
-    .section Unsorted86B3ABSection
+    .section AIActionGuardCastleSection
 
       .al
       .xl
@@ -993,10 +993,10 @@
 
         ; 86/B3DD
 
-    .endsection Unsorted86B3ABSection
+    .endsection AIActionGuardCastleSection
 
 
-    .section Unsorted86B3DDSection
+    .section AIActionTalkSection
 
       .al
       .xl
@@ -1058,6 +1058,6 @@
 
         ; 86/B421
 
-    .endsection Unsorted86B3DDSection
+    .endsection AIActionTalkSection
 
 

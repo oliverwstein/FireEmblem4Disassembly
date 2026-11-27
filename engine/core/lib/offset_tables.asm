@@ -1,6 +1,6 @@
 ; Offset tables, and an unused byte stack.
 
-    .section Unsorted82F517Section
+    .section CopyOffsetTableEntrySection
 
       .al
       .xl
@@ -51,7 +51,7 @@
 
         ; 82/F54F
 
-    .endsection Unsorted82F517Section
+    .endsection CopyOffsetTableEntrySection
 
     .section Unreferenced82F54FSection
 

@@ -4,7 +4,7 @@
 ; a dialogue box), and Select returns to the chapter map.
 
 
-    .section Unsorted8B806DSection
+    .section UnusedWorldMapTestFrameSection
 
       .al
       .xl
@@ -71,10 +71,10 @@
 
         ; 8B/80CB
 
-    .endsection Unsorted8B806DSection
+    .endsection UnusedWorldMapTestFrameSection
 
 
-    .section Unsorted8B818DSection
+    .section UnusedWorldMapTestShowPortraitsSection
 
       .al
       .xl
@@ -127,7 +127,7 @@
 
         ; 8B/81EC
 
-    .endsection Unsorted8B818DSection
+    .endsection UnusedWorldMapTestShowPortraitsSection
 
 
     .section Unreferenced8B81ECSection
@@ -169,7 +169,7 @@
         ; 8B/821F
 
     .endsection Unreferenced8B81ECSection
-    .section Unsorted8B87E5Section
+    .section UnusedWorldMapTestButtonsSection
 
       .al
       .xl
@@ -292,10 +292,10 @@
 
         ; 8B/88CE
 
-    .endsection Unsorted8B87E5Section
+    .endsection UnusedWorldMapTestButtonsSection
 
 
-    .section Unsorted8B8AABSection
+    .section UnusedWorldMapTestMoveCursorSection
 
       .al
       .xl
@@ -423,6 +423,6 @@
 
         ; 8B/8B59
 
-    .endsection Unsorted8B8AABSection
+    .endsection UnusedWorldMapTestMoveCursorSection
 
 

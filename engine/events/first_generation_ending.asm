@@ -7,7 +7,7 @@
 ; set). Bank $88.
 
 
-    .section Unsorted88E02BSection
+    .section ProcFirstGenerationEndingSection
 
       .al
       .xl
@@ -16,10 +16,10 @@
 
         .structProcInfo "MS", rlProcFirstGenerationEndingInit, rlProcFirstGenerationEndingUpload1, aProcFirstGenerationEndingCode
 
-    .endsection Unsorted88E02BSection
+    .endsection ProcFirstGenerationEndingSection
 
 
-    .section Unsorted88E033Section
+    .section ProcFirstGenerationEndingInitSection
 
       .al
       .xl
@@ -160,10 +160,10 @@
 
         ; 88/E10B
 
-    .endsection Unsorted88E033Section
+    .endsection ProcFirstGenerationEndingInitSection
 
 
-    .section Unsorted88E10BSection
+    .section ProcFirstGenerationEndingFadeInSection
 
       .al
       .xl
@@ -251,10 +251,10 @@
 
         ; 88/E179
 
-    .endsection Unsorted88E10BSection
+    .endsection ProcFirstGenerationEndingFadeInSection
 
 
-    .section Unsorted88E179Section
+    .section ProcFirstGenerationEndingFinishSection
 
       .al
       .xl
@@ -341,10 +341,10 @@
 
         ; 88/E1FE
 
-    .endsection Unsorted88E179Section
+    .endsection ProcFirstGenerationEndingFinishSection
 
 
-    .section Unsorted88E1FESection
+    .section ProcFirstGenerationEndingCodeSection
 
       .al
       .xl
@@ -356,7 +356,7 @@
 
         ; 88/E200
 
-    .endsection Unsorted88E1FESection
+    .endsection ProcFirstGenerationEndingCodeSection
 
 
     .section ProcScript88E200Section
@@ -371,7 +371,7 @@
     .endsection ProcScript88E200Section
 
 
-    .section Unsorted88E208Section
+    .section ProcFirstGenerationEndingPortraitFadeInInitSection
 
       .al
       .xl
@@ -450,7 +450,7 @@
 
         ; 88/E268
 
-    .endsection Unsorted88E208Section
+    .endsection ProcFirstGenerationEndingPortraitFadeInInitSection
 
 
     .section ProcScript88E268Section
@@ -472,7 +472,7 @@
     .endsection ProcScript88E268Section
 
 
-    .section Unsorted88E272Section
+    .section ProcFirstGenerationEndingPortraitFadeOutInitSection
 
       .al
       .xl
@@ -557,7 +557,7 @@
         .word $00C2, 15
         .word $FFFF
 
-    .endsection Unsorted88E272Section
+    .endsection ProcFirstGenerationEndingPortraitFadeOutInitSection
 
 
     .section ProcScript88E2DCSection
@@ -575,7 +575,7 @@
     .endsection ProcScript88E2DCSection
 
 
-    .section Unsorted88E2E9Section
+    .section FirstGenerationEndingHDMASection
 
       .al
       .xl
@@ -625,10 +625,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted88E2E9Section
+    .endsection FirstGenerationEndingHDMASection
 
 
-    .section Unsorted88E33DSection
+    .section LoadFirstGenerationEndingPortraitSection
 
       .al
       .xl
@@ -699,10 +699,10 @@
 
         ; 88/E38A
 
-    .endsection Unsorted88E33DSection
+    .endsection LoadFirstGenerationEndingPortraitSection
 
 
-    .section Unsorted88E38ASection
+    .section SetFirstGenerationEndingTextPositionSection
 
       .al
       .xl
@@ -767,10 +767,10 @@
 
         ; 88/E401
 
-    .endsection Unsorted88E38ASection
+    .endsection SetFirstGenerationEndingTextPositionSection
 
 
-    .section Unsorted88E401Section
+    .section FirstGenerationEndingFindCharacterSection
 
       .al
       .xl
@@ -2014,10 +2014,10 @@
 
         ; 88/E9E4
 
-    .endsection Unsorted88E401Section
+    .endsection FirstGenerationEndingFindCharacterSection
 
 
-    .section Table88E9E4Section
+    .section dialogueEpilogueMemorial88E9E5Section
 
       .al
       .xl
@@ -2046,17 +2046,17 @@
       dialogueEpilogueMemorial88EE03 .include "../../text/dialogue/Epilogue/Memorial88EE03.dialogue.txt" ; 88/EE03
       dialogueEpilogueMemorial88EE1F .include "../../text/dialogue/Epilogue/Memorial88EE1F.dialogue.txt" ; 88/EE1F
 
-    .endsection Table88E9E4Section
+    .endsection dialogueEpilogueMemorial88E9E5Section
 
 
-    .section Table88E2DESection
+    .section FirstGenerationEndingHDMAInfoSection
 
       .al
       .xl
 
       aFirstGenerationEndingHDMAInfo .dstruct structHDMADirectEntryInfo, rlFirstGenerationEndingHDMA, rlFirstGenerationEndingHDMA, aFirstGenerationEndingHDMACode, $0008BC, PPU_REG_BASE + $2C, $00 ; 88/E2DE
 
-    .endsection Table88E2DESection
+    .endsection FirstGenerationEndingHDMAInfoSection
 
 
 

@@ -3,7 +3,7 @@
 ; for children, their parents. Banks $87 and $8A.
 
 
-    .section Unsorted87AE88Section
+    .section GetUnitLoverOrTopCandidateSection
 
       .al
       .xl
@@ -133,10 +133,10 @@
 
         ; 87/AF46
 
-    .endsection Unsorted87AE88Section
+    .endsection GetUnitLoverOrTopCandidateSection
 
 
-    .section Unsorted8AAD6FSection
+    .section DrawAuguryTopicsSection
 
       .al
       .xl
@@ -184,10 +184,10 @@
 
         ; 8A/ADA7
 
-    .endsection Unsorted8AAD6FSection
+    .endsection DrawAuguryTopicsSection
 
 
-    .section Table8AADA7Section
+    .section AuguryTopicTextHandlersSection
 
       .al
       .xl
@@ -199,10 +199,10 @@
         .word <>rsGetAuguryTopicRecordText
         .word <>rsGetAuguryTopicParentsText
 
-    .endsection Table8AADA7Section
+    .endsection AuguryTopicTextHandlersSection
 
 
-    .section Unsorted8AADADSection
+    .section GetAuguryTopicLoveTextSection
 
       .al
       .xl
@@ -241,10 +241,10 @@
 
         ; 8A/ADC3
 
-    .endsection Unsorted8AADADSection
+    .endsection GetAuguryTopicLoveTextSection
 
 
-    .section Unsorted8AADC3Section
+    .section GetAuguryTopicParentsTextSection
 
       .al
       .xl
@@ -266,10 +266,10 @@
 
         ; 8A/ADCE
 
-    .endsection Unsorted8AADC3Section
+    .endsection GetAuguryTopicParentsTextSection
 
 
-    .section Table8AADCESection
+    .section AuguryTopicLoveTextSection
 
       .al
       .xl
@@ -296,7 +296,7 @@
         .enc "none"
 
 
-    .endsection Table8AADCESection
+    .endsection AuguryTopicLoveTextSection
 
 
     .section AuguryScreenSetupSection
@@ -471,10 +471,18 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8AFA0C .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/FA0C
+      aDecompressionDMAEntry8AFA14 .structDecompressionDMAEntry g4bppcAuguryBG1Tiles, $1000, $0000 ; 8A/FA14
+      aDecompressionDMAEntry8AFA1C .structDecompressionDMAEntry g4bppcAuguryBG2Tiles, $2000, $1000 ; 8A/FA1C
+      aDecompressionDMAEntry8AFA24 .structDecompressionDMAEntry acAuguryBGTilemap, $0800, $2800 ; 8A/FA24
+      aDecompressionDMAEntry8AFA2C .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/FA2C
+
     .endsection AuguryScreenSetupSection
 
 
-    .section Unsorted8AFA34Section
+    .section AuguryScreenStepSection
 
       .al
       .xl
@@ -526,10 +534,10 @@
 
         ; 8A/FA6F
 
-    .endsection Unsorted8AFA34Section
+    .endsection AuguryScreenStepSection
 
 
-    .section Table8AFA6FSection
+    .section AuguryStepHandlersSection
 
       .al
       .xl
@@ -546,10 +554,10 @@
         .word <>rsAuguryAskAgain
         .word <>rsAuguryLeave
 
-    .endsection Table8AFA6FSection
+    .endsection AuguryStepHandlersSection
 
 
-    .section Unsorted8AFA7FSection
+    .section AuguryGreetSection
 
       .al
       .xl
@@ -843,10 +851,10 @@
 
         ; 8A/FC52
 
-    .endsection Unsorted8AFA7FSection
+    .endsection AuguryGreetSection
 
 
-    .section Unsorted8AFC78Section
+    .section AuguryGetLovePointsSection
 
       .al
       .xl
@@ -909,10 +917,10 @@
 
         ; 8A/FCD5
 
-    .endsection Unsorted8AFC78Section
+    .endsection AuguryGetLovePointsSection
 
 
-    .section Unsorted8AFCD5Section
+    .section AuguryAskAgainSection
 
       .al
       .xl
@@ -965,4 +973,4 @@
 
         ; 8A/FD0F
 
-    .endsection Unsorted8AFCD5Section
+    .endsection AuguryAskAgainSection

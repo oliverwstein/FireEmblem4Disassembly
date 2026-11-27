@@ -6,7 +6,7 @@
 ; step. Code in banks $80 and $89; its variables are at $7F8467 (include/WRAM.h).
 
 
-    .section Unsorted80CD2ESection
+    .section ItemWindowOpenSection
 
       .al
       .xl
@@ -181,10 +181,15 @@
 
         ; 80/CE8E
 
-    .endsection Unsorted80CD2ESection
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80CE8E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/CE8E
+      aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry acMenuWindowBackgroundTilemap, $0800, $2800 ; 80/CE96
+
+    .endsection ItemWindowOpenSection
 
 
-    .section Unsorted80CE9ESection
+    .section ItemWindowSetBGSettingsSection
 
       .al
       .xl
@@ -413,10 +418,10 @@
 
         ; 80/D046
 
-    .endsection Unsorted80CE9ESection
+    .endsection ItemWindowSetBGSettingsSection
 
 
-    .section Table80D046Section
+    .section ItemWindowNoItemsTextSection
 
       .al
       .xl
@@ -438,10 +443,10 @@
 
       aMapMenuWindowCOLDATAHDMAInfo .dstruct structHDMADirectEntryInfo, rlMapMenuWindowCOLDATAHDMAInit, rlMapMenuWindowCOLDATAHDMACycle, $D0B2, $7FB0B6, PPU_REG_BASE + $32, $00 ; 80/D07E
 
-    .endsection Table80D046Section
+    .endsection ItemWindowNoItemsTextSection
 
 
-    .section Unsorted80D089Section
+    .section MapMenuWindowCOLDATAHDMAInitSection
 
       .al
       .xl
@@ -473,7 +478,7 @@
 
         ; 80/D09B
 
-    .endsection Unsorted80D089Section
+    .endsection MapMenuWindowCOLDATAHDMAInitSection
 
 
     .section Data80D09BSection
@@ -493,7 +498,7 @@
     .endsection Data80D09BSection
 
 
-    .section Unsorted80D0B1Section
+    .section MapMenuWindowCOLDATAHDMACycleSection
 
       .al
       .xl
@@ -516,10 +521,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted80D0B1Section
+    .endsection MapMenuWindowCOLDATAHDMACycleSection
 
 
-    .section Unsorted80D0B4Section
+    .section ItemWindowBuildItemListSection
 
       .al
       .xl
@@ -607,10 +612,10 @@
 
         ; 80/D143
 
-    .endsection Unsorted80D0B4Section
+    .endsection ItemWindowBuildItemListSection
 
 
-    .section Unsorted80D143Section
+    .section ItemWindowGetItemDataSection
 
       .al
       .xl
@@ -673,10 +678,10 @@
 
         ; 80/D1AE
 
-    .endsection Unsorted80D143Section
+    .endsection ItemWindowGetItemDataSection
 
 
-    .section Table80D1AESection
+    .section ItemWindowIconIndicesSection
 
       .al
       .xl
@@ -706,10 +711,10 @@
 
         ; 80/D2C6
 
-    .endsection Table80D1AESection
+    .endsection ItemWindowIconIndicesSection
 
 
-    .section Unsorted89B3D7Section
+    .section ItemWindowShowSection
 
       .al
       .xl
@@ -762,10 +767,10 @@
 
         ; 89/B3F6
 
-    .endsection Unsorted89B3D7Section
+    .endsection ItemWindowShowSection
 
 
-    .section Table89B3F6Section
+    .section ItemWindowStepsSection
 
       .al
       .xl
@@ -779,10 +784,10 @@
         .word <>rsItemWindowCloseToMap
         .word <>rsItemWindowFadeToCastle
 
-    .endsection Table89B3F6Section
+    .endsection ItemWindowStepsSection
 
 
-    .section Unsorted89B400Section
+    .section ItemWindowHandleInputSection
 
       .al
       .xl
@@ -1260,10 +1265,10 @@
 
         ; 89/B79D
 
-    .endsection Unsorted89B400Section
+    .endsection ItemWindowHandleInputSection
 
 
-    .section Unsorted89B856Section
+    .section ItemWindowCloseToMapSection
 
       .al
       .xl
@@ -1289,10 +1294,10 @@
 
         ; 89/B869
 
-    .endsection Unsorted89B856Section
+    .endsection ItemWindowCloseToMapSection
 
 
-    .section Unsorted89B883Section
+    .section ItemWindowRenderSection
 
       .al
       .xl
@@ -1335,10 +1340,10 @@
 
         ; 89/B8BD
 
-    .endsection Unsorted89B883Section
+    .endsection ItemWindowRenderSection
 
 
-    .section Unsorted89B8BDSection
+    .section ItemWindowCopyVisibleRowsSection
 
       .al
       .xl
@@ -1416,10 +1421,10 @@
 
         ; 89/B91F
 
-    .endsection Unsorted89B8BDSection
+    .endsection ItemWindowCopyVisibleRowsSection
 
 
-    .section Unsorted89B91FSection
+    .section ItemWindowDrawItemInfoSection
 
       .al
       .xl
@@ -1596,10 +1601,10 @@
 
         ; 89/BAC1
 
-    .endsection Unsorted89B91FSection
+    .endsection ItemWindowDrawItemInfoSection
 
 
-    .section Table89BAC1Section
+    .section ItemWindowHitLabelTextSection
 
       .al
       .xl
@@ -1640,10 +1645,10 @@
         .enc "none"
 
 
-    .endsection Table89BAC1Section
+    .endsection ItemWindowHitLabelTextSection
 
 
-    .section Unsorted89BAF3Section
+    .section ItemWindowClearItemInfoSection
 
       .al
       .xl
@@ -1781,10 +1786,10 @@
 
         ; 89/BBB2
 
-    .endsection Unsorted89BAF3Section
+    .endsection ItemWindowClearItemInfoSection
 
 
-    .section Unsorted89BBB2Section
+    .section ItemWindowRenderItemIconsSection
 
       .al
       .xl
@@ -1933,10 +1938,10 @@
 
         ; 89/BCCE
 
-    .endsection Unsorted89BBB2Section
+    .endsection ItemWindowRenderItemIconsSection
 
 
-    .section Table89BCCESection
+    .section ItemWindowRowYCoordinatesSection
 
       .al
       .xl
@@ -1950,7 +1955,7 @@
 
         ; 89/BCE6
 
-    .endsection Table89BCCESection
+    .endsection ItemWindowRowYCoordinatesSection
 
 
     .section Data89BCE6Section
@@ -1970,7 +1975,7 @@
     .endsection Data89BCE6Section
 
 
-    .section Unsorted89BD00Section
+    .section ItemWindowRenderSelectedItemSpritesSection
 
       .al
       .xl
@@ -2149,7 +2154,7 @@
 
         .structSpriteArray aItemWindowWeaponBadgeSprite._Sprites
 
-    .endsection Unsorted89BD00Section
+    .endsection ItemWindowRenderSelectedItemSpritesSection
 
 
     .section Data89BE57Section
@@ -2218,7 +2223,7 @@
     .endsection Data89BE57Section
 
 
-    .section Unsorted89BEB8Section
+    .section ItemWindowRenderCursorSection
 
       .al
       .xl
@@ -2243,10 +2248,10 @@
 
         ; 89/BECC
 
-    .endsection Unsorted89BEB8Section
+    .endsection ItemWindowRenderCursorSection
 
 
-    .section Unsorted89BEEBSection
+    .section ItemWindowMoveToNextPageSection
 
       .al
       .xl
@@ -2410,10 +2415,10 @@
 
         ; 89/C021
 
-    .endsection Unsorted89BEEBSection
+    .endsection ItemWindowMoveToNextPageSection
 
 
-    .section Unsorted89C021Section
+    .section ItemWindowDrawListSection
 
       .al
       .xl
@@ -2547,10 +2552,10 @@
 
         ; 89/C119
 
-    .endsection Unsorted89C021Section
+    .endsection ItemWindowDrawListSection
 
 
-    .section Unsorted89C144Section
+    .section ItemWindowRenderScrollArrowsSection
 
       .al
       .xl
@@ -2600,7 +2605,7 @@
 
         ; 89/C181
 
-    .endsection Unsorted89C144Section
+    .endsection ItemWindowRenderScrollArrowsSection
 
 
     .section Data89C181Section
@@ -2620,7 +2625,7 @@
     .endsection Data89C181Section
 
 
-    .section Unsorted89C1A1Section
+    .section ItemWindowDrawItemDescriptionSection
 
       .al
       .xl
@@ -2776,10 +2781,10 @@
 
         ; 89/C2CF
 
-    .endsection Unsorted89C1A1Section
+    .endsection ItemWindowDrawItemDescriptionSection
 
 
-    .section Unsorted89C2CFSection
+    .section ItemWindowSortSection
 
       .al
       .xl
@@ -2994,10 +2999,10 @@
 
         ; 89/C3F3
 
-    .endsection Unsorted89C2CFSection
+    .endsection ItemWindowSortSection
 
 
-    .section Unsorted89C3F3Section
+    .section ItemWindowSortListSection
 
       .al
       .xl
@@ -3124,10 +3129,10 @@
 
         ; 89/C488
 
-    .endsection Unsorted89C3F3Section
+    .endsection ItemWindowSortListSection
 
 
-    .section Unsorted89C488Section
+    .section ItemWindowDrawSortPanelSection
 
       .al
       .xl
@@ -3264,10 +3269,10 @@
 
         ; 89/C5A2
 
-    .endsection Unsorted89C488Section
+    .endsection ItemWindowDrawSortPanelSection
 
 
-    .section Unsorted89C5A2Section
+    .section ItemWindowDrawWeaponRankSection
 
       .al
       .xl
@@ -3311,7 +3316,7 @@
 
         ; 89/C5C9
 
-    .endsection Unsorted89C5A2Section
+    .endsection ItemWindowDrawWeaponRankSection
 
 
     .section Data89C5C9Section
@@ -3369,7 +3374,7 @@
     .endsection Data89C5C9Section
 
 
-    .section Unsorted89B79DSection
+    .section ItemWindowSortPanelSection
 
       .al
       .xl
@@ -3458,10 +3463,10 @@
 
         ; 89/B838
 
-    .endsection Unsorted89B79DSection
+    .endsection ItemWindowSortPanelSection
 
 
-    .section Unsorted89B838Section
+    .section ItemWindowNoItemsSection
 
       .al
       .xl
@@ -3496,10 +3501,10 @@
 
         ; 89/B856
 
-    .endsection Unsorted89B838Section
+    .endsection ItemWindowNoItemsSection
 
 
-    .section Unsorted89B869Section
+    .section ItemWindowFadeToCastleSection
 
       .al
       .xl
@@ -3533,10 +3538,10 @@
 
         ; 89/B883
 
-    .endsection Unsorted89B869Section
+    .endsection ItemWindowFadeToCastleSection
 
 
-    .section Unsorted89C119Section
+    .section ItemWindowDrawSortCursorSection
 
       .al
       .xl
@@ -3571,7 +3576,7 @@
 
         ; 89/C13E
 
-    .endsection Unsorted89C119Section
+    .endsection ItemWindowDrawSortCursorSection
 
 
     .section Data89C13ESection

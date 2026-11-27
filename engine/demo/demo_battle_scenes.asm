@@ -327,7 +327,7 @@
     .endsection DemoBattlesSection
 
 
-    .section Unsorted97FDC1Section
+    .section ASMCLoadFirstDemoBattleSection
 
       .al
       .xl
@@ -653,5 +653,5 @@
 
         ; 98/0000
 
-    .endsection Unsorted97FDC1Section
+    .endsection ASMCLoadFirstDemoBattleSection
 

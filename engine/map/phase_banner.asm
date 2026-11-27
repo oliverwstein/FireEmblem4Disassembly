@@ -1,7 +1,7 @@
 ; The banner at the start of each army's phase ("<army> PHASE").
 
 
-    .section Unsorted85ABF6Section
+    .section ProcPhaseBannerSection
 
       .al
       .xl
@@ -10,10 +10,10 @@
 
         .structProcInfo "PS", rlProcPhaseBannerInit, rlProcPhaseBannerLoadGraphics, aProcPhaseBannerCode
 
-    .endsection Unsorted85ABF6Section
+    .endsection ProcPhaseBannerSection
 
 
-    .section Unsorted85ABFESection
+    .section PhaseBannerData85ABFEUnusedSection
 
       .al
       .xl
@@ -24,10 +24,10 @@
 
         .byte 0, 0, 0, 1
 
-    .endsection Unsorted85ABFESection
+    .endsection PhaseBannerData85ABFEUnusedSection
 
 
-    .section Unsorted85AC02Section
+    .section ProcPhaseBannerInitSection
 
       .al
       .xl
@@ -76,10 +76,10 @@
 
         ; 85/AC40
 
-    .endsection Unsorted85AC02Section
+    .endsection ProcPhaseBannerInitSection
 
 
-    .section Unsorted85AC40Section
+    .section ProcPhaseBannerLoadGraphicsSection
 
       .al
       .xl
@@ -136,10 +136,10 @@
 
         ; 85/AC89
 
-    .endsection Unsorted85AC40Section
+    .endsection ProcPhaseBannerLoadGraphicsSection
 
 
-    .section Unsorted85AC89Section
+    .section ProcPhaseBannerDrawFrameSection
 
       .al
       .xl
@@ -232,10 +232,10 @@
 
         .databank 0
 
-    .endsection Unsorted85AC89Section
+    .endsection ProcPhaseBannerDrawFrameSection
 
 
-    .section Table85AD47Section
+    .section PhaseBannerPhaseTextSection
 
       .al
       .xl
@@ -254,10 +254,10 @@
       aPhaseBannerTextTilemapData ; 85/AD5E
         .byte $20, $1E, $00, $00, $00, $00, $88, $83, $7E
 
-    .endsection Table85AD47Section
+    .endsection PhaseBannerPhaseTextSection
 
 
-    .section Unsorted85AD67Section
+    .section ProcPhaseBannerSlideInSection
 
       .al
       .xl
@@ -489,10 +489,10 @@
 
         ; 85/AE8A
 
-    .endsection Unsorted85AD67Section
+    .endsection ProcPhaseBannerSlideInSection
 
 
-    .section Unsorted85AE8ASection
+    .section PhaseBannerCheckSkipSection
 
       .al
       .xl
@@ -526,7 +526,7 @@
 
         ; 85/AEAC
 
-    .endsection Unsorted85AE8ASection
+    .endsection PhaseBannerCheckSkipSection
 
 
     .section ProcScript85AEACSection
@@ -547,17 +547,17 @@
     .endsection ProcScript85AEACSection
 
 
-    .section Table85AEBBSection
+    .section PhaseBannerSlideInHDMAInfoSection
 
       .al
       .xl
 
       aPhaseBannerSlideInHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlPhaseBannerSlideInHDMAInit, rlPhaseBannerSlideInHDMACycle, aPhaseBannerHDMACode, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AEBB
 
-    .endsection Table85AEBBSection
+    .endsection PhaseBannerSlideInHDMAInfoSection
 
 
-    .section Unsorted85AEC7Section
+    .section PhaseBannerSlideInHDMAInitSection
 
       .al
       .xl
@@ -635,10 +635,10 @@
 
         ; 85/AF0D
 
-    .endsection Unsorted85AEC7Section
+    .endsection PhaseBannerSlideInHDMAInitSection
 
 
-    .section Table85AF0DSection
+    .section PhaseBannerHDMACodeSection
 
       .al
       .xl
@@ -648,10 +648,10 @@
 
       aPhaseBannerSlideOutHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlPhaseBannerSlideOutHDMAInit, rlPhaseBannerSlideOutHDMACycle, aPhaseBannerHDMACode, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AF0F
 
-    .endsection Table85AF0DSection
+    .endsection PhaseBannerHDMACodeSection
 
 
-    .section Unsorted85AF1BSection
+    .section PhaseBannerSlideOutHDMAInitSection
 
       .al
       .xl
@@ -795,10 +795,10 @@
 
         .byte $17
 
-    .endsection Unsorted85AF1BSection
+    .endsection PhaseBannerSlideOutHDMAInitSection
 
 
-    .section Unsorted85AFC5Section
+    .section PhaseBannerDrawEmblemSection
 
       .al
       .xl
@@ -870,10 +870,10 @@
 
         ; 85/B009
 
-    .endsection Unsorted85AFC5Section
+    .endsection PhaseBannerDrawEmblemSection
 
 
-    .section Unsorted85B009Section
+    .section PhaseBannerSavePalettesSection
 
       .al
       .xl
@@ -910,10 +910,10 @@
 
         ; 85/B039
 
-    .endsection Unsorted85B009Section
+    .endsection PhaseBannerSavePalettesSection
 
 
-    .section Unsorted85B039Section
+    .section PhaseBannerRestorePalettesSection
 
       .al
       .xl
@@ -976,10 +976,10 @@
 
         ; 85/B07C
 
-    .endsection Unsorted85B039Section
+    .endsection PhaseBannerRestorePalettesSection
 
 
-    .section Unsorted85B07CSection
+    .section PhaseBannerLoadColoursSection
 
       .al
       .xl
@@ -1043,10 +1043,10 @@
 
         ; 85/B0BF
 
-    .endsection Unsorted85B07CSection
+    .endsection PhaseBannerLoadColoursSection
 
 
-    .section Table85B0BFSection
+    .section PhaseBannerTextPalettesSection
 
       .al
       .xl
@@ -1076,10 +1076,10 @@
 
         ; 85/B107
 
-    .endsection Table85B0BFSection
+    .endsection PhaseBannerTextPalettesSection
 
 
-    .section Unsorted85B107Section
+    .section PhaseBannerLoadFrameColoursSection
 
       .al
       .xl
@@ -1115,10 +1115,10 @@
 
         ; 85/B127
 
-    .endsection Unsorted85B107Section
+    .endsection PhaseBannerLoadFrameColoursSection
 
 
-    .section Table85B127Section
+    .section PhaseBannerFramePalettesSection
 
       .al
       .xl
@@ -1148,6 +1148,6 @@
 
         ; 85/B14F
 
-    .endsection Table85B127Section
+    .endsection PhaseBannerFramePalettesSection
 
 

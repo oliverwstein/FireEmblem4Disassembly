@@ -59,7 +59,7 @@
     .endsection MapCursorSpritesSection
 
 
-    .section Unsorted848E5DSection
+    .section MoveCursorToTileSection
 
       .al
       .xl
@@ -121,10 +121,10 @@
 
         ; 84/8EA0
 
-    .endsection Unsorted848E5DSection
+    .endsection MoveCursorToTileSection
 
 
-    .section Unsorted88A12BSection
+    .section MapCursorStepSection
 
       .al
       .xl
@@ -408,10 +408,10 @@
 
         ; 88/A2F5
 
-    .endsection Unsorted88A12BSection
+    .endsection MapCursorStepSection
 
 
-    .section Unsorted88A2F5Section
+    .section UseCastleGridStaffSection
 
       .al
       .xl
@@ -449,10 +449,10 @@
 
         ; 88/A32D
 
-    .endsection Unsorted88A2F5Section
+    .endsection UseCastleGridStaffSection
 
 
-    .section Unsorted88A32DSection
+    .section UpdateMapSystemFlagsSection
 
       .al
       .xl
@@ -521,7 +521,7 @@
 
         ; 88/A383
 
-    .endsection Unsorted88A32DSection
+    .endsection UpdateMapSystemFlagsSection
 
 
     .section Unreferenced88A383Section
@@ -552,7 +552,7 @@
         ; 88/A38C
 
     .endsection Unreferenced88A383Section
-    .section Unsorted88A38CSection
+    .section CheckMapCursorRestingSection
 
       .al
       .xl
@@ -580,10 +580,10 @@
 
         ; 88/A395
 
-    .endsection Unsorted88A38CSection
+    .endsection CheckMapCursorRestingSection
 
 
-    .section Unsorted88A395Section
+    .section MoveFreeMapCursorUnusedSection
 
       .al
       .xl
@@ -694,10 +694,10 @@
 
         ; 88/A44C
 
-    .endsection Unsorted88A395Section
+    .endsection MoveFreeMapCursorUnusedSection
 
 
-    .section Unsorted88A44CSection
+    .section AnimateRangeOverlayPaletteSection
 
       .al
       .xl
@@ -766,7 +766,7 @@
 
         ; 88/A4BC
 
-    .endsection Unsorted88A44CSection
+    .endsection AnimateRangeOverlayPaletteSection
 
 
     .section Data88A4BCSection
@@ -795,7 +795,7 @@
     .endsection Data88A4BCSection
 
 
-    .section Unsorted88A4FCSection
+    .section LoadMapWindowPalettesSection
 
       .al
       .xl
@@ -912,10 +912,10 @@
 
         .databank 0
 
-    .endsection Unsorted88A4FCSection
+    .endsection LoadMapWindowPalettesSection
 
 
-    .section Unsorted88A551Section
+    .section GetMapCursorMoveSection
 
       .al
       .xl
@@ -1119,10 +1119,10 @@
 
         ; 88/A698
 
-    .endsection Unsorted88A551Section
+    .endsection GetMapCursorMoveSection
 
 
-    .section Unsorted88A698Section
+    .section SetCursorScrollSpeedUnusedSection
 
       .al
       .xl
@@ -1214,10 +1214,10 @@
 
         ; 88/A704
 
-    .endsection Unsorted88A698Section
+    .endsection SetCursorScrollSpeedUnusedSection
 
 
-    .section Unsorted88A704Section
+    .section DrawHandCursorSection
 
       .al
       .xl
@@ -1273,10 +1273,10 @@
 
         ; 88/A73D
 
-    .endsection Unsorted88A704Section
+    .endsection DrawHandCursorSection
 
 
-    .section Table88A73DSection
+    .section HandCursorOffsetsSection
 
       .al
       .xl
@@ -1295,10 +1295,10 @@
 
         ; 88/A754
 
-    .endsection Table88A73DSection
+    .endsection HandCursorOffsetsSection
 
 
-    .section Unsorted88A81DSection
+    .section MapChooseTargetStepSection
 
       .al
       .xl
@@ -1504,10 +1504,10 @@
 
         ; 88/A9B4
 
-    .endsection Unsorted88A81DSection
+    .endsection MapChooseTargetStepSection
 
 
-    .section Unsorted88AB2CSection
+    .section GetCursorTileUnusedSection
 
       .al
       .xl
@@ -1544,10 +1544,10 @@
 
         ; 88/AB47
 
-    .endsection Unsorted88AB2CSection
+    .endsection GetCursorTileUnusedSection
 
 
-    .section Unsorted88AB47Section
+    .section SelectNextTargetSection
 
       .al
       .xl
@@ -1734,10 +1734,10 @@
 
         ; 88/AC5B
 
-    .endsection Unsorted88AB47Section
+    .endsection SelectNextTargetSection
 
 
-    .section Unsorted88AC5BSection
+    .section SelectNextTargetInOrderUnusedSection
 
       .al
       .xl
@@ -1803,10 +1803,10 @@
 
         ; 88/ACA6
 
-    .endsection Unsorted88AC5BSection
+    .endsection SelectNextTargetInOrderUnusedSection
 
 
-    .section Unsorted88ACA6Section
+    .section GetTargetAtSearchIndexUnusedSection
 
       .al
       .xl
@@ -1846,10 +1846,10 @@
         .word $0000, $0010, $0000, $FFE0, $FFF0, $0000, $0010, $0020
         .word $0010, $0000, $FFF0
 
-    .endsection Unsorted88ACA6Section
+    .endsection GetTargetAtSearchIndexUnusedSection
 
 
-    .section Table88ACF1Section
+    .section NearTargetOffsetsSection
 
       .al
       .xl
@@ -1863,7 +1863,7 @@
 
         ; 88/AD09
 
-    .endsection Table88ACF1Section
+    .endsection NearTargetOffsetsSection
 
 
     .section Unreferenced88AD09Section
@@ -1921,7 +1921,7 @@
         ; 88/AD46
 
     .endsection Unreferenced88AD09Section
-    .section Unsorted88AD46Section
+    .section StartChoosingTargetSection
 
       .al
       .xl
@@ -1979,10 +1979,10 @@
 
         ; 88/ADA2
 
-    .endsection Unsorted88AD46Section
+    .endsection StartChoosingTargetSection
 
 
-    .section Unsorted88ADA2Section
+    .section SetMapCursorFreeSection
 
       .al
       .xl
@@ -2001,10 +2001,10 @@
 
         ; 88/ADA6
 
-    .endsection Unsorted88ADA2Section
+    .endsection SetMapCursorFreeSection
 
 
-    .section Unsorted88ADA6Section
+    .section SetMapCursorOriginToCursorSection
 
       .al
       .xl
@@ -2041,10 +2041,10 @@
 
         ; 88/ADC9
 
-    .endsection Unsorted88ADA6Section
+    .endsection SetMapCursorOriginToCursorSection
 
 
-    .section Unsorted88ADC9Section
+    .section StartCursorToActiveUnitForActionSection
 
       .al
       .xl
@@ -2078,10 +2078,10 @@
 
         ; 88/ADE9
 
-    .endsection Unsorted88ADC9Section
+    .endsection StartCursorToActiveUnitForActionSection
 
 
-    .section Unsorted88B3AFSection
+    .section SaveMapCameraAndLockCursorSection
 
       .al
       .xl
@@ -2107,7 +2107,7 @@
 
         ; 88/B3C2
 
-    .endsection Unsorted88B3AFSection
+    .endsection SaveMapCameraAndLockCursorSection
 
 
     .section Unreferenced88B3C2Section
@@ -2158,7 +2158,7 @@
         ; 88/B3DF
 
     .endsection Unreferenced88B3C2Section
-    .section Unsorted88B42CSection
+    .section StartCursorToUnitAfterMoveSection
 
       .al
       .xl
@@ -2210,10 +2210,10 @@
 
         ; 88/B46A
 
-    .endsection Unsorted88B42CSection
+    .endsection StartCursorToUnitAfterMoveSection
 
 
-    .section Unsorted88B46ASection
+    .section StartCursorToUnitSection
 
       .al
       .xl
@@ -2284,10 +2284,10 @@
 
         ; 88/B4DB
 
-    .endsection Unsorted88B46ASection
+    .endsection StartCursorToUnitSection
 
 
-    .section Unsorted88B4DBSection
+    .section MoveCursorToUnitSection
 
       .al
       .xl
@@ -2339,10 +2339,10 @@
 
         ; 88/B51A
 
-    .endsection Unsorted88B4DBSection
+    .endsection MoveCursorToUnitSection
 
 
-    .section Unsorted88B64FSection
+    .section MoveCursorTowardsTargetSection
 
       .al
       .xl
@@ -2450,10 +2450,10 @@
 
         ; 88/B6FD
 
-    .endsection Unsorted88B64FSection
+    .endsection MoveCursorTowardsTargetSection
 
 
-    .section Unsorted88BC05Section
+    .section MoveMapCursorInDirectionSection
 
       .al
       .xl
@@ -2721,10 +2721,10 @@
 
         ; 88/BDA1
 
-    .endsection Unsorted88BC05Section
+    .endsection MoveMapCursorInDirectionSection
 
 
-    .section Unsorted88BDA1Section
+    .section MoveMapCursorUpSection
 
       .al
       .xl
@@ -2940,7 +2940,7 @@
 
         ; 88/BEFF
 
-    .endsection Unsorted88BDA1Section
+    .endsection MoveMapCursorUpSection
 
 
     .section Unreferenced88BEFFSection

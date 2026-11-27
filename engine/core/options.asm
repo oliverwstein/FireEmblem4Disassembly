@@ -174,7 +174,7 @@
     .endsection GetTextSpeedOptionSection
 
 
-    .section Unsorted87BED7Section
+    .section SetUnitWindowSettingSection
 
       .al
       .xl
@@ -214,10 +214,10 @@
 
         ; 87/BEF1
 
-    .endsection Unsorted87BED7Section
+    .endsection SetUnitWindowSettingSection
 
 
-    .section Unsorted87BF01Section
+    .section SetTextSpeedOptionSection
 
       .al
       .xl
@@ -254,10 +254,10 @@
 
         ; 87/BF1B
 
-    .endsection Unsorted87BF01Section
+    .endsection SetTextSpeedOptionSection
 
 
-    .section Unsorted87BF1BSection
+    .section GetEnemySpeedOptionSection
 
       .al
       .xl
@@ -284,10 +284,10 @@
 
         ; 87/BF29
 
-    .endsection Unsorted87BF1BSection
+    .endsection GetEnemySpeedOptionSection
 
 
-    .section Unsorted87BF29Section
+    .section SetEnemySpeedOptionSection
 
       .al
       .xl
@@ -325,10 +325,10 @@
 
         ; 87/BF43
 
-    .endsection Unsorted87BF29Section
+    .endsection SetEnemySpeedOptionSection
 
 
-    .section Unsorted87BF43Section
+    .section GetSoundOptionSection
 
       .al
       .xl
@@ -360,10 +360,10 @@
 
         ; 87/BF52
 
-    .endsection Unsorted87BF43Section
+    .endsection GetSoundOptionSection
 
 
-    .section Unsorted87BF52Section
+    .section SetSoundOptionSection
 
       .al
       .xl
@@ -401,10 +401,10 @@
 
         ; 87/BF6F
 
-    .endsection Unsorted87BF52Section
+    .endsection SetSoundOptionSection
 
 
-    .section Unsorted87BF6FSection
+    .section ApplySoundOptionSection
 
       .al
       .xl
@@ -492,10 +492,10 @@
 
         ; 87/BFBF
 
-    .endsection Unsorted87BF6FSection
+    .endsection ApplySoundOptionSection
 
 
-    .section Unsorted87BFBFSection
+    .section SetAutoSaveOptionSection
 
       .al
       .xl
@@ -533,10 +533,10 @@
 
         ; 87/BFD9
 
-    .endsection Unsorted87BFBFSection
+    .endsection SetAutoSaveOptionSection
 
 
-    .section Unsorted87BFD9Section
+    .section GetAutoSaveFileSection
 
       .al
       .xl
@@ -569,10 +569,10 @@
 
         ; 87/BFE9
 
-    .endsection Unsorted87BFD9Section
+    .endsection GetAutoSaveFileSection
 
 
-    .section Unsorted87BFE9Section
+    .section SetAutoSaveFileSection
 
       .al
       .xl
@@ -607,10 +607,10 @@
 
         ; 87/C003
 
-    .endsection Unsorted87BFE9Section
+    .endsection SetAutoSaveFileSection
 
 
-    .section Unsorted87C015Section
+    .section SetCleverModeFlagSection
 
       .al
       .xl
@@ -650,10 +650,10 @@
 
         ; 87/C02F
 
-    .endsection Unsorted87C015Section
+    .endsection SetCleverModeFlagSection
 
 
-    .section Unsorted87C02FSection
+    .section GetAutoCursorOptionSection
 
       .al
       .xl
@@ -683,10 +683,10 @@
 
         ; 87/C03C
 
-    .endsection Unsorted87C02FSection
+    .endsection GetAutoCursorOptionSection
 
 
-    .section Unsorted87C03CSection
+    .section SetAutoCursorOptionSection
 
       .al
       .xl
@@ -724,6 +724,6 @@
 
         ; 87/C056
 
-    .endsection Unsorted87C03CSection
+    .endsection SetAutoCursorOptionSection
 
 

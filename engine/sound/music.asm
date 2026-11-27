@@ -313,7 +313,7 @@
     .endsection ProcScript8283E3Section
 
 
-    .section Unsorted8283EBSection
+    .section ProcFadeOutAndChangeSongInitSection
 
       .al
       .xl
@@ -352,10 +352,10 @@
 
         ; 82/83FA
 
-    .endsection Unsorted8283EBSection
+    .endsection ProcFadeOutAndChangeSongInitSection
 
 
-    .section Unsorted8283FASection
+    .section ProcFadeOutAndChangeSongCycle2Section
 
       .al
       .xl
@@ -393,10 +393,10 @@
 
         ; 82/841F
 
-    .endsection Unsorted8283FASection
+    .endsection ProcFadeOutAndChangeSongCycle2Section
 
 
-    .section Unsorted82841FSection
+    .section ProcFadeOutAndChangeSongCycle3Section
 
       .al
       .xl
@@ -421,7 +421,7 @@
 
         ; 82/8429
 
-    .endsection Unsorted82841FSection
+    .endsection ProcFadeOutAndChangeSongCycle3Section
 
 
     .section ProcScript828429Section

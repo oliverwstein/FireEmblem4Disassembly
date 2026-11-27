@@ -5,7 +5,7 @@
 ; reaches this" are steps no timeline names.
 
 
-    .section Unsorted95EA47Section
+    .section SetUpTitleIntroSection
 
       .al
       .xl
@@ -63,10 +63,10 @@
 
         ; 95/EA91
 
-    .endsection Unsorted95EA47Section
+    .endsection SetUpTitleIntroSection
 
 
-    .section Table95EA91Section
+    .section TitleIntroScene1PPUConfigSection
 
       .al
       .xl
@@ -576,10 +576,10 @@
         WRITE_RAM_END
 
 
-    .endsection Table95EA91Section
+    .endsection TitleIntroScene1PPUConfigSection
 
 
-    .section Unsorted95ED4ESection
+    .section TitleIntroScene6ShowSubBG3Section
 
       .al
       .xl
@@ -645,10 +645,10 @@
 
         ; 95/ED7B
 
-    .endsection Unsorted95ED4ESection
+    .endsection TitleIntroScene6ShowSubBG3Section
 
 
-    .section Unsorted95ED7BSection
+    .section SetUpTitleIntroScene7Section
 
       .al
       .xl
@@ -706,7 +706,7 @@
 
         ; 95/EDD0
 
-    .endsection Unsorted95ED7BSection
+    .endsection SetUpTitleIntroScene7Section
 
 
     .section Data95EDD0Section
@@ -729,7 +729,7 @@
     .endsection Data95EDD0Section
 
 
-    .section Unsorted95EDEASection
+    .section TitleIntroScene7ShowBG1Section
 
       .al
       .xl
@@ -820,7 +820,7 @@
 
         ; 95/EE58
 
-    .endsection Unsorted95EDEASection
+    .endsection TitleIntroScene7ShowBG1Section
 
 
     .section Data95EE58Section
@@ -843,7 +843,7 @@
     .endsection Data95EE58Section
 
 
-    .section Unsorted95F2E5Section
+    .section TitleIntroScene3StartPaletteEffectSection
 
       .al
       .xl
@@ -968,7 +968,7 @@
 
         ; 95/F35D
 
-    .endsection Unsorted95F2E5Section
+    .endsection TitleIntroScene3StartPaletteEffectSection
 
 
     .section TitleScenes95F35DSection
@@ -1064,7 +1064,7 @@
     .endsection TitleScenes95F35DSection
 
 
-    .section Unsorted95F3D3Section
+    .section TitleIntroScene8StartPaletteEffect1Section
 
       .al
       .xl
@@ -1125,7 +1125,7 @@
 
         ; 95/F41B
 
-    .endsection Unsorted95F3D3Section
+    .endsection TitleIntroScene8StartPaletteEffect1Section
 
 
     .section Data95F41BSection
@@ -1143,7 +1143,7 @@
     .endsection Data95F41BSection
 
 
-    .section Unsorted95F426Section
+    .section TitleStartLogoPaletteEffectSection
 
       .al
       .xl
@@ -1227,10 +1227,10 @@
 
         ; 95/F48E
 
-    .endsection Unsorted95F426Section
+    .endsection TitleStartLogoPaletteEffectSection
 
 
-    .section Unsorted95F48ESection
+    .section StartTitleIntroScene2FadeOAMPal0Section
 
       .al
       .xl
@@ -1265,10 +1265,10 @@
 
         ; 95/F4B7
 
-    .endsection Unsorted95F48ESection
+    .endsection StartTitleIntroScene2FadeOAMPal0Section
 
 
-    .section Unsorted95F4B7Section
+    .section StepTitleIntroScene2FadeOAMPal0Section
 
       .al
       .xl
@@ -1311,10 +1311,10 @@
 
         ; 95/F4F0
 
-    .endsection Unsorted95F4B7Section
+    .endsection StepTitleIntroScene2FadeOAMPal0Section
 
 
-    .section Unsorted95F4F0Section
+    .section StartTitleIntroScene2FadeOAMPal4Section
 
       .al
       .xl
@@ -1349,10 +1349,10 @@
 
         ; 95/F519
 
-    .endsection Unsorted95F4F0Section
+    .endsection StartTitleIntroScene2FadeOAMPal4Section
 
 
-    .section Unsorted95F519Section
+    .section StepTitleIntroScene2FadeOAMPal4Section
 
       .al
       .xl
@@ -1395,10 +1395,10 @@
 
         ; 95/F552
 
-    .endsection Unsorted95F519Section
+    .endsection StepTitleIntroScene2FadeOAMPal4Section
 
 
-    .section Unsorted95F552Section
+    .section StartTitleIntroScene2FadeOAMPal5Section
 
       .al
       .xl
@@ -1433,10 +1433,10 @@
 
         ; 95/F57B
 
-    .endsection Unsorted95F552Section
+    .endsection StartTitleIntroScene2FadeOAMPal5Section
 
 
-    .section Unsorted95F57BSection
+    .section StepTitleIntroScene2FadeOAMPal5Section
 
       .al
       .xl
@@ -1511,7 +1511,7 @@
 
         ; 95/F5D9
 
-    .endsection Unsorted95F57BSection
+    .endsection StepTitleIntroScene2FadeOAMPal5Section
 
 
     .section TitleScenes95F5D9Section
@@ -1590,7 +1590,7 @@
     .endsection TitleScenes95F5D9Section
 
 
-    .section Unsorted95F630Section
+    .section StartTitleIntroScene3FadeBGPal34Section
 
       .al
       .xl
@@ -1615,10 +1615,10 @@
 
         ; 95/F64A
 
-    .endsection Unsorted95F630Section
+    .endsection StartTitleIntroScene3FadeBGPal34Section
 
 
-    .section Unsorted95F64ASection
+    .section StepTitleIntroScene3FadeBGPal34Section
 
       .al
       .xl
@@ -1662,7 +1662,7 @@
 
         ; 95/F681
 
-    .endsection Unsorted95F64ASection
+    .endsection StepTitleIntroScene3FadeBGPal34Section
 
 
     .section TitleScenes95F681Section
@@ -1792,7 +1792,7 @@
     .endsection TitleScenes95F681Section
 
 
-    .section Unsorted95F777Section
+    .section TitleIntroScene5InitWindowEffect1Section
 
       .al
       .xl
@@ -1843,10 +1843,10 @@
 
         ; 95/F7B7
 
-    .endsection Unsorted95F777Section
+    .endsection TitleIntroScene5InitWindowEffect1Section
 
 
-    .section Unsorted95F7B7Section
+    .section TitleIntroScene6InitWindowEffect1Section
 
       .al
       .xl
@@ -1899,10 +1899,10 @@
 
         ; 95/F7F7
 
-    .endsection Unsorted95F7B7Section
+    .endsection TitleIntroScene6InitWindowEffect1Section
 
 
-    .section Unsorted95F831Section
+    .section TitleIntroScene4InitWindowEffect2Section
 
       .al
       .xl
@@ -1972,7 +1972,7 @@
 
         ; 95/F87F
 
-    .endsection Unsorted95F831Section
+    .endsection TitleIntroScene4InitWindowEffect2Section
 
 
     .section TitleScenes95F9B4Section
@@ -2009,7 +2009,7 @@
     .endsection TitleScenes95F9B4Section
 
 
-    .section Unsorted95F9CESection
+    .section TitleIntroScene2SpawnSpritePair1Section
 
       .al
       .xl
@@ -2237,10 +2237,10 @@
 
         ; 95/FB0A
 
-    .endsection Unsorted95F9CESection
+    .endsection TitleIntroScene2SpawnSpritePair1Section
 
 
-    .section Unsorted95FB0ASection
+    .section StepTitleIntroScene2SpriteRiseSection
 
       .al
       .xl
@@ -2298,10 +2298,10 @@
 
         ; 95/FB4B
 
-    .endsection Unsorted95FB0ASection
+    .endsection StepTitleIntroScene2SpriteRiseSection
 
 
-    .section Table95FB4BSection
+    .section TitleIntroScene2SpriteRiseStatesSection
 
       .al
       .xl
@@ -2563,10 +2563,10 @@
 
         ; 95/FCA4
 
-    .endsection Table95FB4BSection
+    .endsection TitleIntroScene2SpriteRiseStatesSection
 
 
-    .section Unsorted95FCA4Section
+    .section StartTitleSceneFadeInSection
 
       .al
       .xl
@@ -2646,10 +2646,10 @@
 
         ; 95/FD1C
 
-    .endsection Unsorted95FCA4Section
+    .endsection StartTitleSceneFadeInSection
 
 
-    .section Unsorted95FD1CSection
+    .section StartTitleQuickFadeOutSection
 
       .al
       .xl
@@ -2678,10 +2678,10 @@
 
         ; 95/FD44
 
-    .endsection Unsorted95FD1CSection
+    .endsection StartTitleQuickFadeOutSection
 
 
-    .section Unsorted95FD44Section
+    .section RunTitleBrightnessListSection
 
       .al
       .xl
@@ -2800,7 +2800,7 @@
 
         ; 95/FDE4
 
-    .endsection Unsorted95FD44Section
+    .endsection RunTitleBrightnessListSection
 
 
     .section TitleScenes95FDE4Section
@@ -2866,7 +2866,7 @@
     .endsection TitleScenes95FDE4Section
 
 
-    .section Unsorted95FE22Section
+    .section StartTitleIntroScene2ScrollSection
 
       .al
       .xl
@@ -2895,10 +2895,10 @@
 
         ; 95/FE46
 
-    .endsection Unsorted95FE22Section
+    .endsection StartTitleIntroScene2ScrollSection
 
 
-    .section Unsorted95FE46Section
+    .section TitleIntroScene2ScrollSection
 
       .al
       .xl
@@ -2964,10 +2964,10 @@
 
         ; 95/FEA0
 
-    .endsection Unsorted95FE46Section
+    .endsection TitleIntroScene2ScrollSection
 
 
-    .section Unsorted95FEA0Section
+    .section StartTitleIntroScene3ScrollSection
 
       .al
       .xl
@@ -2994,10 +2994,10 @@
 
         ; 95/FEBC
 
-    .endsection Unsorted95FEA0Section
+    .endsection StartTitleIntroScene3ScrollSection
 
 
-    .section Unsorted95FEBCSection
+    .section TitleIntroScene3ScrollSection
 
       .al
       .xl
@@ -3030,10 +3030,10 @@
 
         ; 95/FED9
 
-    .endsection Unsorted95FEBCSection
+    .endsection TitleIntroScene3ScrollSection
 
 
-    .section Unsorted95FED9Section
+    .section StartTitleIntroScene5ScrollSection
 
       .al
       .xl
@@ -3061,10 +3061,10 @@
 
         ; 95/FEF9
 
-    .endsection Unsorted95FED9Section
+    .endsection StartTitleIntroScene5ScrollSection
 
 
-    .section Unsorted95FEF9Section
+    .section TitleIntroScene5ScrollSection
 
       .al
       .xl
@@ -3113,10 +3113,10 @@
 
         ; 95/FF35
 
-    .endsection Unsorted95FEF9Section
+    .endsection TitleIntroScene5ScrollSection
 
 
-    .section Unsorted95FF35Section
+    .section StartTitleIntroScene6ScrollSection
 
       .al
       .xl
@@ -3143,10 +3143,10 @@
 
         ; 95/FF51
 
-    .endsection Unsorted95FF35Section
+    .endsection StartTitleIntroScene6ScrollSection
 
 
-    .section Unsorted95FF51Section
+    .section TitleIntroScene6ScrollSection
 
       .al
       .xl
@@ -3179,10 +3179,10 @@
 
         ; 95/FF6E
 
-    .endsection Unsorted95FF51Section
+    .endsection TitleIntroScene6ScrollSection
 
 
-    .section Unsorted95FF6ESection
+    .section StartTitleIntroScene7ScrollSection
 
       .al
       .xl
@@ -3209,10 +3209,10 @@
 
         ; 95/FF8A
 
-    .endsection Unsorted95FF6ESection
+    .endsection StartTitleIntroScene7ScrollSection
 
 
-    .section Unsorted95FF8ASection
+    .section TitleIntroScene7ScrollSection
 
       .al
       .xl
@@ -3249,7 +3249,7 @@
         ; 95/FFAC
 ; Routines found by tools/trace.py. Each was reached from code in the build.
 
-    .endsection Unsorted95FF8ASection
+    .endsection TitleIntroScene7ScrollSection
 
 
     .section TitleScenes95FFACSection
@@ -3277,7 +3277,7 @@
     .endsection TitleScenes95FFACSection
 
 
-    .section Unsorted9BE15FSection
+    .section StopTitleTimelineSlotSection
 
       .al
       .xl
@@ -3308,10 +3308,10 @@
 
         ; 9B/E179
 
-    .endsection Unsorted9BE15FSection
+    .endsection StopTitleTimelineSlotSection
 
 
-    .section Unsorted9BE179Section
+    .section InitTitleTopBorderHeightSection
 
       .al
       .xl
@@ -3479,10 +3479,10 @@
 
         ; 9B/E2A4
 
-    .endsection Unsorted9BE179Section
+    .endsection InitTitleTopBorderHeightSection
 
 
-    .section Unsorted9BE2A4Section
+    .section TitleIntroScene7SpawnOrbitSpritesSection
 
       .al
       .xl
@@ -3531,7 +3531,7 @@
 
         ; 9B/E2E3
 
-    .endsection Unsorted9BE2A4Section
+    .endsection TitleIntroScene7SpawnOrbitSpritesSection
 
 
     .section TitleScenes9BE2E3Section
@@ -3572,7 +3572,7 @@
     .endsection TitleScenes9BE2E3Section
 
 
-    .section Unsorted9BE2FDSection
+    .section TitleIntroScene7EnableTrailsFirst6Section
 
       .al
       .xl
@@ -3633,7 +3633,7 @@
 
         ; 9B/E331
 
-    .endsection Unsorted9BE2FDSection
+    .endsection TitleIntroScene7EnableTrailsFirst6Section
 
 
     .section TitleScenes9BE331Section
@@ -3696,7 +3696,7 @@
     .endsection TitleScenes9BE331Section
 
 
-    .section Unsorted9BE372Section
+    .section StepTitleIntroScene7OrbitContractSection
 
       .al
       .xl
@@ -3749,10 +3749,10 @@
 
         ; 9B/E3B0
 
-    .endsection Unsorted9BE372Section
+    .endsection StepTitleIntroScene7OrbitContractSection
 
 
-    .section Unsorted9BE3B0Section
+    .section StepTitleIntroScene7OrbitDecelSection
 
       .al
       .xl
@@ -3816,10 +3816,10 @@
 
         ; 9B/E40B
 
-    .endsection Unsorted9BE3B0Section
+    .endsection StepTitleIntroScene7OrbitDecelSection
 
 
-    .section Unsorted9BE40BSection
+    .section StepTitleIntroScene7OrbitExpandSection
 
       .al
       .xl
@@ -3954,10 +3954,10 @@
 
         ; 9B/E4DB
 
-    .endsection Unsorted9BE40BSection
+    .endsection StepTitleIntroScene7OrbitExpandSection
 
 
-    .section Unsorted9BE4DBSection
+    .section MirrorTitleIntroScene7OrbitSpritesSection
 
       .al
       .xl
@@ -4057,10 +4057,10 @@
 
         ; 9B/E5B2
 
-    .endsection Unsorted9BE4DBSection
+    .endsection MirrorTitleIntroScene7OrbitSpritesSection
 
 
-    .section Unsorted9BE5B2Section
+    .section StartTitleIntroScene1BG2WaveHDMASection
 
       .al
       .xl
@@ -4203,10 +4203,10 @@
 
         ; 9B/E697
 
-    .endsection Unsorted9BE5B2Section
+    .endsection StartTitleIntroScene1BG2WaveHDMASection
 
 
-    .section Unsorted9BE697Section
+    .section StopTitleIntroScene1BG2WaveHDMASection
 
       .al
       .xl
@@ -4260,7 +4260,7 @@
 
         ; 9B/E6DF
 
-    .endsection Unsorted9BE697Section
+    .endsection StopTitleIntroScene1BG2WaveHDMASection
 
 
     .section TitleScenes9BE6DFSection
@@ -4378,7 +4378,7 @@
     .endsection TitleScenes9BE6DFSection
 
 
-    .section Unsorted9BE791Section
+    .section StopTitleIntroScene7BG2WaveHDMASection
 
       .al
       .xl
@@ -4439,10 +4439,10 @@
 
         ; 9B/E7F2
 
-    .endsection Unsorted9BE791Section
+    .endsection StopTitleIntroScene7BG2WaveHDMASection
 
 
-    .section Unsorted9BE7F2Section
+    .section StepTitleIntroScene7BG1WaveHDMASection
 
       .al
       .xl
@@ -4532,7 +4532,7 @@
 
         ; 9B/E88E
 
-    .endsection Unsorted9BE7F2Section
+    .endsection StepTitleIntroScene7BG1WaveHDMASection
 
 
     .section TitleScenes9BE88ESection
@@ -4739,7 +4739,7 @@
     .endsection TitleScenes9BE8D7Section
 
 
-    .section Unsorted9BE9AESection
+    .section StartTitleIntroScene7CurtainHDMASection
 
       .al
       .xl
@@ -4782,10 +4782,10 @@
 
         ; 9B/E9FD
 
-    .endsection Unsorted9BE9AESection
+    .endsection StartTitleIntroScene7CurtainHDMASection
 
 
-    .section Unsorted9BE9FDSection
+    .section StepTitleIntroScene7CurtainHDMASection
 
       .al
       .xl
@@ -4851,7 +4851,7 @@
 
         ; 9B/EA5C
 
-    .endsection Unsorted9BE9FDSection
+    .endsection StepTitleIntroScene7CurtainHDMASection
 
 
     .section TitleScenes9BEA5CSection
@@ -4938,7 +4938,7 @@
     .endsection TitleScenes9BF1F4Section
 
 
-    .section Unsorted9BF218Section
+    .section TitleIntroScene8StartPaletteEffect2Section
 
       .al
       .xl
@@ -4972,10 +4972,10 @@
 
         ; 9B/F23C
 
-    .endsection Unsorted9BF218Section
+    .endsection TitleIntroScene8StartPaletteEffect2Section
 
 
-    .section Unsorted9BF23CSection
+    .section StartTitleIntroScene6ColdataFadeSection
 
       .al
       .xl
@@ -5050,10 +5050,10 @@
 
         ; 9B/F297
 
-    .endsection Unsorted9BF23CSection
+    .endsection StartTitleIntroScene6ColdataFadeSection
 
 
-    .section Unsorted9BF3F3Section
+    .section BuildTitleIntroScene7PaletteTableSection
 
       .al
       .xl
@@ -5155,10 +5155,10 @@
 
         ; 9B/F49E
 
-    .endsection Unsorted9BF3F3Section
+    .endsection BuildTitleIntroScene7PaletteTableSection
 
 
-    .section Unsorted9BF49ESection
+    .section StartTitleIntroScene7PaletteFadeInSection
 
       .al
       .xl
@@ -5185,7 +5185,7 @@
 
         ; 9B/F4BF
 
-    .endsection Unsorted9BF49ESection
+    .endsection StartTitleIntroScene7PaletteFadeInSection
 
 
     .section TitleScenes9BF4BFSection
@@ -5280,7 +5280,7 @@
     .endsection TitleScenes9BF4BFSection
 
 
-    .section Unsorted9BF548Section
+    .section TitleIntroScene7FlashWhiteSection
 
       .al
       .xl
@@ -5315,7 +5315,7 @@
 
         ; 9B/F56C
 
-    .endsection Unsorted9BF548Section
+    .endsection TitleIntroScene7FlashWhiteSection
 
 
     .section Data9BF56CSection
@@ -5334,7 +5334,7 @@
     .endsection Data9BF56CSection
 
 
-    .section Unsorted9BF57ASection
+    .section StartTitleIntroScene7PaletteFadeOutSection
 
       .al
       .xl
@@ -5362,7 +5362,7 @@
 
         ; 9B/F59E
 
-    .endsection Unsorted9BF57ASection
+    .endsection StartTitleIntroScene7PaletteFadeOutSection
 
 
     .section TitleScenes9BF59ESection
@@ -5482,7 +5482,7 @@
     .endsection TitleScenes9BF59ESection
 
 
-    .section Unsorted9BF651Section
+    .section StartTitleEdgeFadeSection
 
       .al
       .xl
@@ -5546,10 +5546,10 @@
 
         ; 9B/F69D
 
-    .endsection Unsorted9BF651Section
+    .endsection StartTitleEdgeFadeSection
 
 
-    .section Table9BF69DSection
+    .section TitleLogoGlintScrollPPUConfigSection
 
       .al
       .xl
@@ -5564,10 +5564,10 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $01
         WRITE_RAM_END
 
-    .endsection Table9BF69DSection
+    .endsection TitleLogoGlintScrollPPUConfigSection
 
 
-    .section Unsorted9BF6B1Section
+    .section StepTitleLogoGlintScrollSection
 
       .al
       .xl
@@ -5639,10 +5639,10 @@
 
         ; 9B/F715
 
-    .endsection Unsorted9BF6B1Section
+    .endsection StepTitleLogoGlintScrollSection
 
 
-    .section Table9BF715Section
+    .section TitleLogoBG3DriftPPUConfigSection
 
       .al
       .xl
@@ -5656,10 +5656,10 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $92
         WRITE_RAM_END
 
-    .endsection Table9BF715Section
+    .endsection TitleLogoBG3DriftPPUConfigSection
 
 
-    .section Unsorted9BF726Section
+    .section StepTitleLogoBG3DriftSection
 
       .al
       .xl
@@ -5721,10 +5721,10 @@
 
         ; 9B/F77A
 
-    .endsection Unsorted9BF726Section
+    .endsection StepTitleLogoBG3DriftSection
 
 
-    .section Unsorted9BF77ASection
+    .section StartTitleLogoBG2RevealSection
 
       .al
       .xl
@@ -5760,7 +5760,7 @@
 
         ; 9B/F7A3
 
-    .endsection Unsorted9BF77ASection
+    .endsection StartTitleLogoBG2RevealSection
 
 
     .section TitleScenes9BF7A3Section
@@ -6214,7 +6214,7 @@
     .endsection TitleScenes9BF9D5Section
 
 
-    .section Unsorted9BF9E3Section
+    .section QueueTitleLogoBG2TilemapUploadSection
 
       .al
       .xl
@@ -6241,7 +6241,7 @@
 
         ; 9B/F9FA
 
-    .endsection Unsorted9BF9E3Section
+    .endsection QueueTitleLogoBG2TilemapUploadSection
 
 
     .section TitleScenes9BF9FASection
@@ -6274,7 +6274,7 @@
     .endsection TitleScenes9BF9FASection
 
 
-    .section Unsorted9BFA11Section
+    .section StartTitleIntroScene8BG1ScrollSection
 
       .al
       .xl
@@ -6301,10 +6301,10 @@
 
         ; 9B/FA2D
 
-    .endsection Unsorted9BFA11Section
+    .endsection StartTitleIntroScene8BG1ScrollSection
 
 
-    .section Unsorted9BFA2DSection
+    .section StepTitleIntroScene8BG1ScrollSection
 
       .al
       .xl
@@ -6346,10 +6346,10 @@
 
         ; 9B/FA58
 
-    .endsection Unsorted9BFA2DSection
+    .endsection StepTitleIntroScene8BG1ScrollSection
 
 
-    .section Unsorted9BFA58Section
+    .section TitleFadeOutSetBG2SCSection
 
       .al
       .xl
@@ -6375,10 +6375,10 @@
 
         ; 9B/FA69
 
-    .endsection Unsorted9BFA58Section
+    .endsection TitleFadeOutSetBG2SCSection
 
 
-    .section Table9BFA69Section
+    .section TitleFadeOutSetBG2SCPPUConfigSection
 
       .al
       .xl
@@ -6388,10 +6388,10 @@
         WRITE_RAM_BYTE bBufferBG2SC, $78
         WRITE_RAM_END
 
-    .endsection Table9BFA69Section
+    .endsection TitleFadeOutSetBG2SCPPUConfigSection
 
 
-    .section Unsorted9BFA6ESection
+    .section TitleFadeOutClearBG2TileBaseSection
 
       .al
       .xl
@@ -6417,10 +6417,10 @@
 
         ; 9B/FA7F
 
-    .endsection Unsorted9BFA6ESection
+    .endsection TitleFadeOutClearBG2TileBaseSection
 
 
-    .section Table9BFA7FSection
+    .section TitleFadeOutClearBG2TileBasePPUConfigSection
 
       .al
       .xl
@@ -6430,10 +6430,10 @@
         WRITE_RAM_MASK_BYTE bBufferBG12NBA, $0F, $00
         WRITE_RAM_END
 
-    .endsection Table9BFA7FSection
+    .endsection TitleFadeOutClearBG2TileBasePPUConfigSection
 
 
-    .section Unsorted9BFA85Section
+    .section TitleFadeOutShowBG2OnlySection
 
       .al
       .xl
@@ -6459,10 +6459,10 @@
 
         ; 9B/FA96
 
-    .endsection Unsorted9BFA85Section
+    .endsection TitleFadeOutShowBG2OnlySection
 
 
-    .section Table9BFA96Section
+    .section TitleFadeOutShowBG2OnlyPPUConfigSection
 
       .al
       .xl
@@ -6474,10 +6474,10 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $00
         WRITE_RAM_END
 
-    .endsection Table9BFA96Section
+    .endsection TitleFadeOutShowBG2OnlyPPUConfigSection
 
 
-    .section Unsorted9BFAA1Section
+    .section TitleFadeOutRestoreBG2SCSection
 
       .al
       .xl
@@ -6503,10 +6503,10 @@
 
         ; 9B/FAB2
 
-    .endsection Unsorted9BFAA1Section
+    .endsection TitleFadeOutRestoreBG2SCSection
 
 
-    .section Table9BFAB2Section
+    .section TitleFadeOutRestoreBG2SCPPUConfigSection
 
       .al
       .xl
@@ -6516,10 +6516,10 @@
         WRITE_RAM_BYTE bBufferBG2SC, $40
         WRITE_RAM_END
 
-    .endsection Table9BFAB2Section
+    .endsection TitleFadeOutRestoreBG2SCPPUConfigSection
 
 
-    .section Unsorted9BFAB7Section
+    .section AllowStartOnTitleSection
 
       .al
       .xl
@@ -6614,10 +6614,10 @@
 
         ; 9B/FB46
 
-    .endsection Unsorted9BFAB7Section
+    .endsection AllowStartOnTitleSection
 
 
-    .section Table9BFB46Section
+    .section TitleDimmingPPUConfigSection
 
       .al
       .xl
@@ -6633,10 +6633,10 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $22
         WRITE_RAM_END
 
-    .endsection Table9BFB46Section
+    .endsection TitleDimmingPPUConfigSection
 
 
-    .section Unsorted9BFB5DSection
+    .section FinishDimmingTitleSection
 
       .al
       .xl
@@ -6676,10 +6676,10 @@
 
         ; 9B/FB73
 
-    .endsection Unsorted9BFB5DSection
+    .endsection FinishDimmingTitleSection
 
 
-    .section Unsorted9BFB73Section
+    .section EnterTitlePhaseSection
 
       .al
       .xl
@@ -6703,10 +6703,10 @@
 
         ; 9B/FB7E
 
-    .endsection Unsorted9BFB73Section
+    .endsection EnterTitlePhaseSection
 
 
-    .section Unsorted9BFB7ESection
+    .section PlayTitleIntroSongSection
 
       .al
       .xl
@@ -6738,10 +6738,10 @@
 
         ; 9B/FB9F
 
-    .endsection Unsorted9BFB7ESection
+    .endsection PlayTitleIntroSongSection
 
 
-    .section Unsorted9BFB9FSection
+    .section PlayTitleIntroSong2Section
 
       .al
       .xl
@@ -6765,10 +6765,10 @@
 
         ; 9B/FBA9
 
-    .endsection Unsorted9BFB9FSection
+    .endsection PlayTitleIntroSong2Section
 
 
-    .section Unsorted9BFBA9Section
+    .section PlayTitleSongSection
 
       .al
       .xl
@@ -6790,10 +6790,10 @@
 
         ; 9B/FBB0
 
-    .endsection Unsorted9BFBA9Section
+    .endsection PlayTitleSongSection
 
 
-    .section Unsorted9BFBB0Section
+    .section PlayTitleIntroSound5Section
 
       .al
       .xl
@@ -6828,10 +6828,10 @@
 
         ; 9B/FBC0
 
-    .endsection Unsorted9BFBB0Section
+    .endsection PlayTitleIntroSound5Section
 
 
-    .section Unsorted9BFD71Section
+    .section StartTitleLogoSprite1Section
 
       .al
       .xl
@@ -7034,7 +7034,7 @@
 
         ; 9B/FE13
 
-    .endsection Unsorted9BFD71Section
+    .endsection StartTitleLogoSprite1Section
 
 
     .section TitleData9BFE13Section

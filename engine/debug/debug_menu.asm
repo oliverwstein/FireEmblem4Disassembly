@@ -4063,7 +4063,7 @@
     .endsection DebugMenuSection
 
 
-    .section Unsorted848EFBSection
+    .section GetTerrainNamePointerSection
 
       .al
       .xl
@@ -4099,10 +4099,10 @@
 
         ; 84/8F17
 
-    .endsection Unsorted848EFBSection
+    .endsection GetTerrainNamePointerSection
 
 
-    .section Unsorted8990DASection
+    .section LoadUnitInventoryIconsSection
 
       .al
       .xl
@@ -4188,10 +4188,10 @@
 
         ; 89/9140
 
-    .endsection Unsorted8990DASection
+    .endsection LoadUnitInventoryIconsSection
 
 
-    .section Unsorted80E42BSection
+    .section OpenDebugMenuSection
 
       .al
       .xs
@@ -4403,6 +4403,6 @@
 
         ; 80/E586
 
-    .endsection Unsorted80E42BSection
+    .endsection OpenDebugMenuSection
 
 

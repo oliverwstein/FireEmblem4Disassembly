@@ -138,7 +138,7 @@
     .endsection SoundInitSection
 
 
-    .section Unsorted808FA3Section
+    .section SendSoundCommandSection
 
       .al
       .xs
@@ -215,10 +215,10 @@
 
         .databank 0
 
-    .endsection Unsorted808FA3Section
+    .endsection SendSoundCommandSection
 
 
-    .section Unsorted808FDDSection
+    .section PlaySoundEffect2CheckedSection
 
       .al
       .xl
@@ -315,10 +315,10 @@
 
         ; 80/903D
 
-    .endsection Unsorted808FDDSection
+    .endsection PlaySoundEffect2CheckedSection
 
 
-    .section Unsorted80903DSection
+    .section SoundOnFlag10ClearedSection
 
       .al
       .xl
@@ -453,10 +453,10 @@
 
         ; 80/90A2
 
-    .endsection Unsorted80903DSection
+    .endsection SoundOnFlag10ClearedSection
 
 
-    .section Unsorted8090A2Section
+    .section SendSoundQueuesToAPUSection
 
       .al
       .xl
@@ -545,10 +545,10 @@
 
         ; 80/9124
 
-    .endsection Unsorted8090A2Section
+    .endsection SendSoundQueuesToAPUSection
 
 
-    .section Unsorted809124Section
+    .section UploadToAPUSection
 
       .al
       .xl
@@ -946,10 +946,10 @@
 
         ; 80/9357
 
-    .endsection Unsorted809124Section
+    .endsection UploadToAPUSection
 
 
-    .section Table809357Section
+    .section SoundUploadCommandsSection
 
       .al
       .xl
@@ -974,10 +974,10 @@
         .word <>rsSoundUploadCommandJump
         .word $93B8
 
-    .endsection Table809357Section
+    .endsection SoundUploadCommandsSection
 
 
-    .section Unsorted809377Section
+    .section SoundUploadCommandClearResendSection
 
       .al
       .xl
@@ -1001,10 +1001,10 @@
 
         ; 80/9382
 
-    .endsection Unsorted809377Section
+    .endsection SoundUploadCommandClearResendSection
 
 
-    .section Unsorted809382Section
+    .section SoundUploadCommandSetDestinationSection
 
       .al
       .xl
@@ -1031,10 +1031,10 @@
 
         ; 80/9391
 
-    .endsection Unsorted809382Section
+    .endsection SoundUploadCommandSetDestinationSection
 
 
-    .section Unsorted809391Section
+    .section SoundUploadCommandNoneSection
 
       .al
       .xs
@@ -1054,10 +1054,10 @@
 
         ; 80/9392
 
-    .endsection Unsorted809391Section
+    .endsection SoundUploadCommandNoneSection
 
 
-    .section Unsorted809392Section
+    .section SoundUploadCommandJumpSection
 
       .as
       .xs
@@ -1093,10 +1093,10 @@
 
         ; 80/93B0
 
-    .endsection Unsorted809392Section
+    .endsection SoundUploadCommandJumpSection
 
 
-    .section Unsorted8093B0Section
+    .section SoundUploadCommandResetBuffersSection
 
       .al
       .xs
@@ -1125,10 +1125,10 @@
 
         ; 80/93C6
 
-    .endsection Unsorted8093B0Section
+    .endsection SoundUploadCommandResetBuffersSection
 
 
-    .section Unsorted8093C6Section
+    .section GetIndirectSoundUploadSection
 
       .al
       .xl
@@ -1330,10 +1330,10 @@
 
         ; 80/94E2
 
-    .endsection Unsorted8093C6Section
+    .endsection GetIndirectSoundUploadSection
 
 
-    .section Unsorted8094E2Section
+    .section SoundUploadCommandReadTerrainSection
 
       .al
       .xs
@@ -1484,10 +1484,10 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $0C
         .byte $00, $00, $00, $00, $00, $00, $00, $00
 
-    .endsection Unsorted8094E2Section
+    .endsection SoundUploadCommandReadTerrainSection
 
 
-    .section Unsorted8095CDSection
+    .section UpdateSoundSection
 
       .al
       .xl
@@ -1595,10 +1595,10 @@
 
         ; 80/9654
 
-    .endsection Unsorted8095CDSection
+    .endsection UpdateSoundSection
 
 
-    .section Unsorted809729Section
+    .section SoundScriptPlaySoundEffectSection
 
       .al
       .xs
@@ -1617,10 +1617,10 @@
 
         ; 80/972E
 
-    .endsection Unsorted809729Section
+    .endsection SoundScriptPlaySoundEffectSection
 
 
-    .section Unsorted80972ESection
+    .section SoundScriptPlaySoundEffect2Section
 
       .al
       .xl
@@ -1639,10 +1639,10 @@
 
         ; 80/9733
 
-    .endsection Unsorted80972ESection
+    .endsection SoundScriptPlaySoundEffect2Section
 
 
-    .section Unsorted809733Section
+    .section SoundScriptQueueCommandSection
 
       .al
       .xl
@@ -1683,10 +1683,10 @@
 
         ; 80/9759
 
-    .endsection Unsorted809733Section
+    .endsection SoundScriptQueueCommandSection
 
 
-    .section Unsorted809759Section
+    .section SoundScriptSendCommandSection
 
       .al
       .xl
@@ -1705,10 +1705,10 @@
 
         ; 80/975E
 
-    .endsection Unsorted809759Section
+    .endsection SoundScriptSendCommandSection
 
 
-    .section Unsorted80975ESection
+    .section SoundScriptUploadFDSection
 
       .al
       .xl
@@ -1838,10 +1838,10 @@
 
         ; 80/97E0
 
-    .endsection Unsorted80975ESection
+    .endsection SoundScriptUploadFDSection
 
 
-    .section Unsorted8097E0Section
+    .section SoundScriptDeferUploadFDSection
 
       .al
       .xl
@@ -1884,10 +1884,10 @@
 
         ; 80/9801
 
-    .endsection Unsorted8097E0Section
+    .endsection SoundScriptDeferUploadFDSection
 
 
-    .section Unsorted809801Section
+    .section SoundScriptDeferUploadFCSection
 
       .al
       .xl
@@ -1911,10 +1911,10 @@
 
         ; 80/9810
 
-    .endsection Unsorted809801Section
+    .endsection SoundScriptDeferUploadFCSection
 
 
-    .section Unsorted809810Section
+    .section SoundScriptDeferUploadFBSection
 
       .as
       .xl
@@ -1938,10 +1938,10 @@
 
         ; 80/981F
 
-    .endsection Unsorted809810Section
+    .endsection SoundScriptDeferUploadFBSection
 
 
-    .section Unsorted80981FSection
+    .section SoundScriptDeferUploadFASection
 
       .as
       .xl
@@ -1965,10 +1965,10 @@
 
         ; 80/982E
 
-    .endsection Unsorted80981FSection
+    .endsection SoundScriptDeferUploadFASection
 
 
-    .section Unsorted80982ESection
+    .section SoundScriptWaitForAPUStatusSection
 
       .as
       .xl
@@ -1999,10 +1999,10 @@
 
         ; 80/983C
 
-    .endsection Unsorted80982ESection
+    .endsection SoundScriptWaitForAPUStatusSection
 
 
-    .section Unsorted80983CSection
+    .section SoundScriptWaitForDeferredUploadSection
 
       .as
       .xl
@@ -2030,10 +2030,10 @@
 
         ; 80/9846
 
-    .endsection Unsorted80983CSection
+    .endsection SoundScriptWaitForDeferredUploadSection
 
 
-    .section Unsorted809846Section
+    .section SoundScriptQueueCommandCheckedSection
 
       .al
       .xl
@@ -2181,10 +2181,10 @@
 
         ; 80/9903
 
-    .endsection Unsorted809846Section
+    .endsection SoundScriptQueueCommandCheckedSection
 
 
-    .section Unsorted809903Section
+    .section RunDeferredSoundUploadSection
 
       .al
       .xl
@@ -2231,10 +2231,10 @@
 
         ; 80/9933
 
-    .endsection Unsorted809903Section
+    .endsection RunDeferredSoundUploadSection
 
 
-    .section Unsorted809933Section
+    .section UpdateMapSpriteSoundPanningSection
 
       .al
       .xl
@@ -2322,10 +2322,10 @@
         ; Unused: 376 zero bytes.
         .fill 376, $00
 
-    .endsection Unsorted809933Section
+    .endsection UpdateMapSpriteSoundPanningSection
 
 
-    .section Unsorted809654Section
+    .section StepMusicScriptSection
 
       .al
       .xs
@@ -2471,10 +2471,10 @@
 
         ; 80/9703
 
-    .endsection Unsorted809654Section
+    .endsection StepMusicScriptSection
 
 
-    .section Table809703Section
+    .section SoundScriptCommandsSection
 
       .al
       .xl
@@ -2508,6 +2508,6 @@
         nop
         rts
 
-    .endsection Table809703Section
+    .endsection SoundScriptCommandsSection
 
 

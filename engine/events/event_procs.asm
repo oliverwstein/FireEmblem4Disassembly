@@ -617,7 +617,7 @@
     .endsection EventHaltProcSection
 
 
-    .section Unsorted819166Section
+    .section StepEventMapScrollSection
 
       .al
       .xl
@@ -681,10 +681,10 @@
 
         .databank 0
 
-    .endsection Unsorted819166Section
+    .endsection StepEventMapScrollSection
 
 
-    .section Unsorted828B2BSection
+    .section ProcHaltEventSection
 
       .as
       .xl
@@ -693,10 +693,10 @@
 
         .word 0
 
-    .endsection Unsorted828B2BSection
+    .endsection ProcHaltEventSection
 
 
-    .section Unsorted82886FSection
+    .section ProcDemoSkipFadeOutInitSection
 
       .al
       .xl
@@ -758,10 +758,10 @@
 
         ; 82/88B2
 
-    .endsection Unsorted82886FSection
+    .endsection ProcDemoSkipFadeOutInitSection
 
 
-    .section Unsorted8288B2Section
+    .section ProcDemoSkipFadeOutCycle2Section
 
       .al
       .xl
@@ -808,7 +808,7 @@
 
         ; 82/88E7
 
-    .endsection Unsorted8288B2Section
+    .endsection ProcDemoSkipFadeOutCycle2Section
 
 
     .section ProcScript8288E7Section
@@ -826,7 +826,7 @@
     .endsection ProcScript8288E7Section
 
 
-    .section Unsorted828B35Section
+    .section ProcHaltEventInitSection
 
       .al
       .xl
@@ -868,10 +868,10 @@
 
         ; 82/8B46
 
-    .endsection Unsorted828B35Section
+    .endsection ProcHaltEventInitSection
 
 
-    .section Unsorted828B46Section
+    .section ProcEventWaitFlag7F4C07Bit10Section
 
       .al
       .xl
@@ -883,10 +883,10 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
-    .endsection Unsorted828B46Section
+    .endsection ProcEventWaitFlag7F4C07Bit10Section
 
 
-    .section Unsorted828B50Section
+    .section ProcEventWaitFlag7F4C07Bit10InitSection
 
       .al
       .xl
@@ -927,10 +927,10 @@
 
         ; 82/8B5F
 
-    .endsection Unsorted828B50Section
+    .endsection ProcEventWaitFlag7F4C07Bit10InitSection
 
 
-    .section Unsorted828B5FSection
+    .section ProcEventWaitFlag7F4C07Bit10CodeSection
 
       .al
       .xl
@@ -942,10 +942,10 @@
 
         ; 82/8B61
 
-    .endsection Unsorted828B5FSection
+    .endsection ProcEventWaitFlag7F4C07Bit10CodeSection
 
 
-    .section Unsorted828BA9Section
+    .section ProcEventWaitBattleSceneEndSection
 
       .al
       .xl
@@ -957,10 +957,10 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
-    .endsection Unsorted828BA9Section
+    .endsection ProcEventWaitBattleSceneEndSection
 
 
-    .section Unsorted828BB3Section
+    .section ProcEventWaitBattleSceneEndInitSection
 
       .al
       .xl
@@ -1005,10 +1005,10 @@
 
         ; 82/8BC6
 
-    .endsection Unsorted828BB3Section
+    .endsection ProcEventWaitBattleSceneEndInitSection
 
 
-    .section Unsorted828BC6Section
+    .section ProcEventWaitBattleSceneEndCodeSection
 
       .al
       .xl
@@ -1020,10 +1020,10 @@
 
         ; 82/8BC8
 
-    .endsection Unsorted828BC6Section
+    .endsection ProcEventWaitBattleSceneEndCodeSection
 
 
-    .section Unsorted828BC8Section
+    .section ProcEventWaitFirstGenerationEndingSection
 
       .al
       .xl
@@ -1035,10 +1035,10 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
-    .endsection Unsorted828BC8Section
+    .endsection ProcEventWaitFirstGenerationEndingSection
 
 
-    .section Unsorted828BD2Section
+    .section ProcEventWaitFirstGenerationEndingInitSection
 
       .al
       .xl
@@ -1082,10 +1082,10 @@
 
         ; 82/8BE8
 
-    .endsection Unsorted828BD2Section
+    .endsection ProcEventWaitFirstGenerationEndingInitSection
 
 
-    .section Unsorted828BE8Section
+    .section ProcEventWaitFirstGenerationEndingCodeSection
 
       .al
       .xl
@@ -1097,10 +1097,10 @@
 
         ; 82/8BEA
 
-    .endsection Unsorted828BE8Section
+    .endsection ProcEventWaitFirstGenerationEndingCodeSection
 
 
-    .section Unsorted829487Section
+    .section CreateProcEventWaitFlag7F4C07Bit10Section
 
       .al
       .xl
@@ -1125,10 +1125,10 @@
 
         ; 82/9496
 
-    .endsection Unsorted829487Section
+    .endsection CreateProcEventWaitFlag7F4C07Bit10Section
 
 
-    .section Unsorted829496Section
+    .section FreeMapBattleProcAndClearSpritesSection
 
       .al
       .xl
@@ -1161,7 +1161,7 @@
 
         ; 82/94B1
 
-    .endsection Unsorted829496Section
+    .endsection FreeMapBattleProcAndClearSpritesSection
 
 
     .section Unreferenced8294B1Section
@@ -1191,7 +1191,7 @@
         ; 82/94C0
 
     .endsection Unreferenced8294B1Section
-    .section Unsorted8294C0Section
+    .section CreateProcEventWaitBattleSceneEndSection
 
       .al
       .xl
@@ -1217,10 +1217,10 @@
 
         ; 82/94CF
 
-    .endsection Unsorted8294C0Section
+    .endsection CreateProcEventWaitBattleSceneEndSection
 
 
-    .section Unsorted8294CFSection
+    .section CreateProcFirstGenerationEndingAndWaitSection
 
       .al
       .xl
@@ -1253,5 +1253,5 @@
         ; Unused: 11028 zero bytes.
         .fill 11028, $00
 
-    .endsection Unsorted8294CFSection
+    .endsection CreateProcFirstGenerationEndingAndWaitSection
 

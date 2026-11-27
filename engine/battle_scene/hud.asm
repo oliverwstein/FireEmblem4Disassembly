@@ -5,7 +5,7 @@
 ; type 2 and the white fade, and the HUD's shake on a critical.
 
 
-    .section Unsorted95938CSection
+    .section BattleSceneUpdateHP2Section
 
       .al
       .xl
@@ -309,10 +309,10 @@
 
         ; 95/94F8
 
-    .endsection Unsorted95938CSection
+    .endsection BattleSceneUpdateHP2Section
 
 
-    .section Unsorted9594F8Section
+    .section BattleSceneDrawHP1Section
 
       .al
       .xl
@@ -479,10 +479,10 @@
 
         ; 95/95CA
 
-    .endsection Unsorted9594F8Section
+    .endsection BattleSceneDrawHP1Section
 
 
-    .section Unsorted9595CASection
+    .section BattleSceneDrawStatSection
 
       .al
       .xl
@@ -585,7 +585,7 @@
 
         ; 95/9650
 
-    .endsection Unsorted9595CASection
+    .endsection BattleSceneDrawStatSection
 
 
     .section Unreferenced959650Section
@@ -645,7 +645,7 @@
         ; 95/968E
 
     .endsection Unreferenced959650Section
-    .section Unsorted95968ESection
+    .section BattleSceneDrawTallNumberSection
 
       .al
       .xl
@@ -933,10 +933,10 @@
 
         ; 95/97FA
 
-    .endsection Unsorted95968ESection
+    .endsection BattleSceneDrawTallNumberSection
 
 
-    .section Unsorted9597FASection
+    .section BattleSceneDrawHPBarSection
 
       .al
       .xl
@@ -1050,10 +1050,10 @@
 
         ; 95/9890
 
-    .endsection Unsorted9597FASection
+    .endsection BattleSceneDrawHPBarSection
 
 
-    .section Table959890Section
+    .section BattleSceneHPBarTilesSection
 
       .al
       .xl
@@ -1066,10 +1066,10 @@
 
         ; 95/9894
 
-    .endsection Table959890Section
+    .endsection BattleSceneHPBarTilesSection
 
 
-    .section Unsorted959895Section
+    .section BattleSceneDrawStatsSection
 
       .al
       .xl
@@ -1141,10 +1141,10 @@
 
         ; 95/98E7
 
-    .endsection Unsorted959895Section
+    .endsection BattleSceneDrawStatsSection
 
 
-    .section Unsorted9598E7Section
+    .section BattleSceneQueueHPUploadSection
 
       .al
       .xl
@@ -1177,10 +1177,10 @@
 
         ; 95/9902
 
-    .endsection Unsorted9598E7Section
+    .endsection BattleSceneQueueHPUploadSection
 
 
-    .section Unsorted959902Section
+    .section BattleSceneLoadHUDSection
 
       .al
       .xl
@@ -1285,10 +1285,10 @@
 
         ; 95/99E7
 
-    .endsection Unsorted959902Section
+    .endsection BattleSceneLoadHUDSection
 
 
-    .section Unsorted9599E7Section
+    .section BattleSceneSetHUDColorsSection
 
       .al
       .xl
@@ -1492,10 +1492,10 @@
 
         ; 95/9B49
 
-    .endsection Unsorted9599E7Section
+    .endsection BattleSceneSetHUDColorsSection
 
 
-    .section Unsorted959B49Section
+    .section BattleSceneBlankMissingCombatantSection
 
       .al
       .xl
@@ -1561,10 +1561,10 @@
 
         ; 95/9B84
 
-    .endsection Unsorted959B49Section
+    .endsection BattleSceneBlankMissingCombatantSection
 
 
-    .section Unsorted959B84Section
+    .section BattleSceneSetHUDColors1Section
 
       .al
       .xl
@@ -1626,10 +1626,10 @@
 
         ; 95/9BC1
 
-    .endsection Unsorted959B84Section
+    .endsection BattleSceneSetHUDColors1Section
 
 
-    .section Unsorted959BC1Section
+    .section BattleSceneSetHUDColors2Section
 
       .al
       .xl
@@ -1689,7 +1689,7 @@
 
         ; 95/9BFE
 
-    .endsection Unsorted959BC1Section
+    .endsection BattleSceneSetHUDColors2Section
 
 
     .section Unreferenced959BFESection
@@ -1723,7 +1723,7 @@
         ; 95/9C14
 
     .endsection Unreferenced959BFESection
-    .section Unsorted959C3ESection
+    .section BattleSceneDivideSection
 
       .al
       .xl
@@ -1766,10 +1766,10 @@
 
         ; 95/9C64
 
-    .endsection Unsorted959C3ESection
+    .endsection BattleSceneDivideSection
 
 
-    .section Unsorted9680C2Section
+    .section BattleSceneLoadNamesSection
 
       .al
       .xl
@@ -3074,7 +3074,7 @@
 
         ; 96/87B3
 
-    .endsection Unsorted9680C2Section
+    .endsection BattleSceneLoadNamesSection
 
 
     .section Unreferenced9687B3Section
@@ -3146,7 +3146,7 @@
         ; 96/881F
 
     .endsection Unreferenced9687B3Section
-    .section Unsorted969398Section
+    .section BattleSceneStartStatGaugeSection
 
       .al
       .xl
@@ -3221,10 +3221,10 @@
 
         ; 96/941C
 
-    .endsection Unsorted969398Section
+    .endsection BattleSceneStartStatGaugeSection
 
 
-    .section Unsorted96994BSection
+    .section BattleSceneClearMagicSwordFlagsSection
 
       .al
       .xl
@@ -3258,7 +3258,7 @@
 
         ; 96/9964
 
-    .endsection Unsorted96994BSection
+    .endsection BattleSceneClearMagicSwordFlagsSection
 
 
     .section Unreferenced969964Section
@@ -3400,7 +3400,7 @@
         ; 96/99DD
 
     .endsection Unreferenced969964Section
-    .section Unsorted9699DDSection
+    .section BattleSceneRecolorHUDForType2Section
 
       .al
       .xl
@@ -3718,10 +3718,10 @@
 
         ; 96/9BE3
 
-    .endsection Unsorted9699DDSection
+    .endsection BattleSceneRecolorHUDForType2Section
 
 
-    .section Unsorted969C63Section
+    .section BattleSceneDarkenColorSection
 
       .al
       .xl
@@ -4130,10 +4130,10 @@
 
         ; 96/9EF9
 
-    .endsection Unsorted969C63Section
+    .endsection BattleSceneDarkenColorSection
 
 
-    .section Unsorted969EF9Section
+    .section BattleSceneStopHUDShakeSection
 
       .al
       .xl
@@ -4241,6 +4241,6 @@
 
         ; 96/9F7D
 
-    .endsection Unsorted969EF9Section
+    .endsection BattleSceneStopHUDShakeSection
 
 

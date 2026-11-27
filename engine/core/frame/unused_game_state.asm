@@ -1,7 +1,7 @@
 ; Unused screen (BG mode $09 setup, game states $16/$17), reached by nothing.
 
 
-    .section Unsorted80C162Section
+    .section RunVBlankWithoutSoundSection
 
       .al
       .xl
@@ -39,10 +39,10 @@
 
         ; 80/C1A0
 
-    .endsection Unsorted80C162Section
+    .endsection RunVBlankWithoutSoundSection
 
 
-    .section Unsorted80C1A0Section
+    .section UnusedScreenSetupSection
 
       .al
       .xl
@@ -72,7 +72,7 @@
 
         ; 80/C1BA
 
-    .endsection Unsorted80C1A0Section
+    .endsection UnusedScreenSetupSection
 
 
     .section Unreferenced80C1BASection
@@ -104,7 +104,7 @@
         ; 80/C1CA
 
     .endsection Unreferenced80C1BASection
-    .section Unsorted80C1CASection
+    .section UnusedScreenStepSection
 
       .al
       .xl
@@ -124,10 +124,10 @@
 
         ; 80/C1CB
 
-    .endsection Unsorted80C1CASection
+    .endsection UnusedScreenStepSection
 
 
-    .section Unsorted80C39ASection
+    .section OpenUnusedScreenSection
 
       .as
       .xs
@@ -171,6 +171,6 @@
 
         ; 80/C3DD
 
-    .endsection Unsorted80C39ASection
+    .endsection OpenUnusedScreenSection
 
 

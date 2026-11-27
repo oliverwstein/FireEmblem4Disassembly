@@ -973,7 +973,7 @@
     .endsection FillItemDurabilityDataSection
 
 
-    .section Unsorted87FD09Section
+    .section GatherUnitItemsSection
 
       .al
       .xl
@@ -1108,7 +1108,7 @@
 
         ; 87/FDD9
 
-    .endsection Unsorted87FD09Section
+    .endsection GatherUnitItemsSection
 
 
     .section SaveFileSection
@@ -3940,7 +3940,7 @@
     .endsection SaveSlotSection
 
 
-    .section Unsorted87F501Section
+    .section GetCharacterUnitTypeSection
 
       .al
       .xl
@@ -3970,10 +3970,10 @@
 
         ; 87/F515
 
-    .endsection Unsorted87F501Section
+    .endsection GetCharacterUnitTypeSection
 
 
-    .section Unsorted87F515Section
+    .section CreateUnitFromBuffersSection
 
       .al
       .xl
@@ -4028,10 +4028,10 @@
 
         ; 87/F559
 
-    .endsection Unsorted87F515Section
+    .endsection CreateUnitFromBuffersSection
 
 
-    .section Unsorted87F55ASection
+    .section CreateUnitFromBuffersByType87F55ASection
 
       .al
       .xl
@@ -4061,10 +4061,10 @@
 
         ; 87/F574
 
-    .endsection Unsorted87F55ASection
+    .endsection CreateUnitFromBuffersByType87F55ASection
 
 
-    .section Unsorted87F9F6Section
+    .section ExpandStaticDynamicUnitBuffer1UnitStatesSection
 
       .al
       .xl
@@ -4104,10 +4104,10 @@
 
         ; 87/FA1E
 
-    .endsection Unsorted87F9F6Section
+    .endsection ExpandStaticDynamicUnitBuffer1UnitStatesSection
 
 
-    .section Unsorted87FA57Section
+    .section ExpandHolyEnemyUnitBuffer1UnitStatesSection
 
       .al
       .xl
@@ -4151,10 +4151,10 @@
 
         ; 87/FA83
 
-    .endsection Unsorted87FA57Section
+    .endsection ExpandHolyEnemyUnitBuffer1UnitStatesSection
 
 
-    .section Unsorted87FABCSection
+    .section RestoreUnitDeploymentSection
 
       .al
       .xl
@@ -4265,10 +4265,10 @@
 
         ; 87/FB5E
 
-    .endsection Unsorted87FABCSection
+    .endsection RestoreUnitDeploymentSection
 
 
-    .section Unsorted87FB5ESection
+    .section PrepareFactionUnitListsSection
 
       .al
       .xl
@@ -4327,10 +4327,10 @@
 
         ; 87/FB94
 
-    .endsection Unsorted87FB5ESection
+    .endsection PrepareFactionUnitListsSection
 
 
-    .section Unsorted87FB94Section
+    .section AddUnitToFactionSection
 
       .al
       .xl
@@ -4385,10 +4385,10 @@
 
         ; 87/FBC5
 
-    .endsection Unsorted87FB94Section
+    .endsection AddUnitToFactionSection
 
 
-    .section Unsorted80F1D5Section
+    .section SetupSaveSelectMenuSection
 
       .al
       .xl
@@ -4437,10 +4437,10 @@
 
         ; 80/F222
 
-    .endsection Unsorted80F1D5Section
+    .endsection SetupSaveSelectMenuSection
 
 
-    .section Unsorted80F222Section
+    .section OpenMapSaveMenuSection
 
       .al
       .xl
@@ -4533,10 +4533,10 @@
 
         ; 80/F2BE
 
-    .endsection Unsorted80F222Section
+    .endsection OpenMapSaveMenuSection
 
 
-    .section Unsorted80F542Section
+    .section RunSaveMenuMainLoopSection
 
       .al
       .xl
@@ -4710,10 +4710,10 @@
 
         ; 80/F628
 
-    .endsection Unsorted80F542Section
+    .endsection RunSaveMenuMainLoopSection
 
 
-    .section Unsorted8486A0Section
+    .section GetCharacterWinCountSection
 
       .al
       .xl
@@ -4832,6 +4832,6 @@
 
         ; 84/8726
 
-    .endsection Unsorted8486A0Section
+    .endsection GetCharacterWinCountSection
 
 

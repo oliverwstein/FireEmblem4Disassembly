@@ -7,7 +7,7 @@
 ; Also: the castle's song (aCastleSongs) and the courtyard unit sprites. Bank $8A.
 
 
-    .section Unsorted8A8208Section
+    .section CastleCourtyardStepSection
 
       .al
       .xl
@@ -241,7 +241,7 @@
 
         ; 8A/8387
 
-    .endsection Unsorted8A8208Section
+    .endsection CastleCourtyardStepSection
 
 
     .section Data8A8387Section
@@ -268,7 +268,7 @@
     .endsection Data8A8387Section
 
 
-    .section Unsorted8A8393Section
+    .section CastleGridMoveCursorSection
 
       .al
       .xl
@@ -421,7 +421,7 @@
 
         ; 8A/847E
 
-    .endsection Unsorted8A8393Section
+    .endsection CastleGridMoveCursorSection
 
 
     .section Data8A847ESection
@@ -448,7 +448,7 @@
     .endsection Data8A847ESection
 
 
-    .section Unsorted8A8496Section
+    .section CastleDrawInfoLineSection
 
       .al
       .xl
@@ -601,10 +601,10 @@
 
         ; 8A/85EF
 
-    .endsection Unsorted8A8496Section
+    .endsection CastleDrawInfoLineSection
 
 
-    .section Table8A85EFSection
+    .section CastleInfoLineBlankTextSection
 
       .al
       .xl
@@ -645,10 +645,10 @@
         .enc "none"
 
 
-    .endsection Table8A85EFSection
+    .endsection CastleInfoLineBlankTextSection
 
 
-    .section Unsorted8A8643Section
+    .section CastleGridMoveToTargetSection
 
       .al
       .xl
@@ -710,10 +710,10 @@
         .word $0000, $0004, $0008, $000C, $0010, $0014, $0003, $0007
         .word $000B, $000F, $0013, $0017
 
-    .endsection Unsorted8A8643Section
+    .endsection CastleGridMoveToTargetSection
 
 
-    .section Unsorted8A869ASection
+    .section CastleGridFindPreviousTargetSection
 
       .al
       .xl
@@ -790,10 +790,10 @@
 
         ; 8A/870D
 
-    .endsection Unsorted8A869ASection
+    .endsection CastleGridFindPreviousTargetSection
 
 
-    .section Unsorted8A870DSection
+    .section CastleGridFindNextTargetSection
 
       .al
       .xl
@@ -871,10 +871,10 @@
 
         ; 8A/8783
 
-    .endsection Unsorted8A870DSection
+    .endsection CastleGridFindNextTargetSection
 
 
-    .section Unsorted8A8783Section
+    .section CastleUnitCommandMenuInputSection
 
       .al
       .xl
@@ -925,10 +925,10 @@
 
         ; 8A/87B8
 
-    .endsection Unsorted8A8783Section
+    .endsection CastleUnitCommandMenuInputSection
 
 
-    .section Unsorted8A87B8Section
+    .section CastleDrawUnitCommandNameSection
 
       .al
       .xl
@@ -1193,10 +1193,10 @@
 
         ; 8A/88E0
 
-    .endsection Unsorted8A87B8Section
+    .endsection CastleDrawUnitCommandNameSection
 
 
-    .section Table8A88E0Section
+    .section CastleUnitCommandSortieTextSection
 
       .al
       .xl
@@ -1258,10 +1258,10 @@
         .enc "none"
 
 
-    .endsection Table8A88E0Section
+    .endsection CastleUnitCommandSortieTextSection
 
 
-    .section Unsorted8A8980Section
+    .section CastleTownFacilityInputSection
 
       .al
       .xl
@@ -1893,10 +1893,10 @@
 
         ; 8A/8E08
 
-    .endsection Unsorted8A8980Section
+    .endsection CastleTownFacilityInputSection
 
 
-    .section Unsorted8A8E08Section
+    .section CastleLoadCourtyardScreenSection
 
       .al
       .xl
@@ -2054,10 +2054,15 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
-    .endsection Unsorted8A8E08Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8A8F58 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/8F58
+      aDecompressionDMAEntry8A8F60 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 8A/8F60
+
+    .endsection CastleLoadCourtyardScreenSection
 
 
-    .section Unsorted8A8F68Section
+    .section CastleRestoreCourtyardPalettesSection
 
       .al
       .xl
@@ -2099,10 +2104,10 @@
 
         ; 8A/8F8F
 
-    .endsection Unsorted8A8F68Section
+    .endsection CastleRestoreCourtyardPalettesSection
 
 
-    .section Unsorted8A8F8FSection
+    .section CastleRunUnitCommandSection
 
       .al
       .xl
@@ -2370,10 +2375,10 @@
 
         ; 8A/9158
 
-    .endsection Unsorted8A8F8FSection
+    .endsection CastleRunUnitCommandSection
 
 
-    .section Table8A9158Section
+    .section CastleStaffBlankTextSection
 
       .al
       .xl
@@ -2386,10 +2391,10 @@
         .enc "none"
 
 
-    .endsection Table8A9158Section
+    .endsection CastleStaffBlankTextSection
 
 
-    .section Unsorted8A918ASection
+    .section CastleUnitCommandDanceSection
 
       .al
       .xl
@@ -2436,10 +2441,10 @@
 
         ; 8A/91D7
 
-    .endsection Unsorted8A918ASection
+    .endsection CastleUnitCommandDanceSection
 
 
-    .section Table8A91D7Section
+    .section CastleDanceBlankTextSection
 
       .al
       .xl
@@ -2452,10 +2457,10 @@
         .enc "none"
 
 
-    .endsection Table8A91D7Section
+    .endsection CastleDanceBlankTextSection
 
 
-    .section Unsorted8A9209Section
+    .section CastleUnitCommandGiveSection
 
       .al
       .xl
@@ -2508,10 +2513,10 @@
 
         ; 8A/9269
 
-    .endsection Unsorted8A9209Section
+    .endsection CastleUnitCommandGiveSection
 
 
-    .section Table8A9269Section
+    .section CastleGiveBlankTextSection
 
       .al
       .xl
@@ -2524,10 +2529,10 @@
         .enc "none"
 
 
-    .endsection Table8A9269Section
+    .endsection CastleGiveBlankTextSection
 
 
-    .section Unsorted8A929BSection
+    .section CastleLoadWindowPaletteSection
 
       .al
       .xl
@@ -2553,10 +2558,10 @@
 
         ; 8A/92AA
 
-    .endsection Unsorted8A929BSection
+    .endsection CastleLoadWindowPaletteSection
 
 
-    .section Unsorted8A92AASection
+    .section CastleStartStaffTargetSelectionSection
 
       .al
       .xl
@@ -2581,10 +2586,10 @@
 
         ; 8A/92BB
 
-    .endsection Unsorted8A92AASection
+    .endsection CastleStartStaffTargetSelectionSection
 
 
-    .section Unsorted8A92BBSection
+    .section CastleUseStaffFromMapSection
 
       .al
       .xl
@@ -2614,10 +2619,10 @@
 
         ; 8A/92D6
 
-    .endsection Unsorted8A92BBSection
+    .endsection CastleUseStaffFromMapSection
 
 
-    .section Unsorted8A92D6Section
+    .section CastleUseStaffFromMapRaisedSection
 
       .al
       .xl
@@ -2692,10 +2697,10 @@
 
         ; 8A/9342
 
-    .endsection Unsorted8A92D6Section
+    .endsection CastleUseStaffFromMapRaisedSection
 
 
-    .section Unsorted8A9342Section
+    .section CastleRefreshUnitsAfterMapActionSection
 
       .al
       .xl
@@ -2758,10 +2763,10 @@
 
         ; 8A/9389
 
-    .endsection Unsorted8A9342Section
+    .endsection CastleRefreshUnitsAfterMapActionSection
 
 
-    .section Unsorted8A9389Section
+    .section CastleEnterFacilitySection
 
       .al
       .xl
@@ -2894,10 +2899,10 @@
 
         ; 8A/945E
 
-    .endsection Unsorted8A9389Section
+    .endsection CastleEnterFacilitySection
 
 
-    .section Table8A945ESection
+    .section CastleTownFacilityBitsSection
 
       .al
       .xl
@@ -2910,10 +2915,10 @@
 
         ; 8A/946A
 
-    .endsection Table8A945ESection
+    .endsection CastleTownFacilityBitsSection
 
 
-    .section Unsorted8A97C2Section
+    .section CastleOpenTownSection
 
       .al
       .xl
@@ -2995,10 +3000,10 @@
 
         ; 8A/9858
 
-    .endsection Unsorted8A97C2Section
+    .endsection CastleOpenTownSection
 
 
-    .section Unsorted8A9858Section
+    .section CastleBlankMissingFacilitiesSection
 
       .al
       .xl
@@ -3054,10 +3059,10 @@
 
         ; 8A/9899
 
-    .endsection Unsorted8A9858Section
+    .endsection CastleBlankMissingFacilitiesSection
 
 
-    .section Table8A9899Section
+    .section CastleTownFacilityBlankTextSection
 
       .al
       .xl
@@ -3073,10 +3078,10 @@
         .enc "none"
 
 
-    .endsection Table8A9899Section
+    .endsection CastleTownFacilityBlankTextSection
 
 
-    .section Table8A98ACSection
+    .section CastleTownFacilityButtonBitsSection
 
       .al
       .xl
@@ -3089,10 +3094,10 @@
 
         ; 8A/98B8
 
-    .endsection Table8A98ACSection
+    .endsection CastleTownFacilityButtonBitsSection
 
 
-    .section Table8A98B8Section
+    .section CastleTownFacilityButtonColumnSection
 
       .al
       .xl
@@ -3105,7 +3110,7 @@
 
         ; 8A/98C4
 
-    .endsection Table8A98B8Section
+    .endsection CastleTownFacilityButtonColumnSection
 
 
     .section Data8A98C4Section
@@ -3124,7 +3129,7 @@
     .endsection Data8A98C4Section
 
 
-    .section Unsorted8A98D0Section
+    .section CastleDrawCourtyardUnitSpritesSection
 
       .al
       .xl
@@ -3279,10 +3284,10 @@
 
         ; 8A/99DB
 
-    .endsection Unsorted8A98D0Section
+    .endsection CastleDrawCourtyardUnitSpritesSection
 
 
-    .section Table8A99DBSection
+    .section CastleGridCursorXSection
 
       .al
       .xl
@@ -3297,10 +3302,10 @@
 
         ; 8A/9A0B
 
-    .endsection Table8A99DBSection
+    .endsection CastleGridCursorXSection
 
 
-    .section Table8A9A0BSection
+    .section CastleGridCursorYSection
 
       .al
       .xl
@@ -3326,10 +3331,10 @@
 
         ; 8A/9A56
 
-    .endsection Table8A9A0BSection
+    .endsection CastleGridCursorYSection
 
 
-    .section Unsorted8A9A56Section
+    .section CastleBuildCourtyardTablesSection
 
       .al
       .xl
@@ -3407,10 +3412,10 @@
 
         ; 8A/9AD4
 
-    .endsection Unsorted8A9A56Section
+    .endsection CastleBuildCourtyardTablesSection
 
 
-    .section Table8A9AD4Section
+    .section CastleCourtyardSpotXSection
 
       .al
       .xl
@@ -3425,10 +3430,10 @@
 
         ; 8A/9B04
 
-    .endsection Table8A9AD4Section
+    .endsection CastleCourtyardSpotXSection
 
 
-    .section Table8A9B04Section
+    .section CastleCourtyardSpotYSection
 
       .al
       .xl
@@ -3449,10 +3454,10 @@
 
         ; 8A/9B94
 
-    .endsection Table8A9B04Section
+    .endsection CastleCourtyardSpotYSection
 
 
-    .section Table8A9B94Section
+    .section CastleGridCharactersGen1Section
 
       .al
       .xl
@@ -3467,10 +3472,10 @@
 
         ; 8A/9BC4
 
-    .endsection Table8A9B94Section
+    .endsection CastleGridCharactersGen1Section
 
 
-    .section Table8A9BC4Section
+    .section CastleGridCharactersGen2Section
 
       .al
       .xl
@@ -3485,10 +3490,10 @@
 
         ; 8A/9BF4
 
-    .endsection Table8A9BC4Section
+    .endsection CastleGridCharactersGen2Section
 
 
-    .section Table8A9BF4Section
+    .section CastleCourtyardSpotsGen1Section
 
       .al
       .xl
@@ -3503,10 +3508,10 @@
 
         ; 8A/9C24
 
-    .endsection Table8A9BF4Section
+    .endsection CastleCourtyardSpotsGen1Section
 
 
-    .section Table8A9C24Section
+    .section CastleCourtyardSpotsGen2Section
 
       .al
       .xl
@@ -3525,10 +3530,10 @@
 
         ; 8A/9C61
 
-    .endsection Table8A9C24Section
+    .endsection CastleCourtyardSpotsGen2Section
 
 
-    .section Unsorted8A9C61Section
+    .section CastleCopyTownHDMATableSection
 
       .al
       .xl
@@ -3610,10 +3615,10 @@
         .byte $08, $EA, $08, $EB, $08, $ED, $09, $EE, $00, $EF
         .word 0
 
-    .endsection Unsorted8A9C61Section
+    .endsection CastleCopyTownHDMATableSection
 
 
-    .section Unsorted8A9D22Section
+    .section CastleFadeSongIfChangingSection
 
       .al
       .xl
@@ -3643,10 +3648,10 @@
 
         ; 8A/9D39
 
-    .endsection Unsorted8A9D22Section
+    .endsection CastleFadeSongIfChangingSection
 
 
-    .section Unsorted8A9D39Section
+    .section PlayCastleSongSection
 
       .al
       .xl
@@ -3699,7 +3704,7 @@
 
         ; 8A/9D79
 
-    .endsection Unsorted8A9D39Section
+    .endsection PlayCastleSongSection
 
 
     .section Data8A9D79Section

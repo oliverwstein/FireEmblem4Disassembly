@@ -4,7 +4,7 @@
 ; scene. Banks $84 and $8A.
 
 
-    .section Unsorted84ABB0Section
+    .section StartCastleClassChangeSection
 
       .al
       .xl
@@ -70,10 +70,10 @@
 
         ; 84/AC24
 
-    .endsection Unsorted84ABB0Section
+    .endsection StartCastleClassChangeSection
 
 
-    .section Unsorted84AC24Section
+    .section ClassChangeSetUpActionStructSection
 
       .al
       .xl
@@ -181,8 +181,8 @@
 
         ; 84/ACE7
 
-    .endsection Unsorted84AC24Section
-    .section Unsorted8AECEFSection
+    .endsection ClassChangeSetUpActionStructSection
+    .section ClassChangeScreenSetupSection
 
       .al
       .xl
@@ -378,10 +378,18 @@
 
         .word $001A, $0017, $001C, $001A
 
-    .endsection Unsorted8AECEFSection
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/EE89
+      aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry g4bppcClassChangeBGTiles, $1000, $0000 ; 8A/EE91
+      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundClassChange, $2000, $1000 ; 8A/EE99
+      aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry acClassChangeBGTilemap, $0800, $2800 ; 8A/EEA1
+      aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/EEA9
+
+    .endsection ClassChangeScreenSetupSection
 
 
-    .section Unsorted8AEEB1Section
+    .section ClassChangeScreenStepSection
 
       .al
       .xl
@@ -435,10 +443,10 @@
 
         ; 8A/EEF2
 
-    .endsection Unsorted8AEEB1Section
+    .endsection ClassChangeScreenStepSection
 
 
-    .section Table8AEEF2Section
+    .section ClassChangeStepHandlersSection
 
       .al
       .xl
@@ -453,10 +461,10 @@
         .word <>rsClassChangeFadeOutAndPromote
         .word <>rsClassChangeLeave
 
-    .endsection Table8AEEF2Section
+    .endsection ClassChangeStepHandlersSection
 
 
-    .section Unsorted8AEEFESection
+    .section ClassChangeGreetSection
 
       .al
       .xl
@@ -650,10 +658,10 @@
         ; Unreferenced: three bytes after an rts.
         .byte $58, $88, $B8
 
-    .endsection Unsorted8AEEFESection
+    .endsection ClassChangeGreetSection
 
 
-    .section Unsorted8AF048Section
+    .section ClassChangeConfirmSection
 
       .al
       .xl
@@ -717,10 +725,10 @@
 
         ; 8A/F0B4
 
-    .endsection Unsorted8AF048Section
+    .endsection ClassChangeConfirmSection
 
 
-    .section Unsorted8AF0B4Section
+    .section ClassChangeFadeOutAndPromoteSection
 
       .al
       .xl
@@ -761,10 +769,10 @@
 
         ; 8A/F0D7
 
-    .endsection Unsorted8AF0B4Section
+    .endsection ClassChangeFadeOutAndPromoteSection
 
 
-    .section Unsorted8AF0D7Section
+    .section ClassChangeLeaveSection
 
       .al
       .xl
@@ -794,4 +802,4 @@
 
         ; 8A/F0F2
 
-    .endsection Unsorted8AF0D7Section
+    .endsection ClassChangeLeaveSection

@@ -508,7 +508,7 @@
 
     .endsection FadeFromToColorByStepSection
 
-    .section Unsorted80A29ASection
+    .section FadeOutCOLDATAByTimerSection
 
       .al
       .xs
@@ -638,4 +638,4 @@
 
         ; 80/A328
 
-    .endsection Unsorted80A29ASection
+    .endsection FadeOutCOLDATAByTimerSection

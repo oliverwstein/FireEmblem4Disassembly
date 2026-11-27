@@ -2232,7 +2232,7 @@
     .endsection AITargetMapSection
 
 
-    .section Unsorted86AD5ESection
+    .section TraceTargetPathToReachableTileSection
 
       .al
       .xl
@@ -2387,10 +2387,10 @@
 
         ; 86/AE36
 
-    .endsection Unsorted86AD5ESection
+    .endsection TraceTargetPathToReachableTileSection
 
 
-    .section Table86AE36Section
+    .section TargetPathTileOffsetsSection
 
       .al
       .xl
@@ -2403,10 +2403,10 @@
 
         ; 86/AE3E
 
-    .endsection Table86AE36Section
+    .endsection TargetPathTileOffsetsSection
 
 
-    .section Unsorted86C293Section
+    .section FillTargetMapWithVillagesSection
 
       .al
       .xl
@@ -2510,10 +2510,10 @@
 
         ; 86/C333
 
-    .endsection Unsorted86C293Section
+    .endsection FillTargetMapWithVillagesSection
 
 
-    .section Unsorted87D65ASection
+    .section AIScoreTargetsNearLeaderSection
 
       .al
       .xl
@@ -2628,6 +2628,6 @@
 
         ; 87/D711
 
-    .endsection Unsorted87D65ASection
+    .endsection AIScoreTargetsNearLeaderSection
 
 

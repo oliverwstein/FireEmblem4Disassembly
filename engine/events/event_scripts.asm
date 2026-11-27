@@ -8,7 +8,7 @@
 ; commands create, use.
 
 
-    .section Table86C69ASection
+    .section MapChangeBitmasksSection
 
       .al
       .xl
@@ -21,7 +21,7 @@
 
         ; 86/C6A2
 
-    .endsection Table86C69ASection
+    .endsection MapChangeBitmasksSection
 
 
     .section EventScriptEngineSection
@@ -4667,7 +4667,7 @@
     .endsection EventCommandSection
 
 
-    .section Unsorted80B63FSection
+    .section EventNoOp80B63FSection
 
       .al
       .xl
@@ -4693,10 +4693,10 @@
 
         rts
 
-    .endsection Unsorted80B63FSection
+    .endsection EventNoOp80B63FSection
 
 
-    .section Unsorted80C32CSection
+    .section SetMapBGModeAndLayerPositionsSection
 
       .al
       .xl
@@ -4735,10 +4735,10 @@
 
         .databank 0
 
-    .endsection Unsorted80C32CSection
+    .endsection SetMapBGModeAndLayerPositionsSection
 
 
-    .section Unsorted80C35DSection
+    .section SetMode3LayerPositionsSection
 
       .al
       .xl
@@ -4784,10 +4784,10 @@
 
         ; 80/C39A
 
-    .endsection Unsorted80C35DSection
+    .endsection SetMode3LayerPositionsSection
 
 
-    .section Unsorted828431Section
+    .section ProcEventWaitMapSpritesHaltingSection
 
       .al
       .xl
@@ -4844,10 +4844,10 @@
 
         PROC_HALT
 
-    .endsection Unsorted828431Section
+    .endsection ProcEventWaitMapSpritesHaltingSection
 
 
-    .section Unsorted828A30Section
+    .section ProcEventWaitFadeToMapSection
 
       .al
       .xl
@@ -5146,7 +5146,7 @@
 
       ; 82/8B2B
 
-    .endsection Unsorted828A30Section
+    .endsection ProcEventWaitFadeToMapSection
 
 
     .section ProcScript828B61Section
@@ -5164,7 +5164,7 @@
     .endsection ProcScript828B61Section
 
 
-    .section Unsorted828B6BSection
+    .section ProcEventBerserkCastInitSection
 
       .al
       .xl
@@ -5217,7 +5217,7 @@
 
         ; 82/8BA7
 
-    .endsection Unsorted828B6BSection
+    .endsection ProcEventBerserkCastInitSection
 
 
     .section ProcScript828BA7Section
@@ -5235,7 +5235,7 @@
     .endsection ProcScript828BA7Section
 
 
-    .section Unsorted828BEASection
+    .section ProcEventPaletteSwapSection
 
       .as
       .xl
@@ -5245,10 +5245,10 @@
         .structProcInfo "CC", rlProcEventPaletteSwapInit, rlProcEventPaletteSwapCycle, aProcEventPaletteSwapCode
         .word 0
 
-    .endsection Unsorted828BEASection
+    .endsection ProcEventPaletteSwapSection
 
 
-    .section Unsorted828BF4Section
+    .section ProcEventPaletteSwapInitSection
 
       .al
       .xl
@@ -5530,10 +5530,10 @@
 
         PROC_HALT
 
-    .endsection Unsorted828BF4Section
+    .endsection ProcEventPaletteSwapInitSection
 
 
-    .section Unsorted828D52Section
+    .section ProcEventSmoothMapScrollSection
 
       .al
       .xl
@@ -5801,10 +5801,10 @@
 
         PROC_HALT
 
-    .endsection Unsorted828D52Section
+    .endsection ProcEventSmoothMapScrollSection
 
 
-    .section Unsorted828E61Section
+    .section InitEventSmoothMapScrollStepSection
 
       .as
       .xl
@@ -5879,10 +5879,10 @@
 
         .databank 0
 
-    .endsection Unsorted828E61Section
+    .endsection InitEventSmoothMapScrollStepSection
 
 
-    .section Unsorted828ECBSection
+    .section ProcEventShowEmptyMapSection
 
       .al
       .xl
@@ -5983,10 +5983,10 @@
 
         ; 82/8F3F
 
-    .endsection Unsorted828ECBSection
+    .endsection ProcEventShowEmptyMapSection
 
 
-    .section Unsorted829245Section
+    .section ProcEventWaitButtonPressSection
 
       .al
       .xl
@@ -6119,10 +6119,10 @@
 
         .databank 0
 
-    .endsection Unsorted829245Section
+    .endsection ProcEventWaitButtonPressSection
 
 
-    .section Unsorted8292A9Section
+    .section ProcEventNoOpSection
 
       .al
       .xl
@@ -6132,10 +6132,10 @@
         .structProcInfo "NP", rlProcEventNoOpInit, rlProcEventNoOpInit, aProcEventNoOpCode
         .word 0
 
-    .endsection Unsorted8292A9Section
+    .endsection ProcEventNoOpSection
 
 
-    .section Unsorted8292B3Section
+    .section ProcEventNoOpInitSection
 
       .al
       .xl
@@ -6259,10 +6259,10 @@
 
         .databank 0
 
-    .endsection Unsorted8292B3Section
+    .endsection ProcEventNoOpInitSection
 
 
-    .section Unsorted82932CSection
+    .section EventScriptLoopStepSection
 
       .al
       .xl
@@ -6329,10 +6329,10 @@
 
         .databank 0
 
-    .endsection Unsorted82932CSection
+    .endsection EventScriptLoopStepSection
 
 
-    .section Unsorted829391Section
+    .section EventFindFreeProcSlotSection
 
       .al
       .xl
@@ -6510,7 +6510,7 @@
 
         ; 82/9469
 
-    .endsection Unsorted829391Section
+    .endsection EventFindFreeProcSlotSection
 
 
     .section Unreferenced829469Section
@@ -6540,7 +6540,7 @@
         ; 82/9478
 
     .endsection Unreferenced829469Section
-    .section Unsorted858728Section
+    .section RunMapMenuUploadIfEnabledSection
 
       .al
       .xl
@@ -6584,10 +6584,10 @@
 
         ; 85/8751
 
-    .endsection Unsorted858728Section
+    .endsection RunMapMenuUploadIfEnabledSection
 
 
-    .section Unsorted858D18Section
+    .section UploadDirtyMapMenuRowsSection
 
       .al
       .xl
@@ -6650,10 +6650,10 @@
 
         ; 85/8D62
 
-    .endsection Unsorted858D18Section
+    .endsection UploadDirtyMapMenuRowsSection
 
 
-    .section Unsorted86C629Section
+    .section ApplyAllActiveMapChangesSection
 
       .al
       .xl
@@ -6768,10 +6768,10 @@
 
         ; 86/C69A
 
-    .endsection Unsorted86C629Section
+    .endsection ApplyAllActiveMapChangesSection
 
 
-    .section Unsorted8B91F6Section
+    .section InitWorldMapDialogueSlotSection
 
       .al
       .xl
@@ -7123,10 +7123,10 @@
 
         ; 8B/9449
 
-    .endsection Unsorted8B91F6Section
+    .endsection InitWorldMapDialogueSlotSection
 
 
-    .section Unsorted91A7BCSection
+    .section FillAndUploadBG3TilemapSection
 
       .al
       .xl
@@ -7164,10 +7164,10 @@
 
         .databank 0
 
-    .endsection Unsorted91A7BCSection
+    .endsection FillAndUploadBG3TilemapSection
 
 
-    .section Unsorted91A7DFSection
+    .section EnableMapMenuLayerFlagsSection
 
       .al
       .xl
@@ -7192,7 +7192,7 @@
 
         ; 91/A7EA
 
-    .endsection Unsorted91A7DFSection
+    .endsection EnableMapMenuLayerFlagsSection
 
 
     .section Unreferenced91A7EASection
@@ -7237,7 +7237,7 @@
         ; 91/A80D
 
     .endsection Unreferenced91A7EASection
-    .section Unsorted91A9BBSection
+    .section InitEventSimpleMapMenuFrameSection
 
       .al
       .xl
@@ -7315,10 +7315,10 @@
 
         ; 91/AA15
 
-    .endsection Unsorted91A9BBSection
+    .endsection InitEventSimpleMapMenuFrameSection
 
 
-    .section Unsorted9EEC95Section
+    .section StartEventBerserkMagicEffectSection
 
       .al
       .xl
@@ -7343,7 +7343,7 @@
 
         ; 9E/ECA4
 
-    .endsection Unsorted9EEC95Section
+    .endsection StartEventBerserkMagicEffectSection
 
 
     .section ProcScript9EECA4Section
@@ -7358,7 +7358,7 @@
     .endsection ProcScript9EECA4Section
 
 
-    .section Unsorted9EECACSection
+    .section ProcEventBerserkMagicEffectInitSection
 
       .al
       .xl
@@ -7437,7 +7437,7 @@
 
         ; 9E/ED31
 
-    .endsection Unsorted9EECACSection
+    .endsection ProcEventBerserkMagicEffectInitSection
 
 
     .section ProcScript9EED31Section
@@ -7476,7 +7476,7 @@
     .endsection ProcScript9EED31Section
 
 
-    .section Unsorted9EED7CSection
+    .section SetEventBerserkMagicStartSection
 
       .al
       .xl
@@ -7546,6 +7546,6 @@
 
         ; 9E/EDB5
 
-    .endsection Unsorted9EED7CSection
+    .endsection SetEventBerserkMagicStartSection
 
 

@@ -8,7 +8,7 @@
 ; the final chapter's ending event.
 
 
-    .section Unsorted8DA06ASection
+    .section EpilogueUpkeepSection
 
       .al
       .xl
@@ -101,10 +101,10 @@
 
         ; 8D/A0C6
 
-    .endsection Unsorted8DA06ASection
+    .endsection EpilogueUpkeepSection
 
 
-    .section Unsorted8DA0C6Section
+    .section EpilogueStepRoutinesSection
 
       .al
       .xl
@@ -573,10 +573,10 @@
 
         ; 8D/A288
 
-    .endsection Unsorted8DA0C6Section
+    .endsection EpilogueStepRoutinesSection
 
 
-    .section Unsorted8DA288Section
+    .section StartEpilogueSection
 
       .al
       .xl
@@ -607,10 +607,10 @@
 
         ; 8D/A2AA
 
-    .endsection Unsorted8DA288Section
+    .endsection StartEpilogueSection
 
 
-    .section Unsorted8DA372Section
+    .section EpilogueDebugButtonsUnusedSection
 
       .al
       .xl
@@ -683,10 +683,10 @@
 
         ; 8D/A3DE
 
-    .endsection Unsorted8DA372Section
+    .endsection EpilogueDebugButtonsUnusedSection
 
 
-    .section Unsorted8DAD9ESection
+    .section EpilogueDebugButtons2UnusedSection
 
       .al
       .xl
@@ -749,6 +749,6 @@
 
         ; 8D/ADFA
 
-    .endsection Unsorted8DAD9ESection
+    .endsection EpilogueDebugButtons2UnusedSection
 
 

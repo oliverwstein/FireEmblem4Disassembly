@@ -2,19 +2,23 @@
 
 Run all of these from the repository root, next to `build.asm` and `fe4.sfc`.
 
-## Build helpers
+## Build & Asset Pipeline
 
 | Tool | Purpose |
 |---|---|
+| `../build.py` | Cross-platform incremental build driver (`build`, `mod`, `coverage`, `pad`, `test`, `clean`). `./build.sh` wraps it. |
 | `c2a.py`, `process_dialogue.py` | Convert CSV tables and dialogue text to assembly (download them; see the main README). |
 | `FE4c2a.py` | Converts the character and item data tables. |
-| `gen_offsets.py` | Auto-generates the 13 1-to-1 offset tables in `data/offset/*.csv.asm` from their source CSVs, `ClassMapSpriteAssignment.asm`, and `text/menutext/*.asm`. `build.sh` runs it. |
-| `checksums.py` | Verifies or updates FE4's internal code checksums (`$80`/`$87`/`$88`/`$8F`) and SNES header checksum. `build.sh` runs it (`--verify` on build, `--update` on `mod`). |
-| `check_paths.py` | Checks that every included file exists with exactly the spelling used. `build.sh` runs it. |
-| `merge_bank.py BANK` | Removes the pins (`* =` and `.logical`) of every block in a bank of `build.asm` that starts exactly where the block before it ends, so the bank's code flows as one block. Lists the pins that stay and why (a gap not built from source, or other code between them). A free run of `$00`/`$FF` from the merged block to the bank end becomes `.fill <bank end> - *`, so the block can grow into it, and old `; 84/XXXX` end comments in the block are dropped. `--dry-run` only lists. The output does not change; run `./build.sh`. |
-| `pad_test.py` | The padding test, run as `./build.sh pad SECTION N`: builds `FE4Padded.sfc` with N bytes of `$EA` (NOP) inserted at the start of SECTION in a temporary copy, and checks that the block (the sections between that `* =` and its `.here` in `build.asm`) moved cleanly: room to grow after it (or a `.fill` to the bank end that absorbs the bytes), every label in it moved by N and none outside it, which bytes elsewhere changed (references the assembler updated), calls into the block (`jsl`/`jml`, and `jsr`/`jmp` from the same bank) from bytes not built from source, which cannot move with it (a problem if `fe4.cdl` shows they ran; matches in the lower half of a bank or past bank `$9F`, where the game keeps only data, are listed apart), long pointers into the block (low, high, bank) in unbuilt bytes in the code banks' upper halves (a problem unless listed in `NOT_POINTERS`, the matches checked by hand and found to be chance), six-digit numbers in the source that are addresses in the block (`jml $84F889`: built, but they do not move), and nothing changed in the code the game checksums. It fixes the header checksum. Hidden addresses (numbers that are really addresses) only show when you run the ROM: `open -a Mesen FE4Padded.sfc`. |
+| `gen_offsets.py` | Auto-generates the 13 1-to-1 offset tables in `data/offset/*.csv.asm` from their source CSVs, `ClassMapSpriteAssignment.asm`, and `text/menutext/*.asm`. `build.py` runs it. |
+| `palettes.py` | Builds `acSaveMenuPalettes.bin`, `acWarningScreenPalettes.bin`, and `acBattleBannerPalettes.bin` from `data/palettes/*.asm` (`bgr555()`). `build.py` runs it. |
+| `checksums.py` | Verifies or updates FE4's internal code checksums (`$80`/`$87`/`$88`/`$8F`) and SNES header checksum. `build.py` runs it (`--verify` on build, `--update` on `mod`). |
+| `check_paths.py` | Checks that every included file exists with exactly the spelling used. `build.py` runs it. |
+| `merge_bank.py BANK` | Removes the pins (`* =` and `.logical`) of every block in a bank of `build.asm` that starts exactly where the block before it ends, so the bank's code flows as one block. Lists the pins that stay and why (a gap not built from source, or other code between them). A free run of `$00`/`$FF` from the merged block to the bank end becomes `.fill <bank end> - *`, so the block can grow into it, and old `; 84/XXXX` end comments in the block are dropped. `--dry-run` only lists. The output does not change; run `python3 build.py`. |
+| `pad_test.py` | The padding test, run as `python3 build.py pad SECTION N`: builds `FE4Padded.sfc` with N bytes of `$EA` (NOP) inserted at the start of SECTION in a temporary copy, and checks that the block (the sections between that `* =` and its `.here` in `build.asm`) moved cleanly: room to grow after it (or a `.fill` to the bank end that absorbs the bytes), every label in it moved by N and none outside it, which bytes elsewhere changed (references the assembler updated), calls into the block (`jsl`/`jml`, and `jsr`/`jmp` from the same bank) from bytes not built from source, which cannot move with it (a problem if `fe4.cdl` shows they ran; matches in the lower half of a bank or past bank `$9F`, where the game keeps only data, are listed apart), long pointers into the block (low, high, bank) in unbuilt bytes in the code banks' upper halves (a problem unless listed in `NOT_POINTERS`, the matches checked by hand and found to be chance), six-digit numbers in the source that are addresses in the block (`jml $84F889`: built, but they do not move), and nothing changed in the code the game checksums. It fixes the header checksum. Hidden addresses (numbers that are really addresses) only show when you run the ROM: `open -a Mesen FE4Padded.sfc`. |
 
-## Bringing new code into the build
+## Disassembly, Analysis & Asset Tools
+
+Note: gap-closing and initial-disassembly tools (`close_gap.py`, `carve.py`, `carve_palettes.py`, `find_streams.py`, `rom_tables.py`, `sweep.py`, `trace.py`, `proc_scripts.py`, `jump_tables.py`) are retained for reference now that the ROM is 100% source-built.
 
 These tools work on a *routines file*: disassembled routines in the usual style, each starting with a top-level label and its address:
 

@@ -143,7 +143,7 @@
     .endsection BattleSceneGameStateSection
 
 
-    .section Unsorted958000Section
+    .section BattleSceneInitSection
 
       .al
       .xl
@@ -447,10 +447,10 @@
 
         ; 95/82D8
 
-    .endsection Unsorted958000Section
+    .endsection BattleSceneInitSection
 
 
-    .section Unsorted958B07Section
+    .section BattleSceneRunFrameSection
 
       .al
       .xl
@@ -688,10 +688,10 @@
 
         ; 95/8CB9
 
-    .endsection Unsorted958B07Section
+    .endsection BattleSceneRunFrameSection
 
 
-    .section Unsorted959C14Section
+    .section BattleSceneReleaseHoldSection
 
       .al
       .xl
@@ -734,10 +734,10 @@
 
         ; 95/9C3E
 
-    .endsection Unsorted959C14Section
+    .endsection BattleSceneReleaseHoldSection
 
 
-    .section Unsorted95A086Section
+    .section BattleSceneRunQueuedCopiesSection
 
       .al
       .xl
@@ -841,10 +841,10 @@
 
         ; 95/A0F7
 
-    .endsection Unsorted95A086Section
+    .endsection BattleSceneRunQueuedCopiesSection
 
 
-    .section Unsorted95A0F7Section
+    .section BattleSceneClearQueuedCopiesSection
 
       .al
       .xl
@@ -882,10 +882,10 @@
 
         ; 95/A114
 
-    .endsection Unsorted95A0F7Section
+    .endsection BattleSceneClearQueuedCopiesSection
 
 
-    .section Unsorted95A481Section
+    .section BattleSceneUpdateFadeSection
 
       .al
       .xl
@@ -1007,10 +1007,10 @@
 
         ; 95/A53E
 
-    .endsection Unsorted95A481Section
+    .endsection BattleSceneUpdateFadeSection
 
 
-    .section Unsorted95A53ESection
+    .section BattleSceneSetFlagsSection
 
       .al
       .xl
@@ -1211,10 +1211,10 @@
 
         ; 95/A65F
 
-    .endsection Unsorted95A53ESection
+    .endsection BattleSceneSetFlagsSection
 
 
-    .section Unsorted96941CSection
+    .section BattleSceneRunIntroStepSection
 
       .al
       .xl
@@ -1293,10 +1293,10 @@
 
         ; 96/947D
 
-    .endsection Unsorted96941CSection
+    .endsection BattleSceneRunIntroStepSection
 
 
-    .section Unsorted96947DSection
+    .section BattleSceneWaitForIntroSection
 
       .al
       .xl
@@ -1362,10 +1362,10 @@
 
         ; 96/94C7
 
-    .endsection Unsorted96947DSection
+    .endsection BattleSceneWaitForIntroSection
 
 
-    .section Unsorted9694C7Section
+    .section BattleSceneRunEndStepSection
 
       .al
       .xl
@@ -1512,10 +1512,10 @@
 
         ; 96/957D
 
-    .endsection Unsorted9694C7Section
+    .endsection BattleSceneRunEndStepSection
 
 
-    .section Unsorted969861Section
+    .section BattleSceneRestartRoundsSection
 
       .al
       .xl
@@ -1540,10 +1540,10 @@
 
         ; 96/9872
 
-    .endsection Unsorted969861Section
+    .endsection BattleSceneRestartRoundsSection
 
 
-    .section Unsorted969872Section
+    .section BattleSceneBuildArenaBoutSection
 
       .al
       .xl
@@ -1582,10 +1582,10 @@
 
         ; 96/989E
 
-    .endsection Unsorted969872Section
+    .endsection BattleSceneBuildArenaBoutSection
 
 
-    .section Unsorted96989ESection
+    .section BattleSceneCheckArenaBoutSection
 
       .al
       .xl
@@ -1722,6 +1722,6 @@
 
         ; 96/994B
 
-    .endsection Unsorted96989ESection
+    .endsection BattleSceneCheckArenaBoutSection
 
 

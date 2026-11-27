@@ -2,7 +2,7 @@
 ; Valkyrie, status), Sol healing, level-up and dropped-item results, and a
 ; percentage-chance roll.
 
-    .section Unsorted84EB24Section
+    .section ActionStructStaffEffectRefreshSection
 
       .al
       .xl
@@ -50,7 +50,7 @@
 
         ; 84/EB6F
 
-    .endsection Unsorted84EB24Section
+    .endsection ActionStructStaffEffectRefreshSection
 
 
     .section StaffEffectClearStatusSection
@@ -747,7 +747,7 @@
     .endsection BattleEffectsSection
 
 
-    .section Unsorted87AF46Section
+    .section FindRescueDestinationTileSection
 
       .al
       .xl
@@ -896,4 +896,4 @@
 
         ; 87/B01D
 
-    .endsection Unsorted87AF46Section
+    .endsection FindRescueDestinationTileSection

@@ -5,7 +5,7 @@
 ; wCastleListItemState chooses which items a list collects. Bank $8A.
 
 
-    .section Table8A9DD5Section
+    .section CastleListRowYSection
 
       .al
       .xl
@@ -18,10 +18,10 @@
 
         ; 8A/9DDD
 
-    .endsection Table8A9DD5Section
+    .endsection CastleListRowYSection
 
 
-    .section Unsorted8A9DDDSection
+    .section AppendItemsFromListSection
 
       .al
       .xl
@@ -53,10 +53,10 @@
         ; 8A/9DF2
 
 
-    .endsection Unsorted8A9DDDSection
+    .endsection AppendItemsFromListSection
 
 
-    .section Unsorted8A9DF2Section
+    .section BuildStockListSection
 
       .al
       .xl
@@ -181,10 +181,10 @@
 
         ; 8A/9EB7
 
-    .endsection Unsorted8A9DF2Section
+    .endsection BuildStockListSection
 
 
-    .section Unsorted8A9EB7Section
+    .section BuildEquippableWeaponListSection
 
       .al
       .xl
@@ -329,10 +329,10 @@
 
         ; 8A/9FCC
 
-    .endsection Unsorted8A9EB7Section
+    .endsection BuildEquippableWeaponListSection
 
 
-    .section Unsorted8A9FCCSection
+    .section BuildItemListInStateSection
 
       .al
       .xl
@@ -381,10 +381,10 @@
 
         ; 8A/A013
 
-    .endsection Unsorted8A9FCCSection
+    .endsection BuildItemListInStateSection
 
 
-    .section Unsorted8AA013Section
+    .section MoveItemToSecondhandStockSection
 
       .al
       .xl
@@ -409,10 +409,10 @@
 
         ; 8A/A022
 
-    .endsection Unsorted8AA013Section
+    .endsection MoveItemToSecondhandStockSection
 
 
-    .section Table8AA022Section
+    .section CastleItemDescTilemapEntrySection
 
       .al
       .xl
@@ -420,10 +420,10 @@
       aCastleItemDescTilemapEntry ; 8A/A022
         .byte $30, $01, $00, $00, $00, $00, $C3, $80, $7F
 
-    .endsection Table8AA022Section
+    .endsection CastleItemDescTilemapEntrySection
 
 
-    .section Unsorted8AA02BSection
+    .section DrawItemDescriptionSection
 
       .al
       .xl
@@ -547,10 +547,10 @@
 
         ; 8A/A12E
 
-    .endsection Unsorted8AA02BSection
+    .endsection DrawItemDescriptionSection
 
 
-    .section Table8AA12ESection
+    .section ItemDescriptionBlankTextSection
 
       .al
       .xl
@@ -563,10 +563,10 @@
         .enc "none"
 
 
-    .endsection Table8AA12ESection
+    .endsection ItemDescriptionBlankTextSection
 
 
-    .section Unsorted8AA142Section
+    .section CastleDrawListItemIconsSection
 
       .al
       .xl
@@ -745,10 +745,10 @@
 
         ; 8A/A241
 
-    .endsection Unsorted8AA142Section
+    .endsection CastleDrawListItemIconsSection
 
 
-    .section Table8AA241Section
+    .section CastleListItemIconTilesSection
 
       .al
       .xl
@@ -761,10 +761,10 @@
 
         ; 8A/A251
 
-    .endsection Table8AA241Section
+    .endsection CastleListItemIconTilesSection
 
 
-    .section Unsorted8AA251Section
+    .section LoadItemIconGraphicsSection
 
       .al
       .xl
@@ -860,10 +860,10 @@
 
         ; 8A/A2ED
 
-    .endsection Unsorted8AA251Section
+    .endsection LoadItemIconGraphicsSection
 
 
-    .section Unsorted8AA2EDSection
+    .section DrawCastleUnitMoneySection
 
       .al
       .xl
@@ -897,10 +897,10 @@
 
         ; 8A/A31C
 
-    .endsection Unsorted8AA2EDSection
+    .endsection DrawCastleUnitMoneySection
 
 
-    .section Table8AA31CSection
+    .section CastleMoneyGTextSection
 
       .al
       .xl
@@ -1017,10 +1017,10 @@
       aCastleOptionMenuOldCursorXPositions ; 8A/A3FC
         .byte $58, $78, $98, $C8
 
-    .endsection Table8AA31CSection
+    .endsection CastleMoneyGTextSection
 
 
-    .section Unsorted8AA400Section
+    .section CastleStockListInputSection
 
       .al
       .xl
@@ -1153,7 +1153,7 @@
 
         ; 8A/A4C6
 
-    .endsection Unsorted8AA400Section
+    .endsection CastleStockListInputSection
 
 
     .section Data8AA4C6Section
@@ -1172,7 +1172,7 @@
     .endsection Data8AA4C6Section
 
 
-    .section Unsorted8AA4C8Section
+    .section CastleInventoryListInputSection
 
       .al
       .xl
@@ -1386,10 +1386,10 @@
 
         ; 8A/A5FF
 
-    .endsection Unsorted8AA4C8Section
+    .endsection CastleInventoryListInputSection
 
 
-    .section Unsorted8AA5FFSection
+    .section DrawWeaponRankTilesSection
 
       .al
       .xl
@@ -1436,7 +1436,7 @@
 
         ; 8A/A629
 
-    .endsection Unsorted8AA5FFSection
+    .endsection DrawWeaponRankTilesSection
 
 
     .section Data8AA629Section
@@ -1456,7 +1456,7 @@
     .endsection Data8AA629Section
 
 
-    .section Unsorted8AA63DSection
+    .section DrawStockItemDetailsSection
 
       .al
       .xl
@@ -1531,10 +1531,10 @@
 
         ; 8A/A6CA
 
-    .endsection Unsorted8AA63DSection
+    .endsection DrawStockItemDetailsSection
 
 
-    .section Unsorted8AA6CASection
+    .section DrawWeaponStatsSection
 
       .al
       .xl
@@ -1646,10 +1646,10 @@
 
         ; 8A/A7DD
 
-    .endsection Unsorted8AA6CASection
+    .endsection DrawWeaponStatsSection
 
 
-    .section Table8AA7DDSection
+    .section WeaponStatsBlankTextSection
 
       .al
       .xl
@@ -1745,10 +1745,10 @@
         .enc "none"
 
 
-    .endsection Table8AA7DDSection
+    .endsection WeaponStatsBlankTextSection
 
 
-    .section Unsorted8AA830Section
+    .section ClearItemDetailsWindowSection
 
       .al
       .xl
@@ -1770,10 +1770,10 @@
 
         ; 8A/A83D
 
-    .endsection Unsorted8AA830Section
+    .endsection ClearItemDetailsWindowSection
 
 
-    .section Unsorted8AA83DSection
+    .section DrawInventoryItemDetailsSection
 
       .al
       .xl
@@ -1840,10 +1840,10 @@
 
         ; 8A/A8B5
 
-    .endsection Unsorted8AA83DSection
+    .endsection DrawInventoryItemDetailsSection
 
 
-    .section Table8AA8B5Section
+    .section InventoryItemDetailsBlankTextSection
 
       .al
       .xl
@@ -1856,10 +1856,10 @@
         .enc "none"
 
 
-    .endsection Table8AA8B5Section
+    .endsection InventoryItemDetailsBlankTextSection
 
 
-    .section Unsorted8AA8C9Section
+    .section PushStockItemTypeIconSection
 
       .al
       .xl
@@ -1914,7 +1914,7 @@
 
         ; 8A/A917
 
-    .endsection Unsorted8AA8C9Section
+    .endsection PushStockItemTypeIconSection
 
 
     .section Data8AA917Section
@@ -1934,7 +1934,7 @@
     .endsection Data8AA917Section
 
 
-    .section Unsorted8AA928Section
+    .section PushInventoryItemTypeIconSection
 
       .al
       .xl
@@ -1988,7 +1988,7 @@
 
         ; 8A/A975
 
-    .endsection Unsorted8AA928Section
+    .endsection PushInventoryItemTypeIconSection
 
 
     .section Data8AA975Section
@@ -2007,7 +2007,7 @@
     .endsection Data8AA975Section
 
 
-    .section Unsorted8AA97FSection
+    .section ClearBG3RectSection
 
       .al
       .xl
@@ -2048,10 +2048,10 @@
 
         ; 8A/A9A6
 
-    .endsection Unsorted8AA97FSection
+    .endsection ClearBG3RectSection
 
 
-    .section Unsorted8AA9A6Section
+    .section CopyBG3RectFromTemplateSection
 
       .al
       .xl
@@ -2092,10 +2092,10 @@
 
         ; 8A/A9CE
 
-    .endsection Unsorted8AA9A6Section
+    .endsection CopyBG3RectFromTemplateSection
 
 
-    .section Unsorted8AA9CESection
+    .section DrawStockListSection
 
       .al
       .xl
@@ -2174,10 +2174,10 @@
         ; Each list row's tilemap row, by row x 2: read by the list drawers here and in augury.asm (and by unreachable code at 8A/AAD3).
         .word $000A, $000C, $000E, $0010, $0012, $0014, $0016, $0018
 
-    .endsection Unsorted8AA9CESection
+    .endsection DrawStockListSection
 
 
-    .section Unsorted8AAA3ASection
+    .section DrawStockListRowNameSection
 
       .al
       .xl
@@ -2222,10 +2222,10 @@
 
         ; 8A/AA78
 
-    .endsection Unsorted8AAA3ASection
+    .endsection DrawStockListRowNameSection
 
 
-    .section Table8AAA78Section
+    .section StockListRowNameBlankTextSection
 
       .al
       .xl
@@ -2238,10 +2238,10 @@
         .enc "none"
 
 
-    .endsection Table8AAA78Section
+    .endsection StockListRowNameBlankTextSection
 
 
-    .section Unsorted8AAA8ASection
+    .section DrawStockListRowPriceSection
 
       .al
       .xl
@@ -2376,10 +2376,10 @@
 
         ; 8A/AB40
 
-    .endsection Unsorted8AAA8ASection
+    .endsection DrawStockListRowPriceSection
 
 
-    .section Table8AAB40Section
+    .section StockListRowDurabilityBlankTextSection
 
       .al
       .xl
@@ -2392,10 +2392,10 @@
         .enc "none"
 
 
-    .endsection Table8AAB40Section
+    .endsection StockListRowDurabilityBlankTextSection
 
 
-    .section Unsorted8AAB48Section
+    .section DrawInventoryWithSellPricesSection
 
       .al
       .xl
@@ -2468,10 +2468,10 @@
 
         ; 8A/ABAB
 
-    .endsection Unsorted8AAB48Section
+    .endsection DrawInventoryWithSellPricesSection
 
 
-    .section Unsorted8AABABSection
+    .section DrawInventoryRowNameSection
 
       .al
       .xl
@@ -2519,10 +2519,10 @@
 
         ; 8A/ABEA
 
-    .endsection Unsorted8AABABSection
+    .endsection DrawInventoryRowNameSection
 
 
-    .section Table8AABEASection
+    .section InventoryRowNameBlankTextSection
 
       .al
       .xl
@@ -2535,10 +2535,10 @@
         .enc "none"
 
 
-    .endsection Table8AABEASection
+    .endsection InventoryRowNameBlankTextSection
 
 
-    .section Unsorted8AABFCSection
+    .section DrawInventoryRowSellPriceSection
 
       .al
       .xl
@@ -2658,10 +2658,10 @@
 
         ; 8A/ACA0
 
-    .endsection Unsorted8AABFCSection
+    .endsection DrawInventoryRowSellPriceSection
 
 
-    .section Table8AACA0Section
+    .section InventoryRowDurabilityBlankTextSection
 
       .al
       .xl
@@ -2674,10 +2674,10 @@
         .enc "none"
 
 
-    .endsection Table8AACA0Section
+    .endsection InventoryRowDurabilityBlankTextSection
 
 
-    .section Unsorted8AACA8Section
+    .section DrawInventoryWithRepairCostsSection
 
       .al
       .xl
@@ -2747,10 +2747,10 @@
 
         ; 8A/AD05
 
-    .endsection Unsorted8AACA8Section
+    .endsection DrawInventoryWithRepairCostsSection
 
 
-    .section Unsorted8AAD05Section
+    .section DrawInventoryRowRepairCostSection
 
       .al
       .xl
@@ -2838,10 +2838,10 @@
 
         ; 8A/AD6F
 
-    .endsection Unsorted8AAD05Section
+    .endsection DrawInventoryRowRepairCostSection
 
 
-    .section Unsorted8AAF0ASection
+    .section PushCastleListSpritesSection
 
       .al
       .xl
@@ -3026,7 +3026,7 @@
 
         ; 8A/B033
 
-    .endsection Unsorted8AAF0ASection
+    .endsection PushCastleListSpritesSection
 
 
     .section Data8AB033Section
@@ -3053,7 +3053,7 @@
     .endsection Data8AB033Section
 
 
-    .section Unsorted8AB043Section
+    .section PushCastleHandCursorSection
 
       .al
       .xl
@@ -3107,7 +3107,7 @@
 
         ; 8A/B07C
 
-    .endsection Unsorted8AB043Section
+    .endsection PushCastleHandCursorSection
 
 
     .section Data8AB07CSection
@@ -3131,7 +3131,7 @@
     .endsection Data8AB07CSection
 
 
-    .section Unsorted8AB093Section
+    .section PushStockListScrollArrowsSection
 
       .al
       .xl
@@ -3218,10 +3218,10 @@
         ; A one-sprite array: the arrow rlPushStockListScrollArrows draws above (flipped) and below the list.
         .byte $01, $00, $00, $C2, $00, $0C, $30
 
-    .endsection Unsorted8AB093Section
+    .endsection PushStockListScrollArrowsSection
 
 
-    .section Unsorted8AB111Section
+    .section DrawCastleNumberSection
 
       .al
       .xl
@@ -3383,20 +3383,20 @@
 
         ; 8A/B230
 
-    .endsection Unsorted8AB111Section
+    .endsection DrawCastleNumberSection
 
 
-    .section Table8AB230Section
+    .section CastleColorMathHDMAInfoSection
 
       .al
       .xl
 
       aCastleColorMathHDMAInfo .dstruct structHDMADirectEntryInfo, rlHDMACastleColorMath1, rlHDMACastleColorMath1, $B261, $0008C8, PPU_REG_BASE + $31, $00 ; 8A/B230
 
-    .endsection Table8AB230Section
+    .endsection CastleColorMathHDMAInfoSection
 
 
-    .section Unsorted8AB23BSection
+    .section HDMACastleColorMath1Section
 
       .al
       .xl
@@ -3548,10 +3548,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted8AB23BSection
+    .endsection HDMACastleColorMath1Section
 
 
-    .section Unsorted8AD092Section
+    .section DrawYesNoSection
 
       .al
       .xl
@@ -3620,4 +3620,4 @@
 
         ; 8A/D0D4
 
-    .endsection Unsorted8AD092Section
+    .endsection DrawYesNoSection

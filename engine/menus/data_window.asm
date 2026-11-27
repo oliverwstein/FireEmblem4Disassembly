@@ -7,7 +7,7 @@
 ; banks $80 ($80/D90C-DFD3) and $8B ($8B/CF0A-D794); its variables are at $7F8183
 ; (include/WRAM.h).
 
-    .section Table80D8E8Section
+    .section SkillWindowBG3TilemapEntrySection
 
       .al
       .xl
@@ -25,7 +25,7 @@
         ; The tilemap entry for aSkillWindowHolderTilemap+2, loaded by rsSkillWindowDrawAllHolderNames.
         .byte $17, $06, $00, $00, $00, $00, $8D, $90, $7F
 
-    .endsection Table80D8E8Section
+    .endsection SkillWindowBG3TilemapEntrySection
 
 
     .section DataWindowOpenSection

@@ -17,7 +17,7 @@
 ; Nothing in this list runs while an event is running (wEventEngineFlags).
 
 
-    .section Unsorted81A800Section
+    .section MapUpkeepSection
 
       .al
       .xl
@@ -84,10 +84,10 @@
 
         ; 81/A85C
 
-    .endsection Unsorted81A800Section
+    .endsection MapUpkeepSection
 
 
-    .section Unsorted81A85CSection
+    .section ResetChapterProgressSection
 
       .al
       .xl
@@ -135,10 +135,10 @@
 
         ; 81/A89D
 
-    .endsection Unsorted81A85CSection
+    .endsection ResetChapterProgressSection
 
 
-    .section Unsorted81A89DSection
+    .section MapStepSection
 
       .al
       .xl
@@ -417,7 +417,7 @@
 
         .databank 0
 
-    .endsection Unsorted81A89DSection
+    .endsection MapStepSection
 
 
     .section MapStepStartPhaseSection
@@ -530,7 +530,7 @@
     .endsection MapStepTurnStartHealingSection
 
 
-    .section Unsorted81AC02Section
+    .section MoveCursorToPhaseStartSection
 
       .al
       .xl
@@ -748,10 +748,10 @@
 
         .databank 0
 
-    .endsection Unsorted81AC02Section
+    .endsection MoveCursorToPhaseStartSection
 
 
-    .section Unsorted81AD28Section
+    .section MapStepResumeSection
 
       .al
       .xl
@@ -802,10 +802,10 @@
 
         .databank 0
 
-    .endsection Unsorted81AD28Section
+    .endsection MapStepResumeSection
 
 
-    .section Unsorted81AD6ASection
+    .section MapStepGameOverSection
 
       .al
       .xl
@@ -840,10 +840,10 @@
 
         .databank 0
 
-    .endsection Unsorted81AD6ASection
+    .endsection MapStepGameOverSection
 
 
-    .section Unsorted81AD8ESection
+    .section RunQueuedAIUnitEventSection
 
       .al
       .xl
@@ -891,10 +891,10 @@
 
         .databank 0
 
-    .endsection Unsorted81AD8ESection
+    .endsection RunQueuedAIUnitEventSection
 
 
-    .section Unsorted81ADD8Section
+    .section RunQueuedUnitRelocationSection
 
       .al
       .xl
@@ -941,10 +941,10 @@
 
         .databank 0
 
-    .endsection Unsorted81ADD8Section
+    .endsection RunQueuedUnitRelocationSection
 
 
-    .section Unsorted81AE02Section
+    .section UnitRelocationRoutinesSection
 
       .al
       .xl
@@ -1073,10 +1073,10 @@
 
         .databank 0
 
-    .endsection Unsorted81AE02Section
+    .endsection UnitRelocationRoutinesSection
 
 
-    .section Unsorted81AE96Section
+    .section RelocateCapturedUnitSection
 
       .al
       .xl
@@ -1104,10 +1104,10 @@
 
         .databank 0
 
-    .endsection Unsorted81AE96Section
+    .endsection RelocateCapturedUnitSection
 
 
-    .section Unsorted81AEAASection
+    .section RelocateIntoCastleSection
 
       .al
       .xl
@@ -1303,10 +1303,10 @@
         .long rlOpenUnitMenuMode1
         .long rlOpenUnitMenuMode2
 
-    .endsection Unsorted81AEAASection
+    .endsection RelocateIntoCastleSection
 
 
-    .section Unsorted81AFB7Section
+    .section RelocateShowSeizePopUpSection
 
       .al
       .xl
@@ -1370,10 +1370,10 @@
 
         ; 81/AFF8
 
-    .endsection Unsorted81AFB7Section
+    .endsection RelocateShowSeizePopUpSection
 
 
-    .section Unsorted81AFF8Section
+    .section RelocateChapterEndSavePromptSection
 
       .al
       .xl
@@ -1395,10 +1395,10 @@
 
         ; 81/AFFE
 
-    .endsection Unsorted81AFF8Section
+    .endsection RelocateChapterEndSavePromptSection
 
 
-    .section Unsorted81AFFESection
+    .section RelocateRemoveHelpedUnitSection
 
       .al
       .xl
@@ -1426,10 +1426,10 @@
 
         ; 81/B016
 
-    .endsection Unsorted81AFFESection
+    .endsection RelocateRemoveHelpedUnitSection
 
 
-    .section Unsorted81B016Section
+    .section RelocateShowItemPopUpSection
 
       .al
       .xl
@@ -1497,10 +1497,10 @@
 
         ; 81/B088
 
-    .endsection Unsorted81B016Section
+    .endsection RelocateShowItemPopUpSection
 
 
-    .section Unsorted81B088Section
+    .section HandleDefeatedUnitSection
 
       .al
       .xl
@@ -1796,10 +1796,10 @@
 
         .databank 0
 
-    .endsection Unsorted81B088Section
+    .endsection HandleDefeatedUnitSection
 
 
-    .section Unsorted81B301Section
+    .section AdvanceToNextChapterSection
 
       .al
       .xl
@@ -1839,10 +1839,10 @@
 
         ; 81/B32C
 
-    .endsection Unsorted81B301Section
+    .endsection AdvanceToNextChapterSection
 
 
-    .section Unsorted81B32CSection
+    .section StartGameOverEventSection
 
       .al
       .xl
@@ -1894,10 +1894,10 @@
         .word $0230
         .word $0231
 
-    .endsection Unsorted81B32CSection
+    .endsection StartGameOverEventSection
 
 
-    .section Unsorted84C5D7Section
+    .section CheckFactionTakesPhaseSection
 
       .al
       .xl
@@ -1973,4 +1973,4 @@
 
         ; 84/C62E
 
-    .endsection Unsorted84C5D7Section
+    .endsection CheckFactionTakesPhaseSection

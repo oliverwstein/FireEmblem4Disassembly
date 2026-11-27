@@ -260,7 +260,7 @@
     .endsection JugdralHistoryStepsSection
 
 
-    .section Unsorted91B164Section
+    .section ScrollJugdralHistorySection
 
       .al
       .xl
@@ -369,10 +369,10 @@
 
         ; 91/B1E3
 
-    .endsection Unsorted91B164Section
+    .endsection ScrollJugdralHistorySection
 
 
-    .section Table91B1E3Section
+    .section JugdralHistoryLineStepsSection
 
       .al
       .xl
@@ -399,10 +399,10 @@
 
         rts
 
-    .endsection Table91B1E3Section
+    .endsection JugdralHistoryLineStepsSection
 
 
-    .section Unsorted91B1FCSection
+    .section JugdralHistoryDrawEntrySection
 
       .al
       .xl
@@ -549,7 +549,7 @@
 
         ; 91/B2D3
 
-    .endsection Unsorted91B1FCSection
+    .endsection JugdralHistoryDrawEntrySection
 
 
     .section Data91B2D3Section
@@ -569,7 +569,7 @@
     .endsection Data91B2D3Section
 
 
-    .section Unsorted91B2E5Section
+    .section JugdralHistoryStartTextSection
 
       .al
       .xl
@@ -660,10 +660,10 @@
 
         ; 91/B34C
 
-    .endsection Unsorted91B2E5Section
+    .endsection JugdralHistoryStartTextSection
 
 
-    .section Table91B34CSection
+    .section JugdralHistoryEntriesSection
 
       .al
       .xl
@@ -730,10 +730,10 @@
 
         ; 91/B496
 
-    .endsection Table91B34CSection
+    .endsection JugdralHistoryEntriesSection
 
 
-    .section Unsorted91B496Section
+    .section JugdralHistoryClearLineSection
 
       .al
       .xl
@@ -896,10 +896,10 @@
 
         ; 91/B546
 
-    .endsection Unsorted91B496Section
+    .endsection JugdralHistoryClearLineSection
 
 
-    .section Table91B546Section
+    .section JugdralHistoryBG2RowsSection
 
       .al
       .xl
@@ -991,10 +991,10 @@
 
         ; 91/BA46
 
-    .endsection Table91B546Section
+    .endsection JugdralHistoryBG2RowsSection
 
 
-    .section Unsorted91BA46Section
+    .section SetJugdralHistoryTextColorsSection
 
       .al
       .xl
@@ -1043,7 +1043,7 @@
 
         ; 91/BA6C
 
-    .endsection Unsorted91BA46Section
+    .endsection SetJugdralHistoryTextColorsSection
 
 
     .section Data91BA6CSection
@@ -1071,7 +1071,7 @@
     .endsection Data91BA6CSection
 
 
-    .section Unsorted91E780Section
+    .section JugdralHistoryHoldSection
 
       .al
       .xl
@@ -1100,6 +1100,6 @@
 
         ; 91/E793
 
-    .endsection Unsorted91E780Section
+    .endsection JugdralHistoryHoldSection
 
 

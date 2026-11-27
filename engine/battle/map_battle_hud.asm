@@ -2,17 +2,17 @@
 ; the map battle text box, and their palettes.
 
 
-    .section Table85AB82Section
+    .section MapBattleExperienceWindowHDMAInfoSection
 
       .al
       .xl
 
       aMapBattleExperienceWindowHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlMapBattleExperienceWindowHDMAInit, rlMapBattleExperienceWindowHDMACycle, aMapBattleExperienceWindowHDMACode, $7FEA9A, PPU_REG_BASE + $12, $42, $85 ; 85/AB82
 
-    .endsection Table85AB82Section
+    .endsection MapBattleExperienceWindowHDMAInfoSection
 
 
-    .section Unsorted85AB8ESection
+    .section MapBattleExperienceWindowHDMAInitSection
 
       .al
       .xl
@@ -45,10 +45,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted85AB8ESection
+    .endsection MapBattleExperienceWindowHDMAInitSection
 
 
-    .section Unsorted85AB96Section
+    .section BuildMapBattleExperienceWindowHDMATableSection
 
       .al
       .xl
@@ -117,10 +117,10 @@
 
         .byte $FE, $01
 
-    .endsection Unsorted85AB96Section
+    .endsection BuildMapBattleExperienceWindowHDMATableSection
 
 
-    .section Unsorted85ABF1Section
+    .section FreeHDMAEntryByIndexSection
 
       .al
       .xl
@@ -139,7 +139,7 @@
 
         ; 85/ABF6
 
-    .endsection Unsorted85ABF1Section
+    .endsection FreeHDMAEntryByIndexSection
 
 
     .section ProcScript85CA85Section
@@ -158,7 +158,7 @@
     .endsection ProcScript85CA85Section
 
 
-    .section Unsorted85CA91Section
+    .section ProcMapExperienceWindowInitSection
 
       .al
       .xl
@@ -235,10 +235,10 @@
 
         ; 85/CAFB
 
-    .endsection Unsorted85CA91Section
+    .endsection ProcMapExperienceWindowInitSection
 
 
-    .section Unsorted85CAFBSection
+    .section ProcMapExperienceWindowIdleSection
 
       .al
       .xl
@@ -256,10 +256,10 @@
 
         ; 85/CAFC
 
-    .endsection Unsorted85CAFBSection
+    .endsection ProcMapExperienceWindowIdleSection
 
 
-    .section Unsorted85CAFCSection
+    .section ProcMapExperienceWindowStartEffectSection
 
       .al
       .xl
@@ -322,10 +322,10 @@
 
         ; 85/CB51
 
-    .endsection Unsorted85CAFCSection
+    .endsection ProcMapExperienceWindowStartEffectSection
 
 
-    .section Unsorted85CB51Section
+    .section ProcMapExperienceWindowShowSection
 
       .al
       .xl
@@ -398,10 +398,10 @@
 
         ; 85/CBBD
 
-    .endsection Unsorted85CB51Section
+    .endsection ProcMapExperienceWindowShowSection
 
 
-    .section Unsorted85CBBDSection
+    .section ProcMapExperienceWindowStartCountSection
 
       .al
       .xl
@@ -486,10 +486,10 @@
 
         ; 85/CC3D
 
-    .endsection Unsorted85CBBDSection
+    .endsection ProcMapExperienceWindowStartCountSection
 
 
-    .section Unsorted85CC3DSection
+    .section ProcMapExperienceWindowIdle3Section
 
       .al
       .xl
@@ -507,10 +507,10 @@
 
         ; 85/CC3E
 
-    .endsection Unsorted85CC3DSection
+    .endsection ProcMapExperienceWindowIdle3Section
 
 
-    .section Unsorted85CC3ESection
+    .section ProcMapExperienceWindowCloseSection
 
       .al
       .xl
@@ -532,10 +532,10 @@
 
         ; 85/CC4D
 
-    .endsection Unsorted85CC3ESection
+    .endsection ProcMapExperienceWindowCloseSection
 
 
-    .section Unsorted85CC4DSection
+    .section ProcMapExperienceWindowEndSection
 
       .al
       .xl
@@ -562,7 +562,7 @@
 
         ; 85/CC62
 
-    .endsection Unsorted85CC4DSection
+    .endsection ProcMapExperienceWindowEndSection
 
 
     .section ProcScript85CC62Section
@@ -605,7 +605,7 @@
     .endsection ProcScript85CC62Section
 
 
-    .section Unsorted85CCA8Section
+    .section GetMapExperienceWindowUnitTileSection
 
       .al
       .xl
@@ -697,7 +697,7 @@
         .long 0, 0, aMapBattleHPWindowRightTilemapData
         .byte 3, 16, 16
 
-    .endsection Unsorted85CCA8Section
+    .endsection GetMapExperienceWindowUnitTileSection
 
 
     .section ProcScript85CD0CSection
@@ -741,7 +741,7 @@
     .endsection ProcScript85CD2DSection
 
 
-    .section Unsorted85CD39Section
+    .section ProcMapBattleHPWindowInitSection
 
       .al
       .xl
@@ -794,10 +794,10 @@
         .byte $20, $21, $00
         .byte $26, $27, $00
 
-    .endsection Unsorted85CD39Section
+    .endsection ProcMapBattleHPWindowInitSection
 
 
-    .section Unsorted85CD81Section
+    .section MapBattleHPWindowReadInputsSection
 
       .al
       .xl
@@ -989,10 +989,10 @@
 
         ; 85/CE54
 
-    .endsection Unsorted85CD81Section
+    .endsection MapBattleHPWindowReadInputsSection
 
 
-    .section Unsorted85CE54Section
+    .section BeginMapBattleHPWindowClosingSection
 
       .al
       .xl
@@ -1029,10 +1029,10 @@
 
         ; 85/CE7C
 
-    .endsection Unsorted85CE54Section
+    .endsection BeginMapBattleHPWindowClosingSection
 
 
-    .section Unsorted85CE7CSection
+    .section StepMapBattleHPWindowClosingSection
 
       .al
       .xl
@@ -1122,10 +1122,10 @@
 
         ; 85/CEC3
 
-    .endsection Unsorted85CE7CSection
+    .endsection StepMapBattleHPWindowClosingSection
 
 
-    .section Unsorted85CEC3Section
+    .section ProcMapBattleHPWindowOpenSection
 
       .al
       .xl
@@ -1156,10 +1156,10 @@
 
         ; 85/CEE2
 
-    .endsection Unsorted85CEC3Section
+    .endsection ProcMapBattleHPWindowOpenSection
 
 
-    .section Unsorted85CEE2Section
+    .section ProcMapBattleHPWindowCycleSection
 
       .al
       .xl
@@ -1399,7 +1399,7 @@
 
         ; 85/D064
 
-    .endsection Unsorted85CEE2Section
+    .endsection ProcMapBattleHPWindowCycleSection
 
 
     .section ProcScript85D064Section
@@ -1417,7 +1417,7 @@
     .endsection ProcScript85D064Section
 
 
-    .section Unsorted85D066Section
+    .section OpenMapBattleHPWindowsSection
 
       .al
       .xl
@@ -1519,10 +1519,10 @@
 
         ; 85/D100
 
-    .endsection Unsorted85D066Section
+    .endsection OpenMapBattleHPWindowsSection
 
 
-    .section Unsorted85D100Section
+    .section OpenMapBattleHPWindowRightOnlySection
 
       .al
       .xl
@@ -1621,10 +1621,10 @@
 
         ; 85/D17E
 
-    .endsection Unsorted85D100Section
+    .endsection OpenMapBattleHPWindowRightOnlySection
 
 
-    .section Unsorted85D17ESection
+    .section OpenMapBattleHPWindowRightSection
 
       .al
       .xl
@@ -2094,10 +2094,10 @@
 
         ; 85/D385
 
-    .endsection Unsorted85D17ESection
+    .endsection OpenMapBattleHPWindowRightSection
 
 
-    .section Unsorted85D385Section
+    .section OpenMapBattleExperienceWindowSection
 
       .al
       .xl
@@ -2178,10 +2178,10 @@
 
         ; 85/D3F5
 
-    .endsection Unsorted85D385Section
+    .endsection OpenMapBattleExperienceWindowSection
 
 
-    .section Unsorted85D3F5Section
+    .section CheckMapBattleExperienceWindowOpenSection
 
       .al
       .xl
@@ -2286,10 +2286,10 @@
 
         ; 85/D442
 
-    .endsection Unsorted85D3F5Section
+    .endsection CheckMapBattleExperienceWindowOpenSection
 
 
-    .section Unsorted85D442Section
+    .section DrawMapMenuTwoRowGaugeSection
 
       .al
       .xl
@@ -2369,10 +2369,10 @@
 
         ; 85/D4B2
 
-    .endsection Unsorted85D442Section
+    .endsection DrawMapMenuTwoRowGaugeSection
 
 
-    .section Unsorted85D4B2Section
+    .section DrawMapMenuGaugeRowSection
 
       .al
       .xl
@@ -2530,10 +2530,10 @@
 
         ; 85/D591
 
-    .endsection Unsorted85D4B2Section
+    .endsection DrawMapMenuGaugeRowSection
 
 
-    .section Table85D591Section
+    .section MapMenuGaugeTilesSection
 
       .al
       .xl
@@ -2547,10 +2547,10 @@
 
         ; 85/D5AA
 
-    .endsection Table85D591Section
+    .endsection MapMenuGaugeTilesSection
 
 
-    .section Unsorted85D5AASection
+    .section GetMapMenuGaugeTileSection
 
       .al
       .xl
@@ -2602,10 +2602,10 @@
 
         ; 85/D5CC
 
-    .endsection Unsorted85D5AASection
+    .endsection GetMapMenuGaugeTileSection
 
 
-    .section Unsorted85D5CCSection
+    .section SetMapBattlePalettesSection
 
       .al
       .xl
@@ -2658,10 +2658,10 @@
         ; Colour 0 of aMapBattlePalette; rlSetMapBattlePalettes copies from colour 1.
         .word $4D96
 
-    .endsection Unsorted85D5CCSection
+    .endsection SetMapBattlePalettesSection
 
 
-    .section Table85D606Section
+    .section MapBattlePaletteSection
 
       .al
       .xl
@@ -2675,10 +2675,10 @@
 
         ; 85/D626
 
-    .endsection Table85D606Section
+    .endsection MapBattlePaletteSection
 
 
-    .section Table85D626Section
+    .section MapBattleHUDPalette1Section
 
       .al
       .xl
@@ -2692,10 +2692,10 @@
 
         ; 85/D638
 
-    .endsection Table85D626Section
+    .endsection MapBattleHUDPalette1Section
 
 
-    .section Table85D638Section
+    .section MapBattleHUDPalette2Section
 
       .al
       .xl
@@ -2708,10 +2708,10 @@
 
         ; 85/D648
 
-    .endsection Table85D638Section
+    .endsection MapBattleHUDPalette2Section
 
 
-    .section Unsorted85D648Section
+    .section RestoreMapBattlePalettesSection
 
       .al
       .xl
@@ -2759,10 +2759,14 @@
 
         ; 85/D669
 
-    .endsection Unsorted85D648Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry85D669 .structDecompressionDMAEntry g4bppcMapBattleHUDTiles, $0800, $4C00 ; 85/D669
+
+    .endsection RestoreMapBattlePalettesSection
 
 
-    .section Unsorted85D671Section
+    .section ReloadMenuIconGraphicsSection
 
       .al
       .xl
@@ -2781,10 +2785,10 @@
 
         ; 85/D676
 
-    .endsection Unsorted85D671Section
+    .endsection ReloadMenuIconGraphicsSection
 
 
-    .section Unsorted85D676Section
+    .section LoadMapBattleHPWindowColoursSection
 
       .al
       .xl
@@ -2848,10 +2852,10 @@
 
         ; 85/D6B2
 
-    .endsection Unsorted85D676Section
+    .endsection LoadMapBattleHPWindowColoursSection
 
 
-    .section Table85D6B2Section
+    .section MapBattleHPWindowPalettePointersSection
 
       .al
       .xl
@@ -2899,10 +2903,10 @@
 
         ; 85/D766
 
-    .endsection Table85D6B2Section
+    .endsection MapBattleHPWindowPalettePointersSection
 
 
-    .section Unsorted85D766Section
+    .section LoadMapBattleHPWindowAccentColoursSection
 
       .al
       .xl
@@ -2964,10 +2968,10 @@
 
         ; 85/D7A0
 
-    .endsection Unsorted85D766Section
+    .endsection LoadMapBattleHPWindowAccentColoursSection
 
 
-    .section Table85D7A0Section
+    .section MapBattleHPWindowAccentColourPointersSection
 
       .al
       .xl
@@ -3015,10 +3019,10 @@
 
         ; 85/D7FA
 
-    .endsection Table85D7A0Section
+    .endsection MapBattleHPWindowAccentColourPointersSection
 
 
-    .section Unsorted85D7FASection
+    .section DrawMapMenuTileByteStringSection
 
       .al
       .xl
@@ -3183,7 +3187,7 @@
         .long 0, 0, aMapBattleExperienceWindowTilemapData
         .byte 5, 3, 11
 
-    .endsection Unsorted85D7FASection
+    .endsection DrawMapMenuTileByteStringSection
 
 
     .section ProcScript85D8AASection
@@ -3202,7 +3206,7 @@
     .endsection ProcScript85D8AASection
 
 
-    .section Unsorted85D8B6Section
+    .section ProcMapBattleExperienceWindowInitSection
 
       .al
       .xl
@@ -3315,10 +3319,10 @@
 
         ; 85/D96D
 
-    .endsection Unsorted85D8B6Section
+    .endsection ProcMapBattleExperienceWindowInitSection
 
 
-    .section Table85D96DSection
+    .section MapBattleExperienceLabelTilesSection
 
       .al
       .xl
@@ -3326,10 +3330,10 @@
       aMapBattleExperienceLabelTiles ; 85/D96D
         .byte $40, $41, $42, $00
 
-    .endsection Table85D96DSection
+    .endsection MapBattleExperienceLabelTilesSection
 
 
-    .section Unsorted85D971Section
+    .section ProcMapBattleExperienceWindowWaitSection
 
       .al
       .xl
@@ -3442,7 +3446,7 @@
 
         ; 85/D9FA
 
-    .endsection Unsorted85D971Section
+    .endsection ProcMapBattleExperienceWindowWaitSection
 
 
     .section ProcScript85D9FASection
@@ -3474,7 +3478,7 @@
     .endsection ProcScript85DAEASection
 
 
-    .section Unsorted85DAF6Section
+    .section ProcMapBattleTextBoxInitSection
 
       .al
       .xl
@@ -3650,7 +3654,7 @@
 
         ; 85/DBDD
 
-    .endsection Unsorted85DAF6Section
+    .endsection ProcMapBattleTextBoxInitSection
 
 
     .section ProcScript9ECEDDSection
@@ -3665,7 +3669,7 @@
     .endsection ProcScript9ECEDDSection
 
 
-    .section Unsorted9ECEE5Section
+    .section ProcMapExperienceWindowEffectInitSection
 
       .al
       .xl
@@ -3736,10 +3740,10 @@
 
         ; 9E/CF72
 
-    .endsection Unsorted9ECEE5Section
+    .endsection ProcMapExperienceWindowEffectInitSection
 
 
-    .section Table9ECF72Section
+    .section MapExperienceWindowEffectItemsSection
 
       .al
       .xl
@@ -3752,10 +3756,10 @@
 
         ; 9E/CF7A
 
-    .endsection Table9ECF72Section
+    .endsection MapExperienceWindowEffectItemsSection
 
 
-    .section Unsorted9ECF7ASection
+    .section ProcMapExperienceWindowEffectIdleSection
 
       .al
       .xl
@@ -3773,7 +3777,7 @@
 
         ; 9E/CF7B
 
-    .endsection Unsorted9ECF7ASection
+    .endsection ProcMapExperienceWindowEffectIdleSection
 
 
     .section ProcScript9ECF7BSection
@@ -3814,7 +3818,7 @@
     .endsection ProcScript9ECF7BSection
 
 
-    .section Unsorted9ECFCDSection
+    .section ProcMapExperienceWindowEffectTriggerMagicSection
 
       .al
       .xl
@@ -3878,7 +3882,7 @@
 
         ; 9E/D006
 
-    .endsection Unsorted9ECFCDSection
+    .endsection ProcMapExperienceWindowEffectTriggerMagicSection
 
 
     .section Unreferenced9ED006Section

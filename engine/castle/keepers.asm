@@ -3,7 +3,7 @@
 ; courtyard), and setting up the keeper's dialogue box. Bank $8A.
 
 
-    .section Unsorted8A946ASection
+    .section LoadPortraitToBGPalette2Section
 
       .al
       .xl
@@ -74,10 +74,10 @@
         ; 8A/94B6
 
 
-    .endsection Unsorted8A946ASection
+    .endsection LoadPortraitToBGPalette2Section
 
 
-    .section Unsorted8A94B6Section
+    .section CastleFillVRAM2000Section
 
       .al
       .xl
@@ -116,10 +116,10 @@
         ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
-    .endsection Unsorted8A94B6Section
+    .endsection CastleFillVRAM2000Section
 
 
-    .section Unsorted8A94E2Section
+    .section CastleFillVRAM2400Section
 
       .al
       .xl
@@ -158,10 +158,10 @@
         ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
-    .endsection Unsorted8A94E2Section
+    .endsection CastleFillVRAM2400Section
 
 
-    .section Unsorted8A950ESection
+    .section PushKeeperPortraitSpritesSection
 
       .al
       .xl
@@ -250,10 +250,10 @@
 
         ; 8A/956F
 
-    .endsection Unsorted8A950ESection
+    .endsection PushKeeperPortraitSpritesSection
 
 
-    .section Unsorted8A956FSection
+    .section PushCourtyardPortraitSpritesSection
 
       .al
       .xl
@@ -418,10 +418,10 @@
 
         .structSpriteArray aCourtyardPortraitSprites._Sprites
 
-    .endsection Unsorted8A956FSection
+    .endsection PushCourtyardPortraitSpritesSection
 
 
-    .section Unsorted8A9750Section
+    .section LoadKeeperPortraitSection
 
       .al
       .xl
@@ -464,10 +464,10 @@
 
         ; 8A/9776
 
-    .endsection Unsorted8A9750Section
+    .endsection LoadKeeperPortraitSection
 
 
-    .section Unsorted8A9776Section
+    .section LoadUnitPortraitSection
 
       .al
       .xl
@@ -506,10 +506,10 @@
 
         ; 8A/979C
 
-    .endsection Unsorted8A9776Section
+    .endsection LoadUnitPortraitSection
 
 
-    .section Unsorted8A979CSection
+    .section LoadCourtyardPortraitSection
 
       .al
       .xl
@@ -548,10 +548,10 @@
 
         ; 8A/97C2
 
-    .endsection Unsorted8A979CSection
+    .endsection LoadCourtyardPortraitSection
 
 
-    .section Unsorted8AB3FESection
+    .section DecompressCharacterPortraitSection
 
       .al
       .xl
@@ -608,10 +608,10 @@
 
         ; 8A/B452
 
-    .endsection Unsorted8AB3FESection
+    .endsection DecompressCharacterPortraitSection
 
 
-    .section Unsorted8ACE50Section
+    .section SetupKeeperDialogueBoxSection
 
       .al
       .xl
@@ -684,10 +684,10 @@
 
         ; 8A/CEB3
 
-    .endsection Unsorted8ACE50Section
+    .endsection SetupKeeperDialogueBoxSection
 
 
-    .section Unsorted8AFC52Section
+    .section LoadKeeperPortraitDataSection
 
       .al
       .xl
@@ -726,4 +726,4 @@
 
         ; 8A/FC78
 
-    .endsection Unsorted8AFC52Section
+    .endsection LoadKeeperPortraitDataSection

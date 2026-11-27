@@ -1015,7 +1015,7 @@
     .endsection MapScrollRightSetBGOFSSection
 
 
-    .section Unsorted888560Section
+    .section ContinueMapScrollSection
 
       .al
       .xl
@@ -1049,7 +1049,7 @@
 
         ; 88/857E
 
-    .endsection Unsorted888560Section
+    .endsection ContinueMapScrollSection
 
 
     .section Unreferenced88857ESection
@@ -1135,7 +1135,7 @@
         ; 88/85D3
 
     .endsection Unreferenced88857ESection
-    .section Unsorted8885D3Section
+    .section StartMapScrollUpSection
 
       .al
       .xl
@@ -1174,10 +1174,10 @@
 
         ; 88/85EF
 
-    .endsection Unsorted8885D3Section
+    .endsection StartMapScrollUpSection
 
 
-    .section Unsorted8885EFSection
+    .section StartMapScrollLeftSection
 
       .al
       .xl
@@ -1212,10 +1212,10 @@
 
         .databank 0
 
-    .endsection Unsorted8885EFSection
+    .endsection StartMapScrollLeftSection
 
 
-    .section Unsorted88860BSection
+    .section StartMapScrollUpLeftSection
 
       .al
       .xl
@@ -1236,10 +1236,10 @@
 
         .databank 0
 
-    .endsection Unsorted88860BSection
+    .endsection StartMapScrollUpLeftSection
 
 
-    .section Unsorted88861CSection
+    .section StartMapScrollDownLeftSection
 
       .al
       .xl
@@ -1467,6 +1467,6 @@
 
         .databank 0
 
-    .endsection Unsorted88861CSection
+    .endsection StartMapScrollDownLeftSection
 
 

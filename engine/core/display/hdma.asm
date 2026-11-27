@@ -706,7 +706,7 @@
     .endsection FreeHDMAEntry0Section
 
 
-    .section Unsorted80A678Section
+    .section BuildHDMADirectTableEntriesSection
 
       .al
       .xl
@@ -785,6 +785,6 @@
 
         ; 80/A6C3
 
-    .endsection Unsorted80A678Section
+    .endsection BuildHDMADirectTableEntriesSection
 
 

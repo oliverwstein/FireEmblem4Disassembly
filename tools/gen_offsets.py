@@ -46,9 +46,14 @@ def write_offset_asm(out_rel, source_desc, entries, start=0):
         table.append(f'{name}{tablename}Entry .word {name}Offset\n')
 
     out_path = os.path.join(ROOT, out_rel)
+    new_content = ''.join(lines) + ''.join(table)
+    if os.path.exists(out_path):
+        old_content = open(out_path, encoding='utf-8').read()
+        # Compare ignoring the date stamp on line 1.
+        if old_content.split('\n', 1)[1:] == new_content.split('\n', 1)[1:]:
+            return
     with open(out_path, 'w', encoding='utf-8') as f:
-        f.writelines(lines)
-        f.writelines(table)
+        f.write(new_content)
 
 
 def main():

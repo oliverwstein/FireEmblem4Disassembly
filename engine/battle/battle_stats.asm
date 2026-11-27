@@ -1124,7 +1124,7 @@
     .endsection BattleStatsSection
 
 
-    .section Unsorted84FE98Section
+    .section GetSelectedUnitFirstWeaponHitSection
 
       .al
       .xl
@@ -1165,10 +1165,10 @@
 
         ; 84/FEAC
 
-    .endsection Unsorted84FE98Section
+    .endsection GetSelectedUnitFirstWeaponHitSection
 
 
-    .section Unsorted84FEACSection
+    .section GetSelectedUnitFirstWeaponCritSection
 
       .al
       .xl
@@ -1203,10 +1203,10 @@
 
         ; 84/FEBE
 
-    .endsection Unsorted84FEACSection
+    .endsection GetSelectedUnitFirstWeaponCritSection
 
 
-    .section Unsorted84FEBESection
+    .section GetSelectedUnitFirstWeaponWeightUnusedSection
 
       .al
       .xl
@@ -1241,6 +1241,6 @@
 
         ; 84/FED2
 
-    .endsection Unsorted84FEBESection
+    .endsection GetSelectedUnitFirstWeaponWeightUnusedSection
 
 

@@ -12,7 +12,7 @@
 ; constants in include/Menus.h.
 
 
-    .section Unsorted80BB9BSection
+    .section RunMenuScreenVBlankSection
 
       .al
       .xl
@@ -394,7 +394,7 @@
 
         ; 80/BEEF
 
-    .endsection Unsorted80BB9BSection
+    .endsection RunMenuScreenVBlankSection
 
 
     .section Data80BEEFSection
@@ -410,10 +410,14 @@
 
         ; 80/BEF9
 
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80BEF9 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/BEF9
+
     .endsection Data80BEEFSection
 
 
-    .section Unsorted80BF01Section
+    .section SetStatusScreenBGSettingsSection
 
       .al
       .xl
@@ -464,10 +468,10 @@
 
         ; 80/BF40
 
-    .endsection Unsorted80BF01Section
+    .endsection SetStatusScreenBGSettingsSection
 
 
-    .section Unsorted898000Section
+    .section StatusScreenUpkeepSection
 
       .al
       .xl
@@ -628,10 +632,10 @@
 
         ; 89/80EF
 
-    .endsection Unsorted898000Section
+    .endsection StatusScreenUpkeepSection
 
 
-    .section Table8980EFSection
+    .section StatusScreenStepsSection
 
       .al
       .xl
@@ -651,10 +655,10 @@
         .word <>rsStatusScreenFadeIn
         .word <>rsStatusScreenFadeOut
 
-    .endsection Table8980EFSection
+    .endsection StatusScreenStepsSection
 
 
-    .section Unsorted898105Section
+    .section StatusScreenTopPageSection
 
       .al
       .xl
@@ -1202,10 +1206,10 @@
 
         ; 89/8536
 
-    .endsection Unsorted898105Section
+    .endsection StatusScreenTopPageSection
 
 
-    .section Unsorted898536Section
+    .section StatusScreenLoadHolyBloodPageSection
 
       .al
       .xl
@@ -1332,10 +1336,10 @@
 
         ; 89/861B
 
-    .endsection Unsorted898536Section
+    .endsection StatusScreenLoadHolyBloodPageSection
 
 
-    .section Unsorted89861BSection
+    .section StatusScreenHolyBloodPageSection
 
       .al
       .xl
@@ -1503,10 +1507,10 @@
 
         ; 89/8734
 
-    .endsection Unsorted89861BSection
+    .endsection StatusScreenHolyBloodPageSection
 
 
-    .section Unsorted898734Section
+    .section StatusScreenLeaveSection
 
       .al
       .xl
@@ -1541,10 +1545,10 @@
 
         ; 89/8755
 
-    .endsection Unsorted898734Section
+    .endsection StatusScreenLeaveSection
 
 
-    .section Unsorted898755Section
+    .section StatusScreenReturnToMapSection
 
       .al
       .xl
@@ -1570,10 +1574,10 @@
 
         ; 89/8768
 
-    .endsection Unsorted898755Section
+    .endsection StatusScreenReturnToMapSection
 
 
-    .section Unsorted898768Section
+    .section StatusScreenReturnToCastleSection
 
       .al
       .xl
@@ -1594,10 +1598,10 @@
 
         ; 89/876D
 
-    .endsection Unsorted898768Section
+    .endsection StatusScreenReturnToCastleSection
 
 
-    .section Unsorted89876DSection
+    .section StatusScreenDrawItemDetailsSection
 
       .al
       .xl
@@ -1819,10 +1823,10 @@
 
         ; 89/8973
 
-    .endsection Unsorted89876DSection
+    .endsection StatusScreenDrawItemDetailsSection
 
 
-    .section Table898973Section
+    .section StatusScreenItemHitLabelSection
 
       .al
       .xl
@@ -1881,10 +1885,10 @@
         .enc "none"
 
 
-    .endsection Table898973Section
+    .endsection StatusScreenItemHitLabelSection
 
 
-    .section Unsorted8989ADSection
+    .section StatusScreenDrawPortraitAndMapSpriteSection
 
       .al
       .xl
@@ -1919,10 +1923,10 @@
 
         ; 89/89CE
 
-    .endsection Unsorted8989ADSection
+    .endsection StatusScreenDrawPortraitAndMapSpriteSection
 
 
-    .section Unsorted8989CESection
+    .section StatusScreenDrawItemCursorSection
 
       .al
       .xl
@@ -1958,10 +1962,10 @@
 
         ; 89/89EA
 
-    .endsection Unsorted8989CESection
+    .endsection StatusScreenDrawItemCursorSection
 
 
-    .section Unsorted8989EASection
+    .section StatusScreenDrawMapSpriteSection
 
       .al
       .xl
@@ -2033,10 +2037,10 @@
 
         .structSpriteArray aStatusScreenLargeMapSprite._Sprites
 
-    .endsection Unsorted8989EASection
+    .endsection StatusScreenDrawMapSpriteSection
 
 
-    .section Unsorted898A41Section
+    .section StatusScreenDrawPromotionMarkerSection
 
       .al
       .xl
@@ -2070,7 +2074,7 @@
 
         ; 89/8A61
 
-    .endsection Unsorted898A41Section
+    .endsection StatusScreenDrawPromotionMarkerSection
 
 
     .section Data898A61Section
@@ -2097,7 +2101,7 @@
     .endsection Data898A61Section
 
 
-    .section Unsorted898A7ESection
+    .section StatusScreenDrawRankIconsAndStarsSection
 
       .al
       .xl
@@ -2162,10 +2166,10 @@
 
         .structSpriteArray aStatusScreenWeaponRankIcons._Sprites
 
-    .endsection Unsorted898A7ESection
+    .endsection StatusScreenDrawRankIconsAndStarsSection
 
 
-    .section Unsorted898AF5Section
+    .section StatusScreenDrawEquippedWeaponIconSection
 
       .al
       .xl
@@ -2212,10 +2216,10 @@
 
         ; 89/8B2A
 
-    .endsection Unsorted898AF5Section
+    .endsection StatusScreenDrawEquippedWeaponIconSection
 
 
-    .section Table898B2ASection
+    .section StatusScreenWeaponTypeIconTilesSection
 
       .al
       .xl
@@ -2235,8 +2239,8 @@
 
         ; 89/8B3B
 
-    .endsection Table898B2ASection
-    .section Unsorted898B3BSection
+    .endsection StatusScreenWeaponTypeIconTilesSection
+    .section StatusScreenDrawInventoryIconsSection
 
       .al
       .xl
@@ -2292,10 +2296,10 @@
 
         ; 89/8B80
 
-    .endsection Unsorted898B3BSection
+    .endsection StatusScreenDrawInventoryIconsSection
 
 
-    .section Table898B80Section
+    .section StatusScreenInventoryRowYSection
 
       .al
       .xl
@@ -2308,7 +2312,7 @@
 
         ; 89/8B88
 
-    .endsection Table898B80Section
+    .endsection StatusScreenInventoryRowYSection
     .section Data898B88Section
 
       .al
@@ -2330,7 +2334,7 @@
         ; 89/8B97
 
     .endsection Data898B88Section
-    .section Unsorted898B97Section
+    .section StatusScreenDrawItemDetailSpritesSection
 
       .al
       .xl
@@ -2478,7 +2482,7 @@
 
         ; 89/8CBC
 
-    .endsection Unsorted898B97Section
+    .endsection StatusScreenDrawItemDetailSpritesSection
 
 
     .section Data898CBCSection
@@ -2586,7 +2590,7 @@
         ; 89/8D55
 
     .endsection Data898CBCSection
-    .section Unsorted898D55Section
+    .section StatusScreenDrawHolyBloodPageSpritesSection
 
       .al
       .xl
@@ -2741,7 +2745,7 @@
 
         ; 89/8E65
 
-    .endsection Unsorted898D55Section
+    .endsection StatusScreenDrawHolyBloodPageSpritesSection
 
 
     .section SpriteArray898E65Section
@@ -2760,7 +2764,7 @@
     .endsection SpriteArray898E65Section
 
 
-    .section Table898E6CSection
+    .section StatusScreenLoptousGlintFramesSection
 
       .al
       .xl
@@ -2800,8 +2804,8 @@
 
         ; 89/8E90
 
-    .endsection Table898E6CSection
-    .section Table898E90Section
+    .endsection StatusScreenLoptousGlintFramesSection
+    .section StatusScreenLoptousGlint2FramesSection
 
       .al
       .xl
@@ -2841,8 +2845,8 @@
 
         ; 89/8EB4
 
-    .endsection Table898E90Section
-    .section Unsorted898EB4Section
+    .endsection StatusScreenLoptousGlint2FramesSection
+    .section StatusScreenDrawHolyBloodRingSection
 
       .al
       .xl
@@ -2896,10 +2900,10 @@
 
         .structSpriteArray aStatusScreenHolyBloodRingSprites._Sprites
 
-    .endsection Unsorted898EB4Section
+    .endsection StatusScreenDrawHolyBloodRingSection
 
 
-    .section Unsorted898F16Section
+    .section StatusScreenDrawHolyBloodGlintsSection
 
       .al
       .xl
@@ -2941,10 +2945,10 @@
 
         ; 89/8F43
 
-    .endsection Unsorted898F16Section
+    .endsection StatusScreenDrawHolyBloodGlintsSection
 
 
-    .section Table898F43Section
+    .section StatusScreenHolyBloodRingXSection
 
       .al
       .xl
@@ -2958,10 +2962,10 @@
 
         ; 89/8F5B
 
-    .endsection Table898F43Section
+    .endsection StatusScreenHolyBloodRingXSection
 
 
-    .section Table898F5BSection
+    .section StatusScreenHolyBloodRingYSection
 
       .al
       .xl
@@ -2975,10 +2979,10 @@
 
         ; 89/8F73
 
-    .endsection Table898F5BSection
+    .endsection StatusScreenHolyBloodRingYSection
 
 
-    .section Unsorted898F73Section
+    .section StatusScreenDrawHolyBloodGlintSection
 
       .al
       .xl
@@ -3037,10 +3041,10 @@
 
         ; 89/8FD4
 
-    .endsection Unsorted898F73Section
+    .endsection StatusScreenDrawHolyBloodGlintSection
 
 
-    .section Table898FD4Section
+    .section StatusScreenGlintFrameTimesSection
 
       .al
       .xl
@@ -3054,10 +3058,10 @@
 
         ; 89/8FEC
 
-    .endsection Table898FD4Section
+    .endsection StatusScreenGlintFrameTimesSection
 
 
-    .section Table898FECSection
+    .section StatusScreenGlintPauseTimesSection
 
       .al
       .xl
@@ -3071,10 +3075,10 @@
 
         ; 89/9004
 
-    .endsection Table898FECSection
+    .endsection StatusScreenGlintPauseTimesSection
 
 
-    .section Table899004Section
+    .section StatusScreenGlintFramesSection
 
       .al
       .xl
@@ -3114,8 +3118,8 @@
 
         ; 89/9028
 
-    .endsection Table899004Section
-    .section Unsorted899028Section
+    .endsection StatusScreenGlintFramesSection
+    .section StatusScreenDrawMajorBloodGlintSection
 
       .al
       .xl
@@ -3172,10 +3176,10 @@
 
         ; 89/9081
 
-    .endsection Unsorted899028Section
+    .endsection StatusScreenDrawMajorBloodGlintSection
 
 
-    .section Table899081Section
+    .section StatusScreenMajorGlintFrameTimesSection
 
       .al
       .xl
@@ -3189,7 +3193,7 @@
 
         ; 89/9099
 
-    .endsection Table899081Section
+    .endsection StatusScreenMajorGlintFrameTimesSection
 
 
     .section Data899099Section
@@ -3233,7 +3237,7 @@
         ; 89/90BD
 
     .endsection Data899099Section
-    .section Unsorted8990BDSection
+    .section StatusScreenGetHolyBloodLevelsSection
 
       .al
       .xl
@@ -3276,20 +3280,20 @@
 
         ; 89/90DA
 
-    .endsection Unsorted8990BDSection
+    .endsection StatusScreenGetHolyBloodLevelsSection
 
 
-    .section Table899140Section
+    .section StatusScreenBG3SplitHDMASection
 
       .al
       .xl
 
       aStatusScreenBG3SplitHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenBuildBG3SplitTable, rlStatusScreenBuildBG3SplitTable, aStatusScreenHDMAHalt, $0008C8, PPU_REG_BASE + $12, $02 ; 89/9140
 
-    .endsection Table899140Section
+    .endsection StatusScreenBG3SplitHDMASection
 
 
-    .section Unsorted89914BSection
+    .section StatusScreenBuildBG3SplitTableSection
 
       .al
       .xl
@@ -3327,10 +3331,10 @@
 
         ; 89/9178
 
-    .endsection Unsorted89914BSection
+    .endsection StatusScreenBuildBG3SplitTableSection
 
 
-    .section Table899178Section
+    .section StatusScreenHDMAHaltSection
 
       .al
       .xl
@@ -3340,10 +3344,10 @@
 
       aStatusScreenBG1SplitHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenBuildBG1SplitTable, rlStatusScreenBuildBG1SplitTable, aStatusScreenHDMAHalt, aStatusScreenBG1SplitTable, PPU_REG_BASE + $0E, $02 ; 89/917A
 
-    .endsection Table899178Section
+    .endsection StatusScreenHDMAHaltSection
 
 
-    .section Unsorted899185Section
+    .section StatusScreenBuildBG1SplitTableSection
 
       .al
       .xl
@@ -3382,20 +3386,20 @@
 
         ; 89/91B9
 
-    .endsection Unsorted899185Section
+    .endsection StatusScreenBuildBG1SplitTableSection
 
 
-    .section Table8991B9Section
+    .section StatusScreenGradientHDMASection
 
       .al
       .xl
 
       aStatusScreenGradientHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenInitGradientHDMA, rlStatusScreenGradientHDMAIdle, aStatusScreenHDMAHalt, aStatusScreenGradientTable, PPU_REG_BASE + $32, $00 ; 89/91B9
 
-    .endsection Table8991B9Section
+    .endsection StatusScreenGradientHDMASection
 
 
-    .section Unsorted8991C4Section
+    .section StatusScreenInitGradientHDMASection
 
       .al
       .xl
@@ -3467,10 +3471,10 @@
 
         ; 89/9200
 
-    .endsection Unsorted8991C4Section
+    .endsection StatusScreenInitGradientHDMASection
 
 
-    .section Unsorted899200Section
+    .section StatusScreenSetGradientSection
 
       .al
       .xl
@@ -3528,7 +3532,7 @@
 
         ; 89/923F
 
-    .endsection Unsorted899200Section
+    .endsection StatusScreenSetGradientSection
 
 
     .section Data89923FSection
@@ -3569,7 +3573,7 @@
     .endsection Data89923FSection
 
 
-    .section Unsorted8992ADSection
+    .section StatusScreenDrawSkillIconsSection
 
       .al
       .xl
@@ -3620,10 +3624,10 @@
 
         ; 89/92E7
 
-    .endsection Unsorted8992ADSection
+    .endsection StatusScreenDrawSkillIconsSection
 
 
-    .section Table8992E7Section
+    .section StatusScreenSkillIconXSection
 
       .al
       .xl
@@ -3652,8 +3656,8 @@
 
         ; 89/933C
 
-    .endsection Table8992E7Section
-    .section Unsorted89933CSection
+    .endsection StatusScreenSkillIconXSection
+    .section StatusScreenDrawDropMarkerSection
 
       .al
       .xl
@@ -3691,7 +3695,7 @@
 
         ; 89/935F
 
-    .endsection Unsorted89933CSection
+    .endsection StatusScreenDrawDropMarkerSection
 
 
     .section Data89935FSection
@@ -3714,7 +3718,7 @@
         ; 89/936E
 
     .endsection Data89935FSection
-    .section Unsorted89936ESection
+    .section StatusScreenDrawItemDescriptionSection
 
       .al
       .xl
@@ -3884,10 +3888,10 @@
 
         ; 89/94B8
 
-    .endsection Unsorted89936ESection
+    .endsection StatusScreenDrawItemDescriptionSection
 
 
-    .section Unsorted8994B8Section
+    .section StatusScreenDrawScrollArrowSection
 
       .al
       .xl
@@ -3952,10 +3956,10 @@
 
         .structSpriteArray aStatusScreenScrollArrow._Sprites
 
-    .endsection Unsorted8994B8Section
+    .endsection StatusScreenDrawScrollArrowSection
 
 
-    .section Unsorted899510Section
+    .section StatusScreenDrawSummarySection
 
       .al
       .xl
@@ -4173,10 +4177,10 @@
 
         ; 89/9703
 
-    .endsection Unsorted899510Section
+    .endsection StatusScreenDrawSummarySection
 
 
-    .section Table899703Section
+    .section StatusScreenDashesSection
 
       .al
       .xl
@@ -4196,10 +4200,10 @@
         .enc "none"
 
 
-    .endsection Table899703Section
+    .endsection StatusScreenDashesSection
 
 
-    .section Unsorted89970DSection
+    .section StatusScreenDrawStatsAndInventorySection
 
       .al
       .xl
@@ -4412,7 +4416,7 @@
 
         ; 89/98D4
 
-    .endsection Unsorted89970DSection
+    .endsection StatusScreenDrawStatsAndInventorySection
 
 
     .section Data8998D4Section
@@ -4436,7 +4440,7 @@
         ; 89/98E1
 
     .endsection Data8998D4Section
-    .section Unsorted8998E1Section
+    .section StatusScreenDrawPersonalDataSection
 
       .al
       .xl
@@ -4747,10 +4751,10 @@
 
         ; 89/9B8F
 
-    .endsection Unsorted8998E1Section
+    .endsection StatusScreenDrawPersonalDataSection
 
 
-    .section Table899B8FSection
+    .section StatusScreenDashSection
 
       .al
       .xl
@@ -4779,10 +4783,10 @@
         .enc "none"
 
 
-    .endsection Table899B8FSection
+    .endsection StatusScreenDashSection
 
 
-    .section Unsorted899BA5Section
+    .section StatusScreenDrawSummaryLabelsSection
 
       .al
       .xl
@@ -4858,10 +4862,10 @@
 
         ; 89/9C44
 
-    .endsection Unsorted899BA5Section
+    .endsection StatusScreenDrawSummaryLabelsSection
 
 
-    .section Table899C44Section
+    .section StatusScreenHPBracketsSection
 
       .al
       .xl
@@ -4909,10 +4913,10 @@
         .enc "none"
 
 
-    .endsection Table899C44Section
+    .endsection StatusScreenHPBracketsSection
 
 
-    .section Unsorted899C7CSection
+    .section StatusScreenDrawStatLabelsSection
 
       .al
       .xl
@@ -4992,10 +4996,10 @@
 
         ; 89/9D26
 
-    .endsection Unsorted899C7CSection
+    .endsection StatusScreenDrawStatLabelsSection
 
 
-    .section Table899D26Section
+    .section StatusScreenStrengthLabelSection
 
       .al
       .xl
@@ -5050,10 +5054,10 @@
         .enc "none"
 
 
-    .endsection Table899D26Section
+    .endsection StatusScreenStrengthLabelSection
 
 
-    .section Unsorted899D72Section
+    .section StatusScreenDrawPersonalDataLabelsSection
 
       .al
       .xl
@@ -5224,10 +5228,10 @@
 
         ; 89/9F0B
 
-    .endsection Unsorted899D72Section
+    .endsection StatusScreenDrawPersonalDataLabelsSection
 
 
-    .section Table899F0BSection
+    .section StatusScreenArmyLabelSection
 
       .al
       .xl
@@ -5359,10 +5363,10 @@
         .enc "none"
 
 
-    .endsection Table899F0BSection
+    .endsection StatusScreenArmyLabelSection
 
 
-    .section Unsorted899FA1Section
+    .section StatusScreenDrawLeadershipStarsSection
 
       .al
       .xl
@@ -5419,10 +5423,10 @@
 
         .structSpriteArray aStatusScreenLeadershipStar._Sprites
 
-    .endsection Unsorted899FA1Section
+    .endsection StatusScreenDrawLeadershipStarsSection
 
 
-    .section Unsorted89A085Section
+    .section DrawStatBonusSection
 
       .al
       .xl
@@ -5514,10 +5518,10 @@
 
         ; 89/A107
 
-    .endsection Unsorted89A085Section
+    .endsection DrawStatBonusSection
 
 
-    .section Unsorted89A138Section
+    .section StatusScreenLoadPortraitSection
 
       .al
       .xl
@@ -5548,10 +5552,10 @@
 
         ; 89/A150
 
-    .endsection Unsorted89A138Section
+    .endsection StatusScreenLoadPortraitSection
 
 
-    .section Unsorted89A150Section
+    .section LoadPortraitAsSpritesSection
 
       .al
       .xl
@@ -5609,10 +5613,10 @@
 
         ; 89/A18C
 
-    .endsection Unsorted89A150Section
+    .endsection LoadPortraitAsSpritesSection
 
 
-    .section Unsorted89A25ASection
+    .section StatusScreenSkillDetailsSection
 
       .al
       .xl
@@ -5696,10 +5700,10 @@
 
         ; 89/A2ED
 
-    .endsection Unsorted89A25ASection
+    .endsection StatusScreenSkillDetailsSection
 
 
-    .section Unsorted89A2EDSection
+    .section StatusScreenFadeInSection
 
       .al
       .xl
@@ -5800,10 +5804,10 @@
 
         ; 89/A376
 
-    .endsection Unsorted89A2EDSection
+    .endsection StatusScreenFadeInSection
 
 
-    .section Unsorted89A376Section
+    .section StatusScreenBuildSkillListSection
 
       .al
       .xl
@@ -5860,10 +5864,10 @@
 
         ; 89/A3C0
 
-    .endsection Unsorted89A376Section
+    .endsection StatusScreenBuildSkillListSection
 
 
-    .section Unsorted89A3C0Section
+    .section StatusScreenDrawSkillDescriptionSection
 
       .al
       .xl
@@ -5992,10 +5996,10 @@
 
         ; 89/A4C5
 
-    .endsection Unsorted89A3C0Section
+    .endsection StatusScreenDrawSkillDescriptionSection
 
 
-    .section Table89A4C5Section
+    .section StatusScreenPersonalSkillTextSection
 
       .al
       .xl
@@ -6015,10 +6019,10 @@
         .enc "none"
 
 
-    .endsection Table89A4C5Section
+    .endsection StatusScreenPersonalSkillTextSection
 
 
-    .section Unsorted89A4E3Section
+    .section StatusScreenDrawSkillCursorSection
 
       .al
       .xl
@@ -6073,10 +6077,10 @@
 
         ; 89/A52D
 
-    .endsection Unsorted89A4E3Section
+    .endsection StatusScreenDrawSkillCursorSection
 
 
-    .section Table89A52DSection
+    .section StatusScreenSkillIconTilesBySkillSection
 
       .al
       .xl
@@ -6098,8 +6102,8 @@
 
         ; 89/A572
 
-    .endsection Table89A52DSection
-    .section Table89A572Section
+    .endsection StatusScreenSkillIconTilesBySkillSection
+    .section StatusScreenSkillCursorFramesSection
 
       .al
       .xl
@@ -6136,8 +6140,8 @@
 
         ; 89/A59E
 
-    .endsection Table89A572Section
-    .section Table89A59ESection
+    .endsection StatusScreenSkillCursorFramesSection
+    .section StatusScreenSkillCursorXSection
 
       .al
       .xl
@@ -6150,10 +6154,10 @@
 
         ; 89/A5AA
 
-    .endsection Table89A59ESection
+    .endsection StatusScreenSkillCursorXSection
 
 
-    .section Unsorted89A5AASection
+    .section DrawWeaponRankLetterSection
 
       .al
       .xl
@@ -6197,10 +6201,10 @@
 
         ; 89/A5D1
 
-    .endsection Unsorted89A5AASection
+    .endsection DrawWeaponRankLetterSection
 
 
-    .section Unsorted89A5D1Section
+    .section WeaponRankLetterTilesSection
 
       .al
       .xl
@@ -6378,7 +6382,7 @@
 
         ; 89/A72E
 
-    .endsection Unsorted89A5D1Section
+    .endsection WeaponRankLetterTilesSection
 
 
     .section SpriteArray89A72ESection
@@ -6408,7 +6412,7 @@
     .endsection SpriteArray89A72ESection
 
 
-    .section Table89A76CSection
+    .section ConditionNamePointersSection
 
       .al
       .xl
@@ -6599,10 +6603,10 @@
 
         ; 89/ABF9
 
-    .endsection Table89A76CSection
+    .endsection ConditionNamePointersSection
 
 
-    .section Table89ABF9Section
+    .section SkillDescriptionPointersSection
 
       .al
       .xl
@@ -6646,4 +6650,4 @@
 
         ; 89/AC56
 
-    .endsection Table89ABF9Section
+    .endsection SkillDescriptionPointersSection

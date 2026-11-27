@@ -359,7 +359,7 @@
     .endsection SplitNumberIntoDigitsSection
 
 
-    .section Unsorted80A1ABSection
+    .section UnsignedDivide16By16R13Section
 
       .al
       .xl
@@ -484,10 +484,10 @@
 
         ; 80/A21C
 
-    .endsection Unsorted80A1ABSection
+    .endsection UnsignedDivide16By16R13Section
 
 
-    .section Unsorted85BCB8Section
+    .section SignedDivide16By16R13Section
 
       .al
       .xl
@@ -522,7 +522,7 @@
 
         ; 85/BCD4
 
-    .endsection Unsorted85BCB8Section
+    .endsection SignedDivide16By16R13Section
 
 
     .section Unreferenced809FB2Section

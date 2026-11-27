@@ -4,7 +4,7 @@
 ; the castle tile, the castle action rounds, giving money). Banks $84 and $87.
 
 
-    .section Unsorted84AF17Section
+    .section SortieUnitFromCastleSection
 
       .al
       .xl
@@ -59,10 +59,10 @@
 
         ; 84/AF57
 
-    .endsection Unsorted84AF17Section
+    .endsection SortieUnitFromCastleSection
 
 
-    .section Unsorted84AF57Section
+    .section SortieUnitNorthOfCastleSection
 
       .al
       .xl
@@ -121,10 +121,10 @@
 
         ; 84/AF9E
 
-    .endsection Unsorted84AF57Section
+    .endsection SortieUnitNorthOfCastleSection
 
 
-    .section Unsorted84B6A6Section
+    .section BuildCastleActionRoundsSection
 
       .al
       .xl
@@ -172,10 +172,10 @@
 
         ; 84/B6E2
 
-    .endsection Unsorted84B6A6Section
+    .endsection BuildCastleActionRoundsSection
 
 
-    .section Unsorted84B6E2Section
+    .section BuildCastleDanceRoundsSection
 
       .al
       .xl
@@ -205,10 +205,10 @@
 
         ; 84/B6F6
 
-    .endsection Unsorted84B6E2Section
+    .endsection BuildCastleDanceRoundsSection
 
 
-    .section Unsorted84B6F6Section
+    .section CastleGiveMoneySection
 
       .al
       .xl
@@ -444,10 +444,10 @@
 
         ; 84/B8C1
 
-    .endsection Unsorted84B6F6Section
+    .endsection CastleGiveMoneySection
 
 
-    .section Unsorted879F12Section
+    .section CheckUnitCanSortieSection
 
       .al
       .xl
@@ -646,10 +646,10 @@
 
         ; 87/A006
 
-    .endsection Unsorted879F12Section
+    .endsection CheckUnitCanSortieSection
 
 
-    .section Unsorted87A006Section
+    .section CheckUnitCanDanceSection
 
       .al
       .xl
@@ -725,10 +725,10 @@
 
         ; 87/A040
 
-    .endsection Unsorted87A006Section
+    .endsection CheckUnitCanDanceSection
 
 
-    .section Unsorted87EF46Section
+    .section GetCastleFacilitiesSection
 
       .al
       .xl
@@ -767,4 +767,4 @@
 
         ; 87/EF61
 
-    .endsection Unsorted87EF46Section
+    .endsection GetCastleFacilitiesSection

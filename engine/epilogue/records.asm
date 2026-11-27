@@ -6,7 +6,7 @@
 ; the secret button code (aEpilogueSecretCode) that reveals one more row of it.
 
 
-    .section Unsorted8DAD73Section
+    .section ScrollEpilogueRecordTextSection
 
       .al
       .xl
@@ -47,10 +47,10 @@
 
         ; 8D/AD9E
 
-    .endsection Unsorted8DAD73Section
+    .endsection ScrollEpilogueRecordTextSection
 
 
-    .section Table8DADFASection
+    .section EpilogueRecordsBrightnessHDMAInfoSection
 
       .al
       .xl
@@ -110,10 +110,10 @@
 
       aEpilogueRecordLayerHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueRecordLayerHDMACycle, rlEpilogueRecordLayerHDMACycle, aEpilogueRecordLayerHDMACode, $7F56C9, PPU_REG_BASE + $2C, $00 ; 8D/AE7A
 
-    .endsection Table8DADFASection
+    .endsection EpilogueRecordsBrightnessHDMAInfoSection
 
 
-    .section Unsorted8DAE85Section
+    .section EpilogueRecordLayerHDMACycleSection
 
       .al
       .xl
@@ -160,10 +160,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted8DAE85Section
+    .endsection EpilogueRecordLayerHDMACycleSection
 
 
-    .section Unsorted8DAEC2Section
+    .section SetUpEpilogueRecordTextWindowSection
 
       .al
       .xl
@@ -228,10 +228,10 @@
 
         ; 8D/AF33
 
-    .endsection Unsorted8DAEC2Section
+    .endsection SetUpEpilogueRecordTextWindowSection
 
 
-    .section Unsorted8DAFA5Section
+    .section ShowEpilogueRankingScreenSection
 
       .al
       .xl
@@ -324,10 +324,16 @@
 
         ; 8D/B056
 
-    .endsection Unsorted8DAFA5Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8DB056 .structDecompressionDMAEntry acEpilogueRankingBG1Tilemap, $0800, $5800 ; 8D/B056
+      aDecompressionDMAEntry8DB05E .structDecompressionDMAEntry acEpilogueRankingBG2Tilemap, $0800, $6800 ; 8D/B05E
+      aDecompressionDMAEntry8DB066 .structDecompressionDMAEntry gcRankingScreenTiles, $1000, $4000 ; 8D/B066
+
+    .endsection ShowEpilogueRankingScreenSection
 
 
-    .section Unsorted8DB06ESection
+    .section DrawRankingScreenRankingsSection
 
       .al
       .xl
@@ -437,10 +443,10 @@
 
         ; 8D/B150
 
-    .endsection Unsorted8DB06ESection
+    .endsection DrawRankingScreenRankingsSection
 
 
-    .section Unsorted8DB150Section
+    .section DrawRankingScreenHoursSection
 
       .al
       .xl
@@ -533,10 +539,10 @@
 
         ; 8D/B1DD
 
-    .endsection Unsorted8DB150Section
+    .endsection DrawRankingScreenHoursSection
 
 
-    .section Unsorted8DB1DDSection
+    .section DrawRankingScreenMinutesSection
 
       .al
       .xl
@@ -585,10 +591,10 @@
 
         ; 8D/B217
 
-    .endsection Unsorted8DB1DDSection
+    .endsection DrawRankingScreenMinutesSection
 
 
-    .section Unsorted8DB217Section
+    .section DrawRankingScreenCompletionsSection
 
       .al
       .xl
@@ -638,10 +644,10 @@
 
         ; 8D/B252
 
-    .endsection Unsorted8DB217Section
+    .endsection DrawRankingScreenCompletionsSection
 
 
-    .section Unsorted8DB252Section
+    .section DrawRankingScreenLettersSection
 
       .al
       .xl
@@ -682,10 +688,10 @@
 
         ; 8D/B276
 
-    .endsection Unsorted8DB252Section
+    .endsection DrawRankingScreenLettersSection
 
 
-    .section Unsorted8DB276Section
+    .section CheckEpilogueSecretCodeSection
 
       .al
       .xl
@@ -740,10 +746,10 @@
 
         ; 8D/B2B8
 
-    .endsection Unsorted8DB276Section
+    .endsection CheckEpilogueSecretCodeSection
 
 
-    .section Unsorted8DB2B8Section
+    .section EpilogueSecretCodeSection
 
       .al
       .xl
@@ -1266,6 +1272,6 @@
 
         ; 8D/B4F1
 
-    .endsection Unsorted8DB2B8Section
+    .endsection EpilogueSecretCodeSection
 
 

@@ -4,7 +4,7 @@
 ; first. Also the castle staff lists and rlFindTargetsForItemRange. Bank $84.
 
 
-    .section Unsorted84F75CSection
+    .section CheckInventorySlotStaffUsableSection
 
       .al
       .xl
@@ -339,10 +339,10 @@
 
         ; 84/F8D9
 
-    .endsection Unsorted84F75CSection
+    .endsection CheckInventorySlotStaffUsableSection
 
 
-    .section Unsorted84F8D9Section
+    .section BuildCastleStaffSlotListsSection
 
       .al
       .xl
@@ -412,10 +412,10 @@
 
         ; 84/F939
 
-    .endsection Unsorted84F8D9Section
+    .endsection BuildCastleStaffSlotListsSection
 
 
-    .section Unsorted84FED2Section
+    .section FindTargetsForItemRangeSection
 
       .al
       .xl
@@ -474,5 +474,5 @@
 
         ; 84/FF0B
 
-    .endsection Unsorted84FED2Section
+    .endsection FindTargetsForItemRangeSection
 

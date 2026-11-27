@@ -1,7 +1,7 @@
 ; The battle forecast: the target's and the attacker's windows while a target is chosen.
 
 
-    .section Table858D62Section
+    .section BattleForecastTargetTilemapDataSection
 
       .al
       .xl
@@ -20,10 +20,10 @@
         .long aBattleForecastTargetData
         .byte $00
 
-    .endsection Table858D62Section
+    .endsection BattleForecastTargetTilemapDataSection
 
 
-    .section Unsorted858D83Section
+    .section ProcBattleForecastTargetInitSection
 
       .al
       .xl
@@ -190,10 +190,10 @@
 
         ; 85/8EA1
 
-    .endsection Unsorted858D83Section
+    .endsection ProcBattleForecastTargetInitSection
 
 
-    .section Table858EA1Section
+    .section BattleForecastLevelTextSection
 
       .al
       .xl
@@ -231,10 +231,10 @@
       aBattleForecastLabel2BottomTiles ; 85/8EC1
         .byte $5A, $5B, $5C, $00
 
-    .endsection Table858EA1Section
+    .endsection BattleForecastLevelTextSection
 
 
-    .section Unsorted858EC5Section
+    .section ProcBattleForecastTargetCycleSection
 
       .al
       .xl
@@ -291,10 +291,10 @@
 
         ; 85/8F10
 
-    .endsection Unsorted858EC5Section
+    .endsection ProcBattleForecastTargetCycleSection
 
 
-    .section Unsorted858F10Section
+    .section BattleForecastCheckCloseSection
 
       .al
       .xl
@@ -327,10 +327,10 @@
 
         ; 85/8F28
 
-    .endsection Unsorted858F10Section
+    .endsection BattleForecastCheckCloseSection
 
 
-    .section Unsorted858F28Section
+    .section BattleForecastAvoidCursorSection
 
       .al
       .xl
@@ -513,10 +513,10 @@
 
         ; 85/9078
 
-    .endsection Unsorted858F28Section
+    .endsection BattleForecastAvoidCursorSection
 
 
-    .section Table859078Section
+    .section BattleForecastSlashTextSection
 
       .al
       .xl
@@ -564,10 +564,10 @@
         .long aBattleForecastAttackerData
         .byte $00
 
-    .endsection Table859078Section
+    .endsection BattleForecastSlashTextSection
 
 
-    .section Unsorted8590B9Section
+    .section ProcBattleForecastAttackerInitSection
 
       .al
       .xl
@@ -647,10 +647,10 @@
 
         ; 85/9108
 
-    .endsection Unsorted8590B9Section
+    .endsection ProcBattleForecastAttackerInitSection
 
 
-    .section Unsorted859108Section
+    .section ProcBattleForecastAttackerCycleSection
 
       .al
       .xl
@@ -709,10 +709,10 @@
 
         PROC_HALT
 
-    .endsection Unsorted859108Section
+    .endsection ProcBattleForecastAttackerCycleSection
 
 
-    .section Unsorted85915ASection
+    .section BattleForecastDrawAttackerSection
 
       .al
       .xl
@@ -900,6 +900,6 @@
 
         ; 85/926C
 
-    .endsection Unsorted85915ASection
+    .endsection BattleForecastDrawAttackerSection
 
 

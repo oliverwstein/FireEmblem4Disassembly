@@ -503,7 +503,7 @@
     .endsection ProcBelhallaAttackingMageInitSection
 
 
-    .section Unsorted9EF79DSection
+    .section SpawnNextBelhallaAttackingMageSection
 
       .al
       .xl
@@ -580,10 +580,10 @@
 
         .databank 0
 
-    .endsection Unsorted9EF79DSection
+    .endsection SpawnNextBelhallaAttackingMageSection
 
 
-    .section Unsorted9EEFF1Section
+    .section StartSoloMapBattleAnimationSection
 
       .al
       .xl
@@ -786,10 +786,10 @@
 
         ; 9E/F1B5
 
-    .endsection Unsorted9EEFF1Section
+    .endsection StartSoloMapBattleAnimationSection
 
 
-    .section Unsorted9EF1D9Section
+    .section StartWarpAwayAnimationNoUnitSection
 
       .al
       .xl
@@ -817,10 +817,10 @@
 
         ; 9E/F1FA
 
-    .endsection Unsorted9EF1D9Section
+    .endsection StartWarpAwayAnimationNoUnitSection
 
 
-    .section Unsorted9EF1FASection
+    .section StartWarpAwayAnimationSection
 
       .al
       .xl
@@ -964,10 +964,10 @@
 
         .databank 0
 
-    .endsection Unsorted9EF1FASection
+    .endsection StartWarpAwayAnimationSection
 
 
-    .section Unsorted9EF353Section
+    .section StartWarpInAnimationSection
 
       .al
       .xl
@@ -1011,10 +1011,10 @@
 
         ; 9E/F37F
 
-    .endsection Unsorted9EF353Section
+    .endsection StartWarpInAnimationSection
 
 
-    .section Unsorted9EF37FSection
+    .section ProcWarpInSection
 
       .al
       .xl
@@ -1128,10 +1128,10 @@
 
         .databank 0
 
-    .endsection Unsorted9EF37FSection
+    .endsection ProcWarpInSection
 
 
-    .section Unsorted9EF49ESection
+    .section ProcWarpInCodeSection
 
       .al
       .xl
@@ -1200,10 +1200,10 @@
 
         ; 9E/F55B
 
-    .endsection Unsorted9EF49ESection
+    .endsection ProcWarpInCodeSection
 
 
-    .section Unsorted9EF55BSection
+    .section WaitWarpDecompressionAndTimerSection
 
       .al
       .xl
@@ -1303,10 +1303,10 @@
 
         ; 9E/F5D0
 
-    .endsection Unsorted9EF55BSection
+    .endsection WaitWarpDecompressionAndTimerSection
 
 
-    .section Unsorted9EF5D0Section
+    .section WaitMapAnimationSignalBit2Section
 
       .al
       .xl
@@ -1366,10 +1366,10 @@
 
         ; 9E/F60F
 
-    .endsection Unsorted9EF5D0Section
+    .endsection WaitMapAnimationSignalBit2Section
 
 
-    .section Unsorted9EF60FSection
+    .section StartBelhallaMagesAttackSection
 
       .al
       .xl
@@ -1389,10 +1389,10 @@
 
         .databank 0
 
-    .endsection Unsorted9EF60FSection
+    .endsection StartBelhallaMagesAttackSection
 
 
-    .section Unsorted9EF9DFSection
+    .section ProcBelhallaAttackingMageCycle2Section
 
       .al
       .xl
@@ -1407,10 +1407,10 @@
 
         .databank 0
 
-    .endsection Unsorted9EF9DFSection
+    .endsection ProcBelhallaAttackingMageCycle2Section
 
 
-    .section Unsorted9EF9E0Section
+    .section ProcBelhallaAttackingMageCodeSection
 
       .al
       .xl
@@ -1434,10 +1434,10 @@
         PROC_YIELD 1
         PROC_END
 
-    .endsection Unsorted9EF9E0Section
+    .endsection ProcBelhallaAttackingMageCodeSection
 
 
-    .section Unsorted9EFA17Section
+    .section FillScriptedUnitMapActionSection
 
       .al
       .xl
@@ -1829,10 +1829,10 @@
 
         .databank 0
 
-    .endsection Unsorted9EFA17Section
+    .endsection FillScriptedUnitMapActionSection
 
 
-    .section Unsorted9EFC47Section
+    .section GrayOutBelhallaBlastUnitsSection
 
       .al
       .xl
@@ -1965,5 +1965,5 @@
 
         ; fill 0
 
-    .endsection Unsorted9EFC47Section
+    .endsection GrayOutBelhallaBlastUnitsSection
 

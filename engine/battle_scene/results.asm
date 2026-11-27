@@ -3,7 +3,7 @@
 ; skill banners (rlBattleSceneShowSkill) and Julius's ending.
 
 
-    .section Unsorted95E7B3Section
+    .section BattleSceneScriptClearMessageWindowSection
 
       .al
       .xl
@@ -88,7 +88,7 @@
 
         ; 95/E80D
 
-    .endsection Unsorted95E7B3Section
+    .endsection BattleSceneScriptClearMessageWindowSection
 
 
     .section Unreferenced95E80DSection
@@ -126,7 +126,7 @@
         ; 95/E834
 
     .endsection Unreferenced95E80DSection
-    .section Unsorted95E834Section
+    .section BattleSceneSetUpMessageDialogueSection
 
       .al
       .xl
@@ -167,7 +167,7 @@
 
         ; 95/E877
 
-    .endsection Unsorted95E834Section
+    .endsection BattleSceneSetUpMessageDialogueSection
 
 
     .section Unreferenced95E877Section
@@ -197,7 +197,7 @@
         ; 95/E888
 
     .endsection Unreferenced95E877Section
-    .section Unsorted95E888Section
+    .section BattleSceneScriptRunMessageSection
 
       .al
       .xl
@@ -546,10 +546,10 @@
 
         ; 95/EA47
 
-    .endsection Unsorted95E888Section
+    .endsection BattleSceneScriptRunMessageSection
 
 
-    .section Unsorted96881FSection
+    .section BattleSceneShowBattleQuoteSection
 
       .al
       .xl
@@ -720,10 +720,10 @@
 
         .databank 0
 
-    .endsection Unsorted96881FSection
+    .endsection BattleSceneShowBattleQuoteSection
 
 
-    .section Unsorted96A20ESection
+    .section BattleSceneEndStepJuliusSection
 
       .al
       .xl
@@ -830,10 +830,10 @@
 
         ; 96/A28B
 
-    .endsection Unsorted96A20ESection
+    .endsection BattleSceneEndStepJuliusSection
 
 
-    .section Unsorted96F558Section
+    .section BattleSceneEndStepType2ScriptSection
 
       .al
       .xl
@@ -1083,10 +1083,10 @@
 
         .databank 0
 
-    .endsection Unsorted96F558Section
+    .endsection BattleSceneEndStepType2ScriptSection
 
 
-    .section Unsorted96F676Section
+    .section BattleSceneShowLevelUpBannerSection
 
       .al
       .xl
@@ -1123,10 +1123,10 @@
 
         ; 96/F697
 
-    .endsection Unsorted96F676Section
+    .endsection BattleSceneShowLevelUpBannerSection
 
 
-    .section Unsorted96F697Section
+    .section BattleSceneShowSkillSection
 
       .al
       .xl
@@ -1373,10 +1373,10 @@
 
         ; 96/F7A8
 
-    .endsection Unsorted96F697Section
+    .endsection BattleSceneShowSkillSection
 
 
-    .section Unsorted96F7A8Section
+    .section BattleSceneFindDialoguePortraitSection
 
       .al
       .xl
@@ -1430,6 +1430,6 @@
 
         ; 96/F7D4
 
-    .endsection Unsorted96F7A8Section
+    .endsection BattleSceneFindDialoguePortraitSection
 
 

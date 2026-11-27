@@ -787,7 +787,7 @@
     .endsection DialogueWithBGSection
 
 
-    .section Unsorted8AE29FSection
+    .section FreeConversationPortraitFadeProcsSection
 
       .al
       .xl
@@ -851,10 +851,10 @@
 
         ; 8A/E2F8
 
-    .endsection Unsorted8AE29FSection
+    .endsection FreeConversationPortraitFadeProcsSection
 
 
-    .section Unsorted828648Section
+    .section StartDialogueWithBoxGraphicsSection
 
       .al
       .xl
@@ -878,10 +878,10 @@
 
         ; 82/8653
 
-    .endsection Unsorted828648Section
+    .endsection StartDialogueWithBoxGraphicsSection
 
 
-    .section Unsorted8288F3Section
+    .section ProcDialogueWithBGFromPointerInitSection
 
       .al
       .xl
@@ -907,6 +907,6 @@
 
         ; 82/8906
 
-    .endsection Unsorted8288F3Section
+    .endsection ProcDialogueWithBGFromPointerInitSection
 
 

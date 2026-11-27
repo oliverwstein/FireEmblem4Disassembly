@@ -3,7 +3,7 @@
 ; rlBattleSceneApplyStrike lands it: HP loss, damage flash, knockback, hit sound.
 
 
-    .section Unsorted95A65FSection
+    .section BattleSceneRunRoundsSection
 
       .al
       .xl
@@ -570,7 +570,7 @@
 
         ; 95/AA8D
 
-    .endsection Unsorted95A65FSection
+    .endsection BattleSceneRunRoundsSection
 
 
     .section Unreferenced95AA8DSection
@@ -645,7 +645,7 @@
         ; 95/AAFF
 
     .endsection Unreferenced95AA8DSection
-    .section Unsorted95AAFFSection
+    .section BattleSceneQueueIdleActionSection
 
       .al
       .xl
@@ -751,10 +751,10 @@
 
         ; 95/AB80
 
-    .endsection Unsorted95AAFFSection
+    .endsection BattleSceneQueueIdleActionSection
 
 
-    .section Unsorted95AB80Section
+    .section BattleSceneDodgeActionsSection
 
       .al
       .xl
@@ -805,10 +805,10 @@
 
         ; 95/ABBB
 
-    .endsection Unsorted95AB80Section
+    .endsection BattleSceneDodgeActionsSection
 
 
-    .section Unsorted95ABBBSection
+    .section BattleSceneQueueAttackSection
 
       .al
       .xl
@@ -910,10 +910,10 @@
 
         ; 95/AC3B
 
-    .endsection Unsorted95ABBBSection
+    .endsection BattleSceneQueueAttackSection
 
 
-    .section Unsorted95AC41Section
+    .section BattleSceneQueueCriticalAttackSection
 
       .al
       .xl
@@ -995,10 +995,10 @@
 
         ; 95/ACA8
 
-    .endsection Unsorted95AC41Section
+    .endsection BattleSceneQueueCriticalAttackSection
 
 
-    .section Unsorted95ACAESection
+    .section BattleSceneQueueSpecialCriticalAttackSection
 
       .al
       .xl
@@ -1049,10 +1049,10 @@
 
         ; 95/ACF0
 
-    .endsection Unsorted95ACAESection
+    .endsection BattleSceneQueueSpecialCriticalAttackSection
 
 
-    .section Unsorted95ACF6Section
+    .section BattleSceneQueueMagicSwordAttackSection
 
       .al
       .xl
@@ -1126,10 +1126,10 @@
 
         ; 95/AD64
 
-    .endsection Unsorted95ACF6Section
+    .endsection BattleSceneQueueMagicSwordAttackSection
 
 
-    .section Unsorted95AD8CSection
+    .section BattleSceneMagicSwordSwingActionsSection
 
       .al
       .xl
@@ -1193,10 +1193,10 @@
 
         ; 95/ADD6
 
-    .endsection Unsorted95AD8CSection
+    .endsection BattleSceneMagicSwordSwingActionsSection
 
 
-    .section Unsorted95ADD6Section
+    .section BattleSceneQueueStaffActionSection
 
       .al
       .xl
@@ -1375,10 +1375,10 @@
 
         ; 95/AE8B
 
-    .endsection Unsorted95ADD6Section
+    .endsection BattleSceneQueueStaffActionSection
 
 
-    .section Unsorted95AE8BSection
+    .section BattleSceneApplyEffectStrikeSection
 
       .al
       .xl
@@ -1408,10 +1408,10 @@
 
         ; 95/AEA2
 
-    .endsection Unsorted95AE8BSection
+    .endsection BattleSceneApplyEffectStrikeSection
 
 
-    .section Unsorted95AEA2Section
+    .section BattleSceneApplyStrikeSection
 
       .al
       .xl
@@ -1845,7 +1845,7 @@
 
         ; 95/B114
 
-    .endsection Unsorted95AEA2Section
+    .endsection BattleSceneApplyStrikeSection
 
 
     .section Unreferenced95B114Section
@@ -1948,7 +1948,7 @@
         ; 95/B184
 
     .endsection Unreferenced95B114Section
-    .section Unsorted978000Section
+    .section BattleScenePlayHolyWeaponSoundSection
 
       .al
       .xl
@@ -1984,7 +1984,7 @@
 
         ; 97/8024
 
-    .endsection Unsorted978000Section
+    .endsection BattleScenePlayHolyWeaponSoundSection
 
 
     .section Unreferenced978024Section

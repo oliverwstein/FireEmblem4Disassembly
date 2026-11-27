@@ -1,7 +1,7 @@
 ; A full inventory: choosing an item to send to the supply.
 
 
-    .section Unsorted85B14FSection
+    .section OpenInventoryFullMenuSection
 
       .al
       .xl
@@ -41,10 +41,10 @@
 
         ; 85/B18F
 
-    .endsection Unsorted85B14FSection
+    .endsection OpenInventoryFullMenuSection
 
 
-    .section Unsorted85B18FSection
+    .section ProcInventoryFullMenuSection
 
       .al
       .xl
@@ -63,10 +63,10 @@
         .long 0, 0, aInventoryFullMenuTilemapData
         .byte 0, 2, 5
 
-    .endsection Unsorted85B18FSection
+    .endsection ProcInventoryFullMenuSection
 
 
-    .section Unsorted85B1B0Section
+    .section ProcInventoryFullMenuInitSection
 
       .al
       .xl
@@ -136,10 +136,10 @@
 
         ; 85/B207
 
-    .endsection Unsorted85B1B0Section
+    .endsection ProcInventoryFullMenuInitSection
 
 
-    .section Unsorted85B207Section
+    .section ProcInventoryFullMenuCycleSection
 
       .al
       .xl
@@ -246,10 +246,10 @@
 
         ; 85/B282
 
-    .endsection Unsorted85B207Section
+    .endsection ProcInventoryFullMenuCycleSection
 
 
-    .section Unsorted85B282Section
+    .section ProcInventoryFullMenuWaitAnswerSection
 
       .al
       .xl
@@ -331,7 +331,7 @@
 
         ; 85/B2D8
 
-    .endsection Unsorted85B282Section
+    .endsection ProcInventoryFullMenuWaitAnswerSection
 
 
     .section ProcScript85B2D8Section
@@ -349,7 +349,7 @@
     .endsection ProcScript85B2D8Section
 
 
-    .section Unsorted85B2DASection
+    .section InventoryFullMenuLoadIconsSection
 
       .al
       .xl
@@ -458,10 +458,10 @@
 
         ; 85/B367
 
-    .endsection Unsorted85B2DASection
+    .endsection InventoryFullMenuLoadIconsSection
 
 
-    .section Unsorted85B367Section
+    .section InventoryFullMenuDepositSection
 
       .al
       .xl
@@ -491,10 +491,10 @@
 
         ; 85/B37D
 
-    .endsection Unsorted85B367Section
+    .endsection InventoryFullMenuDepositSection
 
 
-    .section Unsorted85B37DSection
+    .section InventoryFullMenuHideWindowsSection
 
       .al
       .xl
@@ -527,10 +527,10 @@
 
         ; 85/B3A2
 
-    .endsection Unsorted85B37DSection
+    .endsection InventoryFullMenuHideWindowsSection
 
 
-    .section Unsorted85B3A2Section
+    .section HideProcMapMenuSection
 
       .al
       .xl
@@ -586,10 +586,10 @@
 
         ; 85/B3DA
 
-    .endsection Unsorted85B3A2Section
+    .endsection HideProcMapMenuSection
 
 
-    .section Unsorted85B3DASection
+    .section InventoryFullMenuShowWindowsSection
 
       .al
       .xl
@@ -621,10 +621,10 @@
 
         ; 85/B3FF
 
-    .endsection Unsorted85B3DASection
+    .endsection InventoryFullMenuShowWindowsSection
 
 
-    .section Unsorted85B3FFSection
+    .section ShowProcMapMenuSection
 
       .al
       .xl
@@ -651,10 +651,10 @@
 
         ; 85/B40E
 
-    .endsection Unsorted85B3FFSection
+    .endsection ShowProcMapMenuSection
 
 
-    .section Unsorted85B40ESection
+    .section InventoryFullMenuCloseQuestionSection
 
       .al
       .xl
@@ -684,10 +684,10 @@
 
         ; 85/B42B
 
-    .endsection Unsorted85B40ESection
+    .endsection InventoryFullMenuCloseQuestionSection
 
 
-    .section Unsorted85B42BSection
+    .section CloseProcMapMenuSection
 
       .al
       .xl
@@ -715,10 +715,10 @@
 
         ; 85/B43E
 
-    .endsection Unsorted85B42BSection
+    .endsection CloseProcMapMenuSection
 
 
-    .section Unsorted85B43ESection
+    .section InventoryFullMenuGetAnswerSection
 
       .al
       .xl
@@ -755,10 +755,10 @@
 
         ; 85/B45C
 
-    .endsection Unsorted85B43ESection
+    .endsection InventoryFullMenuGetAnswerSection
 
 
-    .section Unsorted85B45CSection
+    .section InventoryFullMenuGetItemsSection
 
       .al
       .xl
@@ -869,10 +869,10 @@
 
         ; 85/B4E9
 
-    .endsection Unsorted85B45CSection
+    .endsection InventoryFullMenuGetItemsSection
 
 
-    .section Table85B4E9Section
+    .section InventoryFullMenuEquippedTextSection
 
       .al
       .xl
@@ -885,10 +885,10 @@
         .enc "none"
 
 
-    .endsection Table85B4E9Section
+    .endsection InventoryFullMenuEquippedTextSection
 
 
-    .section Unsorted85B4EDSection
+    .section SetTileBaseForObtainableItemSection
 
       .al
       .xl
@@ -942,10 +942,10 @@
 
         ; 85/B520
 
-    .endsection Unsorted85B4EDSection
+    .endsection SetTileBaseForObtainableItemSection
 
 
-    .section Unsorted85B520Section
+    .section OpenInventoryFullMessageSection
 
       .al
       .xl
@@ -989,10 +989,10 @@
 
         ; 85/B547
 
-    .endsection Unsorted85B520Section
+    .endsection OpenInventoryFullMessageSection
 
 
-    .section Table85B547Section
+    .section ProcInventoryFullConfirmSection
 
       .al
       .xl
@@ -1166,7 +1166,7 @@
 
         ; 85/B63B
 
-    .endsection Table85B547Section
+    .endsection ProcInventoryFullConfirmSection
 
 
     .section ProcScript85B63BSection
@@ -1192,7 +1192,7 @@
     .endsection ProcScript85B63BSection
 
 
-    .section Unsorted85B65CSection
+    .section ProcInventoryFullMessageInitSection
 
       .al
       .xl
@@ -1236,10 +1236,10 @@
 
         ; 85/B6A0
 
-    .endsection Unsorted85B65CSection
+    .endsection ProcInventoryFullMessageInitSection
 
 
-    .section Table85B6A0Section
+    .section InventoryFullMessageText1Section
 
       .al
       .xl
@@ -1266,10 +1266,10 @@
         .enc "none"
 
 
-    .endsection Table85B6A0Section
+    .endsection InventoryFullMessageText1Section
 
 
-    .section Unsorted85B6E0Section
+    .section ProcInventoryFullMessageCycleSection
 
       .al
       .xl
@@ -1287,7 +1287,7 @@
 
         ; 85/B6E1
 
-    .endsection Unsorted85B6E0Section
+    .endsection ProcInventoryFullMessageCycleSection
 
 
     .section ProcScript85B6E1Section
@@ -1309,7 +1309,7 @@
     .endsection ProcScript85B6E1Section
 
 
-    .section Table85B6EBSection
+    .section InventoryFullNewItemTilemapDataSection
 
       .al
       .xl
@@ -1341,10 +1341,10 @@
         .long aInventoryFullChosenItemTilemapData
         .byte $00, $02, $01
 
-    .endsection Table85B6EBSection
+    .endsection InventoryFullNewItemTilemapDataSection
 
 
-    .section Unsorted85B725Section
+    .section ProcInventoryItemWindowInitSection
 
       .al
       .xl
@@ -1400,10 +1400,10 @@
 
         ; 85/B786
 
-    .endsection Unsorted85B725Section
+    .endsection ProcInventoryItemWindowInitSection
 
 
-    .section Table85B786Section
+    .section InventoryItemWindowEquippedTextSection
 
       .al
       .xl
@@ -1416,10 +1416,10 @@
         .enc "none"
 
 
-    .endsection Table85B786Section
+    .endsection InventoryItemWindowEquippedTextSection
 
 
-    .section Unsorted85B78ASection
+    .section ProcInventoryItemWindowCycleSection
 
       .al
       .xl
@@ -1477,7 +1477,7 @@
 
         ; 85/B7CF
 
-    .endsection Unsorted85B78ASection
+    .endsection ProcInventoryItemWindowCycleSection
 
 
     .section ProcScript85B7CFSection

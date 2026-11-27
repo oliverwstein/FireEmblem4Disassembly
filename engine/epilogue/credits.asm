@@ -6,7 +6,7 @@
 ; (rlShowEpilogueEndScreen), and the credits' dialogue and sprite data.
 
 
-    .section Unsorted80EB37Section
+    .section RunEpilogueVBlankSection
 
       .al
       .xl
@@ -510,10 +510,10 @@
         ; 80/EE37
 
 
-    .endsection Unsorted80EB37Section
+    .endsection RunEpilogueVBlankSection
 
 
-    .section Unsorted80EE37Section
+    .section SetupEpilogueCreditsDisplaySection
 
       .al
       .xl
@@ -689,10 +689,19 @@
         ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
-    .endsection Unsorted80EE37Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80EFA8 .structDecompressionDMAEntry g4bppcBattleBackgroundThicket, $4000, $0000 ; 80/EFA8
+      aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry g4bppcEpilogueCreditsBG2Tiles, $2000, $2000 ; 80/EFB0
+      aDecompressionDMAEntry80EFB8 .structDecompressionDMAEntry g4bppcDialogueBackgroundFountainForeground, $2000, $3000 ; 80/EFB8
+      aDecompressionDMAEntry80EFC0 .structDecompressionDMAEntry g4bppcEpilogueCreditsSpriteTiles0, $1000, $6000 ; 80/EFC0
+      aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry acEpilogueCreditsBG1Tilemap, $1000, $5000 ; 80/EFC8
+      aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry acEpilogueCreditsBG2Tilemap, $1000, $5800 ; 80/EFD0
+
+    .endsection SetupEpilogueCreditsDisplaySection
 
 
-    .section Unsorted80EFD8Section
+    .section SetupEpilogueRankingsDisplaySection
 
       .al
       .xl
@@ -905,10 +914,17 @@
         ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
-    .endsection Unsorted80EFD8Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80F187 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $3000 ; 80/F187
+      aDecompressionDMAEntry80F18F .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $5000 ; 80/F18F
+      aDecompressionDMAEntry80F197 .structDecompressionDMAEntry g4bppcEpilogueEndScreenTiles, $5800, $0000 ; 80/F197
+      aDecompressionDMAEntry80F19F .structDecompressionDMAEntry acEpilogueRankingsBG2Tilemap, $1000, $5800 ; 80/F19F
+
+    .endsection SetupEpilogueRankingsDisplaySection
 
 
-    .section Unsorted80F1A7Section
+    .section StartEpilogueCharacterEndingsSection
 
       .al
       .xl
@@ -944,10 +960,10 @@
 
         ; 80/F1D5
 
-    .endsection Unsorted80F1A7Section
+    .endsection StartEpilogueCharacterEndingsSection
 
 
-    .section Unsorted8DA2AASection
+    .section ScrollEpilogueCreditsSection
 
       .al
       .xl
@@ -1034,10 +1050,10 @@
 
         ; 8D/A34D
 
-    .endsection Unsorted8DA2AASection
+    .endsection ScrollEpilogueCreditsSection
 
 
-    .section Unsorted8DA34DSection
+    .section DrawEpilogueCreditsSpritesSection
 
       .al
       .xl
@@ -1069,10 +1085,10 @@
 
         ; 8D/A372
 
-    .endsection Unsorted8DA34DSection
+    .endsection DrawEpilogueCreditsSpritesSection
 
 
-    .section Unsorted8DA3DESection
+    .section SetUpEpilogueTextWindowSection
 
       .al
       .xl
@@ -1135,10 +1151,10 @@
 
         ; 8D/A449
 
-    .endsection Unsorted8DA3DESection
+    .endsection SetUpEpilogueTextWindowSection
 
 
-    .section Unsorted8DA449Section
+    .section SetUpEpilogueTextWindowUnusedSection
 
       .al
       .xl
@@ -1199,10 +1215,10 @@
 
       aEpilogueCreditsLayerHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueCreditsLayerHDMAInit, $A4B5, aEpilogueCreditsLayerHDMACode, $0008BC, PPU_REG_BASE + $2C, $00 ; 8D/A4A8
 
-    .endsection Unsorted8DA449Section
+    .endsection SetUpEpilogueTextWindowUnusedSection
 
 
-    .section Unsorted8DA4B3Section
+    .section EpilogueCreditsLayerHDMAInitSection
 
       .al
       .xl
@@ -1249,10 +1265,10 @@
 
         ; 8D/A502
 
-    .endsection Unsorted8DA4B3Section
+    .endsection EpilogueCreditsLayerHDMAInitSection
 
 
-    .section Table8DA502Section
+    .section EpilogueCreditsLayerHDMACodeSection
 
       .al
       .xl
@@ -1262,10 +1278,10 @@
 
       aEpilogueCreditsWaveHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueCreditsWaveHDMACycle, rlEpilogueCreditsWaveHDMACycle, aEpilogueCreditsWaveHDMACode, $7F56C9, PPU_REG_BASE + $0F, $02 ; 8D/A504
 
-    .endsection Table8DA502Section
+    .endsection EpilogueCreditsLayerHDMACodeSection
 
 
-    .section Unsorted8DA50FSection
+    .section EpilogueCreditsWaveHDMACycleSection
 
       .al
       .xl
@@ -1419,10 +1435,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted8DA50FSection
+    .endsection EpilogueCreditsWaveHDMACycleSection
 
 
-    .section Unsorted8DA624Section
+    .section DrawEpilogueCreditsSpriteSection
 
       .al
       .xl
@@ -1585,7 +1601,7 @@
 
         ; 8D/A737
 
-    .endsection Unsorted8DA624Section
+    .endsection DrawEpilogueCreditsSpriteSection
 
 
     .section Data8DA737Section
@@ -1636,7 +1652,7 @@
     .endsection Data8DA737Section
 
 
-    .section Unsorted8DA755Section
+    .section InitEpilogueCreditsSpritesSection
 
       .al
       .xl
@@ -1710,10 +1726,10 @@
 
         ; 8D/A810
 
-    .endsection Unsorted8DA755Section
+    .endsection InitEpilogueCreditsSpritesSection
 
 
-    .section Unsorted8DAF33Section
+    .section ShowEpilogueEndScreenSection
 
       .al
       .xl
@@ -1772,10 +1788,15 @@
 
         ; 8D/AF95
 
-    .endsection Unsorted8DAF33Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8DAF95 .structDecompressionDMAEntry g4bppcEpilogueEndScreenTiles, $3000, $0000 ; 8D/AF95
+      aDecompressionDMAEntry8DAF9D .structDecompressionDMAEntry acEpilogueEndScreenTilemap, $0800, $5800 ; 8D/AF9D
+
+    .endsection ShowEpilogueEndScreenSection
 
 
-    .section Table8DC964Section
+    .section dialogueEpilogueCredits8DC964Section
 
       .al
       .xl
@@ -2004,7 +2025,7 @@
         .structSpriteEntry (   0,   -8), $00, SpriteSmall, $049, 2, 6, false, true
 
 
-    .endsection Table8DC964Section
+    .endsection dialogueEpilogueCredits8DC964Section
 
 
     .section Data8DCF88Section

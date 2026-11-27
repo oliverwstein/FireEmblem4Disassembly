@@ -164,7 +164,7 @@
     .endsection MapBattleMagicSpritesSection
 
 
-    .section Unsorted87C70ASection
+    .section ProcMapMagicRippleSection
 
       .al
       .xl
@@ -174,10 +174,10 @@
         ; BG2 HDMA ripple visual effect created by rlMapMagicCutsceneStartRipple in map_magic_effects.asm.
         .structProcInfo "RP", rlProcMapMagicRippleInit, rlProcMapMagicRippleUploadTiles, aProcMapMagicRippleCode
 
-    .endsection Unsorted87C70ASection
+    .endsection ProcMapMagicRippleSection
 
 
-    .section Unsorted87C712Section
+    .section ProcMapMagicRippleInitSection
 
       .al
       .xl
@@ -243,10 +243,10 @@
 
         ; 87/C784
 
-    .endsection Unsorted87C712Section
+    .endsection ProcMapMagicRippleInitSection
 
 
-    .section Table87C784Section
+    .section MapMagicRipplePaletteDataSection
 
       .al
       .xl
@@ -260,10 +260,10 @@
       aMapMagicRippleTilemapEntry ; 87/C7AB
         .byte $20, $20, $88, $7B, $7E, $00, $88, $7B, $7E
 
-    .endsection Table87C784Section
+    .endsection MapMagicRipplePaletteDataSection
 
 
-    .section Unsorted87C7B4Section
+    .section ProcMapMagicRippleUploadTilesSection
 
       .al
       .xl
@@ -328,10 +328,10 @@
 
         ; 87/C7F3
 
-    .endsection Unsorted87C7B4Section
+    .endsection ProcMapMagicRippleUploadTilesSection
 
 
-    .section Unsorted87C7F3Section
+    .section ProcMapMagicRippleWaitDoneSection
 
       .al
       .xl
@@ -369,10 +369,10 @@
 
         ; 87/C81F
 
-    .endsection Unsorted87C7F3Section
+    .endsection ProcMapMagicRippleWaitDoneSection
 
 
-    .section Unsorted87C81FSection
+    .section ProcMapMagicRippleCodeSection
 
       .al
       .xl
@@ -384,10 +384,10 @@
 
         ; 87/C821
 
-    .endsection Unsorted87C81FSection
+    .endsection ProcMapMagicRippleCodeSection
 
 
-    .section Unsorted87C821Section
+    .section DrawMapMagicRippleSmallTilemapSection
 
       .al
       .xl
@@ -431,10 +431,10 @@
 
         ; 87/C866
 
-    .endsection Unsorted87C821Section
+    .endsection DrawMapMagicRippleSmallTilemapSection
 
 
-    .section Table87C866Section
+    .section MapMagicRippleSmallTilemapRow1Section
 
       .al
       .xl
@@ -451,10 +451,10 @@
       aMapMagicRippleSmallTilemapRow4 ; 87/C875
         .byte $40, $41, $42, $43, $00
 
-    .endsection Table87C866Section
+    .endsection MapMagicRippleSmallTilemapRow1Section
 
 
-    .section Unsorted87C87ASection
+    .section DrawMapMagicRippleLargeTilemapSection
 
       .al
       .xl
@@ -510,10 +510,10 @@
 
         ; 87/C8E1
 
-    .endsection Unsorted87C87ASection
+    .endsection DrawMapMagicRippleLargeTilemapSection
 
 
-    .section Table87C8E1Section
+    .section MapMagicRippleLargeTilemapRow1Section
 
       .al
       .xl
@@ -940,7 +940,7 @@
         .byte $00, $08, $00, $01, $00, $0A, $00, $01, $00, $0C, $00, $01, $00, $0E, $00, $01
         .byte $00, $10, $00, $01, $00, $00, $00, $27, $FF, $FF
 
-    .endsection Table87C8E1Section
+    .endsection MapMagicRippleLargeTilemapRow1Section
 
 
     .section Bank9FBuildStampSection
@@ -956,7 +956,7 @@
     .endsection Bank9FBuildStampSection
 
 
-    .section Unsorted9F8020Section
+    .section StartMapMagicEffectSection
 
       .al
       .xl
@@ -1006,7 +1006,7 @@
 
         ; 9F/805D
 
-    .endsection Unsorted9F8020Section
+    .endsection StartMapMagicEffectSection
 
 
     .section ProcScript9F805DSection
@@ -1021,7 +1021,7 @@
     .endsection ProcScript9F805DSection
 
 
-    .section Unsorted9F8065Section
+    .section ProcMapMagicEffectCycleSection
 
       .al
       .xl
@@ -1108,10 +1108,10 @@
         .word <>rlStartMapMagicThief
         .word <>rlStartMapMagicBrokenStaff
 
-    .endsection Unsorted9F8065Section
+    .endsection ProcMapMagicEffectCycleSection
 
 
-    .section Unsorted9F8253Section
+    .section PlayMapMagicSoundSection
 
       .al
       .xl
@@ -1191,10 +1191,10 @@
 
         ; 9F/82A7
 
-    .endsection Unsorted9F8253Section
+    .endsection PlayMapMagicSoundSection
 
 
-    .section Unsorted9F82A7Section
+    .section SetMapMagicCasterFacingSection
 
       .al
       .xl
@@ -1246,10 +1246,10 @@
 
         ; 9F/82D7
 
-    .endsection Unsorted9F82A7Section
+    .endsection SetMapMagicCasterFacingSection
 
 
-    .section Unsorted9F82D7Section
+    .section CreateMapMagicProcSection
 
       .al
       .xl
@@ -1345,10 +1345,10 @@
 
         ; 9F/8349
 
-    .endsection Unsorted9F82D7Section
+    .endsection CreateMapMagicProcSection
 
 
-    .section Unsorted9F8349Section
+    .section EndMapMagicEffectSection
 
       .al
       .xl
@@ -1454,10 +1454,10 @@
 
         ; 9F/8398
 
-    .endsection Unsorted9F8349Section
+    .endsection EndMapMagicEffectSection
 
 
-    .section Unsorted9F8398Section
+    .section CreateMapMagicActiveSpriteInlineSection
 
       .al
       .xl
@@ -1502,10 +1502,10 @@
 
         ; 9F/83D0
 
-    .endsection Unsorted9F8398Section
+    .endsection CreateMapMagicActiveSpriteInlineSection
 
 
-    .section Unsorted9F83D0Section
+    .section SetMapMagicWindowLinesSection
 
       .al
       .xl
@@ -1539,10 +1539,10 @@
 
         .byte $08, $21, $7F, $37, $7F, $30, $22, $0E
 
-    .endsection Unsorted9F83D0Section
+    .endsection SetMapMagicWindowLinesSection
 
 
-    .section Unsorted9F83F1Section
+    .section SetMapMagicLayerBlendingSection
 
       .al
       .xl
@@ -1580,10 +1580,10 @@
 
         ; 9F/8414
 
-    .endsection Unsorted9F83F1Section
+    .endsection SetMapMagicLayerBlendingSection
 
 
-    .section Unsorted9F8414Section
+    .section SaveMapMagicScreenRegistersSection
 
       .al
       .xl
@@ -2057,10 +2057,10 @@
 
         ; 9F/86B0
 
-    .endsection Unsorted9F8414Section
+    .endsection SaveMapMagicScreenRegistersSection
 
 
-    .section Unsorted9F86B0Section
+    .section CheckMapMagicDecompressionDoneSection
 
       .al
       .xl
@@ -2087,10 +2087,10 @@
 
         ; 9F/86BF
 
-    .endsection Unsorted9F86B0Section
+    .endsection CheckMapMagicDecompressionDoneSection
 
 
-    .section Unsorted9F86BFSection
+    .section LoadMapMagicSpritesSection
 
       .al
       .xl
@@ -2159,10 +2159,10 @@
 
         ; 9F/8724
 
-    .endsection Unsorted9F86BFSection
+    .endsection LoadMapMagicSpritesSection
 
 
-    .section Unsorted9F88C0Section
+    .section MapMagicSpritePalette9F88C0UnusedSection
 
       .al
       .xl
@@ -2175,10 +2175,10 @@
         .word $0571, $09B2, $0A35, $0E97, $131A, $17DF, $0C89, $190C
         .word $298F, $3612, $4276, $4EF9, $5F7C, $6BFF, $0008, $14AC
 
-    .endsection Unsorted9F88C0Section
+    .endsection MapMagicSpritePalette9F88C0UnusedSection
 
 
-    .section Unsorted9F8900Section
+    .section SelectMapMagicEffectForRoundSection
 
       .al
       .xl
@@ -2225,10 +2225,10 @@
 
         ; 9F/8943
 
-    .endsection Unsorted9F8900Section
+    .endsection SelectMapMagicEffectForRoundSection
 
 
-    .section Unsorted9F8943Section
+    .section QueueMapMagicDMAListSection
 
       .al
       .xl
@@ -2288,10 +2288,10 @@
 
         ; 9F/8999
 
-    .endsection Unsorted9F8943Section
+    .endsection QueueMapMagicDMAListSection
 
 
-    .section Unsorted9F8999Section
+    .section MoveActiveSpriteByVelocitySection
 
       .al
       .xl
@@ -2427,10 +2427,10 @@
 
         ; 9F/8A34
 
-    .endsection Unsorted9F8999Section
+    .endsection MoveActiveSpriteByVelocitySection
 
 
-    .section Unsorted9F8A34Section
+    .section GetVectorAngleSection
 
       .as
       .xl
@@ -2511,10 +2511,10 @@
 
         ; 9F/8A97
 
-    .endsection Unsorted9F8A34Section
+    .endsection GetVectorAngleSection
 
 
-    .section Unsorted9F8A97Section
+    .section VectorAngleOctant0Section
 
       .al
       .xl
@@ -2722,10 +2722,10 @@
         .byte $00, $00, $01, $02, $02, $02, $03, $03, $03, $03, $04, $03, $03, $04, $03, $04
         .byte $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $02, $01, $01, $00, $00, $00
 
-    .endsection Unsorted9F8A97Section
+    .endsection VectorAngleOctant0Section
 
 
-    .section Unsorted9F8B7ASection
+    .section MultiplyByNegSinSection
 
       .al
       .xl
@@ -2878,10 +2878,10 @@
 
         ; 9F/8C3A
 
-    .endsection Unsorted9F8B7ASection
+    .endsection MultiplyByNegSinSection
 
 
-    .section Table9F8C3ASection
+    .section MapMagicSineTableSection
 
       .al
       .xl
@@ -2926,10 +2926,10 @@
 
         ; 9F/8E3A
 
-    .endsection Table9F8C3ASection
+    .endsection MapMagicSineTableSection
 
 
-    .section Unsorted9F8E3ASection
+    .section CopyRAMColorsToPaletteBufferSection
 
       .al
       .xl
@@ -2979,10 +2979,10 @@
         ; 9F/8E6C
 
 
-    .endsection Unsorted9F8E3ASection
+    .endsection CopyRAMColorsToPaletteBufferSection
 
 
-    .section Unsorted9F8EC0Section
+    .section DarkenBGPaletteRangeSection
 
       .al
       .xl
@@ -3022,10 +3022,10 @@
 
         ; 9F/8EE1
 
-    .endsection Unsorted9F8EC0Section
+    .endsection DarkenBGPaletteRangeSection
 
 
-    .section Unsorted9F9090Section
+    .section DarkenSNESColorSection
 
       .as
       .xl
@@ -3124,10 +3124,10 @@
 
         ; 9F/90F2
 
-    .endsection Unsorted9F9090Section
+    .endsection DarkenSNESColorSection
 
 
-    .section Unsorted9F90F2Section
+    .section DarkenMapMagicColorsSection
 
       .al
       .xl
@@ -3180,10 +3180,10 @@
 
         ; 9F/90FE
 
-    .endsection Unsorted9F90F2Section
+    .endsection DarkenMapMagicColorsSection
 
 
-    .section Unsorted9F90FESection
+    .section RestoreMapMagicColorsSection
 
       .al
       .xl
@@ -3207,10 +3207,10 @@
 
         ; 9F/910A
 
-    .endsection Unsorted9F90FESection
+    .endsection RestoreMapMagicColorsSection
 
 
-    .section Unsorted9F910ASection
+    .section SaveMapMagicColorsSection
 
       .al
       .xl
@@ -3517,6 +3517,6 @@
 
         ; 9F/9217
 
-    .endsection Unsorted9F910ASection
+    .endsection SaveMapMagicColorsSection
 
 

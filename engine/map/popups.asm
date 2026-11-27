@@ -360,7 +360,7 @@
     .endsection ProcScript85BB52Section
 
 
-    .section Unsorted85BB5ESection
+    .section ProcMapPopUpWindowInitSection
 
       .al
       .xl
@@ -417,10 +417,10 @@
 
         ; 85/BBA5
 
-    .endsection Unsorted85BB5ESection
+    .endsection ProcMapPopUpWindowInitSection
 
 
-    .section Unsorted85BBA5Section
+    .section OpenMapPopUpWindowSection
 
       .al
       .xl
@@ -499,10 +499,10 @@
 
         ; 85/BC00
 
-    .endsection Unsorted85BBA5Section
+    .endsection OpenMapPopUpWindowSection
 
 
-    .section Unsorted85C0C7Section
+    .section SetPopUpWindowCloseOnCycleSection
 
       .al
       .xl
@@ -522,10 +522,10 @@
 
         ; 85/C0CE
 
-    .endsection Unsorted85C0C7Section
+    .endsection SetPopUpWindowCloseOnCycleSection
 
 
-    .section Unsorted85C4E0Section
+    .section SetWindowColoursByRelationSection
 
       .al
       .xl
@@ -591,7 +591,7 @@
 
         ; 85/C51B
 
-    .endsection Unsorted85C4E0Section
+    .endsection SetWindowColoursByRelationSection
 
 
     .section Data85C51BSection
@@ -613,7 +613,7 @@
     .endsection Data85C51BSection
 
 
-    .section Unsorted85B8D6Section
+    .section OpenGoldPopUpSection
 
       .al
       .xl
@@ -636,10 +636,10 @@
 
         ; 85/B8E5
 
-    .endsection Unsorted85B8D6Section
+    .endsection OpenGoldPopUpSection
 
 
-    .section Table85B8E5Section
+    .section GoldPopUpTilemapDataSection
 
       .al
       .xl
@@ -647,10 +647,10 @@
       aGoldPopUpTilemapData ; 85/B8E5
         .byte $20, $04, $88, $83, $7E, $00, $4A, $CE, $7F
 
-    .endsection Table85B8E5Section
+    .endsection GoldPopUpTilemapDataSection
 
 
-    .section Unsorted85B8EESection
+    .section GoldPopUpDataSection
 
       .al
       .xl
@@ -662,7 +662,7 @@
         .long aGoldPopUpTilemapData
         .byte 0, 1, 1
 
-    .endsection Unsorted85B8EESection
+    .endsection GoldPopUpDataSection
 
 
     .section ProcScript85B8FASection
@@ -681,7 +681,7 @@
     .endsection ProcScript85B8FASection
 
 
-    .section Unsorted85B906Section
+    .section ProcGoldPopUpInitSection
 
       .al
       .xl
@@ -797,10 +797,10 @@
 
         ; 85/B9BC
 
-    .endsection Unsorted85B906Section
+    .endsection ProcGoldPopUpInitSection
 
 
-    .section Table85B9BCSection
+    .section GoldPopUpTextSection
 
       .al
       .xl
@@ -813,10 +813,10 @@
         .enc "none"
 
 
-    .endsection Table85B9BCSection
+    .endsection GoldPopUpTextSection
 
 
-    .section Unsorted85B9D4Section
+    .section ProcGoldPopUpShowSection
 
       .al
       .xl
@@ -847,10 +847,10 @@
 
         ; 85/B9F2
 
-    .endsection Unsorted85B9D4Section
+    .endsection ProcGoldPopUpShowSection
 
 
-    .section Unsorted85B9F2Section
+    .section ProcGoldPopUpCheckSkipSection
 
       .al
       .xl
@@ -906,10 +906,10 @@
 
         ; 85/BA2C
 
-    .endsection Unsorted85B9F2Section
+    .endsection ProcGoldPopUpCheckSkipSection
 
 
-    .section Table85BA2CSection
+    .section SeizePopUpTilemapDataSection
 
       .al
       .xl
@@ -923,10 +923,10 @@
         .long aSeizePopUpTilemapData
         .byte $00, $01, $01
 
-    .endsection Table85BA2CSection
+    .endsection SeizePopUpTilemapDataSection
 
 
-    .section Unsorted85BA41Section
+    .section ProcSeizePopUpSection
 
       .al
       .xl
@@ -936,10 +936,10 @@
         .long aSeizePopUpData
         .byte 1
 
-    .endsection Unsorted85BA41Section
+    .endsection ProcSeizePopUpSection
 
 
-    .section Unsorted85BA4DSection
+    .section ProcSeizePopUpInitSection
 
       .al
       .xl
@@ -997,10 +997,10 @@
 
         ; 85/BAB3
 
-    .endsection Unsorted85BA4DSection
+    .endsection ProcSeizePopUpInitSection
 
 
-    .section Table85BAB3Section
+    .section SeizePopUpTextSection
 
       .al
       .xl
@@ -1013,10 +1013,10 @@
         .enc "none"
 
 
-    .endsection Table85BAB3Section
+    .endsection SeizePopUpTextSection
 
 
-    .section Unsorted85BAC7Section
+    .section ProcSeizePopUpWaitMusicSection
 
       .al
       .xl
@@ -1042,10 +1042,10 @@
 
         ; 85/BAD9
 
-    .endsection Unsorted85BAC7Section
+    .endsection ProcSeizePopUpWaitMusicSection
 
 
-    .section Unsorted85BAD9Section
+    .section ProcSeizePopUpWaitToShowSection
 
       .al
       .xl
@@ -1126,10 +1126,10 @@
 
         ; 85/BB2E
 
-    .endsection Unsorted85BAD9Section
+    .endsection ProcSeizePopUpWaitToShowSection
 
 
-    .section Unsorted85BB2ESection
+    .section OpenSeizePopUpSection
 
       .al
       .xl
@@ -1162,10 +1162,10 @@
         .long 0, 0, aMapPopUpWindowTilemapData
         .byte 0, 1, 1
 
-    .endsection Unsorted85BB2ESection
+    .endsection OpenSeizePopUpSection
 
 
-    .section Unsorted85BC00Section
+    .section OpenItemPopUpSection
 
       .al
       .xl
@@ -1188,10 +1188,10 @@
 
         ; 85/BC0F
 
-    .endsection Unsorted85BC00Section
+    .endsection OpenItemPopUpSection
 
 
-    .section Unsorted85BC1BSection
+    .section ProcItemPopUpInitSection
 
       .al
       .xl
@@ -1256,7 +1256,7 @@
 
         .databank 0
 
-    .endsection Unsorted85BC1BSection
+    .endsection ProcItemPopUpInitSection
 
 
     .section ItemObtainedTextSection

@@ -5,7 +5,7 @@
 ; (procMapActionRewards).
 
 
-    .section Unsorted9E9A34Section
+    .section StartVillageRaidAnimationSection
 
       .al
       .xl
@@ -28,7 +28,7 @@
 
         ; 9E/9A43
 
-    .endsection Unsorted9E9A34Section
+    .endsection StartVillageRaidAnimationSection
 
 
     .section ProcScript9E9A43Section
@@ -43,7 +43,7 @@
     .endsection ProcScript9E9A43Section
 
 
-    .section Unsorted9E9A4BSection
+    .section ProcVillageRaidInitSection
 
       .al
       .xl
@@ -153,10 +153,10 @@
 
         ; 9E/9B50
 
-    .endsection Unsorted9E9A4BSection
+    .endsection ProcVillageRaidInitSection
 
 
-    .section Table9E9B50Section
+    .section VillageRaidFireTileOffsetsSection
 
       .al
       .xl
@@ -170,10 +170,10 @@
 
         ; 9E/9B68
 
-    .endsection Table9E9B50Section
+    .endsection VillageRaidFireTileOffsetsSection
 
 
-    .section Unsorted9E9B68Section
+    .section ProcVillageRaidWaitRoundStartSection
 
       .al
       .xl
@@ -203,10 +203,10 @@
 
         ; 9E/9B82
 
-    .endsection Unsorted9E9B68Section
+    .endsection ProcVillageRaidWaitRoundStartSection
 
 
-    .section Unsorted9E9B82Section
+    .section ProcVillageRaidRunRoundSection
 
       .al
       .xl
@@ -290,7 +290,7 @@
 
         ; 9E/9BE1
 
-    .endsection Unsorted9E9B82Section
+    .endsection ProcVillageRaidRunRoundSection
 
 
     .section ProcScript9E9BE1Section
@@ -351,7 +351,7 @@
     .endsection ProcScript9E9BE1Section
 
 
-    .section Unsorted9E9C70Section
+    .section VillageRaidStartFireEffectSection
 
       .al
       .xl
@@ -382,7 +382,7 @@
 
         ; 9E/9C94
 
-    .endsection Unsorted9E9C70Section
+    .endsection VillageRaidStartFireEffectSection
 
 
     .section Unreferenced9E9C94Section
@@ -420,7 +420,7 @@
         ; 9E/9CB9
 
     .endsection Unreferenced9E9C94Section
-    .section Unsorted9E9CB9Section
+    .section ProcVillageRaidQueueGraphicsSection
 
       .al
       .xl
@@ -504,10 +504,10 @@
 
         ; 9E/9D3B
 
-    .endsection Unsorted9E9CB9Section
+    .endsection ProcVillageRaidQueueGraphicsSection
 
 
-    .section Unsorted9E9D3BSection
+    .section MapActionQueueEffectGraphicsSection
 
       .al
       .xl
@@ -551,10 +551,10 @@
 
         ; 9E/9D76
 
-    .endsection Unsorted9E9D3BSection
+    .endsection MapActionQueueEffectGraphicsSection
 
 
-    .section Unsorted9E9D76Section
+    .section MapActionUploadEffectGraphicsSection
 
       .al
       .xl
@@ -610,10 +610,10 @@
 
         ; 9E/9DB9
 
-    .endsection Unsorted9E9D76Section
+    .endsection MapActionUploadEffectGraphicsSection
 
 
-    .section Table9E9DB9Section
+    .section MapActionEffectOAMPaletteSection
 
       .al
       .xl
@@ -627,10 +627,10 @@
 
         ; 9E/9DD9
 
-    .endsection Table9E9DB9Section
+    .endsection MapActionEffectOAMPaletteSection
 
 
-    .section Unsorted9E9DD9Section
+    .section ProcVillageRaidQueueSpriteDataSection
 
       .al
       .xl
@@ -714,10 +714,10 @@
 
         ; 9E/9E61
 
-    .endsection Unsorted9E9DD9Section
+    .endsection ProcVillageRaidQueueSpriteDataSection
 
 
-    .section Unsorted9E9E61Section
+    .section VillageRaidCreateFireSpriteSection
 
       .al
       .xl
@@ -777,7 +777,7 @@
 
         ; 9E/9ECF
 
-    .endsection Unsorted9E9E61Section
+    .endsection VillageRaidCreateFireSpriteSection
 
 
     .section Unreferenced9E9ECFSection
@@ -856,7 +856,7 @@
         ; 9E/9F26
 
     .endsection Unreferenced9E9ECFSection
-    .section Unsorted9EAC5ASection
+    .section StartMapActionRewardsSection
 
       .al
       .xl
@@ -925,10 +925,10 @@
 
         .databank 0
 
-    .endsection Unsorted9EAC5ASection
+    .endsection StartMapActionRewardsSection
 
 
-    .section Unsorted9EACAFSection
+    .section ProcMapActionRewardsCodeSection
 
       .al
       .xl
@@ -1027,10 +1027,10 @@
 
         ; AD7B
 
-    .endsection Unsorted9EACAFSection
+    .endsection ProcMapActionRewardsCodeSection
 
 
-    .section Unsorted9EAD7BSection
+    .section ProcMapActionRewardsRestoreGraphicsSection
 
       .al
       .xl
@@ -1074,10 +1074,10 @@
 
         ; 9E/ADB4
 
-    .endsection Unsorted9EAD7BSection
+    .endsection ProcMapActionRewardsRestoreGraphicsSection
 
 
-    .section Unsorted9EADB4Section
+    .section ProcMapActionRewardsEndSection
 
       .al
       .xl
@@ -1106,10 +1106,10 @@
 
         ; 9E/ADD1
 
-    .endsection Unsorted9EADB4Section
+    .endsection ProcMapActionRewardsEndSection
 
 
-    .section Unsorted9ED07ASection
+    .section StartReturnHomeAnimationSection
 
       .al
       .xl
@@ -1132,10 +1132,10 @@
 
         ; 9E/D089
 
-    .endsection Unsorted9ED07ASection
+    .endsection StartReturnHomeAnimationSection
 
 
-    .section Unsorted9ED089Section
+    .section ProcReturnHomeSection
 
       .al
       .xl
@@ -1245,10 +1245,10 @@
 
         .databank 0
 
-    .endsection Unsorted9ED089Section
+    .endsection ProcReturnHomeSection
 
 
-    .section Unsorted9ED1A1Section
+    .section ProcWaitMapMagicStartCycleSection
 
       .al
       .xl
@@ -1342,10 +1342,10 @@
 
         ; 9E/D1F4
 
-    .endsection Unsorted9ED1A1Section
+    .endsection ProcWaitMapMagicStartCycleSection
 
 
-    .section Unsorted9ED1F4Section
+    .section ProcReturnHomeCodeSection
 
       .al
       .xl
@@ -1412,10 +1412,10 @@
 
         ; 9E/D2B5
 
-    .endsection Unsorted9ED1F4Section
+    .endsection ProcReturnHomeCodeSection
 
 
-    .section Unsorted9ED2B5Section
+    .section ProcReturnHomeQueueGraphicsSection
 
       .al
       .xl
@@ -1499,10 +1499,10 @@
 
         ; 9E/D337
 
-    .endsection Unsorted9ED2B5Section
+    .endsection ProcReturnHomeQueueGraphicsSection
 
 
-    .section Unsorted9ED337Section
+    .section ProcReturnHomeQueueSpriteDataSection
 
       .al
       .xl
@@ -1539,10 +1539,10 @@
 
         ; 9E/D372
 
-    .endsection Unsorted9ED337Section
+    .endsection ProcReturnHomeQueueSpriteDataSection
 
 
-    .section Unsorted9ED372Section
+    .section ReturnHomeStartMagicRoundSection
 
       .al
       .xl
@@ -1595,10 +1595,10 @@
 
         ; 9E/D3C1
 
-    .endsection Unsorted9ED372Section
+    .endsection ReturnHomeStartMagicRoundSection
 
 
-    .section Unsorted9ED3C1Section
+    .section EndReturnHomeSpritesSection
 
       .al
       .xl
@@ -1643,10 +1643,10 @@
 
         ; 9E/D401
 
-    .endsection Unsorted9ED3C1Section
+    .endsection EndReturnHomeSpritesSection
 
 
-    .section Unsorted9ED401Section
+    .section ReturnHomeCopySpriteSlotsToDefenderSection
 
       .al
       .xl
@@ -1668,7 +1668,7 @@
 
         ; 9E/D412
 
-    .endsection Unsorted9ED401Section
+    .endsection ReturnHomeCopySpriteSlotsToDefenderSection
 
 
     .section Unreferenced9ED412Section
@@ -1703,7 +1703,7 @@
         ; 9E/D42A
 
     .endsection Unreferenced9ED412Section
-    .section Unsorted9ED42ASection
+    .section StartHolyWeaponShineSection
 
       .al
       .xl
@@ -1728,10 +1728,10 @@
 
       procHolyWeaponShine .structProcInfo "ON", rlProcHolyWeaponShineInit, rlProcHolyWeaponShineQueueGraphics, aProcHolyWeaponShineCode ; 9E/D441
 
-    .endsection Unsorted9ED42ASection
+    .endsection StartHolyWeaponShineSection
 
 
-    .section Unsorted9ED449Section
+    .section ProcHolyWeaponShineInitSection
 
       .al
       .xl
@@ -1830,7 +1830,7 @@
 
         ; 9E/D528
 
-    .endsection Unsorted9ED449Section
+    .endsection ProcHolyWeaponShineInitSection
 
 
     .section Unreferenced9ED528Section
@@ -1858,7 +1858,7 @@
         ; 9E/D535
 
     .endsection Unreferenced9ED528Section
-    .section Unsorted9ED535Section
+    .section ProcHolyWeaponShineIdleSection
 
       .al
       .xl
@@ -1957,10 +1957,10 @@
 
         .databank 0
 
-    .endsection Unsorted9ED535Section
+    .endsection ProcHolyWeaponShineIdleSection
 
 
-    .section Unsorted9ED609Section
+    .section ProcHolyWeaponShineQueueGraphicsSection
 
       .al
       .xl
@@ -2043,10 +2043,10 @@
 
         .databank 0
 
-    .endsection Unsorted9ED609Section
+    .endsection ProcHolyWeaponShineQueueGraphicsSection
 
 
-    .section Unsorted9ED68BSection
+    .section ProcHolyWeaponShineQueueSpriteDataSection
 
       .al
       .xl
@@ -2079,10 +2079,10 @@
 
         ; 9E/D6BA
 
-    .endsection Unsorted9ED68BSection
+    .endsection ProcHolyWeaponShineQueueSpriteDataSection
 
 
-    .section Unsorted9ED6BASection
+    .section HolyWeaponShineClearRoundStateSection
 
       .al
       .xl
@@ -2176,7 +2176,7 @@
 
         ; 9E/D72A
 
-    .endsection Unsorted9ED6BASection
+    .endsection HolyWeaponShineClearRoundStateSection
 
 
     .section Unreferenced9ED72ASection
@@ -2211,7 +2211,7 @@
         ; 9E/D742
 
     .endsection Unreferenced9ED72ASection
-    .section Unsorted9EDAE7Section
+    .section StartGiveGoldAnimationSection
 
       .al
       .xl
@@ -2234,7 +2234,7 @@
 
         ; 9E/DAF6
 
-    .endsection Unsorted9EDAE7Section
+    .endsection StartGiveGoldAnimationSection
 
 
     .section ProcScript9EDAF6Section
@@ -2249,7 +2249,7 @@
     .endsection ProcScript9EDAF6Section
 
 
-    .section Unsorted9EDAFESection
+    .section ProcGiveGoldInitSection
 
       .al
       .xl
@@ -2384,7 +2384,7 @@
 
         ; 9E/DC15
 
-    .endsection Unsorted9EDAFESection
+    .endsection ProcGiveGoldInitSection
 
 
     .section ProcScript9EDC15Section
@@ -2457,7 +2457,7 @@
     .endsection ProcScript9EDC15Section
 
 
-    .section Unsorted9EDCD2Section
+    .section ProcGiveGoldQueueSpriteDataSection
 
       .al
       .xl
@@ -2615,10 +2615,10 @@
 
         ; 9E/DDC8
 
-    .endsection Unsorted9EDCD2Section
+    .endsection ProcGiveGoldQueueSpriteDataSection
 
 
-    .section Table9EDDC8Section
+    .section GiveGoldCoinOAMPaletteSection
 
       .al
       .xl
@@ -2632,10 +2632,10 @@
 
         ; 9E/DDE8
 
-    .endsection Table9EDDC8Section
+    .endsection GiveGoldCoinOAMPaletteSection
 
 
-    .section Unsorted9EDDE8Section
+    .section GiveGoldCreateCoinSpriteSection
 
       .al
       .xl
@@ -2728,7 +2728,7 @@
 
         ; 9E/DE89
 
-    .endsection Unsorted9EDDE8Section
+    .endsection GiveGoldCreateCoinSpriteSection
 
 
     .section Data9EDE89Section

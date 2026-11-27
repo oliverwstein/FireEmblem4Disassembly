@@ -1704,7 +1704,7 @@
     .endsection SetMovingMapSpriteBufferPointersSection
 
 
-    .section Unsorted818A4ASection
+    .section GetMovingMapSpriteStepShiftSection
 
       .al
       .xl
@@ -2110,10 +2110,10 @@
         .word $0001
         .word $0002
 
-    .endsection Unsorted818A4ASection
+    .endsection GetMovingMapSpriteStepShiftSection
 
 
-    .section Unsorted818C5DSection
+    .section ScriptedMoveCmdFaceDownSection
 
       .al
       .xl
@@ -2182,10 +2182,10 @@
 
         .databank 0
 
-    .endsection Unsorted818C5DSection
+    .endsection ScriptedMoveCmdFaceDownSection
 
 
-    .section Unsorted818C98Section
+    .section CheckMovingMapSpriteOffscreenSection
 
       .al
       .xl
@@ -2316,10 +2316,10 @@
 
         ; 81/8D23
 
-    .endsection Unsorted818C98Section
+    .endsection CheckMovingMapSpriteOffscreenSection
 
 
-    .section Unsorted818D23Section
+    .section StartMovingMapSpriteSoundChannelSection
 
       .al
       .xl
@@ -2364,10 +2364,10 @@
 
         ; 81/8D58
 
-    .endsection Unsorted818D23Section
+    .endsection StartMovingMapSpriteSoundChannelSection
 
 
-    .section Unsorted87C056Section
+    .section ProcCastleTakenOverSection
 
       .al
       .xl
@@ -2436,10 +2436,10 @@
 
         .databank 0
 
-    .endsection Unsorted87C056Section
+    .endsection ProcCastleTakenOverSection
 
 
-    .section Unsorted88C7CFSection
+    .section AnimateMapSpritesSection
 
       .al
       .xl
@@ -2464,10 +2464,10 @@
 
         ; 88/C7D8
 
-    .endsection Unsorted88C7CFSection
+    .endsection AnimateMapSpritesSection
 
 
-    .section Unsorted88C7D8Section
+    .section DrawMovingSpritesTestUnusedSection
 
       .al
       .xl
@@ -2525,10 +2525,10 @@
 
         ; 88/C834
 
-    .endsection Unsorted88C7D8Section
+    .endsection DrawMovingSpritesTestUnusedSection
 
 
-    .section Table88C834Section
+    .section MovingSpritesTestXOffsetsUnusedSection
 
       .al
       .xl
@@ -2541,7 +2541,7 @@
 
         ; 88/C83C
 
-    .endsection Table88C834Section
+    .endsection MovingSpritesTestXOffsetsUnusedSection
 
 
     .section Data88C83CSection
@@ -2560,7 +2560,7 @@
     .endsection Data88C83CSection
 
 
-    .section Unsorted88C844Section
+    .section DrawMovingUnitSpriteSection
 
       .al
       .xl
@@ -2767,7 +2767,7 @@
 
         ; 88/C990
 
-    .endsection Unsorted88C844Section
+    .endsection DrawMovingUnitSpriteSection
 
 
     .section Data88C990Section
@@ -2787,7 +2787,7 @@
     .endsection Data88C990Section
 
 
-    .section Unsorted88C9A6Section
+    .section LoadMovingUnitSpriteSection
 
       .al
       .xl
@@ -2867,10 +2867,10 @@
 
         ; 88/CA28
 
-    .endsection Unsorted88C9A6Section
+    .endsection LoadMovingUnitSpriteSection
 
 
-    .section Unsorted88CA28Section
+    .section UpdateMovingUnitSpriteFrameSection
 
       .al
       .xl
@@ -2927,10 +2927,10 @@
 
         ; 88/CA77
 
-    .endsection Unsorted88CA28Section
+    .endsection UpdateMovingUnitSpriteFrameSection
 
 
-    .section Unsorted88CA77Section
+    .section SetShortMovingUnitSpriteFrameSection
 
       .al
       .xl
@@ -3162,10 +3162,10 @@
 
         ; 88/CBE8
 
-    .endsection Unsorted88CA77Section
+    .endsection SetShortMovingUnitSpriteFrameSection
 
 
-    .section Unsorted88CBE8Section
+    .section MapSpriteWalkFrameDelaysSection
 
       .al
       .xl
@@ -3202,10 +3202,10 @@
 
         .structSpriteArray aMovingUnitSprite24x24._Sprites
 
-    .endsection Unsorted88CBE8Section
+    .endsection MapSpriteWalkFrameDelaysSection
 
 
-    .section Unsorted88CC75Section
+    .section QueueStandingMapSpriteFramesSection
 
       .al
       .xl
@@ -3371,10 +3371,10 @@
 
         ; 88/CD53
 
-    .endsection Unsorted88CC75Section
+    .endsection QueueStandingMapSpriteFramesSection
 
 
-    .section Unsorted88CD53Section
+    .section PauseMapSpriteAnimationSection
 
       .al
       .xl
@@ -3423,10 +3423,10 @@
 
         ; 88/CD68
 
-    .endsection Unsorted88CD53Section
+    .endsection PauseMapSpriteAnimationSection
 
 
-    .section Unsorted88CD68Section
+    .section UploadMapAnimationsSection
 
       .al
       .xl
@@ -3743,10 +3743,10 @@
 
         ; 88/CF8A
 
-    .endsection Unsorted88CD68Section
+    .endsection UploadMapAnimationsSection
 
 
-    .section Table88CF8ASection
+    .section MapTileAnimation1FramesSection
 
       .al
       .xl
@@ -3761,10 +3761,10 @@
 
         ; 88/CFBA
 
-    .endsection Table88CF8ASection
+    .endsection MapTileAnimation1FramesSection
 
 
-    .section Unsorted88CFBASection
+    .section UploadMapTileAnimation2Section
 
       .al
       .xl
@@ -3823,10 +3823,10 @@
 
         ; 88/D013
 
-    .endsection Unsorted88CFBASection
+    .endsection UploadMapTileAnimation2Section
 
 
-    .section Table88D013Section
+    .section MapTileAnimation2FramesSection
 
       .al
       .xl
@@ -3841,10 +3841,10 @@
 
         ; 88/D073
 
-    .endsection Table88D013Section
+    .endsection MapTileAnimation2FramesSection
 
 
-    .section Unsorted88D073Section
+    .section UploadMapTileAnimationsSection
 
       .al
       .xl
@@ -3875,10 +3875,10 @@
 
         ; 88/D084
 
-    .endsection Unsorted88D073Section
+    .endsection UploadMapTileAnimationsSection
 
 
-    .section Unsorted88D084Section
+    .section DrawDeployedUnitMapSpritesSection
 
       .al
       .xl
@@ -3994,7 +3994,7 @@
 
         ; 88/D135
 
-    .endsection Unsorted88D084Section
+    .endsection DrawDeployedUnitMapSpritesSection
 
 
     .section Data88D135Section
@@ -4068,7 +4068,7 @@
     .endsection Data88D135Section
 
 
-    .section Table88D488Section
+    .section MapSpriteWalkOffsetPointersSection
 
       .al
       .xl
@@ -4086,10 +4086,10 @@
 
         ; 88/D4C6
 
-    .endsection Table88D488Section
+    .endsection MapSpriteWalkOffsetPointersSection
 
 
-    .section Table88D4C6Section
+    .section MapSpriteWalkOffsetsSection
 
       .al
       .xl
@@ -4109,10 +4109,10 @@
 
         ; 88/D526
 
-    .endsection Table88D4C6Section
+    .endsection MapSpriteWalkOffsetsSection
 
 
-    .section Table88D526Section
+    .section ShortStandingMapSpritePointersSection
 
       .al
       .xl
@@ -4127,10 +4127,10 @@
 
         ; 88/D5E3
 
-    .endsection Table88D526Section
+    .endsection ShortStandingMapSpritePointersSection
 
 
-    .section Table88D5E3Section
+    .section TallStandingMapSpritePointersSection
 
       .al
       .xl
@@ -4148,10 +4148,10 @@
 
         ; 88/D67C
 
-    .endsection Table88D5E3Section
+    .endsection TallStandingMapSpritePointersSection
 
 
-    .section Unsorted88D731Section
+    .section LoadMovingMapSpriteUnusedSection
 
       .al
       .xl
@@ -4238,10 +4238,10 @@
 
         ; 88/D7B2
 
-    .endsection Unsorted88D731Section
+    .endsection LoadMovingMapSpriteUnusedSection
 
 
-    .section Table88D7B2Section
+    .section SetMovingMapSpriteBufferPointersUnusedSection
 
       .al
       .xl
@@ -4254,10 +4254,10 @@
         .word <>rsSetMovingMapSpriteBuffer2Unused
         .word <>rsSetMovingMapSpriteBuffer3Unused
 
-    .endsection Table88D7B2Section
+    .endsection SetMovingMapSpriteBufferPointersUnusedSection
 
 
-    .section Unsorted88D7BASection
+    .section SetMovingMapSpriteBuffer0UnusedSection
 
       .al
       .xl
@@ -4279,10 +4279,10 @@
 
         ; 88/D7C5
 
-    .endsection Unsorted88D7BASection
+    .endsection SetMovingMapSpriteBuffer0UnusedSection
 
 
-    .section Unsorted88D7C5Section
+    .section SetMovingMapSpriteBuffer1UnusedSection
 
       .al
       .xl
@@ -4308,10 +4308,10 @@
 
         ; 88/D7D8
 
-    .endsection Unsorted88D7C5Section
+    .endsection SetMovingMapSpriteBuffer1UnusedSection
 
 
-    .section Unsorted88D7D8Section
+    .section SetMovingMapSpriteBuffer2UnusedSection
 
       .al
       .xl
@@ -4337,10 +4337,10 @@
 
         ; 88/D7EB
 
-    .endsection Unsorted88D7D8Section
+    .endsection SetMovingMapSpriteBuffer2UnusedSection
 
 
-    .section Unsorted88D7EBSection
+    .section SetMovingMapSpriteBuffer3UnusedSection
 
       .al
       .xl
@@ -4366,10 +4366,10 @@
 
         ; 88/D7FE
 
-    .endsection Unsorted88D7EBSection
+    .endsection SetMovingMapSpriteBuffer3UnusedSection
 
 
-    .section Unsorted88D7FESection
+    .section AnimateMovingMapSpriteSection
 
       .al
       .xl
@@ -4430,10 +4430,10 @@
         .word $2000
         .word $1000
 
-    .endsection Unsorted88D7FESection
+    .endsection AnimateMovingMapSpriteSection
 
 
-    .section Unsorted88D847Section
+    .section AnimateShortMovingMapSpriteSection
 
       .al
       .xl
@@ -4603,10 +4603,10 @@
 
         .databank 0
 
-    .endsection Unsorted88D847Section
+    .endsection AnimateShortMovingMapSpriteSection
 
 
-    .section Unsorted88D94BSection
+    .section MovingMapSpriteGraphicsSettersSection
 
       .al
       .xl
@@ -4632,10 +4632,10 @@
         .word $2000
         .word $1000
 
-    .endsection Unsorted88D94BSection
+    .endsection MovingMapSpriteGraphicsSettersSection
 
 
-    .section Unsorted88D963Section
+    .section AnimateTallMovingMapSpriteSection
 
       .al
       .xl
@@ -4792,10 +4792,10 @@
 
         .databank 0
 
-    .endsection Unsorted88D963Section
+    .endsection AnimateTallMovingMapSpriteSection
 
 
-    .section Unsorted88DA6ASection
+    .section MovingMapSpriteGraphicsSetters2Section
 
       .al
       .xl
@@ -4821,10 +4821,10 @@
         .word $2000
         .word $1000
 
-    .endsection Unsorted88DA6ASection
+    .endsection MovingMapSpriteGraphicsSetters2Section
 
 
-    .section Unsorted88DA82Section
+    .section SetMovingMapSpriteGraphics0Section
 
       .al
       .xl
@@ -4916,10 +4916,10 @@
 
         .databank 0
 
-    .endsection Unsorted88DA82Section
+    .endsection SetMovingMapSpriteGraphics0Section
 
 
-    .section Unsorted88DAFCSection
+    .section MovingMapSpriteTileOffsetsSection
 
       .al
       .xl
@@ -4940,10 +4940,10 @@
 
         ; 88/DB0C
 
-    .endsection Unsorted88DAFCSection
+    .endsection MovingMapSpriteTileOffsetsSection
 
 
-    .section Unsorted88DB0CSection
+    .section UploadMovingUnitSpriteFrameSection
 
       .al
       .xl
@@ -5067,10 +5067,10 @@
 
         ; 88/DBEE
 
-    .endsection Unsorted88DB0CSection
+    .endsection UploadMovingUnitSpriteFrameSection
 
 
-    .section Unsorted88DBEESection
+    .section UploadSelectedUnitMapSpriteFrameSection
 
       .al
       .xl
@@ -5110,10 +5110,10 @@
 
         ; 88/DC07
 
-    .endsection Unsorted88DBEESection
+    .endsection UploadSelectedUnitMapSpriteFrameSection
 
 
-    .section Unsorted88DC07Section
+    .section UploadSelectedUnitShortMapSpriteFrameSection
 
       .al
       .xl
@@ -5284,10 +5284,10 @@
 
         ; 88/DD0F
 
-    .endsection Unsorted88DC07Section
+    .endsection UploadSelectedUnitShortMapSpriteFrameSection
 
 
-    .section Unsorted88DD0FSection
+    .section DrawActiveUnitOverlaySpriteUnusedSection
 
       .al
       .xl
@@ -5381,10 +5381,10 @@
 
         .structSpriteArray aActiveUnitOverlaySpriteTallUnused._Sprites
 
-    .endsection Unsorted88DD0FSection
+    .endsection DrawActiveUnitOverlaySpriteUnusedSection
 
 
-    .section Unsorted88DD9CSection
+    .section UploadMapSpriteFrameSection
 
       .as
       .xl
@@ -5482,10 +5482,10 @@
 
         ; 88/DDFB
 
-    .endsection Unsorted88DD9CSection
+    .endsection UploadMapSpriteFrameSection
 
 
-    .section Unsorted88DDFBSection
+    .section SaveDeploymentMapSpritesSection
 
       .al
       .xl
@@ -5513,10 +5513,10 @@
 
         ; 88/DE0B
 
-    .endsection Unsorted88DDFBSection
+    .endsection SaveDeploymentMapSpritesSection
 
 
-    .section Unsorted88DE0BSection
+    .section RestoreDeploymentMapSpritesSection
 
       .al
       .xl
@@ -5542,10 +5542,10 @@
 
         ; 88/DE1B
 
-    .endsection Unsorted88DE0BSection
+    .endsection RestoreDeploymentMapSpritesSection
 
 
-    .section Unsorted88DE1BSection
+    .section UploadAllStandingMapSpritesSection
 
       .al
       .xl
@@ -5700,7 +5700,7 @@
 
         ; 88/DEFC
 
-    .endsection Unsorted88DE1BSection
+    .endsection UploadAllStandingMapSpritesSection
 
 
     .section Data88DEFCSection
@@ -5727,7 +5727,7 @@
     .endsection Data88DEFCSection
 
 
-    .section Unsorted88DF8CSection
+    .section AnimateUnitWindowLineSpriteSection
 
       .al
       .xl
@@ -5858,7 +5858,7 @@
 
         ; 88/E00E
 
-    .endsection Unsorted88DF8CSection
+    .endsection AnimateUnitWindowLineSpriteSection
 
 
     .section Unreferenced88E00ESection
@@ -5901,7 +5901,7 @@
         ; 88/E02B
 
     .endsection Unreferenced88E00ESection
-    .section Unsorted8189F3Section
+    .section DrawMovingMapSpriteSection
 
       .al
       .xl
@@ -5968,10 +5968,10 @@
         ; Unused: 8 zero bytes.
         .fill 8, $00
 
-    .endsection Unsorted8189F3Section
+    .endsection DrawMovingMapSpriteSection
 
 
-    .section Unsorted818D58Section
+    .section StopMovingMapSpriteSoundSection
 
       .al
       .xl
@@ -6131,10 +6131,10 @@
 
         .databank 0
 
-    .endsection Unsorted818D58Section
+    .endsection StopMovingMapSpriteSoundSection
 
 
-    .section Unsorted818EABSection
+    .section CheckSpriteRightOfLeftMarginSection
 
       .al
       .xl
@@ -6215,6 +6215,6 @@
 
         ; 81/8ECB
 
-    .endsection Unsorted818EABSection
+    .endsection CheckSpriteRightOfLeftMarginSection
 
 

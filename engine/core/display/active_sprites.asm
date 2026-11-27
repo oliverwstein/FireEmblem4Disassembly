@@ -2050,7 +2050,7 @@
     .endsection ActiveSpriteEngineSection
 
 
-    .section Unsorted9EB2BASection
+    .section PlayMapBattleHitSFXSection
 
       .al
       .xl
@@ -2152,10 +2152,10 @@
 
         ; 9E/B345
 
-    .endsection Unsorted9EB2BASection
+    .endsection PlayMapBattleHitSFXSection
 
 
-    .section Table9EB4DFSection
+    .section MapBattleSpriteDMATableSection
 
       .al
       .xl
@@ -2179,4 +2179,4 @@
 
         ; 9E/B50D
 
-    .endsection Table9EB4DFSection
+    .endsection MapBattleSpriteDMATableSection

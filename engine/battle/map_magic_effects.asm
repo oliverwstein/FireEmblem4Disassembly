@@ -14,7 +14,7 @@
 ; out from the references between labels starting at the starters.
 
 
-    .section Unsorted9F9217Section
+    .section StartMapMagicVillageFireSection
 
       .al
       .xl
@@ -57,10 +57,10 @@
 
         ; 9F/924B
 
-    .endsection Unsorted9F9217Section
+    .endsection StartMapMagicVillageFireSection
 
 
-    .section Unsorted9F924BSection
+    .section ProcMapMagicVillageFireSection
 
       .al
       .xl
@@ -69,10 +69,10 @@
 
         .structProcInfo "ON", rlMapMagicFireProcInit, rlMapMagicVillageFireInit, aProcMapMagicHaltCode
 
-    .endsection Unsorted9F924BSection
+    .endsection ProcMapMagicVillageFireSection
 
 
-    .section Unsorted9F9253Section
+    .section MapMagicVillageFireInitSection
 
       .al
       .xl
@@ -101,10 +101,10 @@
 
         ; 9F/926E
 
-    .endsection Unsorted9F9253Section
+    .endsection MapMagicVillageFireInitSection
 
 
-    .section Unsorted9F926ESection
+    .section MapMagicVillageFireWaitSection
 
       .al
       .xl
@@ -218,10 +218,10 @@
         ; Part of the Elfire effect.
         .structProcInfo "ON", rlMapMagicFireProcInit, rlMapMagicElfireWaitHit, aProcMapMagicHaltCode
 
-    .endsection Unsorted9F926ESection
+    .endsection MapMagicVillageFireWaitSection
 
 
-    .section Unsorted9F92D2Section
+    .section MapMagicFireProcInitSection
 
       .al
       .xl
@@ -249,10 +249,10 @@
 
         ; 9F/92F3
 
-    .endsection Unsorted9F92D2Section
+    .endsection MapMagicFireProcInitSection
 
 
-    .section Unsorted9F92F3Section
+    .section MapMagicFireWaitHitSection
 
       .al
       .xl
@@ -371,10 +371,10 @@
 
         ; 9F/9341
 
-    .endsection Unsorted9F92F3Section
+    .endsection MapMagicFireWaitHitSection
 
 
-    .section Unsorted9F9341Section
+    .section MapMagicVillageFireSpawnEffectsSection
 
       .al
       .xl
@@ -440,10 +440,10 @@
 
         ; 9F/936C
 
-    .endsection Unsorted9F9341Section
+    .endsection MapMagicVillageFireSpawnEffectsSection
 
 
-    .section Table9F936CSection
+    .section MapMagicFireSpriteInfoSection
 
       .al
       .xl
@@ -454,10 +454,10 @@
       aMapMagicElfireSpriteInfo ; 9F/9372
         .word <>rlMapMagicFireballSpriteInit, <>rlMapMagicFireSpriteDummyInit, <>aMapMagicElfireSpriteScript
 
-    .endsection Table9F936CSection
+    .endsection MapMagicFireSpriteInfoSection
 
 
-    .section Unsorted9F9378Section
+    .section MapMagicFireSpriteDummyInitSection
 
       .al
       .xl
@@ -722,10 +722,10 @@
 
         ; 9F/94FE
 
-    .endsection Unsorted9F9378Section
+    .endsection MapMagicFireSpriteDummyInitSection
 
 
-    .section Unsorted9F94FESection
+    .section MapMagicFireballSpriteSignalElfireSection
 
       .al
       .xl
@@ -1090,10 +1090,10 @@
 
         .structSpriteArray aMapMagicElfireFrame11._Sprites
 
-    .endsection Unsorted9F94FESection
+    .endsection MapMagicFireballSpriteSignalElfireSection
 
 
-    .section Unsorted9F9691Section
+    .section MapMagicFireStepPaletteAnimSection
 
       .al
       .xl
@@ -1398,10 +1398,10 @@
         .word $0842, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $FFFF
 
-    .endsection Unsorted9F9691Section
+    .endsection MapMagicFireStepPaletteAnimSection
 
 
-    .section Unsorted9F9954Section
+    .section StartMapMagicHealSection
 
       .al
       .xl
@@ -1432,10 +1432,10 @@
 
         ; 9F/9965
 
-    .endsection Unsorted9F9954Section
+    .endsection StartMapMagicHealSection
 
 
-    .section Unsorted9F9965Section
+    .section StartMapMagicMendSection
 
       .al
       .xl
@@ -1465,10 +1465,10 @@
 
         ; 9F/9976
 
-    .endsection Unsorted9F9965Section
+    .endsection StartMapMagicMendSection
 
 
-    .section Unsorted9F9976Section
+    .section StartMapMagicRecoverSection
 
       .al
       .xl
@@ -1499,10 +1499,10 @@
 
         ; 9F/9987
 
-    .endsection Unsorted9F9976Section
+    .endsection StartMapMagicRecoverSection
 
 
-    .section Unsorted9F9987Section
+    .section StartMapMagicPhysicSection
 
       .al
       .xl
@@ -1549,10 +1549,10 @@
 
         ; 9F/999E
 
-    .endsection Unsorted9F9987Section
+    .endsection StartMapMagicPhysicSection
 
 
-    .section Unsorted9F999ESection
+    .section MapMagicHealingInitBlendingAndHDMASection
 
       .al
       .xl
@@ -1604,10 +1604,10 @@
         PROC_CALL rlMapMagicHealingStepPaletteAnim
         PROC_JUMP aProcMapMagicHealingStaffCode
 
-    .endsection Unsorted9F999ESection
+    .endsection MapMagicHealingInitBlendingAndHDMASection
 
 
-    .section Unsorted9F99CESection
+    .section MapMagicHealingInitSection
 
       .al
       .xl
@@ -1709,10 +1709,10 @@
 
         ; 9F/9A2B
 
-    .endsection Unsorted9F99CESection
+    .endsection MapMagicHealingInitSection
 
 
-    .section Unsorted9F9A2BSection
+    .section ProcMapMagicFortifySection
 
       .al
       .xl
@@ -1869,10 +1869,10 @@
 
         ; 9F/9ABF
 
-    .endsection Unsorted9F9A2BSection
+    .endsection ProcMapMagicFortifySection
 
 
-    .section Unsorted9F9ABFSection
+    .section MapMagicHealingStepPaletteAnimSection
 
       .al
       .xl
@@ -12473,9 +12473,9 @@
 
         .databank 0
 
-    .endsection Unsorted9F9ABFSection
+    .endsection MapMagicHealingStepPaletteAnimSection
 
-.section Unsorted9FDB68Section
+.section HDMAMapMagicNoOp1Section
 
       .al
       .xl
@@ -12523,10 +12523,10 @@
       aHDMAMapMagicBG2SC .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType1, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicBG2SCTable, PPU_REG_BASE + $08, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DB7F
 
         ; Shared by 24 effects.
-    .endsection Unsorted9FDB68Section
+    .endsection HDMAMapMagicNoOp1Section
 
 
-    .section Unsorted9FDB8BSection
+    .section HDMAMapMagicSetOffsetType1Section
 
       .al
       .xl
@@ -12566,10 +12566,10 @@
       aHDMAMapMagicW12SEL .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType2, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicW12SELTable, PPU_REG_BASE + $23, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DBB8
 
         ; Shared by 24 effects.
-    .endsection Unsorted9FDB8BSection
+    .endsection HDMAMapMagicSetOffsetType1Section
 
 
-    .section Unsorted9FDBC4Section
+    .section HDMAMapMagicSetOffsetType2Section
 
       .al
       .xl
@@ -12609,10 +12609,10 @@
       aHDMAMapMagicColorMathAdd .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType3, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicColorMathAddTable, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DBF1
 
         ; Shared by 9 effects.
-    .endsection Unsorted9FDBC4Section
+    .endsection HDMAMapMagicSetOffsetType2Section
 
 
-    .section Unsorted9FDBFDSection
+    .section HDMAMapMagicSetOffsetType3Section
 
       .al
       .xl
@@ -12653,10 +12653,10 @@
       aHDMAMapMagicColorMathHalfAdd .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicSetOffsetType4, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicColorMathHalfAddTable, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DC34
 
         ; Shared by 15 effects.
-    .endsection Unsorted9FDBFDSection
+    .endsection HDMAMapMagicSetOffsetType3Section
 
 
-    .section Unsorted9FDC40Section
+    .section HDMAMapMagicSetOffsetType4Section
 
       .al
       .xl
@@ -12697,10 +12697,10 @@
       aHDMAMapMagicCenterOnTarget .dstruct structHDMAIndirectEntryInfo, rlHDMAMapMagicCenterOnTargetInit, rlHDMAMapMagicNoOp2, aHDMAMapMagicSharedHaltCode, aHDMAMapMagicCenterOnTargetTable, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DC77
 
         ; Shared by 14 effects.
-    .endsection Unsorted9FDC40Section
+    .endsection HDMAMapMagicSetOffsetType4Section
 
 
-    .section Unsorted9FDC83Section
+    .section HDMAMapMagicCenterOnTargetInitSection
 
       .al
       .xl
@@ -12983,10 +12983,10 @@
 
         .databank 0
 
-    .endsection Unsorted9FDC83Section
+    .endsection HDMAMapMagicCenterOnTargetInitSection
 
 
-    .section Unsorted9FDEE3Section
+    .section HDMAMapMagicWaveInitSection
 
       .al
       .xl
@@ -13188,10 +13188,10 @@
         .databank 0
         bra rlHDMAMapMagicBuildSineWave
 
-    .endsection Unsorted9FDEE3Section
+    .endsection HDMAMapMagicWaveInitSection
 
 
-    .section Unsorted9FE006Section
+    .section HDMAMapMagicBuildWaveMed1Section
 
       .al
       .xl
@@ -13602,10 +13602,10 @@
 
         ; 9F/E824
 
-    .endsection Unsorted9FE006Section
+    .endsection HDMAMapMagicBuildWaveMed1Section
 
 
-    .section Unsorted9FE824Section
+    .section MapMagicBuildForsetiWindowHDMASection
 
       .al
       .xl
@@ -13925,10 +13925,10 @@
 
         ; 9F/EA0C
 
-    .endsection Unsorted9FE824Section
+    .endsection MapMagicBuildForsetiWindowHDMASection
 
 
-    .section Unsorted9FEA0CSection
+    .section MapMagicCalcStaffCircleRowSection
 
       .al
       .xl
@@ -13993,10 +13993,10 @@
 
         ; 9F/EA52
 
-    .endsection Unsorted9FEA0CSection
+    .endsection MapMagicCalcStaffCircleRowSection
 
 
-    .section Unsorted9FEA52Section
+    .section MapMagicBuildCircleWindowHDMASection
 
       .al
       .xl
@@ -14252,10 +14252,10 @@
 
         ; 9F/EBA7
 
-    .endsection Unsorted9FEA52Section
+    .endsection MapMagicBuildCircleWindowHDMASection
 
 
-    .section Unsorted9FEBA7Section
+    .section ProcMapMagicEffectInitSection
 
       .al
       .xl
@@ -14273,10 +14273,10 @@
 
         ; 9F/EBA8
 
-    .endsection Unsorted9FEBA7Section
+    .endsection ProcMapMagicEffectInitSection
 
 
-    .section Unsorted9FEBA8Section
+    .section MapMagicUnusedStubSection
 
       .al
       .xl
@@ -14293,7 +14293,7 @@
 
         .databank 0
 
-    .endsection Unsorted9FEBA8Section
+    .endsection MapMagicUnusedStubSection
 
 
     .section ProcScript9FEBA9Section
@@ -14434,7 +14434,7 @@
     .endsection ProcScript9FEBA9Section
 
 
-    .section Unsorted9FECB2Section
+    .section MapMagicClearWindowBuffersSection
 
       .al
       .xl
@@ -14518,10 +14518,10 @@
 
         ; 9F/ED29
 
-    .endsection Unsorted9FECB2Section
+    .endsection MapMagicClearWindowBuffersSection
 
 
-    .section Unsorted9FED29Section
+    .section MapMagicAuraWindowInitSection
 
       .al
       .xl
@@ -14569,10 +14569,10 @@
 
         ; 9F/ED5A
 
-    .endsection Unsorted9FED29Section
+    .endsection MapMagicAuraWindowInitSection
 
 
-    .section Unsorted9FED5ASection
+    .section MapMagicCircleWindowInitSection
 
       .al
       .xl
@@ -14705,10 +14705,10 @@
 
         ; 9F/EE45
 
-    .endsection Unsorted9FED5ASection
+    .endsection MapMagicCircleWindowInitSection
 
 
-    .section Unsorted9FEE45Section
+    .section MapMagicMjolnirWindowCycleSection
 
       .al
       .xl
@@ -15020,10 +15020,10 @@
 
         ; 9F/F060
 
-    .endsection Unsorted9FEE45Section
+    .endsection MapMagicMjolnirWindowCycleSection
 
 
-    .section Unsorted9FF060Section
+    .section MapMagicFireWindowCycleSection
 
       .al
       .xl
@@ -15105,10 +15105,10 @@
 
         ; 9F/F0DC
 
-    .endsection Unsorted9FF060Section
+    .endsection MapMagicFireWindowCycleSection
 
 
-    .section Unsorted9FF0DCSection
+    .section MapMagicStaffWindowInitSection
 
       .al
       .xl
@@ -15139,10 +15139,10 @@
 
         ; 9F/F100
 
-    .endsection Unsorted9FF0DCSection
+    .endsection MapMagicStaffWindowInitSection
 
 
-    .section Unsorted9FF100Section
+    .section MapMagicStaffWindowWaitGrowSection
 
       .al
       .xl
@@ -15259,10 +15259,10 @@
 
         ; 9F/F1BC
 
-    .endsection Unsorted9FF100Section
+    .endsection MapMagicStaffWindowWaitGrowSection
 
 
-    .section Unsorted9FF1BCSection
+    .section MapMagicForsetiWindowCycleSection
 
       .al
       .xl
@@ -15349,10 +15349,10 @@
 
         ; 9F/F250
 
-    .endsection Unsorted9FF1BCSection
+    .endsection MapMagicForsetiWindowCycleSection
 
 
-    .section Unsorted9FF250Section
+    .section MapMagicAuraDrawMaskSection
 
       .al
       .xl
@@ -15578,10 +15578,10 @@
 
         .databank 0
 
-    .endsection Unsorted9FF250Section
+    .endsection MapMagicAuraDrawMaskSection
 
 
-    .section Unsorted9FF376Section
+    .section MapMagicAuraDrawMaskRowsSection
 
       .al
       .xl
@@ -15674,10 +15674,10 @@
 
         ; 9F/F3ED
 
-    .endsection Unsorted9FF376Section
+    .endsection MapMagicAuraDrawMaskRowsSection
 
 
-    .section Unsorted9FF3EDSection
+    .section MapMagicGetOctantAngleSection
 
       .al
       .xl
@@ -15759,10 +15759,10 @@
 
         ; 9F/F448
 
-    .endsection Unsorted9FF3EDSection
+    .endsection MapMagicGetOctantAngleSection
 
 
-    .section Table9FF448Section
+    .section MapMagicDivideAngleOctantJumpTableSection
 
       .al
       .xl
@@ -15775,10 +15775,10 @@
         .word <>rsMapMagicAngleOctant6
         .word <>rsMapMagicAngleOctant7
 
-    .endsection Table9FF448Section
+    .endsection MapMagicDivideAngleOctantJumpTableSection
 
 
-    .section Unsorted9FF450Section
+    .section MapMagicAngleOctant0Section
 
       .al
       .xl
@@ -15862,10 +15862,10 @@
 
         ; 9F/F487
 
-    .endsection Unsorted9FF450Section
+    .endsection MapMagicAngleOctant0Section
 
 
-    .section Unsorted9FF487Section
+    .section MapMagicAngleOctant4Section
 
       .al
       .xl
@@ -15890,10 +15890,10 @@
 
         ; 9F/F495
 
-    .endsection Unsorted9FF487Section
+    .endsection MapMagicAngleOctant4Section
 
 
-    .section Unsorted9FF495Section
+    .section MapMagicAngleOctant5Section
 
       .al
       .xl
@@ -15919,10 +15919,10 @@
 
         ; 9F/F4A6
 
-    .endsection Unsorted9FF495Section
+    .endsection MapMagicAngleOctant5Section
 
 
-    .section Unsorted9FF4A6Section
+    .section MapMagicAngleOctant6Section
 
       .al
       .xl
@@ -15948,10 +15948,10 @@
 
         ; 9F/F4B7
 
-    .endsection Unsorted9FF4A6Section
+    .endsection MapMagicAngleOctant6Section
 
 
-    .section Unsorted9FF4B7Section
+    .section MapMagicAngleOctant7Section
 
       .al
       .xl
@@ -15976,10 +15976,10 @@
 
         ; 9F/F4C5
 
-    .endsection Unsorted9FF4B7Section
+    .endsection MapMagicAngleOctant7Section
 
 
-    .section Unsorted9FF4C5Section
+    .section StartMapMagicCutsceneSeqSection
 
       .al
       .xl
@@ -16007,10 +16007,10 @@
 
         ; 9F/F4D6
 
-    .endsection Unsorted9FF4C5Section
+    .endsection StartMapMagicCutsceneSeqSection
 
 
-    .section Unsorted9FF4D6Section
+    .section ProcMapMagicCutsceneSeqSection
 
       .al
       .xl
@@ -16019,10 +16019,10 @@
 
         .structProcInfo "ON", rlProcMapMagicCutsceneSeqInit, rlProcMapMagicCutsceneSeqIdle, aProcMapMagicCutsceneSeqCode
 
-    .endsection Unsorted9FF4D6Section
+    .endsection ProcMapMagicCutsceneSeqSection
 
 
-    .section Unsorted9FF4DESection
+    .section ProcMapMagicCutsceneSeqInitSection
 
       .al
       .xl
@@ -16157,10 +16157,10 @@
 
         ; 9F/F59D
 
-    .endsection Unsorted9FF4DESection
+    .endsection ProcMapMagicCutsceneSeqInitSection
 
 
-    .section Unsorted9FF59DSection
+    .section ProcMapMagicCutsceneSeqCodeSection
 
       .al
       .xl
@@ -16227,10 +16227,10 @@
 
         ; 9F/F65A
 
-    .endsection Unsorted9FF59DSection
+    .endsection ProcMapMagicCutsceneSeqCodeSection
 
 
-    .section Unsorted9FF65ASection
+    .section MapMagicCutscenePlayCastSoundSection
 
       .al
       .xl
@@ -16270,10 +16270,10 @@
 
         .databank 0
 
-    .endsection Unsorted9FF65ASection
+    .endsection MapMagicCutscenePlayCastSoundSection
 
 
-    .section Unsorted9FF67DSection
+    .section MapMagicCutsceneWaitSoundSection
 
       .al
       .xl
@@ -16434,7 +16434,7 @@
 
         ; 9F/F729
 
-    .endsection Unsorted9FF67DSection
+    .endsection MapMagicCutsceneWaitSoundSection
 
 
     .section Data9FF729Section
@@ -16454,7 +16454,7 @@
     .endsection Data9FF729Section
 
 
-    .section Unsorted9FF749Section
+    .section MapMagicCutsceneSetupSpritesSection
 
       .al
       .xl
@@ -16889,10 +16889,10 @@
 
         ; 9F/F98E
 
-    .endsection Unsorted9FF749Section
+    .endsection MapMagicCutsceneSetupSpritesSection
 
 
-    .section Unsorted9FF98ESection
+    .section MapMagicColorRangesUnusedSection
 
       .al
       .xl
@@ -16904,10 +16904,10 @@
         .word $0002, $000F, $0022, $000F, $0042, $000F, $0062, $000F
         .word $0082, $000F, $00A2, $000F, $FFFF
 
-    .endsection Unsorted9FF98ESection
+    .endsection MapMagicColorRangesUnusedSection
 
 
-    .section Unsorted9FF9A8Section
+    .section MapMagicCutsceneStartShakeSection
 
       .al
       .xl
@@ -16932,10 +16932,10 @@
 
         ; 9F/F9B9
 
-    .endsection Unsorted9FF9A8Section
+    .endsection MapMagicCutsceneStartShakeSection
 
 
-    .section Unsorted9FF9B9Section
+    .section ProcMapMagicCutsceneShakeSection
 
       .al
       .xl
@@ -16944,10 +16944,10 @@
 
         .structProcInfo "ON", rlProcMapMagicCutsceneShakeInit, rlProcMapMagicCutsceneShakeCycle, aProcMapMagicCutsceneShakeCode
 
-    .endsection Unsorted9FF9B9Section
+    .endsection ProcMapMagicCutsceneShakeSection
 
 
-    .section Unsorted9FF9C1Section
+    .section ProcMapMagicCutsceneShakeInitSection
 
       .al
       .xl
@@ -17057,7 +17057,7 @@
 
         ; 9F/FA78
 
-    .endsection Unsorted9FF9C1Section
+    .endsection ProcMapMagicCutsceneShakeInitSection
 
 
     .section Data9FFA78Section
@@ -17084,7 +17084,7 @@
     .endsection Data9FFA78Section
 
 
-    .section Unsorted9FFA98Section
+    .section ProcMapMagicCutsceneShakeCodeSection
 
       .al
       .xl
@@ -17096,10 +17096,10 @@
 
         ; 9F/FA9A
 
-    .endsection Unsorted9FFA98Section
+    .endsection ProcMapMagicCutsceneShakeCodeSection
 
 
-    .section Unsorted9FFA9ASection
+    .section MapMagicCutsceneSetScrollUnusedSection
 
       .al
       .xl
@@ -17127,10 +17127,10 @@
 
         ; 9F/FAB4
 
-    .endsection Unsorted9FFA9ASection
+    .endsection MapMagicCutsceneSetScrollUnusedSection
 
 
-    .section Unsorted9FFAB4Section
+    .section MapMagicCutsceneStopShakeSection
 
       .al
       .xl
@@ -17172,4 +17172,4 @@
         ; Unused: 308 zero bytes.
         .fill 308, $00
 
-    .endsection Unsorted9FFAB4Section
+    .endsection MapMagicCutsceneStopShakeSection

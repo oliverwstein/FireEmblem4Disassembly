@@ -9,7 +9,7 @@
 ; slots' spawn fields ($0C03-$0C30) are still unverified.
 
 
-    .section Unsorted95B184Section
+    .section BattleAnimationCompareCombatantXSection
 
       .al
       .xl
@@ -171,10 +171,10 @@
 
         ; 95/B250
 
-    .endsection Unsorted95B184Section
+    .endsection BattleAnimationCompareCombatantXSection
 
 
-    .section Unsorted95B530Section
+    .section BattleAnimationGetTravelFramesSection
 
       .al
       .xl
@@ -220,10 +220,10 @@
 
         ; 95/B554
 
-    .endsection Unsorted95B530Section
+    .endsection BattleAnimationGetTravelFramesSection
 
 
-    .section Unsorted95B554Section
+    .section BattleAnimationSetAdvanceSection
 
       .al
       .xl
@@ -317,10 +317,10 @@
 
         ; 95/B5D0
 
-    .endsection Unsorted95B554Section
+    .endsection BattleAnimationSetAdvanceSection
 
 
-    .section Unsorted95B5D0Section
+    .section BattleAnimationGetBodyWidthSection
 
       .al
       .xl
@@ -506,7 +506,7 @@
 
         ; 95/B6A7
 
-    .endsection Unsorted95B5D0Section
+    .endsection BattleAnimationGetBodyWidthSection
 
 
     .section Unreferenced95B6A7Section
@@ -551,7 +551,7 @@
         ; 95/B6D0
 
     .endsection Unreferenced95B6A7Section
-    .section Unsorted95B6D0Section
+    .section BattleSceneGetStartGapSection
 
       .al
       .xl
@@ -724,7 +724,7 @@
 
         ; 95/B7CF
 
-    .endsection Unsorted95B6D0Section
+    .endsection BattleSceneGetStartGapSection
 
 
     .section Unreferenced95B7CFSection
@@ -769,7 +769,7 @@
         ; 95/B7F8
 
     .endsection Unreferenced95B7CFSection
-    .section Unsorted95B7F8Section
+    .section BattleSceneGetKnockbackStrengthSection
 
       .al
       .xl
@@ -819,10 +819,10 @@
 
         ; 95/B81B
 
-    .endsection Unsorted95B7F8Section
+    .endsection BattleSceneGetKnockbackStrengthSection
 
 
-    .section Unsorted95B81BSection
+    .section BattleAnimationSetBodyIndicesSection
 
       .al
       .xl
@@ -925,10 +925,10 @@
 
         ; 95/B884
 
-    .endsection Unsorted95B81BSection
+    .endsection BattleAnimationSetBodyIndicesSection
 
 
-    .section Unsorted95B884Section
+    .section BattleAnimationStartPoseSection
 
       .al
       .xl
@@ -1127,10 +1127,10 @@
 
         ; 95/B96F
 
-    .endsection Unsorted95B884Section
+    .endsection BattleAnimationStartPoseSection
 
 
-    .section Unsorted95B96FSection
+    .section BattleAnimationResetSlotsSection
 
       .al
       .xl
@@ -1167,10 +1167,10 @@
 
         ; 95/B993
 
-    .endsection Unsorted95B96FSection
+    .endsection BattleAnimationResetSlotsSection
 
 
-    .section Unsorted95B993Section
+    .section BattleAnimationResetSpawnSlotSection
 
       .al
       .xl
@@ -3150,7 +3150,7 @@
 
         ; 95/C306
 
-    .endsection Unsorted95B993Section
+    .endsection BattleAnimationResetSpawnSlotSection
 
 
     .section Unreferenced95C306Section
@@ -3260,7 +3260,7 @@
         ; 95/C368
 
     .endsection Unreferenced95C306Section
-    .section Unsorted95C368Section
+    .section BattleSceneRunUploadsSection
 
       .al
       .xl
@@ -3404,10 +3404,10 @@
 
         ; 95/C43E
 
-    .endsection Unsorted95C368Section
+    .endsection BattleSceneRunUploadsSection
 
 
-    .section Unsorted95C43ESection
+    .section BattleSceneQueueUploadSection
 
       .al
       .xl
@@ -4532,10 +4532,10 @@
 
         ; 95/CA81
 
-    .endsection Unsorted95C43ESection
+    .endsection BattleSceneQueueUploadSection
 
 
-    .section Unsorted95CA81Section
+    .section BattleSceneClearKnockbackSection
 
       .al
       .xl
@@ -4557,10 +4557,10 @@
 
         ; 95/CA88
 
-    .endsection Unsorted95CA81Section
+    .endsection BattleSceneClearKnockbackSection
 
 
-    .section Unsorted95CA88Section
+    .section BattleSceneSetKnockbackSection
 
       .al
       .xl
@@ -5318,10 +5318,10 @@
 
         ; 95/CEBF
 
-    .endsection Unsorted95CA88Section
+    .endsection BattleSceneSetKnockbackSection
 
 
-    .section Unsorted95CEBFSection
+    .section BattleAnimationSetPathToOpponentSection
 
       .al
       .xl
@@ -5412,10 +5412,10 @@
 
         ; 95/CF2E
 
-    .endsection Unsorted95CEBFSection
+    .endsection BattleAnimationSetPathToOpponentSection
 
 
-    .section Unsorted95CFA0Section
+    .section BattleAnimationSetPathToOpponentInFramesSection
 
       .al
       .xl
@@ -5501,10 +5501,10 @@
 
         ; 95/D007
 
-    .endsection Unsorted95CFA0Section
+    .endsection BattleAnimationSetPathToOpponentInFramesSection
 
 
-    .section Unsorted95D078Section
+    .section BattleAnimationSetPathPastOpponentSection
 
       .al
       .xl
@@ -5594,10 +5594,10 @@
 
         ; 95/D0E7
 
-    .endsection Unsorted95D078Section
+    .endsection BattleAnimationSetPathPastOpponentSection
 
 
-    .section Unsorted95D1C5Section
+    .section BattleAnimationGetPathMeasuresSection
 
       .al
       .xl
@@ -5656,7 +5656,7 @@
 
         ; 95/D200
 
-    .endsection Unsorted95D1C5Section
+    .endsection BattleAnimationGetPathMeasuresSection
 
 
     .section Unreferenced95D200Section
@@ -5709,7 +5709,7 @@
         ; 95/D23C
 
     .endsection Unreferenced95D200Section
-    .section Unsorted95D2A4Section
+    .section BattleSceneScrollCameraRightSection
 
       .al
       .xl
@@ -7044,10 +7044,10 @@
 
         ; 95/DA0B
 
-    .endsection Unsorted95D2A4Section
+    .endsection BattleSceneScrollCameraRightSection
 
 
-    .section Unsorted95DA0BSection
+    .section BattleAnimationClearMoveQueuesSection
 
       .al
       .xl
@@ -7076,10 +7076,10 @@
 
         ; 95/DA1D
 
-    .endsection Unsorted95DA0BSection
+    .endsection BattleAnimationClearMoveQueuesSection
 
 
-    .section Unsorted95DA1DSection
+    .section BattleAnimationRunMoveQueueSection
 
       .al
       .xl
@@ -7564,10 +7564,10 @@
 
         ; 95/DC4C
 
-    .endsection Unsorted95DA1DSection
+    .endsection BattleAnimationRunMoveQueueSection
 
 
-    .section Table95DC4CSection
+    .section BattleAnimationEffectSetupsSection
 
       .al
       .xl
@@ -7580,10 +7580,10 @@
         .word <>rsBattleAnimationSetupPathEffect
         .word <>rsBattleAnimationSetupPathScriptEffect
 
-    .endsection Table95DC4CSection
+    .endsection BattleAnimationEffectSetupsSection
 
 
-    .section Unsorted95DC54Section
+    .section BattleAnimationSetupFlyingEffectSection
 
       .al
       .xl
@@ -7648,10 +7648,10 @@
 
         ; 95/DC90
 
-    .endsection Unsorted95DC54Section
+    .endsection BattleAnimationSetupFlyingEffectSection
 
 
-    .section Unsorted95DC90Section
+    .section BattleAnimationSetupPathScriptEffectSection
 
       .al
       .xl
@@ -7680,10 +7680,10 @@
 
         ; 95/DCA3
 
-    .endsection Unsorted95DC90Section
+    .endsection BattleAnimationSetupPathScriptEffectSection
 
 
-    .section Unsorted95DCA3Section
+    .section BattleAnimationSpawnEffect1Section
 
       .al
       .xl
@@ -8003,10 +8003,10 @@
 
         ; 95/DE84
 
-    .endsection Unsorted95DCA3Section
+    .endsection BattleAnimationSpawnEffect1Section
 
 
-    .section Table95DE84Section
+    .section BattleAnimationEffectMotionsSection
 
       .al
       .xl
@@ -8019,10 +8019,10 @@
         .word <>rsBattleAnimationFollowEffectPath
         .word <>rsBattleAnimationRunEffectPathScript
 
-    .endsection Table95DE84Section
+    .endsection BattleAnimationEffectMotionsSection
 
 
-    .section Unsorted95DE8CSection
+    .section BattleAnimationFlyEffectSection
 
       .al
       .xl
@@ -8200,10 +8200,10 @@
 
         ; 95/DF76
 
-    .endsection Unsorted95DE8CSection
+    .endsection BattleAnimationFlyEffectSection
 
 
-    .section Unsorted95DF76Section
+    .section BattleAnimationRunEffectPathScriptSection
 
       .al
       .xl
@@ -8393,7 +8393,7 @@
 
         ; 95/E08C
 
-    .endsection Unsorted95DF76Section
+    .endsection BattleAnimationRunEffectPathScriptSection
 
 
     .section Unreferenced95E08CSection
@@ -8452,7 +8452,7 @@
         ; 95/E0C5
 
     .endsection Unreferenced95E08CSection
-    .section Unsorted95E0C5Section
+    .section BattleAnimationMoveEffectRightSection
 
       .al
       .xl
@@ -8640,10 +8640,10 @@
 
         ; 95/E1C9
 
-    .endsection Unsorted95E0C5Section
+    .endsection BattleAnimationMoveEffectRightSection
 
 
-    .section Unsorted95E1C9Section
+    .section BattleAnimationApplyEffectGravitySection
 
       .al
       .xl
@@ -8994,10 +8994,10 @@
 
         ; 95/E372
 
-    .endsection Unsorted95E1C9Section
+    .endsection BattleAnimationApplyEffectGravitySection
 
 
-    .section Unsorted95E372Section
+    .section BattleAnimationSetEffectPoseSection
 
       .al
       .xl
@@ -9084,10 +9084,10 @@
 
         ; 95/E3DF
 
-    .endsection Unsorted95E372Section
+    .endsection BattleAnimationSetEffectPoseSection
 
 
-    .section Unsorted95E3DFSection
+    .section BattleSceneSetRolesSection
 
       .al
       .xl
@@ -9466,10 +9466,10 @@
 
         ; 95/E5C9
 
-    .endsection Unsorted95E3DFSection
+    .endsection BattleSceneSetRolesSection
 
 
-    .section Unsorted96961FSection
+    .section BattleSceneTrackCombatantSidesSection
 
       .al
       .xl
@@ -9518,6 +9518,6 @@
 
         ; 96/9665
 
-    .endsection Unsorted96961FSection
+    .endsection BattleSceneTrackCombatantSidesSection
 
 

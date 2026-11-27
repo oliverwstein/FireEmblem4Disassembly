@@ -96,7 +96,7 @@
     .endsection BlockCopySection
 
 
-    .section Unsorted80A836Section
+    .section InitBlockCopyRAMStubsSection
 
       .al
       .xl
@@ -141,10 +141,10 @@
 
         ; 80/A859
 
-    .endsection Unsorted80A836Section
+    .endsection InitBlockCopyRAMStubsSection
 
 
-    .section Table80A859Section
+    .section BlockCopyMVNStubTemplateSection
 
       .al
       .xl
@@ -157,10 +157,10 @@
 
         ; 80/A85D
 
-    .endsection Table80A859Section
+    .endsection BlockCopyMVNStubTemplateSection
 
 
-    .section Table80A85DSection
+    .section BlockCopyMVPStubTemplateSection
 
       .al
       .xl
@@ -173,10 +173,10 @@
 
         ; 80/A861
 
-    .endsection Table80A85DSection
+    .endsection BlockCopyMVPStubTemplateSection
 
 
-    .section Unsorted80A861Section
+    .section CallIndirectRoutineFromTableSection
 
       .al
       .xl
@@ -241,7 +241,7 @@
 
         ; 80/A899
 
-    .endsection Unsorted80A861Section
+    .endsection CallIndirectRoutineFromTableSection
 
 
     .section MainDataEntry12UnusedSection

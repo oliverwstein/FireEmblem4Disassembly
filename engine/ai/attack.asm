@@ -1558,7 +1558,7 @@
     .endsection AIAttackSection
 
 
-    .section Unsorted86C333Section
+    .section AIGetClassWeightSection
 
       .al
       .xl
@@ -1599,10 +1599,10 @@
 
         ; 86/C359
 
-    .endsection Unsorted86C333Section
+    .endsection AIGetClassWeightSection
 
 
-    .section Table86C359Section
+    .section AIClassWeightTableSection
 
       .al
       .xl
@@ -1619,10 +1619,10 @@
 
         ; 86/C3A0
 
-    .endsection Table86C359Section
+    .endsection AIClassWeightTableSection
 
 
-    .section Unsorted86C3A0Section
+    .section AIGetClassTargetPrioritySection
 
       .al
       .xl
@@ -1663,10 +1663,10 @@
 
         ; 86/C3C6
 
-    .endsection Unsorted86C3A0Section
+    .endsection AIGetClassTargetPrioritySection
 
 
-    .section Table86C3C6Section
+    .section AIClassTargetPriorityTableSection
 
       .al
       .xl
@@ -1683,10 +1683,10 @@
 
         ; 86/C40D
 
-    .endsection Table86C3C6Section
+    .endsection AIClassTargetPriorityTableSection
 
 
-    .section Unsorted86C40DSection
+    .section AIGetWeaponTriangleScoreSection
 
       .al
       .xl
@@ -1796,5 +1796,5 @@
 
         ; 86/C4C4
 
-    .endsection Unsorted86C40DSection
+    .endsection AIGetWeaponTriangleScoreSection
 

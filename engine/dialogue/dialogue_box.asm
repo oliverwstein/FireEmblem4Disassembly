@@ -1020,7 +1020,7 @@
     .endsection DisplayDialogueAPressArrowsSection
 
 
-    .section Unsorted859D60Section
+    .section CloseDialogueBoxSection
 
       .al
       .xl
@@ -1064,10 +1064,10 @@
 
         ; 85/9D88
 
-    .endsection Unsorted859D60Section
+    .endsection CloseDialogueBoxSection
 
 
-    .section Unsorted85AB32Section
+    .section CheckDialogueBoxesClosedSection
 
       .al
       .xl
@@ -1096,10 +1096,10 @@
 
         ; 85/AB3F
 
-    .endsection Unsorted85AB32Section
+    .endsection CheckDialogueBoxesClosedSection
 
 
-    .section Unsorted85BCD4Section
+    .section InitDialogueBoxHDMASection
 
       .al
       .xl
@@ -1153,10 +1153,10 @@
 
         .byte $01
 
-    .endsection Unsorted85BCD4Section
+    .endsection InitDialogueBoxHDMASection
 
 
-    .section Unsorted85BD12Section
+    .section UpdateDialoguePortraitOverlayTilesSection
 
       .al
       .xl
@@ -1272,10 +1272,10 @@
 
         ; 85/BD8D
 
-    .endsection Unsorted85BD12Section
+    .endsection UpdateDialoguePortraitOverlayTilesSection
 
 
-    .section Table85BD8DSection
+    .section DialoguePortraitOverlayTileOffsetsSection
 
       .al
       .xl
@@ -1292,10 +1292,10 @@
 
         ; 85/BD93
 
-    .endsection Table85BD8DSection
+    .endsection DialoguePortraitOverlayTileOffsetsSection
 
 
-    .section Unsorted85BD93Section
+    .section UploadDialoguePortraitOverlayTilesSection
 
       .al
       .xl
@@ -1319,10 +1319,10 @@
 
         ; 85/BDA1
 
-    .endsection Unsorted85BD93Section
+    .endsection UploadDialoguePortraitOverlayTilesSection
 
 
-    .section Unsorted85BDA1Section
+    .section DrawExpandingWindowSpritesSection
 
       .al
       .xl
@@ -1473,10 +1473,10 @@
 
         ; 85/BE76
 
-    .endsection Unsorted85BDA1Section
+    .endsection DrawExpandingWindowSpritesSection
 
 
-    .section Table85BE76Section
+    .section ExpandingWindowStepSizesSection
 
       .al
       .xl
@@ -1490,10 +1490,10 @@
 
         ; 85/BE87
 
-    .endsection Table85BE76Section
+    .endsection ExpandingWindowStepSizesSection
 
 
-    .section Table85BE87Section
+    .section ExpandingWindowSpritesSection
 
       .al
       .xl
@@ -1675,7 +1675,7 @@
 
         ; 85/C01F
 
-    .endsection Table85BE87Section
+    .endsection ExpandingWindowSpritesSection
 
 
     .section ProcScript85C01FSection
@@ -1692,7 +1692,7 @@
     .endsection ProcScript85C01FSection
 
 
-    .section Unsorted85C028Section
+    .section ProcExpandingWindowAnimationInitSection
 
       .al
       .xl
@@ -1839,10 +1839,10 @@
         ; 85/C0BA
 
 
-    .endsection Unsorted85C028Section
+    .endsection ProcExpandingWindowAnimationInitSection
 
 
-    .section Unsorted85C0BASection
+    .section ClosePopUpWindowAndRestoreMapSection
 
       .al
       .xl
@@ -1865,10 +1865,10 @@
 
         ; 85/C0C7
 
-    .endsection Unsorted85C0BASection
+    .endsection ClosePopUpWindowAndRestoreMapSection
 
 
-    .section Unsorted81B3A6Section
+    .section RedrawDialogueBoxTilemapsSection
 
       .al
       .xl
@@ -1957,10 +1957,10 @@
 
         ; 81/B42D
 
-    .endsection Unsorted81B3A6Section
+    .endsection RedrawDialogueBoxTilemapsSection
 
 
-    .section Table81B42DSection
+    .section DialogueBox1TilemapEntrySection
 
       .al
       .xl
@@ -1971,10 +1971,10 @@
       aDialogueBox2TilemapEntry ; 81/B436
         .byte $06, $08, $88, $7B, $7E, $00, $B2, $C5, $7F
 
-    .endsection Table81B42DSection
+    .endsection DialogueBox1TilemapEntrySection
 
 
-    .section Unsorted91A928Section
+    .section SetupConversationDialogueBoxesSection
 
       .al
       .xl
@@ -2050,6 +2050,6 @@
 
         ; 91/A984
 
-    .endsection Unsorted91A928Section
+    .endsection SetupConversationDialogueBoxesSection
 
 

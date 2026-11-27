@@ -3918,7 +3918,7 @@
     .endsection BattleSection
 
 
-    .section Unsorted84BB54Section
+    .section StartBattleSceneOrMapBattleSection
 
       .al
       .xl
@@ -3946,6 +3946,6 @@
 
         .databank 0
 
-    .endsection Unsorted84BB54Section
+    .endsection StartBattleSceneOrMapBattleSection
 
 

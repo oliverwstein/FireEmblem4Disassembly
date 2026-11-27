@@ -250,28 +250,25 @@
     * = $008000
     .logical $808000
 
-      ; 80/8000: two unreferenced bytes before the first routine.
-      aUnused808000 .byte $02, $FE
-
-      .dsection Unsorted808002Section
+      .dsection Unused808000Section
 
       .dsection DMAPaletteAndOAMBufferSection
 
-      .dsection Unsorted8080C3Section
+      .dsection CopyPPURegisterBufferSection
 
-      .dsection Unsorted8081A8Section
+      .dsection CopyINIDISPBufferSection
 
-      .dsection Unsorted8081B6Section
+      .dsection VBlankSection
 
-      .dsection Unsorted8081FDSection
+      .dsection IRQSection
 
       .dsection VBlankControlSection
 
-      .dsection Unsorted80823FSection
+      .dsection HaltUntilVBlankSection
 
       .dsection EnableForcedBlankSection
 
-      .dsection Unsorted80825BSection
+      .dsection DisableForcedBlankSection
 
       .dsection HideSpritesSection
 
@@ -279,99 +276,97 @@
 
       .dsection OAMUpperXBitTableSection
 
-      .dsection Unsorted808875Section
+      .dsection EnableOAMScanlineFlickerSection
 
-      .dsection Unsorted80889DSection
+      .dsection PushToOAMBufferWithScanlineCullingSection
 
-      .dsection Table8089F1Section
+      .dsection OAMScanlineTrailExtMaskTableSection
 
-      .dsection Unsorted808A01Section
+      .dsection FinishOAMScanlineFrameSection
 
-      .dsection Table808A25Section
+      .dsection OAMUnusedExtMaskTableSection
 
-      .dsection Unsorted808A35Section
+      .dsection FillTrailingSpriteExtBufferSection
 
-      .dsection Unsorted808A6CSection
+      .dsection CountSpritesPerScanlineSection
 
-      .dsection Unsorted808B48Section
+      .dsection UpdateOAMBandSpriteLimitsSection
 
-      .dsection Unsorted808C50Section
+      .dsection InitPPURegistersSection
 
-      .dsection Unsorted808D56Section
+      .dsection ResetSection
 
-      .dsection Unsorted808D6CSection
+      .dsection BootInitAndCheckHardwareSection
 
-      .dsection Unsorted808E2DSection
+      .dsection ColdResetClearMemorySection
 
       .dsection SoundInitSection
 
-      .dsection Unsorted808FA3Section
+      .dsection SendSoundCommandSection
 
-      .dsection Unsorted808FDDSection
+      .dsection PlaySoundEffect2CheckedSection
 
-      .dsection Unsorted80903DSection
+      .dsection SoundOnFlag10ClearedSection
 
-      .dsection Unsorted8090A2Section
+      .dsection SendSoundQueuesToAPUSection
 
-      .dsection Unsorted809124Section
+      .dsection UploadToAPUSection
 
-      .dsection Table809357Section
+      .dsection SoundUploadCommandsSection
 
-      .dsection Unsorted809377Section
+      .dsection SoundUploadCommandClearResendSection
 
-      .dsection Unsorted809382Section
+      .dsection SoundUploadCommandSetDestinationSection
 
-      .dsection Unsorted809391Section
-      .dsection Unsorted809392Section
+      .dsection SoundUploadCommandNoneSection
+      .dsection SoundUploadCommandJumpSection
 
-      .dsection Unsorted8093B0Section
+      .dsection SoundUploadCommandResetBuffersSection
 
-      .dsection Unsorted8093C6Section
+      .dsection GetIndirectSoundUploadSection
 
-      .dsection Unsorted8094E2Section
+      .dsection SoundUploadCommandReadTerrainSection
 
-      .dsection Unsorted8095CDSection
+      .dsection UpdateSoundSection
 
-      .dsection Unsorted809654Section
+      .dsection StepMusicScriptSection
 
-      .dsection Table809703Section
+      .dsection SoundScriptCommandsSection
 
+      .dsection SoundScriptPlaySoundEffectSection
+      .dsection SoundScriptPlaySoundEffect2Section
 
-      .dsection Unsorted809729Section
-      .dsection Unsorted80972ESection
+      .dsection SoundScriptQueueCommandSection
 
-      .dsection Unsorted809733Section
+      .dsection SoundScriptSendCommandSection
 
-      .dsection Unsorted809759Section
+      .dsection SoundScriptUploadFDSection
 
-      .dsection Unsorted80975ESection
+      .dsection SoundScriptDeferUploadFDSection
 
-      .dsection Unsorted8097E0Section
+      .dsection SoundScriptDeferUploadFCSection
+      .dsection SoundScriptDeferUploadFBSection
+      .dsection SoundScriptDeferUploadFASection
+      .dsection SoundScriptWaitForAPUStatusSection
+      .dsection SoundScriptWaitForDeferredUploadSection
 
-      .dsection Unsorted809801Section
-      .dsection Unsorted809810Section
-      .dsection Unsorted80981FSection
-      .dsection Unsorted80982ESection
-      .dsection Unsorted80983CSection
+      .dsection SoundScriptQueueCommandCheckedSection
 
-      .dsection Unsorted809846Section
+      .dsection RunDeferredSoundUploadSection
 
-      .dsection Unsorted809903Section
+      .dsection UpdateMapSpriteSoundPanningSection
 
-      .dsection Unsorted809933Section
+      .dsection GameStateNoneSection
 
-      .dsection Unsorted809B00Section
+      .dsection GameStateRoutinesSection
 
-      .dsection Unsorted809B01Section
-
-      .dsection Unsorted809BEESection
+      .dsection ResetVBlankHookTableSection
 
       .dsection Unreferenced809C3ESection
 
+      .dsection RunVBlankHooksSection
 
-      .dsection Unsorted809C7ASection
-
-      .dsection Unsorted809CA0Section
+      .dsection DefaultVBlankRoutineSection
 
       .dsection InitEngineSection
 
@@ -384,21 +379,21 @@
 
       .dsection MathSection
 
-      .dsection Unsorted80A1ABSection
+      .dsection UnsignedDivide16By16R13Section
 
       .dsection FadeInByTimerSection
 
-      .dsection Unsorted80A29ASection
+      .dsection FadeOutCOLDATAByTimerSection
 
       .dsection HDMAHandlePossibleSection
 
       .dsection DMAEngineSection
 
-      .dsection Unsorted80A5D9Section
+      .dsection ResetDecompListSection
 
       .dsection DecompressionListSection
 
-      .dsection Unsorted80A678Section
+      .dsection BuildHDMADirectTableEntriesSection
 
       .dsection FrameSection
 
@@ -406,128 +401,92 @@
 
       .dsection InitRNArraySection
 
-      .dsection Unsorted80A836Section
+      .dsection InitBlockCopyRAMStubsSection
 
-      .dsection Table80A859Section
-      .dsection Table80A85DSection
+      .dsection BlockCopyMVNStubTemplateSection
+      .dsection BlockCopyMVPStubTemplateSection
 
-      .dsection Unsorted80A861Section
+      .dsection CallIndirectRoutineFromTableSection
 
       .dsection RandomChanceSection
 
       .dsection BlockCopySection
       .dsection SetMainLoopPointerSection
 
-      .dsection Unsorted80A9F2Section
+      .dsection DecompressLinearSection
 
       .dsection DecompressorSection
 
-      .dsection Unsorted80AD24Section
+      .dsection SetupOpeningLogoScreenSection
 
-
-      .dsection Unsorted80AE25Section
+      .dsection OpeningLogoVBlankSection
 
       .dsection IRQEngineCycleSection
 
       .dsection MapVBlankAndStartSection
 
-      .dsection Unsorted80AF9BSection
+      .dsection ResetMapGraphicsAndSystemsSection
 
-      .dsection Unsorted80B041Section
+      .dsection SetMapMainLoopAndVBlankSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B084 .structDecompressionDMAEntry g4bppcMapMenuTiles3600, $0400, $3600 ; 80/B084
+      .dsection LoadMapMenuDecompression80B09BSection
 
-      .dsection Unsorted80B08CSection
+      .dsection LoadDefaultWindowBorderPaletteSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B09B .structDecompressionDMAEntry g4bppcMapMenuTiles3400, $0400, $3400 ; 80/B09B
+      .dsection QueueMenuFontDecompressionSection
 
-      .dsection Unsorted80B0A3Section
+      .dsection InitMapWindowRegistersSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B0CB .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/B0CB
+      .dsection ReturnToMapMainLoopSection
 
-      .dsection Unsorted80B0D3Section
-
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B0FD .structDecompressionDMAEntry gcMenuLabelsAndIcons, $0800, $4C00 ; 80/B0FD
-
-      .dsection Unsorted80B105Section
-
-      .dsection Unsorted80B122Section
-
-      .dsection Unsorted80B1E1Section
+      .dsection SetupGameOverScreenSection
 
       .dsection MapMainLoopSection
 
       .dsection Unreferenced80B316Section
 
-      .dsection Unsorted80B347Section
+      .dsection WorldMapVBlankSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B61E .structDecompressionDMAEntry gcWorldMapTiles, $6000, $0000 ; 80/B61E
-      aDecompressionDMAEntry80B626 .structDecompressionDMAEntry g4bppcWorldMapOverlayTiles, $1000, $3000 ; 80/B626
-      aDecompressionDMAEntry80B62E .structDecompressionDMAEntry acWorldMapData4000, $0100, $4000 ; 80/B62E
-      aDecompressionDMAEntry80B636 .structDecompressionDMAEntry acWorldMapBG3Tilemap, $0800, $6000 ; 80/B636
+      .dsection EventNoOp80B63FSection
 
-      ; 80/B63E: an unreferenced lone rts (as at 80/B640).
-      .byte $60
+      .dsection RunCastleScreenVBlankSection
 
-      .dsection Unsorted80B63FSection
+      .dsection CastleMenuTilemapDataSection
 
+      .dsection OpenCastleScreenSection
 
-      .dsection Unsorted80B641Section
+      .dsection ReturnToCastleFromArenaSection
 
-      .dsection Table80B6ADSection
+      .dsection DispatchCastleStateSection
 
-      .dsection Unsorted80B6B6Section
+      .dsection CastleStateHandlersSection
 
-      .dsection Unsorted80B74BSection
+      .dsection EnterCastleConversationSection
 
+      .dsection EnterCastleArenaScreenSection
+      .dsection ReloadChapterMapAndOpenCastleSection
 
-      .dsection Unsorted80B77FSection
+      .dsection OpenCastleCourtyardSection
 
-      .dsection Table80B787Section
+      .dsection ClearMovementMapBufferSection
 
-      .dsection Unsorted80B793Section
+      .dsection SetCastleCourtyardBGSettingsSection
 
-      .dsection Unsorted80B7B1Section
-      .dsection Unsorted80B7DESection
+      .dsection SetCastleTownBGSettingsSection
 
-      .dsection Unsorted80B81BSection
+      .dsection ResumeCastleTownSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80B99D .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/B99D
-      aDecompressionDMAEntry80B9A5 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 80/B9A5
+      .dsection SetupCastleTownDisplaySection
 
-      .dsection Unsorted80B9ADSection
+      .dsection ReturnToCastleScreenSection
 
-      .dsection Unsorted80B9BCSection
+      .dsection FadeToCastleScreenSection
 
-      .dsection Unsorted80B9E1Section
-
-      .dsection Unsorted80BA02Section
-
-      .dsection Unsorted80BA52Section
-
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80BB45 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/BB45
-      aDecompressionDMAEntry80BB4D .structDecompressionDMAEntry acCastleTownBGTilemap, $0800, $5400 ; 80/BB4D
-      aDecompressionDMAEntry80BB55 .structDecompressionDMAEntry g4bppcCastleTownBGTiles, $2000, $1000 ; 80/BB55
-
-      .dsection Unsorted80BB5DSection
-
-      .dsection Unsorted80BB7CSection
-
-      .dsection Unsorted80BB9BSection
+      .dsection RunMenuScreenVBlankSection
 
       .dsection Data80BEEFSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80BEF9 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/BEF9
-
-      .dsection Unsorted80BF01Section
+      .dsection SetStatusScreenBGSettingsSection
 
       .dsection BattleSceneVBlankSection
 
@@ -541,100 +500,88 @@
 
       .dsection TitleScreenMainLoopSection
 
-      .dsection Unsorted80C162Section
+      .dsection RunVBlankWithoutSoundSection
 
-      .dsection Unsorted80C1A0Section
+      .dsection UnusedScreenSetupSection
 
       .dsection Unreferenced80C1BASection
 
-      .dsection Unsorted80C1CASection
+      .dsection UnusedScreenStepSection
 
-      .dsection Unsorted80C1CBSection
+      .dsection StartChapterEventByIDSection
 
-      .dsection Unsorted80C212Section
+      .dsection ResetPPUAndBuffersMode09Section
 
-      .dsection Unsorted80C32CSection
+      .dsection SetMapBGModeAndLayerPositionsSection
 
-      .dsection Unsorted80C35DSection
+      .dsection SetMode3LayerPositionsSection
 
-      .dsection Unsorted80C39ASection
+      .dsection OpenUnusedScreenSection
 
-      .dsection Table80C3DDSection
+      .dsection UnitWindowBG3TilemapEntrySection
 
-      .dsection Unsorted80C3E6Section
+      .dsection UnitWindowOpenSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80C5BE .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/C5BE
-
-      .dsection Unsorted80C5C6Section
+      .dsection UnitWindowCopyAllEquippedWeaponIconsSection
 
       .dsection Data80C5F8Section
 
-      .dsection Unsorted80C628Section
+      .dsection UnitWindowSetBGSettingsSection
 
-      .dsection Table80C6CDSection
+      .dsection UnitWindowBG3VOFSHDMAInfoSection
 
-      .dsection Unsorted80C6D8Section
+      .dsection UnitWindowBG3VOFSHDMAInitSection
 
-      .dsection Table80C716Section
+      .dsection UnitWindowBG3VOFSHDMACodeSection
 
-      .dsection Unsorted80C723Section
+      .dsection UnitWindowBG1VOFSHDMAInitSection
 
-      .dsection Table80C760Section
+      .dsection UnitWindowBG1VOFSHDMACodeSection
 
-      .dsection Unsorted80C76DSection
+      .dsection UnitWindowCGADSUBHDMAInitSection
 
-      .dsection Table80C88ASection
+      .dsection UnitWindowCGADSUBHDMACodeSection
 
-      .dsection Unsorted80C897Section
+      .dsection UnitWindowBG2VOFSHDMAInitSection
 
-      .dsection Unsorted80C8D5Section
+      .dsection UnitWindowGetUnitsSection
 
       .dsection Data80CA25Section
 
-      .dsection Unsorted80CBA5Section
+      .dsection UnitWindowDrawUnitNamesSection
 
       .dsection Data80CC05Section
 
-      .dsection Unsorted80CC35Section
+      .dsection UnitWindowDrawUnitSkillsSection
 
       .dsection Data80CCD3Section
 
-      .dsection Unsorted80CD2ESection
+      .dsection ItemWindowOpenSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80CE8E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/CE8E
-      aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry acMenuWindowBackgroundTilemap, $0800, $2800 ; 80/CE96
+      .dsection ItemWindowSetBGSettingsSection
 
-      .dsection Unsorted80CE9ESection
+      .dsection ItemWindowNoItemsTextSection
 
-      .dsection Table80D046Section
-
-      .dsection Unsorted80D089Section
+      .dsection MapMenuWindowCOLDATAHDMAInitSection
 
       .dsection Data80D09BSection
 
-      .dsection Unsorted80D0B1Section
+      .dsection MapMenuWindowCOLDATAHDMACycleSection
 
-      .dsection Unsorted80D0B4Section
+      .dsection ItemWindowBuildItemListSection
 
-      .dsection Unsorted80D143Section
-      .dsection Table80D1AESection
+      .dsection ItemWindowGetItemDataSection
+      .dsection ItemWindowIconIndicesSection
 
-      .dsection Unsorted80D2C6Section
+      .dsection SkillWindowOpenSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/D41D
-      aDecompressionDMAEntry80D425 .structDecompressionDMAEntry acSkillWindowBG1Tilemap, $0700, $1800 ; 80/D425
-      aDecompressionDMAEntry80D42D .structDecompressionDMAEntry acMenuWindowBackgroundTilemap, $0800, $2000 ; 80/D42D
+      .dsection SkillWindowSetBGSettingsSection
 
-      .dsection Unsorted80D435Section
+      .dsection SkillWindowPaviseRowTextSection
 
-      .dsection Table80D662Section
+      .dsection SkillWindowGetUnitsSection
 
-      .dsection Unsorted80D818Section
-
-      .dsection Table80D8E8Section
+      .dsection SkillWindowBG3TilemapEntrySection
 
       .dsection DataWindowOpenSection
 
@@ -642,99 +589,79 @@
 
       .dsection ReviveScreenBuildSection
 
-      .dsection Unsorted80E42BSection
+      .dsection OpenDebugMenuSection
 
-      .dsection Table80E586Section
+      .dsection OptionsMenuTilemapEntrySection
 
-      .dsection Unsorted80E598Section
+      .dsection OpenOptionsMenuSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80E72E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/E72E
-      aDecompressionDMAEntry80E736 .structDecompressionDMAEntry g4bppcOptionsMenuTiles, $0800, $4200 ; 80/E736
-      aDecompressionDMAEntry80E73E .structDecompressionDMAEntry acOptionsMenuBG1Tilemap, $0700, $2000 ; 80/E73E
+      .dsection DrawOptionsMenuLabelsSection
 
-      .dsection Unsorted80E746Section
+      .dsection OptionsMenuAnimationLabelSection
 
-      .dsection Table80E84ESection
+      .dsection SetOptionsMenuBGSettingsSection
 
-      .dsection Unsorted80E8F0Section
+      .dsection OptionsMenuCOLDATAHDMASection
 
-      .dsection Table80E96ESection
+      .dsection CycleOptionsMenuCOLDATAHDMASection
 
-      .dsection Unsorted80E979Section
-
-      .dsection Unsorted80E97CSection
+      .dsection InitOptionsMenuCOLDATAHDMASection
 
       .dsection Data80E98ESection
 
-      .dsection Unsorted80E9AFSection
+      .dsection CycleOptionsMenuBG3VOFSHDMASection
 
-      .dsection Unsorted80E9B2Section
+      .dsection InitOptionsMenuBG3VOFSHDMASection
 
       .dsection Data80E9F3Section
       .dsection Data80EA80Section
-      .dsection Unsorted80EB37Section
+      .dsection RunEpilogueVBlankSection
 
-      .dsection Unsorted80EE37Section
+      .dsection SetupEpilogueCreditsDisplaySection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80EFA8 .structDecompressionDMAEntry g4bppcBattleBackgroundThicket, $4000, $0000 ; 80/EFA8
-      aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry g4bppcEpilogueCreditsBG2Tiles, $2000, $2000 ; 80/EFB0
-      aDecompressionDMAEntry80EFB8 .structDecompressionDMAEntry g4bppcDialogueBackgroundFountainForeground, $2000, $3000 ; 80/EFB8
-      aDecompressionDMAEntry80EFC0 .structDecompressionDMAEntry g4bppcEpilogueCreditsSpriteTiles0, $1000, $6000 ; 80/EFC0
-      aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry acEpilogueCreditsBG1Tilemap, $1000, $5000 ; 80/EFC8
-      aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry acEpilogueCreditsBG2Tilemap, $1000, $5800 ; 80/EFD0
+      .dsection SetupEpilogueRankingsDisplaySection
 
-      .dsection Unsorted80EFD8Section
+      .dsection StartEpilogueCharacterEndingsSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80F187 .structDecompressionDMAEntry g4bppcReviveScreenTiles, $1200, $3000 ; 80/F187
-      aDecompressionDMAEntry80F18F .structDecompressionDMAEntry acReviveScreenBG2Tilemap, $0800, $5000 ; 80/F18F
-      aDecompressionDMAEntry80F197 .structDecompressionDMAEntry g4bppcEpilogueEndScreenTiles, $5800, $0000 ; 80/F197
-      aDecompressionDMAEntry80F19F .structDecompressionDMAEntry acEpilogueRankingsBG2Tilemap, $1000, $5800 ; 80/F19F
+      .dsection SetupSaveSelectMenuSection
 
-      .dsection Unsorted80F1A7Section
+      .dsection OpenMapSaveMenuSection
 
-      .dsection Unsorted80F1D5Section
+      .dsection OpenChapterIntroScreenSection
 
-      .dsection Unsorted80F222Section
+      .dsection CreateChapterIntroHDMASection
 
-      .dsection Unsorted80F2BESection
+      .dsection ChapterIntroBG2VOFSHDMASection
 
+      .dsection InitChapterIntroBG2VOFSHDMASection
 
-      .dsection Unsorted80F340Section
+      .dsection ChapterIntroBG2VOFSHDMACodeSection
 
-      .dsection Table80F36CSection
+      .dsection InitChapterIntroBG1HOFSHDMASection
 
-      .dsection Unsorted80F377Section
+      .dsection LoadChapterIntroGraphicsSection
 
-      .dsection Table80F37DSection
-
-      .dsection Unsorted80F38ASection
-
-      .dsection Unsorted80F392Section
-
-      .dsection Table80F413Section
+      .dsection ChapterIntroTitleDMATableSection
 
       .dsection ChapterIntroDecompressionDMAEntriesSection
 
-      .dsection Unsorted80F443Section
+      .dsection DMAPrologueTitleGraphicSection
 
-      .dsection Unsorted80F451Section
-      .dsection Unsorted80F45FSection
-      .dsection Unsorted80F46DSection
-      .dsection Unsorted80F47BSection
-      .dsection Unsorted80F489Section
-      .dsection Unsorted80F497Section
-      .dsection Unsorted80F4A5Section
-      .dsection Unsorted80F4B3Section
-      .dsection Unsorted80F4C1Section
-      .dsection Unsorted80F4CFSection
-      .dsection Unsorted80F4DDSection
+      .dsection DMAChapter01TitleGraphicSection
+      .dsection DMAChapter02TitleGraphicSection
+      .dsection DMAChapter03TitleGraphicSection
+      .dsection DMAChapter04TitleGraphicSection
+      .dsection DMAChapter05TitleGraphicSection
+      .dsection DMAChapter06TitleGraphicSection
+      .dsection DMAChapter07TitleGraphicSection
+      .dsection DMAChapter08TitleGraphicSection
+      .dsection DMAChapter09TitleGraphicSection
+      .dsection DMAChapter10TitleGraphicSection
+      .dsection DMAChapterFinalTitleGraphicSection
 
-      .dsection Unsorted80F4EBSection
+      .dsection SetChapterIntroBGSettingsSection
 
-      .dsection Unsorted80F542Section
+      .dsection RunSaveMenuMainLoopSection
 
       .fill $80FFB0 - *, 0
 
@@ -753,20 +680,20 @@
 
       .dsection MapSpriteCodeSection
 
-      .dsection Unsorted8189F3Section
+      .dsection DrawMovingMapSpriteSection
 
-      .dsection Unsorted818A4ASection
+      .dsection GetMovingMapSpriteStepShiftSection
 
-      .dsection Unsorted818C5DSection
+      .dsection ScriptedMoveCmdFaceDownSection
 
-      .dsection Unsorted818C98Section
+      .dsection CheckMovingMapSpriteOffscreenSection
 
-      .dsection Unsorted818D23Section
+      .dsection StartMovingMapSpriteSoundChannelSection
 
-      .dsection Unsorted818D58Section
+      .dsection StopMovingMapSpriteSoundSection
       .dsection MovingMapSpritePositionRoutinesSection
 
-      .dsection Unsorted818EABSection
+      .dsection CheckSpriteRightOfLeftMarginSection
 
       .dsection MapScrollScriptSection
 
@@ -782,14 +709,14 @@
 
       .dsection Unreferenced8190CCSection
 
-      .dsection Unsorted819166Section
+      .dsection StepEventMapScrollSection
       .dsection GetMapPixelScrollDistanceSection
 
-      .dsection Unsorted81A800Section
+      .dsection MapUpkeepSection
 
-      .dsection Unsorted81A85CSection
+      .dsection ResetChapterProgressSection
 
-      .dsection Unsorted81A89DSection
+      .dsection MapStepSection
 
       .dsection GetActiveFactionSongIDSection
 
@@ -799,31 +726,31 @@
 
       .dsection MapStepTurnStartHealingSection
 
-      .dsection Unsorted81AC02Section
+      .dsection MoveCursorToPhaseStartSection
 
-      .dsection Unsorted81AD28Section
+      .dsection MapStepResumeSection
 
-      .dsection Unsorted81AD6ASection
+      .dsection MapStepGameOverSection
 
-      .dsection Unsorted81AD8ESection
+      .dsection RunQueuedAIUnitEventSection
 
-      .dsection Unsorted81ADD8Section
+      .dsection RunQueuedUnitRelocationSection
 
-      .dsection Unsorted81AE02Section
+      .dsection UnitRelocationRoutinesSection
 
-      .dsection Unsorted81AE96Section
+      .dsection RelocateCapturedUnitSection
 
-      .dsection Unsorted81AEAASection
+      .dsection RelocateIntoCastleSection
 
-      .dsection Unsorted81AFB7Section
+      .dsection RelocateShowSeizePopUpSection
 
-      .dsection Unsorted81AFF8Section
+      .dsection RelocateChapterEndSavePromptSection
 
-      .dsection Unsorted81AFFESection
+      .dsection RelocateRemoveHelpedUnitSection
 
-      .dsection Unsorted81B016Section
+      .dsection RelocateShowItemPopUpSection
 
-      .dsection Unsorted81B088Section
+      .dsection HandleDefeatedUnitSection
 
       .dsection ASMCShowItemPopUpBoxSection
 
@@ -831,39 +758,39 @@
 
       .dsection ASMCGiveItemFromSlot8Section
 
-      .dsection Unsorted81B2AASection
+      .dsection SaveChapterTurncountSection
 
-      .dsection Unsorted81B301Section
+      .dsection AdvanceToNextChapterSection
 
-      .dsection Unsorted81B32CSection
+      .dsection StartGameOverEventSection
 
       .dsection StartBattleFromMapSection
 
-      .dsection Unsorted81B3A6Section
+      .dsection RedrawDialogueBoxTilemapsSection
 
-      .dsection Table81B42DSection
+      .dsection DialogueBox1TilemapEntrySection
 
-      .dsection Unsorted81B43FSection
+      .dsection SetAreaRestrictionBitSection
 
-      .dsection Table81B45BSection
+      .dsection AreaRestrictionSetBitmasksSection
 
-      .dsection Unsorted81B461Section
+      .dsection ClearAreaRestrictionBitSection
 
-      .dsection Table81B47DSection
+      .dsection AreaRestrictionClearBitmasksSection
 
       .dsection ChapterDataPointerSection
 
-      .dsection Unsorted81B4C5Section
+      .dsection GetChapterArenaOpponentsPointerSection
 
       .dsection GetChapterTalkEventsPointerSection
 
-      .dsection Unsorted81B503Section
+      .dsection GetChapterFactionPhaseFlagsPointerSection
 
-      .dsection Table81B522Section
+      .dsection MapRowUploadIRQSection
 
-      .dsection Unsorted81B52ASection
+      .dsection IRQUploadMapRowAndColumnSection
 
-      .dsection Table81B54ASection
+      .dsection MapRowUploadIRQCodeSection
 
       .fill $81C000 - *, 0
 
@@ -1090,18 +1017,17 @@
       .dsection FadeProcsSection
       .dsection DecompressToBufferProcSection
 
-
       .dsection ProcScript8283E3Section
 
-      .dsection Unsorted8283EBSection
+      .dsection ProcFadeOutAndChangeSongInitSection
 
-      .dsection Unsorted8283FASection
+      .dsection ProcFadeOutAndChangeSongCycle2Section
 
-      .dsection Unsorted82841FSection
+      .dsection ProcFadeOutAndChangeSongCycle3Section
 
       .dsection ProcScript828429Section
 
-      .dsection Unsorted828431Section
+      .dsection ProcEventWaitMapSpritesHaltingSection
       .dsection DialogueSection
 
       .dsection ProcDialogueInitSection
@@ -1110,83 +1036,79 @@
 
       .dsection DialogueSlotAPressArrowsSection
 
-      .dsection Unsorted828648Section
+      .dsection StartDialogueWithBoxGraphicsSection
 
       .dsection StartConversationDialogueSection
 
       .dsection ProcDialogueCodeSection
       .dsection CastleNamePopUpSection
 
-
       .dsection ProcScript828865Section
 
-      .dsection Unsorted82886FSection
+      .dsection ProcDemoSkipFadeOutInitSection
 
-      .dsection Unsorted8288B2Section
+      .dsection ProcDemoSkipFadeOutCycle2Section
 
       .dsection ProcScript8288E7Section
 
       .dsection ProcDialogueWithBGFromPointerSection
 
-      .dsection Unsorted8288F3Section
+      .dsection ProcDialogueWithBGFromPointerInitSection
 
       .dsection DialogueWithBGSection
 
-      .dsection Unsorted828A30Section
+      .dsection ProcEventWaitFadeToMapSection
 
-      .dsection Unsorted828B2BSection
+      .dsection ProcHaltEventSection
 
-      .dsection Unsorted828B35Section
+      .dsection ProcHaltEventInitSection
 
-      .dsection Unsorted828B46Section
+      .dsection ProcEventWaitFlag7F4C07Bit10Section
 
-      .dsection Unsorted828B50Section
+      .dsection ProcEventWaitFlag7F4C07Bit10InitSection
 
-      .dsection Unsorted828B5FSection
+      .dsection ProcEventWaitFlag7F4C07Bit10CodeSection
 
       .dsection ProcScript828B61Section
 
-      .dsection Unsorted828B6BSection
+      .dsection ProcEventBerserkCastInitSection
 
       .dsection ProcScript828BA7Section
 
-      .dsection Unsorted828BA9Section
+      .dsection ProcEventWaitBattleSceneEndSection
 
-      .dsection Unsorted828BB3Section
+      .dsection ProcEventWaitBattleSceneEndInitSection
 
-      .dsection Unsorted828BC6Section
-      .dsection Unsorted828BC8Section
+      .dsection ProcEventWaitBattleSceneEndCodeSection
+      .dsection ProcEventWaitFirstGenerationEndingSection
 
-      .dsection Unsorted828BD2Section
+      .dsection ProcEventWaitFirstGenerationEndingInitSection
 
-      .dsection Unsorted828BE8Section
+      .dsection ProcEventWaitFirstGenerationEndingCodeSection
 
-      .dsection Unsorted828BEASection
+      .dsection ProcEventPaletteSwapSection
 
-      .dsection Unsorted828BF4Section
+      .dsection ProcEventPaletteSwapInitSection
 
+      .dsection ProcEventSmoothMapScrollSection
 
-      .dsection Unsorted828D52Section
+      .dsection InitEventSmoothMapScrollStepSection
 
-      .dsection Unsorted828E61Section
-
-      .dsection Unsorted828ECBSection
+      .dsection ProcEventShowEmptyMapSection
 
       .dsection EventScrollFadeProcSection
 
-
       .dsection EventPauseProcSection
 
-      .dsection Unsorted829245Section
+      .dsection ProcEventWaitButtonPressSection
 
+      .dsection ProcEventNoOpSection
 
-      .dsection Unsorted8292A9Section
+      .dsection ProcEventNoOpInitSection
 
-      .dsection Unsorted8292B3Section
+      .dsection EventScriptLoopStepSection
 
-      .dsection Unsorted82932CSection
-
-      .dsection Unsorted829391Section
+      .dsection EventFindFreeProcSlotSection
 
       .dsection Unreferenced829469Section
 
@@ -1194,68 +1116,64 @@
 
       ; 829487
 
-      .dsection Unsorted829487Section
+      .dsection CreateProcEventWaitFlag7F4C07Bit10Section
 
-      .dsection Unsorted829496Section
+      .dsection FreeMapBattleProcAndClearSpritesSection
 
       .dsection Unreferenced8294B1Section
 
-      .dsection Unsorted8294C0Section
+      .dsection CreateProcEventWaitBattleSceneEndSection
 
-      .dsection Unsorted8294CFSection
+      .dsection CreateProcFirstGenerationEndingAndWaitSection
 
       .dsection HDMAEngineSection
       .dsection HDMACodeSection
 
-      .dsection Unsorted82E000Section
+      .dsection IRQEngineMainActionTableSection
 
-      .dsection Unsorted82E028Section
+      .dsection IRQCodeHaltSection
 
       .dsection Unreferenced82E030Section
 
+      .dsection ResetIRQEngineSection
 
-      .dsection Unsorted82E073Section
+      .dsection EnableIRQEngineSection
 
-      .dsection Unsorted82E08DSection
+      .dsection DisableIRQEngineSection
 
-      .dsection Unsorted82E0AFSection
-
-      .dsection Unsorted82E0C6Section
+      .dsection IRQEngineCreateEntrySection
 
       .dsection Unreferenced82E120Section
 
-      .dsection Unsorted82E133Section
+      .dsection IRQEngineStubSection
 
-      .dsection Unsorted82E147Section
+      .dsection IRQEngineSyncAndSortSection
 
-      .dsection Unsorted82E250Section
+      .dsection RunIRQEngineSection
 
-      .dsection Unsorted82E283Section
+      .dsection IRQEngineProgramNextEntrySection
 
-      .dsection Unsorted82E2ADSection
+      .dsection IRQEngineStepSlotCodeSection
 
-      .dsection Unsorted82E400Section
-
+      .dsection ResetRAMStructAndAreaVariablesSection
 
       .dsection RAMStructSection
 
-      .dsection Unsorted82E5FFSection
+      .dsection MoveRAMStructEntryToFirstSection
 
-      .dsection Unsorted82E615Section
+      .dsection MoveRAMStructEntryToLastSection
 
-      .dsection Unsorted82E62CSection
+      .dsection MoveRAMStructEntryPrevSection
 
-      .dsection Unsorted82E664Section
+      .dsection MoveRAMStructEntrySection
 
       .dsection RAMStructAccessSection
 
-      .dsection Unsorted82EADESection
+      .dsection LoadRAMStructEntryToScratchSection
 
       .dsection Unreferenced82EB4CSection
 
-
       .dsection Unreferenced82EC70Section
-
 
       .dsection RAMAreaHeaderSection
 
@@ -1265,19 +1183,19 @@
 
       .dsection Unreferenced82F207Section
 
-      .dsection Unsorted82F211Section
+      .dsection ResetMenuOptionStackSection
 
-      .dsection Unsorted82F227Section
+      .dsection PushMenuOptionListSection
 
-      .dsection Unsorted82F2E3Section
+      .dsection PopMenuOptionListSection
 
-      .dsection Unsorted82F343Section
+      .dsection AddMenuOptionSection
 
-      .dsection Unsorted82F3A7Section
+      .dsection LoadCurrentMenuOptionRAMStructSection
 
-      .dsection Unsorted82F3E5Section
+      .dsection HandleMenuOptionInputSection
 
-      .dsection Unsorted82F4A7Section
+      .dsection GetSelectedMenuOptionCoordinatesSection
 
       .dsection Unreferenced82F4BFSection
 
@@ -1285,7 +1203,7 @@
 
       .dsection Unreferenced82F4F9Section
 
-      .dsection Unsorted82F517Section
+      .dsection CopyOffsetTableEntrySection
 
       .dsection Unreferenced82F54FSection
 
@@ -1377,7 +1295,7 @@
 
       .dsection UnitsSection
 
-      .dsection Unsorted8486A0Section
+      .dsection GetCharacterWinCountSection
 
       .dsection FindCharacterByGenerationIDSection
 
@@ -1397,12 +1315,12 @@
 
       .dsection FatherChildrenSection
 
-      .dsection Unsorted848E5DSection
+      .dsection MoveCursorToTileSection
 
       .dsection CheckUnitsMarriedToEachOtherSection
       .dsection EvaluateSpecifiedRankingScoreSection
 
-      .dsection Unsorted848EFBSection
+      .dsection GetTerrainNamePointerSection
 
       .dsection UnitCreationSection
 
@@ -1427,15 +1345,15 @@
 
       .dsection ActionLevelUpSection
 
-      .dsection Unsorted84ABB0Section
+      .dsection StartCastleClassChangeSection
 
-      .dsection Unsorted84AC24Section
+      .dsection ClassChangeSetUpActionStructSection
 
       .dsection LevelUpSection
 
-      .dsection Unsorted84AF17Section
+      .dsection SortieUnitFromCastleSection
 
-      .dsection Unsorted84AF57Section
+      .dsection SortieUnitNorthOfCastleSection
 
       .dsection GetTurnStartEffectsByStatusSection
 
@@ -1445,37 +1363,37 @@
 
       .dsection UnitStateSection
 
-      .dsection Unsorted84B32BSection
+      .dsection StartInventoryStaffTargetSelectionSection
 
       .dsection RepairSelectedUnitItemSection
 
       .dsection UnitInventoryStateSection
 
-      .dsection Unsorted84B508Section
+      .dsection StartArenaBattleSection
 
-      .dsection Unsorted84B550Section
+      .dsection GetArenaBattleResultSection
 
-      .dsection Unsorted84B57ASection
+      .dsection HandleArenaExitEventSection
 
-      .dsection Unsorted84B6A6Section
+      .dsection BuildCastleActionRoundsSection
 
-      .dsection Unsorted84B6E2Section
+      .dsection BuildCastleDanceRoundsSection
 
-      .dsection Unsorted84B6F6Section
+      .dsection CastleGiveMoneySection
 
       .dsection UnitDeathSection
 
-      .dsection Unsorted84B9A3Section
+      .dsection CheckCanTalkSection
 
-      .dsection Unsorted84B9D4Section
+      .dsection CheckTalkTargetHereSection
 
-      .dsection Unsorted84BA3ESection
+      .dsection FindTalkTargetsSection
 
-      .dsection Unsorted84BA6FSection
+      .dsection StopGuardingCastleSection
 
       .dsection ChildUnitSection
 
-      .dsection Unsorted84BB54Section
+      .dsection StartBattleSceneOrMapBattleSection
       .dsection CheckIfBattleAnimationOFFSection
 
       .dsection FactionSection
@@ -1492,51 +1410,51 @@
 
       .dsection FactionUnitsSection
 
-      .dsection Unsorted84C5D7Section
+      .dsection CheckFactionTakesPhaseSection
 
       .dsection SetFactionSlotUnitsMapAnimationSection
 
       .dsection DeploymentSection
 
-      .dsection Unsorted84CC5DSection
+      .dsection EnterTargetLocationSection
 
       .dsection UnitCastleSection
 
-      .dsection Unsorted84CD35Section
+      .dsection UnitReturnToHomeCastleSection
 
-      .dsection Unsorted84CD8ASection
+      .dsection QueueUnitRelocationToCastleSection
 
-      .dsection Unsorted84CDA4Section
+      .dsection UnitVisitTownSection
 
-      .dsection Unsorted84CDD6Section
+      .dsection UnitVisitVillageSection
 
-      .dsection Unsorted84CE21Section
+      .dsection UnitSeizeCastleSection
 
-      .dsection Unsorted84CFBFSection
+      .dsection StartGuardingCastleAtUnitSection
 
-      .dsection Unsorted84D03ESection
+      .dsection UnitGuardCastleSection
 
-      .dsection Unsorted84D0B2Section
+      .dsection SetMapActionModeGuardSection
 
-      .dsection Unsorted84D0B9Section
+      .dsection UnitReturnIntoCastleSection
 
-      .dsection Unsorted84D16BSection
+      .dsection UnitTalkSection
 
-      .dsection Unsorted84D1CCSection
+      .dsection UnitDismountSection
 
       .dsection FieldedUnitFactionSection
 
-      .dsection Unsorted84D2BASection
+      .dsection UnitHelpSection
 
       .dsection ReturnDeploymentToSavedTileSection
 
-      .dsection Unsorted84D483Section
+      .dsection RequestUnitMenuMode2Section
 
-      .dsection Unsorted84D4A2Section
+      .dsection RequestUnitMenuMode1Section
 
       .dsection BattleSection
 
-      .dsection Unsorted84EB24Section
+      .dsection ActionStructStaffEffectRefreshSection
 
       .dsection StaffEffectClearStatusSection
 
@@ -1544,19 +1462,19 @@
 
       .dsection InventorySection
 
-      .dsection Unsorted84F75CSection
+      .dsection CheckInventorySlotStaffUsableSection
 
-      .dsection Unsorted84F8D9Section
+      .dsection BuildCastleStaffSlotListsSection
 
       .dsection BattleStatsSection
 
-      .dsection Unsorted84FE98Section
+      .dsection GetSelectedUnitFirstWeaponHitSection
 
-      .dsection Unsorted84FEACSection
+      .dsection GetSelectedUnitFirstWeaponCritSection
 
-      .dsection Unsorted84FEBESection
+      .dsection GetSelectedUnitFirstWeaponWeightUnusedSection
 
-      .dsection Unsorted84FED2Section
+      .dsection FindTargetsForItemRangeSection
 
       .fill $848000 + $8000 - *, $00
 
@@ -1565,13 +1483,13 @@
     * = $058000
     .logical $858000
 
-      .dsection Unsorted858000Section
+      .dsection DialogueBoxTilemapSection
 
       .dsection LoadMapMenuDataFromProcSection
 
       .dsection MapMenuSaveMapStateSection
 
-      .dsection Unsorted8582D4Section
+      .dsection MoveMapMenuToCursorSection
 
       .dsection StallProcUntilMapMenuDataLoadedSection
 
@@ -1579,149 +1497,149 @@
 
       .dsection ProcScript858398Section
 
-      .dsection Unsorted8583C2Section
+      .dsection ListMenuProcInitSection
 
-      .dsection Unsorted8583D3Section
+      .dsection ListMenuProcFirstCycleSection
 
-      .dsection Unsorted8583DASection
+      .dsection ListMenuProcSetUpSection
 
-      .dsection Unsorted8583F8Section
+      .dsection ListMenuProcHandleInputSection
 
-      .dsection Unsorted8584A1Section
+      .dsection ListMenuProcEndSection
 
       .dsection ProcScript8584AASection
 
-      .dsection Unsorted8584ACSection
+      .dsection ListMenuProcPushOptionsSection
 
-      .dsection Unsorted8584DCSection
+      .dsection KeepUnitMenuAwayFromCursorSection
 
-      .dsection Unsorted858516Section
+      .dsection CheckListMenuIdleSection
 
-      .dsection Unsorted85856ESection
+      .dsection DrawMenuOptionsSection
 
-      .dsection Unsorted85860ESection
+      .dsection DrawMapMenuNumber100Section
 
-      .dsection Table858647Section
+      .dsection MapMenuNumber100TilesSection
 
-      .dsection Unsorted85864BSection
+      .dsection DrawSelectedUnitNameInMapMenuSection
 
-      .dsection Unsorted858671Section
+      .dsection DrawSelectedUnitFactionInMapMenuSection
 
-      .dsection Unsorted858684Section
+      .dsection DrawItemNameInMapMenuSection
 
-      .dsection Unsorted858697Section
+      .dsection DrawCastleNameInMapMenuSection
 
-      .dsection Unsorted8586AASection
+      .dsection DrawListCursorAtIndexSection
 
-      .dsection Unsorted8586FASection
+      .dsection CloseMapMenuFromProcSection
 
-      .dsection Unsorted8586FFSection
+      .dsection InitMapMenuProcAndTileBaseSection
 
-      .dsection Unsorted858728Section
+      .dsection RunMapMenuUploadIfEnabledSection
 
-      .dsection Unsorted858751Section
+      .dsection MoveMapMenuSection
 
-      .dsection Unsorted858793Section
+      .dsection ShowMapMenuSection
 
-      .dsection Unsorted8587A8Section
+      .dsection ResizeMapMenuSection
 
-      .dsection Unsorted8587E1Section
+      .dsection DrawMapMenuSection
 
-      .dsection Unsorted8587F2Section
+      .dsection MoveMapMenuFrameSection
 
-      .dsection Unsorted85884ASection
+      .dsection ResizeMapMenuFrameSection
 
       .dsection MapMenuBuildTilemapSection
 
-      .dsection Unsorted8589C5Section
+      .dsection BeginMapMenuFrameSection
 
-      .dsection Table8589DESection
+      .dsection MapMenuFrameTilemapDataSection
 
-      .dsection Unsorted8589E7Section
+      .dsection EndMapMenuFrameSection
 
-      .dsection Table858A1BSection
+      .dsection MapMenuFrameType0FillSection
 
-      .dsection Unsorted858A6FSection
+      .dsection DrawMapMenuFrameType1Section
 
-      .dsection Table858A95Section
+      .dsection MapMenuFrameType1FillSection
 
-      .dsection Unsorted858AD7Section
+      .dsection DrawMapMenuFrameType2Section
 
-      .dsection Table858AFDSection
+      .dsection MapMenuFrameType2FillSection
 
-      .dsection Unsorted858B51Section
+      .dsection DrawMapMenuFrameType3Section
 
-      .dsection Table858BD3Section
+      .dsection MapMenuFrameType3FillSection
 
-      .dsection Unsorted858C4ESection
+      .dsection DrawMapMenuFrameType5Section
 
-      .dsection Table858C85Section
+      .dsection MapMenuFrameType5FillSection
 
-      .dsection Unsorted858CD3Section
+      .dsection MapMenuTypeDialogueSection
 
-      .dsection Unsorted858D18Section
+      .dsection UploadDirtyMapMenuRowsSection
 
-      .dsection Table858D62Section
+      .dsection BattleForecastTargetTilemapDataSection
 
-      .dsection Unsorted858D83Section
+      .dsection ProcBattleForecastTargetInitSection
 
-      .dsection Table858EA1Section
+      .dsection BattleForecastLevelTextSection
 
-      .dsection Unsorted858EC5Section
+      .dsection ProcBattleForecastTargetCycleSection
 
-      .dsection Unsorted858F10Section
+      .dsection BattleForecastCheckCloseSection
 
-      .dsection Unsorted858F28Section
+      .dsection BattleForecastAvoidCursorSection
 
-      .dsection Table859078Section
+      .dsection BattleForecastSlashTextSection
 
-      .dsection Unsorted8590B9Section
+      .dsection ProcBattleForecastAttackerInitSection
 
-      .dsection Unsorted859108Section
+      .dsection ProcBattleForecastAttackerCycleSection
 
-      .dsection Unsorted85915ASection
+      .dsection BattleForecastDrawAttackerSection
 
       .dsection MapItemListDataSection
 
-      .dsection Unsorted859281Section
+      .dsection ProcMapItemListSection
 
-      .dsection Unsorted85928DSection
+      .dsection ProcMapItemListInitSection
 
-      .dsection Unsorted8592FASection
+      .dsection MapItemListDrawItemsSection
 
-      .dsection Unsorted859386Section
+      .dsection ProcMapItemListShowPortraitSection
 
-      .dsection Unsorted859390Section
+      .dsection ProcMapItemListShowDetailsSection
 
-      .dsection Unsorted859427Section
+      .dsection ProcMapItemListLoadIconsSection
 
-      .dsection Unsorted859431Section
+      .dsection ProcMapItemListBeginInputSection
 
-      .dsection Unsorted85988ESection
+      .dsection ProcMapItemWeaponStatsSection
 
-      .dsection Unsorted85989ASection
+      .dsection ProcMapItemWeaponStatsInitSection
 
-      .dsection Table859953Section
+      .dsection WeaponStatsLabel1TopTilesSection
 
-      .dsection Unsorted859973Section
+      .dsection ProcMapItemWeaponStatsDrawSection
 
-      .dsection Table859AA8Section
+      .dsection ItemListUpArrowTextSection
 
-      .dsection Unsorted859AB4Section
+      .dsection ProcMapItemWeaponStatsCycleSection
 
-      .dsection Unsorted859AFDSection
+      .dsection MapItemWeaponStatsDrawRankIconSection
 
-      .dsection Unsorted859B28Section
+      .dsection ProcMapItemWeaponStatsCodeSection
 
-      .dsection Unsorted859B2ASection
+      .dsection SetMapMenuTextColorsSection
 
-      .dsection Table859B42Section
+      .dsection MapMenuTextColorsSection
 
-      .dsection Unsorted859B48Section
+      .dsection RestoreMapMenuTextColorsSection
 
       .dsection CreateUnitWindowAndTerrainWindowProcsSection
 
-      .dsection Unsorted859BBDSection
+      .dsection LoadWindowPaletteColorsSection
 
       .dsection DialogueBoxMapMenuTilemapDataSection
 
@@ -1729,529 +1647,526 @@
 
       .dsection DialogueBoxSection
 
-      .dsection Unsorted859D60Section
+      .dsection CloseDialogueBoxSection
 
-      .dsection Table859D88Section
+      .dsection MapMenuGradientHDMAInfoSection
 
-      .dsection Unsorted859D94Section
+      .dsection MapMenuGradientHDMAInitSection
 
-      .dsection Unsorted859DCDSection
+      .dsection MapMenuGradientSkipLinesSection
 
-      .dsection Unsorted859E08Section
+      .dsection MapMenuGradientBuildSection
 
-      .dsection Unsorted859F97Section
+      .dsection WriteMapMenuGradientScanlineCountSection
 
       .dsection FreeHDMAEntry0Section
 
-      .dsection Unsorted859FCDSection
+      .dsection StartMapMenuGradientSection
 
-      .dsection Unsorted859FEASection
+      .dsection BeginMapMenuOpeningSection
 
-      .dsection Unsorted859FFBSection
+      .dsection MapMenuOpeningStylesSection
 
-      .dsection Unsorted85A02ESection
+      .dsection BeginMapMenuOpeningFromLeftSection
 
-      .dsection Unsorted85A03DSection
+      .dsection BeginMapMenuOpeningStyle2Section
 
-      .dsection Unsorted85A040Section
+      .dsection BeginMapMenuOpeningNoneSection
 
-      .dsection Unsorted85A041Section
+      .dsection StepMapMenuOpeningSection
 
-      .dsection Unsorted85A079Section
+      .dsection MapMenuOpeningStepStylesSection
 
-      .dsection Unsorted85A0A1Section
+      .dsection GetMapMenuOpeningWidthSection
 
-      .dsection Unsorted85A0CESection
+      .dsection StepMapMenuOpeningFromLeftSection
 
-      .dsection Unsorted85A0D0Section
+      .dsection GetMapMenuClosingWidthSection
 
-      .dsection Unsorted85A0F5Section
+      .dsection StepMapMenuOpeningNoneSection
 
-      .dsection Unsorted85A117Section
+      .dsection ProcMapTextBoxInitSection
 
-      .dsection Unsorted85A1AASection
+      .dsection ProcMapTextBoxCycleSection
 
-      .dsection Unsorted85A1E7Section
+      .dsection DrawTwoMapMenuTextLinesSection
       .dsection GetMenuTextStringLengthSection
 
-      .dsection Unsorted85A227Section
+      .dsection HideMapMenuLayersSection
 
-      .dsection Unsorted85A314Section
+      .dsection ProcItemDescriptionBoxSection
 
-      .dsection Unsorted85A320Section
+      .dsection ProcItemDescriptionBoxInitSection
 
-      .dsection Unsorted85A3A6Section
+      .dsection CloseItemDescriptionBoxSection
 
-      .dsection Unsorted85A3D5Section
+      .dsection ChangeItemDescriptionBoxSection
 
       .dsection SavePromptDataSection
 
       .dsection ProcScript85A47FSection
 
-      .dsection Unsorted85A48BSection
+      .dsection ProcSavePromptInitSection
 
-      .dsection Table85A4E6Section
+      .dsection SavePromptTextSection
 
-      .dsection Unsorted85A508Section
+      .dsection ProcSavePromptWaitSection
 
-      .dsection Unsorted85A509Section
+      .dsection ProcSavePromptCycleSection
 
       .dsection ProcScript85A5BDSection
 
-      .dsection Unsorted85A5C5Section
+      .dsection OpenSavePromptSection
 
       .dsection UnitAnimationMenuDataSection
 
-      .dsection Unsorted85A5EFSection
+      .dsection ProcUnitAnimationMenuSection
 
-      .dsection Unsorted85A5FBSection
+      .dsection ProcUnitAnimationMenuInitSection
 
-      .dsection Table85A670Section
+      .dsection UnitAnimationMenuTitleSection
 
-      .dsection Unsorted85A69ASection
+      .dsection ProcUnitAnimationMenuWaitSection
 
-      .dsection Unsorted85A765Section
+      .dsection ProcUnitAnimationMenuCodeSection
 
-      .dsection Unsorted85A782Section
+      .dsection ProcAllUnitsAnimationMenuSection
 
-      .dsection Unsorted85A78ESection
+      .dsection ProcAllUnitsAnimationMenuInitSection
 
-      .dsection Table85A7CESection
+      .dsection AllUnitsAnimationMenuRealTextSection
 
-      .dsection Unsorted85A7DESection
+      .dsection ProcAllUnitsAnimationMenuCycleSection
 
       .dsection DialogueBoxHDMASection
 
       .dsection FreeDialogueBoxHDMAIfFinishedSection
 
-      .dsection Unsorted85AB32Section
+      .dsection CheckDialogueBoxesClosedSection
 
       .dsection FreeDialogueBoxesSection
 
-      .dsection Table85AB82Section
+      .dsection MapBattleExperienceWindowHDMAInfoSection
 
-      .dsection Unsorted85AB8ESection
+      .dsection MapBattleExperienceWindowHDMAInitSection
 
-      .dsection Unsorted85AB96Section
+      .dsection BuildMapBattleExperienceWindowHDMATableSection
 
-      .dsection Unsorted85ABF1Section
+      .dsection FreeHDMAEntryByIndexSection
 
-      .dsection Unsorted85ABF6Section
+      .dsection ProcPhaseBannerSection
 
-      .dsection Unsorted85ABFESection
+      .dsection PhaseBannerData85ABFEUnusedSection
 
-      .dsection Unsorted85AC02Section
+      .dsection ProcPhaseBannerInitSection
 
-      .dsection Unsorted85AC40Section
+      .dsection ProcPhaseBannerLoadGraphicsSection
 
-      .dsection Unsorted85AC89Section
+      .dsection ProcPhaseBannerDrawFrameSection
 
-      .dsection Table85AD47Section
+      .dsection PhaseBannerPhaseTextSection
 
-      .dsection Unsorted85AD67Section
+      .dsection ProcPhaseBannerSlideInSection
 
-      .dsection Unsorted85AE8ASection
+      .dsection PhaseBannerCheckSkipSection
 
       .dsection ProcScript85AEACSection
 
-      .dsection Table85AEBBSection
+      .dsection PhaseBannerSlideInHDMAInfoSection
 
-      .dsection Unsorted85AEC7Section
+      .dsection PhaseBannerSlideInHDMAInitSection
 
-      .dsection Table85AF0DSection
+      .dsection PhaseBannerHDMACodeSection
 
-      .dsection Unsorted85AF1BSection
+      .dsection PhaseBannerSlideOutHDMAInitSection
 
-      .dsection Unsorted85AFC5Section
+      .dsection PhaseBannerDrawEmblemSection
 
-      .dsection Unsorted85B009Section
+      .dsection PhaseBannerSavePalettesSection
 
-      .dsection Unsorted85B039Section
+      .dsection PhaseBannerRestorePalettesSection
 
-      .dsection Unsorted85B07CSection
+      .dsection PhaseBannerLoadColoursSection
 
-      .dsection Table85B0BFSection
+      .dsection PhaseBannerTextPalettesSection
 
-      .dsection Unsorted85B107Section
+      .dsection PhaseBannerLoadFrameColoursSection
 
-      .dsection Table85B127Section
+      .dsection PhaseBannerFramePalettesSection
 
-      .dsection Unsorted85B14FSection
+      .dsection OpenInventoryFullMenuSection
 
-      .dsection Unsorted85B18FSection
+      .dsection ProcInventoryFullMenuSection
 
-      .dsection Unsorted85B1B0Section
+      .dsection ProcInventoryFullMenuInitSection
 
-      .dsection Unsorted85B207Section
+      .dsection ProcInventoryFullMenuCycleSection
 
-      .dsection Unsorted85B282Section
+      .dsection ProcInventoryFullMenuWaitAnswerSection
 
       .dsection ProcScript85B2D8Section
 
-      .dsection Unsorted85B2DASection
+      .dsection InventoryFullMenuLoadIconsSection
 
-      .dsection Unsorted85B367Section
+      .dsection InventoryFullMenuDepositSection
 
-      .dsection Unsorted85B37DSection
+      .dsection InventoryFullMenuHideWindowsSection
 
-      .dsection Unsorted85B3A2Section
+      .dsection HideProcMapMenuSection
 
-      .dsection Unsorted85B3DASection
+      .dsection InventoryFullMenuShowWindowsSection
 
-      .dsection Unsorted85B3FFSection
+      .dsection ShowProcMapMenuSection
 
-      .dsection Unsorted85B40ESection
+      .dsection InventoryFullMenuCloseQuestionSection
 
-      .dsection Unsorted85B42BSection
+      .dsection CloseProcMapMenuSection
 
-      .dsection Unsorted85B43ESection
+      .dsection InventoryFullMenuGetAnswerSection
 
-      .dsection Unsorted85B45CSection
+      .dsection InventoryFullMenuGetItemsSection
 
-      .dsection Table85B4E9Section
+      .dsection InventoryFullMenuEquippedTextSection
 
-      .dsection Unsorted85B4EDSection
+      .dsection SetTileBaseForObtainableItemSection
 
-      .dsection Unsorted85B520Section
+      .dsection OpenInventoryFullMessageSection
 
-      .dsection Table85B547Section
+      .dsection ProcInventoryFullConfirmSection
 
       .dsection ProcScript85B63BSection
 
-      .dsection Unsorted85B65CSection
+      .dsection ProcInventoryFullMessageInitSection
 
-      .dsection Table85B6A0Section
+      .dsection InventoryFullMessageText1Section
 
-      .dsection Unsorted85B6E0Section
+      .dsection ProcInventoryFullMessageCycleSection
 
       .dsection ProcScript85B6E1Section
 
-      .dsection Table85B6EBSection
+      .dsection InventoryFullNewItemTilemapDataSection
 
-      .dsection Unsorted85B725Section
+      .dsection ProcInventoryItemWindowInitSection
 
-      .dsection Table85B786Section
+      .dsection InventoryItemWindowEquippedTextSection
 
-      .dsection Unsorted85B78ASection
+      .dsection ProcInventoryItemWindowCycleSection
 
       .dsection ProcScript85B7CFSection
 
-      .dsection Unsorted85B7D1Section
+      .dsection GetCenteredTextBoxPlacementSection
 
-      .dsection Unsorted85B81DSection
+      .dsection BuildMapMenuDialogueBoxSection
 
-      .dsection Unsorted85B8D6Section
+      .dsection OpenGoldPopUpSection
 
-      .dsection Table85B8E5Section
+      .dsection GoldPopUpTilemapDataSection
 
-      .dsection Unsorted85B8EESection
+      .dsection GoldPopUpDataSection
 
       .dsection ProcScript85B8FASection
 
-      .dsection Unsorted85B906Section
+      .dsection ProcGoldPopUpInitSection
 
-      .dsection Table85B9BCSection
+      .dsection GoldPopUpTextSection
 
-      .dsection Unsorted85B9D4Section
+      .dsection ProcGoldPopUpShowSection
 
-      .dsection Unsorted85B9F2Section
+      .dsection ProcGoldPopUpCheckSkipSection
 
-      .dsection Table85BA2CSection
+      .dsection SeizePopUpTilemapDataSection
 
-      .dsection Unsorted85BA41Section
+      .dsection ProcSeizePopUpSection
 
-      .dsection Unsorted85BA4DSection
+      .dsection ProcSeizePopUpInitSection
 
-      .dsection Table85BAB3Section
+      .dsection SeizePopUpTextSection
 
-      .dsection Unsorted85BAC7Section
+      .dsection ProcSeizePopUpWaitMusicSection
 
-      .dsection Unsorted85BAD9Section
+      .dsection ProcSeizePopUpWaitToShowSection
 
-      .dsection Unsorted85BB2ESection
+      .dsection OpenSeizePopUpSection
 
       .dsection ProcScript85BB52Section
 
-      .dsection Unsorted85BB5ESection
+      .dsection ProcMapPopUpWindowInitSection
 
-      .dsection Unsorted85BBA5Section
+      .dsection OpenMapPopUpWindowSection
 
-      .dsection Unsorted85BC00Section
+      .dsection OpenItemPopUpSection
 
-      .dsection Unsorted85BC0FSection
+      .dsection ProcItemPopUpSection
 
-      .dsection Unsorted85BC1BSection
+      .dsection ProcItemPopUpInitSection
 
       .dsection ItemObtainedTextSection
 
-      .dsection Unsorted85BC9ESection
+      .dsection InitMapMenuProcSection
 
-      .dsection Unsorted85BCB8Section
+      .dsection SignedDivide16By16R13Section
 
-      .dsection Unsorted85BCD4Section
+      .dsection InitDialogueBoxHDMASection
 
-      .dsection Unsorted85BD12Section
+      .dsection UpdateDialoguePortraitOverlayTilesSection
 
-      .dsection Table85BD8DSection
+      .dsection DialoguePortraitOverlayTileOffsetsSection
 
-      .dsection Unsorted85BD93Section
+      .dsection UploadDialoguePortraitOverlayTilesSection
 
-      .dsection Unsorted85BDA1Section
+      .dsection DrawExpandingWindowSpritesSection
 
-      .dsection Table85BE76Section
-      .dsection Table85BE87Section
+      .dsection ExpandingWindowStepSizesSection
+      .dsection ExpandingWindowSpritesSection
       .dsection ProcScript85C01FSection
-      .dsection Unsorted85C028Section
+      .dsection ProcExpandingWindowAnimationInitSection
 
-      .dsection Unsorted85C0BASection
+      .dsection ClosePopUpWindowAndRestoreMapSection
 
-      .dsection Unsorted85C0C7Section
+      .dsection SetPopUpWindowCloseOnCycleSection
 
-      .dsection Unsorted85C0CESection
+      .dsection HideMapWindowsSection
 
-      .dsection Unsorted85C0D5Section
+      .dsection ShowMapWindowsSection
 
-      .dsection Unsorted85C0E2Section
+      .dsection GetMapWindowPositionSection
 
-      .dsection Table85C19BSection
+      .dsection MapWindowTextTilemapDataSection
 
-      .dsection Unsorted85C1A4Section
+      .dsection ClearMapWindowSection
 
-      .dsection Unsorted85C30DSection
+      .dsection InitMapWindowProcSection
 
       .dsection ProcScript85C33DSection
 
-      .dsection Unsorted85C347Section
+      .dsection ProcTerrainWindowInitSection
 
-      .dsection Unsorted85C41FSection
+      .dsection KeepTerrainWindowAwayFromCursorSection
 
-      .dsection Unsorted85C4E0Section
+      .dsection SetWindowColoursByRelationSection
 
       .dsection Data85C51BSection
 
-      .dsection Unsorted85C55BSection
+      .dsection DrawTerrainNameSection
 
       .dsection ProcScript85C652Section
 
-      .dsection Unsorted85C65ASection
+      .dsection ProcUnitWindowInitSection
 
-      .dsection Unsorted85C6D2Section
+      .dsection UnitWindowFindUnitSection
 
-      .dsection Unsorted85C819Section
+      .dsection PlaceUnitWindowSection
 
-      .dsection Table85C983Section
+      .dsection UnitWindowHPLabelTilesSection
 
-      .dsection Unsorted85C99FSection
+      .dsection SetUnitWindowColourSection
 
       .dsection Data85C9B7Section
 
-      .dsection Unsorted85C9BFSection
+      .dsection DrawUnitWindowPointerSection
 
-      .dsection Unsorted85CA4BSection
+      .dsection RefreshUnitWindowSection
 
       .dsection ProcScript85CA85Section
 
-      .dsection Unsorted85CA91Section
+      .dsection ProcMapExperienceWindowInitSection
 
-      .dsection Unsorted85CAFBSection
+      .dsection ProcMapExperienceWindowIdleSection
 
-      .dsection Unsorted85CAFCSection
+      .dsection ProcMapExperienceWindowStartEffectSection
 
-      .dsection Unsorted85CB51Section
+      .dsection ProcMapExperienceWindowShowSection
 
-      .dsection Unsorted85CBBDSection
+      .dsection ProcMapExperienceWindowStartCountSection
 
-      .dsection Unsorted85CC3DSection
+      .dsection ProcMapExperienceWindowIdle3Section
 
-      .dsection Unsorted85CC3ESection
+      .dsection ProcMapExperienceWindowCloseSection
 
-      .dsection Unsorted85CC4DSection
+      .dsection ProcMapExperienceWindowEndSection
 
       .dsection ProcScript85CC62Section
 
-      .dsection Unsorted85CCA8Section
+      .dsection GetMapExperienceWindowUnitTileSection
 
       .dsection ProcScript85CD0CSection
 
       .dsection ProcScript85CD2DSection
 
-      .dsection Unsorted85CD39Section
+      .dsection ProcMapBattleHPWindowInitSection
 
-      .dsection Unsorted85CD81Section
+      .dsection MapBattleHPWindowReadInputsSection
 
-      .dsection Unsorted85CE54Section
+      .dsection BeginMapBattleHPWindowClosingSection
 
-      .dsection Unsorted85CE7CSection
+      .dsection StepMapBattleHPWindowClosingSection
 
-      .dsection Unsorted85CEC3Section
+      .dsection ProcMapBattleHPWindowOpenSection
 
-      .dsection Unsorted85CEE2Section
+      .dsection ProcMapBattleHPWindowCycleSection
 
       .dsection ProcScript85D064Section
 
-      .dsection Unsorted85D066Section
+      .dsection OpenMapBattleHPWindowsSection
 
-      .dsection Unsorted85D100Section
+      .dsection OpenMapBattleHPWindowRightOnlySection
 
-      .dsection Unsorted85D17ESection
+      .dsection OpenMapBattleHPWindowRightSection
 
-      .dsection Unsorted85D385Section
+      .dsection OpenMapBattleExperienceWindowSection
 
-      .dsection Unsorted85D3F5Section
+      .dsection CheckMapBattleExperienceWindowOpenSection
 
-      .dsection Unsorted85D442Section
+      .dsection DrawMapMenuTwoRowGaugeSection
 
-      .dsection Unsorted85D4B2Section
+      .dsection DrawMapMenuGaugeRowSection
 
-      .dsection Table85D591Section
+      .dsection MapMenuGaugeTilesSection
 
-      .dsection Unsorted85D5AASection
+      .dsection GetMapMenuGaugeTileSection
 
-      .dsection Unsorted85D5CCSection
+      .dsection SetMapBattlePalettesSection
 
-      .dsection Table85D606Section
-      .dsection Table85D626Section
-      .dsection Table85D638Section
+      .dsection MapBattlePaletteSection
+      .dsection MapBattleHUDPalette1Section
+      .dsection MapBattleHUDPalette2Section
 
-      .dsection Unsorted85D648Section
+      .dsection RestoreMapBattlePalettesSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry85D669 .structDecompressionDMAEntry g4bppcMapBattleHUDTiles, $0800, $4C00 ; 85/D669
+      .dsection ReloadMenuIconGraphicsSection
 
-      .dsection Unsorted85D671Section
+      .dsection LoadMapBattleHPWindowColoursSection
 
-      .dsection Unsorted85D676Section
+      .dsection MapBattleHPWindowPalettePointersSection
 
-      .dsection Table85D6B2Section
+      .dsection LoadMapBattleHPWindowAccentColoursSection
 
-      .dsection Unsorted85D766Section
+      .dsection MapBattleHPWindowAccentColourPointersSection
 
-      .dsection Table85D7A0Section
-
-      .dsection Unsorted85D7FASection
+      .dsection DrawMapMenuTileByteStringSection
 
       .dsection ProcScript85D8AASection
 
-      .dsection Unsorted85D8B6Section
+      .dsection ProcMapBattleExperienceWindowInitSection
 
-      .dsection Table85D96DSection
+      .dsection MapBattleExperienceLabelTilesSection
 
-      .dsection Unsorted85D971Section
+      .dsection ProcMapBattleExperienceWindowWaitSection
 
       .dsection ProcScript85D9FASection
 
-      .dsection Unsorted85D9FCSection
+      .dsection DrawMapMenuGaugeSection
 
-      .dsection Table85DA77Section
+      .dsection GaugeStartTilesSection
 
-      .dsection Unsorted85DA7ESection
+      .dsection DrawGaugeTileSection
 
-      .dsection Table85DAB2Section
+      .dsection GaugeTilesSection
 
-      .dsection Unsorted85DABBSection
+      .dsection DrawGaugeEndSection
 
-      .dsection Table85DACBSection
+      .dsection GaugeEndTilesSection
 
       .dsection ProcScript85DAEASection
 
-      .dsection Unsorted85DAF6Section
+      .dsection ProcMapBattleTextBoxInitSection
 
-      .dsection Unsorted85DBDDSection
+      .dsection MapMenuOpenUnitWindowSection
 
-      .dsection Unsorted85DC26Section
+      .dsection MapMenuTurnEndSection
 
-      .dsection Unsorted85DCABSection
+      .dsection MapMenuOpenSaveSection
 
-      .dsection Unsorted85DCCASection
+      .dsection MapMenuOpenConfigSection
 
       .dsection ProcScript85DDDBSection
 
-      .dsection Unsorted85DDF9Section
+      .dsection ProcMainMapMenuInitSection
 
-      .dsection Unsorted85DE34Section
+      .dsection MainMapMenuProcCycleSection
 
-      .dsection Unsorted85DE7CSection
+      .dsection UnitMenuAssaultSection
 
-      .dsection Unsorted85DED6Section
+      .dsection UnitMenuStaffSection
 
-      .dsection Unsorted85DF20Section
+      .dsection UnitMenuEnterSection
 
-      .dsection Unsorted85DF3FSection
+      .dsection UnitMenuTownSection
 
-      .dsection Unsorted85DF61Section
+      .dsection UnitMenuVillageSection
 
-      .dsection Unsorted85DF6FSection
+      .dsection UnitMenuSeizeSection
 
-      .dsection Unsorted85DF7DSection
+      .dsection UnitMenuGuardSection
 
-      .dsection Unsorted85DF8ASection
+      .dsection UnitMenuDepartSection
 
-      .dsection Unsorted85DFA6Section
+      .dsection UnitMenuDismountSection
 
-      .dsection Unsorted85DFC2Section
+      .dsection UnitMenuTalkSection
 
-      .dsection Unsorted85DFFDSection
+      .dsection UnitMenuAnimationSection
 
-      .dsection Unsorted85E004Section
+      .dsection UnitMenuReturnSkillSection
 
-      .dsection Unsorted85E012Section
+      .dsection UnitMenuHelpSection
 
       .dsection ProcScript85E1CCSection
 
-      .dsection Unsorted85E1DBSection
+      .dsection ProcUnitMenuInitSection
 
-      .dsection Table85E27FSection
+      .dsection UnitMenuCommandChecksSection
 
-      .dsection Unsorted85E2DFSection
+      .dsection UnitMenuMoveOptionListDownSection
 
-      .dsection Unsorted85E33DSection
+      .dsection ProcUnitMenuCycleSection
 
-      .dsection Unsorted85E38CSection
+      .dsection UnitMenuCheckEnterSection
 
-      .dsection Unsorted85E44ESection
+      .dsection UnitMenuBuildItemListsSection
 
-      .dsection Unsorted85E47FSection
+      .dsection UnitMenuCheckAttackSection
 
-      .dsection Unsorted85E545Section
+      .dsection UnitMenuCheckPassSection
 
-      .dsection Unsorted85E549Section
+      .dsection UnitMenuCheckTalkSection
 
-      .dsection Unsorted85E57ESection
+      .dsection UnitMenuCheckGuardSection
 
-      .dsection Unsorted85E6D7Section
+      .dsection UnitMenuCheckMountSection
 
-      .dsection Unsorted85E6E8Section
+      .dsection UnitMenuCheckReturnSkillSection
 
-      .dsection Unsorted85E78ASection
+      .dsection UnitMenuCheckHelpSection
 
-      .dsection Unsorted85E7B3Section
+      .dsection UnitMenuCheckGiveGoldToArmySection
 
-      .dsection Unsorted85E839Section
+      .dsection UnitMenuCheckTalkHereSection
 
-      .dsection Unsorted85E85DSection
+      .dsection OpenUnitMenuSection
 
-      .dsection Unsorted85E897Section
+      .dsection ClearUnitMenuModeFlagsSection
 
-      .dsection Unsorted85E8A8Section
+      .dsection OpenUnitMenuMode1Section
 
-      .dsection Unsorted85E8EASection
+      .dsection UseItemFromMapSection
 
-      .dsection Unsorted85E8FBSection
+      .dsection DiscardItemFromMapSection
 
-      .dsection Unsorted85E951Section
+      .dsection ProcItemUseMenuSection
 
-      .dsection Unsorted85E960Section
+      .dsection ProcItemUseMenuSetUpSection
 
-      .dsection Unsorted85E9C7Section
+      .dsection ProcCastleStaffMenuSection
 
-      .dsection Unsorted85E9D6Section
+      .dsection ProcCastleStaffMenuSetUpSection
 
-      .dsection Table85EA3ASection
+      .dsection CastleStaffMenuChecksSection
 
-      .dsection Unsorted85EA42Section
-      .dsection Unsorted85EA53Section
+      .dsection CastleStaffMenuCheckOutsideSection
+      .dsection CastleStaffMenuCheckInsideSection
 
-      .dsection Unsorted85EA64Section
+      .dsection MapMenuEmptyHookSection
 
       .fill $858000 + $8000 - *, $00
 
@@ -2264,68 +2179,68 @@
       .dsection OpeningLogoStatesSection
       .dsection ChapterEventRAMDataSection
 
-      .dsection Unsorted869CCCSection
+      .dsection ClearAIEngineRAMSection
 
-      .dsection Unsorted869CE4Section
+      .dsection EnableAIEngineCycleSection
 
       .dsection AIEngineCycleSection
       .dsection AIAttackSection
       .dsection AIMovementMapSection
 
-      .dsection Unsorted86AD5ESection
+      .dsection TraceTargetPathToReachableTileSection
 
-      .dsection Table86AE36Section
+      .dsection TargetPathTileOffsetsSection
 
       .dsection FillMapBufferSection
 
       .dsection AIThreatSection
 
-      .dsection Unsorted86B335Section
+      .dsection AIActionWaitSection
 
-      .dsection Unsorted86B36ASection
+      .dsection AIActionNoOp9Section
 
-      .dsection Unsorted86B371Section
+      .dsection AIActionEnterHomeCastleSection
 
-      .dsection Unsorted86B38FSection
+      .dsection AIActionRaidVillageSection
 
-      .dsection Unsorted86B39DSection
+      .dsection AIActionSeizeCastleSection
 
-      .dsection Unsorted86B3ABSection
+      .dsection AIActionGuardCastleSection
 
-      .dsection Unsorted86B3DDSection
+      .dsection AIActionTalkSection
 
       .dsection AIActionSection
 
-      .dsection Unsorted86BA3BSection
+      .dsection AIGetNearestVillageSection
 
       .dsection AIAction86BA86Section
 
-      .dsection Unsorted86BC64Section
+      .dsection AICheckIfInteractionTileReachableSection
 
       .dsection AIClosestTileSection
 
-      .dsection Unsorted86BFE6Section
+      .dsection AICalculateCastleCombatDamageSection
 
       .dsection AILowHPSection
       .dsection AIUnitMapSection
 
-      .dsection Unsorted86C293Section
+      .dsection FillTargetMapWithVillagesSection
 
-      .dsection Unsorted86C333Section
+      .dsection AIGetClassWeightSection
 
-      .dsection Table86C359Section
+      .dsection AIClassWeightTableSection
 
-      .dsection Unsorted86C3A0Section
+      .dsection AIGetClassTargetPrioritySection
 
-      .dsection Table86C3C6Section
+      .dsection AIClassTargetPriorityTableSection
 
-      .dsection Unsorted86C40DSection
+      .dsection AIGetWeaponTriangleScoreSection
 
       .dsection ChapterEventDataSection
 
-      .dsection Unsorted86C629Section
+      .dsection ApplyAllActiveMapChangesSection
 
-      .dsection Table86C69ASection
+      .dsection MapChangeBitmasksSection
 
       .dsection ASMCGiveJuliaLightIfNoWeaponSection
       .dsection ApplyMapTileChangeSection
@@ -2364,15 +2279,15 @@
 
       .dsection CodeChecksums878000Section
 
-      .dsection Unsorted878017Section
+      .dsection WriteResetSignatureSection
 
-      .dsection Unsorted8780AASection
+      .dsection InitMapMenusSection
 
-      .dsection Unsorted8780DFSection
+      .dsection EnableMapMenuUploadsSection
 
       .dsection MapMenu8780F9Section
 
-      .dsection Unsorted878148Section
+      .dsection UnlinkMapMenuSection
 
       .dsection FindLastMapMenuSection
 
@@ -2380,96 +2295,96 @@
 
       .dsection LoadMapMenuTilemapDataSection
 
-      .dsection Unsorted878256Section
+      .dsection MapMenuVBlankUploadSection
 
-      .dsection Unsorted87829ASection
+      .dsection GetMapMenuRowsSection
 
-      .dsection Unsorted8782D4Section
+      .dsection GetAllMapMenuRowsSection
 
-      .dsection Unsorted878337Section
+      .dsection ClearMapMenuRowsSection
 
-      .dsection Unsorted8783F8Section
+      .dsection RedrawAllMapMenusSection
 
-      .dsection Unsorted87840FSection
+      .dsection UploadMapMenuDirtyRowsSection
 
-      .dsection Unsorted878459Section
+      .dsection MarkAllMapMenuRowsDirtySection
 
-      .dsection Unsorted878472Section
+      .dsection MoveMapMenuBG3Section
 
-      .dsection Unsorted8784E1Section
+      .dsection ResizeMapMenuBG3Section
 
       .dsection GetMapMenuYPositionsSection
 
-      .dsection Unsorted878531Section
+      .dsection BringMapMenuToFrontSection
 
-      .dsection Unsorted8785A4Section
+      .dsection RemoveMapMenuSection
 
       .dsection HandleMapMenuPaletteGraphicsDataSection
 
-      .dsection Unsorted87872BSection
+      .dsection SetMapMenuTypeSection
 
       .dsection GetMapMenuPositionSection
 
       .dsection GetMapMenuTilemapRAMEntryPointerSection
 
-      .dsection Unsorted878852Section
+      .dsection FindPreviousMapMenuSection
 
       .dsection GetMapMenuTileIndexSection
 
-      .dsection Unsorted8788F7Section
+      .dsection DrawMapMenuTileStringSection
 
-      .dsection Unsorted878900Section
+      .dsection DrawMapMenuSmallNumberSection
 
-      .dsection Unsorted878916Section
+      .dsection DrawMapMenuNumberSection
 
-      .dsection Unsorted878921Section
+      .dsection DrawMapMenuTextLineSection
       .dsection ApplyMapMenuPaletteDataSection
 
       .dsection HandleMapMenuDecompressionDMASection
 
-      .dsection Unsorted878AB5Section
+      .dsection CopyTilemapEntryToBGSection
 
-      .dsection Unsorted878B1FSection
+      .dsection GetTilemapEntrySizeSection
 
-      .dsection Unsorted878B4ESection
+      .dsection GetTilemapEntryWidthSection
 
       .dsection RemoveMapMenuTilemapRAMEntrySection
 
-      .dsection Unsorted878BF0Section
+      .dsection FillTilemapEntryWithPatternSection
 
-      .dsection Unsorted878C8CSection
+      .dsection DrawSimpleFrameToTilemapEntrySection
 
-      .dsection Unsorted878D61Section
+      .dsection DrawFancyFrameToTilemapEntrySection
 
-      .dsection Unsorted878F6ESection
+      .dsection DrawTileStringToTilemapEntrySection
 
-      .dsection Unsorted878FE7Section
+      .dsection DrawSmallNumberToTilemapEntrySection
 
-      .dsection Table879076Section
+      .dsection TwoDigitDecimalTableSection
 
-      .dsection Unsorted87913ESection
+      .dsection DrawTallTwoDigitNumberToTilemapEntrySection
 
-      .dsection Unsorted8791EESection
+      .dsection DrawNumberToTilemapEntrySection
 
       .dsection DrawMenuTextLineSection
 
-      .dsection Table879471Section
+      .dsection MenuFontBankOffsetsSection
 
-      .dsection Table879D77Section
+      .dsection MenuFontKanjiOverridesSection
 
       .dsection CheckTalkEventEntryAvailableSection
 
       .dsection CheckIsTalkTargetOfSection
 
-      .dsection Unsorted879F12Section
+      .dsection CheckUnitCanSortieSection
 
-      .dsection Unsorted87A006Section
+      .dsection CheckUnitCanDanceSection
 
       .dsection CheckCharacterWaitingInHomeCastleSection
 
-      .dsection Unsorted87A082Section
+      .dsection GetArenaOpponentCharacterIDSection
 
-      .dsection Unsorted87A18CSection
+      .dsection CheckUnitHasBargainSection
 
       .dsection SkillsSection
 
@@ -2479,11 +2394,11 @@
 
       .dsection LovePointsSection
 
-      .dsection Unsorted87AE88Section
+      .dsection GetUnitLoverOrTopCandidateSection
 
-      .dsection Unsorted87AF46Section
+      .dsection FindRescueDestinationTileSection
 
-      .dsection Unsorted87B01DSection
+      .dsection EventMovementPlanRouteSection
       .dsection ClearEventMovementTargetMapSection
 
       .dsection EventMovementTargetDistanceMapSection
@@ -2494,108 +2409,108 @@
 
       .dsection EventMovementWriteToMovementScriptBufferSection
 
-      .dsection Unsorted87B512Section
+      .dsection FindTargetsForSelectedWeaponSection
 
-      .dsection Unsorted87B541Section
+      .dsection BuildSelectedUnitRangeMapsSection
 
-      .dsection Unsorted87B5DDSection
+      .dsection FloodFillMovementMapSection
 
-      .dsection Unsorted87B63FSection
+      .dsection SpreadMovementToNeighboursSection
 
-      .dsection Unsorted87B786Section
+      .dsection SetRangeMapOriginSection
 
-      .dsection Unsorted87B877Section
+      .dsection MarkRangeMapColumnBorderSection
 
-      .dsection Unsorted87B8A7Section
+      .dsection GetTileMovementCostSection
 
-      .dsection Table87B8EESection
+      .dsection TileMovementCostsSection
 
-      .dsection Unsorted87B8FESection
+      .dsection CheckTileAreaRestrictionSection
 
-      .dsection Table87BAD1Section
+      .dsection MaxRangeDiamondRowsSection
 
-      .dsection Unsorted87BB27Section
+      .dsection CheckSelectedUnitCannotMoveSection
 
       .dsection ScriptedCritsSection
 
       .dsection CheckIfTerrainWindowSettingOffSection
 
-      .dsection Unsorted87BED7Section
+      .dsection SetUnitWindowSettingSection
 
       .dsection GetTextSpeedOptionSection
 
-      .dsection Unsorted87BF01Section
+      .dsection SetTextSpeedOptionSection
 
-      .dsection Unsorted87BF1BSection
+      .dsection GetEnemySpeedOptionSection
 
-      .dsection Unsorted87BF29Section
+      .dsection SetEnemySpeedOptionSection
 
-      .dsection Unsorted87BF43Section
+      .dsection GetSoundOptionSection
 
-      .dsection Unsorted87BF52Section
+      .dsection SetSoundOptionSection
 
-      .dsection Unsorted87BF6FSection
+      .dsection ApplySoundOptionSection
 
-      .dsection Unsorted87BFBFSection
+      .dsection SetAutoSaveOptionSection
 
-      .dsection Unsorted87BFD9Section
+      .dsection GetAutoSaveFileSection
 
-      .dsection Unsorted87BFE9Section
+      .dsection SetAutoSaveFileSection
 
       .dsection AICleverModeSection
 
-      .dsection Unsorted87C015Section
+      .dsection SetCleverModeFlagSection
 
-      .dsection Unsorted87C02FSection
+      .dsection GetAutoCursorOptionSection
 
-      .dsection Unsorted87C03CSection
+      .dsection SetAutoCursorOptionSection
 
-      .dsection Unsorted87C056Section
+      .dsection ProcCastleTakenOverSection
       .dsection ProcCycleFlickerUnitsOfFactionSlotSection
 
-      .dsection Unsorted87C38CSection
+      .dsection BattleTransitionHDMAInfoSection
 
-      .dsection Unsorted87C41BSection
+      .dsection BattleTransitionOpenBattleSection
 
-      .dsection Unsorted87C442Section
+      .dsection BuildBattleTransitionWindowSection
 
       .dsection GameOverProcSection
 
-      .dsection Unsorted87C5AASection
+      .dsection ProcGameOverInitSection
 
-      .dsection Table87C5BFSection
+      .dsection GameOverPaletteDataSection
 
-      .dsection Unsorted87C646Section
+      .dsection ProcGameOverCycleSection
 
-      .dsection Unsorted87C695Section
+      .dsection GameOverFadeInSection
 
-      .dsection Unsorted87C70ASection
+      .dsection ProcMapMagicRippleSection
 
-      .dsection Unsorted87C712Section
+      .dsection ProcMapMagicRippleInitSection
 
-      .dsection Table87C784Section
+      .dsection MapMagicRipplePaletteDataSection
 
-      .dsection Unsorted87C7B4Section
+      .dsection ProcMapMagicRippleUploadTilesSection
 
-      .dsection Unsorted87C7F3Section
+      .dsection ProcMapMagicRippleWaitDoneSection
 
-      .dsection Unsorted87C81FSection
+      .dsection ProcMapMagicRippleCodeSection
 
-      .dsection Unsorted87C821Section
+      .dsection DrawMapMagicRippleSmallTilemapSection
 
-      .dsection Table87C866Section
+      .dsection MapMagicRippleSmallTilemapRow1Section
 
-      .dsection Unsorted87C87ASection
+      .dsection DrawMapMagicRippleLargeTilemapSection
 
-      .dsection Table87C8E1Section
+      .dsection MapMagicRippleLargeTilemapRow1Section
 
-      .dsection Unsorted87CBC5Section
+      .dsection MapMenuLoadHookSection
 
       .dsection AITargetListSection
       .dsection AIScriptSection
       .dsection AIRangeMapSection
 
-      .dsection Unsorted87D65ASection
+      .dsection AIScoreTargetsNearLeaderSection
 
       .dsection AITargetMapSection
       .dsection AIUnitListSection
@@ -2613,23 +2528,23 @@
 
       .dsection LocationEventDataSection
 
-      .dsection Unsorted87E9E0Section
+      .dsection FindLocationByNameIDSection
 
-      .dsection Unsorted87EA09Section
+      .dsection FindLocationAtTileSection
 
       .dsection LocationUpdateSection
 
-      .dsection Unsorted87EBC8Section
+      .dsection InitLocationSection
 
       .dsection LocationGettersSection
 
-      .dsection Unsorted87EF46Section
+      .dsection GetCastleFacilitiesSection
 
       .dsection LocationModificationSection
 
-      .dsection Unsorted87F321Section
+      .dsection GetLocationMoneyLevelSection
 
-      .dsection Table87F361Section
+      .dsection LocationMoneyLevelsSection
 
       .dsection GetEventLocationTypeBaseMoneySection
 
@@ -2637,29 +2552,29 @@
 
       .dsection CheckIfCharacterHasFemaleGenerationIDSection
 
-      .dsection Unsorted87F501Section
+      .dsection GetCharacterUnitTypeSection
 
-      .dsection Unsorted87F515Section
+      .dsection CreateUnitFromBuffersSection
 
-      .dsection Unsorted87F55ASection
+      .dsection CreateUnitFromBuffersByType87F55ASection
 
       .dsection CreateUnitFromBuffersByTypeSection
 
       .dsection CompactStaticDynamicUnitBuffer1UnitStatesSection
 
-      .dsection Unsorted87F9F6Section
+      .dsection ExpandStaticDynamicUnitBuffer1UnitStatesSection
 
       .dsection CompactHolyEnemyUnitBuffer1UnitStatesSection
 
-      .dsection Unsorted87FA57Section
+      .dsection ExpandHolyEnemyUnitBuffer1UnitStatesSection
 
       .dsection FillUnitsDeploymentSaveDataSection
 
-      .dsection Unsorted87FABCSection
+      .dsection RestoreUnitDeploymentSection
 
-      .dsection Unsorted87FB5ESection
+      .dsection PrepareFactionUnitListsSection
 
-      .dsection Unsorted87FB94Section
+      .dsection AddUnitToFactionSection
 
       .dsection FillItemsOwnerAndSlotDataSection
 
@@ -2667,7 +2582,7 @@
 
       .dsection CapItemDurabilitySection
 
-      .dsection Unsorted87FD09Section
+      .dsection GatherUnitItemsSection
 
       .fill $878000 + $8000 - *, $00
 
@@ -2676,111 +2591,109 @@
     * = $088000
     .logical $888000
 
-      .dsection Table888000Section
+      .dsection CodeChecksumsCopy88Section
 
-      .dsection Unsorted888082Section
+      .dsection SetUpChapterMapDisplaySection
 
-      .dsection Unsorted88818ASection
+      .dsection ClearMapRAMSection
 
-      .dsection Unsorted888197Section
+      .dsection LoadCursorSpriteGraphicsSection
 
-      .dsection Unsorted8881B8Section
+      .dsection HandleMapReturnFlagsSection
 
-      .dsection Unsorted8881D7Section
+      .dsection SetMapReturnCenterOnUnitSection
 
-      .dsection Unsorted8881DESection
+      .dsection SetMapReturnStartCastleStaffSection
 
-      .dsection Unsorted8881E5Section
+      .dsection SetMapReturnCastleGridStaffSection
 
-      .dsection Unsorted8881ECSection
+      .dsection ClearVRAM6000Section
 
-      .dsection Unsorted88821ASection
+      .dsection SetUpChapterMapDisplayAllFramesSection
 
-      .dsection Unsorted8883C7Section
+      .dsection MapEmptyRoutineSection
 
-      .dsection Unsorted888410Section
+      .dsection RedrawVisibleMapTilemapSection
 
-      .dsection Unsorted88847DSection
+      .dsection CopyMapRowToTilemapBufferSection
 
-      .dsection Unsorted888560Section
+      .dsection ContinueMapScrollSection
 
       .dsection Unreferenced88857ESection
 
-      .dsection Unsorted8885D3Section
+      .dsection StartMapScrollUpSection
 
-      .dsection Unsorted8885EFSection
+      .dsection StartMapScrollLeftSection
 
-      .dsection Unsorted88860BSection
+      .dsection StartMapScrollUpLeftSection
 
-      .dsection Unsorted88861CSection
+      .dsection StartMapScrollDownLeftSection
       .dsection MapScrollRightSetBGOFSSection
 
-      .dsection Unsorted8887ECSection
+      .dsection UploadMapRowAndColumnSection
 
-      .dsection Unsorted888901Section
+      .dsection GetMapBottomRowIndexSection
 
-      .dsection Unsorted888A14Section
+      .dsection BuildRangeOverlayRowSection
 
-      .dsection Unsorted888BB3Section
+      .dsection BuildMapRowTilesHalfOffsetSection
 
-      .dsection Unsorted888C5FSection
+      .dsection BuildRangeOverlayRowHalfOffsetSection
 
-      .dsection Unsorted888D57Section
+      .dsection GetMapTopRowIndexSection
 
-      .dsection Unsorted888F32Section
+      .dsection BuildRangeOverlayColumnSection
 
       .dsection ChapterMapLoadingSection
 
       .dsection ProcScript889396Section
 
-      .dsection Unsorted88939ESection
+      .dsection ProcMinimapInitSection
 
-      .dsection Table8893DBSection
+      .dsection MinimapPaletteDataSection
 
-      .dsection Unsorted889400Section
+      .dsection ProcMinimapClearSection
 
-      .dsection Unsorted889411Section
+      .dsection ProcMinimapDrawTerrainSection
 
-      .dsection Table8894F2Section
+      .dsection MinimapTilemapInfoSection
 
       .dsection ProcScript889504Section
 
-      .dsection Unsorted889506Section
-      .dsection Table88958FSection
+      .dsection PutMinimapDotSection
+      .dsection MinimapDotColorBitsSection
 
-      .dsection Unsorted8896AFSection
+      .dsection ClearMinimapDotSection
 
       .dsection Data88972FSection
 
-      .dsection Unsorted88973FSection
+      .dsection MinimapStepSection
 
-      .dsection Table8899A4Section
+      .dsection MinimapBlankCastleNameTextSection
 
-      .dsection Unsorted8899B8Section
+      .dsection MinimapScrollMapSection
 
+      .dsection MinimapViewColorCycleSection
 
-      .dsection Table889AE2Section
+      .dsection ClearMinimapSection
 
-      .dsection Unsorted889B22Section
+      .dsection DrawMinimapTerrainSection
 
-      .dsection Unsorted889B6DSection
+      .dsection MinimapTerrainColorsSection
 
-      .dsection Unsorted889BB5Section
-
-      .dsection Unsorted889BF7Section
-
+      .dsection DrawMinimapUnitsSection
 
       .dsection ProcScript889C52Section
 
-      .dsection Unsorted889C5ASection
+      .dsection ProcMinimapCloseInitSection
 
-      .dsection Unsorted889CEESection
+      .dsection ProcMinimapCloseLoadGraphics1Section
 
-      .dsection Unsorted889D20Section
+      .dsection ProcMinimapCloseLoadGraphics2Section
 
-      .dsection Table889D92Section
+      .dsection MinimapCloseBlankTextSection
 
-      .dsection Unsorted889DA6Section
+      .dsection ProcMinimapCloseFinishSection
 
       .dsection ProcScript889E6CSection
 
@@ -2788,269 +2701,264 @@
 
       .dsection ChapterMapsSection
 
-      .dsection Unsorted88A12BSection
+      .dsection MapCursorStepSection
 
-      .dsection Unsorted88A2F5Section
+      .dsection UseCastleGridStaffSection
 
-      .dsection Unsorted88A32DSection
+      .dsection UpdateMapSystemFlagsSection
 
       .dsection Unreferenced88A383Section
 
-      .dsection Unsorted88A38CSection
+      .dsection CheckMapCursorRestingSection
 
-      .dsection Unsorted88A395Section
+      .dsection MoveFreeMapCursorUnusedSection
 
-      .dsection Unsorted88A44CSection
+      .dsection AnimateRangeOverlayPaletteSection
 
       .dsection Data88A4BCSection
 
-      .dsection Unsorted88A4FCSection
+      .dsection LoadMapWindowPalettesSection
 
+      .dsection GetMapCursorMoveSection
 
-      .dsection Unsorted88A551Section
+      .dsection SetCursorScrollSpeedUnusedSection
 
-      .dsection Unsorted88A698Section
+      .dsection DrawHandCursorSection
 
+      .dsection HandCursorOffsetsSection
 
-      .dsection Unsorted88A704Section
+      .dsection MapCursorMoveStepSection
 
-      .dsection Table88A73DSection
-
-      .dsection Unsorted88A754Section
-
-      .dsection Unsorted88A7F5Section
+      .dsection SetUnitWalkSpeedSection
 
       .dsection Unreferenced88A816Section
 
-      .dsection Unsorted88A81DSection
+      .dsection MapChooseTargetStepSection
 
       .dsection WalkUnitAlongPathSection
 
-      .dsection Unsorted88AB2CSection
+      .dsection GetCursorTileUnusedSection
 
-      .dsection Unsorted88AB47Section
+      .dsection SelectNextTargetSection
 
-      .dsection Unsorted88AC5BSection
+      .dsection SelectNextTargetInOrderUnusedSection
 
-      .dsection Unsorted88ACA6Section
+      .dsection GetTargetAtSearchIndexUnusedSection
 
-
-      .dsection Table88ACF1Section
+      .dsection NearTargetOffsetsSection
 
       .dsection Unreferenced88AD09Section
 
-      .dsection Unsorted88AD46Section
+      .dsection StartChoosingTargetSection
 
-      .dsection Unsorted88ADA2Section
+      .dsection SetMapCursorFreeSection
 
-      .dsection Unsorted88ADA6Section
+      .dsection SetMapCursorOriginToCursorSection
 
-      .dsection Unsorted88ADC9Section
+      .dsection StartCursorToActiveUnitForActionSection
 
-      .dsection Unsorted88ADE9Section
+      .dsection UndoUnitMoveSection
 
-      .dsection Unsorted88AF4CSection
+      .dsection StartMovingUnitSpriteSection
 
-      .dsection Unsorted88AF7BSection
+      .dsection EndUnitActionSection
 
       .dsection MapInputHandlerSection
 
-      .dsection Unsorted88B028Section
+      .dsection MapPressASection
 
-      .dsection Unsorted88B366Section
+      .dsection OpenSoloConversationFromMapSection
 
-      .dsection Unsorted88B3AFSection
+      .dsection SaveMapCameraAndLockCursorSection
 
       .dsection Unreferenced88B3C2Section
 
-      .dsection Unsorted88B3DFSection
+      .dsection GetTileEntriesAtCursorSection
 
-      .dsection Unsorted88B42CSection
+      .dsection StartCursorToUnitAfterMoveSection
 
-      .dsection Unsorted88B46ASection
+      .dsection StartCursorToUnitSection
 
-      .dsection Unsorted88B4DBSection
+      .dsection MoveCursorToUnitSection
 
-      .dsection Unsorted88B51ASection
+      .dsection CursorToNextReadyUnitSection
 
-      .dsection Unsorted88B64FSection
+      .dsection MoveCursorTowardsTargetSection
 
-      .dsection Unsorted88B6FDSection
+      .dsection SelectUnitAtCursorSection
 
-      .dsection Unsorted88BC05Section
+      .dsection MoveMapCursorInDirectionSection
 
-      .dsection Unsorted88BDA1Section
+      .dsection MoveMapCursorUpSection
 
       .dsection Unreferenced88BEFFSection
 
-      .dsection Unsorted88BF37Section
+      .dsection GetMapDataIndexSection
 
-      .dsection Unsorted88BF6CSection
+      .dsection GetTileScreenPositionSection
 
-      .dsection Unsorted88BF97Section
+      .dsection CheckPointInScreenMarginsSection
 
-      .dsection Unsorted88BFFASection
+      .dsection GetTileScreenPixelPositionAtMapEdgeUnusedSection
 
-      .dsection Unsorted88C059Section
+      .dsection GetTileAtScreenPositionSection
 
-      .dsection Unsorted88C072Section
+      .dsection GetCursorMapPositionUnusedSection
 
-      .dsection Unsorted88C085Section
+      .dsection StartWalkingSoundSection
 
       .dsection GetMapSpriteMovementSoundSection
 
-      .dsection Unsorted88C1BFSection
+      .dsection JumpToNextCastleSection
 
-      .dsection Unsorted88C25DSection
+      .dsection CenterCameraOnLocationSection
 
-      .dsection Unsorted88C2BASection
+      .dsection StepCameraTowardsTargetSection
 
-      .dsection Unsorted88C355Section
+      .dsection SetCameraTargetForCursorSection
 
-      .dsection Unsorted88C3F0Section
+      .dsection RestoreMapCameraSection
 
-      .dsection Unsorted88C4D9Section
+      .dsection MapAIMoveStepSection
 
-      .dsection Unsorted88C67DSection
+      .dsection StartAIUnitWalkSection
 
-      .dsection Unsorted88C6EDSection
+      .dsection StartTestAIMoveUnusedSection
 
-      .dsection Unsorted88C71CSection
+      .dsection StartAIUnitMoveSection
 
-      .dsection Unsorted88C7CFSection
+      .dsection AnimateMapSpritesSection
 
-      .dsection Unsorted88C7D8Section
+      .dsection DrawMovingSpritesTestUnusedSection
 
-      .dsection Table88C834Section
+      .dsection MovingSpritesTestXOffsetsUnusedSection
 
       .dsection Data88C83CSection
 
-      .dsection Unsorted88C844Section
+      .dsection DrawMovingUnitSpriteSection
 
       .dsection Data88C990Section
 
-      .dsection Unsorted88C9A6Section
+      .dsection LoadMovingUnitSpriteSection
 
-      .dsection Unsorted88CA28Section
+      .dsection UpdateMovingUnitSpriteFrameSection
 
-      .dsection Unsorted88CA77Section
+      .dsection SetShortMovingUnitSpriteFrameSection
 
-      .dsection Unsorted88CBE8Section
+      .dsection MapSpriteWalkFrameDelaysSection
 
-      .dsection Unsorted88CC75Section
+      .dsection QueueStandingMapSpriteFramesSection
 
-      .dsection Unsorted88CD53Section
+      .dsection PauseMapSpriteAnimationSection
 
-      .dsection Unsorted88CD68Section
+      .dsection UploadMapAnimationsSection
 
-      .dsection Table88CF8ASection
+      .dsection MapTileAnimation1FramesSection
 
-      .dsection Unsorted88CFBASection
+      .dsection UploadMapTileAnimation2Section
 
-      .dsection Table88D013Section
+      .dsection MapTileAnimation2FramesSection
 
-      .dsection Unsorted88D073Section
+      .dsection UploadMapTileAnimationsSection
 
-      .dsection Unsorted88D084Section
+      .dsection DrawDeployedUnitMapSpritesSection
 
       .dsection Data88D135Section
 
       aMapMovementShortSpritePointers .binclude "data/class/MapMovementShortSpritePointers.csv.asm" ; 88/D365
       aMapMovementTallSpritePointers  .binclude "data/class/MapMovementTallSpritePointers.csv.asm"  ; 88/D428
 
-      .dsection Table88D488Section
-      .dsection Table88D4C6Section
-      .dsection Table88D526Section
-      .dsection Table88D5E3Section
+      .dsection MapSpriteWalkOffsetPointersSection
+      .dsection MapSpriteWalkOffsetsSection
+      .dsection ShortStandingMapSpritePointersSection
+      .dsection TallStandingMapSpritePointersSection
 
       .dsection MovingMapSpriteAppendDecompSection
 
       .dsection SetMovingMapSpriteBufferPointersSection
 
-      .dsection Unsorted88D731Section
+      .dsection LoadMovingMapSpriteUnusedSection
 
-      .dsection Table88D7B2Section
+      .dsection SetMovingMapSpriteBufferPointersUnusedSection
 
-      .dsection Unsorted88D7BASection
-      .dsection Unsorted88D7C5Section
-      .dsection Unsorted88D7D8Section
-      .dsection Unsorted88D7EBSection
+      .dsection SetMovingMapSpriteBuffer0UnusedSection
+      .dsection SetMovingMapSpriteBuffer1UnusedSection
+      .dsection SetMovingMapSpriteBuffer2UnusedSection
+      .dsection SetMovingMapSpriteBuffer3UnusedSection
 
-      .dsection Unsorted88D7FESection
+      .dsection AnimateMovingMapSpriteSection
 
-      .dsection Unsorted88D847Section
+      .dsection AnimateShortMovingMapSpriteSection
 
-      .dsection Unsorted88D94BSection
+      .dsection MovingMapSpriteGraphicsSettersSection
 
-      .dsection Unsorted88D963Section
+      .dsection AnimateTallMovingMapSpriteSection
 
-      .dsection Unsorted88DA6ASection
+      .dsection MovingMapSpriteGraphicsSetters2Section
 
-      .dsection Unsorted88DA82Section
+      .dsection SetMovingMapSpriteGraphics0Section
 
-      .dsection Unsorted88DAFCSection
+      .dsection MovingMapSpriteTileOffsetsSection
 
-      .dsection Unsorted88DB0CSection
+      .dsection UploadMovingUnitSpriteFrameSection
 
-      .dsection Unsorted88DBEESection
+      .dsection UploadSelectedUnitMapSpriteFrameSection
 
-      .dsection Unsorted88DC07Section
+      .dsection UploadSelectedUnitShortMapSpriteFrameSection
 
-      .dsection Unsorted88DD0FSection
+      .dsection DrawActiveUnitOverlaySpriteUnusedSection
 
-      .dsection Unsorted88DD9CSection
+      .dsection UploadMapSpriteFrameSection
 
-      .dsection Unsorted88DDFBSection
+      .dsection SaveDeploymentMapSpritesSection
 
-      .dsection Unsorted88DE0BSection
+      .dsection RestoreDeploymentMapSpritesSection
 
-      .dsection Unsorted88DE1BSection
+      .dsection UploadAllStandingMapSpritesSection
 
       .dsection Data88DEFCSection
 
-      .dsection Unsorted88DF8CSection
+      .dsection AnimateUnitWindowLineSpriteSection
 
       .dsection Unreferenced88E00ESection
 
-      .dsection Unsorted88E02BSection
+      .dsection ProcFirstGenerationEndingSection
 
-      .dsection Unsorted88E033Section
+      .dsection ProcFirstGenerationEndingInitSection
 
-      .dsection Unsorted88E10BSection
+      .dsection ProcFirstGenerationEndingFadeInSection
 
-      .dsection Unsorted88E179Section
+      .dsection ProcFirstGenerationEndingFinishSection
 
-      .dsection Unsorted88E1FESection
+      .dsection ProcFirstGenerationEndingCodeSection
 
       .dsection ProcScript88E200Section
 
-      .dsection Unsorted88E208Section
+      .dsection ProcFirstGenerationEndingPortraitFadeInInitSection
 
       .dsection ProcScript88E268Section
 
-      .dsection Unsorted88E272Section
-
+      .dsection ProcFirstGenerationEndingPortraitFadeOutInitSection
 
       .dsection ProcScript88E2DCSection
 
-      .dsection Table88E2DESection
+      .dsection FirstGenerationEndingHDMAInfoSection
 
-      .dsection Unsorted88E2E9Section
+      .dsection FirstGenerationEndingHDMASection
 
+      .dsection LoadFirstGenerationEndingPortraitSection
 
-      .dsection Unsorted88E33DSection
+      .dsection SetFirstGenerationEndingTextPositionSection
 
-      .dsection Unsorted88E38ASection
+      .dsection FirstGenerationEndingFindCharacterSection
 
-      .dsection Unsorted88E401Section
-
-      .dsection Table88E9E4Section
+      .dsection dialogueEpilogueMemorial88E9E5Section
 
       .dsection MapCursorSpritesSection
 
-      .dsection Unsorted88EEB1Section
+      .dsection SetDemoIndexFromRankingSection
 
-      .dsection Unsorted88EF0DSection
+      .dsection DemoBattleSetupsSection
 
       .fill $888000 + $8000 - *, $00
 
@@ -3059,364 +2967,364 @@
     * = $098000
     .logical $898000
 
-      .dsection Unsorted898000Section
+      .dsection StatusScreenUpkeepSection
 
-      .dsection Table8980EFSection
+      .dsection StatusScreenStepsSection
 
-      .dsection Unsorted898105Section
+      .dsection StatusScreenTopPageSection
 
-      .dsection Unsorted898536Section
+      .dsection StatusScreenLoadHolyBloodPageSection
 
-      .dsection Unsorted89861BSection
+      .dsection StatusScreenHolyBloodPageSection
 
-      .dsection Unsorted898734Section
+      .dsection StatusScreenLeaveSection
 
-      .dsection Unsorted898755Section
+      .dsection StatusScreenReturnToMapSection
 
-      .dsection Unsorted898768Section
+      .dsection StatusScreenReturnToCastleSection
 
-      .dsection Unsorted89876DSection
+      .dsection StatusScreenDrawItemDetailsSection
 
-      .dsection Table898973Section
+      .dsection StatusScreenItemHitLabelSection
 
-      .dsection Unsorted8989ADSection
+      .dsection StatusScreenDrawPortraitAndMapSpriteSection
 
-      .dsection Unsorted8989CESection
+      .dsection StatusScreenDrawItemCursorSection
 
-      .dsection Unsorted8989EASection
+      .dsection StatusScreenDrawMapSpriteSection
 
-      .dsection Unsorted898A41Section
+      .dsection StatusScreenDrawPromotionMarkerSection
 
       .dsection Data898A61Section
 
-      .dsection Unsorted898A7ESection
+      .dsection StatusScreenDrawRankIconsAndStarsSection
 
-      .dsection Unsorted898AF5Section
+      .dsection StatusScreenDrawEquippedWeaponIconSection
 
-      .dsection Table898B2ASection
+      .dsection StatusScreenWeaponTypeIconTilesSection
 
-      .dsection Unsorted898B3BSection
+      .dsection StatusScreenDrawInventoryIconsSection
 
-      .dsection Table898B80Section
+      .dsection StatusScreenInventoryRowYSection
 
       .dsection Data898B88Section
 
-      .dsection Unsorted898B97Section
+      .dsection StatusScreenDrawItemDetailSpritesSection
 
       .dsection Data898CBCSection
 
-      .dsection Unsorted898D55Section
+      .dsection StatusScreenDrawHolyBloodPageSpritesSection
 
       .dsection SpriteArray898E65Section
 
-      .dsection Table898E6CSection
-      .dsection Table898E90Section
+      .dsection StatusScreenLoptousGlintFramesSection
+      .dsection StatusScreenLoptousGlint2FramesSection
 
-      .dsection Unsorted898EB4Section
+      .dsection StatusScreenDrawHolyBloodRingSection
 
-      .dsection Unsorted898F16Section
+      .dsection StatusScreenDrawHolyBloodGlintsSection
 
-      .dsection Table898F43Section
-      .dsection Table898F5BSection
+      .dsection StatusScreenHolyBloodRingXSection
+      .dsection StatusScreenHolyBloodRingYSection
 
-      .dsection Unsorted898F73Section
+      .dsection StatusScreenDrawHolyBloodGlintSection
 
-      .dsection Table898FD4Section
-      .dsection Table898FECSection
-      .dsection Table899004Section
+      .dsection StatusScreenGlintFrameTimesSection
+      .dsection StatusScreenGlintPauseTimesSection
+      .dsection StatusScreenGlintFramesSection
 
-      .dsection Unsorted899028Section
+      .dsection StatusScreenDrawMajorBloodGlintSection
 
-      .dsection Table899081Section
+      .dsection StatusScreenMajorGlintFrameTimesSection
 
       .dsection Data899099Section
 
-      .dsection Unsorted8990BDSection
+      .dsection StatusScreenGetHolyBloodLevelsSection
 
-      .dsection Unsorted8990DASection
+      .dsection LoadUnitInventoryIconsSection
 
-      .dsection Table899140Section
+      .dsection StatusScreenBG3SplitHDMASection
 
-      .dsection Unsorted89914BSection
+      .dsection StatusScreenBuildBG3SplitTableSection
 
-      .dsection Table899178Section
+      .dsection StatusScreenHDMAHaltSection
 
-      .dsection Unsorted899185Section
+      .dsection StatusScreenBuildBG1SplitTableSection
 
-      .dsection Table8991B9Section
+      .dsection StatusScreenGradientHDMASection
 
-      .dsection Unsorted8991C4Section
+      .dsection StatusScreenInitGradientHDMASection
 
-      .dsection Unsorted899200Section
+      .dsection StatusScreenSetGradientSection
 
       .dsection Data89923FSection
 
-      .dsection Unsorted8992ADSection
+      .dsection StatusScreenDrawSkillIconsSection
 
-      .dsection Table8992E7Section
+      .dsection StatusScreenSkillIconXSection
 
-      .dsection Unsorted89933CSection
+      .dsection StatusScreenDrawDropMarkerSection
 
       .dsection Data89935FSection
 
-      .dsection Unsorted89936ESection
+      .dsection StatusScreenDrawItemDescriptionSection
 
-      .dsection Unsorted8994B8Section
+      .dsection StatusScreenDrawScrollArrowSection
 
-      .dsection Unsorted899510Section
+      .dsection StatusScreenDrawSummarySection
 
-      .dsection Table899703Section
+      .dsection StatusScreenDashesSection
 
-      .dsection Unsorted89970DSection
+      .dsection StatusScreenDrawStatsAndInventorySection
 
       .dsection Data8998D4Section
 
-      .dsection Unsorted8998E1Section
+      .dsection StatusScreenDrawPersonalDataSection
 
-      .dsection Table899B8FSection
+      .dsection StatusScreenDashSection
 
-      .dsection Unsorted899BA5Section
+      .dsection StatusScreenDrawSummaryLabelsSection
 
-      .dsection Table899C44Section
+      .dsection StatusScreenHPBracketsSection
 
-      .dsection Unsorted899C7CSection
+      .dsection StatusScreenDrawStatLabelsSection
 
-      .dsection Table899D26Section
+      .dsection StatusScreenStrengthLabelSection
 
-      .dsection Unsorted899D72Section
+      .dsection StatusScreenDrawPersonalDataLabelsSection
 
-      .dsection Table899F0BSection
+      .dsection StatusScreenArmyLabelSection
 
-      .dsection Unsorted899FA1Section
+      .dsection StatusScreenDrawLeadershipStarsSection
 
-      .dsection Unsorted899FDCSection
+      .dsection LoadWindowGraphicsSection
 
-      .dsection Unsorted89A085Section
+      .dsection DrawStatBonusSection
 
       .dsection SplitNumberIntoDigitsSection
 
-      .dsection Unsorted89A138Section
+      .dsection StatusScreenLoadPortraitSection
 
-      .dsection Unsorted89A150Section
+      .dsection LoadPortraitAsSpritesSection
 
       .dsection DrawMenuTextNumberSection
 
-      .dsection Unsorted89A25ASection
+      .dsection StatusScreenSkillDetailsSection
 
-      .dsection Unsorted89A2EDSection
+      .dsection StatusScreenFadeInSection
 
-      .dsection Unsorted89A376Section
+      .dsection StatusScreenBuildSkillListSection
 
-      .dsection Unsorted89A3C0Section
+      .dsection StatusScreenDrawSkillDescriptionSection
 
-      .dsection Table89A4C5Section
+      .dsection StatusScreenPersonalSkillTextSection
 
-      .dsection Unsorted89A4E3Section
+      .dsection StatusScreenDrawSkillCursorSection
 
-      .dsection Table89A52DSection
-      .dsection Table89A572Section
-      .dsection Table89A59ESection
+      .dsection StatusScreenSkillIconTilesBySkillSection
+      .dsection StatusScreenSkillCursorFramesSection
+      .dsection StatusScreenSkillCursorXSection
 
-      .dsection Unsorted89A5AASection
+      .dsection DrawWeaponRankLetterSection
 
-      .dsection Unsorted89A5D1Section
+      .dsection WeaponRankLetterTilesSection
       .dsection SpriteArray89A72ESection
-      .dsection Table89A76CSection
+      .dsection ConditionNamePointersSection
 
-      .dsection Table89ABF9Section
+      .dsection SkillDescriptionPointersSection
 
       .dsection Data89AC56Section
 
-      .dsection Unsorted89ACCESection
+      .dsection ReviveScreenSetupSection
 
-      .dsection Table89ACF6Section
+      .dsection ReviveScreenStepsSection
 
       .dsection ReviveMenuSection
 
-      .dsection Unsorted89B058Section
-      .dsection Unsorted89B0A9Section
+      .dsection ReviveScreenNobodyDeadSection
+      .dsection ReviveScreenWaitSection
 
-      .dsection Unsorted89B0AASection
+      .dsection ReviveScreenUpkeepSection
 
-      .dsection Table89B0B9Section
+      .dsection ReviveScreenDrawModesSection
 
-      .dsection Unsorted89B0BFSection
-      .dsection Unsorted89B0C6Section
-      .dsection Unsorted89B0D0Section
-      .dsection Unsorted89B0D1Section
-      .dsection Unsorted89B10CSection
+      .dsection ReviveScreenDrawGridSection
+      .dsection ReviveScreenDrawGridAndConfirmSection
+      .dsection ReviveScreenDrawNothingSection
+      .dsection ReviveScreenDrawMapSpritesSection
+      .dsection ReviveScreenDrawMapSpriteSection
 
-      .dsection Unsorted89B20BSection
+      .dsection ReviveScreenDrawCursorSection
 
       .dsection Data89B225Section
 
-      .dsection Unsorted89B285Section
+      .dsection ReviveScreenDrawConfirmCursorSection
 
       .dsection Data89B29ESection
 
-      .dsection Unsorted89B2A2Section
-      .dsection Unsorted89B2B6Section
+      .dsection ReviveScreenAnimateMapSpriteSection
+      .dsection ReviveScreenAnimateSmallMapSpriteSection
 
       .dsection Data89B30CSection
 
-      .dsection Unsorted89B344Section
+      .dsection ReviveScreenAnimateLargeMapSpriteSection
 
       .dsection Data89B39FSection
 
-      .dsection Unsorted89B3D7Section
+      .dsection ItemWindowShowSection
 
-      .dsection Table89B3F6Section
+      .dsection ItemWindowStepsSection
 
-      .dsection Unsorted89B400Section
+      .dsection ItemWindowHandleInputSection
 
-      .dsection Unsorted89B79DSection
-      .dsection Unsorted89B838Section
+      .dsection ItemWindowSortPanelSection
+      .dsection ItemWindowNoItemsSection
 
-      .dsection Unsorted89B856Section
+      .dsection ItemWindowCloseToMapSection
 
-      .dsection Unsorted89B869Section
+      .dsection ItemWindowFadeToCastleSection
 
-      .dsection Unsorted89B883Section
+      .dsection ItemWindowRenderSection
 
-      .dsection Unsorted89B8BDSection
+      .dsection ItemWindowCopyVisibleRowsSection
 
-      .dsection Unsorted89B91FSection
+      .dsection ItemWindowDrawItemInfoSection
 
-      .dsection Table89BAC1Section
+      .dsection ItemWindowHitLabelTextSection
 
-      .dsection Unsorted89BAF3Section
+      .dsection ItemWindowClearItemInfoSection
 
-      .dsection Unsorted89BBB2Section
+      .dsection ItemWindowRenderItemIconsSection
 
-      .dsection Table89BCCESection
+      .dsection ItemWindowRowYCoordinatesSection
 
       .dsection Data89BCE6Section
 
-      .dsection Unsorted89BD00Section
+      .dsection ItemWindowRenderSelectedItemSpritesSection
 
       .dsection Data89BE57Section
 
-      .dsection Unsorted89BEB8Section
+      .dsection ItemWindowRenderCursorSection
 
-      .dsection Unsorted89BECCSection
+      .dsection DrawBG3TileRunSection
 
-      .dsection Unsorted89BEEBSection
+      .dsection ItemWindowMoveToNextPageSection
 
-      .dsection Unsorted89C021Section
+      .dsection ItemWindowDrawListSection
 
-      .dsection Unsorted89C119Section
+      .dsection ItemWindowDrawSortCursorSection
 
       .dsection Data89C13ESection
 
-      .dsection Unsorted89C144Section
+      .dsection ItemWindowRenderScrollArrowsSection
 
       .dsection Data89C181Section
 
-      .dsection Unsorted89C1A1Section
+      .dsection ItemWindowDrawItemDescriptionSection
 
-      .dsection Unsorted89C2CFSection
+      .dsection ItemWindowSortSection
 
-      .dsection Unsorted89C3F3Section
+      .dsection ItemWindowSortListSection
 
-      .dsection Unsorted89C488Section
+      .dsection ItemWindowDrawSortPanelSection
 
-      .dsection Unsorted89C5A2Section
+      .dsection ItemWindowDrawWeaponRankSection
 
       .dsection Data89C5C9Section
 
       .dsection DebugMenuSection
 
-      .dsection Unsorted89EB26Section
+      .dsection OptionsMenuSetupSection
 
-      .dsection Table89EB56Section
+      .dsection OptionsMenuStepsSection
 
-      .dsection Unsorted89EB5ESection
+      .dsection OptionsMenuChooseOptionSection
 
-      .dsection Unsorted89ECB4Section
+      .dsection OptionsMenuReturnToMapSection
 
-      .dsection Unsorted89ECC6Section
+      .dsection OptionsMenuWaitSection
 
-      .dsection Unsorted89ECC7Section
+      .dsection OptionsMenuUpkeepSection
 
-      .dsection Unsorted89ED12Section
+      .dsection OptionsMenuDrawChoicesSection
 
-      .dsection Table89ED58Section
+      .dsection OptionsMenuHighlightRoutinesSection
 
       .dsection Data89ED6ASection
 
-      .dsection Unsorted89EDFDSection
+      .dsection OptionsMenuHighlightAnimationSection
 
-      .dsection Table89EE0ESection
+      .dsection OptionsMenuAnimationHighlightsSection
 
-      .dsection Unsorted89EE14Section
+      .dsection OptionsMenuHighlightAnimation1Section
 
-      .dsection Unsorted89EE32Section
+      .dsection OptionsMenuHighlightAnimation3Section
 
-      .dsection Unsorted89EE50Section
-      .dsection Unsorted89EE89Section
+      .dsection OptionsMenuHighlightOnOffSection
+      .dsection OptionsMenuHighlightMessageSpeedSection
 
-      .dsection Table89EE9ASection
+      .dsection OptionsMenuMessageSpeedHighlightsSection
 
-      .dsection Unsorted89EEA4Section
+      .dsection OptionsMenuHighlightMessageSpeedTextSection
 
-      .dsection Unsorted89EEFESection
+      .dsection OptionsMenuHighlightEnemySpeedSection
 
-      .dsection Table89EF0FSection
+      .dsection OptionsMenuEnemySpeedHighlightsSection
 
-      .dsection Unsorted89EF13Section
+      .dsection OptionsMenuHighlightEnemySpeedTextSection
 
-      .dsection Table89EF40Section
+      .dsection OptionsMenuRealTextSection
 
-      .dsection Unsorted89EF50Section
+      .dsection OptionsMenuHighlightSoundSection
 
-      .dsection Table89EF61Section
+      .dsection OptionsMenuSoundHighlightsSection
 
-      .dsection Unsorted89EF67Section
+      .dsection OptionsMenuHighlightSoundTextSection
 
-      .dsection Unsorted89EFA3Section
+      .dsection OptionsMenuHighlightAutoSaveSection
 
-      .dsection Table89EFB4Section
+      .dsection OptionsMenuAutoSaveHighlightsSection
 
-      .dsection Unsorted89EFBESection
+      .dsection OptionsMenuHighlightAutoSaveTextSection
 
-      .dsection Unsorted89F018Section
+      .dsection OptionsMenuHighlightEnemyAISection
 
-      .dsection Table89F029Section
+      .dsection OptionsMenuEnemyAIHighlightsSection
 
-      .dsection Unsorted89F02DSection
+      .dsection OptionsMenuHighlightNormalAISection
 
-      .dsection Table89F051Section
+      .dsection OptionsMenuCleverTextSection
 
-      .dsection Unsorted89F065Section
+      .dsection OptionsMenuDrawValuesSection
 
       .dsection Data89F180Section
 
-      .dsection Unsorted89F246Section
-      .dsection Table89F338Section
+      .dsection OptionsMenuDrawDescriptionSection
+      .dsection OptionsMenuDescriptionPointersSection
 
       .dsection Data89F579Section
 
-      .dsection Unsorted89F620Section
+      .dsection OptionsMenuClearDescriptionSection
 
-      .dsection Unsorted89F630Section
+      .dsection OptionsMenuDrawCursorSection
 
       .dsection Data89F66ESection
 
-      .dsection Unsorted89F67FSection
+      .dsection OptionsMenuDrawValueMarkerSection
 
       .dsection Data89F6BCSection
 
-      .dsection Unsorted89F713Section
+      .dsection OptionsMenuDrawIconsSection
 
-      .dsection Unsorted89F7A6Section
+      .dsection OptionsMenuDrawSelectedIconSection
 
       .dsection Data89F7CDSection
 
-      .dsection Unsorted89F7E6Section
+      .dsection OptionsMenuApplyValuesSection
 
-      .dsection Unsorted89F842Section
+      .dsection OptionsMenuRestoreValuesSection
 
-      .dsection Table89F88BSection
+      .dsection OptionsMenuText0Section
 
       .fill $898000 + $8000 - *, 0
 
@@ -3437,253 +3345,246 @@
 
     .here
 
-
     * = $0A8000
     .logical $8A8000
 
-      .dsection Unsorted8A8000Section
+      .dsection CastleScreenUpkeepSection
 
-      .dsection Unsorted8A800ESection
+      .dsection CastleScreenSetupSection
 
-      .dsection Unsorted8A8061Section
+      .dsection CastleScreenStepSection
 
-      .dsection Table8A8078Section
+      .dsection CastleScreenStepHandlersSection
 
-      .dsection Unsorted8A80A6Section
+      .dsection CastleStepCourtyardStartSection
 
-      .dsection Unsorted8A80C3Section
-      .dsection Unsorted8A80C8Section
+      .dsection CastleStepArenaSetupSection
+      .dsection CastleStepArenaSection
 
-      .dsection Unsorted8A80CDSection
+      .dsection CastleStepAugurySetupSection
 
-      .dsection Unsorted8A80F5Section
+      .dsection CastleStepConversationSetupSection
 
-      .dsection Unsorted8A80FASection
+      .dsection CastleStepConversationSection
 
-      .dsection Unsorted8A8208Section
+      .dsection CastleCourtyardStepSection
 
       .dsection Data8A8387Section
 
-      .dsection Unsorted8A8393Section
+      .dsection CastleGridMoveCursorSection
 
       .dsection Data8A847ESection
 
-      .dsection Unsorted8A8496Section
+      .dsection CastleDrawInfoLineSection
 
-      .dsection Table8A85EFSection
+      .dsection CastleInfoLineBlankTextSection
 
-      .dsection Unsorted8A8643Section
+      .dsection CastleGridMoveToTargetSection
 
+      .dsection CastleGridFindPreviousTargetSection
 
-      .dsection Unsorted8A869ASection
+      .dsection CastleGridFindNextTargetSection
 
-      .dsection Unsorted8A870DSection
+      .dsection CastleUnitCommandMenuInputSection
 
-      .dsection Unsorted8A8783Section
+      .dsection CastleDrawUnitCommandNameSection
 
-      .dsection Unsorted8A87B8Section
+      .dsection CastleUnitCommandSortieTextSection
 
-      .dsection Table8A88E0Section
+      .dsection CastleTownFacilityInputSection
 
-      .dsection Unsorted8A8980Section
+      .dsection CastleLoadCourtyardScreenSection
 
-      .dsection Unsorted8A8E08Section
+      .dsection CastleRestoreCourtyardPalettesSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8A8F58 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/8F58
-      aDecompressionDMAEntry8A8F60 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 8A/8F60
+      .dsection CastleRunUnitCommandSection
 
-      .dsection Unsorted8A8F68Section
+      .dsection CastleStaffBlankTextSection
 
-      .dsection Unsorted8A8F8FSection
+      .dsection CastleUnitCommandDanceSection
 
-      .dsection Table8A9158Section
+      .dsection CastleDanceBlankTextSection
 
-      .dsection Unsorted8A918ASection
+      .dsection CastleUnitCommandGiveSection
 
-      .dsection Table8A91D7Section
+      .dsection CastleGiveBlankTextSection
 
-      .dsection Unsorted8A9209Section
+      .dsection CastleLoadWindowPaletteSection
 
-      .dsection Table8A9269Section
+      .dsection CastleStartStaffTargetSelectionSection
 
-      .dsection Unsorted8A929BSection
+      .dsection CastleUseStaffFromMapSection
 
-      .dsection Unsorted8A92AASection
+      .dsection CastleUseStaffFromMapRaisedSection
 
-      .dsection Unsorted8A92BBSection
+      .dsection CastleRefreshUnitsAfterMapActionSection
 
-      .dsection Unsorted8A92D6Section
+      .dsection CastleEnterFacilitySection
+      .dsection CastleTownFacilityBitsSection
+      .dsection LoadPortraitToBGPalette2Section
 
-      .dsection Unsorted8A9342Section
+      .dsection CastleFillVRAM2000Section
 
-      .dsection Unsorted8A9389Section
-      .dsection Table8A945ESection
-      .dsection Unsorted8A946ASection
+      .dsection CastleFillVRAM2400Section
 
-      .dsection Unsorted8A94B6Section
+      .dsection PushKeeperPortraitSpritesSection
 
-      .dsection Unsorted8A94E2Section
+      .dsection PushCourtyardPortraitSpritesSection
 
-      .dsection Unsorted8A950ESection
+      .dsection LoadKeeperPortraitSection
 
-      .dsection Unsorted8A956FSection
+      .dsection LoadUnitPortraitSection
 
-      .dsection Unsorted8A9750Section
+      .dsection LoadCourtyardPortraitSection
 
-      .dsection Unsorted8A9776Section
+      .dsection CastleOpenTownSection
 
-      .dsection Unsorted8A979CSection
+      .dsection CastleBlankMissingFacilitiesSection
 
-      .dsection Unsorted8A97C2Section
+      .dsection CastleTownFacilityBlankTextSection
 
-      .dsection Unsorted8A9858Section
-
-      .dsection Table8A9899Section
-
-      .dsection Table8A98ACSection
-      .dsection Table8A98B8Section
+      .dsection CastleTownFacilityButtonBitsSection
+      .dsection CastleTownFacilityButtonColumnSection
 
       .dsection Data8A98C4Section
 
-      .dsection Unsorted8A98D0Section
+      .dsection CastleDrawCourtyardUnitSpritesSection
 
-      .dsection Table8A99DBSection
-      .dsection Table8A9A0BSection
+      .dsection CastleGridCursorXSection
+      .dsection CastleGridCursorYSection
 
-      .dsection Unsorted8A9A56Section
+      .dsection CastleBuildCourtyardTablesSection
 
-      .dsection Table8A9AD4Section
-      .dsection Table8A9B04Section
-      .dsection Table8A9B94Section
-      .dsection Table8A9BC4Section
-      .dsection Table8A9BF4Section
-      .dsection Table8A9C24Section
+      .dsection CastleCourtyardSpotXSection
+      .dsection CastleCourtyardSpotYSection
+      .dsection CastleGridCharactersGen1Section
+      .dsection CastleGridCharactersGen2Section
+      .dsection CastleCourtyardSpotsGen1Section
+      .dsection CastleCourtyardSpotsGen2Section
 
-      .dsection Unsorted8A9C61Section
+      .dsection CastleCopyTownHDMATableSection
 
-      .dsection Unsorted8A9D22Section
+      .dsection CastleFadeSongIfChangingSection
 
-      .dsection Unsorted8A9D39Section
+      .dsection PlayCastleSongSection
 
       .dsection Data8A9D79Section
-      .dsection Table8A9DD5Section
-      .dsection Unsorted8A9DDDSection
+      .dsection CastleListRowYSection
+      .dsection AppendItemsFromListSection
 
-      .dsection Unsorted8A9DF2Section
+      .dsection BuildStockListSection
 
-      .dsection Unsorted8A9EB7Section
+      .dsection BuildEquippableWeaponListSection
 
-      .dsection Unsorted8A9FCCSection
+      .dsection BuildItemListInStateSection
 
-      .dsection Unsorted8AA013Section
+      .dsection MoveItemToSecondhandStockSection
 
-      .dsection Table8AA022Section
+      .dsection CastleItemDescTilemapEntrySection
 
-      .dsection Unsorted8AA02BSection
+      .dsection DrawItemDescriptionSection
 
-      .dsection Table8AA12ESection
+      .dsection ItemDescriptionBlankTextSection
 
-      .dsection Unsorted8AA142Section
-      .dsection Table8AA241Section
-      .dsection Unsorted8AA251Section
+      .dsection CastleDrawListItemIconsSection
+      .dsection CastleListItemIconTilesSection
+      .dsection LoadItemIconGraphicsSection
 
-      .dsection Unsorted8AA2EDSection
+      .dsection DrawCastleUnitMoneySection
 
-      .dsection Table8AA31CSection
+      .dsection CastleMoneyGTextSection
 
-      .dsection Unsorted8AA400Section
+      .dsection CastleStockListInputSection
 
       .dsection Data8AA4C6Section
 
-      .dsection Unsorted8AA4C8Section
+      .dsection CastleInventoryListInputSection
 
-      .dsection Unsorted8AA5FFSection
+      .dsection DrawWeaponRankTilesSection
 
       .dsection Data8AA629Section
 
-      .dsection Unsorted8AA63DSection
+      .dsection DrawStockItemDetailsSection
 
-      .dsection Unsorted8AA6CASection
+      .dsection DrawWeaponStatsSection
 
-      .dsection Table8AA7DDSection
+      .dsection WeaponStatsBlankTextSection
 
-      .dsection Unsorted8AA830Section
+      .dsection ClearItemDetailsWindowSection
 
-      .dsection Unsorted8AA83DSection
+      .dsection DrawInventoryItemDetailsSection
 
-      .dsection Table8AA8B5Section
+      .dsection InventoryItemDetailsBlankTextSection
 
-      .dsection Unsorted8AA8C9Section
+      .dsection PushStockItemTypeIconSection
 
       .dsection Data8AA917Section
 
-      .dsection Unsorted8AA928Section
+      .dsection PushInventoryItemTypeIconSection
 
       .dsection Data8AA975Section
 
-      .dsection Unsorted8AA97FSection
+      .dsection ClearBG3RectSection
 
-      .dsection Unsorted8AA9A6Section
+      .dsection CopyBG3RectFromTemplateSection
 
-      .dsection Unsorted8AA9CESection
+      .dsection DrawStockListSection
 
-      .dsection Unsorted8AAA3ASection
+      .dsection DrawStockListRowNameSection
 
-      .dsection Table8AAA78Section
+      .dsection StockListRowNameBlankTextSection
 
-      .dsection Unsorted8AAA8ASection
+      .dsection DrawStockListRowPriceSection
 
-      .dsection Table8AAB40Section
+      .dsection StockListRowDurabilityBlankTextSection
 
-      .dsection Unsorted8AAB48Section
+      .dsection DrawInventoryWithSellPricesSection
 
-      .dsection Unsorted8AABABSection
+      .dsection DrawInventoryRowNameSection
 
-      .dsection Table8AABEASection
+      .dsection InventoryRowNameBlankTextSection
 
-      .dsection Unsorted8AABFCSection
+      .dsection DrawInventoryRowSellPriceSection
 
-      .dsection Table8AACA0Section
+      .dsection InventoryRowDurabilityBlankTextSection
 
-      .dsection Unsorted8AACA8Section
+      .dsection DrawInventoryWithRepairCostsSection
 
-      .dsection Unsorted8AAD05Section
+      .dsection DrawInventoryRowRepairCostSection
 
-      .dsection Unsorted8AAD6FSection
+      .dsection DrawAuguryTopicsSection
 
-      .dsection Table8AADA7Section
+      .dsection AuguryTopicTextHandlersSection
 
-      .dsection Unsorted8AADADSection
+      .dsection GetAuguryTopicLoveTextSection
 
-      .dsection Unsorted8AADC3Section
+      .dsection GetAuguryTopicParentsTextSection
 
-      .dsection Table8AADCESection
+      .dsection AuguryTopicLoveTextSection
 
-      .dsection Unsorted8AADF4Section
+      .dsection DrawArenaOpponentSection
 
-      .dsection Table8AAEDASection
+      .dsection ArenaEnemyTextSection
 
-      .dsection Unsorted8AAF0ASection
+      .dsection PushCastleListSpritesSection
 
       .dsection Data8AB033Section
 
-      .dsection Unsorted8AB043Section
+      .dsection PushCastleHandCursorSection
 
       .dsection Data8AB07CSection
 
-      .dsection Unsorted8AB093Section
+      .dsection PushStockListScrollArrowsSection
 
+      .dsection DrawCastleNumberSection
 
-      .dsection Unsorted8AB111Section
+      .dsection CastleColorMathHDMAInfoSection
 
-      .dsection Table8AB230Section
-
-      .dsection Unsorted8AB23BSection
+      .dsection HDMACastleColorMath1Section
 
       .dsection DialoguePortraitSection
 
-      .dsection Unsorted8AB3FESection
+      .dsection DecompressCharacterPortraitSection
 
       .dsection GetDecompressedPortraitDataPointersSection
 
@@ -3694,79 +3595,65 @@
       aPortraitGraphicPointers .include "data/portraits/PortraitGraphicPointers.csv.asm" ; 8A/B4F9
       aPortraitPalettePointers .include "data/portraits/PortraitPalettePointers.csv.asm" ; 8A/B7E1
 
-      ; 8A/BAC9: unreferenced, two long pointers to aDialogueBackgroundPointers.
-      aUnused8ABAC9 .long aDialogueBackgroundPointers, aDialogueBackgroundPointers
-
       .dsection DialogueBackgroundsSection
 
-      .dsection Unsorted8ABB3ESection
+      .dsection LoadDialogueBackgroundSection
 
       .dsection ShopScreenSetupSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8ABE4B .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/BE4B
-      aDecompressionDMAEntry8ABE53 .structDecompressionDMAEntry acCastleShopAndArenaBG1Tilemap, $0800, $2800 ; 8A/BE53
-      aDecompressionDMAEntry8ABE5B .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/BE5B
+      .dsection LoadShopBackgroundSection
 
-      .dsection Unsorted8ABE63Section
-
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8ABF0F .structDecompressionDMAEntry g4bppcCastleArmoryBGTiles, $1000, $0000 ; 8A/BF0F
-      aDecompressionDMAEntry8ABF17 .structDecompressionDMAEntry g4bppcCastleRepairShopBGTiles, $1000, $0000 ; 8A/BF17
-      aDecompressionDMAEntry8ABF1F .structDecompressionDMAEntry g4bppcCastlePawnShopBGTiles, $1000, $0000 ; 8A/BF1F
-
-      .dsection Unsorted8ABF27Section
+      .dsection SetKeeperOptionListSection
 
       .dsection Data8ABFF3Section
 
-      .dsection Unsorted8AC003Section
+      .dsection DrawShopStartListSection
 
-      .dsection Table8AC08FSection
+      .dsection ShopStepHandlersSection
 
-      .dsection Unsorted8AC0B9Section
+      .dsection ShopGreetSection
 
-      .dsection Table8AC447Section
+      .dsection SecondhandShopOptionsTextSection
 
-      .dsection Unsorted8AC457Section
+      .dsection RepairShopStartSection
 
-      .dsection Unsorted8AC50DSection
-      .dsection Unsorted8AC524Section
-      .dsection Unsorted8AC68ESection
-      .dsection Unsorted8AC6BASection
-      .dsection Unsorted8AC785Section
-      .dsection Unsorted8AC81ESection
-      .dsection Unsorted8AC853Section
+      .dsection ShopOpenBuyListSection
+      .dsection ShopBuyListInputSection
+      .dsection ShopCompareMoneyWithPriceSection
+      .dsection ShopConfirmBuySection
+      .dsection ShopAfterBuySection
+      .dsection ShopBuyAgainSection
+      .dsection ShopLeaveBuyListSection
 
-      .dsection Unsorted8AC8A2Section
+      .dsection ShopOpenSellListSection
 
-      .dsection Unsorted8AC984Section
-      .dsection Unsorted8ACA53Section
+      .dsection ShopConfirmSellSection
+      .dsection ShopAfterSellSection
 
-      .dsection Unsorted8ACAD2Section
+      .dsection ShopOpenRepairListSection
 
-      .dsection Unsorted8ACBF2Section
+      .dsection ShopRepairCancelSection
 
-      .dsection Unsorted8ACC43Section
+      .dsection CheckItemHasFiftyKillsSection
 
-      .dsection Unsorted8ACC58Section
-      .dsection Unsorted8ACD53Section
-      .dsection Unsorted8ACD94Section
-      .dsection Unsorted8ACDABSection
+      .dsection ShopConfirmRepairSection
+      .dsection ShopAfterRepairSection
+      .dsection ShopOpenBelongingsListSection
+      .dsection ShopBelongingsListInputSection
 
-      .dsection Unsorted8ACE2BSection
+      .dsection ShopLeaveSection
 
-      .dsection Unsorted8ACE3ASection
+      .dsection ShopLeaveToCourtyardSection
 
+      .dsection SetupKeeperDialogueBoxSection
 
-      .dsection Unsorted8ACE50Section
+      .dsection ShopDialoguePointersSection
 
-      .dsection Unsorted8ACEB3Section
+      .dsection CastleOptionMenuInputSection
 
-      .dsection Unsorted8ACFBESection
+      .dsection ItemShopOptionXSection
 
-      .dsection Table8AD071Section
-
-      .dsection Unsorted8AD092Section
+      .dsection DrawYesNoSection
 
       dialogueShop00 .include "text/dialogue/Shops/Shop00.dialogue.txt" ; 8AD0D4
       dialogueShop18 .include "text/dialogue/Shops/Shop18.dialogue.txt" ; 8AD0E3
@@ -3848,142 +3735,116 @@
       dialogueShopClassChangeCannotGen2 .include "text/dialogue/Shops/ShopClassChangeCannotGen2.dialogue.txt" ; 8AD7FC
       dialogueShop10 .include "text/dialogue/Shops/Shop10.dialogue.txt" ; 8AD81A
 
-      .dsection Unsorted8AD81BSection
+      .dsection ConversationSceneSetupSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8AD952 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/D952
+      .dsection ResetFountainAnimationSection
 
-      .dsection Unsorted8AD95ASection
+      .dsection ConversationSceneStepSection
 
-      .dsection Unsorted8AD975Section
+      .dsection ConversationSceneStepHandlersSection
 
-      .dsection Unsorted8AD9FESection
+      .dsection ConversationOpenRightWindowSection
 
-      .dsection Unsorted8ADA16Section
+      .dsection ConversationLoadPortraitsSection
 
-      .dsection Unsorted8ADA83Section
+      .dsection PushConversationLeftFrameSection
 
-      .dsection Unsorted8ADB04Section
-
-      .dsection Unsorted8ADB37Section
+      .dsection PushConversationRightFrameSection
 
       .dsection DisplayDialogueAPressArrowsSection
 
-      .dsection Table8ADB9FSection
+      .dsection ConversationData8ADB9FUnusedSection
 
-      .dsection Unsorted8ADBBDSection
+      .dsection ConversationStartSection
 
-      .dsection Unsorted8ADBFFSection
+      .dsection ConversationWaitForTextSection
 
-      .dsection Unsorted8ADC25Section
+      .dsection ConversationEndSection
 
-      .dsection Unsorted8ADCDDSection
+      .dsection ConversationWaitSection
 
-      .dsection Unsorted8ADCDESection
+      .dsection ConversationFadeOutSection
 
-      .dsection Unsorted8ADCF9Section
+      .dsection ConversationSetupSlotsSection
 
+      .dsection AnimateConversationBackgroundSection
 
-      .dsection Unsorted8AE05ESection
-
-      .dsection Table8AE0C7Section
+      .dsection CastleFountainAnimFramesSection
 
       .dsection ProcScript8AE147Section
 
-      .dsection Unsorted8AE14FSection
+      .dsection ProcConversationFadeInLeftPortraitInitSection
 
       .dsection ProcScript8AE197Section
 
-      .dsection Unsorted8AE199Section
+      .dsection ProcConversationFadeInRightPortraitSection
 
       .dsection ProcConversationFadeInRightPortraitInitSection
 
-      .dsection Unsorted8AE1C1Section
+      .dsection ProcConversationFadeInRightPortraitCycleSection
 
-      .dsection Unsorted8AE1EBSection
+      .dsection ProcConversationFadeOutLeftPortraitSection
 
-      .dsection Unsorted8AE1F3Section
+      .dsection ProcConversationFadeOutLeftPortraitInitSection
 
       .dsection ProcScript8AE243Section
 
-      .dsection Unsorted8AE245Section
+      .dsection ProcConversationFadeOutRightPortraitSection
 
-      .dsection Unsorted8AE29FSection
+      .dsection FreeConversationPortraitFadeProcsSection
 
-      .dsection Unsorted8AE2F8Section
+      .dsection ArenaScreenSetupSection
 
       .dsection ArenaMenuSection
 
-      .dsection Unsorted8AECEFSection
+      .dsection ClassChangeScreenSetupSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/EE89
-      aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry g4bppcClassChangeBGTiles, $1000, $0000 ; 8A/EE91
-      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundClassChange, $2000, $1000 ; 8A/EE99
-      aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry acClassChangeBGTilemap, $0800, $2800 ; 8A/EEA1
-      aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/EEA9
+      .dsection ClassChangeScreenStepSection
 
-      .dsection Unsorted8AEEB1Section
+      .dsection ClassChangeStepHandlersSection
 
-      .dsection Table8AEEF2Section
+      .dsection ClassChangeGreetSection
 
-      .dsection Unsorted8AEEFESection
+      .dsection ClassChangeConfirmSection
+      .dsection ClassChangeFadeOutAndPromoteSection
 
-
-      .dsection Unsorted8AF048Section
-      .dsection Unsorted8AF0B4Section
-
-      .dsection Unsorted8AF0D7Section
+      .dsection ClassChangeLeaveSection
 
       .dsection DepotScreenSetupSection
 
+      .dsection DepotScreenStepSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8AF263 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/F263
-      aDecompressionDMAEntry8AF26B .structDecompressionDMAEntry g4bppcDepotBGTiles, $1000, $0000 ; 8A/F26B
-      aDecompressionDMAEntry8AF273 .structDecompressionDMAEntry acCastleShopAndArenaBG1Tilemap, $0800, $2800 ; 8A/F273
-      aDecompressionDMAEntry8AF27B .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/F27B
+      .dsection DepotStepHandlersSection
 
-      .dsection Unsorted8AF283Section
+      .dsection DepotGreetSection
 
-      .dsection Table8AF2C7Section
+      .dsection DepotOptionsTextSection
 
-      .dsection Unsorted8AF2E1Section
+      .dsection DepotOpenWithdrawListSection
+      .dsection DepotWithdrawListInputSection
+      .dsection DepotConfirmWithdrawSection
+      .dsection DepotAfterWithdrawSection
+      .dsection DepotLeaveWithdrawListSection
+      .dsection DepotOpenDepositListSection
+      .dsection DepotDepositListInputSection
+      .dsection DepotConfirmDepositSection
+      .dsection DepotAfterDepositSection
 
-      .dsection Table8AF475Section
-
-      .dsection Unsorted8AF4A1Section
-      .dsection Unsorted8AF4B8Section
-      .dsection Unsorted8AF556Section
-      .dsection Unsorted8AF634Section
-      .dsection Unsorted8AF6A1Section
-      .dsection Unsorted8AF6D5Section
-      .dsection Unsorted8AF6ECSection
-      .dsection Unsorted8AF791Section
-      .dsection Unsorted8AF818Section
-
-      .dsection Unsorted8AF885Section
+      .dsection DepotLeaveSection
 
       .dsection AuguryScreenSetupSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8AFA0C .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/FA0C
-      aDecompressionDMAEntry8AFA14 .structDecompressionDMAEntry g4bppcAuguryBG1Tiles, $1000, $0000 ; 8A/FA14
-      aDecompressionDMAEntry8AFA1C .structDecompressionDMAEntry g4bppcAuguryBG2Tiles, $2000, $1000 ; 8A/FA1C
-      aDecompressionDMAEntry8AFA24 .structDecompressionDMAEntry acAuguryBGTilemap, $0800, $2800 ; 8A/FA24
-      aDecompressionDMAEntry8AFA2C .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/FA2C
+      .dsection AuguryScreenStepSection
 
-      .dsection Unsorted8AFA34Section
+      .dsection AuguryStepHandlersSection
 
-      .dsection Table8AFA6FSection
+      .dsection AuguryGreetSection
 
-      .dsection Unsorted8AFA7FSection
+      .dsection LoadKeeperPortraitDataSection
 
-      .dsection Unsorted8AFC52Section
+      .dsection AuguryGetLovePointsSection
 
-      .dsection Unsorted8AFC78Section
-
-      .dsection Unsorted8AFCD5Section
+      .dsection AuguryAskAgainSection
 
       .fill $8A8000 + $8000 - *, $00
 
@@ -3992,17 +3853,17 @@
     * = $0B8000
     .logical $8B8000
 
-      .dsection Unsorted8B8000Section
+      .dsection WorldMapRunFrameSection
 
-      .dsection Unsorted8B806DSection
+      .dsection UnusedWorldMapTestFrameSection
 
-      .dsection Unsorted8B80CBSection
+      .dsection StartEpilogueCreditsSection
 
       .dsection WorldMapSpriteColorsSection
 
       .dsection Unreferenced8B812ASection
 
-      .dsection Unsorted8B818DSection
+      .dsection UnusedWorldMapTestShowPortraitsSection
 
       .dsection Unreferenced8B81ECSection
 
@@ -4016,16 +3877,15 @@
 
       .dsection WorldMapMarkers1Section
 
-      .dsection Unsorted8B87E5Section
+      .dsection UnusedWorldMapTestButtonsSection
 
       .dsection WorldMapHighlightCodeSection
 
       ; 8b8a58
 
-
       .dsection ClearHighlightWorldMapPartSection
 
-      .dsection Unsorted8B8AABSection
+      .dsection UnusedWorldMapTestMoveCursorSection
 
       .dsection WorldMapMarkerShadowFadeInSection
 
@@ -4041,33 +3901,33 @@
 
       .dsection ProcFadeInWorldMapPortraitSlotCodeSection
 
-      .dsection Table8B911FSection
+      .dsection WorldMapLayersHDMAInfoSection
 
-      .dsection Unsorted8B912ASection
+      .dsection WorldMapBuildLayersHDMATableSection
 
-      .dsection Unsorted8B91F6Section
+      .dsection InitWorldMapDialogueSlotSection
 
-      .dsection Table8B9449Section
+      .dsection WorldMapTopIRQInfoSection
 
-      .dsection Unsorted8B9451Section
+      .dsection WorldMapTopIRQSection
 
-      .dsection Unsorted8B9458Section
+      .dsection WorldMapTopEdgeFadeInSection
 
-      .dsection Table8B9594Section
+      .dsection WorldMapBottomIRQInfoSection
 
-      .dsection Unsorted8B959CSection
+      .dsection WorldMapBottomIRQSection
 
-      .dsection Unsorted8B95A3Section
+      .dsection WorldMapBottomEdgeFadeOutSection
 
-      .dsection Unsorted8B96CFSection
+      .dsection WorldMapUpkeepSection
 
-      .dsection Table8B9726Section
+      .dsection WorldMapStepHandlersSection
 
-      .dsection Unsorted8B972CSection
+      .dsection WorldMapStepRunSection
 
-      .dsection Unsorted8B973CSection
+      .dsection WorldMapStepFadeOutSection
 
-      .dsection Unsorted8B9759Section
+      .dsection WorldMapStepFadeInSection
 
       .dsection WorldMapMarkers2Section
 
@@ -4076,171 +3936,169 @@
 
       .dsection OpeningCreditsHScrollHDMASection
 
-      .dsection Unsorted8BA0B4Section
+      .dsection OpeningCreditsHScrollHDMANoOpSection
 
-      .dsection Unsorted8BA7CBSection
+      .dsection UnusedGameState13Section
 
+      .dsection UnitWindowShowSection
 
-      .dsection Unsorted8BA7F2Section
+      .dsection UnitWindowPageTurnInputHandlersSection
 
-      .dsection Table8BA845Section
+      .dsection UnitWindowHandleInputSection
 
-      .dsection Unsorted8BA851Section
-
-      .dsection Unsorted8BAC7FSection
+      .dsection UnitWindowHandlePage0TurnSection
 
       .dsection UnitWindowPageTurnHandlersSection
 
-      .dsection Unsorted8BADF1Section
+      .dsection UnitWindowDrawPageSection
 
       .dsection UnitWindowPageDrawersSection
 
-      .dsection Unsorted8BAE1ESection
+      .dsection UnitWindowDrawPage0Section
 
       .dsection UnitWindowDrawPagesSection
 
-      .dsection Unsorted8BB45DSection
+      .dsection UnitWindowFillBG3BufferSection
 
-      .dsection Unsorted8BB469Section
+      .dsection UnitWindowRenderPageSpritesSection
 
       .dsection Data8BB4C7Section
 
-      .dsection Unsorted8BB50DSection
+      .dsection UnitWindowRenderWeaponRankSortIconSection
 
       .dsection Data8BB53BSection
 
-      .dsection Unsorted8BB54FSection
+      .dsection UnitWindowRenderUnitSwapCursorsSection
 
-      .dsection Unsorted8BB596Section
+      .dsection UnitWindowMoveToLastUnitSection
 
       .dsection Data8BB61BSection
 
-      .dsection Unsorted8BB63BSection
+      .dsection UnitWindowMoveToNextPageSection
 
       .dsection Data8BB70BSection
 
-      .dsection Unsorted8BB71FSection
+      .dsection UnitWindowMoveToFirstUnitSection
 
       .dsection Data8BB811Section
 
-      .dsection Unsorted8BB871Section
+      .dsection UnitWindowRenderWeaponRankIconsSection
 
-
-      .dsection Unsorted8BB8B6Section
+      .dsection UnitWindowCopyLineHighlightColorsSection
 
       .dsection Data8BB9FCSection
 
-      .dsection Unsorted8BBAA4Section
+      .dsection UnitWindowGetUnitSpriteInfosSection
 
-      .dsection Unsorted8BBAE9Section
+      .dsection UnitWindowRenderSpritesSection
 
       .dsection Data8BBD40Section
 
-      .dsection Unsorted8BBDA7Section
+      .dsection UnitWindowGetCurrentLineUnitSection
 
       .dsection UnitWindowDrawWeaponRankSection
 
-      .dsection Unsorted8BBE68Section
+      .dsection CopyItemIconSection
 
       aItemIconOffsets .binclude "data/item/ItemIconOffsets.asm" ; 8B/BED5
 
-      .dsection Table8BBFEDSection
+      .dsection ItemIconBlankAndVRAMBasesSection
 
-      .dsection Unsorted8BC030Section
+      .dsection UnitWindowCopyWeaponRankIconSection
 
-      .dsection Table8BC08FSection
+      .dsection UnitWindowWeaponRankIconPointersSection
 
       .dsection Data8BC0B0Section
 
-      .dsection Unsorted8BC0F0Section
+      .dsection UnitWindowRenderSortSelectorCursorSection
 
       .dsection Data8BC127Section
 
-      .dsection Unsorted8BC21FSection
+      .dsection UnitWindowHandleSortSelectionSection
 
       .dsection Data8BC385Section
 
-      .dsection Unsorted8BC391Section
+      .dsection UnitWindowHandleUnitSwapSection
 
-      .dsection Unsorted8BC43ASection
+      .dsection UnitWindowCopySpritePalette1Section
 
-      .dsection Table8BC457Section
+      .dsection UnitWindowSpritePaletteOffsetsSection
 
-      .dsection Unsorted8BC467Section
+      .dsection UnitWindowCopySpritePalette2Section
 
-      .dsection Unsorted8BC484Section
+      .dsection UnitWindowGetEquippedWeaponIDSection
 
-      .dsection Table8BC518Section
+      .dsection UnitWindowPageSortTypePointersSection
 
-      .dsection Unsorted8BC52ASection
+      .dsection UnitWindowSetSortDescendingSection
 
-      .dsection Unsorted8BC5C6Section
+      .dsection UnitWindowDrawSortLabelSection
 
-      .dsection Table8BC61CSection
+      .dsection UnitWindowSortLabelDrawers8BC61CSection
 
-      .dsection Unsorted8BC668Section
+      .dsection UnitWindowDrawJoinOrderSortLabelSection
 
       .dsection UnitWindowSortLabelDrawersSection
 
-      .dsection Table8BC96ASection
+      .dsection UnitWindowSkillsSortLabelTextSection
 
       .dsection UnitWindowSortLabelDrawers2Section
 
-      .dsection Unsorted8BC9B6Section
+      .dsection UnitWindowSwapUnitsSection
 
-      .dsection Unsorted8BCA1ASection
+      .dsection UnitWindowGetSortScoresSection
 
-      .dsection Table8BCA31Section
+      .dsection UnitWindowSortScoreGetters8BCA31Section
 
-      .dsection Unsorted8BCA7FSection
+      .dsection UnitWindowGetJoinOrderSortScoresSection
 
-      .dsection Unsorted8BCAB4Section
+      .dsection UnitWindowGetSavedOrderSortScoresSection
 
       .dsection UnitWindowLevelSortScoresSection
 
       .dsection UnitWindowSortScoreGettersSection
 
-      .dsection Unsorted8BCD20Section
+      .dsection UnitWindowSwapSortSlotsSection
 
-      .dsection Unsorted8BCD89Section
+      .dsection UnitWindowGetPromotionFlagsAndWeaponsSection
 
       .dsection JoinOrderSection
 
-      .dsection Unsorted8BCE29Section
+      .dsection UnitWindowSaveListOrderSection
 
-      .dsection Unsorted8BCE71Section
+      .dsection ResetUnitWindowSettingsSection
 
       .dsection Data8BCECASection
 
       .dsection DataWindowShowSection
 
-      .dsection Unsorted8BD794Section
+      .dsection SkillWindowShowSection
 
-      .dsection Table8BD7B9Section
+      .dsection SkillWindowStepHandlersSection
 
-      .dsection Unsorted8BD7BDSection
+      .dsection SkillWindowHandleInputSection
 
-      .dsection Unsorted8BD8FESection
+      .dsection SkillWindowRenderSection
 
-      .dsection Unsorted8BD90BSection
+      .dsection SkillWindowCopyVisibleRowsSection
 
       .dsection Data8BDA9CSection
 
-      .dsection Unsorted8BDAB4Section
+      .dsection SkillWindowRenderBG2SpritesSection
 
-      .dsection Unsorted8BDB54Section
+      .dsection SkillWindowRenderSkillIconSection
 
       .dsection Data8BDB7ESection
 
-      .dsection Unsorted8BDBA2Section
-      .dsection Table8BDC22Section
-      .dsection Unsorted8BDC49Section
+      .dsection SkillWindowRenderCursorSection
+      .dsection SkillWindowScrollArrowSpritesSection
+      .dsection CollectUnitsWithSelectedSkillSection
 
-      .dsection Unsorted8BDC92Section
+      .dsection SkillWindowMoveUpSection
 
       .dsection Data8BDE9DSection
 
-      .dsection Unsorted8BDECDSection
+      .dsection SkillWindowCopyVisibleHoldersSection
 
       .dsection Data8BDFBFSection
 
@@ -4276,109 +4134,61 @@
 
       .dsection BGPalettes8CD000Section
 
-      .dsection Table8CDC00Section
+      .dsection WorldMapPartialBGPalettesSection
 
-      .dsection Table8CDC30Section
+      .dsection WorldMapMarkerShadowBluePaletteSection
 
-      .dsection Table8CDE00Section
+      .dsection WorldMapSpriteColorCycle1Section
 
       .dsection Data8CDE20Section
 
       .dsection BackgroundPalettes8CDF00Section
-
-    .here
-
-    * = $0CE000
-    .logical $8CE000
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE000Section
-
-    .here
-
-    * = $0CE100
-    .logical $8CE100
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE100Section
-
-    .here
-
-    * = $0CE200
-    .logical $8CE200
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE200Section
-
-    .here
-
-    * = $0CE300
-    .logical $8CE300
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE300Section
-
-    .here
-
-    * = $0CE400
-    .logical $8CE400
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE400Section
-
-    .here
-
-    * = $0CE500
-    .logical $8CE500
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE500Section
-
-    .here
-
-    * = $0CE600
-    .logical $8CE600
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE600Section
-
-    .here
-
-    * = $0CE700
-    .logical $8CE700
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE700Section
-
-    .here
-
-    * = $0CE800
-    .logical $8CE800
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE800Section
-
-    .here
-
-    * = $0CE900
-    .logical $8CE900
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CE900Section
-
-    .here
-
-    * = $0CEA00
-    .logical $8CEA00
+      .fill 32, $00
 
       .dsection BackgroundPalettes8CEA00Section
-
-    .here
-
-    * = $0CEB00
-    .logical $8CEB00
+      .fill 32, $00
 
       .dsection BGPalettes8CEB00Section
 
-      .dsection Unsorted8CED00Section
+      .dsection StartLoverHomeCastleConversationSection
 
-      .dsection Unsorted8CED4FSection
+      .dsection BuildLoverHomeCastleConversationSection
 
-      .dsection Unsorted8CEDD0Section
+      .dsection TryStartLoverHomeCastleConversationSection
 
       .dsection Data8CEEE8Section
 
-      .dsection Unsorted8CF06ASection
+      .dsection CopyLoverHomeCastleLineSection
 
       .dsection LoverHomeCastleASMCSection
 
@@ -4512,6 +4322,9 @@
       dialogueLoverHomeCastleUnit2NameSama .include "text/dialogue/LoverHomeCastle/Unit2NameSama.dialogue.txt" ; 8CFFBB
       dialogueLoverHomeCastleUnit1Name .include "text/dialogue/LoverHomeCastle/Unit1Name.dialogue.txt" ; 8CFFC1
       dialogueLoverHomeCastleUnit2Name .include "text/dialogue/LoverHomeCastle/Unit2Name.dialogue.txt" ; 8CFFC4
+
+      .fill 57, $00
+
 
     .here
 
@@ -4858,8 +4671,8 @@
 
       ; 8d9b65
 
-      .dsection Table8D9B65Section
-      .dsection Table8D9BF6Section
+      .dsection SaveMenuRowTextsSection
+      .dsection ChapterTitleTextsSection
       .dsection JugdralHistoryTextSection
       .dsection OpeningDialogueSection
 
@@ -4870,92 +4683,80 @@
 
       ; 8da06a
 
-      .dsection Unsorted8DA06ASection
+      .dsection EpilogueUpkeepSection
 
-      .dsection Unsorted8DA0C6Section
+      .dsection EpilogueStepRoutinesSection
 
-      .dsection Unsorted8DA288Section
+      .dsection StartEpilogueSection
 
-      .dsection Unsorted8DA2AASection
-      .dsection Unsorted8DA34DSection
+      .dsection ScrollEpilogueCreditsSection
+      .dsection DrawEpilogueCreditsSpritesSection
 
-      .dsection Unsorted8DA372Section
+      .dsection EpilogueDebugButtonsUnusedSection
 
-      .dsection Unsorted8DA3DESection
+      .dsection SetUpEpilogueTextWindowSection
 
-      .dsection Unsorted8DA449Section
+      .dsection SetUpEpilogueTextWindowUnusedSection
 
-      .dsection Unsorted8DA4B3Section
+      .dsection EpilogueCreditsLayerHDMAInitSection
 
-      .dsection Table8DA502Section
+      .dsection EpilogueCreditsLayerHDMACodeSection
 
-      .dsection Unsorted8DA50FSection
+      .dsection EpilogueCreditsWaveHDMACycleSection
 
-
-      .dsection Unsorted8DA624Section
+      .dsection DrawEpilogueCreditsSpriteSection
 
       .dsection Data8DA737Section
 
-      .dsection Unsorted8DA755Section
+      .dsection InitEpilogueCreditsSpritesSection
 
-      .dsection Unsorted8DA810Section
+      .dsection ASMCSetOpeningMapChapter9Section
 
-      .dsection Unsorted8DAA96Section
+      .dsection ProcOpeningSkyScrollSection
 
-      .dsection Unsorted8DAA9ESection
+      .dsection ProcOpeningSkyScroll8DAA9ESection
 
-      .dsection Unsorted8DAAFBSection
+      .dsection ProcOpeningSkyScrollCodeSection
 
       .dsection OpeningCreditsSection
 
-      .dsection Unsorted8DAD73Section
+      .dsection ScrollEpilogueRecordTextSection
 
-      .dsection Unsorted8DAD9ESection
+      .dsection EpilogueDebugButtons2UnusedSection
 
-      .dsection Table8DADFASection
+      .dsection EpilogueRecordsBrightnessHDMAInfoSection
 
-      .dsection Unsorted8DAE85Section
+      .dsection EpilogueRecordLayerHDMACycleSection
 
+      .dsection SetUpEpilogueRecordTextWindowSection
+      .dsection ShowEpilogueEndScreenSection
 
-      .dsection Unsorted8DAEC2Section
-      .dsection Unsorted8DAF33Section
+      .dsection ShowEpilogueRankingScreenSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8DAF95 .structDecompressionDMAEntry g4bppcEpilogueEndScreenTiles, $3000, $0000 ; 8D/AF95
-      aDecompressionDMAEntry8DAF9D .structDecompressionDMAEntry acEpilogueEndScreenTilemap, $0800, $5800 ; 8D/AF9D
+      .dsection DrawRankingScreenRankingsSection
+      .dsection DrawRankingScreenHoursSection
+      .dsection DrawRankingScreenMinutesSection
+      .dsection DrawRankingScreenCompletionsSection
+      .dsection DrawRankingScreenLettersSection
+      .dsection CheckEpilogueSecretCodeSection
 
-      .dsection Unsorted8DAFA5Section
+      .dsection EpilogueSecretCodeSection
 
-      ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry8DB056 .structDecompressionDMAEntry acEpilogueRankingBG1Tilemap, $0800, $5800 ; 8D/B056
-      aDecompressionDMAEntry8DB05E .structDecompressionDMAEntry acEpilogueRankingBG2Tilemap, $0800, $6800 ; 8D/B05E
-      aDecompressionDMAEntry8DB066 .structDecompressionDMAEntry gcRankingScreenTiles, $1000, $4000 ; 8D/B066
+      .dsection NextEpilogueCharacterEndingSection
 
-      .dsection Unsorted8DB06ESection
-      .dsection Unsorted8DB150Section
-      .dsection Unsorted8DB1DDSection
-      .dsection Unsorted8DB217Section
-      .dsection Unsorted8DB252Section
-      .dsection Unsorted8DB276Section
+      .dsection CheckEpilogueQuitButtonSection
 
-      .dsection Unsorted8DB2B8Section
-
-      .dsection Unsorted8DB4F1Section
-
-      .dsection Unsorted8DB4F6Section
-
-
-      .dsection Unsorted8DB53ASection
+      .dsection StartEpilogueCharacterSceneSection
 
       .dsection Data8DB5C8Section
 
       .dsection EpilogueDialogueWorldMapCodeSection
 
-      .dsection Table8DC964Section
+      .dsection dialogueEpilogueCredits8DC964Section
 
       .dsection Data8DCF88Section
 
-      .dsection Unsorted8DD041Section
+      .dsection OpeningCreditsVScrollHDMANoOpSection
 
       dialogueChapterEpilogueWorldMapSilesse .include "text/dialogue/EpilogueWorldMap/WorldMapSilesse.dialogue.txt" ; 8DDCA7
       dialogueChapterEpilogueWorldMap_Silesse_NoInheritors .include "text/dialogue/EpilogueWorldMap/WorldMap_Silesse_NoInheritors.dialogue.txt" ; 8DDCB3
@@ -5463,7 +5264,7 @@
     * = $0F8000
     .logical $8F8000
 
-      .dsection Unsorted8F8000Section
+      .dsection CodeChecksumsSection
 
       dialogueChapter02Opening1 .include "text/dialogue/Chapter02/Opening1.dialogue.txt" ; 8F806B
       dialogueChapter02Opening2 .include "text/dialogue/Chapter02/Opening2.dialogue.txt" ; 8F823F
@@ -5831,7 +5632,7 @@
 
       .dsection Data90E8CESection
 
-      .dsection Unsorted90EBCASection
+      .dsection ASMCTestDemoAllowSkipFlagSection
 
     .here
 
@@ -5840,11 +5641,11 @@
 
       .dsection DialogueEngineSection
 
-      .dsection Unsorted91A3ABSection
+      .dsection ResetEventEngineSection
 
-      .dsection Unsorted91A3D9Section
+      .dsection EventEngineMainLoopSection
 
-      .dsection Unsorted91A3DESection
+      .dsection RunEventEngineStateSection
 
       .dsection Data91A405Section
 
@@ -5855,62 +5656,59 @@
 
       ; 91a7bc
 
-      .dsection Unsorted91A7BCSection
+      .dsection FillAndUploadBG3TilemapSection
 
-      .dsection Unsorted91A7DFSection
+      .dsection EnableMapMenuLayerFlagsSection
 
       .dsection Unreferenced91A7EASection
 
-      .dsection Unsorted91A80DSection
+      .dsection PlanQueuedMapSpriteMovementSection
 
       .dsection DialogueEventCommandSection
 
-
-      .dsection Unsorted91A928Section
+      .dsection SetupConversationDialogueBoxesSection
 
       .dsection DialogueFontAndColorsSection
 
-      .dsection Unsorted91A9BBSection
+      .dsection InitEventSimpleMapMenuFrameSection
 
+      .dsection SplitNumberIntoFiveDigitsSection
 
-      .dsection Unsorted91AA15Section
+      .dsection DrawFiveDigitNumberSection
 
-      .dsection Unsorted91AA6FSection
+      .dsection DrawBlankDigitSection
 
-      .dsection Unsorted91AAE2Section
+      .dsection BuildChapterTitleStringSection
 
-      .dsection Unsorted91AB91Section
+      .dsection BuildSaveSlotChapterStringSection
 
-      .dsection Unsorted91ABEESection
+      .dsection GetSaveSlotChapterTitleSection
 
-      .dsection Unsorted91AC79Section
+      .dsection CopyChapterNumberTextSection
 
-      .dsection Unsorted91AC96Section
-
-      .dsection Unsorted91ACE2Section
+      .dsection GetChapterTitleTextSection
 
       .dsection DeathQuoteSection
 
       .dsection ASMCDialogueSection
 
-      .dsection Unsorted91B131Section
+      .dsection ASMCCloseDialogueSection
 
-      .dsection Unsorted91B164Section
+      .dsection ScrollJugdralHistorySection
 
-      .dsection Table91B1E3Section
+      .dsection JugdralHistoryLineStepsSection
 
-
-      .dsection Unsorted91B1FCSection
+      .dsection JugdralHistoryDrawEntrySection
 
       .dsection Data91B2D3Section
 
-      .dsection Unsorted91B2E5Section
-      .dsection Table91B34CSection
+      .dsection JugdralHistoryStartTextSection
+      .dsection JugdralHistoryEntriesSection
 
-      .dsection Unsorted91B496Section
-      .dsection Table91B546Section
+      .dsection JugdralHistoryClearLineSection
+      .dsection JugdralHistoryBG2RowsSection
 
-      .dsection Unsorted91BA46Section
+      .dsection SetJugdralHistoryTextColorsSection
 
       .dsection Data91BA6CSection
 
@@ -5919,7 +5717,6 @@
       ; 91bd42
 
       .dsection Unreferenced91BD42Section
-
 
       .dsection ASMCStatUpDisplaySection
 
@@ -5953,168 +5750,165 @@
 
       ; 91d616
 
-      .dsection Unsorted91D616Section
+      .dsection SaveMenuUpkeepSection
 
-      .dsection Table91D62ASection
+      .dsection SaveMenuStepsSection
 
-      .dsection Unsorted91D682Section
+      .dsection SaveMenuUnusedStepSection
 
-      .dsection Unsorted91D683Section
+      .dsection SaveMenuStartNewGameSection
 
-      .dsection Unsorted91D69BSection
+      .dsection StartChapterWorldMapEventsSection
 
-      .dsection Unsorted91D6BBSection
+      .dsection SaveMenuIdleSection
 
       .dsection ChapterIntroStepsSection
 
-      .dsection Unsorted91D6E3Section
+      .dsection ChapterIntroSkipSection
 
-      .dsection Unsorted91D6ECSection
+      .dsection LoadSaveMenuScreenSection
 
       g2bppBlankTile .binary "gfx/ui/BlankTile.2bpp" ; 91D7E8
 
-      .dsection Unsorted91D7F8Section
+      .dsection SaveMenuCommandsStubSection
 
-      .dsection Unsorted91D7F9Section
+      .dsection SaveMenuBuildCommandRowsSection
 
-      .dsection Unsorted91D839Section
+      .dsection SaveMenuAddRowSection
 
-      .dsection Unsorted91D844Section
+      .dsection SaveMenuFileCommandsSection
 
       .dsection Data91D899Section
 
-      .dsection Unsorted91D8A0Section
+      .dsection SaveMenuSaveSlotsSection
 
-      .dsection Unsorted91D90DSection
+      .dsection SaveMenuSaveCancelledFadeOutSection
 
-      .dsection Unsorted91D921Section
+      .dsection SaveMenuLeaveMapSaveSection
 
-      .dsection Unsorted91D945Section
-      .dsection Unsorted91D995Section
+      .dsection SaveMenuLoadSlotsSection
+      .dsection SaveMenuLoadedFadeOutSection
 
       .dsection SaveFileSection
 
-      .dsection Unsorted91D9FASection
+      .dsection SaveMenuCopySlotsSection
 
-      .dsection Unsorted91DA25Section
+      .dsection SaveMenuEraseSlotsSection
 
-      .dsection Unsorted91DA64Section
+      .dsection SaveMenuSlotInputSection
 
-      .dsection Unsorted91DB17Section
+      .dsection SaveMenuDrawConfirmWindowSection
 
-      .dsection Unsorted91DB6DSection
+      .dsection SaveMenuBuildSlotRowsSection
 
-      .dsection Unsorted91DBA8Section
+      .dsection SaveMenuStartLoadedMapSection
 
-      .dsection Unsorted91DBD0Section
+      .dsection SaveMenuReturnToMapSection
 
-      .dsection Unsorted91DBEESection
+      .dsection SaveMenuDrawRowsSection
 
-      .dsection Unsorted91DC13Section
-      .dsection Unsorted91DC1ASection
-      .dsection Unsorted91DC37Section
-      .dsection Unsorted91DC50Section
+      .dsection SaveMenuRedrawRowsSection
+      .dsection SaveMenuRedrawSlotTextSection
+      .dsection SaveMenuWaitSlotTextSection
+      .dsection SaveMenuRedrawSlotDetailsSection
 
-      .dsection Unsorted91DC6DSection
+      .dsection SaveMenuWaitSlotDetailsSection
 
-      .dsection Unsorted91DC92Section
+      .dsection SaveMenuStartDrawingRowsSection
 
-      .dsection Unsorted91DCDESection
+      .dsection SaveMenuScrollBackgroundSection
 
-      .dsection Unsorted91DCF8Section
+      .dsection SaveMenuDrawRowTilesSection
 
-      .dsection Unsorted91DD9BSection
+      .dsection SaveMenuRenderAllRowTextsSection
 
-      .dsection Table91DDD5Section
+      .dsection SaveMenuRowTextTilesSection
 
-      .dsection Unsorted91DDF1Section
+      .dsection SaveMenuRenderRowTextSection
 
-      .dsection Unsorted91DE4CSection
+      .dsection SaveMenuEmptyTextSection
 
-      .dsection Table91DE9FSection
+      .dsection SaveMenuEmptyTitleTextSection
 
-      .dsection Unsorted91DEA1Section
+      .dsection SaveMenuClearSlotTextTilesSection
 
       .dsection Unreferenced91DF08Section
 
-      .dsection Unsorted91DF32Section
+      .dsection StartTextToTilesSection
 
-      .dsection Unsorted91DF6DSection
+      .dsection SetSaveMenuScreenRegistersSection
 
+      .dsection CreateSaveMenuHDMASection
 
-      .dsection Unsorted91E07ASection
+      .dsection SaveMenuHDMAInfoSection
 
-      .dsection Table91E089Section
+      .dsection InitSaveMenuHDMASection
 
-      .dsection Unsorted91E095Section
+      .dsection SaveMenuHDMACodeSection
 
-      .dsection Table91E09ESection
+      .dsection SaveMenuMoveCommandCursorSection
 
-      .dsection Unsorted91E275Section
+      .dsection SaveMenuMoveSlotCursorSection
 
-      .dsection Unsorted91E2AASection
+      .dsection SaveMenuRowSpritesSection
 
-      .dsection Table91E397Section
+      .dsection SaveMenuDrawConfirmSpritesSection
 
-      .dsection Unsorted91E405Section
-
-
-      .dsection Table91E4B3Section
+      .dsection SaveMenuHandFramesSection
 
       .dsection Data91E4F3Section
 
-      .dsection Unsorted91E52BSection
+      .dsection ResetEnginesForSaveMenuSection
 
-      .dsection Unsorted91E55ASection
+      .dsection ReturnToFileMenuSection
 
-      .dsection Unsorted91E583Section
+      .dsection FileMenuReloadRegistersSection
 
       .dsection JugdralHistoryStepsSection
 
-      .dsection Unsorted91E780Section
+      .dsection JugdralHistoryHoldSection
 
-      .dsection Unsorted91E793Section
+      .dsection LoadAntiTamperScreenAgainSection
 
+      .dsection ClearRAMAndResetHardwareSection
 
-      .dsection Unsorted91E915Section
+      .dsection FillSaveSlotDataBuffersSection
 
-      .dsection Unsorted91E92ESection
+      .dsection CheckSaveSlotEmptySection
 
-      .dsection Unsorted91E932Section
-
-      .dsection Unsorted91E940Section
+      .dsection CountUsedSaveSlotsSection
 
       .dsection SaveSlotSection
 
-      .dsection Unsorted91F748Section
+      .dsection ChapterIntroFadeInStepSection
 
-      .dsection Unsorted91F759Section
+      .dsection ChapterIntroFadeInPhasesSection
 
-      .dsection Unsorted91F813Section
+      .dsection ChapterIntroFadePaletteInSection
 
       .dsection Data91F872Section
 
-      .dsection Unsorted91F88ASection
+      .dsection ChapterIntroFadeOutStepSection
 
-      .dsection Table91F89BSection
+      .dsection ChapterIntroFadeOutPhasesSection
 
-      .dsection Unsorted91F89FSection
+      .dsection ChapterIntroDarkenSection
 
-      .dsection Unsorted91F907Section
+      .dsection ChapterIntroSkipToMapSection
 
-      .dsection Unsorted91F935Section
+      .dsection ChapterIntroUpdateSection
 
-      .dsection Unsorted91F959Section
+      .dsection FillChapterIntroBG2VOFSTableSection
 
-      .dsection Table91F9ADSection
+      .dsection ChapterIntroWaveOffsetsSection
 
-      .dsection Unsorted91F9DDSection
+      .dsection FillChapterIntroBG1HOFSTableSection
 
-      .dsection Table91FA27Section
+      .dsection ChapterIntroTitleSlideOffsetsSection
 
-      .dsection Unsorted91FA57Section
+      .dsection SlideChapterIntroTitleSection
 
-      .dsection Unsorted91FA9ASection
+      .dsection ChapterIntroFadePaletteStepSection
 
       .fill $918000 + $8000 - *, $00
 
@@ -6152,118 +5946,117 @@
     * = $158000
     .logical $958000
 
-      .dsection Unsorted958000Section
+      .dsection BattleSceneInitSection
 
-      .dsection Unsorted9582D8Section
+      .dsection BattleSceneCopyExperienceSection
 
-      .dsection Unsorted9582F7Section
+      .dsection BattleSceneGetGenderSection
 
-      .dsection Unsorted958B07Section
+      .dsection BattleSceneRunFrameSection
 
-      .dsection Unsorted958CB9Section
+      .dsection BattleSceneSetWaterFlagsSection
 
-      .dsection Unsorted9590F2Section
+      .dsection BattleSceneBuildBG2VOFSTableSection
 
       .dsection Data95937CSection
 
-      .dsection Unsorted95938CSection
+      .dsection BattleSceneUpdateHP2Section
 
-      .dsection Unsorted9594F8Section
+      .dsection BattleSceneDrawHP1Section
 
-      .dsection Unsorted9595CASection
+      .dsection BattleSceneDrawStatSection
 
       .dsection Unreferenced959650Section
 
-      .dsection Unsorted95968ESection
+      .dsection BattleSceneDrawTallNumberSection
 
-      .dsection Unsorted9597FASection
+      .dsection BattleSceneDrawHPBarSection
 
-      .dsection Table959890Section
+      .dsection BattleSceneHPBarTilesSection
 
       .dsection Data959894Section
 
-      .dsection Unsorted959895Section
+      .dsection BattleSceneDrawStatsSection
 
-      .dsection Unsorted9598E7Section
+      .dsection BattleSceneQueueHPUploadSection
 
-      .dsection Unsorted959902Section
+      .dsection BattleSceneLoadHUDSection
 
-      .dsection Unsorted9599E7Section
+      .dsection BattleSceneSetHUDColorsSection
 
-      .dsection Unsorted959B49Section
+      .dsection BattleSceneBlankMissingCombatantSection
 
-      .dsection Unsorted959B84Section
+      .dsection BattleSceneSetHUDColors1Section
 
-      .dsection Unsorted959BC1Section
+      .dsection BattleSceneSetHUDColors2Section
 
       .dsection Unreferenced959BFESection
 
-      .dsection Unsorted959C14Section
+      .dsection BattleSceneReleaseHoldSection
 
-      .dsection Unsorted959C3ESection
+      .dsection BattleSceneDivideSection
 
-      .dsection Unsorted959C64Section
+      .dsection BattleSceneStartKnockbackFromStrikeSection
 
-      .dsection Unsorted959DACSection
+      .dsection BattleSceneDarkenColorsStepSection
 
-      .dsection Unsorted959E22Section
+      .dsection BattleSceneBrightenColorsStepSection
 
       .dsection Unreferenced959E71Section
 
-      .dsection Unsorted959F43Section
+      .dsection BattleSceneStepColorsTowardSection
 
       .dsection Unreferenced959FEASection
 
-      .dsection Unsorted95A086Section
+      .dsection BattleSceneRunQueuedCopiesSection
 
-      .dsection Unsorted95A0F7Section
+      .dsection BattleSceneClearQueuedCopiesSection
 
-      .dsection Unsorted95A114Section
+      .dsection BattleSceneBuildBrightnessTableSection
 
-
-      .dsection Unsorted95A167Section
+      .dsection BattleSceneLoadCharacterColorsSection
 
       .dsection DecompressSingleSection
 
-      .dsection Unsorted95A414Section
+      .dsection BattleSceneCreateHUDBannerHDMASection
 
-      .dsection Unsorted95A481Section
+      .dsection BattleSceneUpdateFadeSection
 
-      .dsection Unsorted95A53ESection
+      .dsection BattleSceneSetFlagsSection
 
-      .dsection Unsorted95A65FSection
+      .dsection BattleSceneRunRoundsSection
 
       .dsection Unreferenced95AA8DSection
 
-      .dsection Unsorted95AAFFSection
-      .dsection Unsorted95AB80Section
+      .dsection BattleSceneQueueIdleActionSection
+      .dsection BattleSceneDodgeActionsSection
 
-      .dsection Unsorted95ABBBSection
+      .dsection BattleSceneQueueAttackSection
 
       .dsection Data95AC3BSection
 
-      .dsection Unsorted95AC41Section
+      .dsection BattleSceneQueueCriticalAttackSection
 
       .dsection Data95ACA8Section
 
-      .dsection Unsorted95ACAESection
+      .dsection BattleSceneQueueSpecialCriticalAttackSection
 
       .dsection Data95ACF0Section
 
-      .dsection Unsorted95ACF6Section
+      .dsection BattleSceneQueueMagicSwordAttackSection
 
       .dsection Data95AD64Section
-      .dsection Unsorted95AD8CSection
+      .dsection BattleSceneMagicSwordSwingActionsSection
 
-      .dsection Unsorted95ADD6Section
+      .dsection BattleSceneQueueStaffActionSection
 
-      .dsection Unsorted95AE8BSection
+      .dsection BattleSceneApplyEffectStrikeSection
 
-      .dsection Unsorted95AEA2Section
+      .dsection BattleSceneApplyStrikeSection
 
       .dsection Unreferenced95B114Section
 
-      .dsection Unsorted95B184Section
+      .dsection BattleAnimationCompareCombatantXSection
 
       .dsection BattleAnimationMoves95B250Section
 
@@ -6279,51 +6072,51 @@
 
       .dsection BattleAnimationMoves95B48DSection
 
-      .dsection Unsorted95B530Section
+      .dsection BattleAnimationGetTravelFramesSection
 
-      .dsection Unsorted95B554Section
+      .dsection BattleAnimationSetAdvanceSection
 
-      .dsection Unsorted95B5D0Section
+      .dsection BattleAnimationGetBodyWidthSection
 
       .dsection Unreferenced95B6A7Section
 
-      .dsection Unsorted95B6D0Section
+      .dsection BattleSceneGetStartGapSection
 
       .dsection Unreferenced95B7CFSection
 
-      .dsection Unsorted95B7F8Section
+      .dsection BattleSceneGetKnockbackStrengthSection
 
-      .dsection Unsorted95B81BSection
+      .dsection BattleAnimationSetBodyIndicesSection
 
-      .dsection Unsorted95B884Section
+      .dsection BattleAnimationStartPoseSection
 
-      .dsection Unsorted95B96FSection
+      .dsection BattleAnimationResetSlotsSection
 
-      .dsection Unsorted95B993Section
+      .dsection BattleAnimationResetSpawnSlotSection
 
       .dsection Unreferenced95C306Section
 
-      .dsection Unsorted95C368Section
+      .dsection BattleSceneRunUploadsSection
 
-      .dsection Unsorted95C43ESection
+      .dsection BattleSceneQueueUploadSection
 
-      .dsection Unsorted95CA81Section
+      .dsection BattleSceneClearKnockbackSection
 
-      .dsection Unsorted95CA88Section
+      .dsection BattleSceneSetKnockbackSection
 
-      .dsection Unsorted95CEBFSection
+      .dsection BattleAnimationSetPathToOpponentSection
 
       .dsection BattleAnimationMoves95CF2ESection
 
-      .dsection Unsorted95CFA0Section
+      .dsection BattleAnimationSetPathToOpponentInFramesSection
 
       .dsection BattleAnimationMoves95D007Section
 
-      .dsection Unsorted95D078Section
+      .dsection BattleAnimationSetPathPastOpponentSection
 
       .dsection BattleAnimationMoves95D0E7Section
 
-      .dsection Unsorted95D1C5Section
+      .dsection BattleAnimationGetPathMeasuresSection
 
       .dsection Unreferenced95D200Section
 
@@ -6331,157 +6124,157 @@
 
       .dsection Unreferenced95D280Section
 
-      .dsection Unsorted95D2A4Section
+      .dsection BattleSceneScrollCameraRightSection
 
-      .dsection Unsorted95DA0BSection
+      .dsection BattleAnimationClearMoveQueuesSection
 
-      .dsection Unsorted95DA1DSection
+      .dsection BattleAnimationRunMoveQueueSection
 
-      .dsection Table95DC4CSection
+      .dsection BattleAnimationEffectSetupsSection
 
-      .dsection Unsorted95DC54Section
+      .dsection BattleAnimationSetupFlyingEffectSection
 
-      .dsection Unsorted95DC90Section
+      .dsection BattleAnimationSetupPathScriptEffectSection
 
-      .dsection Unsorted95DCA3Section
+      .dsection BattleAnimationSpawnEffect1Section
 
-      .dsection Table95DE84Section
+      .dsection BattleAnimationEffectMotionsSection
 
-      .dsection Unsorted95DE8CSection
+      .dsection BattleAnimationFlyEffectSection
 
-      .dsection Unsorted95DF76Section
+      .dsection BattleAnimationRunEffectPathScriptSection
 
       .dsection Unreferenced95E08CSection
 
-      .dsection Unsorted95E0C5Section
+      .dsection BattleAnimationMoveEffectRightSection
 
-      .dsection Unsorted95E1C9Section
+      .dsection BattleAnimationApplyEffectGravitySection
 
-      .dsection Unsorted95E372Section
+      .dsection BattleAnimationSetEffectPoseSection
 
-      .dsection Unsorted95E3DFSection
+      .dsection BattleSceneSetRolesSection
 
       .dsection BattleSceneGameStateSection
 
-      .dsection Table95E69ESection
+      .dsection BattleSceneWindowEffect2HDMAInfoSection
 
-      .dsection Unsorted95E6AASection
+      .dsection BattleSceneHDMAInitNoOpSection
 
-      .dsection Table95E6ACSection
+      .dsection BattleSceneHDMAHaltCodeSection
 
-      .dsection Unsorted95E7B3Section
+      .dsection BattleSceneScriptClearMessageWindowSection
 
       .dsection Unreferenced95E80DSection
 
-      .dsection Unsorted95E834Section
+      .dsection BattleSceneSetUpMessageDialogueSection
 
       .dsection Unreferenced95E877Section
 
-      .dsection Unsorted95E888Section
+      .dsection BattleSceneScriptRunMessageSection
 
-      .dsection Unsorted95EA47Section
+      .dsection SetUpTitleIntroSection
 
-      .dsection Table95EA91Section
+      .dsection TitleIntroScene1PPUConfigSection
 
-      .dsection Unsorted95ED4ESection
+      .dsection TitleIntroScene6ShowSubBG3Section
 
-      .dsection Unsorted95ED7BSection
+      .dsection SetUpTitleIntroScene7Section
 
       .dsection Data95EDD0Section
 
-      .dsection Unsorted95EDEASection
+      .dsection TitleIntroScene7ShowBG1Section
 
       .dsection Data95EE58Section
 
-      .dsection Unsorted95EE73Section
+      .dsection DecompressTitleGraphicsSection
 
-      .dsection Unsorted95EF54Section
+      .dsection LoadTitleGraphicsSection
 
-      .dsection Unsorted95F0E9Section
+      .dsection SetTitleScreenRegistersSection
 
-      .dsection Unsorted95F12ASection
+      .dsection TitleScreenNoOpSection
 
-      .dsection Unsorted95F248Section
+      .dsection AllowTitleLoadSection
 
-      .dsection Unsorted95F256Section
+      .dsection StartTitleLoadDecompressionSection
 
-      .dsection Unsorted95F2E5Section
+      .dsection TitleIntroScene3StartPaletteEffectSection
 
       .dsection TitleScenes95F35DSection
 
-      .dsection Unsorted95F3D3Section
+      .dsection TitleIntroScene8StartPaletteEffect1Section
 
       .dsection Data95F41BSection
 
-      .dsection Unsorted95F426Section
+      .dsection TitleStartLogoPaletteEffectSection
 
-      .dsection Unsorted95F48ESection
+      .dsection StartTitleIntroScene2FadeOAMPal0Section
 
-      .dsection Unsorted95F4B7Section
+      .dsection StepTitleIntroScene2FadeOAMPal0Section
 
-      .dsection Unsorted95F4F0Section
+      .dsection StartTitleIntroScene2FadeOAMPal4Section
 
-      .dsection Unsorted95F519Section
+      .dsection StepTitleIntroScene2FadeOAMPal4Section
 
-      .dsection Unsorted95F552Section
+      .dsection StartTitleIntroScene2FadeOAMPal5Section
 
-      .dsection Unsorted95F57BSection
+      .dsection StepTitleIntroScene2FadeOAMPal5Section
 
       .dsection TitleScenes95F5D9Section
 
-      .dsection Unsorted95F630Section
+      .dsection StartTitleIntroScene3FadeBGPal34Section
 
-      .dsection Unsorted95F64ASection
+      .dsection StepTitleIntroScene3FadeBGPal34Section
 
       .dsection TitleScenes95F681Section
 
-      .dsection Unsorted95F741Section
+      .dsection BattleSceneResetWindowEffect1Section
 
-      .dsection Unsorted95F777Section
+      .dsection TitleIntroScene5InitWindowEffect1Section
 
-      .dsection Unsorted95F7B7Section
+      .dsection TitleIntroScene6InitWindowEffect1Section
 
-      .dsection Unsorted95F7F7Section
+      .dsection BattleSceneResetWindowEffect2Section
 
-      .dsection Unsorted95F831Section
+      .dsection TitleIntroScene4InitWindowEffect2Section
 
-      .dsection Unsorted95F87FSection
+      .dsection ClearTitleSpritesSection
 
       .dsection TitleScenes95F9B4Section
 
-      .dsection Unsorted95F9CESection
+      .dsection TitleIntroScene2SpawnSpritePair1Section
 
-      .dsection Unsorted95FB0ASection
+      .dsection StepTitleIntroScene2SpriteRiseSection
 
-      .dsection Table95FB4BSection
+      .dsection TitleIntroScene2SpriteRiseStatesSection
 
-      .dsection Unsorted95FCA4Section
+      .dsection StartTitleSceneFadeInSection
 
-      .dsection Unsorted95FD1CSection
+      .dsection StartTitleQuickFadeOutSection
 
-      .dsection Unsorted95FD44Section
+      .dsection RunTitleBrightnessListSection
 
       .dsection TitleScenes95FDE4Section
 
-      .dsection Unsorted95FE22Section
+      .dsection StartTitleIntroScene2ScrollSection
 
-      .dsection Unsorted95FE46Section
+      .dsection TitleIntroScene2ScrollSection
 
-      .dsection Unsorted95FEA0Section
+      .dsection StartTitleIntroScene3ScrollSection
 
-      .dsection Unsorted95FEBCSection
+      .dsection TitleIntroScene3ScrollSection
 
-      .dsection Unsorted95FED9Section
+      .dsection StartTitleIntroScene5ScrollSection
 
-      .dsection Unsorted95FEF9Section
+      .dsection TitleIntroScene5ScrollSection
 
-      .dsection Unsorted95FF35Section
+      .dsection StartTitleIntroScene6ScrollSection
 
-      .dsection Unsorted95FF51Section
+      .dsection TitleIntroScene6ScrollSection
 
-      .dsection Unsorted95FF6ESection
+      .dsection StartTitleIntroScene7ScrollSection
 
-      .dsection Unsorted95FF8ASection
+      .dsection TitleIntroScene7ScrollSection
 
       .dsection TitleScenes95FFACSection
 
@@ -6492,401 +6285,388 @@
     * = $168000
     .logical $968000
 
-      .dsection Table968000Section
+      .dsection BattleSceneIRQ5SetupSection
 
-      .dsection Unsorted968008Section
+      .dsection BattleSceneIRQ5HandlerSection
 
-      .dsection Table96800DSection
+      .dsection BattleSceneIRQ5CodeSection
 
-      .dsection Unsorted968017Section
+      .dsection BattleSceneIRQ2HandlerSection
 
-      .dsection Table96804ESection
+      .dsection BattleSceneIRQ2CodeSection
 
-      .dsection Unsorted968058Section
+      .dsection BattleSceneIRQ3HandlerSection
 
-      .dsection Table968076Section
+      .dsection BattleSceneIRQ3CodeSection
 
-      .dsection Unsorted968080Section
+      .dsection BattleSceneIRQ4HandlerSection
 
-      .dsection Table968093Section
+      .dsection BattleSceneIRQ4CodeSection
 
-      .dsection Unsorted96809DSection
+      .dsection BattleSceneIRQ1HandlerSection
 
-      .dsection Table9680A2Section
+      .dsection BattleSceneIRQ1CodeSection
 
       .dsection TitleScreenIRQSection
 
-      .dsection Unsorted9680ACSection
+      .dsection TitleScreenTopIRQSection
 
-      .dsection Table9680B1Section
+      .dsection TitleScreenTopIRQCodeSection
 
-      .dsection Unsorted9680BBSection
+      .dsection TitleScreenBottomIRQSection
 
-      .dsection Unsorted9680C2Section
+      .dsection BattleSceneLoadNamesSection
 
       .dsection Unreferenced9687B3Section
 
-      .dsection Unsorted96881FSection
+      .dsection BattleSceneShowBattleQuoteSection
 
-      .dsection Unsorted96890ESection
+      .dsection BattleSceneResetToNormalModeSection
 
-
-      .dsection Unsorted968DBDSection
+      .dsection BattleSceneBlankWindowDisplaySection
 
       .dsection Unreferenced968DE1Section
 
-      .dsection Unsorted968E4CSection
+      .dsection BattleSceneScriptFadeInWindow3Section
 
       .dsection Unreferenced968E8FSection
 
-      .dsection Unsorted968F50Section
+      .dsection BattleSceneScriptInitStatGainsSection
 
       .dsection Unreferenced9692F8Section
 
-      .dsection Unsorted969398Section
+      .dsection BattleSceneStartStatGaugeSection
 
-      .dsection Unsorted96941CSection
+      .dsection BattleSceneRunIntroStepSection
 
-      .dsection Unsorted96947DSection
+      .dsection BattleSceneWaitForIntroSection
 
-      .dsection Unsorted9694C7Section
+      .dsection BattleSceneRunEndStepSection
 
-      .dsection Unsorted96957DSection
+      .dsection BattleSceneInitWindowScrollVarsSection
 
-      .dsection Unsorted969603Section
+      .dsection BattleSceneFadeMusicForJuliusSection
 
-      .dsection Unsorted969617Section
+      .dsection BattleSceneScriptFadeOutMusicSection
 
-      .dsection Unsorted96961FSection
+      .dsection BattleSceneTrackCombatantSidesSection
 
-      .dsection Unsorted969665Section
+      .dsection BattleSceneApplyPlacementSection
 
-      .dsection Table9696A0Section
+      .dsection BattleScenePlacementsSection
 
-      .dsection Unsorted9696AASection
+      .dsection BattleSceneGetWeaponPlacementSection
 
-      .dsection Unsorted9696E6Section
-      .dsection Unsorted969707Section
-      .dsection Unsorted969727Section
-      .dsection Unsorted969735Section
-      .dsection Unsorted969765Section
+      .dsection BattleScenePlaceStrikerAloneSection
+      .dsection BattleScenePlaceTogetherSection
+      .dsection BattleSceneHideOtherSection
+      .dsection BattleScenePlaceTogetherOnGroundSection
+      .dsection BattleScenePlaceNoneSection
 
       .dsection Unreferenced969766Section
 
-      .dsection Unsorted9697FASection
+      .dsection BattleSceneGetFirstStrikerSection
 
-      .dsection Unsorted969861Section
+      .dsection BattleSceneRestartRoundsSection
 
-      .dsection Unsorted969872Section
+      .dsection BattleSceneBuildArenaBoutSection
 
-      .dsection Unsorted96989ESection
+      .dsection BattleSceneCheckArenaBoutSection
 
-      .dsection Unsorted96994BSection
+      .dsection BattleSceneClearMagicSwordFlagsSection
 
       .dsection Unreferenced969964Section
 
-
-      .dsection Unsorted9699DDSection
+      .dsection BattleSceneRecolorHUDForType2Section
 
       .dsection Data969BE3Section
 
-      .dsection Unsorted969C63Section
+      .dsection BattleSceneDarkenColorSection
 
-      .dsection Unsorted969EF9Section
+      .dsection BattleSceneStopHUDShakeSection
 
-      .dsection Unsorted969F7DSection
+      .dsection BattleSceneCheckAlternatingRoundsSection
 
-      .dsection Unsorted96A05CSection
+      .dsection BattleSceneScriptSaveOAMExtSection
 
       .dsection Unreferenced96A0EBSection
 
-      .dsection Unsorted96A20ESection
+      .dsection BattleSceneEndStepJuliusSection
 
       .dsection BattleSceneScriptSection
 
-      .dsection Unsorted96A4B2Section
+      .dsection StartBattleSceneScriptSection
 
-      .dsection Unsorted96A4FCSection
+      .dsection BattleSceneInitEffectBuffersSection
 
-      .dsection Unsorted96A532Section
+      .dsection BattleSceneUpdateSpellWindowEffectsSection
 
       .dsection BattleSceneCommand96ABF6Section
 
-      .dsection Unsorted96AC1FSection
+      .dsection BattleSceneStartWindowEffect1Section
 
-      .dsection Unsorted96ACABSection
+      .dsection BattleSceneClearWindowRegsSection
 
       .dsection Unreferenced96ACC5Section
 
+      .dsection BattleSceneCreateSpellWindowHDMASection
 
-      .dsection Unsorted96AD07Section
+      .dsection BattleSceneBuildSpellWindowHDMASection
 
-
-      .dsection Unsorted96AD39Section
-
-      .dsection Unsorted96ADE9Section
+      .dsection BattleSceneDrawWindowCircleSection
 
       .dsection Unreferenced96B08DSection
 
-      .dsection Unsorted96B0E1Section
+      .dsection BattleSceneDrawWindowCone8Section
 
       .dsection Unreferenced96B7E2Section
 
-      .dsection Unsorted96B852Section
+      .dsection BattleSceneInitEffectVerticalArcSection
 
-      .dsection Unsorted96B945Section
+      .dsection BattleSceneCommandDecompressToVRAMSection
 
       .dsection BattleSceneCommand96BA68Section
 
-      .dsection Unsorted96BB0CSection
+      .dsection BattleSceneCommandCopyToVRAMSection
 
       .dsection BattleSceneCommand96BB70Section
 
-      .dsection Unsorted96BBC2Section
+      .dsection BattleSceneCommandWaitSection
 
-      .dsection Unsorted96BBE2Section
+      .dsection BattleSceneScriptUpdateLoadingSection
 
-      .dsection Unsorted96BC4CSection
+      .dsection BattleSceneCommandPlaySoundSection
 
       .dsection BattleSceneCommand96BCAFSection
 
-      .dsection Unsorted96BCECSection
+      .dsection StartBattleSceneScriptFarSection
 
-      .dsection Unsorted96BCF1Section
+      .dsection BattleSceneCommandWriteRAMSection
 
-      .dsection Unsorted96BD1ASection
+      .dsection BattleSceneWriteRAMSection
 
-      .dsection Unsorted96BD74Section
+      .dsection BattleSceneClearHDMAEffectsSection
 
-      .dsection Unsorted96BE28Section
+      .dsection BattleSceneRunHDMAEffectsSection
 
-
-      .dsection Unsorted96BFE5Section
+      .dsection BattleSceneInitBG3WaveHDMASection
 
       .dsection Unreferenced96C07FSection
 
-      .dsection Unsorted96C7DBSection
+      .dsection BattleSceneCreateBG2VScrollHDMA5Section
 
-      .dsection Unsorted96C8A1Section
+      .dsection BattleSceneStepWaveOffsetTableSection
 
-      .dsection Unsorted96C942Section
+      .dsection BattleSceneStopHDMAEffectSection
 
-      .dsection Unsorted96C9ADSection
+      .dsection BattleSceneScriptRunRoutineSection
 
-      .dsection Unsorted96C9D9Section
+      .dsection BattleSceneCommandSetRoutineSection
 
-      .dsection Unsorted96CB44Section
+      .dsection BattleSceneUpdatePolygonWindowsSection
 
       .dsection Unreferenced96CD0ESection
 
-      .dsection Unsorted96CD23Section
+      .dsection BattleScenePolygonWindowWait1Section
 
       .dsection BattleSceneCommand96CDB7Section
 
-      .dsection Unsorted96CECESection
+      .dsection BattleSceneFreePolygonWindowHDMASection
 
+      .dsection BattleSceneRasterizePolygonWindowsSection
 
-      .dsection Unsorted96D256Section
+      .dsection BattleSceneRasterizeTriangleSection
 
+      .dsection BattleSceneStepEdgeUpPreIncSection
 
-      .dsection Unsorted96D2D7Section
+      .dsection BattleSceneStepEdgeDownPreDecSection
 
+      .dsection BattleSceneStepEdgeUpPostIncSection
 
-      .dsection Unsorted96D3EDSection
+      .dsection BattleSceneStepEdgeDownPostDecSection
 
+      .dsection BattleSceneBuildGradientWindowHDMASection
 
-      .dsection Unsorted96D402Section
+      .dsection FreeBattleScenePaletteSlotsSection
 
+      .dsection BattleSceneSavePaletteSection
 
-      .dsection Unsorted96D417Section
+      .dsection BattleSceneRunPaletteEffectsSection
 
+      .dsection BattleScenePaletteEffectTypesSection
 
-      .dsection Unsorted96D42CSection
+      .dsection BattleScenePaletteEffectFramesSection
 
-      .dsection Unsorted96D5DBSection
+      .dsection BattleScenePaletteEffectScrollInSection
 
-      .dsection Unsorted96D659Section
+      .dsection BattleScenePaletteEffectRotateSection
+      .dsection BattleScenePaletteEffectRotateBackSection
 
-      .dsection Unsorted96D67BSection
+      .dsection BattleScenePaletteEffectFadeToBlackSection
 
-      .dsection Unsorted96D695Section
+      .dsection BattleScenePaletteEffectFadeToWhiteSection
 
-      .dsection Table96D6DDSection
+      .dsection BattleScenePaletteEffectFadeToColorsSection
 
-      .dsection Unsorted96D6F7Section
+      .dsection BattleScenePaletteEffectBlackSection
+      .dsection BattleScenePaletteEffectWhiteSection
+      .dsection BattleScenePaletteEffectSetColorsSection
+      .dsection BattleScenePaletteEffectRestoreSection
+      .dsection BattleScenePaletteEffectScrollInBrightSection
+      .dsection BattleSceneBrightenColorBySection
 
-      .dsection Unsorted96D774Section
+      .dsection BattleSceneStopPaletteSlotSection
 
-      .dsection Unsorted96D89FSection
-      .dsection Unsorted96D8D7Section
+      .dsection BattleSceneCommandPaletteEffectSection
 
-      .dsection Unsorted96D912Section
+      .dsection BattleSceneStartPaletteEffectSection
 
-      .dsection Unsorted96D938Section
-
-      .dsection Unsorted96D95ESection
-
-      .dsection Unsorted96D990Section
-      .dsection Unsorted96D9B4Section
-      .dsection Unsorted96D9D8Section
-      .dsection Unsorted96DA0FSection
-      .dsection Unsorted96DA34Section
-      .dsection Unsorted96DACBSection
-
-      .dsection Unsorted96DB20Section
-
-      .dsection Unsorted96DB58Section
-
-      .dsection Unsorted96DB94Section
-
-      .dsection Unsorted96DC7CSection
+      .dsection BattleSceneGetWeaponScriptSection
 
       .dsection Unreferenced96DCC8Section
 
-      .dsection Unsorted96DD39Section
+      .dsection BattleSceneResetBGScrollsSection
 
-      .dsection Unsorted96DD6ESection
+      .dsection BattleSceneUpdateBGScrollsSection
 
-      .dsection Table96DEAASection
+      .dsection BattleSceneBGAnimSlotHandlersSection
 
-      .dsection Unsorted96DEC0Section
+      .dsection BattleSceneCommandBGScrollEffectSection
 
-      .dsection Table96DF60Section
+      .dsection BattleSceneBGScrollEffectInitsSection
 
       .dsection Unreferenced96DF98Section
 
-      .dsection Unsorted96DFBBSection
+      .dsection BattleSceneClearBGSlotOffsetSection
 
-      .dsection Unsorted96DFC7Section
+      .dsection BattleSceneInitBGSlotAttackerSection
 
-      .dsection Unsorted96E01FSection
+      .dsection BattleSceneInitBGSlotAttackerAltSection
 
-      .dsection Unsorted96E077Section
-      .dsection Unsorted96E0CFSection
-      .dsection Unsorted96E127Section
-      .dsection Unsorted96E17BSection
-      .dsection Unsorted96E1D3Section
-      .dsection Unsorted96E20ASection
-      .dsection Unsorted96E245Section
-      .dsection Unsorted96E275Section
-      .dsection Unsorted96E2CESection
-      .dsection Unsorted96E312Section
-      .dsection Unsorted96E356Section
-      .dsection Unsorted96E38DSection
-      .dsection Unsorted96E3CASection
-      .dsection Unsorted96E3E5Section
-      .dsection Unsorted96E42DSection
-      .dsection Unsorted96E463Section
-      .dsection Unsorted96E49CSection
-      .dsection Unsorted96E49DSection
-      .dsection Unsorted96E4D8Section
+      .dsection BattleSceneInitBGSlotAttackerLowSection
+      .dsection BattleSceneInitBGSlotAttackerLowFarSection
+      .dsection BattleSceneInitBGSlotDefenderSection
+      .dsection BattleSceneInitBGSlotDefenderOffsetSection
+      .dsection BattleSceneInitBGSlotFixedCenterSection
+      .dsection BattleSceneInitBGSlotFixedRightSection
+      .dsection BattleSceneInitBGSlotFixedOriginSection
+      .dsection BattleSceneInitBGSlotDefenderScreenSection
+      .dsection BattleSceneInitBGSlotDefenderGroundSection
+      .dsection BattleSceneInitBGSlotAttackerGroundSection
+      .dsection BattleSceneInitBGSlotFixedLowSection
+      .dsection BattleSceneInitBGSlotCameraSection
+      .dsection BattleSceneStopBGSlotSection
+      .dsection BattleSceneInitBGSlotDefenderLowSection
+      .dsection BattleSceneInitBGSlotFromArgsSection
+      .dsection BattleSceneAimBGSlotAtAttackerSection
+      .dsection BattleSceneBGSlotNoOp1Section
+      .dsection BattleSceneAimBGSlotAtDefenderHitSection
+      .dsection BattleSceneAimBGSlotAtDefenderTopSection
 
-      .dsection Unsorted96E50ESection
+      .dsection BattleSceneBGSlotNoOp2Section
 
-      .dsection Unsorted96E50FSection
-      .dsection Unsorted96E558Section
-      .dsection Unsorted96E58ESection
-      .dsection Unsorted96E5DASection
-      .dsection Unsorted96E5F6Section
+      .dsection BattleSceneAimBGSlotWithPathSection
+      .dsection BattleSceneStartBGScrollScriptSection
+      .dsection BattleSceneSetBGSlotVelocitySection
+      .dsection BattleSceneSetBGSlotVelocityOffset1Section
+      .dsection BattleSceneSetBGSlotVelocityOffset2Section
 
-      .dsection Unsorted96E612Section
+      .dsection BattleSceneAimBGSlotAtDefenderFlatSection
 
-      .dsection Unsorted96E6D7Section
-      .dsection Unsorted96E712Section
+      .dsection BattleSceneStepBGSlotMoveSection
+      .dsection BattleSceneStepBGSlotIdleSection
 
-      .dsection Unsorted96E716Section
+      .dsection BattleSceneStepBGSlotMove2Section
 
-      .dsection Unsorted96E798Section
+      .dsection BattleSceneStepBGSlotPathYSection
 
-      .dsection Unsorted96E803Section
+      .dsection BattleSceneStepBGScrollScriptSection
 
-      .dsection Unsorted96E8E1Section
-      .dsection Unsorted96E91CSection
-      .dsection Unsorted96E92FSection
-      .dsection Unsorted96E936Section
+      .dsection BattleSceneStepBGSlotMove3Section
+      .dsection BattleSceneStepBGSlotGravitySection
+      .dsection BattleSceneStepBGSlotBounceSection
+      .dsection BattleSceneStepBGSlotMirrorSection
 
-      .dsection Unsorted96E9B8Section
+      .dsection BattleSceneApplyBGSlotVelocitySection
 
-      .dsection Unsorted96EA7ASection
+      .dsection BattleSceneClearBGScrollScriptSection
 
-      .dsection Unsorted96EA99Section
+      .dsection BattleSceneCommandScrollToCombatantSection
 
-      .dsection Unsorted96EBE3Section
+      .dsection BattleSceneStepBG2ShakeSection
 
       .dsection BattleSceneCommand96EC4ASection
 
-      .dsection Unsorted96EC91Section
+      .dsection BattleSceneStopBG2ShakeSection
 
-      .dsection Unsorted96ECABSection
+      .dsection BattleSceneCommandPaletteOperationSection
 
-      .dsection Table96ECCCSection
+      .dsection BattleScenePaletteOperationsSection
 
-      .dsection Unsorted96ECDCSection
-      .dsection Unsorted96ED0BSection
-      .dsection Unsorted96ED23Section
+      .dsection BattleSceneTintPaletteRedSection
+      .dsection BattleSceneDimPaletteHalfSection
+      .dsection BattleSceneConvertPaletteLumaSection
 
       .dsection Data96ED67Section
 
-      .dsection Unsorted96EDA7Section
+      .dsection BattleSceneConvertPaletteLuma2Section
 
-      .dsection Unsorted96EDC0Section
+      .dsection BattleSceneColorToLumaSection
 
       .dsection Data96EDF2Section
 
-      .dsection Unsorted96EE32Section
+      .dsection BattleSceneDimSpritePaletteHalfSection
 
-      .dsection Unsorted96EE4ASection
-      .dsection Unsorted96EE5ESection
-      .dsection Unsorted96EE71Section
+      .dsection BattleSceneFillPaletteBlue1Section
+      .dsection BattleSceneFillPaletteBlue2Section
+      .dsection BattleSceneDimPaletteQuarterSection
 
-      .dsection Unsorted96EE8ASection
+      .dsection BattleSceneResetMosaicSection
 
-      .dsection Unsorted96EE95Section
+      .dsection BattleSceneStepMosaicSection
 
-      .dsection Table96EEBDSection
+      .dsection BattleSceneMosaicModeHandlersSection
 
-      .dsection Unsorted96EEC5Section
-      .dsection Unsorted96EEC6Section
-      .dsection Unsorted96EFC3Section
-      .dsection Unsorted96F0C4Section
+      .dsection BattleSceneMosaicMode0NoOpSection
+      .dsection BattleSceneCalcMosaicBoxBG3Section
+      .dsection BattleSceneCalcMosaicBoxBG3CenterSection
+      .dsection BattleSceneCalcMosaicBoxBG1Section
 
       .dsection BattleSceneCommand96F1C2Section
 
-      .dsection Unsorted96F275Section
+      .dsection BattleSceneCreateMosaicWindowHDMASection
 
+      .dsection BattleSceneBuildMosaicWindowHDMASection
 
-      .dsection Unsorted96F28DSection
-
-      .dsection Unsorted96F315Section
+      .dsection BattleSceneEndStepDefeatScriptSection
 
       .dsection Unreferenced96F41ASection
 
+      .dsection BattleSceneEndStepType2ScriptSection
 
-      .dsection Unsorted96F558Section
+      .dsection BattleSceneShowLevelUpBannerSection
 
-      .dsection Unsorted96F676Section
+      .dsection BattleSceneShowSkillSection
 
-      .dsection Unsorted96F697Section
+      .dsection BattleSceneFindDialoguePortraitSection
 
-      .dsection Unsorted96F7A8Section
-
-      .dsection Unsorted96F7D4Section
+      .dsection BattleSceneUpdateEffectSpritesSection
 
       .dsection Unreferenced96F89BSection
 
-      .dsection Unsorted96F915Section
+      .dsection BattleSceneStepHitEffectSpritesSection
 
       .dsection Unreferenced96FA92Section
 
-      .dsection Unsorted96FAB6Section
+      .dsection BattleScenePlaySound6FPannedSection
 
       .dsection Unreferenced96FADASection
 
-      .dsection Unsorted96FBF9Section
+      .dsection BattleSceneResetAllEffectsSection
 
       .dsection Unreferenced96FC49Section
 
-      .dsection Unsorted96FD54Section
+      .dsection BattleSceneRestoreHUDPalettesSection
 
       .dsection DemoBattles96Section
 
@@ -6917,11 +6697,11 @@
     * = $178000
     .logical $978000
 
-      .dsection Unsorted978000Section
+      .dsection BattleScenePlayHolyWeaponSoundSection
 
       .dsection Unreferenced978024Section
 
-      .dsection Unsorted97802CSection
+      .dsection BattleSceneClearWindowBuffersRegsSection
 
       .dsection BattleAnimationSheetsSection
 
@@ -6940,11 +6720,11 @@
       .dsection BattleAnimationProgramsSection
 
       .dsection BattleAnimationMoveDataSection
-      .dsection Table97E8FBSection
+      .dsection BattleAnimationBodyRecordsSection
       .dsection TitleTimelinesSection
       .dsection Data97F19BSection
       .dsection Data97F48BSection
-      .dsection Unsorted97FDC1Section
+      .dsection ASMCLoadFirstDemoBattleSection
 
     .here
 
@@ -6971,7 +6751,7 @@
       .dsection Data98AD04Section
       .dsection Data98AD65Section
       .dsection Data98AFFDSection
-      .dsection Table98B231Section
+      .dsection BattleSceneDodgeMissSpritesSection
 
       .dsection Data98B388Section
 
@@ -7085,99 +6865,99 @@
       .dsection BattleAnimationFrameData9BSection
       .dsection BattleAnimationEffectData9BSection
 
-      .dsection Unsorted9BDC24Section
+      .dsection TitleScreenSetupSection
 
-      .dsection Table9BDF09Section
+      .dsection TitleScreenRegistersSection
 
-      .dsection Unsorted9BDFAASection
+      .dsection StartOpeningEventSection
 
-      .dsection Unsorted9BE15FSection
+      .dsection StopTitleTimelineSlotSection
 
-      .dsection Unsorted9BE179Section
+      .dsection InitTitleTopBorderHeightSection
 
-      .dsection Unsorted9BE2A4Section
+      .dsection TitleIntroScene7SpawnOrbitSpritesSection
 
       .dsection TitleScenes9BE2E3Section
 
-      .dsection Unsorted9BE2FDSection
+      .dsection TitleIntroScene7EnableTrailsFirst6Section
 
       .dsection TitleScenes9BE331Section
 
-      .dsection Unsorted9BE372Section
+      .dsection StepTitleIntroScene7OrbitContractSection
 
-      .dsection Unsorted9BE3B0Section
+      .dsection StepTitleIntroScene7OrbitDecelSection
 
-      .dsection Unsorted9BE40BSection
+      .dsection StepTitleIntroScene7OrbitExpandSection
 
-      .dsection Unsorted9BE4DBSection
+      .dsection MirrorTitleIntroScene7OrbitSpritesSection
 
-      .dsection Unsorted9BE5B2Section
+      .dsection StartTitleIntroScene1BG2WaveHDMASection
 
-      .dsection Unsorted9BE697Section
+      .dsection StopTitleIntroScene1BG2WaveHDMASection
 
       .dsection TitleScenes9BE6DFSection
 
-      .dsection Unsorted9BE791Section
+      .dsection StopTitleIntroScene7BG2WaveHDMASection
 
-      .dsection Unsorted9BE7F2Section
+      .dsection StepTitleIntroScene7BG1WaveHDMASection
 
       .dsection TitleScenes9BE88ESection
 
       .dsection TitleScenes9BE8D7Section
 
-      .dsection Unsorted9BE9AESection
+      .dsection StartTitleIntroScene7CurtainHDMASection
 
-      .dsection Unsorted9BE9FDSection
+      .dsection StepTitleIntroScene7CurtainHDMASection
 
       .dsection TitleScenes9BEA5CSection
 
-      .dsection Unsorted9BEAA5Section
+      .dsection ClearTitleVBlankRoutinesSection
 
-      .dsection Unsorted9BEAB1Section
+      .dsection RunTitleVBlankRoutinesSection
 
-      .dsection Unsorted9BEAE8Section
+      .dsection DrawTitleSpriteAfterimageSection
 
-      .dsection Unsorted9BEDD7Section
+      .dsection StartTitleSpriteAfterimageSection
 
-      .dsection Unsorted9BEEB4Section
+      .dsection FadeTitleScreenTopEdgeSection
 
-      .dsection Unsorted9BF179Section
+      .dsection SetTitleEdgeBrightnessSection
 
       .dsection TitleScenes9BF1F4Section
 
-      .dsection Unsorted9BF218Section
+      .dsection TitleIntroScene8StartPaletteEffect2Section
 
-      .dsection Unsorted9BF23CSection
+      .dsection StartTitleIntroScene6ColdataFadeSection
 
-      .dsection Unsorted9BF297Section
+      .dsection WaitForVBlankStartSection
 
-      .dsection Unsorted9BF2AASection
+      .dsection WaitForVBlankEndSection
 
-      .dsection Unsorted9BF3F3Section
+      .dsection BuildTitleIntroScene7PaletteTableSection
 
-      .dsection Unsorted9BF49ESection
+      .dsection StartTitleIntroScene7PaletteFadeInSection
 
       .dsection TitleScenes9BF4BFSection
 
-      .dsection Unsorted9BF548Section
+      .dsection TitleIntroScene7FlashWhiteSection
 
       .dsection Data9BF56CSection
 
-      .dsection Unsorted9BF57ASection
+      .dsection StartTitleIntroScene7PaletteFadeOutSection
 
       .dsection TitleScenes9BF59ESection
 
-      .dsection Unsorted9BF651Section
+      .dsection StartTitleEdgeFadeSection
 
-      .dsection Table9BF69DSection
+      .dsection TitleLogoGlintScrollPPUConfigSection
 
-      .dsection Unsorted9BF6B1Section
+      .dsection StepTitleLogoGlintScrollSection
 
-      .dsection Table9BF715Section
+      .dsection TitleLogoBG3DriftPPUConfigSection
 
-      .dsection Unsorted9BF726Section
+      .dsection StepTitleLogoBG3DriftSection
 
-      .dsection Unsorted9BF77ASection
+      .dsection StartTitleLogoBG2RevealSection
 
       .dsection TitleScenes9BF7A3Section
 
@@ -7199,51 +6979,51 @@
 
       .dsection TitleScenes9BF9D5Section
 
-      .dsection Unsorted9BF9E3Section
+      .dsection QueueTitleLogoBG2TilemapUploadSection
 
       .dsection TitleScenes9BF9FASection
 
-      .dsection Unsorted9BFA11Section
+      .dsection StartTitleIntroScene8BG1ScrollSection
 
-      .dsection Unsorted9BFA2DSection
+      .dsection StepTitleIntroScene8BG1ScrollSection
 
-      .dsection Unsorted9BFA58Section
+      .dsection TitleFadeOutSetBG2SCSection
 
-      .dsection Table9BFA69Section
+      .dsection TitleFadeOutSetBG2SCPPUConfigSection
 
-      .dsection Unsorted9BFA6ESection
+      .dsection TitleFadeOutClearBG2TileBaseSection
 
-      .dsection Table9BFA7FSection
+      .dsection TitleFadeOutClearBG2TileBasePPUConfigSection
 
-      .dsection Unsorted9BFA85Section
+      .dsection TitleFadeOutShowBG2OnlySection
 
-      .dsection Table9BFA96Section
+      .dsection TitleFadeOutShowBG2OnlyPPUConfigSection
 
-      .dsection Unsorted9BFAA1Section
+      .dsection TitleFadeOutRestoreBG2SCSection
 
-      .dsection Table9BFAB2Section
+      .dsection TitleFadeOutRestoreBG2SCPPUConfigSection
 
-      .dsection Unsorted9BFAB7Section
+      .dsection AllowStartOnTitleSection
 
-      .dsection Table9BFB46Section
+      .dsection TitleDimmingPPUConfigSection
 
-      .dsection Unsorted9BFB5DSection
+      .dsection FinishDimmingTitleSection
 
-      .dsection Unsorted9BFB73Section
+      .dsection EnterTitlePhaseSection
 
-      .dsection Unsorted9BFB7ESection
+      .dsection PlayTitleIntroSongSection
 
-      .dsection Unsorted9BFB9FSection
+      .dsection PlayTitleIntroSong2Section
 
-      .dsection Unsorted9BFBA9Section
+      .dsection PlayTitleSongSection
 
-      .dsection Unsorted9BFBB0Section
+      .dsection PlayTitleIntroSound5Section
 
-      .dsection Unsorted9BFBC0Section
+      .dsection LoadOpeningLogoScreenSection
 
-      .dsection Unsorted9BFC8DSection
+      .dsection FlashToTitleScreenSection
 
-      .dsection Unsorted9BFD71Section
+      .dsection StartTitleLogoSprite1Section
 
       .dsection TitleData9BFE13Section
 
@@ -7282,8 +7062,8 @@
 
       g4bppWindowFrames .binary "gfx/ui/WindowFrames.4bpp" ; DD72B0
 
-      .dsection TableDD7EB0Section
-      .dsection TableDD7FB0Section
+      .dsection ChapterIntroAndUIBGPalettesSection
+      .dsection ItemIconPaletteSection
 
     .here
 
@@ -7593,420 +7373,415 @@
     * = $1E8000
     .logical $9E8000
 
-      .dsection Unsorted9E8000Section
+      .dsection ASMCStartDemoMapBattleSection
 
-      .dsection Unsorted9E800CSection
+      .dsection StartMapBattleAnimationSection
 
       .dsection Unreferenced9E8035Section
 
-      .dsection Unsorted9E805ESection
+      .dsection GetMapBattleFacingSection
 
-      .dsection Table9E80CBSection
+      .dsection MapBattleFacingOffsetsSection
 
-      .dsection Unsorted9E80F2Section
+      .dsection GetMapBattleFacingByAngleSection
 
-      .dsection Unsorted9E811FSection
+      .dsection SetMapMagicFlagsSection
 
-      .dsection Table9E826BSection
+      .dsection MapMagicEdgeMarginsSection
 
-      .dsection Unsorted9E8271Section
+      .dsection GetVisibleMapTileBoundsSection
 
-      .dsection Unsorted9E82AASection
+      .dsection MapBattleSetRoundSpriteScriptsSection
 
-      .dsection Unsorted9E832CSection
+      .dsection GetMapBattleRoundScriptsSection
 
-      .dsection Unsorted9E838BSection
+      .dsection InitMapBattleCombatantsSection
 
-      .dsection Unsorted9E85A4Section
+      .dsection GetMapBattleClassSpriteSection
 
-      .dsection Unsorted9E85DFSection
+      .dsection MapBattleFemaleClassSpritesSection
 
-      .dsection Unsorted9E86CFSection
+      .dsection GetMagicSwordMapEffectSection
 
-      .dsection Table9E8792Section
-      .dsection Table9E879CSection
+      .dsection MagicSwordMapEffectItemsSection
+      .dsection StatusSwordMapEffectItemsSection
 
-      .dsection Unsorted9E87A4Section
+      .dsection SelectMapBattleAttackerSpriteSection
 
-      .dsection Unsorted9E87CASection
+      .dsection SelectMapBattleDefenderSpriteSection
 
-      .dsection Table9E8863Section
+      .dsection MapBattleSpriteBufferOffsetsSection
 
-      .dsection Unsorted9E8867Section
+      .dsection MapBattleQueueSpriteDataSection
 
-      .dsection Unsorted9E88CESection
+      .dsection InitMapBattleSpriteInfosSection
 
-      .dsection Unsorted9E88F4Section
+      .dsection MapBattleSpriteInfoTemplateSection
 
-      .dsection Unsorted9E88FASection
+      .dsection QueueMapBattleSpriteGraphicsBodySection
 
-      .dsection Unsorted9E89F1Section
+      .dsection CreateMapBattleAttackerSpritesSection
 
-      .dsection Unsorted9E8D25Section
+      .dsection GetMapBattleUnitScreenPositionSection
 
-      .dsection Unsorted9E8D6CSection
+      .dsection UploadMapBattleSideTilesSection
 
-      .dsection Table9E8EC4Section
-      .dsection Table9E8F3ESection
+      .dsection MapBattleWeaponIconsSection
+      .dsection MapBattleWeaponIconColorsSection
 
-      .dsection Unsorted9E8F6ASection
+      .dsection MapBattleEndRoundScriptsSection
 
-      .dsection Table9E8FB2Section
+      .dsection MapBattleEndedRoundScriptTemplateSection
 
-      .dsection Unsorted9E8FB3Section
+      .dsection EndMapBattleRestoreMapSection
 
-      .dsection Table9E9123Section
-      .dsection Table9E914BSection
+      .dsection MapBattleRecoilOffsetsSection
+      .dsection MapBattleNoDamageRecoilOffsetsSection
 
-      .dsection Unsorted9E915BSection
+      .dsection MapBattleWhitenStruckSideSection
 
-      .dsection Unsorted9E9320Section
+      .dsection MapBattleSelectActiveUnitIfIdleSection
 
-      .dsection Unsorted9E9342Section
+      .dsection MapBattleStartLevelUpBannerSection
 
-      .dsection Table9E9480Section
-      .dsection Table9E94B6Section
-      .dsection Table9E94EASection
-      .dsection Table9E9504Section
+      .dsection LevelUpBannerXOffsetsSection
+      .dsection LevelUpBannerYOffsetsSection
+      .dsection LevelUpBannerSpacingSection
+      .dsection LevelUpBannerTilesSection
 
-      .dsection Unsorted9E950ASection
+      .dsection GetMapBattleShiftYOffsetSection
 
-      .dsection Table9E964CSection
+      .dsection MapBattleStatGainOrderSection
 
-      .dsection Unsorted9E965ESection
+      .dsection LoadStatGainGraphicsSection
 
-      .dsection Table9E973DSection
-      .dsection Table9E9787Section
+      .dsection StatGainYOffsetsSection
+      .dsection StatGainNameTilesSection
 
-      .dsection Unsorted9E978DSection
+      .dsection DrawStatGainPlusSection
 
-      .dsection Table9E98B0Section
+      .dsection ObtainedItemTextSection
 
-      .dsection Unsorted9E98C4Section
+      .dsection ShowWeaponBrokeTextSection
 
-      .dsection Table9E9910Section
+      .dsection WeaponBrokeTextSection
 
-      .dsection Unsorted9E9928Section
+      .dsection ShowObtainedGoldTextSection
 
-      .dsection Table9E994FSection
+      .dsection ObtainedGoldTextSection
 
-      .dsection Unsorted9E9967Section
+      .dsection ShowGoldStolenTextSection
 
-      .dsection Table9E998ESection
+      .dsection GoldStolenTextSection
 
-      .dsection Unsorted9E99A4Section
+      .dsection ShowGoldAmountTextSection
 
-      .dsection Unsorted9E99F7Section
+      .dsection UploadMapBattleShadowTilesSection
 
-      .dsection Unsorted9E9A34Section
+      .dsection StartVillageRaidAnimationSection
 
       .dsection ProcScript9E9A43Section
 
-      .dsection Unsorted9E9A4BSection
+      .dsection ProcVillageRaidInitSection
 
-      .dsection Table9E9B50Section
+      .dsection VillageRaidFireTileOffsetsSection
 
-      .dsection Unsorted9E9B68Section
+      .dsection ProcVillageRaidWaitRoundStartSection
 
-      .dsection Unsorted9E9B82Section
+      .dsection ProcVillageRaidRunRoundSection
 
       .dsection ProcScript9E9BE1Section
 
-      .dsection Unsorted9E9C70Section
+      .dsection VillageRaidStartFireEffectSection
 
       .dsection Unreferenced9E9C94Section
 
-      .dsection Unsorted9E9CB9Section
+      .dsection ProcVillageRaidQueueGraphicsSection
 
-      .dsection Unsorted9E9D3BSection
+      .dsection MapActionQueueEffectGraphicsSection
 
-      .dsection Unsorted9E9D76Section
+      .dsection MapActionUploadEffectGraphicsSection
 
-      .dsection Table9E9DB9Section
+      .dsection MapActionEffectOAMPaletteSection
 
-      .dsection Unsorted9E9DD9Section
+      .dsection ProcVillageRaidQueueSpriteDataSection
 
-      .dsection Unsorted9E9E61Section
+      .dsection VillageRaidCreateFireSpriteSection
 
       .dsection Unreferenced9E9ECFSection
 
-      .dsection Unsorted9E9F26Section
+      .dsection EndVillageRaidSpritesSection
 
-      .dsection Table9EA085Section
+      .dsection MapBattleDefeatBlinkTimesSection
 
-      .dsection Unsorted9EA096Section
+      .dsection MapBattleStartBattleQuoteSection
 
-      .dsection Unsorted9EA1D7Section
+      .dsection FreeMapBattleSpritesSection
 
-      .dsection Unsorted9EA238Section
+      .dsection MapBattleNextRoundSection
 
       .dsection ProcScript9EA334Section
 
-      .dsection Unsorted9EA33CSection
+      .dsection ProcMapBattleBallistaBoltInitSection
 
       .dsection ProcScript9EA404Section
 
-      .dsection Unsorted9EA417Section
+      .dsection CreateBallistaBoltSpriteSection
 
-      .dsection Table9EA50FSection
-      .dsection Table9EA513Section
-      .dsection Unsorted9EA523Section
+      .dsection BallistaBoltTileBasesSection
+      .dsection BallistaBoltXOffsetsSection
+      .dsection StepBallistaBoltSection
 
-      .dsection Unsorted9EA67CSection
+      .dsection SetBallistaBoltVelocitySection
 
-      .dsection Table9EA84ASection
+      .dsection MapBattleCameraMarginsSection
 
-      .dsection Unsorted9EA850Section
+      .dsection CheckMapMagicEffectsMoveCameraSection
 
-      .dsection Table9EA873Section
+      .dsection MapMagicEffectMovesCameraSection
 
-      .dsection Unsorted9EA89FSection
+      .dsection MapBattleMoveCameraSection
 
-      .dsection Table9EAA5CSection
+      .dsection MapBattleSkillPaletteEffectSection
 
-      .dsection Table9EAA61Section
+      .dsection MapBattleSkillColorsSection
 
-      .dsection Unsorted9EAB21Section
+      .dsection MapBattleEndSkillEffectSection
 
-      .dsection Table9EABBDSection
+      .dsection MapMagicEffectNoHPChangeSection
 
-      .dsection Unsorted9EABE9Section
+      .dsection CheckSideHasRoundSection
 
-      .dsection Unsorted9EAC49Section
+      .dsection SetMapMagicFlagsFromBit7Section
 
-      .dsection Unsorted9EAC5ASection
+      .dsection StartMapActionRewardsSection
 
-      .dsection Unsorted9EACAFSection
+      .dsection ProcMapActionRewardsCodeSection
 
-      .dsection Unsorted9EAD7BSection
+      .dsection ProcMapActionRewardsRestoreGraphicsSection
 
-      .dsection Unsorted9EADB4Section
+      .dsection ProcMapActionRewardsEndSection
 
-      .dsection Unsorted9EADD1Section
+      .dsection MapBattleOffsetShiftedSpritesSection
 
-      .dsection Table9EAEAFSection
+      .dsection MapBattleShiftSlideOutSection
 
-      .dsection Unsorted9EAECFSection
+      .dsection MapBattleSlideShiftedUnitBackSection
 
-      .dsection Table9EAF24Section
+      .dsection MapBattleShiftSlideBackSection
 
-      .dsection Unsorted9EAF44Section
+      .dsection MapBattleStartWarpArrivalSection
 
       .dsection ProcScript9EAF98Section
 
-      .dsection Unsorted9EAFA0Section
+      .dsection ProcMapBattleWarpArrivalInitSection
 
       .dsection ProcScript9EAFF8Section
 
-      .dsection Unsorted9EB01BSection
+      .dsection MapBattleCheckWarpDestinationShownSection
 
-      .dsection Table9EB0ECSection
+      .dsection MapBattleDefeatCrySoundsSection
 
-      .dsection Unsorted9EB0F2Section
+      .dsection GetDefeatedUnitVoiceSection
 
-      .dsection Table9EB15ASection
+      .dsection MapBattleChildCrySoundsSection
 
-      .dsection Unsorted9EB160Section
+      .dsection MapBattlePlayHitSoundSection
 
-      .dsection Unsorted9EB2BASection
+      .dsection PlayMapBattleHitSFXSection
 
-      .dsection Unsorted9EB345Section
+      .dsection MapBattlePlaySound48Section
 
       .dsection Unreferenced9EB3C8Section
 
-      .dsection Unsorted9EB3DESection
+      .dsection MapBattlePlaySound32Section
 
+      .dsection PlayGoldObtainedJingleSection
 
-      .dsection Unsorted9EB491Section
+      .dsection GetSoundPanFromXPixelSection
 
-      .dsection Unsorted9EB4BBSection
-
-      .dsection Table9EB4C9Section
-      .dsection Table9EB4CDSection
-      .dsection Table9EB4D7Section
-      .dsection Table9EB4DBSection
-      .dsection Table9EB4DFSection
+      .dsection MapBattleSideGraphicsOffsetsSection
+      .dsection MapBattleWeaponTypeTileOffsetsSection
+      .dsection MapBattleSideFrameVRAMSection
+      .dsection MapBattleSideTileVRAMSection
+      .dsection MapBattleSpriteDMATableSection
 
       .dsection BattleMapSpriteDataSection
 
-      .dsection Unsorted9EC70BSection
+      .dsection ProcMapBattleSection
 
-      .dsection Unsorted9EC776Section
+      .dsection ProcMapBattleLoadCombatantsSection
 
-      .dsection Unsorted9EC79BSection
+      .dsection MapBattleWaitDecompressionSection
 
-      .dsection Unsorted9EC7B3Section
+      .dsection ProcMapBattleQueueSpriteDataSection
 
-      .dsection Unsorted9EC899Section
+      .dsection MapBattleWaitRoundStartSection
 
-      .dsection Unsorted9EC8B3Section
+      .dsection MapBattleReadNextRoundEntrySection
 
-      .dsection Unsorted9EC91ASection
+      .dsection MapBattleOpenExperienceWindowSection
 
-      .dsection Unsorted9EC98ASection
+      .dsection MapBattleEndSetCameraSection
 
-      .dsection Unsorted9EC9FDSection
+      .dsection QueueMapMagicBackgroundAllSection
 
-      .dsection Unsorted9ECABBSection
+      .dsection MapBattleReloadIconsSection
 
       .dsection ProcScript9ECAD2Section
 
-      .dsection Unsorted9ECEA0Section
-
+      .dsection MapBattleCheckExperienceSection
 
       .dsection ProcScript9ECEDDSection
 
-      .dsection Unsorted9ECEE5Section
+      .dsection ProcMapExperienceWindowEffectInitSection
 
-      .dsection Table9ECF72Section
+      .dsection MapExperienceWindowEffectItemsSection
 
-      .dsection Unsorted9ECF7ASection
+      .dsection ProcMapExperienceWindowEffectIdleSection
 
       .dsection ProcScript9ECF7BSection
 
-      .dsection Unsorted9ECFCDSection
+      .dsection ProcMapExperienceWindowEffectTriggerMagicSection
 
       .dsection Unreferenced9ED006Section
 
+      .dsection StartReturnHomeAnimationSection
 
-      .dsection Unsorted9ED07ASection
+      .dsection ProcReturnHomeSection
 
-      .dsection Unsorted9ED089Section
+      .dsection ProcWaitMapMagicStartCycleSection
 
-      .dsection Unsorted9ED1A1Section
+      .dsection ProcReturnHomeCodeSection
 
-      .dsection Unsorted9ED1F4Section
+      .dsection ProcReturnHomeQueueGraphicsSection
 
-      .dsection Unsorted9ED2B5Section
+      .dsection ProcReturnHomeQueueSpriteDataSection
 
-      .dsection Unsorted9ED337Section
+      .dsection ReturnHomeStartMagicRoundSection
 
-      .dsection Unsorted9ED372Section
+      .dsection EndReturnHomeSpritesSection
 
-      .dsection Unsorted9ED3C1Section
-
-      .dsection Unsorted9ED401Section
+      .dsection ReturnHomeCopySpriteSlotsToDefenderSection
 
       .dsection Unreferenced9ED412Section
 
-      .dsection Unsorted9ED42ASection
+      .dsection StartHolyWeaponShineSection
 
-      .dsection Unsorted9ED449Section
+      .dsection ProcHolyWeaponShineInitSection
 
       .dsection Unreferenced9ED528Section
 
-      .dsection Unsorted9ED535Section
+      .dsection ProcHolyWeaponShineIdleSection
 
-      .dsection Unsorted9ED609Section
+      .dsection ProcHolyWeaponShineQueueGraphicsSection
 
-      .dsection Unsorted9ED68BSection
+      .dsection ProcHolyWeaponShineQueueSpriteDataSection
 
-      .dsection Unsorted9ED6BASection
+      .dsection HolyWeaponShineClearRoundStateSection
 
       .dsection Unreferenced9ED72ASection
 
-      .dsection Unsorted9ED742Section
+      .dsection MapBattleStartPaviseSection
 
       .dsection ProcScript9ED78BSection
 
-      .dsection Unsorted9ED793Section
+      .dsection ProcMapBattlePaviseInitSection
 
       .dsection ProcScript9ED79FSection
 
-      .dsection Unsorted9ED7B7Section
+      .dsection MapBattleLoadPaviseGraphicsSection
 
-      .dsection Table9ED7E8Section
+      .dsection MapBattlePaviseColorsSection
 
-      .dsection Unsorted9ED808Section
+      .dsection MapBattleShowPaviseSection
 
       .dsection Data9ED900Section
 
-      .dsection Unsorted9EDAE7Section
+      .dsection StartGiveGoldAnimationSection
 
       .dsection ProcScript9EDAF6Section
 
-      .dsection Unsorted9EDAFESection
+      .dsection ProcGiveGoldInitSection
 
       .dsection ProcScript9EDC15Section
 
-      .dsection Unsorted9EDCD2Section
+      .dsection ProcGiveGoldQueueSpriteDataSection
 
-      .dsection Table9EDDC8Section
+      .dsection GiveGoldCoinOAMPaletteSection
 
-      .dsection Unsorted9EDDE8Section
+      .dsection GiveGoldCreateCoinSpriteSection
 
       .dsection Data9EDE89Section
 
-      .dsection Unsorted9EDF7FSection
+      .dsection StartScriptedCritEffectSection
 
       .dsection ProcScript9EDF8ESection
 
-      .dsection Unsorted9EDF96Section
+      .dsection ProcScriptedCritStartInitSection
 
-      .dsection Unsorted9EDFF8Section
+      .dsection ScriptedCritStartWaitEffectSection
 
       .dsection ProcScript9EE011Section
 
-      .dsection Unsorted9EE021Section
+      .dsection ScriptedCritStartBattleSection
 
-      .dsection Unsorted9EE02DSection
+      .dsection CreateScriptedCritEffectSection
 
       .dsection ProcScript9EE03CSection
 
-      .dsection Unsorted9EE044Section
+      .dsection ProcScriptedCritEffectInitSection
 
       .dsection ProcScript9EE092Section
 
-      .dsection Unsorted9EE0F1Section
+      .dsection DecompressScriptedCritSpritesSection
 
-      .dsection Table9EE11BSection
+      .dsection MapBattleScriptedCritSpritesSection
 
-      .dsection Unsorted9EE127Section
+      .dsection UploadScriptedCritSpritesSection
 
+      .dsection ScriptedCritSaveColorsSection
 
-      .dsection Unsorted9EE228Section
+      .dsection ScriptedCritEffectProcsSection
 
-      .dsection Table9EE2B2Section
+      .dsection ScriptedCritWaitTypeEffectSection
 
-      .dsection Unsorted9EE2BESection
-
-
-      .dsection Unsorted9EEC95Section
+      .dsection StartEventBerserkMagicEffectSection
 
       .dsection ProcScript9EECA4Section
 
-      .dsection Unsorted9EECACSection
+      .dsection ProcEventBerserkMagicEffectInitSection
 
       .dsection ProcScript9EED31Section
 
-      .dsection Unsorted9EED7CSection
+      .dsection SetEventBerserkMagicStartSection
 
-      .dsection Unsorted9EEDB5Section
+      .dsection SetUpDemoBattleASection
 
-      .dsection Unsorted9EEFF1Section
+      .dsection StartSoloMapBattleAnimationSection
 
-      .dsection Unsorted9EF1B5Section
+      .dsection MapBattleSignalEventMarkerSection
 
-      .dsection Unsorted9EF1D9Section
+      .dsection StartWarpAwayAnimationNoUnitSection
 
-      .dsection Unsorted9EF1FASection
+      .dsection StartWarpAwayAnimationSection
 
-      .dsection Unsorted9EF353Section
+      .dsection StartWarpInAnimationSection
 
-      .dsection Unsorted9EF37FSection
+      .dsection ProcWarpInSection
 
-      .dsection Unsorted9EF49ESection
+      .dsection ProcWarpInCodeSection
 
-      .dsection Unsorted9EF55BSection
+      .dsection WaitWarpDecompressionAndTimerSection
 
-      .dsection Unsorted9EF5D0Section
+      .dsection WaitMapAnimationSignalBit2Section
 
-      .dsection Unsorted9EF60FSection
+      .dsection StartBelhallaMagesAttackSection
       .dsection BelhallaMagesAttackSection
 
       .dsection ClearBelhallaMagesProcBit4Section
 
-      .dsection Unsorted9EF79DSection
+      .dsection SpawnNextBelhallaAttackingMageSection
 
       .dsection BelhallaAttackingMagePositionsSection
 
@@ -8014,13 +7789,13 @@
 
       .dsection ProcBelhallaAttackingMageInitSection
 
-      .dsection Unsorted9EF9DFSection
+      .dsection ProcBelhallaAttackingMageCycle2Section
 
-      .dsection Unsorted9EF9E0Section
+      .dsection ProcBelhallaAttackingMageCodeSection
 
-      .dsection Unsorted9EFA17Section
+      .dsection FillScriptedUnitMapActionSection
 
-      .dsection Unsorted9EFC47Section
+      .dsection GrayOutBelhallaBlastUnitsSection
 
       .fill $9E8000 + $8000 - *, $00
 
@@ -8034,57 +7809,57 @@
 
       .dsection Bank9FBuildStampSection
 
-      .dsection Unsorted9F8020Section
+      .dsection StartMapMagicEffectSection
 
       .dsection ProcScript9F805DSection
 
-      .dsection Unsorted9F8065Section
+      .dsection ProcMapMagicEffectCycleSection
 
       .dsection MapBattleMagicBackgroundsSection
 
-      .dsection Unsorted9F8253Section
+      .dsection PlayMapMagicSoundSection
 
-      .dsection Unsorted9F82A7Section
+      .dsection SetMapMagicCasterFacingSection
 
-      .dsection Unsorted9F82D7Section
+      .dsection CreateMapMagicProcSection
 
-      .dsection Unsorted9F8349Section
+      .dsection EndMapMagicEffectSection
 
-      .dsection Unsorted9F8398Section
+      .dsection CreateMapMagicActiveSpriteInlineSection
 
-      .dsection Unsorted9F83D0Section
+      .dsection SetMapMagicWindowLinesSection
 
-      .dsection Unsorted9F83F1Section
+      .dsection SetMapMagicLayerBlendingSection
 
-      .dsection Unsorted9F8414Section
+      .dsection SaveMapMagicScreenRegistersSection
 
-      .dsection Unsorted9F86B0Section
+      .dsection CheckMapMagicDecompressionDoneSection
 
-      .dsection Unsorted9F86BFSection
+      .dsection LoadMapMagicSpritesSection
 
       .dsection MapBattleMagicSpritesSection
 
       .dsection MapBattleMagicPalettes9F8800Section
 
-      .dsection Unsorted9F88C0Section
+      .dsection MapMagicSpritePalette9F88C0UnusedSection
 
-      .dsection Unsorted9F8900Section
+      .dsection SelectMapMagicEffectForRoundSection
 
-      .dsection Unsorted9F8943Section
+      .dsection QueueMapMagicDMAListSection
 
-      .dsection Unsorted9F8999Section
+      .dsection MoveActiveSpriteByVelocitySection
 
-      .dsection Unsorted9F8A34Section
+      .dsection GetVectorAngleSection
 
-      .dsection Unsorted9F8A97Section
+      .dsection VectorAngleOctant0Section
 
-      .dsection Unsorted9F8B7ASection
-      .dsection Table9F8C3ASection
-      .dsection Unsorted9F8E3ASection
+      .dsection MultiplyByNegSinSection
+      .dsection MapMagicSineTableSection
+      .dsection CopyRAMColorsToPaletteBufferSection
 
       .dsection SavePaletteBufferColorsToRAMSection
 
-      .dsection Unsorted9F8EC0Section
+      .dsection DarkenBGPaletteRangeSection
 
       .dsection FadePaletteToColorsSection
 
@@ -8092,142 +7867,142 @@
 
       .dsection FadeFromToColorByStepSection
 
-      .dsection Unsorted9F9090Section
+      .dsection DarkenSNESColorSection
 
-      .dsection Unsorted9F90F2Section
+      .dsection DarkenMapMagicColorsSection
 
-      .dsection Unsorted9F90FESection
+      .dsection RestoreMapMagicColorsSection
 
-      .dsection Unsorted9F910ASection
+      .dsection SaveMapMagicColorsSection
 
-      .dsection Unsorted9F9217Section
+      .dsection StartMapMagicVillageFireSection
 
-      .dsection Unsorted9F924BSection
+      .dsection ProcMapMagicVillageFireSection
 
-      .dsection Unsorted9F9253Section
+      .dsection MapMagicVillageFireInitSection
 
-      .dsection Unsorted9F926ESection
+      .dsection MapMagicVillageFireWaitSection
 
-      .dsection Unsorted9F92D2Section
+      .dsection MapMagicFireProcInitSection
 
-      .dsection Unsorted9F92F3Section
+      .dsection MapMagicFireWaitHitSection
 
-      .dsection Unsorted9F9341Section
+      .dsection MapMagicVillageFireSpawnEffectsSection
 
-      .dsection Table9F936CSection
+      .dsection MapMagicFireSpriteInfoSection
 
-      .dsection Unsorted9F9378Section
+      .dsection MapMagicFireSpriteDummyInitSection
 
-      .dsection Unsorted9F94FESection
+      .dsection MapMagicFireballSpriteSignalElfireSection
 
-      .dsection Unsorted9F9691Section
+      .dsection MapMagicFireStepPaletteAnimSection
 
-      .dsection Unsorted9F9954Section
+      .dsection StartMapMagicHealSection
 
-      .dsection Unsorted9F9965Section
+      .dsection StartMapMagicMendSection
 
-      .dsection Unsorted9F9976Section
+      .dsection StartMapMagicRecoverSection
 
-      .dsection Unsorted9F9987Section
+      .dsection StartMapMagicPhysicSection
 
-      .dsection Unsorted9F999ESection
+      .dsection MapMagicHealingInitBlendingAndHDMASection
 
-      .dsection Unsorted9F99CESection
+      .dsection MapMagicHealingInitSection
 
-      .dsection Unsorted9F9A2BSection
+      .dsection ProcMapMagicFortifySection
 
-      .dsection Unsorted9F9ABFSection
+      .dsection MapMagicHealingStepPaletteAnimSection
 
-      .dsection Unsorted9FDB68Section
+      .dsection HDMAMapMagicNoOp1Section
 
-      .dsection Unsorted9FDB8BSection
+      .dsection HDMAMapMagicSetOffsetType1Section
 
-      .dsection Unsorted9FDBC4Section
+      .dsection HDMAMapMagicSetOffsetType2Section
 
-      .dsection Unsorted9FDBFDSection
+      .dsection HDMAMapMagicSetOffsetType3Section
 
-      .dsection Unsorted9FDC40Section
+      .dsection HDMAMapMagicSetOffsetType4Section
 
-      .dsection Unsorted9FDC83Section
+      .dsection HDMAMapMagicCenterOnTargetInitSection
 
-      .dsection Unsorted9FDEE3Section
+      .dsection HDMAMapMagicWaveInitSection
 
-      .dsection Unsorted9FE006Section
+      .dsection HDMAMapMagicBuildWaveMed1Section
 
-      .dsection Unsorted9FE824Section
+      .dsection MapMagicBuildForsetiWindowHDMASection
 
-      .dsection Unsorted9FEA0CSection
+      .dsection MapMagicCalcStaffCircleRowSection
 
-      .dsection Unsorted9FEA52Section
+      .dsection MapMagicBuildCircleWindowHDMASection
 
-      .dsection Unsorted9FEBA7Section
+      .dsection ProcMapMagicEffectInitSection
 
-      .dsection Unsorted9FEBA8Section
+      .dsection MapMagicUnusedStubSection
 
       .dsection ProcScript9FEBA9Section
 
-      .dsection Unsorted9FECB2Section
+      .dsection MapMagicClearWindowBuffersSection
 
-      .dsection Unsorted9FED29Section
+      .dsection MapMagicAuraWindowInitSection
 
-      .dsection Unsorted9FED5ASection
+      .dsection MapMagicCircleWindowInitSection
 
-      .dsection Unsorted9FEE45Section
+      .dsection MapMagicMjolnirWindowCycleSection
 
-      .dsection Unsorted9FF060Section
+      .dsection MapMagicFireWindowCycleSection
 
-      .dsection Unsorted9FF0DCSection
+      .dsection MapMagicStaffWindowInitSection
 
-      .dsection Unsorted9FF100Section
+      .dsection MapMagicStaffWindowWaitGrowSection
 
-      .dsection Unsorted9FF1BCSection
+      .dsection MapMagicForsetiWindowCycleSection
 
-      .dsection Unsorted9FF250Section
+      .dsection MapMagicAuraDrawMaskSection
 
-      .dsection Unsorted9FF376Section
+      .dsection MapMagicAuraDrawMaskRowsSection
 
-      .dsection Unsorted9FF3EDSection
+      .dsection MapMagicGetOctantAngleSection
 
-      .dsection Table9FF448Section
+      .dsection MapMagicDivideAngleOctantJumpTableSection
 
-      .dsection Unsorted9FF450Section
+      .dsection MapMagicAngleOctant0Section
 
-      .dsection Unsorted9FF487Section
-      .dsection Unsorted9FF495Section
-      .dsection Unsorted9FF4A6Section
-      .dsection Unsorted9FF4B7Section
+      .dsection MapMagicAngleOctant4Section
+      .dsection MapMagicAngleOctant5Section
+      .dsection MapMagicAngleOctant6Section
+      .dsection MapMagicAngleOctant7Section
 
-      .dsection Unsorted9FF4C5Section
+      .dsection StartMapMagicCutsceneSeqSection
 
-      .dsection Unsorted9FF4D6Section
+      .dsection ProcMapMagicCutsceneSeqSection
 
-      .dsection Unsorted9FF4DESection
+      .dsection ProcMapMagicCutsceneSeqInitSection
 
-      .dsection Unsorted9FF59DSection
+      .dsection ProcMapMagicCutsceneSeqCodeSection
 
-      .dsection Unsorted9FF65ASection
+      .dsection MapMagicCutscenePlayCastSoundSection
 
-      .dsection Unsorted9FF67DSection
+      .dsection MapMagicCutsceneWaitSoundSection
 
       .dsection Data9FF729Section
 
-      .dsection Unsorted9FF749Section
+      .dsection MapMagicCutsceneSetupSpritesSection
 
-      .dsection Unsorted9FF98ESection
+      .dsection MapMagicColorRangesUnusedSection
 
-      .dsection Unsorted9FF9A8Section
+      .dsection MapMagicCutsceneStartShakeSection
 
-      .dsection Unsorted9FF9B9Section
+      .dsection ProcMapMagicCutsceneShakeSection
 
-      .dsection Unsorted9FF9C1Section
+      .dsection ProcMapMagicCutsceneShakeInitSection
 
       .dsection Data9FFA78Section
 
-      .dsection Unsorted9FFA98Section
+      .dsection ProcMapMagicCutsceneShakeCodeSection
 
-      .dsection Unsorted9FFA9ASection
+      .dsection MapMagicCutsceneSetScrollUnusedSection
 
-      .dsection Unsorted9FFAB4Section
+      .dsection MapMagicCutsceneStopShakeSection
 
       g4bppMapBattlePavise .binary "gfx/ui/MapBattlePavise.4bpp", 0, $0400 ; 9F/FC00
 
@@ -8496,7 +8271,7 @@
 
       .dsection BackgroundPalettesE027FFSection
 
-      .dsection TableE0283FSection
+      .dsection OpeningLogoPalette1Section
 
       .dsection DataE0285DSection
 
@@ -9567,98 +9342,6 @@
       .fill 5120, $00
 
     .here
-
-    * = $0CDFE0
-    .logical $8CDFE0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE0E0
-    .logical $8CE0E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE1E0
-    .logical $8CE1E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE2E0
-    .logical $8CE2E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE3E0
-    .logical $8CE3E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE4E0
-    .logical $8CE4E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE5E0
-    .logical $8CE5E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE6E0
-    .logical $8CE6E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE7E0
-    .logical $8CE7E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE8E0
-    .logical $8CE8E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CE9E0
-    .logical $8CE9E0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CEAE0
-    .logical $8CEAE0
-
-      .fill 32, $00
-
-    .here
-
-    * = $0CFFC7
-    .logical $8CFFC7
-
-      .fill 57, $00
-
-    .here
-
     * = $146B27
     .logical $D46B27
 

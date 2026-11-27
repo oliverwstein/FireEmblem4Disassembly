@@ -240,7 +240,7 @@
     .endsection HardwareResetRegistersSection
 
 
-    .section Unsorted808C50Section
+    .section InitPPURegistersSection
 
       .al
       .xl
@@ -354,10 +354,10 @@
 
         ; 80/8D56
 
-    .endsection Unsorted808C50Section
+    .endsection InitPPURegistersSection
 
 
-    .section Unsorted80C212Section
+    .section ResetPPUAndBuffersMode09Section
 
       .al
       .xl
@@ -495,6 +495,6 @@
 
         ; 80/C32C
 
-    .endsection Unsorted80C212Section
+    .endsection ResetPPUAndBuffersMode09Section
 
 

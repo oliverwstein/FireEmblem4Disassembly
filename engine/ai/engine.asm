@@ -471,7 +471,7 @@
     .endsection AICleverModeSection
 
 
-    .section Unsorted869CCCSection
+    .section ClearAIEngineRAMSection
 
       .al
       .xl
@@ -510,10 +510,10 @@
 
         ; 86/9CE4
 
-    .endsection Unsorted869CCCSection
+    .endsection ClearAIEngineRAMSection
 
 
-    .section Unsorted869CE4Section
+    .section EnableAIEngineCycleSection
 
       .al
       .xl
@@ -595,6 +595,6 @@
 
         ; 86/9D1B
 
-    .endsection Unsorted869CE4Section
+    .endsection EnableAIEngineCycleSection
 
 

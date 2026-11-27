@@ -165,10 +165,17 @@
 
         .word $0000, $001A, $0017, $001C, $001A
 
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8AF263 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/F263
+      aDecompressionDMAEntry8AF26B .structDecompressionDMAEntry g4bppcDepotBGTiles, $1000, $0000 ; 8A/F26B
+      aDecompressionDMAEntry8AF273 .structDecompressionDMAEntry acCastleShopAndArenaBG1Tilemap, $0800, $2800 ; 8A/F273
+      aDecompressionDMAEntry8AF27B .structDecompressionDMAEntry acCastleFacilityBG2Tilemap, $0800, $2C00 ; 8A/F27B
+
     .endsection DepotScreenSetupSection
 
 
-    .section Unsorted8AF283Section
+    .section DepotScreenStepSection
 
       .al
       .xl
@@ -223,10 +230,10 @@
 
         ; 8A/F2C7
 
-    .endsection Unsorted8AF283Section
+    .endsection DepotScreenStepSection
 
 
-    .section Table8AF2C7Section
+    .section DepotStepHandlersSection
 
       .al
       .xl
@@ -248,10 +255,10 @@
         .word <>rsDepotAfterDeposit
         .word <>rsDepotLeave
 
-    .endsection Table8AF2C7Section
+    .endsection DepotStepHandlersSection
 
 
-    .section Unsorted8AF2E1Section
+    .section DepotGreetSection
 
       .al
       .xl
@@ -488,10 +495,10 @@
 
         ; 8A/F475
 
-    .endsection Unsorted8AF2E1Section
+    .endsection DepotGreetSection
 
 
-    .section Table8AF475Section
+    .section DepotOptionsTextSection
 
       .al
       .xl
@@ -504,10 +511,10 @@
         .enc "none"
 
 
-    .endsection Table8AF475Section
+    .endsection DepotOptionsTextSection
 
 
-    .section Unsorted8AF4A1Section
+    .section DepotOpenWithdrawListSection
 
       .al
       .xl
@@ -532,10 +539,10 @@
 
         ; 8A/F4B8
 
-    .endsection Unsorted8AF4A1Section
+    .endsection DepotOpenWithdrawListSection
 
 
-    .section Unsorted8AF4B8Section
+    .section DepotWithdrawListInputSection
 
       .al
       .xl
@@ -619,10 +626,10 @@
 
         ; 8A/F556
 
-    .endsection Unsorted8AF4B8Section
+    .endsection DepotWithdrawListInputSection
 
 
-    .section Unsorted8AF556Section
+    .section DepotConfirmWithdrawSection
 
       .al
       .xl
@@ -738,10 +745,10 @@
 
         ; 8A/F634
 
-    .endsection Unsorted8AF556Section
+    .endsection DepotConfirmWithdrawSection
 
 
-    .section Unsorted8AF634Section
+    .section DepotAfterWithdrawSection
 
       .al
       .xl
@@ -801,10 +808,10 @@
 
         ; 8A/F6A1
 
-    .endsection Unsorted8AF634Section
+    .endsection DepotAfterWithdrawSection
 
 
-    .section Unsorted8AF6A1Section
+    .section DepotLeaveWithdrawListSection
 
       .al
       .xl
@@ -841,10 +848,10 @@
 
         ; 8A/F6D5
 
-    .endsection Unsorted8AF6A1Section
+    .endsection DepotLeaveWithdrawListSection
 
 
-    .section Unsorted8AF6D5Section
+    .section DepotOpenDepositListSection
 
       .al
       .xl
@@ -869,10 +876,10 @@
 
         ; 8A/F6EC
 
-    .endsection Unsorted8AF6D5Section
+    .endsection DepotOpenDepositListSection
 
 
-    .section Unsorted8AF6ECSection
+    .section DepotDepositListInputSection
 
       .al
       .xl
@@ -957,10 +964,10 @@
 
         ; 8A/F791
 
-    .endsection Unsorted8AF6ECSection
+    .endsection DepotDepositListInputSection
 
 
-    .section Unsorted8AF791Section
+    .section DepotConfirmDepositSection
 
       .al
       .xl
@@ -1035,10 +1042,10 @@
 
         ; 8A/F818
 
-    .endsection Unsorted8AF791Section
+    .endsection DepotConfirmDepositSection
 
 
-    .section Unsorted8AF818Section
+    .section DepotAfterDepositSection
 
       .al
       .xl
@@ -1099,10 +1106,10 @@
 
         ; 8A/F885
 
-    .endsection Unsorted8AF818Section
+    .endsection DepotAfterDepositSection
 
 
-    .section Unsorted8AF885Section
+    .section DepotLeaveSection
 
       .al
       .xl
@@ -1128,4 +1135,4 @@
 
         ; 8A/F894
 
-    .endsection Unsorted8AF885Section
+    .endsection DepotLeaveSection

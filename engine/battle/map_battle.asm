@@ -97,7 +97,7 @@
     .endsection Data9CFC00Section
 
 
-    .section Unsorted9E8000Section
+    .section ASMCStartDemoMapBattleSection
 
       .al
       .xl
@@ -120,10 +120,10 @@
 
         ; 9E/800C
 
-    .endsection Unsorted9E8000Section
+    .endsection ASMCStartDemoMapBattleSection
 
 
-    .section Unsorted9E800CSection
+    .section StartMapBattleAnimationSection
 
       .al
       .xl
@@ -168,7 +168,7 @@
 
         ; 9E/8035
 
-    .endsection Unsorted9E800CSection
+    .endsection StartMapBattleAnimationSection
 
 
     .section Unreferenced9E8035Section
@@ -213,7 +213,7 @@
         ; 9E/805E
 
     .endsection Unreferenced9E8035Section
-    .section Unsorted9E805ESection
+    .section GetMapBattleFacingSection
 
       .al
       .xl
@@ -301,10 +301,10 @@
 
         ; 9E/80CB
 
-    .endsection Unsorted9E805ESection
+    .endsection GetMapBattleFacingSection
 
 
-    .section Table9E80CBSection
+    .section MapBattleFacingOffsetsSection
 
       .al
       .xl
@@ -319,10 +319,10 @@
 
         ; 9E/80F2
 
-    .endsection Table9E80CBSection
+    .endsection MapBattleFacingOffsetsSection
 
 
-    .section Unsorted9E80F2Section
+    .section GetMapBattleFacingByAngleSection
 
       .al
       .xl
@@ -366,10 +366,10 @@
 
         ; 9E/811F
 
-    .endsection Unsorted9E80F2Section
+    .endsection GetMapBattleFacingByAngleSection
 
 
-    .section Unsorted9E811FSection
+    .section SetMapMagicFlagsSection
 
       .al
       .xl
@@ -546,10 +546,10 @@
 
         ; 9E/826B
 
-    .endsection Unsorted9E811FSection
+    .endsection SetMapMagicFlagsSection
 
 
-    .section Table9E826BSection
+    .section MapMagicEdgeMarginsSection
 
       .al
       .xl
@@ -562,10 +562,10 @@
 
         ; 9E/8271
 
-    .endsection Table9E826BSection
+    .endsection MapMagicEdgeMarginsSection
 
 
-    .section Unsorted9E8271Section
+    .section GetVisibleMapTileBoundsSection
 
       .al
       .xl
@@ -623,10 +623,10 @@
 
         ; 9E/82AA
 
-    .endsection Unsorted9E8271Section
+    .endsection GetVisibleMapTileBoundsSection
 
 
-    .section Unsorted9E82AASection
+    .section MapBattleSetRoundSpriteScriptsSection
 
       .al
       .xl
@@ -700,10 +700,10 @@
 
         ; 9E/832C
 
-    .endsection Unsorted9E82AASection
+    .endsection MapBattleSetRoundSpriteScriptsSection
 
 
-    .section Unsorted9E832CSection
+    .section GetMapBattleRoundScriptsSection
 
       .al
       .xl
@@ -780,10 +780,10 @@
 
         ; 9E/838B
 
-    .endsection Unsorted9E832CSection
+    .endsection GetMapBattleRoundScriptsSection
 
 
-    .section Unsorted9E838BSection
+    .section InitMapBattleCombatantsSection
 
       .al
       .xl
@@ -1050,10 +1050,10 @@
 
         ; 9E/85A4
 
-    .endsection Unsorted9E838BSection
+    .endsection InitMapBattleCombatantsSection
 
 
-    .section Unsorted9E85A4Section
+    .section GetMapBattleClassSpriteSection
 
       .al
       .xl
@@ -1117,10 +1117,10 @@
 
         .databank 0
 
-    .endsection Unsorted9E85A4Section
+    .endsection GetMapBattleClassSpriteSection
 
 
-    .section Unsorted9E85DFSection
+    .section MapBattleFemaleClassSpritesSection
 
       .al
       .xl
@@ -1312,10 +1312,10 @@
 
       ; 9E/86CF
 
-    .endsection Unsorted9E85DFSection
+    .endsection MapBattleFemaleClassSpritesSection
 
 
-    .section Unsorted9E86CFSection
+    .section GetMagicSwordMapEffectSection
 
       .al
       .xl
@@ -1430,10 +1430,10 @@
 
         ; 9E/8792
 
-    .endsection Unsorted9E86CFSection
+    .endsection GetMagicSwordMapEffectSection
 
 
-    .section Table9E8792Section
+    .section MagicSwordMapEffectItemsSection
 
       .al
       .xl
@@ -1451,10 +1451,10 @@
 
         ; 9E/879C
 
-    .endsection Table9E8792Section
+    .endsection MagicSwordMapEffectItemsSection
 
 
-    .section Table9E879CSection
+    .section StatusSwordMapEffectItemsSection
 
       .al
       .xl
@@ -1471,10 +1471,10 @@
 
         ; 9E/87A4
 
-    .endsection Table9E879CSection
+    .endsection StatusSwordMapEffectItemsSection
 
 
-    .section Unsorted9E87A4Section
+    .section SelectMapBattleAttackerSpriteSection
 
       .al
       .xl
@@ -1507,10 +1507,10 @@
 
         ; 9E/87CA
 
-    .endsection Unsorted9E87A4Section
+    .endsection SelectMapBattleAttackerSpriteSection
 
 
-    .section Unsorted9E87CASection
+    .section SelectMapBattleDefenderSpriteSection
 
       .al
       .xl
@@ -1613,10 +1613,10 @@
 
         ; 9E/8863
 
-    .endsection Unsorted9E87CASection
+    .endsection SelectMapBattleDefenderSpriteSection
 
 
-    .section Table9E8863Section
+    .section MapBattleSpriteBufferOffsetsSection
 
       .al
       .xl
@@ -1629,10 +1629,10 @@
 
         ; 9E/8867
 
-    .endsection Table9E8863Section
+    .endsection MapBattleSpriteBufferOffsetsSection
 
 
-    .section Unsorted9E8867Section
+    .section MapBattleQueueSpriteDataSection
 
       .al
       .xl
@@ -1705,10 +1705,10 @@
 
         .databank 0
 
-    .endsection Unsorted9E8867Section
+    .endsection MapBattleQueueSpriteDataSection
 
 
-    .section Unsorted9E88CESection
+    .section InitMapBattleSpriteInfosSection
 
       .al
       .xl
@@ -1741,10 +1741,10 @@
 
         .databank 0
 
-    .endsection Unsorted9E88CESection
+    .endsection InitMapBattleSpriteInfosSection
 
 
-    .section Unsorted9E88F4Section
+    .section MapBattleSpriteInfoTemplateSection
 
       .al
       .xl
@@ -1769,10 +1769,10 @@
 
         .databank 0
 
-    .endsection Unsorted9E88F4Section
+    .endsection MapBattleSpriteInfoTemplateSection
 
 
-    .section Unsorted9E88FASection
+    .section QueueMapBattleSpriteGraphicsBodySection
 
       .al
       .xl
@@ -1914,10 +1914,10 @@
 
         ; 9E/89F1
 
-    .endsection Unsorted9E88FASection
+    .endsection QueueMapBattleSpriteGraphicsBodySection
 
 
-    .section Unsorted9E89F1Section
+    .section CreateMapBattleAttackerSpritesSection
 
       .al
       .xl
@@ -2307,10 +2307,10 @@
 
         ; 9E/8D25
 
-    .endsection Unsorted9E89F1Section
+    .endsection CreateMapBattleAttackerSpritesSection
 
 
-    .section Unsorted9E8D25Section
+    .section GetMapBattleUnitScreenPositionSection
 
       .al
       .xl
@@ -2369,10 +2369,10 @@
 
         ; 9E/8D6C
 
-    .endsection Unsorted9E8D25Section
+    .endsection GetMapBattleUnitScreenPositionSection
 
 
-    .section Unsorted9E8D6CSection
+    .section UploadMapBattleSideTilesSection
 
       .al
       .xl
@@ -2610,10 +2610,10 @@
 
         ; 9E/8EC4
 
-    .endsection Unsorted9E8D6CSection
+    .endsection UploadMapBattleSideTilesSection
 
 
-    .section Table9E8EC4Section
+    .section MapBattleWeaponIconsSection
 
       .al
       .xl
@@ -2633,10 +2633,10 @@
 
         ; 9E/8F3E
 
-    .endsection Table9E8EC4Section
+    .endsection MapBattleWeaponIconsSection
 
 
-    .section Table9E8F3ESection
+    .section MapBattleWeaponIconColorsSection
 
       .al
       .xl
@@ -2651,10 +2651,10 @@
 
         ; 9E/8F6A
 
-    .endsection Table9E8F3ESection
+    .endsection MapBattleWeaponIconColorsSection
 
 
-    .section Unsorted9E8F6ASection
+    .section MapBattleEndRoundScriptsSection
 
       .al
       .xl
@@ -2694,10 +2694,10 @@
 
         ; 9E/8FB2
 
-    .endsection Unsorted9E8F6ASection
+    .endsection MapBattleEndRoundScriptsSection
 
 
-    .section Table9E8FB2Section
+    .section MapBattleEndedRoundScriptTemplateSection
 
       .al
       .xl
@@ -2710,10 +2710,10 @@
 
         ; 9E/8FB3
 
-    .endsection Table9E8FB2Section
+    .endsection MapBattleEndedRoundScriptTemplateSection
 
 
-    .section Unsorted9E8FB3Section
+    .section EndMapBattleRestoreMapSection
 
       .al
       .xl
@@ -2951,10 +2951,10 @@
 
         ; 9E/9123
 
-    .endsection Unsorted9E8FB3Section
+    .endsection EndMapBattleRestoreMapSection
 
 
-    .section Table9E9123Section
+    .section MapBattleRecoilOffsetsSection
 
       .al
       .xl
@@ -2969,10 +2969,10 @@
 
         ; 9E/914B
 
-    .endsection Table9E9123Section
+    .endsection MapBattleRecoilOffsetsSection
 
 
-    .section Table9E914BSection
+    .section MapBattleNoDamageRecoilOffsetsSection
 
       .al
       .xl
@@ -2985,10 +2985,10 @@
 
         ; 9E/915B
 
-    .endsection Table9E914BSection
+    .endsection MapBattleNoDamageRecoilOffsetsSection
 
 
-    .section Unsorted9E915BSection
+    .section MapBattleWhitenStruckSideSection
 
       .al
       .xl
@@ -3288,10 +3288,10 @@
 
         ; 9E/9320
 
-    .endsection Unsorted9E915BSection
+    .endsection MapBattleWhitenStruckSideSection
 
 
-    .section Unsorted9E9320Section
+    .section MapBattleSelectActiveUnitIfIdleSection
 
       .al
       .xl
@@ -3328,10 +3328,10 @@
 
         ; 9E/9342
 
-    .endsection Unsorted9E9320Section
+    .endsection MapBattleSelectActiveUnitIfIdleSection
 
 
-    .section Unsorted9E9342Section
+    .section MapBattleStartLevelUpBannerSection
 
       .al
       .xl
@@ -3552,10 +3552,10 @@
 
         ; 9E/9480
 
-    .endsection Unsorted9E9342Section
+    .endsection MapBattleStartLevelUpBannerSection
 
 
-    .section Table9E9480Section
+    .section LevelUpBannerXOffsetsSection
 
       .al
       .xl
@@ -3571,10 +3571,10 @@
 
         ; 9E/94B6
 
-    .endsection Table9E9480Section
+    .endsection LevelUpBannerXOffsetsSection
 
 
-    .section Table9E94B6Section
+    .section LevelUpBannerYOffsetsSection
 
       .al
       .xl
@@ -3590,10 +3590,10 @@
 
         ; 9E/94EA
 
-    .endsection Table9E94B6Section
+    .endsection LevelUpBannerYOffsetsSection
 
 
-    .section Table9E94EASection
+    .section LevelUpBannerSpacingSection
 
       .al
       .xl
@@ -3607,10 +3607,10 @@
 
         ; 9E/9504
 
-    .endsection Table9E94EASection
+    .endsection LevelUpBannerSpacingSection
 
 
-    .section Table9E9504Section
+    .section LevelUpBannerTilesSection
 
       .al
       .xl
@@ -3623,10 +3623,10 @@
 
         ; 9E/950A
 
-    .endsection Table9E9504Section
+    .endsection LevelUpBannerTilesSection
 
 
-    .section Unsorted9E950ASection
+    .section GetMapBattleShiftYOffsetSection
 
       .al
       .xl
@@ -3820,10 +3820,10 @@
 
         ; 9E/964C
 
-    .endsection Unsorted9E950ASection
+    .endsection GetMapBattleShiftYOffsetSection
 
 
-    .section Table9E964CSection
+    .section MapBattleStatGainOrderSection
 
       .al
       .xl
@@ -3837,10 +3837,10 @@
 
         ; 9E/965E
 
-    .endsection Table9E964CSection
+    .endsection MapBattleStatGainOrderSection
 
 
-    .section Unsorted9E965ESection
+    .section LoadStatGainGraphicsSection
 
       .al
       .xl
@@ -3987,10 +3987,10 @@
 
         ; 9E/973D
 
-    .endsection Unsorted9E965ESection
+    .endsection LoadStatGainGraphicsSection
 
 
-    .section Table9E973DSection
+    .section StatGainYOffsetsSection
 
       .al
       .xl
@@ -4007,10 +4007,10 @@
 
         ; 9E/9787
 
-    .endsection Table9E973DSection
+    .endsection StatGainYOffsetsSection
 
 
-    .section Table9E9787Section
+    .section StatGainNameTilesSection
 
       .al
       .xl
@@ -4023,10 +4023,10 @@
 
         ; 9E/978D
 
-    .endsection Table9E9787Section
+    .endsection StatGainNameTilesSection
 
 
-    .section Unsorted9E978DSection
+    .section DrawStatGainPlusSection
 
       .al
       .xl
@@ -4202,10 +4202,10 @@
 
         ; 9E/98B0
 
-    .endsection Unsorted9E978DSection
+    .endsection DrawStatGainPlusSection
 
 
-    .section Table9E98B0Section
+    .section ObtainedItemTextSection
 
       .al
       .xl
@@ -4218,10 +4218,10 @@
         .enc "none"
 
 
-    .endsection Table9E98B0Section
+    .endsection ObtainedItemTextSection
 
 
-    .section Unsorted9E98C4Section
+    .section ShowWeaponBrokeTextSection
 
       .al
       .xl
@@ -4270,10 +4270,10 @@
 
         ; 9E/9910
 
-    .endsection Unsorted9E98C4Section
+    .endsection ShowWeaponBrokeTextSection
 
 
-    .section Table9E9910Section
+    .section WeaponBrokeTextSection
 
       .al
       .xl
@@ -4286,10 +4286,10 @@
         .enc "none"
 
 
-    .endsection Table9E9910Section
+    .endsection WeaponBrokeTextSection
 
 
-    .section Unsorted9E9928Section
+    .section ShowObtainedGoldTextSection
 
       .al
       .xl
@@ -4322,10 +4322,10 @@
 
         ; 9E/994F
 
-    .endsection Unsorted9E9928Section
+    .endsection ShowObtainedGoldTextSection
 
 
-    .section Table9E994FSection
+    .section ObtainedGoldTextSection
 
       .al
       .xl
@@ -4338,10 +4338,10 @@
         .enc "none"
 
 
-    .endsection Table9E994FSection
+    .endsection ObtainedGoldTextSection
 
 
-    .section Unsorted9E9967Section
+    .section ShowGoldStolenTextSection
 
       .al
       .xl
@@ -4374,10 +4374,10 @@
 
         ; 9E/998E
 
-    .endsection Unsorted9E9967Section
+    .endsection ShowGoldStolenTextSection
 
 
-    .section Table9E998ESection
+    .section GoldStolenTextSection
 
       .al
       .xl
@@ -4390,10 +4390,10 @@
         .enc "none"
 
 
-    .endsection Table9E998ESection
+    .endsection GoldStolenTextSection
 
 
-    .section Unsorted9E99A4Section
+    .section ShowGoldAmountTextSection
 
       .al
       .xl
@@ -4453,10 +4453,10 @@
 
         ; 9E/99F7
 
-    .endsection Unsorted9E99A4Section
+    .endsection ShowGoldAmountTextSection
 
 
-    .section Unsorted9E99F7Section
+    .section UploadMapBattleShadowTilesSection
 
       .al
       .xl
@@ -4510,10 +4510,10 @@
 
         ; 9E/9A34
 
-    .endsection Unsorted9E99F7Section
+    .endsection UploadMapBattleShadowTilesSection
 
 
-    .section Unsorted9E9F26Section
+    .section EndVillageRaidSpritesSection
 
       .al
       .xl
@@ -4720,10 +4720,10 @@
 
         ; 9E/A085
 
-    .endsection Unsorted9E9F26Section
+    .endsection EndVillageRaidSpritesSection
 
 
-    .section Table9EA085Section
+    .section MapBattleDefeatBlinkTimesSection
 
       .al
       .xl
@@ -4737,10 +4737,10 @@
 
         ; 9E/A096
 
-    .endsection Table9EA085Section
+    .endsection MapBattleDefeatBlinkTimesSection
 
 
-    .section Unsorted9EA096Section
+    .section MapBattleStartBattleQuoteSection
 
       .al
       .xl
@@ -5036,10 +5036,10 @@
 
         ; 9E/A1D7
 
-    .endsection Unsorted9EA096Section
+    .endsection MapBattleStartBattleQuoteSection
 
 
-    .section Unsorted9EA1D7Section
+    .section FreeMapBattleSpritesSection
 
       .al
       .xl
@@ -5112,10 +5112,10 @@
 
         ; 9E/A238
 
-    .endsection Unsorted9EA1D7Section
+    .endsection FreeMapBattleSpritesSection
 
 
-    .section Unsorted9EA238Section
+    .section MapBattleNextRoundSection
 
       .al
       .xl
@@ -5261,7 +5261,7 @@
 
         ; 9E/A334
 
-    .endsection Unsorted9EA238Section
+    .endsection MapBattleNextRoundSection
 
 
     .section ProcScript9EA334Section
@@ -5276,7 +5276,7 @@
     .endsection ProcScript9EA334Section
 
 
-    .section Unsorted9EA33CSection
+    .section ProcMapBattleBallistaBoltInitSection
 
       .al
       .xl
@@ -5414,7 +5414,7 @@
 
         ; 9E/A404
 
-    .endsection Unsorted9EA33CSection
+    .endsection ProcMapBattleBallistaBoltInitSection
 
 
     .section ProcScript9EA404Section
@@ -5437,7 +5437,7 @@
     .endsection ProcScript9EA404Section
 
 
-    .section Unsorted9EA417Section
+    .section CreateBallistaBoltSpriteSection
 
       .al
       .xl
@@ -5561,10 +5561,10 @@
 
         ; 9E/A50F
 
-    .endsection Unsorted9EA417Section
+    .endsection CreateBallistaBoltSpriteSection
 
 
-    .section Table9EA50FSection
+    .section BallistaBoltTileBasesSection
 
       .al
       .xl
@@ -5577,10 +5577,10 @@
 
         ; 9E/A513
 
-    .endsection Table9EA50FSection
+    .endsection BallistaBoltTileBasesSection
 
 
-    .section Table9EA513Section
+    .section BallistaBoltXOffsetsSection
 
       .al
       .xl
@@ -5593,10 +5593,10 @@
 
         ; 9E/A523
 
-    .endsection Table9EA513Section
+    .endsection BallistaBoltXOffsetsSection
 
 
-    .section Unsorted9EA523Section
+    .section StepBallistaBoltSection
 
       .al
       .xl
@@ -5783,10 +5783,10 @@
 
         ; 9E/A67C
 
-    .endsection Unsorted9EA523Section
+    .endsection StepBallistaBoltSection
 
 
-    .section Unsorted9EA67CSection
+    .section SetBallistaBoltVelocitySection
 
       .al
       .xl
@@ -6097,10 +6097,10 @@
 
         ; 9E/A84A
 
-    .endsection Unsorted9EA67CSection
+    .endsection SetBallistaBoltVelocitySection
 
 
-    .section Table9EA84ASection
+    .section MapBattleCameraMarginsSection
 
       .al
       .xl
@@ -6113,10 +6113,10 @@
 
         ; 9E/A850
 
-    .endsection Table9EA84ASection
+    .endsection MapBattleCameraMarginsSection
 
 
-    .section Unsorted9EA850Section
+    .section CheckMapMagicEffectsMoveCameraSection
 
       .al
       .xl
@@ -6157,10 +6157,10 @@
 
         ; 9E/A873
 
-    .endsection Unsorted9EA850Section
+    .endsection CheckMapMagicEffectsMoveCameraSection
 
 
-    .section Table9EA873Section
+    .section MapMagicEffectMovesCameraSection
 
       .al
       .xl
@@ -6175,10 +6175,10 @@
 
         ; 9E/A89F
 
-    .endsection Table9EA873Section
+    .endsection MapMagicEffectMovesCameraSection
 
 
-    .section Unsorted9EA89FSection
+    .section MapBattleMoveCameraSection
 
       .al
       .xl
@@ -6466,10 +6466,10 @@
 
         ; 9E/AA5C
 
-    .endsection Unsorted9EA89FSection
+    .endsection MapBattleMoveCameraSection
 
 
-    .section Table9EAA5CSection
+    .section MapBattleSkillPaletteEffectSection
 
       .al
       .xl
@@ -6477,10 +6477,10 @@
       aMapBattleSkillPaletteEffect ; 9E/AA5C
         PALETTE_EFFECT_VALUE $00, $03, $D0, $10, $02
 
-    .endsection Table9EAA5CSection
+    .endsection MapBattleSkillPaletteEffectSection
 
 
-    .section Table9EAA61Section
+    .section MapBattleSkillColorsSection
 
       .al
       .xl
@@ -6504,10 +6504,10 @@
 
         ; 9E/AB21
 
-    .endsection Table9EAA61Section
+    .endsection MapBattleSkillColorsSection
 
 
-    .section Unsorted9EAB21Section
+    .section MapBattleEndSkillEffectSection
 
       .al
       .xl
@@ -6618,10 +6618,10 @@
 
         ; 9E/ABBD
 
-    .endsection Unsorted9EAB21Section
+    .endsection MapBattleEndSkillEffectSection
 
 
-    .section Table9EABBDSection
+    .section MapMagicEffectNoHPChangeSection
 
       .al
       .xl
@@ -6636,10 +6636,10 @@
 
         ; 9E/ABE9
 
-    .endsection Table9EABBDSection
+    .endsection MapMagicEffectNoHPChangeSection
 
 
-    .section Unsorted9EABE9Section
+    .section CheckSideHasRoundSection
 
       .al
       .xl
@@ -6740,10 +6740,10 @@
 
         ; 9E/AC49
 
-    .endsection Unsorted9EABE9Section
+    .endsection CheckSideHasRoundSection
 
 
-    .section Unsorted9EAC49Section
+    .section SetMapMagicFlagsFromBit7Section
 
       .al
       .xl
@@ -6770,10 +6770,10 @@
 
         ; 9E/AC5A
 
-    .endsection Unsorted9EAC49Section
+    .endsection SetMapMagicFlagsFromBit7Section
 
 
-    .section Unsorted9EADD1Section
+    .section MapBattleOffsetShiftedSpritesSection
 
       .al
       .xl
@@ -6929,10 +6929,10 @@
 
         ; 9E/AEAF
 
-    .endsection Unsorted9EADD1Section
+    .endsection MapBattleOffsetShiftedSpritesSection
 
 
-    .section Table9EAEAFSection
+    .section MapBattleShiftSlideOutSection
 
       .al
       .xl
@@ -6946,10 +6946,10 @@
 
         ; 9E/AECF
 
-    .endsection Table9EAEAFSection
+    .endsection MapBattleShiftSlideOutSection
 
 
-    .section Unsorted9EAECFSection
+    .section MapBattleSlideShiftedUnitBackSection
 
       .al
       .xl
@@ -7014,10 +7014,10 @@
 
         ; 9E/AF24
 
-    .endsection Unsorted9EAECFSection
+    .endsection MapBattleSlideShiftedUnitBackSection
 
 
-    .section Table9EAF24Section
+    .section MapBattleShiftSlideBackSection
 
       .al
       .xl
@@ -7031,10 +7031,10 @@
 
         ; 9E/AF44
 
-    .endsection Table9EAF24Section
+    .endsection MapBattleShiftSlideBackSection
 
 
-    .section Unsorted9EAF44Section
+    .section MapBattleStartWarpArrivalSection
 
       .al
       .xl
@@ -7105,7 +7105,7 @@
 
         ; 9E/AF98
 
-    .endsection Unsorted9EAF44Section
+    .endsection MapBattleStartWarpArrivalSection
 
 
     .section ProcScript9EAF98Section
@@ -7120,7 +7120,7 @@
     .endsection ProcScript9EAF98Section
 
 
-    .section Unsorted9EAFA0Section
+    .section ProcMapBattleWarpArrivalInitSection
 
       .al
       .xl
@@ -7192,7 +7192,7 @@
 
         ; 9E/AFF8
 
-    .endsection Unsorted9EAFA0Section
+    .endsection ProcMapBattleWarpArrivalInitSection
 
 
     .section ProcScript9EAFF8Section
@@ -7220,7 +7220,7 @@
     .endsection ProcScript9EAFF8Section
 
 
-    .section Unsorted9EB01BSection
+    .section MapBattleCheckWarpDestinationShownSection
 
       .al
       .xl
@@ -7417,10 +7417,10 @@
 
         ; 9E/B0EC
 
-    .endsection Unsorted9EB01BSection
+    .endsection MapBattleCheckWarpDestinationShownSection
 
 
-    .section Table9EB0ECSection
+    .section MapBattleDefeatCrySoundsSection
 
       .al
       .xl
@@ -7433,10 +7433,10 @@
 
         ; 9E/B0F2
 
-    .endsection Table9EB0ECSection
+    .endsection MapBattleDefeatCrySoundsSection
 
 
-    .section Unsorted9EB0F2Section
+    .section GetDefeatedUnitVoiceSection
 
       .al
       .xl
@@ -7527,10 +7527,10 @@
 
         ; 9E/B15A
 
-    .endsection Unsorted9EB0F2Section
+    .endsection GetDefeatedUnitVoiceSection
 
 
-    .section Table9EB15ASection
+    .section MapBattleChildCrySoundsSection
 
       .al
       .xl
@@ -7543,10 +7543,10 @@
 
         ; 9E/B160
 
-    .endsection Table9EB15ASection
+    .endsection MapBattleChildCrySoundsSection
 
 
-    .section Unsorted9EB160Section
+    .section MapBattlePlayHitSoundSection
 
       .al
       .xl
@@ -7773,10 +7773,10 @@
 
         ; 9E/B2BA
 
-    .endsection Unsorted9EB160Section
+    .endsection MapBattlePlayHitSoundSection
 
 
-    .section Unsorted9EB345Section
+    .section MapBattlePlaySound48Section
 
       .al
       .xl
@@ -7892,7 +7892,7 @@
 
         ; 9E/B3C8
 
-    .endsection Unsorted9EB345Section
+    .endsection MapBattlePlaySound48Section
 
 
     .section Unreferenced9EB3C8Section
@@ -7925,7 +7925,7 @@
         ; 9E/B3DE
 
     .endsection Unreferenced9EB3C8Section
-    .section Unsorted9EB3DESection
+    .section MapBattlePlaySound32Section
 
       .al
       .xl
@@ -8130,10 +8130,10 @@
 
         ; 9E/B491
 
-    .endsection Unsorted9EB3DESection
+    .endsection MapBattlePlaySound32Section
 
 
-    .section Unsorted9EB491Section
+    .section PlayGoldObtainedJingleSection
 
       .al
       .xl
@@ -8218,10 +8218,10 @@
 
         ; 9E/B4BB
 
-    .endsection Unsorted9EB491Section
+    .endsection PlayGoldObtainedJingleSection
 
 
-    .section Unsorted9EB4BBSection
+    .section GetSoundPanFromXPixelSection
 
       .al
       .xl
@@ -8251,10 +8251,10 @@
 
         ; 9E/B4C9
 
-    .endsection Unsorted9EB4BBSection
+    .endsection GetSoundPanFromXPixelSection
 
 
-    .section Table9EB4C9Section
+    .section MapBattleSideGraphicsOffsetsSection
 
       .al
       .xl
@@ -8267,10 +8267,10 @@
 
         ; 9E/B4CD
 
-    .endsection Table9EB4C9Section
+    .endsection MapBattleSideGraphicsOffsetsSection
 
 
-    .section Table9EB4CDSection
+    .section MapBattleWeaponTypeTileOffsetsSection
 
       .al
       .xl
@@ -8283,10 +8283,10 @@
 
         ; 9E/B4D7
 
-    .endsection Table9EB4CDSection
+    .endsection MapBattleWeaponTypeTileOffsetsSection
 
 
-    .section Table9EB4D7Section
+    .section MapBattleSideFrameVRAMSection
 
       .al
       .xl
@@ -8299,10 +8299,10 @@
 
         ; 9E/B4DB
 
-    .endsection Table9EB4D7Section
+    .endsection MapBattleSideFrameVRAMSection
 
 
-    .section Table9EB4DBSection
+    .section MapBattleSideTileVRAMSection
 
       .al
       .xl
@@ -8315,7 +8315,7 @@
 
         ; 9E/B4DF
 
-    .endsection Table9EB4DBSection
+    .endsection MapBattleSideTileVRAMSection
 
 
     .section BattleMapSpriteDataSection
@@ -8901,7 +8901,7 @@
     .endsection BattleMapSpriteDataSection
 
 
-    .section Unsorted9EC70BSection
+    .section ProcMapBattleSection
 
       .al
       .xl
@@ -8967,10 +8967,10 @@
 
         ; 9E/C776
 
-    .endsection Unsorted9EC70BSection
+    .endsection ProcMapBattleSection
 
 
-    .section Unsorted9EC776Section
+    .section ProcMapBattleLoadCombatantsSection
 
       .al
       .xl
@@ -9002,10 +9002,10 @@
 
         ; 9E/C79B
 
-    .endsection Unsorted9EC776Section
+    .endsection ProcMapBattleLoadCombatantsSection
 
 
-    .section Unsorted9EC79BSection
+    .section MapBattleWaitDecompressionSection
 
       .al
       .xl
@@ -9045,10 +9045,10 @@
 
         ; 9E/C7B3
 
-    .endsection Unsorted9EC79BSection
+    .endsection MapBattleWaitDecompressionSection
 
 
-    .section Unsorted9EC7B3Section
+    .section ProcMapBattleQueueSpriteDataSection
 
       .al
       .xl
@@ -9205,10 +9205,10 @@
 
         ; 9E/C899
 
-    .endsection Unsorted9EC7B3Section
+    .endsection ProcMapBattleQueueSpriteDataSection
 
 
-    .section Unsorted9EC899Section
+    .section MapBattleWaitRoundStartSection
 
       .al
       .xl
@@ -9251,10 +9251,10 @@
 
         ; 9E/C8B3
 
-    .endsection Unsorted9EC899Section
+    .endsection MapBattleWaitRoundStartSection
 
 
-    .section Unsorted9EC8B3Section
+    .section MapBattleReadNextRoundEntrySection
 
       .al
       .xl
@@ -9314,10 +9314,10 @@
 
         ; 9E/C91A
 
-    .endsection Unsorted9EC8B3Section
+    .endsection MapBattleReadNextRoundEntrySection
 
 
-    .section Unsorted9EC91ASection
+    .section MapBattleOpenExperienceWindowSection
 
       .al
       .xl
@@ -9405,10 +9405,10 @@
 
         ; 9E/C98A
 
-    .endsection Unsorted9EC91ASection
+    .endsection MapBattleOpenExperienceWindowSection
 
 
-    .section Unsorted9EC98ASection
+    .section MapBattleEndSetCameraSection
 
       .al
       .xl
@@ -9531,10 +9531,10 @@
 
         ; 9E/C9FD
 
-    .endsection Unsorted9EC98ASection
+    .endsection MapBattleEndSetCameraSection
 
 
-    .section Unsorted9EC9FDSection
+    .section QueueMapMagicBackgroundAllSection
 
       .al
       .xl
@@ -9713,10 +9713,10 @@
 
         ; 9E/CABB
 
-    .endsection Unsorted9EC9FDSection
+    .endsection QueueMapMagicBackgroundAllSection
 
 
-    .section Unsorted9ECABBSection
+    .section MapBattleReloadIconsSection
 
       .al
       .xl
@@ -9756,7 +9756,7 @@
 
         ; 9E/CAD2
 
-    .endsection Unsorted9ECABBSection
+    .endsection MapBattleReloadIconsSection
 
 
     .section ProcScript9ECAD2Section
@@ -10061,7 +10061,7 @@
     .endsection ProcScript9ECAD2Section
 
 
-    .section Unsorted9ECEA0Section
+    .section MapBattleCheckExperienceSection
 
       .al
       .xl
@@ -10138,10 +10138,10 @@
 
         PROC_HALT
 
-    .endsection Unsorted9ECEA0Section
+    .endsection MapBattleCheckExperienceSection
 
 
-    .section Unsorted9ED742Section
+    .section MapBattleStartPaviseSection
 
       .al
       .xl
@@ -10207,7 +10207,7 @@
 
         ; 9E/D78B
 
-    .endsection Unsorted9ED742Section
+    .endsection MapBattleStartPaviseSection
 
 
     .section ProcScript9ED78BSection
@@ -10222,7 +10222,7 @@
     .endsection ProcScript9ED78BSection
 
 
-    .section Unsorted9ED793Section
+    .section ProcMapBattlePaviseInitSection
 
       .al
       .xl
@@ -10256,7 +10256,7 @@
 
         ; 9E/D79F
 
-    .endsection Unsorted9ED793Section
+    .endsection ProcMapBattlePaviseInitSection
 
 
     .section ProcScript9ED79FSection
@@ -10281,7 +10281,7 @@
     .endsection ProcScript9ED79FSection
 
 
-    .section Unsorted9ED7B7Section
+    .section MapBattleLoadPaviseGraphicsSection
 
       .al
       .xl
@@ -10327,10 +10327,10 @@
 
         ; 9E/D7E8
 
-    .endsection Unsorted9ED7B7Section
+    .endsection MapBattleLoadPaviseGraphicsSection
 
 
-    .section Table9ED7E8Section
+    .section MapBattlePaviseColorsSection
 
       .al
       .xl
@@ -10344,10 +10344,10 @@
 
         ; 9E/D808
 
-    .endsection Table9ED7E8Section
+    .endsection MapBattlePaviseColorsSection
 
 
-    .section Unsorted9ED808Section
+    .section MapBattleShowPaviseSection
 
       .al
       .xl
@@ -10478,7 +10478,7 @@
 
         ; 9E/D900
 
-    .endsection Unsorted9ED808Section
+    .endsection MapBattleShowPaviseSection
 
 
     .section Data9ED900Section
@@ -10672,7 +10672,7 @@
     .endsection Data9ED900Section
 
 
-    .section Unsorted9EDF7FSection
+    .section StartScriptedCritEffectSection
 
       .al
       .xl
@@ -10697,7 +10697,7 @@
 
         ; 9E/DF8E
 
-    .endsection Unsorted9EDF7FSection
+    .endsection StartScriptedCritEffectSection
 
 
     .section ProcScript9EDF8ESection
@@ -10712,7 +10712,7 @@
     .endsection ProcScript9EDF8ESection
 
 
-    .section Unsorted9EDF96Section
+    .section ProcScriptedCritStartInitSection
 
       .al
       .xl
@@ -10777,10 +10777,10 @@
 
         ; 9E/DFF8
 
-    .endsection Unsorted9EDF96Section
+    .endsection ProcScriptedCritStartInitSection
 
 
-    .section Unsorted9EDFF8Section
+    .section ScriptedCritStartWaitEffectSection
 
       .al
       .xl
@@ -10816,7 +10816,7 @@
 
         ; 9E/E011
 
-    .endsection Unsorted9EDFF8Section
+    .endsection ScriptedCritStartWaitEffectSection
 
 
     .section ProcScript9EE011Section
@@ -10839,7 +10839,7 @@
     .endsection ProcScript9EE011Section
 
 
-    .section Unsorted9EE021Section
+    .section ScriptedCritStartBattleSection
 
       .al
       .xl
@@ -10860,10 +10860,10 @@
 
         ; 9E/E02D
 
-    .endsection Unsorted9EE021Section
+    .endsection ScriptedCritStartBattleSection
 
 
-    .section Unsorted9EE02DSection
+    .section CreateScriptedCritEffectSection
 
       .al
       .xl
@@ -10886,7 +10886,7 @@
 
         ; 9E/E03C
 
-    .endsection Unsorted9EE02DSection
+    .endsection CreateScriptedCritEffectSection
 
 
     .section ProcScript9EE03CSection
@@ -10901,7 +10901,7 @@
     .endsection ProcScript9EE03CSection
 
 
-    .section Unsorted9EE044Section
+    .section ProcScriptedCritEffectInitSection
 
       .al
       .xl
@@ -10985,7 +10985,7 @@
 
         ; 9E/E092
 
-    .endsection Unsorted9EE044Section
+    .endsection ProcScriptedCritEffectInitSection
 
 
     .section ProcScript9EE092Section
@@ -11031,7 +11031,7 @@
     .endsection ProcScript9EE092Section
 
 
-    .section Unsorted9EE0F1Section
+    .section DecompressScriptedCritSpritesSection
 
       .al
       .xl
@@ -11069,10 +11069,10 @@
 
         ; 9E/E11B
 
-    .endsection Unsorted9EE0F1Section
+    .endsection DecompressScriptedCritSpritesSection
 
 
-    .section Table9EE11BSection
+    .section MapBattleScriptedCritSpritesSection
 
       .al
       .xl
@@ -11093,10 +11093,10 @@
 
         ; 9E/E127
 
-    .endsection Table9EE11BSection
+    .endsection MapBattleScriptedCritSpritesSection
 
 
-    .section Unsorted9EE127Section
+    .section UploadScriptedCritSpritesSection
 
       .al
       .xl
@@ -11214,10 +11214,10 @@
         .word $3800, $7FFF, $5BDF, $1E9A, $1551, $0C8A, $0425, $7FBA
         .word $5EB3, $49EE, $28E6, $1421, $63FA, $2E2D, $1505, $0000
 
-    .endsection Unsorted9EE127Section
+    .endsection UploadScriptedCritSpritesSection
 
 
-    .section Unsorted9EE228Section
+    .section ScriptedCritSaveColorsSection
 
       .al
       .xl
@@ -11361,10 +11361,10 @@
 
         ; 9E/E2B2
 
-    .endsection Unsorted9EE228Section
+    .endsection ScriptedCritSaveColorsSection
 
 
-    .section Table9EE2B2Section
+    .section ScriptedCritEffectProcsSection
 
       .al
       .xl
@@ -11380,10 +11380,10 @@
 
         ; 9E/E2BE
 
-    .endsection Table9EE2B2Section
+    .endsection ScriptedCritEffectProcsSection
 
 
-    .section Unsorted9EE2BESection
+    .section ScriptedCritWaitTypeEffectSection
 
       .al
       .xl
@@ -13011,10 +13011,10 @@
 
         .databank 0
 
-    .endsection Unsorted9EE2BESection
+    .endsection ScriptedCritWaitTypeEffectSection
 
 
-    .section Unsorted9EF1B5Section
+    .section MapBattleSignalEventMarkerSection
 
       .al
       .xl
@@ -13047,6 +13047,6 @@
 
         ; 9E/F1D9
 
-    .endsection Unsorted9EF1B5Section
+    .endsection MapBattleSignalEventMarkerSection
 
 

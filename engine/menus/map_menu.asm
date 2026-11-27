@@ -1556,17 +1556,17 @@
     .endsection RemoveMapMenuTilemapRAMEntrySection
 
 
-    .section Unsorted858000Section
+    .section DialogueBoxTilemapSection
 
       .al
       .xl
 
       aDialogueBoxTilemap .binary "../../gfx/build/ui/tilemaps/DialogueBoxTilemap.bin" ; 85/8000
 
-    .endsection Unsorted858000Section
+    .endsection DialogueBoxTilemapSection
 
 
-    .section Unsorted858CD3Section
+    .section MapMenuTypeDialogueSection
 
       .al
       .xl
@@ -1628,10 +1628,10 @@
 
         ; 85/8D18
 
-    .endsection Unsorted858CD3Section
+    .endsection MapMenuTypeDialogueSection
 
 
-    .section Unsorted85B81DSection
+    .section BuildMapMenuDialogueBoxSection
 
       .al
       .xl
@@ -1781,10 +1781,10 @@
 
         ; 85/B8D6
 
-    .endsection Unsorted85B81DSection
+    .endsection BuildMapMenuDialogueBoxSection
 
 
-    .section Unsorted82F211Section
+    .section ResetMenuOptionStackSection
 
       .al
       .xl
@@ -1819,10 +1819,10 @@
 
         ; 82/F227
 
-    .endsection Unsorted82F211Section
+    .endsection ResetMenuOptionStackSection
 
 
-    .section Unsorted82F227Section
+    .section PushMenuOptionListSection
 
       .al
       .xl
@@ -1938,10 +1938,10 @@
 
         ; 82/F2E3
 
-    .endsection Unsorted82F227Section
+    .endsection PushMenuOptionListSection
 
 
-    .section Unsorted82F2E3Section
+    .section PopMenuOptionListSection
 
       .al
       .xl
@@ -2012,10 +2012,10 @@
 
         ; 82/F343
 
-    .endsection Unsorted82F2E3Section
+    .endsection PopMenuOptionListSection
 
 
-    .section Unsorted82F343Section
+    .section AddMenuOptionSection
 
       .al
       .xl
@@ -2082,10 +2082,10 @@
 
         ; 82/F3A7
 
-    .endsection Unsorted82F343Section
+    .endsection AddMenuOptionSection
 
 
-    .section Unsorted82F3A7Section
+    .section LoadCurrentMenuOptionRAMStructSection
 
       .al
       .xl
@@ -2166,10 +2166,10 @@
 
         ; 82/F3E5
 
-    .endsection Unsorted82F3A7Section
+    .endsection LoadCurrentMenuOptionRAMStructSection
 
 
-    .section Unsorted82F3E5Section
+    .section HandleMenuOptionInputSection
 
       .al
       .xl
@@ -2337,10 +2337,10 @@
 
         ; 82/F4A7
 
-    .endsection Unsorted82F3E5Section
+    .endsection HandleMenuOptionInputSection
 
 
-    .section Unsorted82F4A7Section
+    .section GetSelectedMenuOptionCoordinatesSection
 
       .al
       .xl
@@ -2378,7 +2378,7 @@
 
         ; 82/F4BF
 
-    .endsection Unsorted82F4A7Section
+    .endsection GetSelectedMenuOptionCoordinatesSection
 
 
     .section Unreferenced82F4BFSection
@@ -2422,7 +2422,7 @@
         ; 82/F4DE
 
     .endsection Unreferenced82F4BFSection
-    .section Unsorted8582D4Section
+    .section MoveMapMenuToCursorSection
 
       .al
       .xl
@@ -2505,10 +2505,10 @@
         .long 0
         .byte 0
 
-    .endsection Unsorted8582D4Section
+    .endsection MoveMapMenuToCursorSection
 
 
-    .section Unsorted8583C2Section
+    .section ListMenuProcInitSection
 
       .al
       .xl
@@ -2533,10 +2533,10 @@
 
         ; 85/83D3
 
-    .endsection Unsorted8583C2Section
+    .endsection ListMenuProcInitSection
 
 
-    .section Unsorted8583D3Section
+    .section ListMenuProcFirstCycleSection
 
       .al
       .xl
@@ -2558,10 +2558,10 @@
 
         ; 85/83DA
 
-    .endsection Unsorted8583D3Section
+    .endsection ListMenuProcFirstCycleSection
 
 
-    .section Unsorted8583DASection
+    .section ListMenuProcSetUpSection
 
       .al
       .xl
@@ -2590,10 +2590,10 @@
 
         ; 85/83F8
 
-    .endsection Unsorted8583DASection
+    .endsection ListMenuProcSetUpSection
 
 
-    .section Unsorted8583F8Section
+    .section ListMenuProcHandleInputSection
 
       .al
       .xl
@@ -2707,10 +2707,10 @@
 
         ; 85/84A1
 
-    .endsection Unsorted8583F8Section
+    .endsection ListMenuProcHandleInputSection
 
 
-    .section Unsorted8584A1Section
+    .section ListMenuProcEndSection
 
       .al
       .xl
@@ -2732,7 +2732,7 @@
 
         ; 85/84AA
 
-    .endsection Unsorted8584A1Section
+    .endsection ListMenuProcEndSection
 
 
     .section ProcScript8584AASection
@@ -2750,7 +2750,7 @@
     .endsection ProcScript8584AASection
 
 
-    .section Unsorted8584ACSection
+    .section ListMenuProcPushOptionsSection
 
       .al
       .xl
@@ -2800,10 +2800,10 @@
 
         ; 85/84DC
 
-    .endsection Unsorted8584ACSection
+    .endsection ListMenuProcPushOptionsSection
 
 
-    .section Unsorted8584DCSection
+    .section KeepUnitMenuAwayFromCursorSection
 
       .al
       .xl
@@ -2853,10 +2853,10 @@
 
         ; 85/8516
 
-    .endsection Unsorted8584DCSection
+    .endsection KeepUnitMenuAwayFromCursorSection
 
 
-    .section Unsorted858516Section
+    .section CheckListMenuIdleSection
 
       .al
       .xl
@@ -2946,10 +2946,10 @@
 
         ; 85/856E
 
-    .endsection Unsorted858516Section
+    .endsection CheckListMenuIdleSection
 
 
-    .section Unsorted85856ESection
+    .section DrawMenuOptionsSection
 
       .al
       .xl
@@ -3070,10 +3070,10 @@
 
         ; 85/860E
 
-    .endsection Unsorted85856ESection
+    .endsection DrawMenuOptionsSection
 
 
-    .section Unsorted85860ESection
+    .section DrawMapMenuNumber100Section
 
       .al
       .xl
@@ -3117,10 +3117,10 @@
 
         ; 85/8647
 
-    .endsection Unsorted85860ESection
+    .endsection DrawMapMenuNumber100Section
 
 
-    .section Table858647Section
+    .section MapMenuNumber100TilesSection
 
       .al
       .xl
@@ -3128,10 +3128,10 @@
       aMapMenuNumber100Tiles ; 85/8647
         .byte $AC, $AD, $AE, $00
 
-    .endsection Table858647Section
+    .endsection MapMenuNumber100TilesSection
 
 
-    .section Unsorted85864BSection
+    .section DrawSelectedUnitNameInMapMenuSection
 
       .al
       .xl
@@ -3176,10 +3176,10 @@
 
         ; 85/8671
 
-    .endsection Unsorted85864BSection
+    .endsection DrawSelectedUnitNameInMapMenuSection
 
 
-    .section Unsorted858671Section
+    .section DrawSelectedUnitFactionInMapMenuSection
 
       .al
       .xl
@@ -3206,10 +3206,10 @@
 
         ; 85/8684
 
-    .endsection Unsorted858671Section
+    .endsection DrawSelectedUnitFactionInMapMenuSection
 
 
-    .section Unsorted858684Section
+    .section DrawItemNameInMapMenuSection
 
       .al
       .xl
@@ -3235,10 +3235,10 @@
 
         ; 85/8697
 
-    .endsection Unsorted858684Section
+    .endsection DrawItemNameInMapMenuSection
 
 
-    .section Unsorted858697Section
+    .section DrawCastleNameInMapMenuSection
 
       .al
       .xl
@@ -3265,10 +3265,10 @@
 
         ; 85/86AA
 
-    .endsection Unsorted858697Section
+    .endsection DrawCastleNameInMapMenuSection
 
 
-    .section Unsorted8586AASection
+    .section DrawListCursorAtIndexSection
 
       .al
       .xl
@@ -3331,10 +3331,10 @@
 
         ; 85/86FA
 
-    .endsection Unsorted8586AASection
+    .endsection DrawListCursorAtIndexSection
 
 
-    .section Unsorted8586FASection
+    .section CloseMapMenuFromProcSection
 
       .al
       .xl
@@ -3356,10 +3356,10 @@
 
         ; 85/86FF
 
-    .endsection Unsorted8586FASection
+    .endsection CloseMapMenuFromProcSection
 
 
-    .section Unsorted8586FFSection
+    .section InitMapMenuProcAndTileBaseSection
 
       .al
       .xl
@@ -3412,10 +3412,10 @@
 
         ; 85/8728
 
-    .endsection Unsorted8586FFSection
+    .endsection InitMapMenuProcAndTileBaseSection
 
 
-    .section Unsorted858751Section
+    .section MoveMapMenuSection
 
       .al
       .xl
@@ -3484,10 +3484,10 @@
 
         ; 85/8793
 
-    .endsection Unsorted858751Section
+    .endsection MoveMapMenuSection
 
 
-    .section Unsorted858793Section
+    .section ShowMapMenuSection
 
       .al
       .xl
@@ -3519,10 +3519,10 @@
 
         ; 85/87A8
 
-    .endsection Unsorted858793Section
+    .endsection ShowMapMenuSection
 
 
-    .section Unsorted8587A8Section
+    .section ResizeMapMenuSection
 
       .al
       .xl
@@ -3575,10 +3575,10 @@
 
         ; 85/87E1
 
-    .endsection Unsorted8587A8Section
+    .endsection ResizeMapMenuSection
 
 
-    .section Unsorted8587E1Section
+    .section DrawMapMenuSection
 
       .al
       .xl
@@ -3610,10 +3610,10 @@
 
         ; 85/87F2
 
-    .endsection Unsorted8587E1Section
+    .endsection DrawMapMenuSection
 
 
-    .section Unsorted8587F2Section
+    .section MoveMapMenuFrameSection
 
       .al
       .xl
@@ -3708,10 +3708,10 @@
 
         ; 85/884A
 
-    .endsection Unsorted8587F2Section
+    .endsection MoveMapMenuFrameSection
 
 
-    .section Unsorted85884ASection
+    .section ResizeMapMenuFrameSection
 
       .al
       .xl
@@ -3942,10 +3942,10 @@
 
         ; 85/895C
 
-    .endsection Unsorted85884ASection
+    .endsection ResizeMapMenuFrameSection
 
 
-    .section Unsorted8589C5Section
+    .section BeginMapMenuFrameSection
 
       .al
       .xl
@@ -3974,10 +3974,10 @@
 
         ; 85/89DE
 
-    .endsection Unsorted8589C5Section
+    .endsection BeginMapMenuFrameSection
 
 
-    .section Table8589DESection
+    .section MapMenuFrameTilemapDataSection
 
       .al
       .xl
@@ -3985,10 +3985,10 @@
       aMapMenuFrameTilemapData ; 85/89DE
         .byte $00, $00, $88, $7B, $7E, $00, $4A, $D5, $7F
 
-    .endsection Table8589DESection
+    .endsection MapMenuFrameTilemapDataSection
 
 
-    .section Unsorted8589E7Section
+    .section EndMapMenuFrameSection
 
       .al
       .xl
@@ -4038,10 +4038,10 @@
 
         ; 85/8A1B
 
-    .endsection Unsorted8589E7Section
+    .endsection EndMapMenuFrameSection
 
 
-    .section Table858A1BSection
+    .section MapMenuFrameType0FillSection
 
       .al
       .xl
@@ -4057,10 +4057,10 @@
         .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $2378
         .word $236F, $236F, $2379, $237A
 
-    .endsection Table858A1BSection
+    .endsection MapMenuFrameType0FillSection
 
 
-    .section Unsorted858A6FSection
+    .section DrawMapMenuFrameType1Section
 
       .al
       .xl
@@ -4091,10 +4091,10 @@
 
         ; 85/8A95
 
-    .endsection Unsorted858A6FSection
+    .endsection DrawMapMenuFrameType1Section
 
 
-    .section Table858A95Section
+    .section MapMenuFrameType1FillSection
 
       .al
       .xl
@@ -4109,10 +4109,10 @@
         .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $237E
         .word $237F, $236F, $2379, $237A
 
-    .endsection Table858A95Section
+    .endsection MapMenuFrameType1FillSection
 
 
-    .section Unsorted858AD7Section
+    .section DrawMapMenuFrameType2Section
 
       .al
       .xl
@@ -4143,10 +4143,10 @@
 
         ; 85/8AFD
 
-    .endsection Unsorted858AD7Section
+    .endsection DrawMapMenuFrameType2Section
 
 
-    .section Table858AFDSection
+    .section MapMenuFrameType2FillSection
 
       .al
       .xl
@@ -4162,10 +4162,10 @@
         .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $2378
         .word $236F, $236F, $2379, $237A
 
-    .endsection Table858AFDSection
+    .endsection MapMenuFrameType2FillSection
 
 
-    .section Unsorted858B51Section
+    .section DrawMapMenuFrameType3Section
 
       .al
       .xl
@@ -4244,10 +4244,10 @@
 
         ; 85/8BD3
 
-    .endsection Unsorted858B51Section
+    .endsection DrawMapMenuFrameType3Section
 
 
-    .section Table858BD3Section
+    .section MapMenuFrameType3FillSection
 
       .al
       .xl
@@ -4273,10 +4273,10 @@
         .word $6353, $2350, $2352, $A350, $A351, $E351, $A352, $A340
         .word $A341, $A341, $A341, $A342
 
-    .endsection Table858BD3Section
+    .endsection MapMenuFrameType3FillSection
 
 
-    .section Unsorted858C4ESection
+    .section DrawMapMenuFrameType5Section
 
       .al
       .xl
@@ -4325,10 +4325,10 @@
 
         ; 85/8C85
 
-    .endsection Unsorted858C4ESection
+    .endsection DrawMapMenuFrameType5Section
 
 
-    .section Table858C85Section
+    .section MapMenuFrameType5FillSection
 
       .al
       .xl
@@ -4344,10 +4344,10 @@
         .word $2352, $2350, $2352, $A350, $A351, $E351, $A352, $A340
         .word $A341, $A341, $A341, $A342
 
-    .endsection Table858C85Section
+    .endsection MapMenuFrameType5FillSection
 
 
-    .section Unsorted859B2ASection
+    .section SetMapMenuTextColorsSection
 
       .al
       .xl
@@ -4379,10 +4379,10 @@
 
         ; 85/9B42
 
-    .endsection Unsorted859B2ASection
+    .endsection SetMapMenuTextColorsSection
 
 
-    .section Table859B42Section
+    .section MapMenuTextColorsSection
 
       .al
       .xl
@@ -4395,10 +4395,10 @@
 
         ; 85/9B48
 
-    .endsection Table859B42Section
+    .endsection MapMenuTextColorsSection
 
 
-    .section Unsorted859B48Section
+    .section RestoreMapMenuTextColorsSection
 
       .al
       .xl
@@ -4426,10 +4426,10 @@
 
         ; 85/9B59
 
-    .endsection Unsorted859B48Section
+    .endsection RestoreMapMenuTextColorsSection
 
 
-    .section Unsorted859BBDSection
+    .section LoadWindowPaletteColorsSection
 
       .al
       .xl
@@ -4460,20 +4460,20 @@
 
         ; 85/9BD1
 
-    .endsection Unsorted859BBDSection
+    .endsection LoadWindowPaletteColorsSection
 
 
-    .section Table859D88Section
+    .section MapMenuGradientHDMAInfoSection
 
       .al
       .xl
 
       aMapMenuGradientHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlMapMenuGradientHDMAInit, rlMapMenuGradientHDMACycle, aMapMenuGradientHDMACode, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $32, $40, $85 ; 85/9D88
 
-    .endsection Table859D88Section
+    .endsection MapMenuGradientHDMAInfoSection
 
 
-    .section Unsorted859D94Section
+    .section MapMenuGradientHDMAInitSection
 
       .al
       .xl
@@ -4536,10 +4536,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted859D94Section
+    .endsection MapMenuGradientHDMAInitSection
 
 
-    .section Unsorted859DCDSection
+    .section MapMenuGradientSkipLinesSection
 
       .al
       .xl
@@ -4592,10 +4592,10 @@
 
         .byte $E0
 
-    .endsection Unsorted859DCDSection
+    .endsection MapMenuGradientSkipLinesSection
 
 
-    .section Unsorted859E08Section
+    .section MapMenuGradientBuildSection
 
       .al
       .xl
@@ -4820,10 +4820,10 @@
         .byte $E0, $E1, $E2, $E3, $E4, $E5, $E6, $E7, $E8, $E9, $EA, $EB, $EC, $ED, $EE, $EF
         .byte $F0, $F1, $F2, $F3, $F4, $F5, $F6, $F7, $F8, $F9, $FA, $FB, $FC, $FD, $FE, $FF
 
-    .endsection Unsorted859E08Section
+    .endsection MapMenuGradientBuildSection
 
 
-    .section Unsorted859F97Section
+    .section WriteMapMenuGradientScanlineCountSection
 
       .al
       .xl
@@ -4879,10 +4879,10 @@
 
         ; 85/9FC5
 
-    .endsection Unsorted859F97Section
+    .endsection WriteMapMenuGradientScanlineCountSection
 
 
-    .section Unsorted859FCDSection
+    .section StartMapMenuGradientSection
 
       .al
       .xl
@@ -4926,10 +4926,10 @@
 
         ; 85/9FEA
 
-    .endsection Unsorted859FCDSection
+    .endsection StartMapMenuGradientSection
 
 
-    .section Unsorted859FEASection
+    .section BeginMapMenuOpeningSection
 
       .al
       .xl
@@ -4958,10 +4958,10 @@
 
         ; 85/9FFB
 
-    .endsection Unsorted859FEASection
+    .endsection BeginMapMenuOpeningSection
 
 
-    .section Unsorted859FFBSection
+    .section MapMenuOpeningStylesSection
 
       .al
       .xl
@@ -5004,10 +5004,10 @@
 
         ; 85/A02E
 
-    .endsection Unsorted859FFBSection
+    .endsection MapMenuOpeningStylesSection
 
 
-    .section Unsorted85A02ESection
+    .section BeginMapMenuOpeningFromLeftSection
 
       .al
       .xl
@@ -5029,10 +5029,10 @@
 
         ; 85/A03D
 
-    .endsection Unsorted85A02ESection
+    .endsection BeginMapMenuOpeningFromLeftSection
 
 
-    .section Unsorted85A03DSection
+    .section BeginMapMenuOpeningStyle2Section
 
       .al
       .xl
@@ -5065,10 +5065,10 @@
 
         ; 85/A040
 
-    .endsection Unsorted85A03DSection
+    .endsection BeginMapMenuOpeningStyle2Section
 
 
-    .section Unsorted85A040Section
+    .section BeginMapMenuOpeningNoneSection
 
       .al
       .xl
@@ -5086,10 +5086,10 @@
 
         ; 85/A041
 
-    .endsection Unsorted85A040Section
+    .endsection BeginMapMenuOpeningNoneSection
 
 
-    .section Unsorted85A041Section
+    .section StepMapMenuOpeningSection
 
       .al
       .xl
@@ -5143,10 +5143,10 @@
 
         ; 85/A079
 
-    .endsection Unsorted85A041Section
+    .endsection StepMapMenuOpeningSection
 
 
-    .section Unsorted85A079Section
+    .section MapMenuOpeningStepStylesSection
 
       .al
       .xl
@@ -5178,10 +5178,10 @@
 
         .databank 0
 
-    .endsection Unsorted85A079Section
+    .endsection MapMenuOpeningStepStylesSection
 
 
-    .section Unsorted85A0A1Section
+    .section GetMapMenuOpeningWidthSection
 
       .al
       .xl
@@ -5218,10 +5218,10 @@
 
         ; 85/A0CE
 
-    .endsection Unsorted85A0A1Section
+    .endsection GetMapMenuOpeningWidthSection
 
 
-    .section Unsorted85A0CESection
+    .section StepMapMenuOpeningFromLeftSection
 
       .al
       .xl
@@ -5239,10 +5239,10 @@
 
         ; 85/A0D0
 
-    .endsection Unsorted85A0CESection
+    .endsection StepMapMenuOpeningFromLeftSection
 
 
-    .section Unsorted85A0D0Section
+    .section GetMapMenuClosingWidthSection
 
       .al
       .xl
@@ -5288,10 +5288,10 @@
 
         ; 85/A0F5
 
-    .endsection Unsorted85A0D0Section
+    .endsection GetMapMenuClosingWidthSection
 
 
-    .section Unsorted85A0F5Section
+    .section StepMapMenuOpeningNoneSection
 
       .al
       .xl
@@ -5322,10 +5322,10 @@
         .long aMapTextBoxData
         .byte 0
 
-    .endsection Unsorted85A0F5Section
+    .endsection StepMapMenuOpeningNoneSection
 
 
-    .section Unsorted85A117Section
+    .section ProcMapTextBoxInitSection
 
       .al
       .xl
@@ -5414,10 +5414,10 @@
 
         ; 85/A1AA
 
-    .endsection Unsorted85A117Section
+    .endsection ProcMapTextBoxInitSection
 
 
-    .section Unsorted85A1AASection
+    .section ProcMapTextBoxCycleSection
 
       .al
       .xl
@@ -5464,10 +5464,10 @@
 
         ; 85/A1E7
 
-    .endsection Unsorted85A1AASection
+    .endsection ProcMapTextBoxCycleSection
 
 
-    .section Unsorted85A1E7Section
+    .section DrawTwoMapMenuTextLinesSection
 
       .al
       .xl
@@ -5499,10 +5499,10 @@
 
         .databank 0
 
-    .endsection Unsorted85A1E7Section
+    .endsection DrawTwoMapMenuTextLinesSection
 
 
-    .section Unsorted85A227Section
+    .section HideMapMenuLayersSection
 
       .al
       .xl
@@ -5699,10 +5699,10 @@
         .long 0, 0, aItemDescriptionBoxTilemapData
         .byte 0, 1, 1
 
-    .endsection Unsorted85A227Section
+    .endsection HideMapMenuLayersSection
 
 
-    .section Unsorted85A314Section
+    .section ProcItemDescriptionBoxSection
 
       .al
       .xl
@@ -5715,10 +5715,10 @@
         .long aItemDescriptionBoxData
         .byte 0
 
-    .endsection Unsorted85A314Section
+    .endsection ProcItemDescriptionBoxSection
 
 
-    .section Unsorted85A320Section
+    .section ProcItemDescriptionBoxInitSection
 
       .al
       .xl
@@ -5826,10 +5826,10 @@
 
         ; 85/A3A6
 
-    .endsection Unsorted85A320Section
+    .endsection ProcItemDescriptionBoxInitSection
 
 
-    .section Unsorted85A3A6Section
+    .section CloseItemDescriptionBoxSection
 
       .al
       .xl
@@ -5869,10 +5869,10 @@
 
         ; 85/A3D5
 
-    .endsection Unsorted85A3A6Section
+    .endsection CloseItemDescriptionBoxSection
 
 
-    .section Unsorted85A3D5Section
+    .section ChangeItemDescriptionBoxSection
 
       .al
       .xl
@@ -5998,10 +5998,10 @@
 
         ; 85/A46A
 
-    .endsection Unsorted85A3D5Section
+    .endsection ChangeItemDescriptionBoxSection
 
 
-    .section Unsorted85B7D1Section
+    .section GetCenteredTextBoxPlacementSection
 
       .al
       .xl
@@ -6060,10 +6060,10 @@
 
         ; 85/B81D
 
-    .endsection Unsorted85B7D1Section
+    .endsection GetCenteredTextBoxPlacementSection
 
 
-    .section Unsorted85BC9ESection
+    .section InitMapMenuProcSection
 
       .al
       .xl
@@ -6090,10 +6090,10 @@
 
         ; 85/BCB8
 
-    .endsection Unsorted85BC9ESection
+    .endsection InitMapMenuProcSection
 
 
-    .section Unsorted85D9FCSection
+    .section DrawMapMenuGaugeSection
 
       .al
       .xl
@@ -6200,10 +6200,10 @@
 
         ; 85/DA77
 
-    .endsection Unsorted85D9FCSection
+    .endsection DrawMapMenuGaugeSection
 
 
-    .section Table85DA77Section
+    .section GaugeStartTilesSection
 
       .al
       .xl
@@ -6216,10 +6216,10 @@
 
         ; 85/DA7E
 
-    .endsection Table85DA77Section
+    .endsection GaugeStartTilesSection
 
 
-    .section Unsorted85DA7ESection
+    .section DrawGaugeTileSection
 
       .al
       .xl
@@ -6262,10 +6262,10 @@
 
         ; 85/DAB2
 
-    .endsection Unsorted85DA7ESection
+    .endsection DrawGaugeTileSection
 
 
-    .section Table85DAB2Section
+    .section GaugeTilesSection
 
       .al
       .xl
@@ -6278,10 +6278,10 @@
 
         ; 85/DABB
 
-    .endsection Table85DAB2Section
+    .endsection GaugeTilesSection
 
 
-    .section Unsorted85DABBSection
+    .section DrawGaugeEndSection
 
       .al
       .xl
@@ -6304,10 +6304,10 @@
 
         ; 85/DACB
 
-    .endsection Unsorted85DABBSection
+    .endsection DrawGaugeEndSection
 
 
-    .section Table85DACBSection
+    .section GaugeEndTilesSection
 
       .al
       .xl
@@ -6350,10 +6350,10 @@
 
         ; 85/DAEA
 
-    .endsection Table85DACBSection
+    .endsection GaugeEndTilesSection
 
 
-    .section Unsorted85EA64Section
+    .section MapMenuEmptyHookSection
 
       .al
       .xl
@@ -6373,10 +6373,10 @@
 
         ; 85/EA65
 
-    .endsection Unsorted85EA64Section
+    .endsection MapMenuEmptyHookSection
 
 
-    .section Unsorted8780AASection
+    .section InitMapMenusSection
 
       .al
       .xl
@@ -6421,10 +6421,10 @@
 
         .databank 0
 
-    .endsection Unsorted8780AASection
+    .endsection InitMapMenusSection
 
 
-    .section Unsorted8780DFSection
+    .section EnableMapMenuUploadsSection
 
       .al
       .xl
@@ -6471,10 +6471,10 @@
 
         ; 87/80F9
 
-    .endsection Unsorted8780DFSection
+    .endsection EnableMapMenuUploadsSection
 
 
-    .section Unsorted878148Section
+    .section UnlinkMapMenuSection
 
       .al
       .xl
@@ -6541,10 +6541,10 @@
 
         ; 87/819A
 
-    .endsection Unsorted878148Section
+    .endsection UnlinkMapMenuSection
 
 
-    .section Unsorted878256Section
+    .section MapMenuVBlankUploadSection
 
       .al
       .xl
@@ -6624,10 +6624,10 @@
 
         ; 87/829A
 
-    .endsection Unsorted878256Section
+    .endsection MapMenuVBlankUploadSection
 
 
-    .section Unsorted87829ASection
+    .section GetMapMenuRowsSection
 
       .al
       .xl
@@ -6684,10 +6684,10 @@
 
         ; 87/82D4
 
-    .endsection Unsorted87829ASection
+    .endsection GetMapMenuRowsSection
 
 
-    .section Unsorted8782D4Section
+    .section GetAllMapMenuRowsSection
 
       .al
       .xl
@@ -6762,10 +6762,10 @@
 
         ; 87/8337
 
-    .endsection Unsorted8782D4Section
+    .endsection GetAllMapMenuRowsSection
 
 
-    .section Unsorted878337Section
+    .section ClearMapMenuRowsSection
 
       .al
       .xl
@@ -6911,17 +6911,17 @@
 
         ; 87/83F8
 
-    .endsection Unsorted878337Section
+    .endsection ClearMapMenuRowsSection
 
 
-    .section Unsorted8783F8Section
+    .section RedrawAllMapMenusSection
 
       .al
       .xl
 
       rlRedrawAllMapMenus ; 87/83F8
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -6950,10 +6950,10 @@
 
         ; 87/840F
 
-    .endsection Unsorted8783F8Section
+    .endsection RedrawAllMapMenusSection
 
 
-    .section Unsorted87840FSection
+    .section UploadMapMenuDirtyRowsSection
 
       .al
       .xl
@@ -7016,10 +7016,10 @@
 
         ; 87/8459
 
-    .endsection Unsorted87840FSection
+    .endsection UploadMapMenuDirtyRowsSection
 
 
-    .section Unsorted878459Section
+    .section MarkAllMapMenuRowsDirtySection
 
       .al
       .xl
@@ -7050,10 +7050,10 @@
 
         ; 87/8472
 
-    .endsection Unsorted878459Section
+    .endsection MarkAllMapMenuRowsDirtySection
 
 
-    .section Unsorted878472Section
+    .section MoveMapMenuBG3Section
 
       .al
       .xl
@@ -7168,10 +7168,10 @@
 
         ; 87/84E1
 
-    .endsection Unsorted878472Section
+    .endsection MoveMapMenuBG3Section
 
 
-    .section Unsorted8784E1Section
+    .section ResizeMapMenuBG3Section
 
       .al
       .xl
@@ -7222,10 +7222,10 @@
 
         ; 87/8517
 
-    .endsection Unsorted8784E1Section
+    .endsection ResizeMapMenuBG3Section
 
 
-    .section Unsorted878531Section
+    .section BringMapMenuToFrontSection
 
       .al
       .xl
@@ -7301,10 +7301,10 @@
 
         ; 87/85A4
 
-    .endsection Unsorted878531Section
+    .endsection BringMapMenuToFrontSection
 
 
-    .section Unsorted8785A4Section
+    .section RemoveMapMenuSection
 
       .al
       .xl
@@ -7532,10 +7532,10 @@
 
         ; 87/86BA
 
-    .endsection Unsorted8785A4Section
+    .endsection RemoveMapMenuSection
 
 
-    .section Unsorted87872BSection
+    .section SetMapMenuTypeSection
 
       .al
       .xl
@@ -7577,10 +7577,10 @@
 
         ; 87/8749
 
-    .endsection Unsorted87872BSection
+    .endsection SetMapMenuTypeSection
 
 
-    .section Unsorted878852Section
+    .section FindPreviousMapMenuSection
 
       .al
       .xl
@@ -7661,10 +7661,10 @@
 
         ; 87/88B3
 
-    .endsection Unsorted878852Section
+    .endsection FindPreviousMapMenuSection
 
 
-    .section Unsorted8788F7Section
+    .section DrawMapMenuTileStringSection
 
       .al
       .xl
@@ -7686,10 +7686,10 @@
 
         ; 87/8900
 
-    .endsection Unsorted8788F7Section
+    .endsection DrawMapMenuTileStringSection
 
 
-    .section Unsorted878900Section
+    .section DrawMapMenuSmallNumberSection
 
       .al
       .xl
@@ -7733,10 +7733,10 @@
 
         ; 87/8916
 
-    .endsection Unsorted878900Section
+    .endsection DrawMapMenuSmallNumberSection
 
 
-    .section Unsorted878916Section
+    .section DrawMapMenuNumberSection
 
       .al
       .xl
@@ -7760,10 +7760,10 @@
 
         ; 87/8921
 
-    .endsection Unsorted878916Section
+    .endsection DrawMapMenuNumberSection
 
 
-    .section Unsorted878921Section
+    .section DrawMapMenuTextLineSection
 
       .al
       .xl
@@ -7783,10 +7783,10 @@
 
         .databank 0
 
-    .endsection Unsorted878921Section
+    .endsection DrawMapMenuTextLineSection
 
 
-    .section Unsorted878AB5Section
+    .section CopyTilemapEntryToBGSection
 
       .al
       .xl
@@ -7873,10 +7873,10 @@
 
         ; 87/8B1F
 
-    .endsection Unsorted878AB5Section
+    .endsection CopyTilemapEntryToBGSection
 
 
-    .section Unsorted878B1FSection
+    .section GetTilemapEntrySizeSection
 
       .al
       .xl
@@ -7925,10 +7925,10 @@
 
         ; 87/8B4E
 
-    .endsection Unsorted878B1FSection
+    .endsection GetTilemapEntrySizeSection
 
 
-    .section Unsorted878B4ESection
+    .section GetTilemapEntryWidthSection
 
       .al
       .xl
@@ -8000,10 +8000,10 @@
 
         ; 87/8B83
 
-    .endsection Unsorted878B4ESection
+    .endsection GetTilemapEntryWidthSection
 
 
-    .section Unsorted878BF0Section
+    .section FillTilemapEntryWithPatternSection
 
       .al
       .xl
@@ -8120,10 +8120,10 @@
 
         ; 87/8C8C
 
-    .endsection Unsorted878BF0Section
+    .endsection FillTilemapEntryWithPatternSection
 
 
-    .section Unsorted878C8CSection
+    .section DrawSimpleFrameToTilemapEntrySection
 
       .al
       .xl
@@ -8283,10 +8283,10 @@
 
         ; 87/8D61
 
-    .endsection Unsorted878C8CSection
+    .endsection DrawSimpleFrameToTilemapEntrySection
 
 
-    .section Unsorted878D61Section
+    .section DrawFancyFrameToTilemapEntrySection
 
       .al
       .xl
@@ -8590,10 +8590,10 @@
 
         ; 87/8F6E
 
-    .endsection Unsorted878D61Section
+    .endsection DrawFancyFrameToTilemapEntrySection
 
 
-    .section Unsorted878F6ESection
+    .section DrawTileStringToTilemapEntrySection
 
       .al
       .xl
@@ -8687,10 +8687,10 @@
 
         ; 87/8FE7
 
-    .endsection Unsorted878F6ESection
+    .endsection DrawTileStringToTilemapEntrySection
 
 
-    .section Unsorted878FE7Section
+    .section DrawSmallNumberToTilemapEntrySection
 
       .al
       .xl
@@ -8792,10 +8792,10 @@
 
         ; 87/9076
 
-    .endsection Unsorted878FE7Section
+    .endsection DrawSmallNumberToTilemapEntrySection
 
 
-    .section Table879076Section
+    .section TwoDigitDecimalTableSection
 
       .al
       .xl
@@ -8820,10 +8820,10 @@
 
         ; 87/913E
 
-    .endsection Table879076Section
+    .endsection TwoDigitDecimalTableSection
 
 
-    .section Unsorted87913ESection
+    .section DrawTallTwoDigitNumberToTilemapEntrySection
 
       .al
       .xl
@@ -8945,10 +8945,10 @@
 
         ; 87/91EE
 
-    .endsection Unsorted87913ESection
+    .endsection DrawTallTwoDigitNumberToTilemapEntrySection
 
 
-    .section Unsorted8791EESection
+    .section DrawNumberToTilemapEntrySection
 
       .al
       .xl
@@ -9172,6 +9172,6 @@
 
         ; 87/9354
 
-    .endsection Unsorted8791EESection
+    .endsection DrawNumberToTilemapEntrySection
 
 

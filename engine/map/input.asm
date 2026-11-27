@@ -110,7 +110,7 @@
     .endsection MapInputHandlerSection
 
 
-    .section Unsorted88B028Section
+    .section MapPressASection
 
       .al
       .xl
@@ -648,10 +648,10 @@
 
         ; 88/B366
 
-    .endsection Unsorted88B028Section
+    .endsection MapPressASection
 
 
-    .section Unsorted88B51ASection
+    .section CursorToNextReadyUnitSection
 
       .al
       .xl
@@ -879,10 +879,10 @@
 
         ; 88/B64F
 
-    .endsection Unsorted88B51ASection
+    .endsection CursorToNextReadyUnitSection
 
 
-    .section Unsorted88B366Section
+    .section OpenSoloConversationFromMapSection
 
       .al
       .xl
@@ -925,10 +925,10 @@
 
         ; 88/B3AF
 
-    .endsection Unsorted88B366Section
+    .endsection OpenSoloConversationFromMapSection
 
 
-    .section Unsorted88B3DFSection
+    .section GetTileEntriesAtCursorSection
 
       .al
       .xl
@@ -979,6 +979,6 @@
 
         ; 88/B42C
 
-    .endsection Unsorted88B3DFSection
+    .endsection GetTileEntriesAtCursorSection
 
 

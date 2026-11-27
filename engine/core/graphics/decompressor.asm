@@ -827,7 +827,7 @@
     .endsection DecompressSingleSection
 
 
-    .section Unsorted80A5D9Section
+    .section ResetDecompListSection
 
       .as
       .xl
@@ -855,10 +855,10 @@
 
         ; 80/A5E9
 
-    .endsection Unsorted80A5D9Section
+    .endsection ResetDecompListSection
 
 
-    .section Unsorted80A9F2Section
+    .section DecompressLinearSection
 
       .al
       .xl
@@ -889,7 +889,7 @@
 
         ; 80/AA02
 
-    .endsection Unsorted80A9F2Section
+    .endsection DecompressLinearSection
 
 
     .section DecompressToBufferProcSection

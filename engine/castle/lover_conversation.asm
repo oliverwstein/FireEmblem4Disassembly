@@ -7,7 +7,7 @@
 ; text/dialogue/LoverHomeCastle; their two ASMCs add 様 to Seliph's and Leif's
 ; names.
 
-    .section Unsorted8CED00Section
+    .section StartLoverHomeCastleConversationSection
 
       .al
       .xl
@@ -53,10 +53,10 @@
 
         ; 8C/ED4F
 
-    .endsection Unsorted8CED00Section
+    .endsection StartLoverHomeCastleConversationSection
 
 
-    .section Unsorted8CED4FSection
+    .section BuildLoverHomeCastleConversationSection
 
       .al
       .xl
@@ -135,10 +135,10 @@
 
         ; 8C/EDD0
 
-    .endsection Unsorted8CED4FSection
+    .endsection BuildLoverHomeCastleConversationSection
 
 
-    .section Unsorted8CEDD0Section
+    .section TryStartLoverHomeCastleConversationSection
 
       .al
       .xl
@@ -301,7 +301,7 @@
         .word PermanentFlagLayleaLeneLoverHomeCastle   ; Lene
         .word PermanentFlagJeanneNannaLoverHomeCastle  ; Nanna
 
-    .endsection Unsorted8CEDD0Section
+    .endsection TryStartLoverHomeCastleConversationSection
 
 
     .section Data8CEEE8Section
@@ -459,7 +459,7 @@
     .endsection Data8CEEE8Section
 
 
-    .section Unsorted8CF06ASection
+    .section CopyLoverHomeCastleLineSection
 
       .al
       .xl
@@ -523,7 +523,7 @@
 
         ; 8C/F09B
 
-    .endsection Unsorted8CF06ASection
+    .endsection CopyLoverHomeCastleLineSection
 
 
     .section LoverHomeCastleASMCSection

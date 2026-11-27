@@ -638,7 +638,7 @@
     .endsection ReviveScreenBuildSection
 
 
-    .section Unsorted89ACCESection
+    .section ReviveScreenSetupSection
 
       .al
       .xl
@@ -693,10 +693,10 @@
 
         ; 89/ACF6
 
-    .endsection Unsorted89ACCESection
+    .endsection ReviveScreenSetupSection
 
 
-    .section Table89ACF6Section
+    .section ReviveScreenStepsSection
 
       .al
       .xl
@@ -710,7 +710,7 @@
         .word <>rsReviveScreenWait
         .word <>rsReviveScreenWait
 
-    .endsection Table89ACF6Section
+    .endsection ReviveScreenStepsSection
 
 
     .section ReviveMenuSection
@@ -1170,7 +1170,7 @@
     .endsection ReviveMenuSection
 
 
-    .section Unsorted89B058Section
+    .section ReviveScreenNobodyDeadSection
 
       .al
       .xl
@@ -1224,10 +1224,10 @@
 
         ; 89/B0A9
 
-    .endsection Unsorted89B058Section
+    .endsection ReviveScreenNobodyDeadSection
 
 
-    .section Unsorted89B0A9Section
+    .section ReviveScreenWaitSection
 
       .al
       .xl
@@ -1247,10 +1247,10 @@
 
         ; 89/B0AA
 
-    .endsection Unsorted89B0A9Section
+    .endsection ReviveScreenWaitSection
 
 
-    .section Unsorted89B0AASection
+    .section ReviveScreenUpkeepSection
 
       .al
       .xl
@@ -1277,10 +1277,10 @@
 
         ; 89/B0B9
 
-    .endsection Unsorted89B0AASection
+    .endsection ReviveScreenUpkeepSection
 
 
-    .section Table89B0B9Section
+    .section ReviveScreenDrawModesSection
 
       .al
       .xl
@@ -1292,10 +1292,10 @@
         .word <>rsReviveScreenDrawGridAndConfirm
         .word <>rsReviveScreenDrawNothing
 
-    .endsection Table89B0B9Section
+    .endsection ReviveScreenDrawModesSection
 
 
-    .section Unsorted89B0BFSection
+    .section ReviveScreenDrawGridSection
 
       .al
       .xl
@@ -1317,10 +1317,10 @@
 
         ; 89/B0C6
 
-    .endsection Unsorted89B0BFSection
+    .endsection ReviveScreenDrawGridSection
 
 
-    .section Unsorted89B0C6Section
+    .section ReviveScreenDrawGridAndConfirmSection
 
       .al
       .xl
@@ -1343,10 +1343,10 @@
 
         ; 89/B0D0
 
-    .endsection Unsorted89B0C6Section
+    .endsection ReviveScreenDrawGridAndConfirmSection
 
 
-    .section Unsorted89B0D0Section
+    .section ReviveScreenDrawNothingSection
 
       .al
       .xl
@@ -1366,10 +1366,10 @@
 
         ; 89/B0D1
 
-    .endsection Unsorted89B0D0Section
+    .endsection ReviveScreenDrawNothingSection
 
 
-    .section Unsorted89B0D1Section
+    .section ReviveScreenDrawMapSpritesSection
 
       .al
       .xl
@@ -1420,10 +1420,10 @@
 
         ; 89/B10C
 
-    .endsection Unsorted89B0D1Section
+    .endsection ReviveScreenDrawMapSpritesSection
 
 
-    .section Unsorted89B10CSection
+    .section ReviveScreenDrawMapSpriteSection
 
       .al
       .xl
@@ -1507,10 +1507,10 @@
 
         ; 89/B20B
 
-    .endsection Unsorted89B10CSection
+    .endsection ReviveScreenDrawMapSpriteSection
 
 
-    .section Unsorted89B20BSection
+    .section ReviveScreenDrawCursorSection
 
       .al
       .xl
@@ -1539,7 +1539,7 @@
 
         ; 89/B225
 
-    .endsection Unsorted89B20BSection
+    .endsection ReviveScreenDrawCursorSection
 
 
     .section Data89B225Section
@@ -1570,7 +1570,7 @@
     .endsection Data89B225Section
 
 
-    .section Unsorted89B285Section
+    .section ReviveScreenDrawConfirmCursorSection
 
       .al
       .xl
@@ -1599,7 +1599,7 @@
 
         ; 89/B29E
 
-    .endsection Unsorted89B285Section
+    .endsection ReviveScreenDrawConfirmCursorSection
 
 
     .section Data89B29ESection
@@ -1618,7 +1618,7 @@
     .endsection Data89B29ESection
 
 
-    .section Unsorted89B2A2Section
+    .section ReviveScreenAnimateMapSpriteSection
 
       .al
       .xl
@@ -1649,10 +1649,10 @@
 
         ; 89/B2B6
 
-    .endsection Unsorted89B2A2Section
+    .endsection ReviveScreenAnimateMapSpriteSection
 
 
-    .section Unsorted89B2B6Section
+    .section ReviveScreenAnimateSmallMapSpriteSection
 
       .al
       .xl
@@ -1710,7 +1710,7 @@
 
         ; 89/B30C
 
-    .endsection Unsorted89B2B6Section
+    .endsection ReviveScreenAnimateSmallMapSpriteSection
 
 
     .section Data89B30CSection
@@ -1739,7 +1739,7 @@
     .endsection Data89B30CSection
 
 
-    .section Unsorted89B344Section
+    .section ReviveScreenAnimateLargeMapSpriteSection
 
       .al
       .xl
@@ -1799,7 +1799,7 @@
 
         ; 89/B39F
 
-    .endsection Unsorted89B344Section
+    .endsection ReviveScreenAnimateLargeMapSpriteSection
 
 
     .section Data89B39FSection

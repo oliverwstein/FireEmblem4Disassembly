@@ -24,7 +24,7 @@
 
     .endsection IRQEngineCycleSection
 
-    .section Unsorted82E000Section
+    .section IRQEngineMainActionTableSection
 
       .al
       .xl
@@ -87,9 +87,9 @@
         sta aIRQSystem.aSleepTimer,b,x
         ; falls into rsIRQCodeHalt
 
-    .endsection Unsorted82E000Section
+    .endsection IRQEngineMainActionTableSection
 
-    .section Unsorted82E028Section
+    .section IRQCodeHaltSection
 
       .al
       .xl
@@ -116,7 +116,7 @@
 
         ; 82/E030
 
-    .endsection Unsorted82E028Section
+    .endsection IRQCodeHaltSection
 
     .section Unreferenced82E030Section
 
@@ -230,7 +230,7 @@
 
     .endsection Unreferenced82E030Section
 
-    .section Unsorted82E073Section
+    .section ResetIRQEngineSection
 
       .al
       .xl
@@ -267,9 +267,9 @@
 
         ; 82/E08D
 
-    .endsection Unsorted82E073Section
+    .endsection ResetIRQEngineSection
 
-    .section Unsorted82E08DSection
+    .section EnableIRQEngineSection
 
       .al
       .xl
@@ -311,9 +311,9 @@
 
         ; 82/E0AF
 
-    .endsection Unsorted82E08DSection
+    .endsection EnableIRQEngineSection
 
-    .section Unsorted82E0AFSection
+    .section DisableIRQEngineSection
 
       .al
       .xl
@@ -344,9 +344,9 @@
 
         ; 82/E0C6
 
-    .endsection Unsorted82E0AFSection
+    .endsection DisableIRQEngineSection
 
-    .section Unsorted82E0C6Section
+    .section IRQEngineCreateEntrySection
 
       .al
       .xl
@@ -421,7 +421,7 @@
 
         ; 82/E120
 
-    .endsection Unsorted82E0C6Section
+    .endsection IRQEngineCreateEntrySection
 
     .section Unreferenced82E120Section
 
@@ -458,7 +458,7 @@
 
     .endsection Unreferenced82E120Section
 
-    .section Unsorted82E133Section
+    .section IRQEngineStubSection
 
       .al
       .xl
@@ -517,9 +517,9 @@
 
         ; 82/E147
 
-    .endsection Unsorted82E133Section
+    .endsection IRQEngineStubSection
 
-    .section Unsorted82E147Section
+    .section IRQEngineSyncAndSortSection
 
       .al
       .xl
@@ -703,9 +703,9 @@
 
         ; 82/E250
 
-    .endsection Unsorted82E147Section
+    .endsection IRQEngineSyncAndSortSection
 
-    .section Unsorted82E250Section
+    .section RunIRQEngineSection
 
       .al
       .xl
@@ -758,9 +758,9 @@
 
         ; 82/E283
 
-    .endsection Unsorted82E250Section
+    .endsection RunIRQEngineSection
 
-    .section Unsorted82E283Section
+    .section IRQEngineProgramNextEntrySection
 
       .al
       .xl
@@ -796,9 +796,9 @@
 
         ; 82/E2AD
 
-    .endsection Unsorted82E283Section
+    .endsection IRQEngineProgramNextEntrySection
 
-    .section Unsorted82E2ADSection
+    .section IRQEngineStepSlotCodeSection
 
       .al
       .xl
@@ -869,4 +869,4 @@
         ; Unused: 282 zero bytes.
         .fill 282, $00
 
-    .endsection Unsorted82E2ADSection
+    .endsection IRQEngineStepSlotCodeSection

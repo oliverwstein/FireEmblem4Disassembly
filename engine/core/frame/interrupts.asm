@@ -81,7 +81,7 @@
     .endsection EnableForcedBlankSection
 
 
-    .section Unsorted80823FSection
+    .section HaltUntilVBlankSection
 
       .al
       .xl
@@ -108,10 +108,10 @@
 
         ; 80/8248
 
-    .endsection Unsorted80823FSection
+    .endsection HaltUntilVBlankSection
 
 
-    .section Unsorted80825BSection
+    .section DisableForcedBlankSection
 
       .al
       .xl
@@ -144,10 +144,10 @@
 
         ; 80/826E
 
-    .endsection Unsorted80825BSection
+    .endsection DisableForcedBlankSection
 
 
-    .section Unsorted8081B6Section
+    .section VBlankSection
 
       .al
       .xl
@@ -223,10 +223,10 @@
 
         ; 80/81FD
 
-    .endsection Unsorted8081B6Section
+    .endsection VBlankSection
 
 
-    .section Unsorted8081FDSection
+    .section IRQSection
 
       .al
       .xl
@@ -292,10 +292,10 @@
 
         ; 80/8223
 
-    .endsection Unsorted8081FDSection
+    .endsection IRQSection
 
 
-    .section Unsorted809CA0Section
+    .section DefaultVBlankRoutineSection
 
       .al
       .xl
@@ -335,5 +335,5 @@
 
         ; 80/9CD6
 
-    .endsection Unsorted809CA0Section
+    .endsection DefaultVBlankRoutineSection
 

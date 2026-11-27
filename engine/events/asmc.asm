@@ -241,7 +241,7 @@
     .endsection FinalChapterJuliaRecruitmentASMCSection
 
 
-    .section Unsorted85BC0FSection
+    .section ProcItemPopUpSection
 
       .al
       .xl
@@ -251,7 +251,7 @@
         .long aGoldPopUpData
         .byte 1
 
-    .endsection Unsorted85BC0FSection
+    .endsection ProcItemPopUpSection
 
 
     .section ASMCDialogueSection
@@ -285,7 +285,7 @@
     .endsection ASMCDialogueSection
 
 
-    .section Unsorted91B131Section
+    .section ASMCCloseDialogueSection
 
       .al
       .xl
@@ -331,6 +331,6 @@
 
         ; 91/B164
 
-    .endsection Unsorted91B131Section
+    .endsection ASMCCloseDialogueSection
 
 

@@ -8,7 +8,7 @@
 ; variables at $7F8400 (include/WRAM.h), constants in include/Menus.h.
 
 
-    .section Table80E586Section
+    .section OptionsMenuTilemapEntrySection
 
       .al
       .xl
@@ -19,10 +19,10 @@
       aOptionsMenuDescriptionTilemapEntry ; 80/E58F
         .byte $3C, $01, $00, $00, $00, $00, $2E, $84, $7F
 
-    .endsection Table80E586Section
+    .endsection OptionsMenuTilemapEntrySection
 
 
-    .section Unsorted80E598Section
+    .section OpenOptionsMenuSection
 
       .al
       .xl
@@ -205,10 +205,16 @@
 
         ; 80/E72E
 
-    .endsection Unsorted80E598Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80E72E .structDecompressionDMAEntry gcHiraganaFont, $1800, $0000 ; 80/E72E
+      aDecompressionDMAEntry80E736 .structDecompressionDMAEntry g4bppcOptionsMenuTiles, $0800, $4200 ; 80/E736
+      aDecompressionDMAEntry80E73E .structDecompressionDMAEntry acOptionsMenuBG1Tilemap, $0700, $2000 ; 80/E73E
+
+    .endsection OpenOptionsMenuSection
 
 
-    .section Unsorted80E746Section
+    .section DrawOptionsMenuLabelsSection
 
       .al
       .xl
@@ -322,10 +328,10 @@
 
         ; 80/E84E
 
-    .endsection Unsorted80E746Section
+    .endsection DrawOptionsMenuLabelsSection
 
 
-    .section Table80E84ESection
+    .section OptionsMenuAnimationLabelSection
 
       .al
       .xl
@@ -394,10 +400,10 @@
         .enc "none"
 
 
-    .endsection Table80E84ESection
+    .endsection OptionsMenuAnimationLabelSection
 
 
-    .section Unsorted80E8F0Section
+    .section SetOptionsMenuBGSettingsSection
 
       .al
       .xl
@@ -490,20 +496,20 @@
 
         ; 80/E96E
 
-    .endsection Unsorted80E8F0Section
+    .endsection SetOptionsMenuBGSettingsSection
 
 
-    .section Table80E96ESection
+    .section OptionsMenuCOLDATAHDMASection
 
       .al
       .xl
 
       aOptionsMenuCOLDATAHDMA .dstruct structHDMADirectEntryInfo, rlInitOptionsMenuCOLDATAHDMA, rlCycleOptionsMenuCOLDATAHDMA, aOptionsMenuCOLDATAHDMACode, aOptionsMenuCOLDATAHDMABuffer, PPU_REG_BASE + $32, $00 ; 80/E96E
 
-    .endsection Table80E96ESection
+    .endsection OptionsMenuCOLDATAHDMASection
 
 
-    .section Unsorted80E979Section
+    .section CycleOptionsMenuCOLDATAHDMASection
 
       .al
       .xl
@@ -528,10 +534,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted80E979Section
+    .endsection CycleOptionsMenuCOLDATAHDMASection
 
 
-    .section Unsorted80E97CSection
+    .section InitOptionsMenuCOLDATAHDMASection
 
       .al
       .xl
@@ -563,7 +569,7 @@
 
         ; 80/E98E
 
-    .endsection Unsorted80E97CSection
+    .endsection InitOptionsMenuCOLDATAHDMASection
 
 
     .section Data80E98ESection
@@ -585,7 +591,7 @@
     .endsection Data80E98ESection
 
 
-    .section Unsorted80E9AFSection
+    .section CycleOptionsMenuBG3VOFSHDMASection
 
       .al
       .xl
@@ -610,10 +616,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted80E9AFSection
+    .endsection CycleOptionsMenuBG3VOFSHDMASection
 
 
-    .section Unsorted80E9B2Section
+    .section InitOptionsMenuBG3VOFSHDMASection
 
       .al
       .xl
@@ -667,7 +673,7 @@
 
         ; 80/E9F3
 
-    .endsection Unsorted80E9B2Section
+    .endsection InitOptionsMenuBG3VOFSHDMASection
 
 
     .section Data80E9F3Section
@@ -722,7 +728,7 @@
     .endsection Data80EA80Section
 
 
-    .section Unsorted89EB26Section
+    .section OptionsMenuSetupSection
 
       .al
       .xl
@@ -785,10 +791,10 @@
 
         ; 89/EB56
 
-    .endsection Unsorted89EB26Section
+    .endsection OptionsMenuSetupSection
 
 
-    .section Table89EB56Section
+    .section OptionsMenuStepsSection
 
       .al
       .xl
@@ -801,10 +807,10 @@
         .word <>rsOptionsMenuReturnToMap
         .word <>rsOptionsMenuWait
 
-    .endsection Table89EB56Section
+    .endsection OptionsMenuStepsSection
 
 
-    .section Unsorted89EB5ESection
+    .section OptionsMenuChooseOptionSection
 
       .al
       .xl
@@ -1020,10 +1026,10 @@
 
         ; 89/ECB4
 
-    .endsection Unsorted89EB5ESection
+    .endsection OptionsMenuChooseOptionSection
 
 
-    .section Unsorted89ECB4Section
+    .section OptionsMenuReturnToMapSection
 
       .al
       .xl
@@ -1049,10 +1055,10 @@
 
         ; 89/ECC6
 
-    .endsection Unsorted89ECB4Section
+    .endsection OptionsMenuReturnToMapSection
 
 
-    .section Unsorted89ECC6Section
+    .section OptionsMenuWaitSection
 
       .al
       .xl
@@ -1072,10 +1078,10 @@
 
         ; 89/ECC7
 
-    .endsection Unsorted89ECC6Section
+    .endsection OptionsMenuWaitSection
 
 
-    .section Unsorted89ECC7Section
+    .section OptionsMenuUpkeepSection
 
       .al
       .xl
@@ -1128,10 +1134,10 @@
 
         ; 89/ED12
 
-    .endsection Unsorted89ECC7Section
+    .endsection OptionsMenuUpkeepSection
 
 
-    .section Unsorted89ED12Section
+    .section OptionsMenuDrawChoicesSection
 
       .al
       .xl
@@ -1188,10 +1194,10 @@
 
         ; 89/ED58
 
-    .endsection Unsorted89ED12Section
+    .endsection OptionsMenuDrawChoicesSection
 
 
-    .section Table89ED58Section
+    .section OptionsMenuHighlightRoutinesSection
 
       .al
       .xl
@@ -1209,7 +1215,7 @@
         .word <>rsOptionsMenuHighlightOnOff
         .word <>rsOptionsMenuHighlightEnemyAI
 
-    .endsection Table89ED58Section
+    .endsection OptionsMenuHighlightRoutinesSection
 
 
     .section Data89ED6ASection
@@ -1276,7 +1282,7 @@
         ; 89/EDFD
 
     .endsection Data89ED6ASection
-    .section Unsorted89EDFDSection
+    .section OptionsMenuHighlightAnimationSection
 
       .al
       .xl
@@ -1306,10 +1312,10 @@
 
         ; 89/EE0E
 
-    .endsection Unsorted89EDFDSection
+    .endsection OptionsMenuHighlightAnimationSection
 
 
-    .section Table89EE0ESection
+    .section OptionsMenuAnimationHighlightsSection
 
       .al
       .xl
@@ -1321,10 +1327,10 @@
         .word <>rsOptionsMenuHighlightAnimation2
         .word <>rsOptionsMenuHighlightAnimation3
 
-    .endsection Table89EE0ESection
+    .endsection OptionsMenuAnimationHighlightsSection
 
 
-    .section Unsorted89EE14Section
+    .section OptionsMenuHighlightAnimation1Section
 
       .al
       .xl
@@ -1365,10 +1371,10 @@
 
         ; 89/EE32
 
-    .endsection Unsorted89EE14Section
+    .endsection OptionsMenuHighlightAnimation1Section
 
 
-    .section Unsorted89EE32Section
+    .section OptionsMenuHighlightAnimation3Section
 
       .al
       .xl
@@ -1402,10 +1408,10 @@
 
         ; 89/EE50
 
-    .endsection Unsorted89EE32Section
+    .endsection OptionsMenuHighlightAnimation3Section
 
 
-    .section Unsorted89EE50Section
+    .section OptionsMenuHighlightOnOffSection
 
       .al
       .xl
@@ -1455,10 +1461,10 @@
 
         ; 89/EE89
 
-    .endsection Unsorted89EE50Section
+    .endsection OptionsMenuHighlightOnOffSection
 
 
-    .section Unsorted89EE89Section
+    .section OptionsMenuHighlightMessageSpeedSection
 
       .al
       .xl
@@ -1488,10 +1494,10 @@
 
         ; 89/EE9A
 
-    .endsection Unsorted89EE89Section
+    .endsection OptionsMenuHighlightMessageSpeedSection
 
 
-    .section Table89EE9ASection
+    .section OptionsMenuMessageSpeedHighlightsSection
 
       .al
       .xl
@@ -1505,10 +1511,10 @@
         .word <>rsOptionsMenuHighlightMessageSpeedText._EED1
         .word <>rsOptionsMenuHighlightMessageSpeedText._EEE0
 
-    .endsection Table89EE9ASection
+    .endsection OptionsMenuMessageSpeedHighlightsSection
 
 
-    .section Unsorted89EEA4Section
+    .section OptionsMenuHighlightMessageSpeedTextSection
 
       .al
       .xl
@@ -1578,10 +1584,10 @@
 
         ; 89/EEFE
 
-    .endsection Unsorted89EEA4Section
+    .endsection OptionsMenuHighlightMessageSpeedTextSection
 
 
-    .section Unsorted89EEFESection
+    .section OptionsMenuHighlightEnemySpeedSection
 
       .al
       .xl
@@ -1611,10 +1617,10 @@
 
         ; 89/EF0F
 
-    .endsection Unsorted89EEFESection
+    .endsection OptionsMenuHighlightEnemySpeedSection
 
 
-    .section Table89EF0FSection
+    .section OptionsMenuEnemySpeedHighlightsSection
 
       .al
       .xl
@@ -1625,10 +1631,10 @@
         .word <>rsOptionsMenuHighlightEnemySpeedText
         .word <>rsOptionsMenuHighlightEnemySpeedText._EF22
 
-    .endsection Table89EF0FSection
+    .endsection OptionsMenuEnemySpeedHighlightsSection
 
 
-    .section Unsorted89EF13Section
+    .section OptionsMenuHighlightEnemySpeedTextSection
 
       .al
       .xl
@@ -1671,10 +1677,10 @@
 
         ; 89/EF40
 
-    .endsection Unsorted89EF13Section
+    .endsection OptionsMenuHighlightEnemySpeedTextSection
 
 
-    .section Table89EF40Section
+    .section OptionsMenuRealTextSection
 
       .al
       .xl
@@ -1694,10 +1700,10 @@
         .enc "none"
 
 
-    .endsection Table89EF40Section
+    .endsection OptionsMenuRealTextSection
 
 
-    .section Unsorted89EF50Section
+    .section OptionsMenuHighlightSoundSection
 
       .al
       .xl
@@ -1727,10 +1733,10 @@
 
         ; 89/EF61
 
-    .endsection Unsorted89EF50Section
+    .endsection OptionsMenuHighlightSoundSection
 
 
-    .section Table89EF61Section
+    .section OptionsMenuSoundHighlightsSection
 
       .al
       .xl
@@ -1742,10 +1748,10 @@
         .word <>rsOptionsMenuHighlightSoundText._EF76
         .word <>rsOptionsMenuHighlightSoundText._EF85
 
-    .endsection Table89EF61Section
+    .endsection OptionsMenuSoundHighlightsSection
 
 
-    .section Unsorted89EF67Section
+    .section OptionsMenuHighlightSoundTextSection
 
       .al
       .xl
@@ -1797,10 +1803,10 @@
 
         ; 89/EFA3
 
-    .endsection Unsorted89EF67Section
+    .endsection OptionsMenuHighlightSoundTextSection
 
 
-    .section Unsorted89EFA3Section
+    .section OptionsMenuHighlightAutoSaveSection
 
       .al
       .xl
@@ -1830,10 +1836,10 @@
 
         ; 89/EFB4
 
-    .endsection Unsorted89EFA3Section
+    .endsection OptionsMenuHighlightAutoSaveSection
 
 
-    .section Table89EFB4Section
+    .section OptionsMenuAutoSaveHighlightsSection
 
       .al
       .xl
@@ -1847,10 +1853,10 @@
         .word <>rsOptionsMenuHighlightAutoSaveText._EFEB
         .word <>rsOptionsMenuHighlightAutoSaveText._EFFA
 
-    .endsection Table89EFB4Section
+    .endsection OptionsMenuAutoSaveHighlightsSection
 
 
-    .section Unsorted89EFBESection
+    .section OptionsMenuHighlightAutoSaveTextSection
 
       .al
       .xl
@@ -1920,10 +1926,10 @@
 
         ; 89/F018
 
-    .endsection Unsorted89EFBESection
+    .endsection OptionsMenuHighlightAutoSaveTextSection
 
 
-    .section Unsorted89F018Section
+    .section OptionsMenuHighlightEnemyAISection
 
       .al
       .xl
@@ -1953,10 +1959,10 @@
 
         ; 89/F029
 
-    .endsection Unsorted89F018Section
+    .endsection OptionsMenuHighlightEnemyAISection
 
 
-    .section Table89F029Section
+    .section OptionsMenuEnemyAIHighlightsSection
 
       .al
       .xl
@@ -1967,10 +1973,10 @@
         .word <>rsOptionsMenuHighlightNormalAI
         .word <>rsOptionsMenuHighlightCleverAI
 
-    .endsection Table89F029Section
+    .endsection OptionsMenuEnemyAIHighlightsSection
 
 
-    .section Unsorted89F02DSection
+    .section OptionsMenuHighlightNormalAISection
 
       .al
       .xl
@@ -2013,10 +2019,10 @@
 
         ; 89/F051
 
-    .endsection Unsorted89F02DSection
+    .endsection OptionsMenuHighlightNormalAISection
 
 
-    .section Table89F051Section
+    .section OptionsMenuCleverTextSection
 
       .al
       .xl
@@ -2036,10 +2042,10 @@
         .enc "none"
 
 
-    .endsection Table89F051Section
+    .endsection OptionsMenuCleverTextSection
 
 
-    .section Unsorted89F065Section
+    .section OptionsMenuDrawValuesSection
 
       .al
       .xl
@@ -2173,7 +2179,7 @@
 
         ; 89/F180
 
-    .endsection Unsorted89F065Section
+    .endsection OptionsMenuDrawValuesSection
 
 
     .section Data89F180Section
@@ -2326,7 +2332,7 @@
         ; 89/F246
 
     .endsection Data89F180Section
-    .section Unsorted89F246Section
+    .section OptionsMenuDrawDescriptionSection
 
       .al
       .xl
@@ -2446,10 +2452,10 @@
 
         ; 89/F338
 
-    .endsection Unsorted89F246Section
+    .endsection OptionsMenuDrawDescriptionSection
 
 
-    .section Table89F338Section
+    .section OptionsMenuDescriptionPointersSection
 
       .al
       .xl
@@ -2506,7 +2512,7 @@
 
         ; 89/F579
 
-    .endsection Table89F338Section
+    .endsection OptionsMenuDescriptionPointersSection
 
 
     .section Data89F579Section
@@ -2580,7 +2586,7 @@
         ; 89/F620
 
     .endsection Data89F579Section
-    .section Unsorted89F620Section
+    .section OptionsMenuClearDescriptionSection
 
       .al
       .xl
@@ -2609,10 +2615,10 @@
 
         ; 89/F630
 
-    .endsection Unsorted89F620Section
+    .endsection OptionsMenuClearDescriptionSection
 
 
-    .section Unsorted89F630Section
+    .section OptionsMenuDrawCursorSection
 
       .al
       .xl
@@ -2666,7 +2672,7 @@
 
         ; 89/F66E
 
-    .endsection Unsorted89F630Section
+    .endsection OptionsMenuDrawCursorSection
 
 
     .section Data89F66ESection
@@ -2693,7 +2699,7 @@
     .endsection Data89F66ESection
 
 
-    .section Unsorted89F67FSection
+    .section OptionsMenuDrawValueMarkerSection
 
       .al
       .xl
@@ -2742,7 +2748,7 @@
 
         ; 89/F6BC
 
-    .endsection Unsorted89F67FSection
+    .endsection OptionsMenuDrawValueMarkerSection
 
 
     .section Data89F6BCSection
@@ -2779,7 +2785,7 @@
         ; 89/F713
 
     .endsection Data89F6BCSection
-    .section Unsorted89F713Section
+    .section OptionsMenuDrawIconsSection
 
       .al
       .xl
@@ -2862,10 +2868,10 @@
 
         .structSpriteArray aOptionsMenuEnemyAIIcon._Sprites
 
-    .endsection Unsorted89F713Section
+    .endsection OptionsMenuDrawIconsSection
 
 
-    .section Unsorted89F7A6Section
+    .section OptionsMenuDrawSelectedIconSection
 
       .al
       .xl
@@ -2904,7 +2910,7 @@
 
         ; 89/F7CD
 
-    .endsection Unsorted89F7A6Section
+    .endsection OptionsMenuDrawSelectedIconSection
 
 
     .section Data89F7CDSection
@@ -2928,7 +2934,7 @@
         ; 89/F7E6
 
     .endsection Data89F7CDSection
-    .section Unsorted89F7E6Section
+    .section OptionsMenuApplyValuesSection
 
       .al
       .xl
@@ -2977,10 +2983,10 @@
 
         ; 89/F842
 
-    .endsection Unsorted89F7E6Section
+    .endsection OptionsMenuApplyValuesSection
 
 
-    .section Unsorted89F842Section
+    .section OptionsMenuRestoreValuesSection
 
       .al
       .xl
@@ -3018,10 +3024,10 @@
 
         ; 89/F88B
 
-    .endsection Unsorted89F842Section
+    .endsection OptionsMenuRestoreValuesSection
 
 
-    .section Table89F88BSection
+    .section OptionsMenuText0Section
 
       .al
       .xl
@@ -3083,6 +3089,6 @@
         .enc "none"
 
 
-    .endsection Table89F88BSection
+    .endsection OptionsMenuText0Section
 
 

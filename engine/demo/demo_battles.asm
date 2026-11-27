@@ -4,7 +4,7 @@
 ; in bank $9E.
 
 
-    .section Unsorted88EEB1Section
+    .section SetDemoIndexFromRankingSection
 
       .al
       .xl
@@ -91,10 +91,10 @@
 
         .databank 0
 
-    .endsection Unsorted88EEB1Section
+    .endsection SetDemoIndexFromRankingSection
 
 
-    .section Unsorted88EF0DSection
+    .section DemoBattleSetupsSection
 
       .al
       .xl
@@ -1156,10 +1156,10 @@
 
         ; 88/FA19
 
-    .endsection Unsorted88EF0DSection
+    .endsection DemoBattleSetupsSection
 
 
-    .section Unsorted9EEDB5Section
+    .section SetUpDemoBattleASection
 
       .al
       .xl
@@ -1374,7 +1374,7 @@
 
         ; 9E/EFF1
 
-    .endsection Unsorted9EEDB5Section
+    .endsection SetUpDemoBattleASection
 
 
     .section DemoBattles96Section

@@ -2016,7 +2016,7 @@
     .endsection AILowHPSection
 
 
-    .section Unsorted86BA3BSection
+    .section AIGetNearestVillageSection
 
       .al
       .xl
@@ -2067,10 +2067,10 @@
 
         ; 86/BA86
 
-    .endsection Unsorted86BA3BSection
+    .endsection AIGetNearestVillageSection
 
 
-    .section Unsorted86BC64Section
+    .section AICheckIfInteractionTileReachableSection
 
       .al
       .xl
@@ -2189,10 +2189,10 @@
 
         ; 86/BCE3
 
-    .endsection Unsorted86BC64Section
+    .endsection AICheckIfInteractionTileReachableSection
 
 
-    .section Unsorted86BFE6Section
+    .section AICalculateCastleCombatDamageSection
 
       .al
       .xl
@@ -2312,6 +2312,6 @@
 
         ; 86/C0AF
 
-    .endsection Unsorted86BFE6Section
+    .endsection AICalculateCastleCombatDamageSection
 
 

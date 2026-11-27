@@ -16,7 +16,7 @@
 ; but are in engine/units/join_order.asm.
 
 
-    .section Unsorted80C3E6Section
+    .section UnitWindowOpenSection
 
       .al
       .xl
@@ -246,10 +246,14 @@
 
         ; 80/C5BE
 
-    .endsection Unsorted80C3E6Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80C5BE .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/C5BE
+
+    .endsection UnitWindowOpenSection
 
 
-    .section Unsorted80C5C6Section
+    .section UnitWindowCopyAllEquippedWeaponIconsSection
 
       .al
       .xl
@@ -293,7 +297,7 @@
 
         ; 80/C5F8
 
-    .endsection Unsorted80C5C6Section
+    .endsection UnitWindowCopyAllEquippedWeaponIconsSection
 
 
     .section Data80C5F8Section
@@ -314,7 +318,7 @@
     .endsection Data80C5F8Section
 
 
-    .section Unsorted80C628Section
+    .section UnitWindowSetBGSettingsSection
 
       .al
       .xl
@@ -422,20 +426,20 @@
 
         ; 80/C6CD
 
-    .endsection Unsorted80C628Section
+    .endsection UnitWindowSetBGSettingsSection
 
 
-    .section Table80C6CDSection
+    .section UnitWindowBG3VOFSHDMAInfoSection
 
       .al
       .xl
 
       aUnitWindowBG3VOFSHDMAInfo .dstruct structHDMADirectEntryInfo, rlUnitWindowBG3VOFSHDMAInit, rlUnitWindowBG3VOFSHDMACycle, aUnitWindowBG3VOFSHDMACode, $7FB038, PPU_REG_BASE + $12, $02 ; 80/C6CD
 
-    .endsection Table80C6CDSection
+    .endsection UnitWindowBG3VOFSHDMAInfoSection
 
 
-    .section Unsorted80C6D8Section
+    .section UnitWindowBG3VOFSHDMAInitSection
 
       .al
       .xl
@@ -494,10 +498,10 @@
 
         ; 80/C716
 
-    .endsection Unsorted80C6D8Section
+    .endsection UnitWindowBG3VOFSHDMAInitSection
 
 
-    .section Table80C716Section
+    .section UnitWindowBG3VOFSHDMACodeSection
 
       .al
       .xl
@@ -507,10 +511,10 @@
 
       aUnitWindowBG1VOFSHDMAInfo .dstruct structHDMADirectEntryInfo, rlUnitWindowBG1VOFSHDMAInit, rlUnitWindowBG1VOFSHDMACycle, aUnitWindowBG1VOFSHDMACode, $7FB020, PPU_REG_BASE + $0E, $02 ; 80/C718
 
-    .endsection Table80C716Section
+    .endsection UnitWindowBG3VOFSHDMACodeSection
 
 
-    .section Unsorted80C723Section
+    .section UnitWindowBG1VOFSHDMAInitSection
 
       .al
       .xl
@@ -568,10 +572,10 @@
 
         ; 80/C760
 
-    .endsection Unsorted80C723Section
+    .endsection UnitWindowBG1VOFSHDMAInitSection
 
 
-    .section Table80C760Section
+    .section UnitWindowBG1VOFSHDMACodeSection
 
       .al
       .xl
@@ -581,10 +585,10 @@
 
       aUnitWindowCGADSUBHDMAInfo .dstruct structHDMADirectEntryInfo, rlUnitWindowCGADSUBHDMAInit, rlUnitWindowCGADSUBHDMACycle, aUnitWindowCGADSUBHDMACode, $7FB0B6, PPU_REG_BASE + $31, $03 ; 80/C762
 
-    .endsection Table80C760Section
+    .endsection UnitWindowBG1VOFSHDMACodeSection
 
 
-    .section Unsorted80C76DSection
+    .section UnitWindowCGADSUBHDMAInitSection
 
       .al
       .xl
@@ -747,10 +751,10 @@
 
         ; 80/C88A
 
-    .endsection Unsorted80C76DSection
+    .endsection UnitWindowCGADSUBHDMAInitSection
 
 
-    .section Table80C88ASection
+    .section UnitWindowCGADSUBHDMACodeSection
 
       .al
       .xl
@@ -760,10 +764,10 @@
 
       aUnitWindowBG2VOFSHDMAInfo .dstruct structHDMADirectEntryInfo, rlUnitWindowBG2VOFSHDMAInit, rlUnitWindowBG2VOFSHDMACycle, $C8D3, $7FB02C, PPU_REG_BASE + $10, $02 ; 80/C88C
 
-    .endsection Table80C88ASection
+    .endsection UnitWindowCGADSUBHDMACodeSection
 
 
-    .section Unsorted80C897Section
+    .section UnitWindowBG2VOFSHDMAInitSection
 
       .al
       .xl
@@ -825,10 +829,10 @@
 
         HDMA_HALT
 
-    .endsection Unsorted80C897Section
+    .endsection UnitWindowBG2VOFSHDMAInitSection
 
 
-    .section Unsorted80C8D5Section
+    .section UnitWindowGetUnitsSection
 
       .al
       .xl
@@ -1013,7 +1017,7 @@
 
         ; 80/CA25
 
-    .endsection Unsorted80C8D5Section
+    .endsection UnitWindowGetUnitsSection
 
 
     .section Data80CA25Section
@@ -1062,7 +1066,7 @@
     .endsection Data80CA25Section
 
 
-    .section Unsorted80CBA5Section
+    .section UnitWindowDrawUnitNamesSection
 
       .al
       .xl
@@ -1127,7 +1131,7 @@
 
         ; 80/CC05
 
-    .endsection Unsorted80CBA5Section
+    .endsection UnitWindowDrawUnitNamesSection
 
 
     .section Data80CC05Section
@@ -1148,7 +1152,7 @@
     .endsection Data80CC05Section
 
 
-    .section Unsorted80CC35Section
+    .section UnitWindowDrawUnitSkillsSection
 
       .al
       .xl
@@ -1249,7 +1253,7 @@
 
         ; 80/CCD3
 
-    .endsection Unsorted80CC35Section
+    .endsection UnitWindowDrawUnitSkillsSection
 
 
     .section Data80CCD3Section
@@ -1287,7 +1291,7 @@
     .endsection Data80CCD3Section
 
 
-    .section Table8BA845Section
+    .section UnitWindowPageTurnInputHandlersSection
 
       .al
       .xl
@@ -1302,7 +1306,7 @@
         .word <>rsUnitWindowHandlePage4Turn
         .word <>rsUnitWindowHandlePage5Turn
 
-    .endsection Table8BA845Section
+    .endsection UnitWindowPageTurnInputHandlersSection
 
 
     .section UnitWindowPageTurnHandlersSection
@@ -2274,7 +2278,7 @@
     .endsection UnitWindowDrawPagesSection
 
 
-    .section Unsorted8BB45DSection
+    .section UnitWindowFillBG3BufferSection
 
       .al
       .xl
@@ -2301,10 +2305,10 @@
 
         ; 8B/B469
 
-    .endsection Unsorted8BB45DSection
+    .endsection UnitWindowFillBG3BufferSection
 
 
-    .section Unsorted8BB469Section
+    .section UnitWindowRenderPageSpritesSection
 
       .al
       .xl
@@ -2374,7 +2378,7 @@
 
         ; 8B/B4C7
 
-    .endsection Unsorted8BB469Section
+    .endsection UnitWindowRenderPageSpritesSection
 
 
     .section Data8BB4C7Section
@@ -2404,7 +2408,7 @@
     .endsection Data8BB4C7Section
 
 
-    .section Unsorted8BB50DSection
+    .section UnitWindowRenderWeaponRankSortIconSection
 
       .al
       .xl
@@ -2450,7 +2454,7 @@
 
         .structSpriteArray aUnitWindowWeaponRankSortIconSprite._Sprites
 
-    .endsection Unsorted8BB50DSection
+    .endsection UnitWindowRenderWeaponRankSortIconSection
 
 
     .section Data8BB53BSection
@@ -2470,7 +2474,7 @@
     .endsection Data8BB53BSection
 
 
-    .section Unsorted8BB54FSection
+    .section UnitWindowRenderUnitSwapCursorsSection
 
       .al
       .xl
@@ -2524,10 +2528,10 @@
 
         .structSpriteArray aUnitWindowUnitSwapCursorSprite._Sprites
 
-    .endsection Unsorted8BB54FSection
+    .endsection UnitWindowRenderUnitSwapCursorsSection
 
 
-    .section Unsorted8BB596Section
+    .section UnitWindowMoveToLastUnitSection
 
       .al
       .xl
@@ -2601,7 +2605,7 @@
 
         ; 8B/B61B
 
-    .endsection Unsorted8BB596Section
+    .endsection UnitWindowMoveToLastUnitSection
 
 
     .section Data8BB61BSection
@@ -2621,7 +2625,7 @@
     .endsection Data8BB61BSection
 
 
-    .section Unsorted8BB63BSection
+    .section UnitWindowMoveToNextPageSection
 
       .al
       .xl
@@ -2730,7 +2734,7 @@
 
         ; 8B/B70B
 
-    .endsection Unsorted8BB63BSection
+    .endsection UnitWindowMoveToNextPageSection
 
 
     .section Data8BB70BSection
@@ -2750,7 +2754,7 @@
     .endsection Data8BB70BSection
 
 
-    .section Unsorted8BB71FSection
+    .section UnitWindowMoveToFirstUnitSection
 
       .al
       .xl
@@ -2905,7 +2909,7 @@
 
         .structSpriteArray aUnitWindowItemIconSprite._Sprites
 
-    .endsection Unsorted8BB71FSection
+    .endsection UnitWindowMoveToFirstUnitSection
 
 
     .section Data8BB811Section
@@ -2936,7 +2940,7 @@
     .endsection Data8BB811Section
 
 
-    .section Unsorted8BB871Section
+    .section UnitWindowRenderWeaponRankIconsSection
 
       .al
       .xl
@@ -2982,10 +2986,10 @@
 
         ; 8B/B8B6
 
-    .endsection Unsorted8BB871Section
+    .endsection UnitWindowRenderWeaponRankIconsSection
 
 
-    .section Unsorted8BB8B6Section
+    .section UnitWindowCopyLineHighlightColorsSection
 
       .al
       .xl
@@ -3189,7 +3193,7 @@
 
         ; 8B/B9FC
 
-    .endsection Unsorted8BB8B6Section
+    .endsection UnitWindowCopyLineHighlightColorsSection
 
 
     .section Data8BB9FCSection
@@ -3226,7 +3230,7 @@
     .endsection Data8BB9FCSection
 
 
-    .section Unsorted8BBAA4Section
+    .section UnitWindowGetUnitSpriteInfosSection
 
       .al
       .xl
@@ -3283,10 +3287,10 @@
 
         ; 8B/BAE9
 
-    .endsection Unsorted8BBAA4Section
+    .endsection UnitWindowGetUnitSpriteInfosSection
 
 
-    .section Unsorted8BBAE9Section
+    .section UnitWindowRenderSpritesSection
 
       .al
       .xl
@@ -3639,7 +3643,7 @@
 
         ; 8B/BD40
 
-    .endsection Unsorted8BBAE9Section
+    .endsection UnitWindowRenderSpritesSection
 
 
     .section Data8BBD40Section
@@ -3702,7 +3706,7 @@
     .endsection Data8BBD40Section
 
 
-    .section Unsorted8BBDA7Section
+    .section UnitWindowGetCurrentLineUnitSection
 
       .al
       .xl
@@ -3749,7 +3753,7 @@
 
         ; 8B/BDF0
 
-    .endsection Unsorted8BBDA7Section
+    .endsection UnitWindowGetCurrentLineUnitSection
 
 
     .section UnitWindowDrawWeaponRankSection
@@ -3837,7 +3841,7 @@
     .endsection UnitWindowDrawWeaponRankSection
 
 
-    .section Unsorted8BBE68Section
+    .section CopyItemIconSection
 
       .al
       .xl
@@ -3919,10 +3923,10 @@
 
         ; 8B/BED5
 
-    .endsection Unsorted8BBE68Section
+    .endsection CopyItemIconSection
 
 
-    .section Table8BBFEDSection
+    .section ItemIconBlankAndVRAMBasesSection
 
       .al
       .xl
@@ -3939,10 +3943,10 @@
 
         ; 8B/C030
 
-    .endsection Table8BBFEDSection
+    .endsection ItemIconBlankAndVRAMBasesSection
 
 
-    .section Unsorted8BC030Section
+    .section UnitWindowCopyWeaponRankIconSection
 
       .al
       .xl
@@ -4015,10 +4019,10 @@
 
         ; 8B/C08F
 
-    .endsection Unsorted8BC030Section
+    .endsection UnitWindowCopyWeaponRankIconSection
 
 
-    .section Table8BC08FSection
+    .section UnitWindowWeaponRankIconPointersSection
 
       .al
       .xl
@@ -4033,7 +4037,7 @@
 
         ; 8B/C0B0
 
-    .endsection Table8BC08FSection
+    .endsection UnitWindowWeaponRankIconPointersSection
 
 
     .section Data8BC0B0Section
@@ -4055,7 +4059,7 @@
     .endsection Data8BC0B0Section
 
 
-    .section Unsorted8BC0F0Section
+    .section UnitWindowRenderSortSelectorCursorSection
 
       .al
       .xl
@@ -4105,7 +4109,7 @@
 
         ; 8B/C127
 
-    .endsection Unsorted8BC0F0Section
+    .endsection UnitWindowRenderSortSelectorCursorSection
 
 
     .section Data8BC127Section
@@ -4146,7 +4150,7 @@
     .endsection Data8BC127Section
 
 
-    .section Unsorted8BC21FSection
+    .section UnitWindowHandleSortSelectionSection
 
       .al
       .xl
@@ -4345,7 +4349,7 @@
 
         ; 8B/C385
 
-    .endsection Unsorted8BC21FSection
+    .endsection UnitWindowHandleSortSelectionSection
 
 
     .section Data8BC385Section
@@ -4364,7 +4368,7 @@
     .endsection Data8BC385Section
 
 
-    .section Unsorted8BC391Section
+    .section UnitWindowHandleUnitSwapSection
 
       .al
       .xl
@@ -4460,10 +4464,10 @@
 
         ; 8B/C43A
 
-    .endsection Unsorted8BC391Section
+    .endsection UnitWindowHandleUnitSwapSection
 
 
-    .section Unsorted8BC43ASection
+    .section UnitWindowCopySpritePalette1Section
 
       .al
       .xl
@@ -4501,10 +4505,10 @@
 
         ; 8B/C457
 
-    .endsection Unsorted8BC43ASection
+    .endsection UnitWindowCopySpritePalette1Section
 
 
-    .section Table8BC457Section
+    .section UnitWindowSpritePaletteOffsetsSection
 
       .al
       .xl
@@ -4517,10 +4521,10 @@
 
         ; 8B/C467
 
-    .endsection Table8BC457Section
+    .endsection UnitWindowSpritePaletteOffsetsSection
 
 
-    .section Unsorted8BC467Section
+    .section UnitWindowCopySpritePalette2Section
 
       .al
       .xl
@@ -4558,10 +4562,10 @@
 
         ; 8B/C484
 
-    .endsection Unsorted8BC467Section
+    .endsection UnitWindowCopySpritePalette2Section
 
 
-    .section Unsorted8BC484Section
+    .section UnitWindowGetEquippedWeaponIDSection
 
       .al
       .xl
@@ -4672,10 +4676,10 @@
 
         ; 8B/C518
 
-    .endsection Unsorted8BC484Section
+    .endsection UnitWindowGetEquippedWeaponIDSection
 
 
-    .section Table8BC518Section
+    .section UnitWindowPageSortTypePointersSection
 
       .al
       .xl
@@ -4693,10 +4697,10 @@
 
         ; 8B/C52A
 
-    .endsection Table8BC518Section
+    .endsection UnitWindowPageSortTypePointersSection
 
 
-    .section Unsorted8BC52ASection
+    .section UnitWindowSetSortDescendingSection
 
       .al
       .xl
@@ -4841,10 +4845,10 @@
 
         ; 8B/C5C6
 
-    .endsection Unsorted8BC52ASection
+    .endsection UnitWindowSetSortDescendingSection
 
 
-    .section Unsorted8BC5C6Section
+    .section UnitWindowDrawSortLabelSection
 
       .al
       .xl
@@ -4895,10 +4899,10 @@
 
         ; 8B/C61C
 
-    .endsection Unsorted8BC5C6Section
+    .endsection UnitWindowDrawSortLabelSection
 
 
-    .section Table8BC61CSection
+    .section UnitWindowSortLabelDrawers8BC61CSection
 
       .al
       .xl
@@ -4945,10 +4949,10 @@
         .word <>rsUnitWindowDrawArenaLevelSortLabel
         .word <>rsUnitWindowDrawTalkTargetSortLabel
 
-    .endsection Table8BC61CSection
+    .endsection UnitWindowSortLabelDrawers8BC61CSection
 
 
-    .section Unsorted8BC668Section
+    .section UnitWindowDrawJoinOrderSortLabelSection
 
       .al
       .xl
@@ -4976,7 +4980,7 @@
 
         ; 8B/C67F
 
-    .endsection Unsorted8BC668Section
+    .endsection UnitWindowDrawJoinOrderSortLabelSection
 
 
     .section UnitWindowSortLabelDrawersSection
@@ -5551,7 +5555,7 @@
     .endsection UnitWindowSortLabelDrawersSection
 
 
-    .section Table8BC96ASection
+    .section UnitWindowSkillsSortLabelTextSection
 
       .al
       .xl
@@ -5564,7 +5568,7 @@
         .enc "none"
 
 
-    .endsection Table8BC96ASection
+    .endsection UnitWindowSkillsSortLabelTextSection
 
 
     .section UnitWindowSortLabelDrawers2Section
@@ -5629,7 +5633,7 @@
     .endsection UnitWindowSortLabelDrawers2Section
 
 
-    .section Unsorted8BC9B6Section
+    .section UnitWindowSwapUnitsSection
 
       .al
       .xl
@@ -5698,10 +5702,10 @@
 
         ; 8B/CA1A
 
-    .endsection Unsorted8BC9B6Section
+    .endsection UnitWindowSwapUnitsSection
 
 
-    .section Unsorted8BCA1ASection
+    .section UnitWindowGetSortScoresSection
 
       .al
       .xl
@@ -5737,10 +5741,10 @@
 
         ; 8B/CA31
 
-    .endsection Unsorted8BCA1ASection
+    .endsection UnitWindowGetSortScoresSection
 
 
-    .section Table8BCA31Section
+    .section UnitWindowSortScoreGetters8BCA31Section
 
       .al
       .xl
@@ -5788,10 +5792,10 @@
         .word <>rsUnitWindowGetTalkTargetSortScores
         .word <>rsUnitWindowGetSavedOrderSortScores
 
-    .endsection Table8BCA31Section
+    .endsection UnitWindowSortScoreGetters8BCA31Section
 
 
-    .section Unsorted8BCA7FSection
+    .section UnitWindowGetJoinOrderSortScoresSection
 
       .al
       .xl
@@ -5837,10 +5841,10 @@
 
         ; 8B/CAB4
 
-    .endsection Unsorted8BCA7FSection
+    .endsection UnitWindowGetJoinOrderSortScoresSection
 
 
-    .section Unsorted8BCAB4Section
+    .section UnitWindowGetSavedOrderSortScoresSection
 
       .al
       .xl
@@ -5884,7 +5888,7 @@
 
         ; 8B/CAE5
 
-    .endsection Unsorted8BCAB4Section
+    .endsection UnitWindowGetSavedOrderSortScoresSection
 
 
     .section UnitWindowLevelSortScoresSection
@@ -6335,7 +6339,7 @@
     .endsection UnitWindowSortScoreGettersSection
 
 
-    .section Unsorted8BCD20Section
+    .section UnitWindowSwapSortSlotsSection
 
       .al
       .xl
@@ -6409,10 +6413,10 @@
 
         ; 8B/CD89
 
-    .endsection Unsorted8BCD20Section
+    .endsection UnitWindowSwapSortSlotsSection
 
 
-    .section Unsorted8BCD89Section
+    .section UnitWindowGetPromotionFlagsAndWeaponsSection
 
       .al
       .xl
@@ -6473,10 +6477,10 @@
 
         ; 8B/CDD8
 
-    .endsection Unsorted8BCD89Section
+    .endsection UnitWindowGetPromotionFlagsAndWeaponsSection
 
 
-    .section Unsorted8BCE29Section
+    .section UnitWindowSaveListOrderSection
 
       .al
       .xl
@@ -6535,10 +6539,10 @@
 
         ; 8B/CE71
 
-    .endsection Unsorted8BCE29Section
+    .endsection UnitWindowSaveListOrderSection
 
 
-    .section Unsorted8BCE71Section
+    .section ResetUnitWindowSettingsSection
 
       .al
       .xl
@@ -6623,10 +6627,10 @@
 
         ; 8B/CECA
 
-    .endsection Unsorted8BCE71Section
+    .endsection ResetUnitWindowSettingsSection
 
 
-    .section Unsorted8BA7F2Section
+    .section UnitWindowShowSection
 
       .al
       .xl
@@ -6710,10 +6714,10 @@
 
         ; 8B/A845
 
-    .endsection Unsorted8BA7F2Section
+    .endsection UnitWindowShowSection
 
 
-    .section Unsorted8BA851Section
+    .section UnitWindowHandleInputSection
 
       .al
       .xl
@@ -7374,10 +7378,10 @@
 
         ; 8B/AC7F
 
-    .endsection Unsorted8BA851Section
+    .endsection UnitWindowHandleInputSection
 
 
-    .section Unsorted8BAC7FSection
+    .section UnitWindowHandlePage0TurnSection
 
       .al
       .xl
@@ -7422,10 +7426,10 @@
 
         ; 8B/ACAD
 
-    .endsection Unsorted8BAC7FSection
+    .endsection UnitWindowHandlePage0TurnSection
 
 
-    .section Unsorted8BADF1Section
+    .section UnitWindowDrawPageSection
 
       .al
       .xl
@@ -7462,10 +7466,10 @@
 
         ; 8B/AE12
 
-    .endsection Unsorted8BADF1Section
+    .endsection UnitWindowDrawPageSection
 
 
-    .section Unsorted8BAE1ESection
+    .section UnitWindowDrawPage0Section
 
       .al
       .xl
@@ -7621,7 +7625,7 @@
 
         ; 8B/AF3B
 
-    .endsection Unsorted8BAE1ESection
+    .endsection UnitWindowDrawPage0Section
 
 
     .section Data8BCECASection
@@ -7643,7 +7647,7 @@
     .endsection Data8BCECASection
 
 
-    .section Table80C3DDSection
+    .section UnitWindowBG3TilemapEntrySection
 
       .al
       .xl
@@ -7651,10 +7655,10 @@
       aUnitWindowBG3TilemapEntry ; 80/C3DD
         .byte $20, $40, $00, $00, $00, $00, $88, $83, $7E
 
-    .endsection Table80C3DDSection
+    .endsection UnitWindowBG3TilemapEntrySection
 
 
-    .section TableDD7FB0Section
+    .section ItemIconPaletteSection
 
       .al
       .xl
@@ -7679,5 +7683,5 @@
 
         ; DD/8000
 
-    .endsection TableDD7FB0Section
+    .endsection ItemIconPaletteSection
 

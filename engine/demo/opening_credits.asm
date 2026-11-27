@@ -366,7 +366,7 @@
     .endsection OpeningCreditsHScrollHDMASection
 
 
-    .section Unsorted8DD041Section
+    .section OpeningCreditsVScrollHDMANoOpSection
 
       .al
       .xl
@@ -644,10 +644,10 @@
         .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
         .byte 0
 
-    .endsection Unsorted8DD041Section
+    .endsection OpeningCreditsVScrollHDMANoOpSection
 
 
-    .section Unsorted8BA0B4Section
+    .section OpeningCreditsHScrollHDMANoOpSection
 
       .al
       .xl
@@ -817,6 +817,6 @@
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .byte 0
 
-    .endsection Unsorted8BA0B4Section
+    .endsection OpeningCreditsHScrollHDMANoOpSection
 
 

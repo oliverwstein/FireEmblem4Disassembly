@@ -13,7 +13,7 @@
 ; that does the upload in forced blank partway down the screen during some events.
 
 
-    .section Unsorted888410Section
+    .section RedrawVisibleMapTilemapSection
 
       .al
       .xl
@@ -78,10 +78,10 @@
 
         ; 88/847D
 
-    .endsection Unsorted888410Section
+    .endsection RedrawVisibleMapTilemapSection
 
 
-    .section Unsorted88847DSection
+    .section CopyMapRowToTilemapBufferSection
 
       .al
       .xl
@@ -237,10 +237,10 @@
 
         ; 88/8560
 
-    .endsection Unsorted88847DSection
+    .endsection CopyMapRowToTilemapBufferSection
 
 
-    .section Unsorted8887ECSection
+    .section UploadMapRowAndColumnSection
 
       .al
       .xl
@@ -386,10 +386,10 @@
 
         ; 88/8901
 
-    .endsection Unsorted8887ECSection
+    .endsection UploadMapRowAndColumnSection
 
 
-    .section Unsorted888901Section
+    .section GetMapBottomRowIndexSection
 
       .al
       .xl
@@ -604,10 +604,10 @@
 
         ; 88/8A14
 
-    .endsection Unsorted888901Section
+    .endsection GetMapBottomRowIndexSection
 
 
-    .section Unsorted888A14Section
+    .section BuildRangeOverlayRowSection
 
       .al
       .xl
@@ -928,10 +928,10 @@
 
         ; 88/8BB3
 
-    .endsection Unsorted888A14Section
+    .endsection BuildRangeOverlayRowSection
 
 
-    .section Unsorted888BB3Section
+    .section BuildMapRowTilesHalfOffsetSection
 
       .al
       .xl
@@ -1055,10 +1055,10 @@
 
         ; 88/8C5F
 
-    .endsection Unsorted888BB3Section
+    .endsection BuildMapRowTilesHalfOffsetSection
 
 
-    .section Unsorted888C5FSection
+    .section BuildRangeOverlayRowHalfOffsetSection
 
       .al
       .xl
@@ -1246,10 +1246,10 @@
 
         ; 88/8D57
 
-    .endsection Unsorted888C5FSection
+    .endsection BuildRangeOverlayRowHalfOffsetSection
 
 
-    .section Unsorted888D57Section
+    .section GetMapTopRowIndexSection
 
       .al
       .xl
@@ -1619,10 +1619,10 @@
 
         ; 88/8F32
 
-    .endsection Unsorted888D57Section
+    .endsection GetMapTopRowIndexSection
 
 
-    .section Unsorted888F32Section
+    .section BuildRangeOverlayColumnSection
 
       .al
       .xl
@@ -2240,10 +2240,10 @@
 
         ; 88/9268
 
-    .endsection Unsorted888F32Section
+    .endsection BuildRangeOverlayColumnSection
 
 
-    .section Table81B522Section
+    .section MapRowUploadIRQSection
 
       .al
       .xl
@@ -2251,10 +2251,10 @@
       aMapRowUploadIRQ ; 81/B522
         .word $0068, $00D7, <>rlIRQUploadMapRowAndColumn, <>aMapRowUploadIRQCode
 
-    .endsection Table81B522Section
+    .endsection MapRowUploadIRQSection
 
 
-    .section Unsorted81B52ASection
+    .section IRQUploadMapRowAndColumnSection
 
       .al
       .xl
@@ -2290,10 +2290,10 @@
 
         ; 81/B54A
 
-    .endsection Unsorted81B52ASection
+    .endsection IRQUploadMapRowAndColumnSection
 
 
-    .section Table81B54ASection
+    .section MapRowUploadIRQCodeSection
 
       .al
       .xl
@@ -2301,5 +2301,5 @@
       aMapRowUploadIRQCode ; 81/B54A
         .word <>rsIRQCodeHalt
 
-    .endsection Table81B54ASection
+    .endsection MapRowUploadIRQCodeSection
 

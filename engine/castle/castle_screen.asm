@@ -8,7 +8,7 @@
 ; conversation, shop). Banks $80 and $8A.
 
 
-    .section Unsorted80B641Section
+    .section RunCastleScreenVBlankSection
 
       .al
       .xl
@@ -68,10 +68,10 @@
 
         ; 80/B6AD
 
-    .endsection Unsorted80B641Section
+    .endsection RunCastleScreenVBlankSection
 
 
-    .section Table80B6ADSection
+    .section CastleMenuTilemapDataSection
 
       .al
       .xl
@@ -79,10 +79,10 @@
       aCastleMenuTilemapData ; 80/B6AD
         .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
 
-    .endsection Table80B6ADSection
+    .endsection CastleMenuTilemapDataSection
 
 
-    .section Unsorted80B6B6Section
+    .section OpenCastleScreenSection
 
       .al
       .xl
@@ -156,10 +156,10 @@
 
         ; 80/B74B
 
-    .endsection Unsorted80B6B6Section
+    .endsection OpenCastleScreenSection
 
 
-    .section Unsorted80B74BSection
+    .section ReturnToCastleFromArenaSection
 
       .al
       .xl
@@ -203,10 +203,10 @@
         sec
         rtl
 
-    .endsection Unsorted80B74BSection
+    .endsection ReturnToCastleFromArenaSection
 
 
-    .section Unsorted80B77FSection
+    .section DispatchCastleStateSection
 
       .al
       .xl
@@ -229,10 +229,10 @@
 
         ; 80/B787
 
-    .endsection Unsorted80B77FSection
+    .endsection DispatchCastleStateSection
 
 
-    .section Table80B787Section
+    .section CastleStateHandlersSection
 
       .al
       .xl
@@ -247,10 +247,10 @@
         .word <>rlOpenCastleCourtyard
         .word <>rlReloadChapterMapAndOpenCastle
 
-    .endsection Table80B787Section
+    .endsection CastleStateHandlersSection
 
 
-    .section Unsorted80B793Section
+    .section EnterCastleConversationSection
 
       .al
       .xl
@@ -282,10 +282,10 @@
 
         ; 80/B7B1
 
-    .endsection Unsorted80B793Section
+    .endsection EnterCastleConversationSection
 
 
-    .section Unsorted80B7B1Section
+    .section EnterCastleArenaScreenSection
 
       .al
       .xl
@@ -322,10 +322,10 @@
 
         ; 80/B7DE
 
-    .endsection Unsorted80B7B1Section
+    .endsection EnterCastleArenaScreenSection
 
 
-    .section Unsorted80B7DESection
+    .section ReloadChapterMapAndOpenCastleSection
 
       .al
       .xl
@@ -365,10 +365,10 @@
 
         ; 80/B81B
 
-    .endsection Unsorted80B7DESection
+    .endsection ReloadChapterMapAndOpenCastleSection
 
 
-    .section Unsorted80B81BSection
+    .section OpenCastleCourtyardSection
 
       .al
       .xl
@@ -562,10 +562,15 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
-    .endsection Unsorted80B81BSection
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B99D .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/B99D
+      aDecompressionDMAEntry80B9A5 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 80/B9A5
+
+    .endsection OpenCastleCourtyardSection
 
 
-    .section Unsorted80B9ADSection
+    .section ClearMovementMapBufferSection
 
       .al
       .xl
@@ -593,10 +598,10 @@
 
         ; 80/B9BC
 
-    .endsection Unsorted80B9ADSection
+    .endsection ClearMovementMapBufferSection
 
 
-    .section Unsorted80B9BCSection
+    .section SetCastleCourtyardBGSettingsSection
 
       .al
       .xl
@@ -634,10 +639,10 @@
 
         ; 80/B9E1
 
-    .endsection Unsorted80B9BCSection
+    .endsection SetCastleCourtyardBGSettingsSection
 
 
-    .section Unsorted80B9E1Section
+    .section SetCastleTownBGSettingsSection
 
       .al
       .xl
@@ -673,10 +678,10 @@
 
         ; 80/BA02
 
-    .endsection Unsorted80B9E1Section
+    .endsection SetCastleTownBGSettingsSection
 
 
-    .section Unsorted80BA02Section
+    .section ResumeCastleTownSection
 
       .al
       .xl
@@ -727,10 +732,10 @@
 
         ; 80/BA52
 
-    .endsection Unsorted80BA02Section
+    .endsection ResumeCastleTownSection
 
 
-    .section Unsorted80BA52Section
+    .section SetupCastleTownDisplaySection
 
       .al
       .xl
@@ -848,10 +853,16 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
-    .endsection Unsorted80BA52Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80BB45 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 80/BB45
+      aDecompressionDMAEntry80BB4D .structDecompressionDMAEntry acCastleTownBGTilemap, $0800, $5400 ; 80/BB4D
+      aDecompressionDMAEntry80BB55 .structDecompressionDMAEntry g4bppcCastleTownBGTiles, $2000, $1000 ; 80/BB55
+
+    .endsection SetupCastleTownDisplaySection
 
 
-    .section Unsorted80BB5DSection
+    .section ReturnToCastleScreenSection
 
       .al
       .xl
@@ -881,10 +892,10 @@
 
         ; 80/BB7C
 
-    .endsection Unsorted80BB5DSection
+    .endsection ReturnToCastleScreenSection
 
 
-    .section Unsorted80BB7CSection
+    .section FadeToCastleScreenSection
 
       .al
       .xl
@@ -914,10 +925,10 @@
 
         ; 80/BB9B
 
-    .endsection Unsorted80BB7CSection
+    .endsection FadeToCastleScreenSection
 
 
-    .section Unsorted8A8000Section
+    .section CastleScreenUpkeepSection
 
       .al
       .xl
@@ -944,10 +955,10 @@
 
         ; 8A/800E
 
-    .endsection Unsorted8A8000Section
+    .endsection CastleScreenUpkeepSection
 
 
-    .section Unsorted8A800ESection
+    .section CastleScreenSetupSection
 
       .al
       .xl
@@ -1007,10 +1018,10 @@
 
         ; 8A/8061
 
-    .endsection Unsorted8A800ESection
+    .endsection CastleScreenSetupSection
 
 
-    .section Unsorted8A8061Section
+    .section CastleScreenStepSection
 
       .al
       .xl
@@ -1044,10 +1055,10 @@
 
         ; 8A/8078
 
-    .endsection Unsorted8A8061Section
+    .endsection CastleScreenStepSection
 
 
-    .section Table8A8078Section
+    .section CastleScreenStepHandlersSection
 
       .al
       .xl
@@ -1079,10 +1090,10 @@
         .word <>rsCastleStepReopenTown
         .word <>rsCastleStepExitToMap
 
-    .endsection Table8A8078Section
+    .endsection CastleScreenStepHandlersSection
 
 
-    .section Unsorted8A80A6Section
+    .section CastleStepCourtyardStartSection
 
       .al
       .xl
@@ -1142,10 +1153,10 @@
 
         ; 8A/80C3
 
-    .endsection Unsorted8A80A6Section
+    .endsection CastleStepCourtyardStartSection
 
 
-    .section Unsorted8A80C3Section
+    .section CastleStepArenaSetupSection
 
       .al
       .xl
@@ -1166,10 +1177,10 @@
 
         ; 8A/80C8
 
-    .endsection Unsorted8A80C3Section
+    .endsection CastleStepArenaSetupSection
 
 
-    .section Unsorted8A80C8Section
+    .section CastleStepArenaSection
 
       .al
       .xl
@@ -1190,10 +1201,10 @@
 
         ; 8A/80CD
 
-    .endsection Unsorted8A80C8Section
+    .endsection CastleStepArenaSection
 
 
-    .section Unsorted8A80CDSection
+    .section CastleStepAugurySetupSection
 
       .al
       .xl
@@ -1326,10 +1337,10 @@
 
         ; 8A/80F5
 
-    .endsection Unsorted8A80CDSection
+    .endsection CastleStepAugurySetupSection
 
 
-    .section Unsorted8A80F5Section
+    .section CastleStepConversationSetupSection
 
       .al
       .xl
@@ -1350,10 +1361,10 @@
 
         ; 8A/80FA
 
-    .endsection Unsorted8A80F5Section
+    .endsection CastleStepConversationSetupSection
 
 
-    .section Unsorted8A80FASection
+    .section CastleStepConversationSection
 
       .al
       .xl
@@ -1592,4 +1603,4 @@
 
         ; 8A/8208
 
-    .endsection Unsorted8A80FASection
+    .endsection CastleStepConversationSection

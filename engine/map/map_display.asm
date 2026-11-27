@@ -6,7 +6,7 @@
 ; for a new game or a loaded save. Bank $88.
 
 
-    .section Unsorted888082Section
+    .section SetUpChapterMapDisplaySection
 
       .al
       .xl
@@ -137,10 +137,10 @@
         ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
-    .endsection Unsorted888082Section
+    .endsection SetUpChapterMapDisplaySection
 
 
-    .section Unsorted88818ASection
+    .section ClearMapRAMSection
 
       .al
       .xl
@@ -167,10 +167,10 @@
 
         ; 88/8197
 
-    .endsection Unsorted88818ASection
+    .endsection ClearMapRAMSection
 
 
-    .section Unsorted888197Section
+    .section LoadCursorSpriteGraphicsSection
 
       .al
       .xl
@@ -221,10 +221,10 @@
 
         ; 88/81B8
 
-    .endsection Unsorted888197Section
+    .endsection LoadCursorSpriteGraphicsSection
 
 
-    .section Unsorted8881B8Section
+    .section HandleMapReturnFlagsSection
 
       .al
       .xl
@@ -263,10 +263,10 @@
 
         ; 88/81D7
 
-    .endsection Unsorted8881B8Section
+    .endsection HandleMapReturnFlagsSection
 
 
-    .section Unsorted8881D7Section
+    .section SetMapReturnCenterOnUnitSection
 
       .al
       .xl
@@ -288,10 +288,10 @@
 
         ; 88/81DE
 
-    .endsection Unsorted8881D7Section
+    .endsection SetMapReturnCenterOnUnitSection
 
 
-    .section Unsorted8881DESection
+    .section SetMapReturnStartCastleStaffSection
 
       .al
       .xl
@@ -313,10 +313,10 @@
 
         ; 88/81E5
 
-    .endsection Unsorted8881DESection
+    .endsection SetMapReturnStartCastleStaffSection
 
 
-    .section Unsorted8881E5Section
+    .section SetMapReturnCastleGridStaffSection
 
       .al
       .xl
@@ -338,10 +338,10 @@
 
         ; 88/81EC
 
-    .endsection Unsorted8881E5Section
+    .endsection SetMapReturnCastleGridStaffSection
 
 
-    .section Unsorted8881ECSection
+    .section ClearVRAM6000Section
 
       .al
       .xl
@@ -383,10 +383,10 @@
         ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
-    .endsection Unsorted8881ECSection
+    .endsection ClearVRAM6000Section
 
 
-    .section Unsorted88821ASection
+    .section SetUpChapterMapDisplayAllFramesSection
 
       .al
       .xl
@@ -561,10 +561,10 @@
         .byte $00, $00
         rtl
 
-    .endsection Unsorted88821ASection
+    .endsection SetUpChapterMapDisplayAllFramesSection
 
 
-    .section Unsorted8883C7Section
+    .section MapEmptyRoutineSection
 
       .al
       .xl
@@ -625,6 +625,6 @@
 
         ; 88/8410
 
-    .endsection Unsorted8883C7Section
+    .endsection MapEmptyRoutineSection
 
 

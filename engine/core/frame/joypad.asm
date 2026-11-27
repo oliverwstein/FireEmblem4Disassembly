@@ -1,7 +1,10 @@
 ; Reading the joypads each frame: held, new and repeated presses.
 
 
-    .section Unsorted808002Section
+    .section Unused808000Section
+
+      ; 80/8000: two unreferenced bytes before the first routine.
+      aUnused808000 .byte $02, $FE
 
       .al
       .xl
@@ -97,6 +100,6 @@
 
         ; 80/807C
 
-    .endsection Unsorted808002Section
+    .endsection Unused808000Section
 
 

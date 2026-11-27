@@ -3,7 +3,7 @@
 ; scene, then on to the credits. Holding B during them goes back to the title.
 
 
-    .section Unsorted8DB4F1Section
+    .section NextEpilogueCharacterEndingSection
 
       .al
       .xl
@@ -24,10 +24,10 @@
 
         ; 8D/B4F6
 
-    .endsection Unsorted8DB4F1Section
+    .endsection NextEpilogueCharacterEndingSection
 
 
-    .section Unsorted8DB4F6Section
+    .section CheckEpilogueQuitButtonSection
 
       .al
       .xl
@@ -95,10 +95,10 @@
         ; Unreachable: it follows a return.
         rtl
 
-    .endsection Unsorted8DB4F6Section
+    .endsection CheckEpilogueQuitButtonSection
 
 
-    .section Unsorted8DB53ASection
+    .section StartEpilogueCharacterSceneSection
 
       .al
       .xl
@@ -175,7 +175,7 @@
 
         ; 8D/B5C8
 
-    .endsection Unsorted8DB53ASection
+    .endsection StartEpilogueCharacterSceneSection
 
 
     .section Data8DB5C8Section

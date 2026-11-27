@@ -2,7 +2,7 @@
 ; PPU registers.
 
 
-    .section Unsorted8080C3Section
+    .section CopyPPURegisterBufferSection
 
       .al
       .xl
@@ -123,10 +123,10 @@
 
         ; 80/81A8
 
-    .endsection Unsorted8080C3Section
+    .endsection CopyPPURegisterBufferSection
 
 
-    .section Unsorted8081A8Section
+    .section CopyINIDISPBufferSection
 
       .al
       .xl
@@ -157,6 +157,6 @@
 
         ; 80/81B6
 
-    .endsection Unsorted8081A8Section
+    .endsection CopyINIDISPBufferSection
 
 

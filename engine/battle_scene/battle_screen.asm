@@ -177,7 +177,7 @@
     .endsection BattleSceneMainLoopSection
 
 
-    .section Unsorted87C38CSection
+    .section BattleTransitionHDMAInfoSection
 
       aBattleTransitionHDMAInfo ; 87/C38C
 
@@ -264,10 +264,10 @@
 
         ; 87/C41B
 
-    .endsection Unsorted87C38CSection
+    .endsection BattleTransitionHDMAInfoSection
 
 
-    .section Unsorted87C41BSection
+    .section BattleTransitionOpenBattleSection
 
       .al
       .xl
@@ -308,10 +308,10 @@
 
         ; 87/C442
 
-    .endsection Unsorted87C41BSection
+    .endsection BattleTransitionOpenBattleSection
 
 
-    .section Unsorted87C442Section
+    .section BuildBattleTransitionWindowSection
 
       .al
       .xl
@@ -429,6 +429,6 @@
         .byte $12, $0E, $10, $0C, $0A, $06, $02, $06, $0A, $08, $06, $0A, $0E, $0B, $0D, $0B
         .byte $07, $03, $02, $01, $00, $02, $03, $05, $07, $05, $03, $04, $05, $08, $0A, $04
 
-    .endsection Unsorted87C442Section
+    .endsection BuildBattleTransitionWindowSection
 
 

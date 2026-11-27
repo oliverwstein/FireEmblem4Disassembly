@@ -260,7 +260,7 @@
     .endsection WalkUnitAlongPathSection
 
 
-    .section Unsorted88A754Section
+    .section MapCursorMoveStepSection
 
       .al
       .xl
@@ -362,10 +362,10 @@
 
         ; 88/A7F5
 
-    .endsection Unsorted88A754Section
+    .endsection MapCursorMoveStepSection
 
 
-    .section Unsorted88A7F5Section
+    .section SetUnitWalkSpeedSection
 
       .al
       .xl
@@ -399,7 +399,7 @@
 
         ; 88/A816
 
-    .endsection Unsorted88A7F5Section
+    .endsection SetUnitWalkSpeedSection
 
 
     .section Unreferenced88A816Section
@@ -424,7 +424,7 @@
         ; 88/A81D
 
     .endsection Unreferenced88A816Section
-    .section Unsorted88ADE9Section
+    .section UndoUnitMoveSection
 
       .al
       .xl
@@ -623,10 +623,10 @@
 
         ; 88/AF4C
 
-    .endsection Unsorted88ADE9Section
+    .endsection UndoUnitMoveSection
 
 
-    .section Unsorted88AF4CSection
+    .section StartMovingUnitSpriteSection
 
       .al
       .xl
@@ -666,10 +666,10 @@
 
         .databank 0
 
-    .endsection Unsorted88AF4CSection
+    .endsection StartMovingUnitSpriteSection
 
 
-    .section Unsorted88AF7BSection
+    .section EndUnitActionSection
 
       .al
       .xl
@@ -715,10 +715,10 @@
 
         .databank 0
 
-    .endsection Unsorted88AF7BSection
+    .endsection EndUnitActionSection
 
 
-    .section Unsorted88B6FDSection
+    .section SelectUnitAtCursorSection
 
       .al
       .xl
@@ -1445,10 +1445,10 @@
 
         ; 88/BC05
 
-    .endsection Unsorted88B6FDSection
+    .endsection SelectUnitAtCursorSection
 
 
-    .section Unsorted88C085Section
+    .section StartWalkingSoundSection
 
       .al
       .xl
@@ -1589,10 +1589,10 @@
 
         ; 88/C13E
 
-    .endsection Unsorted88C085Section
+    .endsection StartWalkingSoundSection
 
 
-    .section Unsorted88C4D9Section
+    .section MapAIMoveStepSection
 
       .al
       .xl
@@ -1819,10 +1819,10 @@
 
         ; 88/C67D
 
-    .endsection Unsorted88C4D9Section
+    .endsection MapAIMoveStepSection
 
 
-    .section Unsorted88C67DSection
+    .section StartAIUnitWalkSection
 
       .al
       .xl
@@ -1884,10 +1884,10 @@
 
         ; 88/C6ED
 
-    .endsection Unsorted88C67DSection
+    .endsection StartAIUnitWalkSection
 
 
-    .section Unsorted88C6EDSection
+    .section StartTestAIMoveUnusedSection
 
       .al
       .xl
@@ -1923,10 +1923,10 @@
 
         ; 88/C71C
 
-    .endsection Unsorted88C6EDSection
+    .endsection StartTestAIMoveUnusedSection
 
 
-    .section Unsorted88C71CSection
+    .section StartAIUnitMoveSection
 
       .al
       .xl
@@ -2036,6 +2036,6 @@
 
         ; 88/C7CF
 
-    .endsection Unsorted88C71CSection
+    .endsection StartAIUnitMoveSection
 
 

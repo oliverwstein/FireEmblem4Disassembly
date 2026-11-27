@@ -3,7 +3,7 @@
 ; number sprites, OAM buffer management, and VBlank work.
 
 
-    .section Unsorted9590F2Section
+    .section BattleSceneBuildBG2VOFSTableSection
 
       .al
       .xl
@@ -416,10 +416,10 @@
 
         ; 95/937C
 
-    .endsection Unsorted9590F2Section
+    .endsection BattleSceneBuildBG2VOFSTableSection
 
 
-    .section Unsorted95A114Section
+    .section BattleSceneBuildBrightnessTableSection
 
       .al
       .xl
@@ -507,10 +507,10 @@
         ; Unreachable: it follows a return.
         rtl
 
-    .endsection Unsorted95A114Section
+    .endsection BattleSceneBuildBrightnessTableSection
 
 
-    .section Unsorted95A414Section
+    .section BattleSceneCreateHUDBannerHDMASection
 
       .al
       .xl
@@ -621,10 +621,10 @@
 
         ; 95/A481
 
-    .endsection Unsorted95A414Section
+    .endsection BattleSceneCreateHUDBannerHDMASection
 
 
-    .section Table968000Section
+    .section BattleSceneIRQ5SetupSection
 
       .al
       .xl
@@ -632,10 +632,10 @@
       aBattleSceneIRQ5Setup ; 96/8000
         .word $0060, $00CF, <>rlBattleSceneIRQ5Handler, <>aBattleSceneIRQ5Code
 
-    .endsection Table968000Section
+    .endsection BattleSceneIRQ5SetupSection
 
 
-    .section Unsorted968008Section
+    .section BattleSceneIRQ5HandlerSection
 
       .al
       .xl
@@ -658,10 +658,10 @@
 
         ; 96/800D
 
-    .endsection Unsorted968008Section
+    .endsection BattleSceneIRQ5HandlerSection
 
 
-    .section Table96800DSection
+    .section BattleSceneIRQ5CodeSection
 
       .al
       .xl
@@ -672,10 +672,10 @@
       aBattleSceneIRQ2Setup ; 96/800F
         .word $0060, $007E, <>rlBattleSceneIRQ2Handler, <>aBattleSceneIRQ2Code
 
-    .endsection Table96800DSection
+    .endsection BattleSceneIRQ5CodeSection
 
 
-    .section Unsorted968017Section
+    .section BattleSceneIRQ2HandlerSection
 
       .al
       .xl
@@ -728,10 +728,10 @@
 
         ; 96/804E
 
-    .endsection Unsorted968017Section
+    .endsection BattleSceneIRQ2HandlerSection
 
 
-    .section Table96804ESection
+    .section BattleSceneIRQ2CodeSection
 
       .al
       .xl
@@ -742,10 +742,10 @@
       aBattleSceneIRQ3Setup ; 96/8050
         .word $0060, $009C, <>rlBattleSceneIRQ3Handler, <>aBattleSceneIRQ3Code
 
-    .endsection Table96804ESection
+    .endsection BattleSceneIRQ2CodeSection
 
 
-    .section Unsorted968058Section
+    .section BattleSceneIRQ3HandlerSection
 
       .al
       .xl
@@ -783,10 +783,10 @@
 
         ; 96/8076
 
-    .endsection Unsorted968058Section
+    .endsection BattleSceneIRQ3HandlerSection
 
 
-    .section Table968076Section
+    .section BattleSceneIRQ3CodeSection
 
       .al
       .xl
@@ -797,10 +797,10 @@
       aBattleSceneIRQ4Setup ; 96/8078
         .word $0060, $00A1, <>rlBattleSceneIRQ4Handler, <>aBattleSceneIRQ4Code
 
-    .endsection Table968076Section
+    .endsection BattleSceneIRQ3CodeSection
 
 
-    .section Unsorted968080Section
+    .section BattleSceneIRQ4HandlerSection
 
       .al
       .xl
@@ -831,10 +831,10 @@
 
         ; 96/8093
 
-    .endsection Unsorted968080Section
+    .endsection BattleSceneIRQ4HandlerSection
 
 
-    .section Table968093Section
+    .section BattleSceneIRQ4CodeSection
 
       .al
       .xl
@@ -845,10 +845,10 @@
       aBattleSceneIRQ1Setup ; 96/8095
         .word $0060, $000E, <>rlBattleSceneIRQ1Handler, <>aBattleSceneIRQ1Code
 
-    .endsection Table968093Section
+    .endsection BattleSceneIRQ4CodeSection
 
 
-    .section Unsorted96809DSection
+    .section BattleSceneIRQ1HandlerSection
 
       .al
       .xl
@@ -872,10 +872,10 @@
 
         ; 96/80A2
 
-    .endsection Unsorted96809DSection
+    .endsection BattleSceneIRQ1HandlerSection
 
 
-    .section Table9680A2Section
+    .section BattleSceneIRQ1CodeSection
 
       .al
       .xl
@@ -883,10 +883,10 @@
       aBattleSceneIRQ1Code ; 96/80A2
         .word <>rsIRQCodeHalt
 
-    .endsection Table9680A2Section
+    .endsection BattleSceneIRQ1CodeSection
 
 
-    .section Unsorted96890ESection
+    .section BattleSceneResetToNormalModeSection
 
       .al
       .xl
@@ -1524,10 +1524,10 @@
         rtl
         rtl
 
-    .endsection Unsorted96890ESection
+    .endsection BattleSceneResetToNormalModeSection
 
 
-    .section Unsorted968DBDSection
+    .section BattleSceneBlankWindowDisplaySection
 
       .al
       .xl
@@ -1577,7 +1577,7 @@
 
         ; 96/8DE1
 
-    .endsection Unsorted968DBDSection
+    .endsection BattleSceneBlankWindowDisplaySection
 
 
     .section Unreferenced968DE1Section
@@ -1684,7 +1684,7 @@
         ; 96/8E4C
 
     .endsection Unreferenced968DE1Section
-    .section Unsorted968E4CSection
+    .section BattleSceneScriptFadeInWindow3Section
 
       .al
       .xl
@@ -1748,7 +1748,7 @@
 
         ; 96/8E8F
 
-    .endsection Unsorted968E4CSection
+    .endsection BattleSceneScriptFadeInWindow3Section
 
 
     .section Unreferenced968E8FSection
@@ -1941,7 +1941,7 @@
         ; 96/8F50
 
     .endsection Unreferenced968E8FSection
-    .section Unsorted968F50Section
+    .section BattleSceneScriptInitStatGainsSection
 
       .al
       .xl
@@ -2429,7 +2429,7 @@
 
         ; 96/92F8
 
-    .endsection Unsorted968F50Section
+    .endsection BattleSceneScriptInitStatGainsSection
 
 
     .section Unreferenced9692F8Section
@@ -2518,7 +2518,7 @@
         ; 96/9398
 
     .endsection Unreferenced9692F8Section
-    .section Unsorted96957DSection
+    .section BattleSceneInitWindowScrollVarsSection
 
       .al
       .xl
@@ -2648,10 +2648,10 @@
 
         ; 96/9603
 
-    .endsection Unsorted96957DSection
+    .endsection BattleSceneInitWindowScrollVarsSection
 
 
-    .section Unsorted969603Section
+    .section BattleSceneFadeMusicForJuliusSection
 
       .al
       .xl
@@ -2679,10 +2679,10 @@
 
         ; 96/9617
 
-    .endsection Unsorted969603Section
+    .endsection BattleSceneFadeMusicForJuliusSection
 
 
-    .section Unsorted969617Section
+    .section BattleSceneScriptFadeOutMusicSection
 
       .al
       .xl
@@ -2703,10 +2703,10 @@
 
         ; 96/961F
 
-    .endsection Unsorted969617Section
+    .endsection BattleSceneScriptFadeOutMusicSection
 
 
-    .section Unsorted969F7DSection
+    .section BattleSceneCheckAlternatingRoundsSection
 
       .al
       .xl
@@ -2858,10 +2858,10 @@
 
         ; 96/A05C
 
-    .endsection Unsorted969F7DSection
+    .endsection BattleSceneCheckAlternatingRoundsSection
 
 
-    .section Unsorted96A05CSection
+    .section BattleSceneScriptSaveOAMExtSection
 
       .al
       .xl
@@ -2935,7 +2935,7 @@
 
         ; 96/A0EB
 
-    .endsection Unsorted96A05CSection
+    .endsection BattleSceneScriptSaveOAMExtSection
 
 
     .section Unreferenced96A0EBSection

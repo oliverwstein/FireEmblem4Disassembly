@@ -49,7 +49,7 @@
 
     .endsection CodeChecksums878000Section
 
-    .section Unsorted878017Section
+    .section WriteResetSignatureSection
 
       .al
       .xl
@@ -178,9 +178,9 @@
 
         ; 87/80AA
 
-    .endsection Unsorted878017Section
+    .endsection WriteResetSignatureSection
 
-    .section Table888000Section
+    .section CodeChecksumsCopy88Section
 
       .al
       .xl
@@ -291,9 +291,9 @@
 
         ; 88/8082
 
-    .endsection Table888000Section
+    .endsection CodeChecksumsCopy88Section
 
-    .section Unsorted8F8000Section
+    .section CodeChecksumsSection
 
       .al
       .xl
@@ -379,10 +379,10 @@
 
         .databank 0
 
-    .endsection Unsorted8F8000Section
+    .endsection CodeChecksumsSection
 
 
-    .section Unsorted91E793Section
+    .section LoadAntiTamperScreenAgainSection
 
       .as
       .xl
@@ -600,10 +600,10 @@
         plp
         rtl
 
-    .endsection Unsorted91E793Section
+    .endsection LoadAntiTamperScreenAgainSection
 
 
-    .section Unsorted91E915Section
+    .section ClearRAMAndResetHardwareSection
 
       .al
       .xl
@@ -634,6 +634,6 @@
 
         ; 91/E92E
 
-    .endsection Unsorted91E915Section
+    .endsection ClearRAMAndResetHardwareSection
 
 

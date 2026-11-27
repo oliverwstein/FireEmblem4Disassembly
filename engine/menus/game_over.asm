@@ -2,7 +2,7 @@
 ; (the palette, the shake, and Start or a long wait to soft-reset).
 
 
-    .section Unsorted80B1E1Section
+    .section SetupGameOverScreenSection
 
       .as
       .xl
@@ -135,7 +135,7 @@
 
         ; 80/B301
 
-    .endsection Unsorted80B1E1Section
+    .endsection SetupGameOverScreenSection
 
 
     .section GameOverProcSection
@@ -152,7 +152,7 @@
     .endsection GameOverProcSection
 
 
-    .section Unsorted87C5AASection
+    .section ProcGameOverInitSection
 
       .al
       .xl
@@ -179,10 +179,10 @@
 
         ; 87/C5BF
 
-    .endsection Unsorted87C5AASection
+    .endsection ProcGameOverInitSection
 
 
-    .section Table87C5BFSection
+    .section GameOverPaletteDataSection
 
       .al
       .xl
@@ -199,10 +199,10 @@
         .word $7FFF, $1042, $0C63, $1463, $1463, $1463, $1463, $1463
         .word $1463, $1463, $1463, $1463, $1463, $1463, $1463, $1463
 
-    .endsection Table87C5BFSection
+    .endsection GameOverPaletteDataSection
 
 
-    .section Unsorted87C646Section
+    .section ProcGameOverCycleSection
 
       .al
       .xl
@@ -259,10 +259,10 @@
 
         ; 87/C695
 
-    .endsection Unsorted87C646Section
+    .endsection ProcGameOverCycleSection
 
 
-    .section Unsorted87C695Section
+    .section GameOverFadeInSection
 
       .al
       .xl
@@ -342,6 +342,6 @@
         .byte $FE, $FD, $FE, $FC, $FE, $FC, $FE, $FC, $FD, $FB, $FD, $FB, $FD, $FB, $FD, $FA
         .byte $FD, $FA, $FD, $FA, $FC, $F9, $FC, $F9, $FC, $F9, $FC, $F8, $00, $00
 
-    .endsection Unsorted87C695Section
+    .endsection GameOverFadeInSection
 
 

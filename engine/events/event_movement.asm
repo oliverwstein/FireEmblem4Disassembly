@@ -725,7 +725,7 @@
     .endsection EventMovementWriteToMovementScriptBufferSection
 
 
-    .section Unsorted87B01DSection
+    .section EventMovementPlanRouteSection
 
       .al
       .xl
@@ -908,10 +908,10 @@
 
         .databank 0
 
-    .endsection Unsorted87B01DSection
+    .endsection EventMovementPlanRouteSection
 
 
-    .section Unsorted91A80DSection
+    .section PlanQueuedMapSpriteMovementSection
 
       .al
       .xl
@@ -970,6 +970,6 @@
 
         ; 91/A863
 
-    .endsection Unsorted91A80DSection
+    .endsection PlanQueuedMapSpriteMovementSection
 
 

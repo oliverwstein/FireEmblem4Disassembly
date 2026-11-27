@@ -5,7 +5,7 @@
 ; the targets of a weapon.
 
 
-    .section Unsorted87B512Section
+    .section FindTargetsForSelectedWeaponSection
 
       .al
       .xl
@@ -52,10 +52,10 @@
 
         ; 87/B541
 
-    .endsection Unsorted87B512Section
+    .endsection FindTargetsForSelectedWeaponSection
 
 
-    .section Unsorted87B541Section
+    .section BuildSelectedUnitRangeMapsSection
 
       .al
       .xl
@@ -182,10 +182,10 @@
 
         .databank 0
 
-    .endsection Unsorted87B541Section
+    .endsection BuildSelectedUnitRangeMapsSection
 
 
-    .section Unsorted87B5DDSection
+    .section FloodFillMovementMapSection
 
       .al
       .xl
@@ -270,10 +270,10 @@
 
         ; 87/B63F
 
-    .endsection Unsorted87B5DDSection
+    .endsection FloodFillMovementMapSection
 
 
-    .section Unsorted87B63FSection
+    .section SpreadMovementToNeighboursSection
 
       .al
       .xl
@@ -469,10 +469,10 @@
 
         ; 87/B786
 
-    .endsection Unsorted87B63FSection
+    .endsection SpreadMovementToNeighboursSection
 
 
-    .section Unsorted87B786Section
+    .section SetRangeMapOriginSection
 
       .al
       .xl
@@ -694,10 +694,10 @@
 
         .databank 0
 
-    .endsection Unsorted87B786Section
+    .endsection SetRangeMapOriginSection
 
 
-    .section Unsorted87B877Section
+    .section MarkRangeMapColumnBorderSection
 
       .al
       .xl
@@ -762,10 +762,10 @@
 
         ; 87/B8A7
 
-    .endsection Unsorted87B877Section
+    .endsection MarkRangeMapColumnBorderSection
 
 
-    .section Unsorted87B8A7Section
+    .section GetTileMovementCostSection
 
       .al
       .xl
@@ -822,10 +822,10 @@
 
         ; 87/B8EE
 
-    .endsection Unsorted87B8A7Section
+    .endsection GetTileMovementCostSection
 
 
-    .section Table87B8EESection
+    .section TileMovementCostsSection
 
       .al
       .xl
@@ -838,10 +838,10 @@
 
         ; 87/B8FE
 
-    .endsection Table87B8EESection
+    .endsection TileMovementCostsSection
 
 
-    .section Unsorted87B8FESection
+    .section CheckTileAreaRestrictionSection
 
       .al
       .xl
@@ -1217,10 +1217,10 @@
 
         ; 87/BAD1
 
-    .endsection Unsorted87B8FESection
+    .endsection CheckTileAreaRestrictionSection
 
 
-    .section Table87BAD1Section
+    .section MaxRangeDiamondRowsSection
 
       .al
       .xl
@@ -1238,10 +1238,10 @@
 
         ; 87/BB27
 
-    .endsection Table87BAD1Section
+    .endsection MaxRangeDiamondRowsSection
 
 
-    .section Unsorted87BB27Section
+    .section CheckSelectedUnitCannotMoveSection
 
       .al
       .xl
@@ -1291,6 +1291,6 @@
 
         ; 87/BB50
 
-    .endsection Unsorted87BB27Section
+    .endsection CheckSelectedUnitCannotMoveSection
 
 

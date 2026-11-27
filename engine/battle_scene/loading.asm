@@ -3,7 +3,7 @@
 ; foreground for the two terrains, and the combatants' starting places.
 
 
-    .section Unsorted9582D8Section
+    .section BattleSceneCopyExperienceSection
 
       .al
       .xl
@@ -33,10 +33,10 @@
 
         ; 95/82F7
 
-    .endsection Unsorted9582D8Section
+    .endsection BattleSceneCopyExperienceSection
 
 
-    .section Unsorted9582F7Section
+    .section BattleSceneGetGenderSection
 
       .al
       .xl
@@ -1430,10 +1430,10 @@
 
         ; 95/8B07
 
-    .endsection Unsorted9582F7Section
+    .endsection BattleSceneGetGenderSection
 
 
-    .section Unsorted958CB9Section
+    .section BattleSceneSetWaterFlagsSection
 
       .al
       .xl
@@ -2128,10 +2128,10 @@
 
         ; 95/90F2
 
-    .endsection Unsorted958CB9Section
+    .endsection BattleSceneSetWaterFlagsSection
 
 
-    .section Unsorted95A167Section
+    .section BattleSceneLoadCharacterColorsSection
 
       .al
       .xl
@@ -2563,10 +2563,10 @@
 
         ; 95/A3FB
 
-    .endsection Unsorted95A167Section
+    .endsection BattleSceneLoadCharacterColorsSection
 
 
-    .section Unsorted969665Section
+    .section BattleSceneApplyPlacementSection
 
       .al
       .xl
@@ -2625,10 +2625,10 @@
 
         ; 96/96A0
 
-    .endsection Unsorted969665Section
+    .endsection BattleSceneApplyPlacementSection
 
 
-    .section Table9696A0Section
+    .section BattleScenePlacementsSection
 
       .al
       .xl
@@ -2642,10 +2642,10 @@
         .word <>rsBattleScenePlaceTogetherOnGround
         .word <>rsBattleScenePlaceNone
 
-    .endsection Table9696A0Section
+    .endsection BattleScenePlacementsSection
 
 
-    .section Unsorted9696AASection
+    .section BattleSceneGetWeaponPlacementSection
 
       .al
       .xl
@@ -2704,10 +2704,10 @@
 
         ; 96/96E6
 
-    .endsection Unsorted9696AASection
+    .endsection BattleSceneGetWeaponPlacementSection
 
 
-    .section Unsorted9696E6Section
+    .section BattleScenePlaceStrikerAloneSection
 
       .al
       .xl
@@ -2739,10 +2739,10 @@
 
         ; 96/9707
 
-    .endsection Unsorted9696E6Section
+    .endsection BattleScenePlaceStrikerAloneSection
 
 
-    .section Unsorted969707Section
+    .section BattleScenePlaceTogetherSection
 
       .al
       .xl
@@ -2772,10 +2772,10 @@
 
         ; 96/9727
 
-    .endsection Unsorted969707Section
+    .endsection BattleScenePlaceTogetherSection
 
 
-    .section Unsorted969727Section
+    .section BattleSceneHideOtherSection
 
       .al
       .xl
@@ -2801,10 +2801,10 @@
 
         ; 96/9735
 
-    .endsection Unsorted969727Section
+    .endsection BattleSceneHideOtherSection
 
 
-    .section Unsorted969735Section
+    .section BattleScenePlaceTogetherOnGroundSection
 
       .al
       .xl
@@ -2841,10 +2841,10 @@
 
         ; 96/9765
 
-    .endsection Unsorted969735Section
+    .endsection BattleScenePlaceTogetherOnGroundSection
 
 
-    .section Unsorted969765Section
+    .section BattleScenePlaceNoneSection
 
       .al
       .xl
@@ -2864,7 +2864,7 @@
 
         ; 96/9766
 
-    .endsection Unsorted969765Section
+    .endsection BattleScenePlaceNoneSection
 
 
     .section Unreferenced969766Section
@@ -3075,7 +3075,7 @@
         ; 96/97FA
 
     .endsection Unreferenced969766Section
-    .section Unsorted9697FASection
+    .section BattleSceneGetFirstStrikerSection
 
       .al
       .xl
@@ -3192,6 +3192,6 @@
 
         ; 96/9861
 
-    .endsection Unsorted9697FASection
+    .endsection BattleSceneGetFirstStrikerSection
 
 

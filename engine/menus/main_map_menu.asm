@@ -34,7 +34,7 @@
     .endsection ProcScript85A47FSection
 
 
-    .section Unsorted85A48BSection
+    .section ProcSavePromptInitSection
 
       .al
       .xl
@@ -85,10 +85,10 @@
 
         ; 85/A4E6
 
-    .endsection Unsorted85A48BSection
+    .endsection ProcSavePromptInitSection
 
 
-    .section Table85A4E6Section
+    .section SavePromptTextSection
 
       .al
       .xl
@@ -115,10 +115,10 @@
         .enc "none"
 
 
-    .endsection Table85A4E6Section
+    .endsection SavePromptTextSection
 
 
-    .section Unsorted85A508Section
+    .section ProcSavePromptWaitSection
 
       .al
       .xl
@@ -136,10 +136,10 @@
 
         ; 85/A509
 
-    .endsection Unsorted85A508Section
+    .endsection ProcSavePromptWaitSection
 
 
-    .section Unsorted85A509Section
+    .section ProcSavePromptCycleSection
 
       .al
       .xl
@@ -275,7 +275,7 @@
 
         ; 85/A5BD
 
-    .endsection Unsorted85A509Section
+    .endsection ProcSavePromptCycleSection
 
 
     .section ProcScript85A5BDSection
@@ -295,7 +295,7 @@
     .endsection ProcScript85A5BDSection
 
 
-    .section Unsorted85A5C5Section
+    .section OpenSavePromptSection
 
       .al
       .xl
@@ -322,10 +322,10 @@
 
         ; 85/A5DA
 
-    .endsection Unsorted85A5C5Section
+    .endsection OpenSavePromptSection
 
 
-    .section Unsorted85DBDDSection
+    .section MapMenuOpenUnitWindowSection
 
       .al
       .xl
@@ -418,10 +418,10 @@
 
         ; 85/DC26
 
-    .endsection Unsorted85DBDDSection
+    .endsection MapMenuOpenUnitWindowSection
 
 
-    .section Unsorted85DC26Section
+    .section MapMenuTurnEndSection
 
       .al
       .xl
@@ -512,10 +512,10 @@
 
         ; 85/DCAB
 
-    .endsection Unsorted85DC26Section
+    .endsection MapMenuTurnEndSection
 
 
-    .section Unsorted85DCABSection
+    .section MapMenuOpenSaveSection
 
       .al
       .xl
@@ -543,10 +543,10 @@
 
         ; 85/DCCA
 
-    .endsection Unsorted85DCABSection
+    .endsection MapMenuOpenSaveSection
 
 
-    .section Unsorted85DCCASection
+    .section MapMenuOpenConfigSection
 
       .al
       .xl
@@ -692,7 +692,7 @@
         .byte 1, 11
         .long aMapMenuOptionTurnEnd
 
-    .endsection Unsorted85DCCASection
+    .endsection MapMenuOpenConfigSection
 
 
     .section ProcScript85DDDBSection
@@ -719,7 +719,7 @@
     .endsection ProcScript85DDDBSection
 
 
-    .section Unsorted85DDF9Section
+    .section ProcMainMapMenuInitSection
 
       .al
       .xl
@@ -773,10 +773,10 @@
 
         ; 85/DE34
 
-    .endsection Unsorted85DDF9Section
+    .endsection ProcMainMapMenuInitSection
 
 
-    .section Unsorted85DE34Section
+    .section MainMapMenuProcCycleSection
 
       .al
       .xl
@@ -854,10 +854,10 @@
 
         ; 85/DE7C
 
-    .endsection Unsorted85DE34Section
+    .endsection MainMapMenuProcCycleSection
 
 
-    .section Unsorted87CBC5Section
+    .section MapMenuLoadHookSection
 
       .al
       .xl
@@ -877,6 +877,6 @@
 
         ; 87/CBC6
 
-    .endsection Unsorted87CBC5Section
+    .endsection MapMenuLoadHookSection
 
 

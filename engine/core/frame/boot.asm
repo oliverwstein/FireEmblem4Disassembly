@@ -69,7 +69,7 @@
     .endsection InitEngineSection
 
 
-    .section Unsorted808D56Section
+    .section ResetSection
 
       .al
       .xl
@@ -104,10 +104,10 @@
 
         ; 80/8D6C
 
-    .endsection Unsorted808D56Section
+    .endsection ResetSection
 
 
-    .section Unsorted808D6CSection
+    .section BootInitAndCheckHardwareSection
 
       .al
       .xl
@@ -239,10 +239,10 @@
 
         ; 80/8E2D
 
-    .endsection Unsorted808D6CSection
+    .endsection BootInitAndCheckHardwareSection
 
 
-    .section Unsorted808E2DSection
+    .section ColdResetClearMemorySection
 
       .as
       .xl
@@ -392,7 +392,7 @@
 
         ; 80/8EF6
 
-    .endsection Unsorted808E2DSection
+    .endsection ColdResetClearMemorySection
 
     .section RunFrameTasksSection
 

@@ -13,35 +13,34 @@ You need:
 * Zane Avernathy's [**c2a.py**](https://github.com/ZaneAvernathy/FE5Tools/blob/main/c2a.py) and [**process_dialogue.py**](https://github.com/ZaneAvernathy/FireEmblem5/blob/master/TOOLS/process_dialogue.py), in `tools/`.
 * A headerless copy of the original ROM named `fe4.sfc` in this directory. It must be 4,194,304 bytes. A copy with a 512-byte copier header (4,194,816 bytes, often named `.smc`) can be fixed with `tail -c +513 original.smc > fe4.sfc`.
 
-### macOS and Linux
+### Building (macOS, Linux, and Windows)
 
 ```sh
-./build.sh            # build FE4Disassembly.sfc and check it matches fe4.sfc
-./build.sh coverage   # also report how much of the ROM is built from source
-./build.sh clean      # remove generated files
+python3 build.py            # build FE4Disassembly.sfc and check it matches fe4.sfc
+python3 build.py mod        # build without fe4.sfc and update checksums
+python3 build.py coverage   # also report how much of the ROM is built from source
+python3 build.py test       # run static checks and tool self-tests (--full for all)
+python3 build.py clean      # remove generated files
 ```
 
-`build.sh` converts the dialogue text and CSV tables to assembly and the indexed PNGs in `gfx/` (`NAME.4bpp.png`) to tile data, checks that every included file exists with exactly the spelling used, assembles the ROM and compares its SHA-1 with the original. If they differ, it lists the first differing addresses.
+On macOS and Linux, `./build.sh` is a thin wrapper around `python3 build.py`.
 
-### Windows
-
-1. Optionally run `cleardialogueAll.bat` to remove old `.dialogue.txt` files.
-2. Run `dialoguebuilderAll.bat` to convert the dialogue text files in `text/` to `.dialogue.txt` files.
-3. Run `tablebuilder.bat` to convert the `.csv` files in `data/` to `.csv.asm` files.
-4. Run `build.bat` to build `FE4Disassembly.sfc`; it converts the PNGs in `gfx/` first. If no ROM is produced, see `log.txt`.
+`build.py` incrementally converts the dialogue text, CSV tables, palettes, and authored graphics in `gfx/` (`*.png`, `*.scene.json`, `*.csv`, `*.asm`) to assembly/tile data, checks that every included file exists with exactly the spelling used, assembles the ROM and compares its SHA-1 with the original. If they differ, it lists the first differing addresses.
 
 ## Layout
 
 | Folder | Contents |
 |---|---|
-| `build.asm` | The ROM map: which section of code or data goes at which address. It contains no code itself. |
+| `build.asm` | The ROM map: which section of code or data goes at which address, plus top-level table/binary placements. |
 | `engine/` | Game code, one folder per system (below). |
 | `events/` | Event scripts for each chapter. |
-| `data/` | Data tables as CSV: characters, classes, items, chapters, unit groups and more. |
+| `data/` | Data tables as CSV and `.asm`: characters, classes, items, chapters, palettes, unit groups and more. |
 | `text/` | Dialogue and menu text. |
-| `gfx/` | Extracted graphics. |
+| `gfx/` | Authored graphics sources by system (`portraits/`, `scenes/`, `maps/`, `ui/`, `icons/`, `fonts/`, `map_sprites/`, `map_battle/`, `effects/`, `battle_animation/`) and build plumbing in `gfx/build/`. |
+| `audio/` | Extracted SPC700 driver, sequences, BRR samples, sample directories, instruments, and `sound_data.asm`. |
 | `include/` | Constants, RAM layout, hardware registers and macros. `include/fe4.h` includes them all. |
-| `tools/` | Build helpers, and tools for testing new code against the ROM and moving it into the build. See `tools/README.md`. |
+| `docs/` | Modding guide (`MODDING_DATA.md`), graphics pipeline plan, subsystem references (`docs/reference/`), and the engine guide (`docs/guide/`). |
+| `tools/` | Build helpers, asset compilers, and analysis/disassembly tools. See `tools/README.md`. |
 | `wip/` | Disassembled code that is not part of the build yet (empty when nothing is in progress). |
 
 `engine/` is split by game system:
@@ -53,16 +52,21 @@ You need:
 | `units/` | Units and their data, classes, stats, level-ups, skills, factions, lovers, turn-start effects, and the move to generation 2 with inheritance. |
 | `items/` | Item data and unit inventories. |
 | `ai/` | The enemy AI: its main cycle, AI scripts, groups and formations, and choosing targets, attacks and movement. |
-| `battle/` | Battle calculations, weapon traits and staff effects, battle stats and scripted special attacks. |
-| `menus/` | Map menus and menu text. |
+| `arena/` | The castle arena ladder and combat loop. |
+| `battle/` | Battle calculations, weapon traits, staff effects, battle stats, map battles, map magic effects, and scripted special attacks. |
+| `battle_scene/` | The full-screen battle scene engine, scripts, animations, HUD, and results. |
+| `castle/` | Castle town facilities: shops, pawn shop, repair, storage, augury, class change, and conversations. |
+| `menus/` | Map menus, full-screen status/overview windows, options, revive screen, and menu text. |
 | `dialogue/` | The dialogue engine, dialogue boxes, portraits and death quotes. |
 | `events/` | The chapter event engine and conditions, the event script interpreter and commands, procs used by events, talk events, event movement and scripted scenes. |
 | `worldmap/` | The world map. |
+| `title/` | The title screen, opening logo, and title intro scenes. |
+| `demo/` | The attract-mode demo battles. |
 | `epilogue/` | Choosing and showing each character's epilogue. |
-| `save/` | Saving and loading. |
+| `save/` | Saving, loading, and the Jugdral history screens. |
 | `debug/` | The leftover debug menu. |
 | `rankings/` | The end-of-game rankings. |
-| `sound/` | Choosing music. |
+| `sound/` | Choosing music and communicating with the SPC700 driver. |
 
 ### How files relate to ROM addresses
 

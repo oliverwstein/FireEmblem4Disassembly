@@ -1,7 +1,7 @@
 ; The opening logo screen (game states $01-$03): its setup from boot, its VBlank,
 ; loading its graphics, and its two steps (the flash, then the fade to the title).
 
-    .section Unsorted80AD24Section
+    .section SetupOpeningLogoScreenSection
 
       .as
       .xl
@@ -151,9 +151,9 @@
 
         ; 80/AE25
 
-    .endsection Unsorted80AD24Section
+    .endsection SetupOpeningLogoScreenSection
 
-    .section Unsorted80AE25Section
+    .section OpeningLogoVBlankSection
 
       .al
       .xl
@@ -190,7 +190,7 @@
 
         ; 80/AE63
 
-    .endsection Unsorted80AE25Section
+    .endsection OpeningLogoVBlankSection
 
     .section OpeningLogoStatesSection
 
@@ -316,7 +316,7 @@
 
     .endsection OpeningLogoStatesSection
 
-    .section Unsorted9BFBC0Section
+    .section LoadOpeningLogoScreenSection
 
       .al
       .xl
@@ -418,9 +418,9 @@
 
         ; 9B/FC8D
 
-    .endsection Unsorted9BFBC0Section
+    .endsection LoadOpeningLogoScreenSection
 
-    .section TableE0283FSection
+    .section OpeningLogoPalette1Section
 
       .al
       .xl
@@ -434,7 +434,7 @@
 
         ; E0/285D
 
-    .endsection TableE0283FSection
+    .endsection OpeningLogoPalette1Section
 
     .section DataE0285DSection
 

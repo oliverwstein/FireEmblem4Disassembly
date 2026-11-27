@@ -7,7 +7,7 @@
 ; changes the layers shown down the screen. Events drive what the map shows.
 
 
-    .section Unsorted80B347Section
+    .section WorldMapVBlankSection
 
       .al
       .xl
@@ -339,10 +339,20 @@
         ; Read at +1 by the fixed-source DMA above: the zero it fills VRAM with.
         .fill 2, $00
 
-    .endsection Unsorted80B347Section
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B61E .structDecompressionDMAEntry gcWorldMapTiles, $6000, $0000 ; 80/B61E
+      aDecompressionDMAEntry80B626 .structDecompressionDMAEntry g4bppcWorldMapOverlayTiles, $1000, $3000 ; 80/B626
+      aDecompressionDMAEntry80B62E .structDecompressionDMAEntry acWorldMapData4000, $0100, $4000 ; 80/B62E
+      aDecompressionDMAEntry80B636 .structDecompressionDMAEntry acWorldMapBG3Tilemap, $0800, $6000 ; 80/B636
+
+      ; 80/B63E: an unreferenced lone rts (as at 80/B640).
+      .byte $60
+
+    .endsection WorldMapVBlankSection
 
 
-    .section Unsorted8B96CFSection
+    .section WorldMapUpkeepSection
 
       .al
       .xl
@@ -432,10 +442,10 @@
 
         ; 8B/9726
 
-    .endsection Unsorted8B96CFSection
+    .endsection WorldMapUpkeepSection
 
 
-    .section Table8B9726Section
+    .section WorldMapStepHandlersSection
 
       .al
       .xl
@@ -447,10 +457,10 @@
         .word <>rsWorldMapStepRun
         .word <>rsWorldMapStepFadeOut
 
-    .endsection Table8B9726Section
+    .endsection WorldMapStepHandlersSection
 
 
-    .section Unsorted8B9759Section
+    .section WorldMapStepFadeInSection
 
       .al
       .xl
@@ -491,10 +501,10 @@
 
         ; 8B/977D
 
-    .endsection Unsorted8B9759Section
+    .endsection WorldMapStepFadeInSection
 
 
-    .section Unsorted8B972CSection
+    .section WorldMapStepRunSection
 
       .al
       .xl
@@ -521,10 +531,10 @@
 
         ; 8B/973C
 
-    .endsection Unsorted8B972CSection
+    .endsection WorldMapStepRunSection
 
 
-    .section Unsorted8B973CSection
+    .section WorldMapStepFadeOutSection
 
       .al
       .xl
@@ -563,10 +573,10 @@
 
         ; 8B/9759
 
-    .endsection Unsorted8B973CSection
+    .endsection WorldMapStepFadeOutSection
 
 
-    .section Unsorted8B8000Section
+    .section WorldMapRunFrameSection
 
       .al
       .xl
@@ -635,7 +645,7 @@
 
         ; 8B/806D
 
-    .endsection Unsorted8B8000Section
+    .endsection WorldMapRunFrameSection
 
 
     .section WorldMapSpriteColorsSection
@@ -729,7 +739,7 @@
         ; 8B/818D
 
     .endsection Unreferenced8B812ASection
-    .section Table8CDE00Section
+    .section WorldMapSpriteColorCycle1Section
 
       .al
       .xl
@@ -743,7 +753,7 @@
 
         ; 8C/DE20
 
-    .endsection Table8CDE00Section
+    .endsection WorldMapSpriteColorCycle1Section
 
 
     .section Data8CDE20Section
@@ -776,7 +786,7 @@
     .endsection Data8CDE20Section
 
 
-    .section Table8B9449Section
+    .section WorldMapTopIRQInfoSection
 
       .al
       .xl
@@ -784,10 +794,10 @@
       aWorldMapTopIRQInfo ; 8B/9449
         .word $00A0, $0000, <>rlWorldMapTopIRQ, <>aWorldMapTopIRQCode
 
-    .endsection Table8B9449Section
+    .endsection WorldMapTopIRQInfoSection
 
 
-    .section Unsorted8B9451Section
+    .section WorldMapTopIRQSection
 
       .al
       .xl
@@ -811,10 +821,10 @@
       aWorldMapTopIRQCode ; 8B/9456
         .word <>rsIRQCodeHalt
 
-    .endsection Unsorted8B9451Section
+    .endsection WorldMapTopIRQSection
 
 
-    .section Unsorted8B9458Section
+    .section WorldMapTopEdgeFadeInSection
 
       .al
       .xl
@@ -1013,10 +1023,10 @@
 
         ; 8B/9594
 
-    .endsection Unsorted8B9458Section
+    .endsection WorldMapTopEdgeFadeInSection
 
 
-    .section Table8B9594Section
+    .section WorldMapBottomIRQInfoSection
 
       .al
       .xl
@@ -1024,10 +1034,10 @@
       aWorldMapBottomIRQInfo ; 8B/9594
         .word $0060, $00A0, <>rlWorldMapBottomIRQ, <>aWorldMapBottomIRQCode
 
-    .endsection Table8B9594Section
+    .endsection WorldMapBottomIRQInfoSection
 
 
-    .section Unsorted8B959CSection
+    .section WorldMapBottomIRQSection
 
       .al
       .xl
@@ -1051,10 +1061,10 @@
       aWorldMapBottomIRQCode ; 8B/95A1
         .word <>rsIRQCodeHalt
 
-    .endsection Unsorted8B959CSection
+    .endsection WorldMapBottomIRQSection
 
 
-    .section Unsorted8B95A3Section
+    .section WorldMapBottomEdgeFadeOutSection
 
       .al
       .xl
@@ -1244,20 +1254,20 @@
 
         ; 8B/96CF
 
-    .endsection Unsorted8B95A3Section
+    .endsection WorldMapBottomEdgeFadeOutSection
 
 
-    .section Table8B911FSection
+    .section WorldMapLayersHDMAInfoSection
 
       .al
       .xl
 
       aWorldMapLayersHDMAInfo .dstruct structHDMADirectEntryInfo, rlWorldMapBuildLayersHDMATable, rlWorldMapBuildLayersHDMATable, aWorldMapLayersHDMACode, $0008BC, PPU_REG_BASE + $2C, $00 ; 8B/911F
 
-    .endsection Table8B911FSection
+    .endsection WorldMapLayersHDMAInfoSection
 
 
-    .section Unsorted8B912ASection
+    .section WorldMapBuildLayersHDMATableSection
 
       .al
       .xl
@@ -1355,4 +1365,4 @@
 
         ; 8B/91F6
 
-    .endsection Unsorted8B912ASection
+    .endsection WorldMapBuildLayersHDMATableSection

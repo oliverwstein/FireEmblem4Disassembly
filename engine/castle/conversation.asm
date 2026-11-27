@@ -5,7 +5,7 @@
 ; and throne animations. Banks $8A and $8C.
 
 
-    .section Unsorted8ABB3ESection
+    .section LoadDialogueBackgroundSection
 
       .al
       .xl
@@ -206,10 +206,10 @@
 
         ; 8A/BCF8
 
-    .endsection Unsorted8ABB3ESection
+    .endsection LoadDialogueBackgroundSection
 
 
-    .section Unsorted8AD81BSection
+    .section ConversationSceneSetupSection
 
       .al
       .xl
@@ -364,10 +364,14 @@
         ; Unused: 2 zero bytes.
         .fill 2, $00
 
-    .endsection Unsorted8AD81BSection
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8AD952 .structDecompressionDMAEntry gcHiraganaFont, $1800, $4000 ; 8A/D952
+
+    .endsection ConversationSceneSetupSection
 
 
-    .section Unsorted8AD95ASection
+    .section ResetFountainAnimationSection
 
       .al
       .xl
@@ -400,10 +404,10 @@
 
         ; 8A/D975
 
-    .endsection Unsorted8AD95ASection
+    .endsection ResetFountainAnimationSection
 
 
-    .section Unsorted8AD975Section
+    .section ConversationSceneStepSection
 
       .al
       .xl
@@ -489,10 +493,10 @@
 
         .databank 0
 
-    .endsection Unsorted8AD975Section
+    .endsection ConversationSceneStepSection
 
 
-    .section Unsorted8AD9FESection
+    .section ConversationSceneStepHandlersSection
 
       .al
       .xl
@@ -521,10 +525,10 @@
 
         ; 8A/DA16
 
-    .endsection Unsorted8AD9FESection
+    .endsection ConversationSceneStepHandlersSection
 
 
-    .section Unsorted8ADA16Section
+    .section ConversationOpenRightWindowSection
 
       .al
       .xl
@@ -619,10 +623,10 @@
 
         ; 8A/DA83
 
-    .endsection Unsorted8ADA16Section
+    .endsection ConversationOpenRightWindowSection
 
 
-    .section Unsorted8ADA83Section
+    .section ConversationLoadPortraitsSection
 
       .al
       .xl
@@ -729,10 +733,10 @@
 
         ; 8A/DB04
 
-    .endsection Unsorted8ADA83Section
+    .endsection ConversationLoadPortraitsSection
 
 
-    .section Unsorted8ADB04Section
+    .section PushConversationLeftFrameSection
 
       .al
       .xl
@@ -778,10 +782,10 @@
 
         .structSpriteArray aConversationLeftFrameSprite._Sprites
 
-    .endsection Unsorted8ADB04Section
+    .endsection PushConversationLeftFrameSection
 
 
-    .section Unsorted8ADB37Section
+    .section PushConversationRightFrameSection
 
       .al
       .xl
@@ -820,10 +824,10 @@
 
         ; 8A/DB63
 
-    .endsection Unsorted8ADB37Section
+    .endsection PushConversationRightFrameSection
 
 
-    .section Table8ADB9FSection
+    .section ConversationData8ADB9FUnusedSection
 
       .al
       .xl
@@ -840,10 +844,10 @@
         .word 1 ; sprite count
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $008, 3, 0, false, false
 
-    .endsection Table8ADB9FSection
+    .endsection ConversationData8ADB9FUnusedSection
 
 
-    .section Unsorted8ADBBDSection
+    .section ConversationStartSection
 
       .al
       .xl
@@ -888,10 +892,10 @@
 
         .databank 0
 
-    .endsection Unsorted8ADBBDSection
+    .endsection ConversationStartSection
 
 
-    .section Unsorted8ADBFFSection
+    .section ConversationWaitForTextSection
 
       .al
       .xl
@@ -928,10 +932,10 @@
 
         ; 8A/DC25
 
-    .endsection Unsorted8ADBFFSection
+    .endsection ConversationWaitForTextSection
 
 
-    .section Unsorted8ADC25Section
+    .section ConversationEndSection
 
       .al
       .xl
@@ -1039,10 +1043,10 @@
 
         ; 8A/DCDD
 
-    .endsection Unsorted8ADC25Section
+    .endsection ConversationEndSection
 
 
-    .section Unsorted8ADCDDSection
+    .section ConversationWaitSection
 
       .al
       .xl
@@ -1060,10 +1064,10 @@
 
         ; 8A/DCDE
 
-    .endsection Unsorted8ADCDDSection
+    .endsection ConversationWaitSection
 
 
-    .section Unsorted8ADCDESection
+    .section ConversationFadeOutSection
 
       .al
       .xl
@@ -1101,10 +1105,10 @@
 
         ; 8A/DCF9
 
-    .endsection Unsorted8ADCDESection
+    .endsection ConversationFadeOutSection
 
 
-    .section Unsorted8ADCF9Section
+    .section ConversationSetupSlotsSection
 
       .al
       .xl
@@ -1297,10 +1301,10 @@
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00
 
-    .endsection Unsorted8ADCF9Section
+    .endsection ConversationSetupSlotsSection
 
 
-    .section Unsorted8AE05ESection
+    .section AnimateConversationBackgroundSection
 
       .al
       .xl
@@ -1385,10 +1389,10 @@
 
         ; 8A/E0C7
 
-    .endsection Unsorted8AE05ESection
+    .endsection AnimateConversationBackgroundSection
 
 
-    .section Table8AE0C7Section
+    .section CastleFountainAnimFramesSection
 
       .al
       .xl
@@ -1456,7 +1460,7 @@
 
         ; 8A/E147
 
-    .endsection Table8AE0C7Section
+    .endsection CastleFountainAnimFramesSection
 
 
     .section ProcScript8AE147Section
@@ -1471,7 +1475,7 @@
     .endsection ProcScript8AE147Section
 
 
-    .section Unsorted8AE14FSection
+    .section ProcConversationFadeInLeftPortraitInitSection
 
       .al
       .xl
@@ -1535,7 +1539,7 @@
 
         ; 8A/E197
 
-    .endsection Unsorted8AE14FSection
+    .endsection ProcConversationFadeInLeftPortraitInitSection
 
 
     .section ProcScript8AE197Section
@@ -1553,7 +1557,7 @@
     .endsection ProcScript8AE197Section
 
 
-    .section Unsorted8AE199Section
+    .section ProcConversationFadeInRightPortraitSection
 
       .al
       .xl
@@ -1562,7 +1566,7 @@
 
         .structProcInfo "F2", rlProcConversationFadeInRightPortraitInit, rlProcConversationFadeInRightPortraitCycle, aProcConversationFadeInRightPortraitCode
 
-    .endsection Unsorted8AE199Section
+    .endsection ProcConversationFadeInRightPortraitSection
 
 
     .section ProcConversationFadeInRightPortraitInitSection
@@ -1600,7 +1604,7 @@
     .endsection ProcConversationFadeInRightPortraitInitSection
 
 
-    .section Unsorted8AE1C1Section
+    .section ProcConversationFadeInRightPortraitCycleSection
 
       .al
       .xl
@@ -1640,10 +1644,10 @@
 
         PROC_HALT
 
-    .endsection Unsorted8AE1C1Section
+    .endsection ProcConversationFadeInRightPortraitCycleSection
 
 
-    .section Unsorted8AE1EBSection
+    .section ProcConversationFadeOutLeftPortraitSection
 
       .al
       .xl
@@ -1652,10 +1656,10 @@
 
         .structProcInfo "FF", rlProcConversationFadeOutLeftPortraitInit, rlProcConversationFadeOutLeftPortraitCycle, aProcConversationFadeOutLeftPortraitCode
 
-    .endsection Unsorted8AE1EBSection
+    .endsection ProcConversationFadeOutLeftPortraitSection
 
 
-    .section Unsorted8AE1F3Section
+    .section ProcConversationFadeOutLeftPortraitInitSection
 
       .al
       .xl
@@ -1723,7 +1727,7 @@
         ; The left portrait's colours for rlFadePaletteToBlack (rlProcConversationFadeOutLeftPortraitCycle).
         .word $01A2, $000F, $FFFF
 
-    .endsection Unsorted8AE1F3Section
+    .endsection ProcConversationFadeOutLeftPortraitInitSection
 
 
     .section ProcScript8AE243Section
@@ -1741,7 +1745,7 @@
     .endsection ProcScript8AE243Section
 
 
-    .section Unsorted8AE245Section
+    .section ProcConversationFadeOutRightPortraitSection
 
       .al
       .xl
@@ -1816,7 +1820,7 @@
 
         ; 8A/E29F
 
-    .endsection Unsorted8AE245Section
+    .endsection ProcConversationFadeOutRightPortraitSection
 
 
     .section Data8CCB00Section
