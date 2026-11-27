@@ -1,0 +1,38 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BackgroundPalettes.asm",
+      "label": "aDialogueBackgroundFountainPalette",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/compressed/C70C80/g4bppcDialogueBackgroundFountain.4bpp.png",
+      "max_tiles": 512,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "Fountain.png",
+      "tilemap": "gfx/compressed/C70C80/acDialogueBackgroundFountainTilemap.bin",
+      "width": 32,
+      "height": 11,
+      "transparent": false,
+      "palettes": [
+        3,
+        4
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    }
+  ]
+}

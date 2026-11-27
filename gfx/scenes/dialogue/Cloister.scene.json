@@ -1,0 +1,67 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BackgroundPalettes.asm",
+      "label": "aDialogueBackgroundCloisterPalette",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/compressed/DE6230/g4bppcDialogueBackgroundCloister.4bpp.png",
+      "max_tiles": 512,
+      "writable": true
+    },
+    {
+      "png": "gfx/compressed/DE6230/g4bppcDialogueBackgroundCloisterForeground.4bpp.png",
+      "max_tiles": 256,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "Cloister.png",
+      "tilemap": "gfx/compressed/DE6230/acDialogueBackgroundCloisterTilemap.bin",
+      "width": 32,
+      "height": 11,
+      "transparent": false,
+      "palettes": [
+        3,
+        4
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    },
+    {
+      "png": "CloisterForeground.png",
+      "tilemap": "gfx/compressed/9C8000/acDialogueBackgroundCloisterForegroundTilemap.bin",
+      "width": 32,
+      "height": 32,
+      "transparent": true,
+      "palettes": [
+        0,
+        2,
+        3
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        },
+        {
+          "sheet": 1,
+          "base": 512
+        }
+      ],
+      "append_sheet": 1,
+      "priority": "CloisterForeground_priority.png"
+    }
+  ]
+}

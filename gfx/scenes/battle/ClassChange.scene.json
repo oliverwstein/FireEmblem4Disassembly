@@ -1,0 +1,39 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BackgroundPalettes.asm",
+      "label": "aBattleBackgroundClassChangePalette",
+      "dest": 49,
+      "count": 47
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/compressed/D05673/g4bppcBattleBackgroundClassChange.4bpp.png",
+      "max_tiles": 256,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "ClassChange.png",
+      "tilemap": "gfx/compressed/DF0000/acBattleBackgroundClassChangeTilemap.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        0,
+        3,
+        4
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    }
+  ]
+}

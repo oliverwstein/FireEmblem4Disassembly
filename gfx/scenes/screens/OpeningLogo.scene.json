@@ -1,0 +1,38 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "engine/title/opening_logo.asm",
+      "label": "aOpeningLogoPalette1",
+      "dest": 17,
+      "count": 15
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/compressed/DF0000/g4bppcOpeningLogoTiles.4bpp.png",
+      "max_tiles": 256,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "OpeningLogo.png",
+      "tilemap": "gfx/compressed/DF0000/acOpeningLogoTilemap.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    }
+  ]
+}

@@ -32,7 +32,7 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 **Key design rules:**
 
-1. **Compilers must reproduce the existing blobs from unedited sources.** For fixed-layout assets (portraits, icons, fonts, map movement sprites) slicing is 1-to-1, so this is automatic. For tilemap assets (backgrounds, title/opening screens, UI screens) the packer starts from the existing tile order and only appends new tiles (see Phase 3), so an unedited scene packs to the same `.4bpp` and `.bin`, and the `.comp` fallback above does the rest.
+1. **Compilers must reproduce the existing blobs from unedited sources.** For fixed-layout assets (portraits, icons, fonts, map movement sprites) slicing is 1-to-1, so this is automatic. For tilemap assets (backgrounds, title/opening screens, UI screens) the packer starts from the existing tile order and only adds new tiles, in free blank slots or at the end (see Phase 3), so an unedited scene packs to the same `.4bpp` and `.bin`, and the `.comp` fallback above does the rest.
 2. **No information may live only in a generated file.** Anything the PNG cannot hold (per-tile palette choice, flip and priority bits, which entries share graphics) stays in a committed source file next to it, in a documented format.
 3. **Hard SNES budget checks at build time:** every compiler validates VRAM tile count, palette count (16 colors per 4bpp sub-palette, 4 per 2bpp), and OAM entry budget, failing with a clear error. Region size is already checked by `stream_layout.py`; a full region is fixed by moving a stream to another `.streams` list with free space, not by the compiler.
 4. **Generated files stay gitignored.** `.4bpp`, `.2bpp` and all `.lz` files already are. When an asset class is promoted, the files its compiler writes (for example `.bin` tilemaps built from a scene) join them, and `./build.sh clean` deletes them. The `.comp` streams stay committed.
@@ -62,26 +62,37 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 
 ---
 
-### Phase 3 — Static Full-Screen Scenes & Backgrounds (`24` dialogue/battle backgrounds, `~40` title/opening/credits/world-map scenes, `14` battle banners)
+### Phase 3 — Static Full-Screen Scenes & Backgrounds (`65` tilemap layers in `45` manifests) — **done (2026-11-27)**
 *Big readability win; introduces the reusable tilemap packer that Phase 4 also uses.*
 
-- **Current state:** split across `.4bpp.png`/`.2bpp.png` tile sheets, raw `.bin` tilemaps (`25` background tilemaps, `39` title/opening/credits, `9` world-map/epilogue) and palettes in `data/palettes/`. [tools/backgrounds.py](../tools/backgrounds.py) already renders the dialogue, battle and map-battle magic backgrounds as the game composes them, from the built ROM, and its `--self-test` checks that an edited tile and tilemap entry reach the ROM and that later streams move correctly.
-- **Author-facing object:** one **assembled scene PNG** per screen (`256×224`, `256×160`, or the tilemap's own size), plus a committed `NAME.scene.json` holding everything the PNG cannot:
-  - BG mode and bit depth, tilemap size, VRAM base tile index, and which sub-palettes (`0–7`) the scene may use;
-  - the tile sheet(s) it draws from, in order (the existing `.4bpp.png` stays committed as the seed tile order);
-  - the priority bit per tilemap entry, stored as a 1-bit `NAME_priority.png` mask when any bit is set;
-  - for scenes that share a tile sheet or are layered (two dialogue backgrounds on one sheet, `CloisterForegroundTilemap` over its background), the list of scenes packed together.
-- **Round-trip tool (`tools/scene_pack.py`):**
-  - `unpack`: renders tiles + tilemap + palettes into the scene PNG and writes the `.scene.json` and priority mask. The palette for each 8×8 cell comes from its tilemap entry, so the PNG is a direct-color render; `unpack` also checks that re-packing it reproduces the `.bin` exactly.
-  - `pack`:
-    1. Split the image into 8×8 cells.
-    2. For each cell, find the sub-palette whose colors cover it exactly (fail if none does, naming the cell and the colors that are missing; quantizing is the artist's job, not the packer's).
-    3. Match the cell, converted to that palette's indices, against the **existing tiles in their committed order**, trying all four flip combinations. When several tiles or palettes match, prefer the choice the original tilemap entry made (read from the previous `.bin` when present), so unedited cells keep their exact entry.
-    4. Append a new tile only for a cell nothing matches.
-    5. Check the tile count against the VRAM budget and write `.4bpp` + `.bin` (and the palette `.asm` if palettes are edited in the PNG).
-  - `--self-test`: unpack and pack every scene and compare `.4bpp` and `.bin` bytes.
-- **Why seed from the existing order instead of deduplicating from scratch:** a fresh deduplicator assigns tile IDs in scan order, which differs from the ROM's, so every unedited scene would need a fallback and every one-pixel edit would renumber the whole tilemap. Seeding keeps unedited scenes byte-identical and keeps the diff of an edit to the tiles and entries that actually changed. Tiles that an edit leaves unused are kept, not compacted, unless `pack --compact` is passed.
-- **Open question:** whether any of these sheets hold tiles that no tilemap here references (used by code or by another screen). `unpack` should report unreferenced tiles per sheet so they are not mistaken for garbage.
+- **Author-facing objects (`gfx/scenes/`):** `45` manifests (`*.scene.json`) covering `65` static tilemap layers:
+  - `gfx/scenes/dialogue/` (`9` layers): `Fountain`, `Gate`, `Alley`, `Throne` + `ThroneForeground`, `Hallway` + `HallwayForeground`, `Cloister` + `CloisterForeground`, plus `FountainForegroundGroup`, which shares `g4bppcDialogueBackgroundFountainForeground` across `FountainForeground`, `GateForeground` and `BattleForeground3Tilemap1–2`.
+  - `gfx/scenes/battle/`: `14` battle backgrounds and `4` two-layer battle foregrounds.
+  - `gfx/scenes/screens/`: `GameOver` BG1/BG2, `AntiPiracyWarning`, `AbnormalityWarning`, `OpeningLogo`, `OpeningCreditsPage1–8`, `EpilogueEndScreen` + `EpilogueRankingsBG2`, `EpilogueCreditsBG1–2`, and `TitleIntroCaption01–13`.
+- **The scene PNG is the source.** Each layer is an assembled `RGB` or `RGBA` PNG (`256×88`, `256×224`, `256×256`, `512×256`, `256×16`), plus a 1-bit `*_priority.png` mask where any tilemap entry sets bit `$2000`. A sheet a manifest marks `writable` (`.4bpp.png`/`.2bpp.png`) is only the seed tile order. `pack` refuses to run when such a sheet no longer decodes to its `.comp` stream, because the scene PNG would silently put the old pixels back. Colours must already be in one of the layer's allowed sub-palettes; palettes are edited in their `.asm` files, not through the PNG.
+- **Manifest (`.scene.json`):** depth (`4` or `2`), palette sources (`.asm` `bgr555()` labels, `.bin.comp`, or `grey`), seed sheets with `max_tiles` VRAM budgets, `writable`, and `external` (a note naming a tilemap outside `gfx/scenes/` that also reads the sheet), and per layer the allowed sub-palettes, sheet bases and `append_sheet`. `pack` checks every index and value before packing.
+- **Round-trip tool & build wiring ([tools/scene_pack.py](../tools/scene_pack.py)):**
+  - `pack`: matches each 8×8 cell against existing tiles in committed order, trying all four flips and preferring the original tilemap entry when its pixels still match. A cell nothing matches gets a new tile in the layer's `append_sheet`: first in a blank slot that no committed scene tilemap references, then appended up to `max_tiles`. This matters because `25` of the `48` writable sheets are already full, their streams padded with blank tiles up to the budget (all `14` battle backgrounds, five of the seven dialogue pictures, the Throne and Hallway foregrounds, both warning screens, `EpilogueCreditsBG2Tiles` and the opening credits font). A sheet with `external` never gives up blank slots. Fixed-sheet layers set `append_sheet` to `null`.
+  - `pack --compact`: drops, from each writable sheet only this manifest uses, the unreferenced blank tiles and the tiles the edit left unreferenced, and renumbers the rest. Tiles no committed scene tilemap ever referenced are kept, since code or another screen may read them. It refuses a sheet that another manifest or an `external` tilemap reads.
+  - `unpack [--force]`: renders scene PNGs and priority masks from the committed sheets and `.bin.comp` tilemaps, refuses to overwrite existing PNGs without `--force`, records new masks in the manifest, checks that packing reproduces every `.comp` stream, and reports unreferenced tiles per sheet.
+  - `build` / `clean`: wired into `build.sh` and `build.bat` before `gfx.py lz`; all `65` generated `.bin` tilemaps are gitignored and deleted by `./build.sh clean`.
+- **VRAM budgets (`max_tiles`) and where they come from.** `structDMAToVRAM` takes byte addresses ([include/DMA.h](../include/DMA.h)).
+  - Dialogue pictures `512`, dialogue foregrounds `256`: `$4000` and `$2000`-byte uploads of the decompressed stream, whatever its size ([engine/castle/conversation.asm](../engine/castle/conversation.asm)).
+  - Battle backgrounds `512`: `rsBattleSceneLoadBackgroundLayer` uploads `$6000` bytes (768 tiles) from tile 0, but `rsBattleSceneLoadForeground` then writes bytes `$4000`–`$5FFF` and `$7800`, over tiles 512 and up ([engine/battle_scene/loading.asm](../engine/battle_scene/loading.asm)). `ClassChange` is `256`; no code reason has been found, and its stream holds exactly 256 tiles, all referenced.
+  - Battle foregrounds `128`: the `$1000`-byte upload to byte `$5000`.
+  - The rest (title captions `64`, `OpeningLogo` and `GameOver` `256`, warnings `512`, epilogue `768`/`256`, credits font `768`) are not yet traced to their loaders.
+- **Unreferenced tiles (the earlier open question).** Almost all are blank padding up to the budget. Four sheets hold real art no scene tilemap uses: `g4bppcBattleBackgroundTitleIntro` (236 tiles, read by the title scene through `acTitleSceneTilemapF5222D` in `engine/battle_scene/data.asm`, so it is marked `external`), `g4bppcEpilogueEndScreenTiles` (161), `gcOpeningCreditsFont` (138) and `g4bppcDialogueBackgroundGate` (41). `--compact` keeps them.
+- **Proved:** `tools/scene_pack.py --self-test` packs all `65` layers byte-identically against their `.bin.comp` and `.4bpp.comp`/`.2bpp.comp` streams. It also checks:
+  - appending a tile, and its `gfx.lz` recompression (`OpeningLogo`);
+  - a new tile going into the first free blank slot of a full sheet, with no other entry changed (`Plains`, `ThroneForeground`);
+  - an `external` sheet refusing its blank slots (`Unused16`);
+  - toggling a priority bit with no other entry changed (`ThroneForeground`);
+  - `--compact` on `Gate` keeping exactly the referenced and never-referenced art and rendering the same picture, and refusing shared (`Thicket`) and external sheets;
+  - the edited-seed-sheet guard, and `unpack` refusing to overwrite before reproducing the PNG with `--force`;
+  - errors for off-palette colours, the VRAM budget, disabled append, mixed priority cells and a bad `append_sheet` index.
+
+  A clean build is byte-identical. `tools/backgrounds.py --self-test` edits `Plains.png` in a copy (a copied cell, and a pixel that needs a new tile in the full sheet), builds it with `./build.sh mod`, fails unless the build succeeds and Plains' tiles and tilemap changed, and checks that both reach the ROM while every other battle background entry decompresses unchanged after the streams move.
+- **Left as-is / outside static scenes:** the `14` battle banners are already `128×8` indexed tile strips with no tilemap; `gcWorldMapTilemap` uses 16×16 metatiles; dynamic palette-effect title scenes (`acTitleSceneTilemap*`, `acOpeningSkySceneTilemap*`) can be added as `.scene.json` manifests once their palette setups are pinned down.
 
 ---
 
@@ -91,7 +102,7 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 - **Fonts (`gfx/font/DialogueFont*.2bpp.png`):** Already editable 2bpp sheets; pair with a glyph-grid visualizer that overlays character codes and widths from [data/dialogue/DialogueFontWidth.asm](../data/dialogue/DialogueFontWidth.asm).
 - **UI windows & tilemaps (`28` in `gfx/ui/tilemaps/` + `31` in `gfx/compressed/`):**
   - Status screen (`StatusScreenTilemap1–3`), unit window pages (`UnitWindowPage0–5`), castle courtyard/town, shop screen, genealogy wheel, dialogue boxes, save menu.
-  - Use `tools/scene_pack.py` from Phase 3 with the shared sheets (`WindowFrames`, `MenuLabels`, `SkillIcons`, …) as the seed and appending **disabled**: a UI layout may only use tiles that already exist in its sheets, and new art goes into the sheet itself. Artists edit either the shared sheet or the assembled layout PNG.
+  - Use `tools/scene_pack.py` from Phase 3 with the shared sheets (`WindowFrames`, `MenuLabels`, `SkillIcons`, …) as the seed and appending **disabled**: a UI layout may only use tiles that already exist in its sheets, and new art goes into the sheet itself. Here the shared sheet is the source (it is not `writable` in any layout manifest): artists draw new art in the sheet, and arrange existing tiles in the layout PNG.
 
 ---
 
@@ -131,7 +142,7 @@ ROM (byte-identical when unmodified; repacked & recompressed when edited)
 |---|---|---:|---|---|
 | **1** ✓ | Chapter maps, map-battle sprite data (source + build wiring) | 32 map streams, 120 sprite data | Done | [tools/chapter_maps.py](../tools/chapter_maps.py) (CSV), [tools/map_battle_layouts.py](../tools/map_battle_layouts.py) (assembly) |
 | **2** ✓ | Portraits | 152 graphics, 248 entries | Done | [tools/portrait_pack.py](../tools/portrait_pack.py) (`80×64` PNG) |
-| **3** | Backgrounds & full-screen scenes | ~78 scenes | **Medium** (seeded tile matching + sub-palette) | [tools/gfx.py](../tools/gfx.py), [tools/backgrounds.py](../tools/backgrounds.py), `data/palettes/` |
+| **3** ✓ | Backgrounds & full-screen scenes | 65 scene layers (45 manifests) | Done | [tools/scene_pack.py](../tools/scene_pack.py) (`gfx/scenes/`) |
 | **4** | UI tilemaps, icons, fonts | ~80 assets | **Medium** (fixed-sheet tilemap match) | `tools/scene_pack.py` from Phase 3 |
 | **5** | Map sprites & map-battle animations | 99 sheets + 557 battle sheets | **Medium–Hard** (OAM packing, Level B only) | Phase 1 layouts |
 | **6** | Battle scene animations | 337 sheets + scripts | **Hard** (multi-piece OAM + DMA budgets) | `data/battle_animation/` |

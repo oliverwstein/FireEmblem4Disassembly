@@ -1,0 +1,38 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BackgroundPalettes.asm",
+      "label": "aDialogueBackgroundAlleyPalette",
+      "dest": 0,
+      "count": 128
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/compressed/D05673/g4bppcDialogueBackgroundAlley.4bpp.png",
+      "max_tiles": 512,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "Alley.png",
+      "tilemap": "gfx/compressed/D05673/acDialogueBackgroundAlleyTilemap.bin",
+      "width": 32,
+      "height": 11,
+      "transparent": false,
+      "palettes": [
+        3,
+        4
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    }
+  ]
+}

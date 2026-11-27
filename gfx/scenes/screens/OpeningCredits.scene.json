@@ -1,0 +1,164 @@
+{
+  "depth": 2,
+  "palette": [
+    {
+      "asm": "data/palettes/BGPalettes8C.asm",
+      "label": "aOpeningCreditsPalette",
+      "dest": 0,
+      "count": 16
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/compressed/D05673/gcOpeningCreditsFont.2bpp.png",
+      "max_tiles": 768,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "OpeningCreditsPage1.png",
+      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage1.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    },
+    {
+      "png": "OpeningCreditsPage2.png",
+      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage2.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    },
+    {
+      "png": "OpeningCreditsPage3.png",
+      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage3.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    },
+    {
+      "png": "OpeningCreditsPage4.png",
+      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage4.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    },
+    {
+      "png": "OpeningCreditsPage5.png",
+      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage5.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    },
+    {
+      "png": "OpeningCreditsPage6.png",
+      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage6.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    },
+    {
+      "png": "OpeningCreditsPage7.png",
+      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage7.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    },
+    {
+      "png": "OpeningCreditsPage8.png",
+      "tilemap": "gfx/compressed/D05673/gcOpeningCreditsPage8.bin",
+      "width": 32,
+      "height": 28,
+      "transparent": false,
+      "palettes": [
+        0,
+        1
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    }
+  ]
+}

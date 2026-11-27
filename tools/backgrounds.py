@@ -13,15 +13,18 @@ aMapBattleMagicBackgrounds) at their labels in labels.txt from the built ROM
   battle/NN_NAME.png  the 64x32 background, colours from palette 3 colour 1;
   magic/NN_ITEM.png   the map battle magic layer (tiles from tile 896).
 
-These are previews, not source: the source is the tiles (.4bpp.png), the
-tilemaps (.bin) and the palettes. Because they come from the built ROM, an edit
-to any of those shows up here after ./build.sh.
+These are previews, not source: the source is the assembled scene PNGs in
+gfx/scenes/ (packed by tools/scene_pack.py to .4bpp/.2bpp and .bin) and the
+palettes. Because they come from the built ROM, an edit to any of those shows up
+here after ./build.sh.
 
---self-test edits one pixel of a background's tiles and one tilemap entry in a
-temporary copy of the repository, builds it, and checks that the built ROM's
-streams decompress to the edited bytes and that every table entry still
-decompresses to the same bytes as before (so the streams after the edited ones
-moved, and the tables moved with them).
+--self-test makes two edits to gfx/scenes/battle/Plains.png in a temporary copy
+of the repository (a cell copied from elsewhere, and a changed pixel that needs a
+new tile, which goes into a free blank slot of the full sheet) and builds it with
+./build.sh mod. It checks that the build succeeded, that Plains' tiles and
+tilemap changed, and that the built ROM's streams decompress to the edited bytes
+while every other table entry decompresses to the same bytes as before (so the
+streams after the edited ones moved, and the tables moved with them).
 """
 import argparse
 import os
@@ -142,7 +145,7 @@ def render(rom, labels, by_addr, out, scale):
 
 
 def self_test():
-    """Edit a tile sheet and a tilemap in a copy, build, and check what the ROM holds."""
+    """Edit assembled scene PNGs in a copy, build, and check what the ROM holds."""
     from PIL import Image
     rom0 = Rom(os.path.join(ROOT, 'FE4Disassembly.sfc'))
     labels, _ = load_labels(ROOT)
@@ -151,35 +154,55 @@ def self_test():
     tmp = tempfile.mkdtemp()
     try:
         subprocess.run(['rsync', '-a', '--exclude', '.git', ROOT + '/', tmp + '/'], check=True)
-        folder = next(os.path.join(dp, '') for dp, _, fs in os.walk(os.path.join(tmp, 'gfx'))
-                      if 'g4bppcBattleBackgroundPlains.4bpp.png' in fs)
-        png = folder + 'g4bppcBattleBackgroundPlains.4bpp.png'
-        img = Image.open(png)
-        img.putpixel((3, 5), (img.getpixel((3, 5)) + 1) % 16)
-        img.save(png)
-        binp = folder + 'acBattleBackgroundPlainsTilemap.bin'
-        data = bytearray(open(binp, 'rb').read())
-        data[0] ^= 0x01
-        open(binp, 'wb').write(data)
-        r = subprocess.run(['./build.sh'], cwd=tmp, capture_output=True, text=True)
-        if 'matches the original' in r.stdout:
-            print('FAIL: the edited build still matches the ROM')
+        # Two edits to gfx/scenes/battle/Plains.png: copy cell (0, 16) onto (0, 0),
+        # which reuses existing tiles, and change one pixel of a two-colour cell,
+        # which needs a new tile. Plains' sheet is full (512 of 512), so the new
+        # tile takes a free blank slot and the sheet keeps its size.
+        import json
+        import scene_pack
+        manifest = json.load(open(os.path.join(ROOT, 'gfx/scenes/battle/Plains.scene.json')))
+        bpp_rel = manifest['sheets'][0]['png'][:-4]
+        tm_rel = manifest['layers'][0]['tilemap']
+        plains_png = os.path.join(tmp, 'gfx/scenes/battle/Plains.png')
+        pimg = Image.open(plains_png)
+        pimg.paste(pimg.crop((0, 128, 8, 136)), (0, 0))
+        pimg.save(plains_png)
+        scene_pack._new_tile_edit(plains_png, start_row=2)
+        # Generated files copied from the working tree must not stand in for a failed pack.
+        for rel in (bpp_rel, tm_rel, bpp_rel + '.lz', tm_rel + '.lz'):
+            if os.path.exists(os.path.join(tmp, rel)):
+                os.remove(os.path.join(tmp, rel))
+
+        # ./build.sh mod builds without comparing to fe4.sfc, so a non-zero exit
+        # means a build step (such as scene_pack.py build) failed.
+        r = subprocess.run(['./build.sh', 'mod'], cwd=tmp, capture_output=True, text=True)
+        if r.returncode != 0:
+            print('FAIL: the edited build failed')
+            print((r.stdout + r.stderr)[-2000:])
             return 1
         rom1 = Rom(os.path.join(tmp, 'FE4Disassembly.sfc'))
         labels1, _ = load_labels(tmp)
         t1 = labels1['aBattleBackgrounds']
         after = [rom1.comp(rom1.long(t1 + 10 * i + k)) for i in range(24) for k in (0, 3)]
-        from gfx import png_to_4bpp
-        want = png_to_4bpp(png)[:len(before[0])]
+        plains_bpp = open(os.path.join(tmp, bpp_rel), 'rb').read()
+        plains_tm = open(os.path.join(tmp, tm_rel), 'rb').read()
         bad = 0
+        if plains_bpp == before[0] or len(plains_bpp) != len(before[0]):
+            bad += 1
+            print('FAIL: the new tile did not change the Plains sheet in place')
+        if plains_tm == before[1]:
+            bad += 1
+            print('FAIL: the edits did not change the Plains tilemap')
         for i, (b, a) in enumerate(zip(before, after)):
             rec, k = divmod(i, 2)
-            plains = rec in (0, 1)
-            expect = (want if k == 0 else bytes(data)) if plains else b
+            if rec in (0, 1):
+                expect = plains_bpp if k == 0 else plains_tm
+            else:
+                expect = b
             if a != expect:
                 bad += 1
                 print(f'FAIL: entry {rec:02X} {"tiles" if k == 0 else "tilemap"} decompresses to other bytes')
-        print('edited tiles and tilemap built and decompress as edited; other entries unchanged'
+        print('edited scenes built and decompress as edited; other entries unchanged'
               if not bad else f'{bad} entries wrong')
         return 1 if bad else 0
     finally:

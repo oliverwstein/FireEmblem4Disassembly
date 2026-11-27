@@ -1,0 +1,39 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BackgroundPalettes.asm",
+      "label": "aBattleBackgroundForestPalette",
+      "dest": 49,
+      "count": 47
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/compressed/B48720/g4bppcBattleBackgroundForest.4bpp.png",
+      "max_tiles": 512,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "Forest.png",
+      "tilemap": "gfx/compressed/DF0000/acBattleBackgroundForestTilemap.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        0,
+        4,
+        5
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    }
+  ]
+}

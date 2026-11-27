@@ -26,6 +26,19 @@ gfx/**/Layout.asm
 # Built from .csv / .asm sources by tools/chapter_maps.py and tools/map_battle_layouts.py
 gfx/compressed/C70C80/acChapterMap*.bin
 gfx/compressed/*/aMapBattle*Layout*.bin
+# Built from gfx/scenes/ manifests by tools/scene_pack.py
+gfx/compressed/*/acDialogueBackground*.bin
+gfx/compressed/*/acBattleBackground*.bin
+gfx/compressed/*/acBattleForeground*.bin
+gfx/compressed/*/acGameOverBG*.bin
+gfx/compressed/*/acAntiPiracyWarningTilemap.bin
+gfx/compressed/*/acAbnormalityWarningTilemap.bin
+gfx/compressed/*/acOpeningLogoTilemap.bin
+gfx/compressed/*/gcOpeningCreditsPage*.bin
+gfx/compressed/*/acEpilogueCreditsBG*.bin
+gfx/compressed/*/acEpilogueEndScreenTilemap.bin
+gfx/compressed/*/acEpilogueRankingsBG2Tilemap.bin
+gfx/compressed/*/gcTitleIntroCaption*Tilemap.bin
 *.dialogue.txt
 
 tools/64tass.exe

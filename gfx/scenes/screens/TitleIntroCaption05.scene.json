@@ -1,0 +1,30 @@
+{
+  "depth": 4,
+  "palette": "grey",
+  "sheets": [
+    {
+      "png": "gfx/compressed/DF0000/gcTitleIntroCaption05.4bpp.png",
+      "max_tiles": 64,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "TitleIntroCaption05.png",
+      "tilemap": "gfx/compressed/E02EBD/gcTitleIntroCaption05Tilemap.bin",
+      "width": 32,
+      "height": 2,
+      "transparent": false,
+      "palettes": [
+        0
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 128
+        }
+      ],
+      "append_sheet": 0
+    }
+  ]
+}

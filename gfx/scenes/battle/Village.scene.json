@@ -1,0 +1,40 @@
+{
+  "depth": 4,
+  "palette": [
+    {
+      "asm": "data/palettes/BackgroundPalettes.asm",
+      "label": "aBattleBackgroundVillagePalette",
+      "dest": 49,
+      "count": 47
+    }
+  ],
+  "sheets": [
+    {
+      "png": "gfx/compressed/AFC8C0/g4bppcBattleBackgroundVillage.4bpp.png",
+      "max_tiles": 512,
+      "writable": true
+    }
+  ],
+  "layers": [
+    {
+      "png": "Village.png",
+      "tilemap": "gfx/compressed/AFC8C0/acBattleBackgroundVillageTilemap.bin",
+      "width": 64,
+      "height": 32,
+      "transparent": false,
+      "palettes": [
+        0,
+        3,
+        4,
+        5
+      ],
+      "sheets": [
+        {
+          "sheet": 0,
+          "base": 0
+        }
+      ],
+      "append_sheet": 0
+    }
+  ]
+}
